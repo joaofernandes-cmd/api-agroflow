@@ -7,7 +7,16 @@
 
 ## Nome do Grupo
 
-#### Nomes dos integrantes do grupo
+#### Integrantes do grupo:
+
+- <a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/">Ana Clara da Silva Silvestre</a>
+- <a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/">André Fischer de Carvalho</a>
+- <a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/">Enzo Braga Heins</a>
+- <a href="https://www.linkedin.com/in/fabiana-dias-souza/">Fabiana Dias de Souza</a>
+- <a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//">João Glauco Fernandes Araújo de Freitas</a>
+- <a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/">Levi Correia Silveira</a>
+- <a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en">Matheus Augusto Corrêa Santos</a>
+- <a href="https://www.linkedin.com/in/theo-moreda">Théo Pires Morêda</a>
 
 
 
