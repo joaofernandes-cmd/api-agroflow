@@ -208,7 +208,12 @@
 
 ### <a name="c2.1.2"></a>2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-*Preencha com até 100 palavras – sem necessidade de fonte*
+A análise SWOT da BRPEC evidencia os principais fatores internos e externos que impactam sua atuação no agronegócio brasileiro. Entre as forças, destacam-se a integração vertical, a escala produtiva e o sólido respaldo financeiro. Por outro lado, surgem desafios relacionados à dependência estratégica e à complexidade regulatória. O cenário também apresenta oportunidades relevantes, como o crescimento da demanda internacional e o avanço de práticas sustentáveis, ao mesmo tempo em que impõe ameaças como riscos climáticos, pressão regulatória e redução de margens. Essa visão sintetiza os elementos-chave para orientar decisões estratégicas e garantir 
+competitividade no setor.
+
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/analiseSwot.png" alt="Análise de SWOT" border="0"></a>
+</p>
 
 *Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
 
