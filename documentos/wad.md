@@ -72,14 +72,30 @@
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
  Solução: 
- Produtos e serviços- Quais soluções ajudam o segmento de cliente a cumprir as tarefas?
+ Produtos e serviços- Quais soluções ajudam o segmento de cliente a cumprir as tarefas? 
  Criadores de ganho- O que oferecer ao cliente para obterem os ganhos?
  Analgésicos- O que oferecer ao cliente para aliviar as dores? O que oferecer para solucionar problemas de clientes?
 
 Cliente: 
  Ganhos-  O que faz o cliente ficar feliz ou torna a vida mais fácil dentro de seu contexto?
+Registro digital direto na fonte, eliminando redigitação manual
+Acesso a dados consolidados e atualizados do rebanho para tomada de decisão estratégica
+Maior rastreabilidade e transparência nas operações de campo
+Agilidade no acompanhamento de tarefas e movimentações diariamente
+
  Dores- Quais são os principais problemas enfrentados pelo cliente? O que impede dele realizar as tarefas?
- Tarefas- Quais tarefas que o segmento de cliente tem para concluir?
+Dependência de processos manuais e anotações em papel (boletas), gerando retrabalho de redigitação em planilhas
+Lentidão na comunicação entre campo e escritório, dependendo de repasse humano para atualizar informações
+Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos
+Falta de visibilidade agilizada sobre o status das atividades e do rebanho
+
+ 
+ Tarefas- Quais tarefas que o segmento de cliente tem para concluir? 
+ Controlar a movimentação do rebanho bovino (nascimentos, mortes, compras, vendas e transferências entre retiros)
+Consolidar dados operacionais para subsidiar decisões 
+Gerenciar e acompanhar tarefas diárias de campo
+
+
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
