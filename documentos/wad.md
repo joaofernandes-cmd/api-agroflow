@@ -71,9 +71,15 @@
 6. Critério de sucesso e como será avaliado
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
-*Sem limite de palavras – usar template do curso*
+ Solução: 
+ Produtos e serviços- Quais soluções ajudam o segmento de cliente a cumprir as tarefas?
+ Criadores de ganho- O que oferecer ao cliente para obterem os ganhos?
+ Analgésicos- O que oferecer ao cliente para aliviar as dores? O que oferecer para solucionar problemas de clientes?
 
-*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+Cliente: 
+ Ganhos-  O que faz o cliente ficar feliz ou torna a vida mais fácil dentro de seu contexto?
+ Dores- Quais são os principais problemas enfrentados pelo cliente? O que impede dele realizar as tarefas?
+ Tarefas- Quais tarefas que o segmento de cliente tem para concluir?
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
