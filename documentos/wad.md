@@ -72,9 +72,21 @@
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
  Solução: 
- Produtos e serviços- Quais soluções ajudam o segmento de cliente a cumprir as tarefas? 
+ Produtos e serviços- 
+ Aplicação web com interface de campo para o Capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências)
+Interface de calendarização e monitoramento de tarefas para o Gerente
+Funcionalidade offline com sincronização automática
+
  Criadores de ganho- O que oferecer ao cliente para obterem os ganhos?
- Analgésicos- O que oferecer ao cliente para aliviar as dores? O que oferecer para solucionar problemas de clientes?
+Centraliza os registros do rebanho em tempo real, substituindo anotações dispersas em papel
+Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano
+Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações
+
+ Analgésicos- O que oferecer ao cliente para aliviar as dores? O que oferecer para solucionar problemas de clientes? 
+Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo
+Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor
+Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação
+Garante operação contínua em campo mesmo sem internet via modo offline
 
 Cliente: 
  Ganhos-  O que faz o cliente ficar feliz ou torna a vida mais fácil dentro de seu contexto?
