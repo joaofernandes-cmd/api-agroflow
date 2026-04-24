@@ -75,43 +75,53 @@ Introdução:
 Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A. A análise desenvolvida pode ser consultada na figura 2.
 
 
- Solução: 
- Produtos e serviços- 
- Aplicação web com interface de campo para o Capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências)
-Interface de calendarização e monitoramento de tarefas para o Gerente
-Funcionalidade offline com sincronização automática
+ Perfil do Cliente
+Tarefas do Cliente:
+Nas tarefas do cliente, são delimitadas as tarefas que um cliente está tentando fazer, especialmente antes de utilizar uma nova solução proposta por uma determinada organização (G4 EDUCAÇÃO, 2025). Com isso, a equipe identificou as seguintes tarefas do cliente:
 
- Criadores de ganho- O que oferecer ao cliente para obterem os ganhos?
-Centraliza os registros do rebanho em tempo real, substituindo anotações dispersas em papel
-Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano
-Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações
+Controlar a movimentação do rebanho bovino (nascimentos, mortes, compras, vendas e transferências entre retiros);
+Consolidar dados operacionais para subsidiar decisões estratégicas de negócio;
+Gerenciar e acompanhar tarefas diárias de campo.
 
- Analgésicos- O que oferecer ao cliente para aliviar as dores? O que oferecer para solucionar problemas de clientes? 
-Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo
-Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor
-Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação
-Garante operação contínua em campo mesmo sem internet via modo offline
+Dores:
+Na seção de dores do Canvas Proposta de Valor, são adicionadas as frustrações que o cliente sofre ao tentar realizar determinada tarefa (G4 EDUCAÇÃO, 2025). Desse modo, foram elencadas as seguintes dores do cliente:
 
-Cliente: 
- Ganhos-  O que faz o cliente ficar feliz ou torna a vida mais fácil dentro de seu contexto?
-Registro digital direto na fonte, eliminando redigitação manual
-Acesso a dados consolidados e atualizados do rebanho para tomada de decisão estratégica
-Maior rastreabilidade e transparência nas operações de campo
-Agilidade no acompanhamento de tarefas e movimentações diariamente
+Dependência de processos manuais e anotações em papel (boletas), gerando retrabalho de redigitação em planilhas;
+Lentidão na comunicação entre campo e escritório, dependendo de repasse humano para atualizar informações;
+Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos;
+Falta de visibilidade agilizada sobre o status das atividades e do rebanho.
 
- Dores- Quais são os principais problemas enfrentados pelo cliente? O que impede dele realizar as tarefas?
-Dependência de processos manuais e anotações em papel (boletas), gerando retrabalho de redigitação em planilhas
-Lentidão na comunicação entre campo e escritório, dependendo de repasse humano para atualizar informações
-Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos
-Falta de visibilidade agilizada sobre o status das atividades e do rebanho
+Ganhos:
+Na seção de ganhos do Canvas Proposta de Valor, são colocados os resultados que o cliente aspira ter quando realiza uma tarefa (G4 EDUCAÇÃO, 2025). Assim, foram identificados os seguintes ganhos do cliente:
 
- 
- Tarefas- Quais tarefas que o segmento de cliente tem para concluir? 
- Controlar a movimentação do rebanho bovino (nascimentos, mortes, compras, vendas e transferências entre retiros)
-Consolidar dados operacionais para subsidiar decisões 
-Gerenciar e acompanhar tarefas diárias de campo
+Registro digital direto na fonte, eliminando a redigitação manual;
+Acesso a dados consolidados e atualizados do rebanho para tomada de decisão estratégica;
+Maior rastreabilidade e transparência nas operações de campo;
+Agilidade no acompanhamento de tarefas e movimentações diariamente.
 
 
+Proposta de Valor
+Produtos e Serviços:
+A seção de produtos e serviços de um Canvas Proposta de Valor se refere aos recursos oferecidos por uma determinada organização (G4 EDUCAÇÃO, 2025). Dessa forma, é possível mencionar os seguintes no que se refere à solução proposta pela equipe:
+
+Aplicação web com interface de campo para o Capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
+Interface de calendarização e monitoramento de tarefas para o Gerente;
+Funcionalidade offline com sincronização automática ao restabelecer conexão com a internet.
+
+Criadores de Ganho:
+A seção de criadores de ganhos de um Canvas Proposta de Valor diz respeito a como os produtos e serviços de uma determinada organização acarretam os resultados que o cliente espera (G4 EDUCAÇÃO, 2025). A partir disso, foram elencados os seguintes criadores de ganho:
+
+Centraliza os registros do rebanho diariamente, substituindo anotações dispersas em papel;
+Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano;
+Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações.
+
+Aliviam as Dores:
+A seção de aliviadores de dor de um Canvas Proposta de Valor mostra de qual maneira os produtos e serviços propostos por uma organização tratam as dores do cliente (G4 EDUCAÇÃO, 2025). Por conseguinte, foram elaborados os seguintes aliviadores de dor:
+
+Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo;
+Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor;
+Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
+Garante operação contínua em campo mesmo sem internet via modo offline.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
