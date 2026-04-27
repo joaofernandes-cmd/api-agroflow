@@ -194,6 +194,10 @@
 
 No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório depende de processos manuais e anotações em papel, conhecidas como boletas. Esse modelo gera atrasos na consolidação dos dados e exige a redigitação de informações em planilhas, dificultando o acompanhamento estratégico em tempo real.
 
+Para solucionar esse problema, será desenvolvida uma aplicação web  para o gerenciamento de demandas operacionais e movimentação bovina. A solução centraliza o planejamento de tarefas diárias e a digitalização de eventos zootécnicos, como nascimentos, óbitos, transferências. O valor do produto está na sua capacidade de operar de modo off-line, garantindo que o capataz e o vaqueiro registre dados no campo sem depender de internet, com sincronização automática posterior.
+
+
+
 *Preencha com até 300 palavras – sem necessidade de fonte*
 
 *Contextualize aqui a problemática trazida pelo parceiro de projeto.*
