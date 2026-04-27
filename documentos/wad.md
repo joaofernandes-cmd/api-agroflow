@@ -295,10 +295,14 @@ competitividade no setor.
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
 - Garante operação contínua em campo mesmo sem internet via modo offline.
 
+<div align="center">
+<p>Figura 2 - Canvas Proposta de Valor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/"><img src="outros/assets/CanvasPropostaValor.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
