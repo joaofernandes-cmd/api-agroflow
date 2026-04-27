@@ -192,6 +192,8 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
+No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório depende de processos manuais e anotações em papel, conhecidas como boletas. Esse modelo gera atrasos na consolidação dos dados e exige a redigitação de informações em planilhas, dificultando o acompanhamento estratégico em tempo real.
+
 *Preencha com até 300 palavras – sem necessidade de fonte*
 
 *Contextualize aqui a problemática trazida pelo parceiro de projeto.*
