@@ -196,15 +196,7 @@ No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidad
 
 Para solucionar esse problema, será desenvolvida uma aplicação web  para o gerenciamento de demandas operacionais e movimentação bovina. A solução centraliza o planejamento de tarefas diárias e a digitalização de eventos zootécnicos, como nascimentos, óbitos, transferências. O valor do produto está na sua capacidade de operar de modo off-line, garantindo que o capataz e o vaqueiro registre dados no campo sem depender de internet, com sincronização automática posterior.
 
-
-
-*Preencha com até 300 palavras – sem necessidade de fonte*
-
-*Contextualize aqui a problemática trazida pelo parceiro de projeto.*
-
-*Descreva brevemente a solução desenvolvida para o parceiro de negócios. Descreva os aspectos essenciais para a criação de valor do produto, com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
-
-*Observe a seção 2 e verifique que ali é possível trazer mais detalhes, portanto seja objetivo aqui. Atualize esta descrição até a entrega final, conforme desenvolvimento.*
+A interface atende a diferentes níveis hierárquicos: gerentes agendam tarefas, capatazes e vaqueiros reportam a execução com evidências (fotos e áudio) e coordenadores validam as informações, exportando-as em Excel ou CSV através da funcionalidade da aplicação. Com isso, a BrPec elimina a redigitação manual, padroniza os registros e ganha agilidade na atualização do inventário pecuário, otimizando a eficiência dos processos produtivos.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
