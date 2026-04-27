@@ -568,6 +568,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+PROJECT MANAGEMENT INSTITUTE (PMI). A guide to the Project Management Body of Knowledge (PMBOK® Guide). 7. ed. Newtown Square: PMI, 2021. 
+
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
