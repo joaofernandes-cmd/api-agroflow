@@ -376,7 +376,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 *Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
 
 | RF    | RN associadas | Endpoint    | Método |
-|-------|---------------|-------------|--------|
+|:-------:|:---------------:|:-------------:|:--------:|
 | RF001 | RN01    | `/usuarios` | POST   |
 | RF002 | RN02    | `/usuarios` | POST   |
 | RF003 | RN03    | `/usuarios` | POST   |
