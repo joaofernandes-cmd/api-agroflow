@@ -252,12 +252,16 @@ Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regul
 
 ### <a name="c2.1.4"></a>2.1.4. Value Proposition Canvas (sprint 1)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A. A análise desenvolvida pode ser consultada na figura 2.
+&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 2).
 
-
+<div align="center">
+<p>Figura 2 - Canvas Proposta de Valor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/analiseSwot.png" alt="Análise de SWOT" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/canva-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -317,15 +321,6 @@ Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regul
 - Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor;
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
 - Garante operação contínua em campo mesmo sem internet via modo offline.
-
-<div align="center">
-<p>Figura 2 - Canvas Proposta de Valor</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/CanvasPropostaValor.png" alt="Canvas Proposta de Valor" border="0"></a>
-</p>
-
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
