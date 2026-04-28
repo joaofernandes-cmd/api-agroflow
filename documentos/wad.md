@@ -225,7 +225,7 @@ competitividade no setor.
 
 *1. Problema a ser resolvido*
 
-Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera retrabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados.
+Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados, além de por não haver um formato fixo certas informações podem ser esquecidas de serem anotadas, como a causa da morte de um boi.
 
 *2. Dados disponíveis*
 
@@ -233,19 +233,19 @@ Não se aplica.
 
 *3. Solução proposta*
 
-Desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet, envia automaticamente as informações registradas para a base central de dados da fazenda, eliminando a dependência de anotações em papel.
+Proposuemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a base a planilha que será utilizada para salvar as informações sobre nascimento, morte, transferência e etc, eliminando a dependência de anotações em papel e transcrição manual para a planilha.
 
 *4. Forma de utilização da solução*
 
-A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações são inseridas e armazenadas localmente no celular enquanto offline e, ao se conectar à internet, sincronizam automaticamente com a base central de dados dos capatazes.
+A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações são inseridas e armazenadas localmente no celular enquanto offline e, ao se conectar à internet, sincronizam automaticamente com a base central de dados dos capatazes salvando todas as informações e otimizando parte do trabalho dos capatazes para que não precisem transcrever manualmente todas as anotações para a planilha.
 
 *5. Benefícios esperados*
 
-Agilizar a coleta e o processamento dos dados, reduzindo o trabalho manual de anotação em papel e posterior transcrição em planilhas no retiro. Além disso, facilitar a conciliação de informações entre retiros distintos, otimizando a comunicação e a integração entre eles.
+Os benefícios visados englobam agilizar a coleta e o processamento dos dados, reduzindo o trabalho manual de anotação em papel e posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre retiros distintos, otimizando a comunicação e a integração entre eles, tornando o trabalho mais coordenado entre retiros e diminuindo os riscos de erros ou perda de dados.
 
 *6. Critério de sucesso e como será avaliado*
 
-Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados.
+Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
 
 ### <a name="c2.1.4"></a>2.1.4. Value Proposition Canvas (sprint 1)
 
