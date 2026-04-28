@@ -257,7 +257,7 @@ Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regul
 <div align="center">
 <p>Figura 2 - Canvas Proposta de Valor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/CanvasPropostaValor.png" alt="Canvas Proposta de Valor" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/canva-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
