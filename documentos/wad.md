@@ -259,14 +259,33 @@ A rivalidade se acentua com a entrada de operadores corporativos ligados ao merc
 
 ### <a name="c2.1.2"></a>2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-A análise SWOT da BRPEC evidencia os principais fatores internos e externos que impactam sua atuação no agronegócio brasileiro. Entre as forças, destacam-se a integração vertical, a escala produtiva e o sólido respaldo financeiro. Por outro lado, surgem desafios relacionados à dependência estratégica e à complexidade regulatória. O cenário também apresenta oportunidades relevantes, como o crescimento da demanda internacional e o avanço de práticas sustentáveis, ao mesmo tempo em que impõe ameaças como riscos climáticos, pressão regulatória e redução de margens. Essa visão sintetiza os elementos-chave para orientar decisões estratégicas e garantir 
-competitividade no setor.
+A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças (PORTER, 1980). Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado.
 
+<div align="center">
+<p>Figura 1 - Análise de SWOT</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/analiseSwot.png" alt="Análise de SWOT" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot.png" alt="Análise de SWOT" border="0"></a>
 </p>
 
-*Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**FORÇAS**
+
+A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, sua localização estratégica, com acesso a diferentes modais logísticos, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
+
+**FRAQUEZAS:** 
+
+Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a exposição a riscos ambientais e regulatórios, que podem gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012). 
+
+**OPORTUNIDADES:**
+
+No ambiente externo, observa-se um cenário favorável à expansão, impulsionado pela crescente demanda global por proteína animal e pela valorização de práticas sustentáveis. Nesse contexto, iniciativas ligadas a ESG e créditos de carbono surgem como potenciais fontes de geração de valor (DE OLHO NOS RURALISTAS, 2025). Além disso, o avanço da fronteira agrícola e o crescimento projetado da produção de soja no Mato Grosso do Sul ampliam as possibilidades de expansão das áreas produtivas, aumento da oferta de insumos para alimentação animal e maior integração entre agricultura e pecuária, fortalecendo a eficiência e a escala das operações da empresa (APROSOJA MS, 2024).
+
+**AMEAÇAS:**
+
+Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo (PORTER, 1980).
+
 
 ### <a name="c2.1.3"></a>2.1.3. Solução (sprints 1 a 5)
 
@@ -357,9 +376,48 @@ competitividade no setor.
 
 ### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-*Sem limite de palavras – usar template do curso*
+A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
 
-*Registre na matriz os riscos identificados no projeto.*
+<p align="center">Figura 3 – Matriz De Risco.</p> 
+
+<div align="center">
+<img src="outros/assets/matriz-de-risco.png">
+
+<p> Fonte: Próprios autores (2026).</p>
+</div>
+
+**Planos de ação, impacto e probabilidade**
+
+Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC (conforme os quadros 1 e 2). Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
+
+<p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
+
+
+| Ameaça                                                   | Plano de ação                                                                    | Probabilidade | Impacto    |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
+| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar alterações no backlog | 70%           | Moderado   |
+| Dependência de testes em ambiente real de campo          | Criar cenários simulados para testes antes da validação em campo                 | 50%           | Alto       |
+| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar alinhamentos frequentes com o parceiro antes da implementação           | 30%           | Moderado   |
+| Problemas de comunicação interna                         | Manter reuniões periódicas e alinhamentos constantes durante as sprints          | 30%           | Muito alto |
+| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis e critérios de aceite no início de cada sprint              | 30%           | Baixo      |
+
+
+<p align="center">Fonte: Próprios autores (2026).</p> 
+
+
+
+<p align="center">Quadro 2 – Plano de ação para as oportunidades.</p> 
+
+| Oportunidade                                        | Plano de ação                                                                    | Probabilidade | Impacto    |
+| --------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
+| Parceiro engajado com o projeto                     | Manter contato frequente e apresentar entregas parciais para validação           | 90%           | Muito alto |
+| Testes contínuos durante o desenvolvimento          | Realizar testes a cada funcionalidade desenvolvida                               | 70%           | Muito alto |
+| Validação frequente das funcionalidades             | Validar as funcionalidades ao final de cada sprint com o parceiro                | 70%           | Alto       |
+| Melhoria na rastreabilidade das atividades no campo | Estruturar os registros no sistema e garantir o preenchimento adequado dos dados | 50%           | Alto       |
+| Evolução do sistema com base em feedback prático    | Coletar feedback após cada entrega e priorizar melhorias no backlog              | 50%           | Moderado   |
+
+<p align="center">Fonte: Próprios autores (2026).</p> 
+
 
 ## <a name="c2.2"></a>2.2. Personas (sprint 1)
 
