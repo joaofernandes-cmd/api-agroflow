@@ -310,9 +310,48 @@ competitividade no setor.
 
 ### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-*Sem limite de palavras – usar template do curso*
+A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
 
-*Registre na matriz os riscos identificados no projeto.*
+<p align="center">Figura 3 – Matriz De Risco.</p> 
+
+<div align="center">
+<img src="outros/assets/matriz-de-risco.png">
+
+<p> Fonte: Próprios autores (2026).</p>
+</div>
+
+**Planos de ação, impacto e probabilidade**
+
+Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC (conforme os quadros 1 e 2). Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
+
+<p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
+
+
+| Ameaça                                                   | Plano de ação                                                                    | Probabilidade | Impacto    |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
+| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar alterações no backlog | 70%           | Moderado   |
+| Dependência de testes em ambiente real de campo          | Criar cenários simulados para testes antes da validação em campo                 | 50%           | Alto       |
+| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar alinhamentos frequentes com o parceiro antes da implementação           | 30%           | Moderado   |
+| Problemas de comunicação interna                         | Manter reuniões periódicas e alinhamentos constantes durante as sprints          | 30%           | Muito alto |
+| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis e critérios de aceite no início de cada sprint              | 30%           | Baixo      |
+
+
+<p align="center">Fonte: Próprios autores (2026).</p> 
+
+
+
+<p align="center">Quadro 2 – Plano de ação para as oportunidades.</p> 
+
+| Oportunidade                                        | Plano de ação                                                                    | Probabilidade | Impacto    |
+| --------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
+| Parceiro engajado com o projeto                     | Manter contato frequente e apresentar entregas parciais para validação           | 90%           | Muito alto |
+| Testes contínuos durante o desenvolvimento          | Realizar testes a cada funcionalidade desenvolvida                               | 70%           | Muito alto |
+| Validação frequente das funcionalidades             | Validar as funcionalidades ao final de cada sprint com o parceiro                | 70%           | Alto       |
+| Melhoria na rastreabilidade das atividades no campo | Estruturar os registros no sistema e garantir o preenchimento adequado dos dados | 50%           | Alto       |
+| Evolução do sistema com base em feedback prático    | Coletar feedback após cada entrega e priorizar melhorias no backlog              | 50%           | Moderado   |
+
+<p align="center">Fonte: Próprios autores (2026).</p> 
+
 
 ## <a name="c2.2"></a>2.2. Personas (sprint 1)
 
@@ -608,7 +647,9 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-G4 EDUCAÇÃO. Value Proposition Canvas: o que é e como funciona essa metodologia?. [S. l.], 16 abr. 2025. Disponível em: https://g4educacao.com/blog/value-proposition-canvas. Acesso em: 24 abr. 2026.
+PROJECT MANAGEMENT INSTITUTE (PMI). A guide to the Project Management Body of Knowledge (PMBOK® Guide). 7. ed. Newtown Square: PMI, 2021. 
+
+_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
 OSTERWALDER, A, PIGNEUR, Y. Business Model Generation: Inovação em Modelos de Negócios. Rio de Janeiro. Alta Books, 2011. https://www.academia.edu/37075116/Business_Model_Generation. Acesso em: 23 abr. 2026.
 
