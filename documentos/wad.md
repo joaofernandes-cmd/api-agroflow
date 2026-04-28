@@ -225,7 +225,7 @@ competitividade no setor.
 
 *1. Problema a ser resolvido*
 
-Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados, além de por não haver um formato fixo certas informações podem ser esquecidas de serem anotadas, como a causa da morte de um boi.
+Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados. Além disso, como não há um formato fixo, certas informações podem deixar de ser anotadas, como a causa da morte de um boi.
 
 *2. Dados disponíveis*
 
@@ -233,15 +233,15 @@ Não se aplica.
 
 *3. Solução proposta*
 
-Proposuemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a base a planilha que será utilizada para salvar as informações sobre nascimento, morte, transferência e etc, eliminando a dependência de anotações em papel e transcrição manual para a planilha.
+ Propusemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a planilha que será utilizada para armazenar dados sobre nascimento, morte, transferência etc., eliminando a dependência de anotações em papel e da transcrição manual.
 
 *4. Forma de utilização da solução*
 
-A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações são inseridas e armazenadas localmente no celular enquanto offline e, ao se conectar à internet, sincronizam automaticamente com a base central de dados dos capatazes salvando todas as informações e otimizando parte do trabalho dos capatazes para que não precisem transcrever manualmente todas as anotações para a planilha.
+A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações serão inseridas e armazenadas localmente no celular enquanto o dispositivo estiver offline e, ao se conectar à internet, serão sincronizadas automaticamente com a base central de dados, otimizando o trabalho dos capatazes ao eliminar a necessidade de transcrição manual para a planilha.
 
 *5. Benefícios esperados*
 
-Os benefícios visados englobam agilizar a coleta e o processamento dos dados, reduzindo o trabalho manual de anotação em papel e posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre retiros distintos, otimizando a comunicação e a integração entre eles, tornando o trabalho mais coordenado entre retiros e diminuindo os riscos de erros ou perda de dados.
+Os benefícios visados incluem a agilização da coleta e do processamento de dados, com a redução do trabalho manual de anotação em papel e da posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre diferentes retiros, otimizando a comunicação e a integração entre eles, o que torna as operações mais coordenadas e reduz os riscos de erros ou perda de dados.
 
 *6. Critério de sucesso e como será avaliado*
 
