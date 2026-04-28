@@ -655,9 +655,18 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-G4 EDUCAÇÃO. Value Proposition Canvas: o que é e como funciona essa metodologia?. [S. l.], 16 abr. 2025. Disponível em: https://g4educacao.com/blog/value-proposition-canvas. Acesso em: 24 abr. 2026.
+1. G4 EDUCAÇÃO. Value Proposition Canvas: o que é e como funciona essa metodologia?. [S. l.], 16 abr. 2025. Disponível em: https://g4educacao.com/blog/value-proposition-canvas. Acesso em: 24 abr. 2026.
 
-OSTERWALDER, A, PIGNEUR, Y. Business Model Generation: Inovação em Modelos de Negócios. Rio de Janeiro. Alta Books, 2011. https://www.academia.edu/37075116/Business_Model_Generation. Acesso em: 23 abr. 2026.
+2. OSTERWALDER, A, PIGNEUR, Y. Business Model Generation: Inovação em Modelos de Negócios. Rio de Janeiro. Alta Books, 2011. https://www.academia.edu/37075116/Business_Model_Generation. Acesso em: 23 abr. 2026.
+
+3. Mesquita, A. "Aposta no modelo flex". Portal DBO, 2022.
+Disponível em: https://portaldbo.com.br/aposta-no-modelo-flex/
+
+4. Brasil de Fato. "Fusão entre Marfrig e BRF: entenda os impactos da nova gigante do setor de carnes na soberania alimentar", agosto de 2025.
+Disponível em: https://www.brasildefato.com.br/2025/08/21/fusao-marfrig-brf-impactos-gigante-carnes-soberania-alimentar/
+
+5. Higa, V. "As cinco forças competitivas de Porter". AgroTVM, 2014.
+Disponível em: https://agrotvm.wordpress.com/2014/11/12/as-cinco-forcas-competitivas-de-porter/
 
 # <a name="c9"></a>Anexos
 
