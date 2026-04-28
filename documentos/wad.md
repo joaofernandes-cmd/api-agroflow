@@ -204,13 +204,17 @@
 
 ## <a name="c2.1"></a>2.1. Escopo do Projeto (sprints 1 e 4)
 
-### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter (sprint 1)
-
-### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter 
 
 # Análise das 5 Forças de Porter — BrPec Agropecuária
 
 A estrutura competitiva do setor pecuário no Pantanal e Cerrado sul mato grossenses é marcada por intensividade em capital, dependência ambiental e inserção em um mercado global de commodities, o que reduz a capacidade de diferenciação e torna o produtor essencialmente tomador de preço.
+
+## 5 Forças de Porter
+
+<img src="./forcas-de-porter.png">
+
+Figura 1 - Autoria Própria (2026)
 
 
 ---
