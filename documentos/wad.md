@@ -221,15 +221,31 @@ competitividade no setor.
 
 *Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
 
-### <a name="c2.1.3"></a>2.1.3. Solução (sprints 1 a 5)
+### <a name="c2.1.3"></a>2.1.3. Solução
 
-*Explique detalhadamente os seguintes aspectos (até 60 palavras por item):*
-1. Problema a ser resolvido
-2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
-3. Solução proposta
-4. Forma de utilização da solução
-5. Benefícios esperados
-6. Critério de sucesso e como será avaliado
+*1. Problema a ser resolvido*
+
+Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera retrabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados.
+
+*2. Dados disponíveis*
+
+Não se aplica.
+
+*3. Solução proposta*
+
+Desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet, envia automaticamente as informações registradas para a base central de dados da fazenda, eliminando a dependência de anotações em papel.
+
+*4. Forma de utilização da solução*
+
+A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações são inseridas e armazenadas localmente no celular enquanto offline e, ao se conectar à internet, sincronizam automaticamente com a base central de dados dos capatazes.
+
+*5. Benefícios esperados*
+
+Agilizar a coleta e o processamento dos dados, reduzindo o trabalho manual de anotação em papel e posterior transcrição em planilhas no retiro. Além disso, facilitar a conciliação de informações entre retiros distintos, otimizando a comunicação e a integração entre eles.
+
+*6. Critério de sucesso e como será avaliado*
+
+Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados.
 
 ### <a name="c2.1.4"></a>2.1.4. Value Proposition Canvas (sprint 1)
 
