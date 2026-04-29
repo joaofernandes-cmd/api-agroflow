@@ -620,15 +620,14 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+| Identificação | US06 |
+| - | - |
+| Persona | Luiz Felipe |
+| User Story | Como supervisor, posso criar tarefas para os capatazes, para organizar a operação. |
+| Critério de aceite 1 | CR1: Dado que cria uma tarefa, quando preenche os dados, então o sistema permite salvar. |
+| Critério de aceite 2 | CR2: Dado que salva a tarefa, quando concluído, então ela fica visível ao capataz. |
+| Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
+| Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
 
 
