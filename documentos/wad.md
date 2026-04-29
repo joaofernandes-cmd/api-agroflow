@@ -512,15 +512,14 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+| Identificação | US03 |
+| - | - |
+| Persona | Daniel Carvalho |
+| User Story | Como capataz, posso anexar fotos como evidência, para comprovar ações realizadas. |
+| Critério de aceite 1 | CR1: Dado que o usuário registra uma ação, quando anexa foto, então o sistema salva a imagem. |
+| Critério de aceite 2 | CR2: Dado que a imagem é enviada, quando salva, então fica vinculada ao registro. |
+| Critério de aceite 3 | CR3: Dado que acessa o registro, quando visualiza, então a imagem deve estar disponível. |
+| Critérios INVEST | <p>Independente: Pode ser desenvolvida como complemento aos registros existentes.</p> <p>Negociável: O tipo de evidência pode ser ampliado para vídeo ou áudio.</p> <p>Valorosa: Aumenta a confiabilidade das informações registradas.</p> <p>Estimável: Escopo claro envolvendo upload e armazenamento.</p> <p>Pequena: Restrita ao envio e visualização de imagens.</p> <p>Testável: Pode ser validada pelo upload correto e exibição da imagem.</p> |
 
 
 
