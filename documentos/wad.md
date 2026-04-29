@@ -548,15 +548,14 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+| Identificação | US04 |
+| - | - |
+| Persona | Daniel Carvalho |
+| User Story | Como capataz, posso abrir chamados de infraestrutura, para reportar problemas. |
+| Critério de aceite 1 | CR1: Dado que cria um chamado, quando preenche os dados, então o sistema permite envio. |
+| Critério de aceite 2 | CR2: Dado que envia o chamado, quando salvo, então fica registrado no sistema. |
+| Critério de aceite 3 | CR3: Dado que acessa histórico, quando consulta, então visualiza seus chamados. |
+| Critérios INVEST | <p>Independente: Pode ser desenvolvida separadamente dos demais módulos.</p> <p>Negociável: Campos como prioridade e categoria podem ser ajustados.</p> <p>Valorosa: Permite comunicação estruturada de problemas no retiro.</p> <p>Estimável: Escopo claro envolvendo criação e consulta.</p> <p>Pequena: Restrita à abertura e visualização de chamados.</p> <p>Testável: Pode ser validada pela criação e listagem dos chamados.</p> |
 
 
 
