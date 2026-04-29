@@ -890,8 +890,15 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 *Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
 
 | RF    | RN associadas | Endpoint    | Método |
-|-------|---------------|-------------|--------|
-| RF001 | RN01, RN02    | `/usuarios` | POST   |
+|:-------:|:---------------:|:-------------:|:--------:|
+| RF001 | RN01    | `/usuarios` | POST   |
+| RF002 | RN02    | `/usuarios` | POST   |
+| RF003 | RN03    | `/usuarios` | POST   |
+| RF004 | RN04    | `/usuarios` | POST   |
+| RF005 | RN05    | `/usuarios` | POST   |
+| RF006 | RN06    | `/usuarios` | POST   |
+| RF007 | RN07    | `/usuarios` | POST   |
+| RF008 | RN08    | `/usuarios` | POST   |
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
