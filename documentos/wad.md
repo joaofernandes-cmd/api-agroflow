@@ -476,15 +476,14 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+| Identificação | US02 |
+| - | - |
+| Persona | Daniel Carvalho |
+| User Story | Como capataz, posso usar o sistema offline, para registrar dados sem internet. |
+| Critério de aceite 1 | CR1: Dado que não há conexão, quando acessa o sistema, então as funcionalidades principais permanecem disponíveis. |
+| Critério de aceite 2 | CR2: Dado que registra dados offline, quando salva, então o sistema armazena localmente. |
+| Critério de aceite 3 | CR3: Dado que a conexão retorna, quando o sistema detecta internet, então os dados são sincronizados automaticamente. |
+| Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
 
 
 
