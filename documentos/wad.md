@@ -782,6 +782,28 @@ Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
 
+## <a name="c2.3"></a>2.4. Conclusão 
+
+# Conclusões
+
+**5 Forças de Porter**
+A BRPec atua em um setor com altas barreiras de entrada e baixa ameaça de substitutos, mas enfrenta forte pressão dos grandes frigoríficos e rivalidade intensa entre produtores, o que a coloca como tomadora de preço. O modelo "flex" surge como resposta estratégica para capturar margem no elo mais favorável da cadeia em cada ciclo.
+
+**Análise SWOT**
+A empresa combina forças relevantes, como escala, integração agricultura-pecuária e respaldo do BTG Pactual, com fraquezas ligadas à complexidade operacional e dependência de mão de obra em áreas remotas. No ambiente externo, oportunidades como ESG e expansão agrícola contrabalançam ameaças regulatórias, climáticas e de mercado, exigindo gestão de risco robusta.
+
+**Solução**
+O registro manual em papel pelos capatazes gera retrabalho e risco de inconsistências, e a aplicação web offline com sincronização automática responde diretamente a essa dor. A solução prioriza simplicidade de uso para um público com baixo repertório digital, garantindo agilidade e confiabilidade na coleta de dados em campo.
+
+**Value Proposition Canvas**
+O canvas evidencia o alinhamento entre a solução proposta e as reais necessidades do cliente, ao eliminar boletas em papel, reduzir retrabalho e aumentar a rastreabilidade das operações. Os criadores de ganho e aliviadores de dor mostram que a aplicação entrega valor tangível tanto para o capataz em campo quanto para o gerente na tomada de decisão.
+
+**Matriz de Riscos**
+A matriz demonstra planejamento maduro ao mapear ameaças e oportunidades com planos de ação específicos. Destaca-se o alto engajamento do parceiro como oportunidade de impacto muito alto, fator que viabiliza validações frequentes e sustenta a evolução iterativa do projeto.
+
+
+
+
 
 
 
