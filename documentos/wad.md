@@ -450,32 +450,6 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 | Identificação | US02 |
 | - | - |
 | Persona | Daniel Carvalho |
@@ -484,31 +458,6 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 | Critério de aceite 2 | CR2: Dado que registra dados offline, quando salva, então o sistema armazena localmente. |
 | Critério de aceite 3 | CR3: Dado que a conexão retorna, quando o sistema detecta internet, então os dados são sincronizados automaticamente. |
 | Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -523,31 +472,6 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 | Identificação | US04 |
 | - | - |
 | Persona | Daniel Carvalho |
@@ -559,31 +483,6 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 | Identificação | US05 |
 | - | - |
 | Persona | Luiz Felipe |
@@ -592,31 +491,6 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 | Critério de aceite 2 | CR2: Dado que analisa um registro, quando aprova ou rejeita, então o status é atualizado. |
 | Critério de aceite 3 | CR3: Dado que rejeita um registro, quando confirma, então informa o motivo. |
 | Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
