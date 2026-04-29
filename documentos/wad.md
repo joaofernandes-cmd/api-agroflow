@@ -438,15 +438,16 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 *ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO*
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+| Identificação | US01 |
+| - | - |
+| Persona | Daniel Carvalho |
+| User Story | Como capataz, posso registrar movimentações do rebanho, para substituir o uso de boletas em papel. |
+| Critério de aceite 1 | CR1: Dado que o usuário acessa o formulário, quando preenche os campos obrigatórios, então o sistema permite o registro. |
+| Critério de aceite 2 | CR2: Dado que há campos obrigatórios vazios, quando tenta salvar, então o sistema impede o envio. |
+| Critério de aceite 3 | CR3: Dado que não há conexão, quando registra, então o dado é salvo localmente. |
+| Critérios INVEST | <p>Independente: A funcionalidade pode ser desenvolvida de forma isolada, sem depender de outros módulos.</p> <p>Negociável: Os campos do formulário podem ser ajustados conforme necessidade.</p> <p>Valorosa: Elimina o uso de boletas em papel, reduzindo erros e retrabalho.</p> <p>Estimável: Possui escopo claro, envolvendo formulário e validação.</p> <p>Pequena: Restrita ao registro de movimentações.</p> <p>Testável: Pode ser validada pelo preenchimento e salvamento correto dos dados.</p> |
+
 
 
 
