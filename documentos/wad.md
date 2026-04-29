@@ -584,15 +584,14 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+| Identificação | US05 |
+| - | - |
+| Persona | Luiz Felipe |
+| User Story | Como supervisor, posso validar registros enviados, para garantir a confiabilidade dos dados. |
+| Critério de aceite 1 | CR1: Dado que existem registros pendentes, quando acessa a tela, então visualiza a lista. |
+| Critério de aceite 2 | CR2: Dado que analisa um registro, quando aprova ou rejeita, então o status é atualizado. |
+| Critério de aceite 3 | CR3: Dado que rejeita um registro, quando confirma, então informa o motivo. |
+| Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
 
 
 
