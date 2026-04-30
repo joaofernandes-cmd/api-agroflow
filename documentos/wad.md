@@ -210,11 +210,40 @@ Manter o trabalho organizado e sem imprevistos.
 
 <img src="outros/assets/persona-luiz.png">
 
-&ensp; &ensp;Luiz tem 37 anos, é solteiro, mas mantém um relacionamento estável. Atualmente, atua como supervisor dos capatazes da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por coordenar múltiplas frentes operacionais do manejo pecuário e garantir que os capatazes executem corretamente as diretrizes estabelecidas pela gestão da fazenda.
+Informações
+Idade: 37 anos
+Localização: Campo Grande – MS
+Cargo: Supervisor
+Escolaridade: Ensino médio completo
+Letramento digital: Intermediário
 
-&ensp; &ensp;Sua trajetória começou como peão ainda jovem, passando por diferentes funções no campo até se tornar capataz. Ao longo dos anos, destacou-se pela organização, capacidade de resolver problemas e visão prática da operação, o que o levou à promoção para supervisor — cargo que ocupa há cerca de 5 anos.
+Biografia
+Luiz Felipe atua como supervisor na Fazenda Rocha Lima (BrPec), sendo responsável pela coordenação dos capatazes e pelo acompanhamento das operações de manejo. Possui experiência prática no campo e apresenta um perfil analítico, com foco na eficiência operacional e no desenvolvimento profissional.
+No entanto, enfrenta dificuldades relacionadas à falta de integração de informações entre os retiros e a área administrativa, além de lidar com processos pouco estruturados, o que compromete a visibilidade e o controle das operações.
 
-&ensp; &ensp;Luiz é um profissional analítico e exigente, com forte senso de responsabilidade sobre os resultados da fazenda. Ele busca garantir eficiência, padronização e produtividade, mas enfrenta dificuldades devido à falta de integração entre informações, excesso de demandas simultâneas e dependência de processos pouco estruturados. Seu objetivo pessoal é crescer profissionalmente dentro da empresa e conquistar estabilidade financeira suficiente para investir em uma casa própria.
+Metas
+Reduzir erros e retrabalho;
+Aumentar a eficiência operacional;
+Desenvolver maior autonomia dos capatazes;
+Evoluir para funções de maior responsabilidade.
+
+Necessidades
+Tecnologias intuitivas que simplifiquem a gestão;
+Ferramentas que otimizem o tempo das atividades;
+Métodos que aumentem a produtividade da equipe.
+
+Desafios/Dores
+Dificuldade em supervisionar múltiplas frentes;
+Baixa visibilidade das operações;
+Comunicação informal e descentralizada;
+Retrabalho decorrente de falhas e desalinhamentos.
+
+Interesses
+Ferramentas simples para acompanhamento em tempo real;
+Visão consolidada das operações;
+Melhor organização das rotinas;
+Redução da dependência de comunicação informal.
+
 
 <img src="outros/assets/persona-marcos.png">
 
