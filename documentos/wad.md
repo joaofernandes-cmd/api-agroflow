@@ -250,6 +250,15 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critério de aceite 3 | CR3: Dado que não há dados, quando gera relatório, então o sistema informa ausência de registros.|
 | Critérios INVEST     | <p>Independente: Depende apenas dos dados já registrados.</p> <p>Negociável: O formato do relatório pode ser ajustado.</p> <p>Valorosa: Permite acompanhamento da operação.</p> <p>Estimável: Escopo claro de geração de relatório.</p> <p>Pequena: Restrita à exportação de dados.</p> <p>Testável: Validada pela geração e abertura do arquivo.</p> |
 
+| Identificação        | US08 |
+| -------------------- | - |
+| Persona              | Luiz Felipe   |
+| User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
+| Critério de aceite 1 | CR1: Dado que existem chamados, quando acessa a tela, então o sistema exibe a lista.  |
+| Critério de aceite 2 | CR2: Dado que seleciona um chamado, quando abre, então visualiza os detalhes. |
+| Critério de aceite 3 | CR3: Dado que altera o status, quando salva, então o sistema atualiza o chamado. |
+| Critérios INVEST     | <p>Independente: Pode ser desenvolvido como módulo separado.</p> <p>Negociável: Os status podem ser ajustados.</p> <p>Valorosa: Permite gestão estruturada de problemas.</p> <p>Estimável: Escopo simples de listagem e atualização.</p> <p>Pequena: Restrta à visualização e alteração de status.</p> <p>Testável: Validada pela atualização do chamado.</p> |
+
 
 
 
