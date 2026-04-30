@@ -168,7 +168,9 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 ## 2.2. Personas (sprint 1)
 
-&ensp; &ensp; Foram desenvolvidas três personas para representar o perfil de partes interessadas usuarias da solução proposta neste documento. Cada persona representa um cargo presente em todas as fazendas da BrPec, respectivamente capataz, supervisor e gerente.
+&ensp; &ensp; Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
+
+&ensp; &ensp;No contexto deste projeto, foram desenvolvidas três personas com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec — capataz, supervisor e gerente —, possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
 
 <img src="outros/assets/persona-daniel.png">
 
@@ -742,6 +744,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+
+HARLEY, Aurora. Personas Make Users Memorable for Product Team Members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 30 abr. 2026.
 
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
 SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
