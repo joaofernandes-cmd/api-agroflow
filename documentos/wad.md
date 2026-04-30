@@ -247,9 +247,40 @@ Redução da dependência de comunicação informal.
 
 <img src="outros/assets/persona-marcos.png">
 
-&ensp; &ensp;Marcos Ferreira tem 49 anos, é casado e pai de dois filhos. Atua como gerente da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por garantir o desempenho geral da operação, conectando a estratégia da empresa com a execução no campo. Supervisiona diretamente os capatazes e o supervisor, acompanhando resultados produtivos, financeiros e operacionais da fazenda.
+Informações
+Idade: 49 anos
+Localização: Dourados – MS
+Cargo: Gerente da fazenda
+Escolaridade: Ensino superior completo
+Letramento digital: Intermediário
 
-&ensp; &ensp;Formado em Administração, com experiência em gestão agropecuária, Marcos possui perfil estruturado e orientado a resultados. Divide sua rotina entre atividades administrativas e presença no campo, buscando garantir que o planejamento seja executado corretamente. Apesar de já utilizar alguns sistemas, ainda enfrenta limitações na consolidação e confiabilidade das informações operacionais. Seu principal objetivo é aumentar a eficiência da fazenda com maior controle e previsibilidade dos resultados.
+Biografia
+Marcos Ferreira atua como gerente da Fazenda Rocha Lima (BrPec), sendo responsável pela supervisão da equipe e pelos resultados operacionais. Formado em Administração, possui uma visão estratégica voltada para eficiência, controle e tomada de decisão baseada em dados.
+Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilidade dos dados operacionais, especialmente os provenientes do campo, além da dependência de registros manuais, o que impacta a qualidade das informações e a agilidade na gestão.
+
+Metas
+Reduzir o estresse operacional e a dependência de ações reativas;
+Garantir maior previsibilidade dos resultados;
+Melhorar a qualidade e agilidade das informações;
+Possibilitar melhor equilíbrio entre vida profissional e pessoal.
+
+Necessidades
+Visão consolidada e confiável das operações;
+Redução de erros na coleta de dados;
+Ferramentas acessíveis para todos os níveis da operação;
+Apoio à tomada de decisão com base em dados organizados.
+
+Desafios/Dores
+Baixa integração e confiabilidade dos dados;
+Dificuldade de acompanhamento do realizado vs. planejado;
+Dependência de registros manuais sujeitos a erros;
+Pressão por resultados e controle de custos.
+
+Interesses
+Soluções digitais práticas e de fácil adoção;
+Integração entre operação e gestão;
+Indicadores claros para tomada de decisão;
+Estabilidade financeira e qualidade de vida.
 
 ## 2.3. User Stories (sprints 1 a 5)
 
