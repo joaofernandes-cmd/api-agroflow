@@ -176,7 +176,13 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 ### Persona 1 — Daniel Carvalho
 
-<img src="outros/assets/persona-daniel.png">
+<div align="center">
+<p>Figura 4 - Persona 1</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img src="outros/assets/persona-daniel.png">  <alt="Persona 1" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 #### Informações
 
@@ -225,7 +231,13 @@ Apesar de ser um profissional experiente, prático e comprometido, enfrenta limi
 
 ### Persona 2 — Luiz Felipe
 
-<img src="outros/assets/persona-luiz.png">
+<div align="center">
+<p>Figura 4 - Persona 2</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-luiz.png">  <alt="Persona 2" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 #### Informações
 
@@ -273,8 +285,13 @@ No entanto, enfrenta dificuldades relacionadas à falta de integração de infor
 ---
 
 ### Persona 3 — Marcos Ferreira
-
-<img src="outros/assets/persona-marcos.png">
+<div align="center">
+<p>Figura 4 - Persona 3</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-marcos.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 #### Informações
 
