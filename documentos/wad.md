@@ -184,7 +184,7 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 &ensp; &ensp;Luiz é um profissional analítico e exigente, com forte senso de responsabilidade sobre os resultados da fazenda. Ele busca garantir eficiência, padronização e produtividade, mas enfrenta dificuldades devido à falta de integração entre informações, excesso de demandas simultâneas e dependência de processos pouco estruturados. Seu objetivo pessoal é crescer profissionalmente dentro da empresa e conquistar estabilidade financeira suficiente para investir em uma casa própria.
 
-<img src="outros/assets/card-persona-marcos.png">
+<img src="outros/assets/persona-marcos.png">
 
 &ensp; &ensp;Marcos Ferreira tem 49 anos, é casado e pai de dois filhos. Atua como gerente da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por garantir o desempenho geral da operação, conectando a estratégia da empresa com a execução no campo. Supervisiona diretamente os capatazes e o supervisor, acompanhando resultados produtivos, financeiros e operacionais da fazenda.
 
