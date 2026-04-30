@@ -766,8 +766,6 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 </div>
 
 
-## <a name="c2.3"></a>2.4. Conclusão 
-
 # Conclusões
 
 **5 Forças de Porter**
@@ -860,18 +858,15 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 
 ### <a name="c3.2.1"></a>3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
-*Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
-
 ### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
-No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental. Para cada caso de uso, são definidos um fluxo básico, correspondente ao caminho principal de execução, e fluxos alternativos, que representam variações, exceções e possíveis erros. Adicionalmente, são considerados os use-case slices, entendidos como unidades menores de entrega de valor, bem como casos de teste, utilizados para a verificação da implementação da solução proposta.
 
-**Fluxo integrado:** Daniel **registra** no campo → UC-02 **sincroniza** → Luiz **valida** (aprova ou rejeita) → dados aprovados sobem para Marcos **consolidar e gerar relatórios**.
+No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
 
 ---
 
-### UC-01 — Registrar Movimentação de Rebanho
+#### UC-01 — Registrar Movimentação de Rebanho
 
 | Campo | Conteúdo |
 |---|---|
@@ -899,21 +894,21 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Fluxos Alternativos:**
 
-- **A1 (no passo 3):** se o Capataz seleciona "morte" como tipo de movimentação, o sistema dispara o UC-08 (Registrar Causa de Óbito), tornando o campo "causa do óbito" estritamente obrigatório e exibindo-o em destaque junto aos demais campos obrigatórios (RN01). `<<extend>>`
-- **A2 (no passo 5):** se o Capataz opta por anexar áudio ou mensagem escrita em vez de foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar Evidência). `<<extend>>`
-- **A3 (no passo 8):** se houver conexão ativa com a internet no momento do registro, o sistema dispara a sincronização automática (UC-02) e marca a movimentação como "sincronizada" (RN03).
+- **A1** (no passo 3): se o Capataz seleciona "morte" como tipo de movimentação, o sistema dispara o UC-08 (Registrar Causa de Óbito), tornando o campo "causa do óbito" estritamente obrigatório e exibindo-o em destaque junto aos demais campos obrigatórios (RN01). `<<extend>>`
+- **A2** (no passo 5): se o Capataz opta por anexar áudio ou mensagem escrita em vez de foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar Evidência). `<<extend>>`
+- **A3** (no passo 8): se houver conexão ativa com a internet no momento do registro, o sistema dispara a sincronização automática (UC-02) e marca a movimentação como "sincronizada" (RN03).
 
 **Exceções:**
 
-- **E1 (no passo 6):** se a foto anexada não possuir metadados de georreferenciamento válidos, o sistema rejeita o anexo, exibe mensagem clara e visual ao Capataz solicitando nova foto e mantém os demais campos preenchidos (RN04).
-- **E2 (no passo 7):** se algum campo obrigatório (origem, destino, quantidade, estágio da vida ou causa do óbito quando aplicável) estiver em branco, o sistema bloqueia o envio, destaca visualmente os campos faltantes com linguagem simples e exibe mensagem de erro de validação (RN01).
-- **E3 (no passo 8):** se houver falha no armazenamento local, o sistema exibe alerta claro ao Capataz, mantém os dados preenchidos em memória e solicita nova tentativa.
+- **E1** (no passo 6): se a foto anexada não possuir metadados de georreferenciamento válidos, o sistema rejeita o anexo, exibe mensagem clara e visual ao Capataz solicitando nova foto e mantém os demais campos preenchidos (RN04).
+- **E2** (no passo 7): se algum campo obrigatório (origem, destino, quantidade, estágio da vida ou causa do óbito quando aplicável) estiver em branco, o sistema bloqueia o envio, destaca visualmente os campos faltantes com linguagem simples e exibe mensagem de erro de validação (RN01).
+- **E3** (no passo 8): se houver falha no armazenamento local, o sistema exibe alerta claro ao Capataz, mantém os dados preenchidos em memória e solicita nova tentativa.
 
 **Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
 
 ---
 
-### UC-02 — Sincronizar Dados Offline com o Servidor
+#### UC-02 — Sincronizar Dados Offline com o Servidor
 
 | Campo | Conteúdo |
 |---|---|
@@ -939,20 +934,20 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Fluxos Alternativos:**
 
-- **A1 (no passo 3):** se houver muitos registros pendentes, o sistema processa a fila em lotes para evitar sobrecarga na conexão Starlink (DES — p95 < 3000ms), mantendo a ordem cronológica.
-- **A2 (no passo 7):** se a sincronização ocorre em segundo plano sem o aplicativo aberto, o sistema apenas atualiza os indicadores visuais sem notificação explícita.
+- **A1** (no passo 3): se houver muitos registros pendentes, o sistema processa a fila em lotes para evitar sobrecarga na conexão Starlink (DES — p95 < 3000ms), mantendo a ordem cronológica.
+- **A2** (no passo 7): se a sincronização ocorre em segundo plano sem o aplicativo aberto, o sistema apenas atualiza os indicadores visuais sem notificação explícita.
 
 **Exceções:**
 
-- **E1 (no passo 2):** se o status HTTP retornado não for válido (timeout, 5xx, sem resposta), o sistema mantém o modo offline ativo, não dispara a sincronização e tenta novamente após intervalo de espera (RN03).
-- **E2 (no passo 5):** se o servidor rejeita um registro específico por erro de validação, o sistema mantém esse registro como "pendente com erro", exibe alerta detalhado ao Capataz e prossegue com os demais registros da fila.
-- **E3 (no passo 5):** se a conexão cai durante o envio, o sistema interrompe a sincronização, mantém os registros não confirmados como "pendentes" e retoma do ponto de parada quando a conexão for restabelecida.
+- **E1** (no passo 2): se o status HTTP retornado não for válido (timeout, 5xx, sem resposta), o sistema mantém o modo offline ativo, não dispara a sincronização e tenta novamente após intervalo de espera (RN03).
+- **E2** (no passo 5): se o servidor rejeita um registro específico por erro de validação, o sistema mantém esse registro como "pendente com erro", exibe alerta detalhado ao Capataz e prossegue com os demais registros da fila.
+- **E3** (no passo 5): se a conexão cai durante o envio, o sistema interrompe a sincronização, mantém os registros não confirmados como "pendentes" e retoma do ponto de parada quando a conexão for restabelecida.
 
 **Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
 
 ---
 
-### UC-03 — Criar e Atribuir Tarefa a Capataz
+#### UC-03 — Criar e Atribuir Tarefa a Capataz
 
 | Campo | Conteúdo |
 |---|---|
@@ -981,20 +976,20 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Fluxos Alternativos:**
 
-- **A1 (no passo 5):** o Supervisor pode anexar evidências descritivas (foto georreferenciada, áudio ou mensagem) à tarefa criada, disparando o UC-09 (Anexar Evidência), conforme RF004. `<<extend>>`
-- **A2 (no passo 6):** o Supervisor pode optar por salvar a tarefa como "rascunho" para edição posterior, sem disparar a validação dos campos obrigatórios.
+- **A1** (no passo 5): o Supervisor pode anexar evidências descritivas (foto georreferenciada, áudio ou mensagem) à tarefa criada, disparando o UC-09 (Anexar Evidência), conforme RF004. `<<extend>>`
+- **A2** (no passo 6): o Supervisor pode optar por salvar a tarefa como "rascunho" para edição posterior, sem disparar a validação dos campos obrigatórios.
 
 **Exceções:**
 
-- **E1 (no passo 7):** se algum dos campos obrigatórios (Capataz atribuído, data, horário, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
-- **E2 (no passo 8):** se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
-- **E3 (no passo 9):** se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
+- **E1** (no passo 7): se algum dos campos obrigatórios (Capataz atribuído, data, horário, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
+- **E2** (no passo 8): se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
+- **E3** (no passo 9): se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
 
 **Pós-condição:** A tarefa está registrada no sistema, vinculada ao Capataz Daniel, com status inicial "pendente" e disponível tanto na visão do Supervisor quanto na do Capataz. O Capataz Daniel recebe a tarefa e a executa no campo. Ao concluir, a tarefa entra no fluxo de validação pelo Supervisor Luiz (UC-04).
 
 ---
 
-### UC-04 — Validar Registros do Capataz
+#### UC-04 — Validar Registros do Capataz
 
 | Campo | Conteúdo |
 |---|---|
@@ -1023,101 +1018,16 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Fluxos Alternativos:**
 
-- **A1 (no passo 6):** o Supervisor pode optar por "Rejeitar" o registro, disparando o UC-10 (Rejeitar Registro). O Supervisor deve informar justificativa textual obrigatória. O registro retorna ao Capataz Daniel com status "rejeitado" e a justificativa visível, para que ele corrija e ressubmeta. `<<extend>>`
-- **A2 (no passo 6):** o Supervisor pode optar por "Solicitar mais informações", enviando uma mensagem ao Capataz Daniel sem alterar o status final do registro.
-- **A3 (no passo 2):** o Supervisor pode aplicar filtros por Capataz, tipo de registro ou período para reduzir a sobrecarga visual e focar na validação por prioridade.
+- **A1** (no passo 6): o Supervisor pode optar por "Rejeitar" o registro, disparando o UC-10 (Rejeitar Registro). O Supervisor deve informar justificativa textual obrigatória. O registro retorna ao Capataz Daniel com status "rejeitado" e a justificativa visível, para que ele corrija e ressubmeta. `<<extend>>`
+- **A2** (no passo 6): o Supervisor pode optar por "Solicitar mais informações", enviando uma mensagem ao Capataz Daniel sem alterar o status final do registro.
+- **A3** (no passo 2): o Supervisor pode aplicar filtros por Capataz, tipo de registro ou período para reduzir a sobrecarga visual e focar na validação por prioridade.
 
 **Exceções:**
 
-- **E1 (no passo 1):** se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
-- **E2 (no passo 7):** se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
+- **E1** (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
+- **E2** (no passo 7): se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
 
 **Pós-condição:** O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
-
----
-
-### UC-05 — Abrir Ticket de Infraestrutura
-
-| Campo | Conteúdo |
-|---|---|
-| **UC-ID + Nome** | UC-05 — Abrir Ticket de Infraestrutura |
-| **Ator primário** | Capataz (Daniel) |
-| **Atores secundários** | Supervisor Luiz (notificado, pode atribuir); Equipe de Infraestrutura |
-| **RFs relacionados** | RF008, RF004 |
-| **RNs relacionadas** | RN08 |
-| **RNFs relacionados** | SUP, USAB |
-| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
-
-**Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz". O Capataz escolheu a ação "Abrir chamado" após identificar-se. Existe um problema de infraestrutura no retiro (cerca quebrada, falta de água, equipamento danificado, problema em edificação) que precisa ser reportado.
-
-**Fluxo Principal (cenário de sucesso):**
-
-1. O Capataz acessa o módulo "Chamados" e seleciona "Abrir Novo Chamado".
-2. O sistema apresenta o formulário de abertura com ícones de categoria e campos simplificados, adequados ao baixo letramento digital (RN05), contendo: categoria do problema, localização, descrição e área de evidências.
-3. O Capataz seleciona a categoria do problema via ícone (cerca, abastecimento de água, equipamento, edificação).
-4. O Capataz informa a localização aproximada dentro do retiro.
-5. O Capataz adiciona ao menos uma evidência descritiva obrigatória: mensagem escrita ou áudio (RN08).
-6. O Capataz confirma a abertura do ticket.
-7. O sistema valida a presença obrigatória de pelo menos uma evidência descritiva.
-8. O sistema persiste o ticket (no servidor ou localmente, se offline) com status "aberto" e identificador único.
-9. O sistema notifica o Supervisor Luiz (que pode atribuir o chamado) e a equipe de Infraestrutura sobre o novo chamado.
-10. O sistema exibe ao Capataz a confirmação com o número do ticket gerado.
-
-**Fluxos Alternativos:**
-
-- **A1 (no passo 5):** o Capataz pode opcionalmente anexar foto georreferenciada como evidência adicional, disparando o UC-09 (Anexar Evidência). Se a foto não tiver coordenadas válidas, o sistema rejeita apenas a foto, mas mantém o ticket válido caso já haja mensagem ou áudio (RN04). `<<extend>>`
-- **A2 (no passo 8):** se o dispositivo está offline, o ticket é salvo localmente e entra na fila de sincronização (UC-02).
-
-**Exceções:**
-
-- **E1 (no passo 7):** se o Capataz tentar enviar o ticket sem nenhuma evidência descritiva (mensagem ou áudio), o sistema bloqueia o envio e exibe mensagem clara e visual solicitando o cumprimento da obrigação (RN08).
-- **E2 (no passo 8):** se houver falha de persistência mesmo com armazenamento local disponível, o sistema mantém os dados em memória e oferece nova tentativa.
-
-**Pós-condição:** O ticket de infraestrutura está registrado com identificador único, evidência(s) anexada(s), categoria, localização e Capataz autor Daniel. O Supervisor Luiz é notificado e pode atribuir o chamado. A equipe de Infraestrutura pode iniciar o atendimento remotamente (SUP — 100% das correções sem deslocamento a campo).
-
----
-
-### UC-06 — Visualizar Dados Aprovados e Gerar Relatório
-
-| Campo | Conteúdo |
-|---|---|
-| **UC-ID + Nome** | UC-06 — Visualizar Dados Aprovados e Gerar Relatório |
-| **Ator primário** | Gerente (Marcos) |
-| **Atores secundários** | Servidor de Dados Sincronizados e Aprovados |
-| **RFs relacionados** | RF007 |
-| **RNs relacionadas** | RN07 |
-| **RNFs relacionados** | ORG, DES |
-| **Relacionamentos UML** | `<<include>>` UC-07 |
-
-**Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem dados de movimentação ou tarefas que já foram sincronizados (UC-02) e aprovados pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
-
-**Fluxo Principal (cenário de sucesso):**
-
-1. O Gerente acessa o painel de consolidação do sistema.
-2. O sistema apresenta a visão geral dos dados aprovados: movimentações, tarefas concluídas e tickets, com identificação de quem registrou (Capataz Daniel) e quem aprovou (Supervisor Luiz), data e horário de cada ação.
-3. O Gerente analisa os dados consolidados para ter visão do que aconteceu na operação.
-4. O Gerente acessa o módulo "Relatórios" e seleciona o tipo de relatório (movimentação de rebanho ou tarefas).
-5. O Gerente define o período (semanal ou mensal) e o(s) retiro(s) de interesse.
-6. O Gerente confirma a geração.
-7. O sistema consulta exclusivamente os dados que já foram sincronizados e aprovados pelo Supervisor para o filtro definido.
-8. O sistema processa os dados e gera o arquivo no formato de planilha (.xlsx ou .csv) seguindo o template do parceiro BrPec (ORG — 99,9% dos campos do modelo atual do parceiro presentes na exportação).
-9. O sistema disponibiliza o arquivo para download.
-10. O Gerente faz o download da planilha gerada e segue com o trabalho de gestão.
-
-**Fluxos Alternativos:**
-
-- **A1 (no passo 5):** o Gerente pode aplicar filtros adicionais, como tipo de movimentação (apenas mortes, apenas transferências), Capataz responsável ou Supervisor validador.
-- **A2 (no passo 9):** o sistema oferece também o envio do relatório por e-mail diretamente ao Gerente, em vez de download direto.
-- **A3 (no passo 2):** o Gerente pode consultar apenas a visão consolidada sem gerar relatório, caso queira apenas acompanhar a operação em tempo quase real.
-
-**Exceções:**
-
-- **E1 (no passo 7):** se não houver dados sincronizados e aprovados para o filtro selecionado, o sistema exibe mensagem informando ausência de dados e oferece sugestão de ampliar o período ou alterar o filtro.
-- **E2 (no passo 7):** o sistema explicitamente exclui da consulta quaisquer registros que estejam apenas em armazenamento local e ainda não sincronizados, bem como registros não aprovados pelo Supervisor, garantindo consistência do relatório oficial (RN07).
-- **E3 (no passo 8):** se houver falha no processamento (timeout ou erro do servidor), o sistema exibe erro claro ao Gerente com opção de nova tentativa.
-- **E4 (no passo 1):** se um usuário com perfil "Capataz" tentar acessar o painel de consolidação ou o módulo de relatórios, o sistema bloqueia o acesso e retorna erro 403 (SEG).
-
-**Pós-condição:** O Gerente Marcos possui visão completa da operação (quem registrou, quem aprovou, quando) e, se necessário, um arquivo de planilha no formato compatível com o template do parceiro BrPec, contendo exclusivamente dados sincronizados e aprovados, pronto para análises gerenciais e comunicação com a sede. O sistema registra em log a geração do relatório com identificação do Gerente e timestamp. O ciclo completo campo → sincronização → validação → consolidação está concluído.
 
 ---
 
