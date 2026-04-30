@@ -768,20 +768,7 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 
 # Conclusões
 
-**5 Forças de Porter**
-A BRPec atua em um setor com altas barreiras de entrada e baixa ameaça de substitutos, mas enfrenta forte pressão dos grandes frigoríficos e rivalidade intensa entre produtores, o que a coloca como tomadora de preço. O modelo "flex" surge como resposta estratégica para capturar margem no elo mais favorável da cadeia em cada ciclo.
-
-**Análise SWOT**
-A empresa combina forças relevantes, como escala, integração agricultura-pecuária e respaldo do BTG Pactual, com fraquezas ligadas à complexidade operacional e dependência de mão de obra em áreas remotas. No ambiente externo, oportunidades como ESG e expansão agrícola contrabalançam ameaças regulatórias, climáticas e de mercado, exigindo gestão de risco robusta.
-
-**Solução**
-O registro manual em papel pelos capatazes gera retrabalho e risco de inconsistências, e a aplicação web offline com sincronização automática responde diretamente a essa dor. A solução prioriza simplicidade de uso para um público com baixo repertório digital, garantindo agilidade e confiabilidade na coleta de dados em campo.
-
-**Value Proposition Canvas**
-O canvas evidencia o alinhamento entre a solução proposta e as reais necessidades do cliente, ao eliminar boletas em papel, reduzir retrabalho e aumentar a rastreabilidade das operações. Os criadores de ganho e aliviadores de dor mostram que a aplicação entrega valor tangível tanto para o capataz em campo quanto para o gerente na tomada de decisão.
-
-**Matriz de Riscos**
-A matriz demonstra planejamento maduro ao mapear ameaças e oportunidades com planos de ação específicos. Destaca-se o alto engajamento do parceiro como oportunidade de impacto muito alto, fator que viabiliza validações frequentes e sustenta a evolução iterativa do projeto.
+A análise da BRPec a partir da perspectiva das 5 Forças de Porter, mostra que ela atua em um setor difícil de entrar e sem muitos substitutos (pouca ameaça de novos entrantes e baixa ameaça de substituto), mas sofre pressão dos grandes frigoríficos e enfrenta concorrência forte entre produtores (afetado pelo poder de barganha do comprador e da forte Rivalidade entre concorrentes), o que a obriga a aceitar os preços do mercado. Por isso, o modelo "flex" aparece como uma estratégia para ganhar mais dinheiro no setor da cadeia que seja mais vantajoso a cada momento. Olhando para a SWOT, a empresa tem pontos fortes importantes, como o tamanho, a união entre agricultura e pecuária e o apoio do BTG Pactual, mas também tem pontos fracos, como a operação complexa e a dependência de trabalhadores em locais distantes. Além disso, conta com oportunidades ligadas ao ESG (Ambiental, social e governança) e à expansão agrícola, ao mesmo tempo em que precisa lidar com riscos regulatórios, climáticos e de mercado, o que exige um bom controle de riscos. Para resolver um problema do dia a dia, foi pensada uma solução simples: como os capatazes anotam tudo no papel e isso gera retrabalho e erros, criou-se um aplicativo web que funciona sem internet e sincroniza os dados depois, fácil de usar até para quem tem pouca familiaridade com tecnologia, garantindo mais rapidez e confiança nas informações. O Value Proposition Canvas mostra que essa solução está realmente alinhada com o que o cliente precisa, porque acaba com as boletas de papel, diminui o retrabalho e melhora o acompanhamento das operações, trazendo benefícios tanto para o capataz no campo quanto para o gerente que toma as decisões. Por fim, a Matriz de Riscos mostra que o projeto foi bem planejado, já que mapeia os riscos e as oportunidades com planos de ação claros, e destaca o forte engajamento do parceiro como uma oportunidade de grande impacto, que permite validar o trabalho com frequência e manter a evolução constante do projeto.
 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
