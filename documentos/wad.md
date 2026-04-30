@@ -401,6 +401,7 @@ Não se aplica.
 
 <p align="center">Fonte: Próprios autores (2026).</p> 
 
+---
 
 <p align="center">Quadro 2 – Plano de ação para as oportunidades.</p> 
 
@@ -414,6 +415,9 @@ Não se aplica.
 
 <p align="center">Fonte: Próprios autores (2026).</p> 
 
+# Conclusões
+
+&nbsp;&nbsp;&nbsp;&nbsp;A análise da BRPec a partir da perspectiva das 5 Forças de Porter, mostra que ela atua em um setor difícil de entrar e sem muitos substitutos (pouca ameaça de novos entrantes e baixa ameaça de substituto), mas sofre pressão dos grandes frigoríficos e enfrenta concorrência forte entre produtores (afetado pelo poder de barganha do comprador e da forte Rivalidade entre concorrentes), o que a obriga a aceitar os preços do mercado. Por isso, o modelo "flex" aparece como uma estratégia para ganhar mais dinheiro no setor da cadeia que seja mais vantajoso a cada momento. Olhando para a SWOT, a empresa tem pontos fortes importantes, como o tamanho, a união entre agricultura e pecuária e o apoio do BTG Pactual, mas também tem pontos fracos, como a operação complexa e a dependência de trabalhadores em locais distantes. Além disso, conta com oportunidades ligadas ao ESG (Ambiental, social e governança) e à expansão agrícola, ao mesmo tempo em que precisa lidar com riscos regulatórios, climáticos e de mercado, o que exige um bom controle de riscos. Para resolver um problema do dia a dia, foi pensada uma solução simples: como os capatazes anotam tudo no papel e isso gera retrabalho e erros, criou-se um aplicativo web que funciona sem internet e sincroniza os dados depois, fácil de usar até para quem tem pouca familiaridade com tecnologia, garantindo mais rapidez e confiança nas informações. O Value Proposition Canvas mostra que essa solução está realmente alinhada com o que o cliente precisa, porque acaba com as boletas de papel, diminui o retrabalho e melhora o acompanhamento das operações, trazendo benefícios tanto para o capataz no campo quanto para o gerente que toma as decisões. Por fim, a Matriz de Riscos mostra que o projeto foi bem planejado, já que mapeia os riscos e as oportunidades com planos de ação claros, e destaca o forte engajamento do parceiro como uma oportunidade de grande impacto, que permite validar o trabalho com frequência e manter a evolução constante do projeto. 
 
 ## 2.2. Personas (sprint 1)
 
@@ -595,6 +599,9 @@ Não se aplica.
 
 ## 2.3. User Stories (sprints 1 a 5)
 
+
+<p align="center">Quadro 6 - User Story 01.</p> 
+
 | Identificação | US01 |
 | - | - |
 | Persona | Daniel Carvalho |
@@ -604,7 +611,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que não há conexão, quando registra, então o dado é salvo localmente. |
 | Critérios INVEST | <p>Independente: A funcionalidade pode ser desenvolvida de forma isolada, sem depender de outros módulos.</p> <p>Negociável: Os campos do formulário podem ser ajustados conforme necessidade.</p> <p>Valorosa: Elimina o uso de boletas em papel, reduzindo erros e retrabalho.</p> <p>Estimável: Possui escopo claro, envolvendo formulário e validação.</p> <p>Pequena: Restrita ao registro de movimentações.</p> <p>Testável: Pode ser validada pelo preenchimento e salvamento correto dos dados.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+--- 
+
+<p align="center">Quadro 7 - User Story 02.</p>
 
 | Identificação | US02 |
 | - | - |
@@ -615,7 +627,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que a conexão retorna, quando o sistema detecta internet, então os dados são sincronizados automaticamente. |
 | Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+---
+
+<p align="center">Quadro 8 - User Story 03.</p>
 
 | Identificação | US03 |
 | - | - |
@@ -626,7 +643,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que acessa o registro, quando visualiza, então a imagem deve estar disponível. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida como complemento aos registros existentes.</p> <p>Negociável: O tipo de evidência pode ser ampliado para vídeo ou áudio.</p> <p>Valorosa: Aumenta a confiabilidade das informações registradas.</p> <p>Estimável: Escopo claro envolvendo upload e armazenamento.</p> <p>Pequena: Restrita ao envio e visualização de imagens.</p> <p>Testável: Pode ser validada pelo upload correto e exibição da imagem.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+--- 
+
+<p align="center">Quadro 9 - User Story 04.</p>
 
 | Identificação | US04 |
 | - | - |
@@ -637,7 +659,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que acessa histórico, quando consulta, então visualiza seus chamados. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida separadamente dos demais módulos.</p> <p>Negociável: Campos como prioridade e categoria podem ser ajustados.</p> <p>Valorosa: Permite comunicação estruturada de problemas no retiro.</p> <p>Estimável: Escopo claro envolvendo criação e consulta.</p> <p>Pequena: Restrita à abertura e visualização de chamados.</p> <p>Testável: Pode ser validada pela criação e listagem dos chamados.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+---
+
+<p align="center">Quadro 10 - User Story 05.</p>
 
 | Identificação | US05 |
 | - | - |
@@ -648,7 +675,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que rejeita um registro, quando confirma, então informa o motivo. |
 | Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+---
+
+<p align="center">Quadro 11 - User Story 06.</p>
 
 | Identificação | US06 |
 | - | - |
@@ -659,7 +691,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
-<p align="center">Quadro Y - User Story 07.</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+<p align="center">Quadro 12 - User Story 07.</p>
 </div>
 
 | Identificação        | US07 |
@@ -674,7 +711,9 @@ Não se aplica.
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 08.</p>
+---
+
+<p align="center">Quadro 13 - User Story 08.</p>
 </div>
 
 | Identificação        | US08 |
@@ -689,7 +728,9 @@ Não se aplica.
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 9.</p>
+---
+
+<p align="center">Quadro 14 - User Story 9.</p>
 </div>
 
 | Identificação        | US09   |
@@ -705,7 +746,9 @@ Não se aplica.
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 10.</p>
+---
+
+<p align="center">Quadro 15 - User Story 10.</p>
 </div>
 
 | Identificação        | US10 |
@@ -717,12 +760,12 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
 | Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
 
-
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 11.</p>
+---
+
+<p align="center">Quadro 16 - User Story 11.</p>
 </div>
 
 | Identificação        | US11 |
@@ -733,9 +776,13 @@ Não se aplica.
 | Critério de aceite 2 | CR2: Dado que aplica filtros, quando seleciona critérios, então a lista é atualizada.  |
 | Critério de aceite 3 | CR3: Dado que acessa um chamado, quando abre, então visualiza os detalhes.  |
 | Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
-                                                                                                                        
 
-<p align="center">Quadro Y - User Story 12.</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>                                                                                                                       
+
+---
+
+<p align="center">Quadro 17 - User Story 12.</p>
 </div>
 
 | Identificação        | US12 |
@@ -747,28 +794,24 @@ Não se aplica.
 | Critério de aceite 3 | CR3: Dado que o gerente altera o filtro, quando seleciona outro retiro, então os resultados são atualizados automaticamente.  |
 | Critérios INVEST     | <p>Independente: Pode ser desenvolvida de forma isolada, desde que os dados já estejam disponíveis no sistema.</p> <p>Negociável: Os tipos de filtros podem ser ajustados conforme necessidade.</p> <p>Valorosa: Permite análise detalhada do desempenho por unidade, apoiando a tomada de decisão.</p> <p>Estimável: O escopo é claro, envolvendo aplicação de filtros sobre dados existentes.</p> <p>Pequena: Restrita à funcionalidade de filtragem e atualização de dados.</p> <p>Testável: Pode ser validada verificando se os dados exibidos correspondem aos filtros aplicados.</p> |
 
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
-
-
-# Conclusões
-
-A análise da BRPec a partir da perspectiva das 5 Forças de Porter, mostra que ela atua em um setor difícil de entrar e sem muitos substitutos (pouca ameaça de novos entrantes e baixa ameaça de substituto), mas sofre pressão dos grandes frigoríficos e enfrenta concorrência forte entre produtores (afetado pelo poder de barganha do comprador e da forte Rivalidade entre concorrentes), o que a obriga a aceitar os preços do mercado. Por isso, o modelo "flex" aparece como uma estratégia para ganhar mais dinheiro no setor da cadeia que seja mais vantajoso a cada momento. Olhando para a SWOT, a empresa tem pontos fortes importantes, como o tamanho, a união entre agricultura e pecuária e o apoio do BTG Pactual, mas também tem pontos fracos, como a operação complexa e a dependência de trabalhadores em locais distantes. Além disso, conta com oportunidades ligadas ao ESG (Ambiental, social e governança) e à expansão agrícola, ao mesmo tempo em que precisa lidar com riscos regulatórios, climáticos e de mercado, o que exige um bom controle de riscos. Para resolver um problema do dia a dia, foi pensada uma solução simples: como os capatazes anotam tudo no papel e isso gera retrabalho e erros, criou-se um aplicativo web que funciona sem internet e sincroniza os dados depois, fácil de usar até para quem tem pouca familiaridade com tecnologia, garantindo mais rapidez e confiança nas informações. O Value Proposition Canvas mostra que essa solução está realmente alinhada com o que o cliente precisa, porque acaba com as boletas de papel, diminui o retrabalho e melhora o acompanhamento das operações, trazendo benefícios tanto para o capataz no campo quanto para o gerente que toma as decisões. Por fim, a Matriz de Riscos mostra que o projeto foi bem planejado, já que mapeia os riscos e as oportunidades com planos de ação claros, e destaca o forte engajamento do parceiro como uma oportunidade de grande impacto, que permite validar o trabalho com frequência e manter a evolução constante do projeto.
 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ## <a name="c3.1"></a>3.1. Requisitos do Sistema (sprints 1 a 5)
 
-Os requisitos do sistema representam o ponto de partida para tudo que será construído, estabelecendo um entendimento comum entre nossa equipe e o parceiro sobre o que a aplicação precisa ser, como deve se comportar e sob quais critérios será testada e aprovada.
+&nbsp;&nbsp;&nbsp;&nbsp;Os requisitos do sistema representam o ponto de partida para tudo que será construído, estabelecendo um entendimento comum entre nossa equipe e o parceiro sobre o que a aplicação precisa ser, como deve se comportar e sob quais critérios será testada e aprovada.
 
-Eles estão organizados em duas categorias complementares, os requisitos funcionais, que descrevem o que o sistema deve fazer, como o registro de movimentações, o controle de acesso por perfil e a operação offline e os requisitos não funcionais, que definem a qualidade com que essas funcionalidades devem ser entregues, abrangendo desempenho, segurança, confiabilidade e usabilidade.
+&nbsp;&nbsp;&nbsp;&nbsp;Eles estão organizados em duas categorias complementares, os requisitos funcionais, que descrevem o que o sistema deve fazer, como o registro de movimentações, o controle de acesso por perfil e a operação offline e os requisitos não funcionais, que definem a qualidade com que essas funcionalidades devem ser entregues, abrangendo desempenho, segurança, confiabilidade e usabilidade.
 
-Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
+&nbsp;&nbsp;&nbsp;&nbsp;Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
+<p align="center">Quadro 18 - Requisitos Funcionais </p>
+</div> 
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
@@ -781,9 +824,13 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
 | RF008 | O sistema deve disponibilizar um ticket de chamados de infraestrutura, permitindo que Capatazes abram chamados para a equipe de infraestrutura e que Supervisores atribuam chamados aos Capatazes.  | Média | Planejado |
 
+ <p align="center">Fonte: Próprios autores (2026).</p>
+</div> 
+
 ### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-*Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3.*
+<p align="center">Quadro 19 - Regras de Negócios </p>
+</div>
 
 | ID   | Descrição | RF associado |
 |------|-----------|--------------|
@@ -796,10 +843,13 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha só poderá ser processada utilizando dados que já foram sincronizados com o servidor (dados apenas locais/off-line não devem entrar no relatório gerado). | RF007 |
 | RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente a inclusão de pelo menos uma evidência descritiva associada ao chamado (uma mensagem escrita ou um áudio). | RF008 |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div> 
 
 ### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-*Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
+<p align="center">Quadro 20 - Requisitos Não Funcionais </p>
+</div>
 
 | Eixo                     | Requisito | Métrica / Critério | Como atendido |
 |--------------------------|-----------|--------------------|---------------|
@@ -812,9 +862,13 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | REST — Restrições Design | A identidade visual deve seguir a logo e paleta de cores da BrPec Agropecuária; a aplicação deve ser exclusivamente web | 100% das telas aprovadas pelo parceiro em revisão de UI | Aplicação de design system com tokens de cor e tipografia baseados na identidade visual da BrPec Agropecuária, validado em revisão de UI com o parceiro |
 | ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div> 
+
 ### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-*Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
+<p>Quadro 21 - Matriz RF → RN → Endpoint </p>
+</div>
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
@@ -827,19 +881,24 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RF007 | RN07    | `/usuarios` | POST   |
 | RF008 | RN08    | `/usuarios` | POST   |
 
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
 ### <a name="c3.2.1"></a>3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 ### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
+&nbsp;&nbsp;&nbsp;&nbsp;Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
 
-No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
 
----
+--- 
 
-#### UC-01 — Registrar Movimentação de Rebanho
+<p>Quadro 22 - Use Case 01 </p>
+
+#### UC-01 - Registrar Movimentação de Rebanho
 
 | Campo | Conteúdo |
 |---|---|
@@ -851,6 +910,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNFs relacionados** | USAB, CONF |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-08 [tipo = morte]; `<<extend>>` UC-09 [evidência adicional] |
 
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+--- 
 **Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem acesso ao retiro associado à sua conta. O dispositivo possui armazenamento local funcional, mesmo sem conexão com a internet.
 
 **Fluxo Principal (cenário de sucesso):**
@@ -880,8 +943,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 **Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
 
 ---
+<p>Quadro 23 - Use Case 02 </p>
 
-#### UC-02 — Sincronizar Dados Offline com o Servidor
+#### UC-02 - Sincronizar Dados Offline com o Servidor
 
 | Campo | Conteúdo |
 |---|---|
@@ -892,6 +956,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN03 |
 | **RNFs relacionados** | CONF, DES |
 | **Relacionamentos UML** | `<<include>>` UC-07 |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** Existem registros pendentes no armazenamento local do dispositivo (movimentações, tarefas concluídas, evidências ou tickets) gerados em modo offline pelo Capataz Daniel. O usuário está identificado no sistema (UC-07).
 
@@ -919,8 +988,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 **Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
 
 ---
+<p>Quadro 24 - Use Case 03 </p>
 
-#### UC-03 — Criar e Atribuir Tarefa a Capataz
+#### UC-03 - Criar e Atribuir Tarefa a Capataz
 
 | Campo | Conteúdo |
 |---|---|
@@ -931,6 +1001,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN02 |
 | **RNFs relacionados** | USAB, ORG |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um Capataz cadastrado e vinculado a um retiro sob sua coordenação. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
 
@@ -962,7 +1037,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 ---
 
-#### UC-04 — Validar Registros do Capataz
+<p>Quadro 25 - Use Case 04 </p>
+
+#### UC-04 - Validar Registros do Capataz
 
 | Campo | Conteúdo |
 |---|---|
@@ -973,6 +1050,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN06 |
 | **RNFs relacionados** | SEG, USAB |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [recusa do registro] |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div>  
+
+---
 
 **Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor" (RN06). O Supervisor escolheu a ação "Validar registros" após identificar-se. Existe pelo menos um registro (movimentação ou tarefa concluída) com status "pendente de validação" submetido pelo Capataz Daniel e já sincronizado com o servidor (UC-02).
 
@@ -1002,7 +1084,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
 
-#### UC-05 — Abrir Ticket de Infraestrutura
+---
+
+<p>Quadro 26 - Use Case 05 </p> 
+
+#### UC-05 - Abrir Ticket de Infraestrutura
 
 | Campo | Conteúdo |
 |---|---|
@@ -1013,6 +1099,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN08 |
 | **RNFs relacionados** | SUP, USAB |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz". O Capataz escolheu a ação "Abrir chamado" após identificar-se. Existe um problema de infraestrutura no retiro (cerca quebrada, falta de água, equipamento danificado, problema em edificação) que precisa ser reportado.
 
@@ -1043,7 +1134,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 ---
 
-#### UC-06 — Visualizar Dados Aprovados e Gerar Relatório
+<p>Quadro 27 - Use Case 06 </p>
+
+#### UC-06 - Visualizar Dados Aprovados e Gerar Relatório
 
 | Campo | Conteúdo |
 |---|---|
@@ -1054,6 +1147,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN07 |
 | **RNFs relacionados** | ORG, DES |
 | **Relacionamentos UML** | `<<include>>` UC-07 |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem dados de movimentação ou tarefas que já foram sincronizados (UC-02) e aprovados pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
 
@@ -1086,7 +1184,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 ---
 
-#### UC-07 — Identificar-se no Sistema
+<p>Quadro 28 - Use Case 07 </p>
+
+#### UC-07 - Identificar-se no Sistema
 
 | Campo | Conteúdo |
 |---|---|
@@ -1097,6 +1197,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN05 |
 | **RNFs relacionados** | USAB, SEG |
 | **Relacionamento UML** | `<<include>>` por UC-01, UC-02, UC-03, UC-04, UC-05 e UC-06 |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+--- 
 
 **Pré-condição:** O usuário possui credencial cadastrada no sistema. O dispositivo está acessível.
 
@@ -1121,9 +1226,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** O usuário está autenticado com perfil identificado e sessão ativa. O menu exibe apenas as ações do perfil: Daniel (Capataz) vê "Registrar movimentação" e "Abrir chamado"; Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". Todas as ações ficam vinculadas ao usuário para rastreabilidade e auditoria.
 
----
+--- 
+<p>Quadro 29 - Use Case 08 </p>
 
-#### UC-08 — Registrar Causa de Óbito
+#### UC-08 - Registrar Causa de Óbito
 
 | Campo | Conteúdo |
 |---|---|
@@ -1134,6 +1240,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN01 |
 | **RNFs relacionados** | USAB |
 | **Relacionamento UML** | `<<extend>>` UC-01 — condição: tipo da movimentação = "morte" |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Capataz está executando o UC-01 (Registrar Movimentação) e selecionou "morte" como tipo de movimentação no passo 3.
 
@@ -1151,8 +1262,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** A causa do óbito está registrada como parte da movimentação de morte. O fluxo retorna ao UC-01, que prossegue normalmente com os demais campos.
 
+---
 
-#### UC-09 — Anexar Evidência
+<p>Quadro 30 - Use Case 09 </p>
+
+#### UC-09 - Anexar Evidência
 | Campo | Conteúdo |
 |---|---|
 | **UC-ID + Nome** | UC-09 — Anexar Evidência |
@@ -1162,6 +1276,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN04|
 | **RNFs relacionados** | USAB |
 | **Relacionamento UML** | UML<<extend>> UC-01, UC-03 e UC-05 — condição: usuário aciona "Anexar evidência" |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O usuário está executando um dos UCs base (UC-01, UC-03 ou UC-05) e está na etapa de preenchimento onde evidências podem ser adicionadas.
 
@@ -1186,8 +1305,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** A evidência está anexada ao registro principal com seus metadados (tipo, timestamp, localização quando aplicável). O fluxo retorna ao UC base.
 
+---
+<p>Quadro 31 - Use Case 10 </p>
 
-#### UC-10 — Rejeitar Registro
+#### UC-10 - Rejeitar Registro
 | Campo | Conteúdo |
 |---|---|
 | **UC-ID + Nome** | UC-10 — Rejeitar Registro |
@@ -1198,6 +1319,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNFs relacionados** | SEG |
 | **Relacionamento UML** | <<extend>> UC-04 — condição: Supervisor opta por rejeitar o registro |
 
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 **Pré-condição:** O Supervisor está executando o UC-04 (Validar Registros) e identificou inconsistência ou problema no registro analisado, optando por rejeitá-lo no passo 6.
 
 **Fluxo Principal (cenário de sucesso):**
@@ -1217,7 +1342,6 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 **Pós-condição:** O registro está marcado como "Rejeitado" com justificativa visível. O Capataz Daniel é notificado e pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
 Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
 
----
 
 ### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
