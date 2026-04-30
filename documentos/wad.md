@@ -241,16 +241,8 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
-| Identificação        | US07   |
-| -------------------- | -- |
-| Persona              | Luiz Felipe   |
-| User Story           | Como supervisor, posso gerar relatórios semanais, para acompanhar a operação. |
-| Critério de aceite 1 | CR1: Dado que existem dados, quando o supervisor solicita relatório, então o sistema gera o arquivo.   |
-| Critério de aceite 2 | CR2: Dado que o relatório é gerado, quando aberto, então contém dados consolidados.  |
-| Critério de aceite 3 | CR3: Dado que não há dados, quando gera relatório, então o sistema informa ausência de registros.|
-| Critérios INVEST     | <p>Independente: Depende apenas dos dados já registrados.</p> <p>Negociável: O formato do relatório pode ser ajustado.</p> <p>Valorosa: Permite acompanhamento da operação.</p> <p>Estimável: Escopo claro de geração de relatório.</p> <p>Pequena: Restrita à exportação de dados.</p> <p>Testável: Validada pela geração e abertura do arquivo.</p> |
 
-| Identificação        | US08 |
+| Identificação        | US07 |
 | -------------------- | - |
 | Persona              | Luiz Felipe   |
 | User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
@@ -259,7 +251,7 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critério de aceite 3 | CR3: Dado que altera o status, quando salva, então o sistema atualiza o chamado. |
 | Critérios INVEST     | <p>Independente: Pode ser desenvolvido como módulo separado.</p> <p>Negociável: Os status podem ser ajustados.</p> <p>Valorosa: Permite gestão estruturada de problemas.</p> <p>Estimável: Escopo simples de listagem e atualização.</p> <p>Pequena: Restrta à visualização e alteração de status.</p> <p>Testável: Validada pela atualização do chamado.</p> |
 
-| Identificação        | US09 |
+| Identificação        | US08 |
 | ---- | --  |
 | Persona              | Luiz Felipe  |
 | User Story           | Como supervisor, posso receber alertas de problemas, para agir rapidamente. |
@@ -267,6 +259,15 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critério de aceite 2 | CR2: Dado que há alerta, quando acessa o painel, então o supervisor visualiza a notificação. |
 | Critério de aceite 3 | CR3: Dado que clica no alerta, quando acessa, então é redirecionado ao detalhe correspondente.   |
 | Critérios INVEST     | <p>Independente: Depende apenas da geração de eventos no sistema.</p> <p>Negociável: Tipos de alerta podem ser ajustados.</p> <p>Valorosa: Permite resposta rápida a problemas.</p> <p>Estimável: Escopo claro de notificação.</p> <p>Pequena: Restrita à exibição de alertas.</p> <p>Testável: Validada pela geração e visualização de alertas.</p> |
+
+| Identificação        | US09 |
+| -------- | ---- |
+| Persona              | Marcos Ferreira   |
+| User Story           | Como gerente, posso visualizar um dashboard com indicadores da fazenda, para acompanhar a operação.   |
+| Critério de aceite 1 | CR1: Dado que existem dados, quando o gerente acessa o sistema, então o dashboard exibe indicadores principais.  |
+| Critério de aceite 2 | CR2: Dado que novos dados são sincronizados, quando atualizados, então o dashboard reflete as mudanças. |
+| Critério de aceite 3 | CR3: Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
+| Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
 
 
 
