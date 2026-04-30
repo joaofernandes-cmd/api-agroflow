@@ -678,7 +678,9 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
+No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental. Para cada caso de uso, são definidos um fluxo básico, correspondente ao caminho principal de execução, e fluxos alternativos, que representam variações, exceções e possíveis erros. Adicionalmente, são considerados os use-case slices, entendidos como unidades menores de entrega de valor, bem como casos de teste, utilizados para a verificação da implementação da solução proposta.
+
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -899,6 +901,34 @@ SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publ
 
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONCA, Kurt Bittner. Use-Case 3.0. Ivar Jacobson International, 2024. Disponível em: https://www.ivarjacobson.com/publications/white-papers/use-case-3.0. Acesso em: 30 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
