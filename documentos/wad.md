@@ -241,153 +241,16 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
+| Identificação        | US07   |
+| -------------------- | -- |
+| Persona              | Luiz Felipe   |
+| User Story           | Como supervisor, posso gerar relatórios semanais, para acompanhar a operação. |
+| Critério de aceite 1 | CR1: Dado que existem dados, quando o supervisor solicita relatório, então o sistema gera o arquivo.   |
+| Critério de aceite 2 | CR2: Dado que o relatório é gerado, quando aberto, então contém dados consolidados.  |
+| Critério de aceite 3 | CR3: Dado que não há dados, quando gera relatório, então o sistema informa ausência de registros.|
+| Critérios INVEST     | <p>Independente: Depende apenas dos dados já registrados.</p> <p>Negociável: O formato do relatório pode ser ajustado.</p> <p>Valorosa: Permite acompanhamento da operação.</p> <p>Estimável: Escopo claro de geração de relatório.</p> <p>Pequena: Restrita à exportação de dados.</p> <p>Testável: Validada pela geração e abertura do arquivo.</p> |
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
 
 ## <a name="c2.3"></a>2.4. Conclusão 
