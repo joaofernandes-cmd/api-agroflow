@@ -786,6 +786,37 @@ E3 (no passo 9): se o Capataz atribuído estiver offline no momento da criação
 
 Pós-condição: A tarefa está registrada no sistema, vinculada ao Capataz Daniel, com status inicial "pendente" e disponível tanto na visão do Supervisor quanto na do Capataz. O Capataz Daniel recebe a tarefa e a executa no campo. Ao concluir, a tarefa entra no fluxo de validação pelo Supervisor Luiz (UC-04).
 
+
+UC-04 — Validar Registros do Capataz
+CampoConteúdoUC-ID + NomeUC-04 — Validar Registros do CapatazAtor primárioSupervisor (Luiz)Atores secundáriosCapataz Daniel (autor do registro, notificado); Gerente Marcos (recebe dados aprovados)RFs relacionadosRF006RNs relacionadasRN06RNFs relacionadosSEG, USABRelacionamentos UML<<include>> UC-07; <<extend>> UC-10 [recusa do registro]
+Pré-condição: O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor" (RN06). O Supervisor escolheu a ação "Validar registros" após identificar-se. Existe pelo menos um registro (movimentação ou tarefa concluída) com status "pendente de validação" submetido pelo Capataz Daniel e já sincronizado com o servidor (UC-02).
+Fluxo Principal (cenário de sucesso):
+
+O Supervisor acessa o painel de "Validações Pendentes".
+O sistema lista todos os registros pendentes de validação dos Capatazes sob sua coordenação, ordenados por data e agrupados por retiro.
+O Supervisor seleciona um registro específico para análise.
+O sistema apresenta os detalhes completos do registro: autor (Capataz Daniel), data, conteúdo dos campos, evidências anexadas (foto georreferenciada, áudio ou mensagem) e localização.
+O Supervisor analisa as informações e as evidências.
+O Supervisor seleciona a ação "Aprovar".
+O sistema altera o status do registro para "Aprovado", grava o identificador do Supervisor validador e o timestamp da ação.
+O sistema envia os dados aprovados para a camada de consolidação visível ao Gerente Marcos (UC-06).
+O sistema notifica o Capataz Daniel sobre a aprovação.
+O sistema retorna o Supervisor ao painel com o registro removido da lista de pendências.
+
+Fluxos Alternativos:
+
+A1 (no passo 6): o Supervisor pode optar por "Rejeitar" o registro, disparando o UC-10 (Rejeitar Registro). O Supervisor deve informar justificativa textual obrigatória. O registro retorna ao Capataz Daniel com status "rejeitado" e a justificativa visível, para que ele corrija e ressubmeta. <<extend>>
+A2 (no passo 6): o Supervisor pode optar por "Solicitar mais informações", enviando uma mensagem ao Capataz Daniel sem alterar o status final do registro.
+A3 (no passo 2): o Supervisor pode aplicar filtros por Capataz, tipo de registro ou período para reduzir a sobrecarga visual e focar na validação por prioridade.
+
+Exceções:
+
+E1 (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
+E2 (no passo 7): se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
+
+Pós-condição: O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
+
+
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
 *Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
