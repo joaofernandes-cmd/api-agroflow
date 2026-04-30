@@ -168,7 +168,27 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 ## 2.2. Personas (sprint 1)
 
-*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+&ensp; &ensp; Foram desenvolvidas três personas para representar o perfil de partes interessadas usuarias da solução proposta neste documento. Cada persona representa um cargo presente em todas as fazendas da BrPec, respectivamente capataz, supervisor e gerente.
+
+<img src="outros/assets/card-persona-daniel.png">
+
+&ensp; &ensp;Daniel Carvalho tem 43 anos, é casado e pai de 3 filhos. Atualmente, trabalha como capataz na Fazenda BrPec, sendo responsável pela gestão do retiro e pela coordenação de uma equipe de 12 vaqueiros. Iniciou sua carreira ainda jovem como vaqueiro em fazendas da região, função na qual desenvolveu experiência em manejo de rebanho e liderança de equipe no campo. Por seu desempenho e domínio da rotina da pecuária, foi contratado pela BrPec para assumir a função de capataz, na qual atua há mais de 10 anos. 
+
+&ensp; &ensp;Daniel é um profissional comprometido e prático, focado em garantir que o retiro funcione com eficiência. Entretanto, a falta de ferramentas tecnológicas e de capacitação estruturada dificulta seu trabalho no dia a dia. Seu maior sonho é levar a esposa e os três filhos para conhecer o Rio de Janeiro, viagem que planeja há anos e para a qual guarda dinheiro mensalmente.
+
+<img src="outros/assets/card-persona-luiz.png">
+
+&ensp; &ensp;Luiz tem 37 anos, é solteiro, mas mantém um relacionamento estável. Atualmente, atua como supervisor dos capatazes da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por coordenar múltiplas frentes operacionais do manejo pecuário e garantir que os capatazes executem corretamente as diretrizes estabelecidas pela gestão da fazenda.
+
+&ensp; &ensp;Sua trajetória começou como peão ainda jovem, passando por diferentes funções no campo até se tornar capataz. Ao longo dos anos, destacou-se pela organização, capacidade de resolver problemas e visão prática da operação, o que o levou à promoção para supervisor — cargo que ocupa há cerca de 5 anos.
+
+&ensp; &ensp;Luiz é um profissional analítico e exigente, com forte senso de responsabilidade sobre os resultados da fazenda. Ele busca garantir eficiência, padronização e produtividade, mas enfrenta dificuldades devido à falta de integração entre informações, excesso de demandas simultâneas e dependência de processos pouco estruturados. Seu objetivo pessoal é crescer profissionalmente dentro da empresa e conquistar estabilidade financeira suficiente para investir em uma casa própria.
+
+<img src="outros/assets/card-persona-marcos.png">
+
+&ensp; &ensp;Marcos Ferreira tem 49 anos, é casado e pai de dois filhos. Atua como gerente da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por garantir o desempenho geral da operação, conectando a estratégia da empresa com a execução no campo. Supervisiona diretamente os capatazes e o supervisor, acompanhando resultados produtivos, financeiros e operacionais da fazenda.
+
+&ensp; &ensp;Formado em Administração, com experiência em gestão agropecuária, Marcos possui perfil estruturado e orientado a resultados. Divide sua rotina entre atividades administrativas e presença no campo, buscando garantir que o planejamento seja executado corretamente. Apesar de já utilizar alguns sistemas, ainda enfrenta limitações na consolidação e confiabilidade das informações operacionais. Seu principal objetivo é aumentar a eficiência da fazenda com maior controle e previsibilidade dos resultados.
 
 ## 2.3. User Stories (sprints 1 a 5)
 
