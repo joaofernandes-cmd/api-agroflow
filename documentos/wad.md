@@ -781,7 +781,6 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | UC-05 — Abrir Ticket de Infra | Daniel | Capataz | RF008, RF004 | RN08 | SUP, USAB | include UC-07; extend UC-09 |
 | UC-06 — Visualizar e Gerar Relatório | Marcos | Gerente | RF007 | RN07 | ORG, DES | include UC-07 |
 
-> **Cobertura total:** 8 dos 8 RFs (RF001 a RF008) e 8 das 8 RNs (RN01 a RN08), distribuídos entre as 3 personas do projeto. O RF005 (identificação do usuário) é coberto transversalmente pelo UC-07 (Identificar-se no Sistema), incluído (`<<include>>`) por todos os demais casos de uso como pré-condição obrigatória.
 
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
