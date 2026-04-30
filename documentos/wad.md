@@ -673,6 +673,98 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
+<p align="center">Quadro Y - User Story 07.</p>
+</div>
+
+| Identificação        | US07 |
+| -------------------- | - |
+| Persona              | Luiz Felipe   |
+| User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
+| Critério de aceite 1 | CR1: Dado que existem chamados, quando acessa a tela, então o sistema exibe a lista.  |
+| Critério de aceite 2 | CR2: Dado que seleciona um chamado, quando abre, então visualiza os detalhes. |
+| Critério de aceite 3 | CR3: Dado que altera o status, quando salva, então o sistema atualiza o chamado. |
+| Critérios INVEST     | <p>Independente: Pode ser desenvolvido como módulo separado.</p> <p>Negociável: Os status podem ser ajustados.</p> <p>Valorosa: Permite gestão estruturada de problemas.</p> <p>Estimável: Escopo simples de listagem e atualização.</p> <p>Pequena: Restrta à visualização e alteração de status.</p> <p>Testável: Validada pela atualização do chamado.</p> |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<p align="center">Quadro Y - User Story 08.</p>
+</div>
+
+| Identificação        | US08 |
+| ---- | --  |
+| Persona              | Luiz Felipe  |
+| User Story           | Como supervisor, posso receber alertas de problemas, para agir rapidamente. |
+| Critério de aceite 1 | CR1: Dado que ocorre um problema, quando identificado, então o sistema gera um alerta.  |
+| Critério de aceite 2 | CR2: Dado que há alerta, quando acessa o painel, então o supervisor visualiza a notificação. |
+| Critério de aceite 3 | CR3: Dado que clica no alerta, quando acessa, então é redirecionado ao detalhe correspondente.   |
+| Critérios INVEST     | <p>Independente: Depende apenas da geração de eventos no sistema.</p> <p>Negociável: Tipos de alerta podem ser ajustados.</p> <p>Valorosa: Permite resposta rápida a problemas.</p> <p>Estimável: Escopo claro de notificação.</p> <p>Pequena: Restrita à exibição de alertas.</p> <p>Testável: Validada pela geração e visualização de alertas.</p> |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<p align="center">Quadro Y - User Story 9.</p>
+</div>
+
+| Identificação        | US09   |
+| -------------------- | -- |
+| Persona              | Luiz Felipe   |
+| User Story           | Como supervisor, posso gerar relatórios semanais, para acompanhar a operação. |
+| Critério de aceite 1 | CR1: Dado que existem dados, quando o supervisor solicita relatório, então o sistema gera o arquivo.   |
+| Critério de aceite 2 | CR2: Dado que o relatório é gerado, quando aberto, então contém dados consolidados.  |
+| Critério de aceite 3 | CR3: Dado que não há dados, quando gera relatório, então o sistema informa ausência de registros.|
+| Critérios INVEST     | <p>Independente: Depende apenas dos dados já registrados.</p> <p>Negociável: O formato do relatório pode ser ajustado.</p> <p>Valorosa: Permite acompanhamento da operação.</p> <p>Estimável: Escopo claro de geração de relatório.</p> <p>Pequena: Restrita à exportação de dados.</p> <p>Testável: Validada pela geração e abertura do arquivo.</p> |
+
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<p align="center">Quadro Y - User Story 10.</p>
+</div>
+
+| Identificação        | US10 |
+| -------- | ---- |
+| Persona              | Marcos Ferreira   |
+| User Story           | Como gerente, posso visualizar um dashboard com indicadores da fazenda, para acompanhar a operação.   |
+| Critério de aceite 1 | CR1: Dado que existem dados, quando o gerente acessa o sistema, então o dashboard exibe indicadores principais.  |
+| Critério de aceite 2 | CR2: Dado que novos dados são sincronizados, quando atualizados, então o dashboard reflete as mudanças. |
+| Critério de aceite 3 | CR3: Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
+| Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
+
+
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<p align="center">Quadro Y - User Story 11.</p>
+</div>
+
+| Identificação        | US11 |
+| ---- | -- |
+| Persona              | Marcos Ferreira    |
+| User Story           | Como gerente, posso visualizar histórico de chamados, para acompanhar problemas recorrentes. |
+| Critério de aceite 1 | CR1: Dado que existem chamados, quando acessa o sistema, então visualiza a lista completa. |
+| Critério de aceite 2 | CR2: Dado que aplica filtros, quando seleciona critérios, então a lista é atualizada.  |
+| Critério de aceite 3 | CR3: Dado que acessa um chamado, quando abre, então visualiza os detalhes.  |
+| Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
+                                                                                                                        
+
+<p align="center">Quadro Y - User Story 12.</p>
+</div>
+
+| Identificação        | US12 |
+| -------------------- | --- |
+| Persona              | Marcos Ferreira                                               |
+| User Story           | Como gerente, posso filtrar dados por retiro, para analisar o desempenho de cada unidade da fazenda.  |
+| Critério de aceite 1 | CR1: Dado que existem dados registrados, quando o gerente aplica filtro por retiro, então o sistema exibe apenas os dados correspondentes.   |
+| Critério de aceite 2 | CR2: Dado que o gerente combina filtros, quando seleciona um período, então os dados são refinados conforme os critérios definidos.                                            |
+| Critério de aceite 3 | CR3: Dado que o gerente altera o filtro, quando seleciona outro retiro, então os resultados são atualizados automaticamente.  |
+| Critérios INVEST     | <p>Independente: Pode ser desenvolvida de forma isolada, desde que os dados já estejam disponíveis no sistema.</p> <p>Negociável: Os tipos de filtros podem ser ajustados conforme necessidade.</p> <p>Valorosa: Permite análise detalhada do desempenho por unidade, apoiando a tomada de decisão.</p> <p>Estimável: O escopo é claro, envolvendo aplicação de filtros sobre dados existentes.</p> <p>Pequena: Restrita à funcionalidade de filtragem e atualização de dados.</p> <p>Testável: Pode ser validada verificando se os dados exibidos correspondem aos filtros aplicados.</p> |
+
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 
 ## <a name="c2.3"></a>2.4. Conclusão 
 
