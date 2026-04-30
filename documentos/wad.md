@@ -1178,6 +1178,72 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** A causa do óbito está registrada como parte da movimentação de morte. O fluxo retorna ao UC-01, que prossegue normalmente com os demais campos.
 
+
+#### UC-09 — Anexar Evidência
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-09 — Anexar Evidência |
+| **Ator primário** | Capataz (Daniel) ou Supervisor (Luiz) |
+| **Atores secundários** | Sistema de Localização (GPS); Câmera; Microfone |
+| **RFs relacionados** | RF004 |
+| **RNs relacionadas** | RN04|
+| **RNFs relacionados** | USAB |
+| **Relacionamento UML** | UML<<extend>> UC-01, UC-03 e UC-05 — condição: usuário aciona "Anexar evidência" |
+
+**Pré-condição:** O usuário está executando um dos UCs base (UC-01, UC-03 ou UC-05) e está na etapa de preenchimento onde evidências podem ser adicionadas.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O sistema apresenta as opções de evidência: foto, áudio ou mensagem escrita, com ícones grandes.
+2. O usuário seleciona o tipo de evidência.
+3. Para foto: o sistema aciona a câmera, captura a imagem e extrai automaticamente os metadados de georreferenciamento.
+4. Para áudio: o sistema aciona o microfone e grava o áudio até o usuário encerrar.
+5. Para mensagem: o sistema apresenta campo de texto para digitação livre.
+6. O sistema valida a evidência (no caso de foto, verifica georreferenciamento — RN04).
+7. O sistema anexa a evidência ao registro principal e retorna o controle ao UC base.
+
+**Fluxos Alternativos:**
+
+- **A1** (no passo 2): o usuário pode anexar mais de um tipo de evidência ao mesmo registro (ex.: foto + áudio).
+
+**Exceções:**
+
+- **E1** (no passo 6): se a foto não possui metadados de georreferenciamento válidos, o sistema rejeita a foto, exibe mensagem clara e oferece nova captura (RN04). O registro base continua válido se já houver outra evidência.
+- **E2** (no passo 3): se o GPS do dispositivo está desligado, o sistema solicita ativação antes de capturar a foto.
+
+**Pós-condição:** A evidência está anexada ao registro principal com seus metadados (tipo, timestamp, localização quando aplicável). O fluxo retorna ao UC base.
+
+
+#### UC-10 — Rejeitar Registro
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-10 — Rejeitar Registro |
+| **Ator primário** | Supervisor (Luiz) |
+| **Atores secundários** | Capataz Daniel (notificado da rejeição) |
+| **RFs relacionados** | RF006 |
+| **RNs relacionadas** | RN06|
+| **RNFs relacionados** | SEG |
+| **Relacionamento UML** | <<extend>> UC-04 — condição: Supervisor opta por rejeitar o registro |
+
+**Pré-condição:** O Supervisor está executando o UC-04 (Validar Registros) e identificou inconsistência ou problema no registro analisado, optando por rejeitá-lo no passo 6.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Supervisor seleciona a ação "Rejeitar".
+2. O sistema apresenta campo obrigatório de justificativa textual.
+3. O Supervisor preenche a justificativa explicando o motivo da rejeição.
+4. O Supervisor confirma a rejeição.
+5. O sistema altera o status do registro para "Rejeitado", grava o identificador do Supervisor, timestamp e a justificativa.
+6. O sistema notifica o Capataz Daniel sobre a rejeição, exibindo o motivo.
+7. O sistema retorna o Supervisor ao painel de validações (UC-04).
+
+**Exceções:**
+
+- **E1** (no passo 4): se a justificativa está em branco, o sistema bloqueia a confirmação e exige preenchimento.
+
+**Pós-condição:** O registro está marcado como "Rejeitado" com justificativa visível. O Capataz Daniel é notificado e pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
+Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
+
 ---
 
 ### Matriz de Cobertura RF/RN/RNF × UC
