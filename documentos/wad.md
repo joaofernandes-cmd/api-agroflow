@@ -3,9 +3,7 @@
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
-
-## Nome do Grupo
+## AgroFlow
 
 #### Integrantes do grupo:
 
@@ -192,11 +190,11 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa dificulta o acompanhamento estratégico em **tempo real** e a precisão do inventário pecuário.
+&nbsp;&nbsp;&nbsp;&nbsp;No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa dificulta o acompanhamento estratégico em **tempo real** e a precisão do inventário pecuário.
 
-Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização automática** de dados assim que a conexão for restabelecida.
+&nbsp;&nbsp;&nbsp;&nbsp;Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização automática** de dados assim que a conexão for restabelecida.
 
-A interface foi estruturada para atender a diferentes **níveis hierárquicos**: tarefas calendarizadas são atribuídas por **gerentes**, enquanto a execução é reportada por capatazes mediante o envio de **evidências digitais**, como fotos e áudios. Por fim, as informações são validadas por **coordenadores**, sendo os dados consolidados **exportados em formatos Excel ou CSV** para suporte à tomada de decisão. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
+&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos**: tarefas calendarizadas são atribuídas por **gerentes**, enquanto a execução é reportada por capatazes mediante o envio de **evidências digitais**, como fotos e áudios. Por fim, as informações são validadas por **coordenadores**, sendo os dados consolidados **exportados em formatos Excel ou CSV** para suporte à tomada de decisão. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
@@ -204,63 +202,57 @@ A interface foi estruturada para atender a diferentes **níveis hierárquicos**:
 
 ### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter 
 
-# Análise das 5 Forças de Porter — BrPec Agropecuária
+#### Análise das 5 Forças de Porter - BrPec Agropecuária
 
-A estrutura competitiva do setor pecuário no Pantanal e Cerrado sul mato grossenses é marcada por intensividade em capital, dependência ambiental e inserção em um mercado global de commodities, o que reduz a capacidade de diferenciação e torna o produtor essencialmente tomador de preço.
-
-## 5 Forças de Porter
-
-<img src="./forcas-de-porter.png">
-
-Figura 1 - Autoria Própria (2026)
+&nbsp;&nbsp;&nbsp;&nbsp; A análise das Cinco Forças de Porter permite compreender a estrutura competitiva do setor em que a BRPec está inserida, avaliando fatores que impactam diretamente sua rentabilidade e posicionamento estratégico. No contexto do agronegócio, especialmente na pecuária de larga escala no Pantanal e Cerrado, essa análise se torna essencial devido à alta dependência de capital, fatores ambientais, logística e dinâmica de mercado. A partir desse modelo, é possível identificar como barreiras à entrada, produtos substitutos, relações com fornecedores e compradores, além da intensidade da concorrência, influenciam as decisões da empresa, contribuindo para uma visão mais clara dos desafios e oportunidades do negócio (PORTER, 2008).
 
 
----
+<div align="center">
+<p>Figura 1 - 5 Forças de Porter</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
+</p>
+</div> 
 
-## 1. Ameaça de Novos Entrantes
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
-O risco de novos entrantes é muito baixo. A pecuária de grande escala no Pantanal e Cerrado exige investimentos elevados em terras, rebanho e infraestrutura, com horizonte de retorno de longo prazo, o que restringe a entrada a poucos agentes com elevada capacidade financeira e técnica. A BrPec, com 132.660 hectares em Miranda e Corumbá, ilustra essa escala.
+**1. Ameaça de Novos Entrantes:**
 
-Além disso, a operação no Pantanal depende de licenciamentos ambientais rigorosos e domínio de técnicas de manejo adaptadas ao bioma. Novos operadores tendem a adquirir propriedades existentes em vez de criar novas unidades, o que não altera substancialmente a estrutura do setor. O vínculo da BrPec com o BTG Pactual reforça essa barreira ao conferir acesso privilegiado a capital e gestão.
+&nbsp;&nbsp;&nbsp;&nbsp;O risco de novos entrantes é muito baixo. A pecuária de grande escala no Pantanal e Cerrado exige investimentos elevados em terras, rebanho e infraestrutura, com horizonte de retorno de longo prazo, o que restringe a entrada a poucos agentes com elevada capacidade financeira e técnica. A BrPec, com 132.660 hectares em Miranda e Corumbá, ilustra essa escala.
 
----
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, a operação no Pantanal depende de licenciamentos ambientais rigorosos e domínio de técnicas de manejo adaptadas ao bioma. Novos operadores tendem a adquirir propriedades existentes em vez de criar novas unidades, o que não altera substancialmente a estrutura do setor. O vínculo da BrPec com o BTG Pactual reforça essa barreira ao conferir acesso privilegiado a capital e gestão.
 
-## 2. Ameaça de Produtos Substitutos
+**2. Ameaça de Produtos Substitutos:**
 
-O risco de substituição é moderado. Frango e carne suína competem por preço, especialmente em segmentos de menor renda, e o crescimento das proteínas vegetais representa uma tendência a ser monitorada, embora ainda restrita a nichos urbanos no Brasil.
+&nbsp;&nbsp;&nbsp;&nbsp;O risco de substituição é moderado. Frango e carne suína competem por preço, especialmente em segmentos de menor renda, e o crescimento das proteínas vegetais representa uma tendência a ser monitorada, embora ainda restrita a nichos urbanos no Brasil.
 
-Por outro lado, a carne bovina mantém posição cultural privilegiada no consumo doméstico, e a demanda global crescente, sobretudo nos mercados asiáticos, sustenta sua relevância comercial. A pressão ambiental pode influenciar hábitos no longo prazo, mas no horizonte atual ainda não se traduz em substituição significativa.
+&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a carne bovina mantém posição cultural privilegiada no consumo doméstico, e a demanda global crescente, sobretudo nos mercados asiáticos, sustenta sua relevância comercial. A pressão ambiental pode influenciar hábitos no longo prazo, mas no horizonte atual ainda não se traduz em substituição significativa.
 
----
+**3. Poder de Barganha dos Fornecedores:**
 
-## 3. Poder de Barganha dos Fornecedores
+&nbsp;&nbsp;&nbsp;&nbsp;O poder de barganha dos fornecedores é moderado, com variações por segmento. A genética bovina de alta qualidade está concentrada em poucos grupos especializados, o que aumenta a dependência tecnológica e eleva os custos de substituição ao longo do ciclo produtivo.
 
-O poder de barganha dos fornecedores é moderado, com variações por segmento. A genética bovina de alta qualidade está concentrada em poucos grupos especializados, o que aumenta a dependência tecnológica e eleva os custos de substituição ao longo do ciclo produtivo.
+&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, insumos veterinários, suplementos e maquinário contam com diversos fornecedores, e a escala da BrPec confere poder de negociação em compras de volume. Contudo, a mão de obra especializada em manejo pantaneiro é escassa e de difícil substituição, elevando o poder de barganha nesse segmento. O modelo "flex" da empresa funciona como mecanismo de mitigação ao ajustar a demanda por insumos conforme o cenário econômico.
 
-Em contrapartida, insumos veterinários, suplementos e maquinário contam com diversos fornecedores, e a escala da BrPec confere poder de negociação em compras de volume. Contudo, a mão de obra especializada em manejo pantaneiro é escassa e de difícil substituição, elevando o poder de barganha nesse segmento. O modelo "flex" da empresa funciona como mecanismo de mitigação ao ajustar a demanda por insumos conforme o cenário econômico.
+**4. Poder de Barganha dos Compradores:**
 
----
+&nbsp;&nbsp;&nbsp;&nbsp;O poder de barganha dos compradores é elevado e constitui uma das forças mais relevantes para a BrPec. O mercado de abate é altamente concentrado em poucos grandes frigoríficos JBS, Marfrig e Minerva Foods, que possuem instrumentos diretos para influenciar preços e condições de compra. O produtor é tomador de preço, seguindo referências definidas pela B3 e pelo Cepea/Esalq.
 
-## 4. Poder de Barganha dos Compradores
+&nbsp;&nbsp;&nbsp;&nbsp;Essa dinâmica se intensifica no modelo de cria adotado pela BrPec, no qual os bezerros são vendidos a recriadores e confinadores que também pressionam por preços competitivos. A volatilidade cambial agrava o cenário ao influenciar a atratividade das exportações. Assim, a principal relação de poder se estabelece entre produtor e indústria frigorífica, não entre empresa e consumidor final.
 
-O poder de barganha dos compradores é elevado e constitui uma das forças mais relevantes para a BrPec. O mercado de abate é altamente concentrado em poucos grandes frigoríficos JBS, Marfrig e Minerva Foods, que possuem instrumentos diretos para influenciar preços e condições de compra. O produtor é tomador de preço, seguindo referências definidas pela B3 e pelo Cepea/Esalq.
+**5. Rivalidade entre Concorrentes Existentes:**
 
-Essa dinâmica se intensifica no modelo de cria adotado pela BrPec, no qual os bezerros são vendidos a recriadores e confinadores que também pressionam por preços competitivos. A volatilidade cambial agrava o cenário ao influenciar a atratividade das exportações. Assim, a principal relação de poder se estabelece entre produtor e indústria frigorífica, não entre empresa e consumidor final.
+&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada. O Brasil possui o maior rebanho comercial do mundo, distribuído entre milhares de produtores, e a escolha do comprador é condicionada primariamente ao preço e à logística, não à empresa responsável pela produção. Isso reduz a diferenciação e intensifica a competição por eficiência operacional.
 
----
-
-## 5. Rivalidade entre Concorrentes Existentes
-
-A rivalidade entre concorrentes é elevada. O Brasil possui o maior rebanho comercial do mundo, distribuído entre milhares de produtores, e a escolha do comprador é condicionada primariamente ao preço e à logística, não à empresa responsável pela produção. Isso reduz a diferenciação e intensifica a competição por eficiência operacional.
-
-A rivalidade se acentua com a entrada de operadores corporativos ligados ao mercado financeiro as chamadas "fazendas Faria Lima", que acessam capital a custo mais baixo e utilizam ferramentas financeiras sofisticadas. Os custos fixos elevados forçam operação contínua mesmo em margens negativas, mantendo a pressão sobre preços. O modelo "flex" da BrPec representa resposta estratégica direta a essa intensidade competitiva, ao capturar margem no elo da cadeia mais favorável em cada ciclo.
+&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade se acentua com a entrada de operadores corporativos ligados ao mercado financeiro as chamadas "fazendas Faria Lima", que acessam capital a custo mais baixo e utilizam ferramentas financeiras sofisticadas. Os custos fixos elevados forçam operação contínua mesmo em margens negativas, mantendo a pressão sobre preços. O modelo "flex" da BrPec representa resposta estratégica direta a essa intensidade competitiva, ao capturar margem no elo da cadeia mais favorável em cada ciclo.
 
 ### <a name="c2.1.2"></a>2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças (PORTER, 1980). Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado.
+&nbsp;&nbsp;&nbsp;&nbsp;A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças (PORTER, 1980). Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado, como demonstra a figura 2.
 
 <div align="center">
-<p>Figura 1 - Análise de SWOT</p>
+<p>Figura 2 - Análise de SWOT</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot.png" alt="Análise de SWOT" border="0"></a>
 </p>
@@ -268,67 +260,66 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utiliza
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**FORÇAS**
+**- Forças:**
 
-A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, sua localização estratégica, com acesso a diferentes modais logísticos, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
+&nbsp;&nbsp;&nbsp;&nbsp;A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, sua localização estratégica, com acesso a diferentes modais logísticos, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
 
-**FRAQUEZAS:** 
+**- Fraquezas:** 
 
-Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a exposição a riscos ambientais e regulatórios, que podem gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012). 
+&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a exposição a riscos ambientais e regulatórios, que podem gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012). 
 
-**OPORTUNIDADES:**
+**- Oportunidades:**
 
-No ambiente externo, observa-se um cenário favorável à expansão, impulsionado pela crescente demanda global por proteína animal e pela valorização de práticas sustentáveis. Nesse contexto, iniciativas ligadas a ESG e créditos de carbono surgem como potenciais fontes de geração de valor (DE OLHO NOS RURALISTAS, 2025). Além disso, o avanço da fronteira agrícola e o crescimento projetado da produção de soja no Mato Grosso do Sul ampliam as possibilidades de expansão das áreas produtivas, aumento da oferta de insumos para alimentação animal e maior integração entre agricultura e pecuária, fortalecendo a eficiência e a escala das operações da empresa (APROSOJA MS, 2024).
+&nbsp;&nbsp;&nbsp;&nbsp;No ambiente externo, observa-se um cenário favorável à expansão, impulsionado pela crescente demanda global por proteína animal e pela valorização de práticas sustentáveis. Nesse contexto, iniciativas ligadas a ESG e créditos de carbono surgem como potenciais fontes de geração de valor (DE OLHO NOS RURALISTAS, 2025). Além disso, o avanço da fronteira agrícola e o crescimento projetado da produção de soja no Mato Grosso do Sul ampliam as possibilidades de expansão das áreas produtivas, aumento da oferta de insumos para alimentação animal e maior integração entre agricultura e pecuária, fortalecendo a eficiência e a escala das operações da empresa (APROSOJA MS, 2024).
 
-**AMEAÇAS:**
+**- Ameaças:**
 
-Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo (PORTER, 1980).
+&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo (PORTER, 1980).
 
 
 ### <a name="c2.1.3"></a>2.1.3. Solução
 
-*1. Problema a ser resolvido*
+**1. Problema a ser resolvido**
 
-Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados. Além disso, como não há um formato fixo, certas informações podem deixar de ser anotadas, como a causa da morte de um boi.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados. Além disso, como não há um formato fixo, certas informações podem deixar de ser anotadas, como a causa da morte de um boi.
 
-*2. Dados disponíveis*
+**2. Dados disponíveis**
 
 Não se aplica.
 
-*3. Solução proposta*
+**3. Solução proposta**
 
- Propusemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a planilha que será utilizada para armazenar dados sobre nascimento, morte, transferência etc., eliminando a dependência de anotações em papel e da transcrição manual.
+ &nbsp;&nbsp;&nbsp;&nbsp;Propusemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a planilha que será utilizada para armazenar dados sobre nascimento, morte, transferência etc., eliminando a dependência de anotações em papel e da transcrição manual.
 
-*4. Forma de utilização da solução*
+**4. Forma de utilização da solução**
 
-A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações serão inseridas e armazenadas localmente no celular enquanto o dispositivo estiver offline e, ao se conectar à internet, serão sincronizadas automaticamente com a base central de dados, otimizando o trabalho dos capatazes ao eliminar a necessidade de transcrição manual para a planilha.
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações serão inseridas e armazenadas localmente no celular enquanto o dispositivo estiver offline e, ao se conectar à internet, serão sincronizadas automaticamente com a base central de dados, otimizando o trabalho dos capatazes ao eliminar a necessidade de transcrição manual para a planilha.
 
-*5. Benefícios esperados*
+**5. Benefícios esperados**
 
-Os benefícios visados incluem a agilização da coleta e do processamento de dados, com a redução do trabalho manual de anotação em papel e da posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre diferentes retiros, otimizando a comunicação e a integração entre eles, o que torna as operações mais coordenadas e reduz os riscos de erros ou perda de dados.
+&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios visados incluem a agilização da coleta e do processamento de dados, com a redução do trabalho manual de anotação em papel e da posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre diferentes retiros, otimizando a comunicação e a integração entre eles, o que torna as operações mais coordenadas e reduz os riscos de erros ou perda de dados.
 
-*6. Critério de sucesso e como será avaliado*
+**6. Critério de sucesso e como será avaliado**
 
-Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
+&nbsp;&nbsp;&nbsp;&nbsp;Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 &nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 2).
 
 <div align="center">
-<p>Figura 2 - Canvas Proposta de Valor</p>
+<p>Figura 3 - Canvas Proposta de Valor</p>
 <p align="center">
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/canva-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/canvas-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
----
 
-#### Perfil do Cliente
+### Perfil do Cliente
 
-##### Tarefas do Cliente
+**- Tarefas do Cliente:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Nas tarefas do cliente, são delimitadas as tarefas que um cliente está tentando fazer, especialmente antes de utilizar uma nova solução proposta por uma determinada organização (G4 EDUCAÇÃO, 2025). Com isso, a equipe identificou as seguintes tarefas do cliente:
 
@@ -336,7 +327,7 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 - Consolidar dados operacionais para subsidiar decisões estratégicas de negócio;
 - Gerenciar e acompanhar tarefas diárias de campo.
 
-##### Dores
+**- Dores:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na seção de dores do Canvas Proposta de Valor, são adicionadas as frustrações que o cliente sofre ao tentar realizar determinada tarefa (G4 EDUCAÇÃO, 2025). Desse modo, foram elencadas as seguintes dores do cliente:
 
@@ -345,7 +336,7 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 - Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos;
 - Falta de visibilidade agilizada sobre o status das atividades e do rebanho.
 
-##### Ganhos
+**- Ganhos:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na seção de ganhos do Canvas Proposta de Valor, são colocados os resultados que o cliente aspira ter quando realiza uma tarefa (G4 EDUCAÇÃO, 2025). Assim, foram identificados os seguintes ganhos do cliente:
 
@@ -354,11 +345,9 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 - Maior rastreabilidade e transparência nas operações de campo;
 - Agilidade no acompanhamento de tarefas e movimentações diariamente.
 
----
+### Proposta de Valor
 
-#### Proposta de Valor
-
-##### Produtos e Serviços
+**- Produtos e Serviços:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de produtos e serviços de um Canvas Proposta de Valor se refere aos recursos oferecidos por uma determinada organização (G4 EDUCAÇÃO, 2025). Dessa forma, é possível mencionar os seguintes no que se refere à solução proposta pela equipe:
 
@@ -366,7 +355,7 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 - Interface de calendarização e monitoramento de tarefas para o Gerente;
 - Funcionalidade offline com sincronização automática ao restabelecer conexão com a internet.
 
-##### Criadores de Ganho
+**- Criadores de Ganho:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de criadores de ganhos de um Canvas Proposta de Valor diz respeito a como os produtos e serviços de uma determinada organização acarretam os resultados que o cliente espera (G4 EDUCAÇÃO, 2025). A partir disso, foram elencados os seguintes criadores de ganho:
 
@@ -374,7 +363,7 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 - Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano;
 - Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações.
 
-##### Aliviam as Dores
+**- Aliviadores das dores:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de aliviadores de dor de um Canvas Proposta de Valor mostra de qual maneira os produtos e serviços propostos por uma organização tratam as dores do cliente (G4 EDUCAÇÃO, 2025). Por conseguinte, foram elaborados os seguintes aliviadores de dor:
 
@@ -385,23 +374,21 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
 
-<p align="center">Figura 3 – Matriz De Risco.</p> 
+<p align="center">Figura 4 – Matriz De Risco.</p> 
 
 <div align="center">
-
-img src="outros/assets/matriz-de-risco.png">
+<img src="outros/assets/matriz-de-risco.png">
 
 <p> Fonte: Próprios autores (2026).</p>
 </div>
 
 **Planos de ação, impacto e probabilidade**
 
-Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC (conforme os quadros 1 e 2). Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
+&nbsp;&nbsp;&nbsp;&nbsp;Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC, de acordo com os quadros 1 e 2. Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
 
 <p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
-
 
 | Ameaça                                                   | Plano de ação                                                                    | Probabilidade | Impacto    |
 | -------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
@@ -414,7 +401,7 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 <p align="center">Fonte: Próprios autores (2026).</p> 
 
-
+---
 
 <p align="center">Quadro 2 – Plano de ação para as oportunidades.</p> 
 
@@ -428,19 +415,20 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 
 <p align="center">Fonte: Próprios autores (2026).</p> 
 
+# Conclusões
+
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação integrada das análises SWOT, Cinco Forças de Porter e Business Model Canvas foi fundamental para entender melhor o problema enfrentado pela BRPec e direcionar a solução proposta. A análise SWOT ajudou a organizar os principais pontos internos e externos do negócio, evidenciando tanto a força da operação quanto limitações como a dependência de processos manuais. Já o modelo de Porter mostrou como o setor é altamente competitivo, com forte pressão de compradores e baixa diferenciação, exigindo maior eficiência operacional. Por fim, o Canvas permitiu enxergar o negócio de forma mais completa, conectando a proposta de valor com as necessidades reais da operação. No conjunto, essas análises deixaram claro que o principal desafio está na organização e confiabilidade das informações do campo, e que a digitalização dos processos é essencial para reduzir retrabalho, organizar os dados e aumentar o controle da operação.
 
 ## 2.2. Personas (sprint 1)
 
-&ensp;&ensp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
+&nbsp;&nbsp;&nbsp;&nbsp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
-&ensp;&ensp;No contexto deste projeto, foram desenvolvidas três personas com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec — capataz, supervisor e gerente —, possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, foram desenvolvidas três personas, como demonstra as figuras 5, 6 e 7, com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec (capataz, supervisor e gerente), possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
 
----
-
-### Persona 1 — Daniel Carvalho
+### Persona 1 - Daniel Carvalho
 
 <div align="center">
-<p>Figura 4 - Persona 1</p>
+<p>Figura 5 - Persona 1 (Daniel Carvalho)</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/"><img <img src="outros/assets/persona-daniel.png">  <alt="Persona 1" border="0"></a>
 </p>
@@ -448,6 +436,8 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 </div>
 
 #### Informações
+
+<p>Quadro 3 - Informações do Daniel .</p>  
 
 | Campo               | Descrição                      |
 |---------------------|--------------------------------|
@@ -457,13 +447,15 @@ Em linhas gerais, um plano de ação consiste em um conjunto de medidas definida
 | **Escolaridade**    | Ensino fundamental incompleto  |
 | **Letramento digital** | Baixo                       |
 
-#### Biografia
+<p>Fonte: Próprios Autores (2026) .</p>
 
-Daniel Carvalho iniciou sua trajetória ainda jovem em fazendas da região, desenvolvendo experiência prática no manejo de rebanho e na coordenação de equipes. Atualmente, atua há mais de 10 anos como capataz na Fazenda BrPec, sendo responsável pela execução das atividades operacionais no retiro.
+**- Biografia:**
 
-Apesar de ser um profissional experiente, prático e comprometido, enfrenta limitações relacionadas à baixa digitalização dos processos, à escassez de ferramentas adequadas e à falta de capacitação para utilização de tecnologias. Essas condições impactam diretamente a organização das tarefas e a eficiência no dia a dia.
+&nbsp;&nbsp;&nbsp;&nbsp;Daniel Carvalho iniciou sua trajetória ainda jovem em fazendas da região, desenvolvendo experiência prática no manejo de rebanho e na coordenação de equipes. Atualmente, atua há mais de 10 anos como capataz na Fazenda BrPec, sendo responsável pela execução das atividades operacionais no retiro.
 
-#### Metas
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar de ser um profissional experiente, prático e comprometido, enfrenta limitações relacionadas à baixa digitalização dos processos, à escassez de ferramentas adequadas e à falta de capacitação para utilização de tecnologias. Essas condições impactam diretamente a organização das tarefas e a eficiência no dia a dia.
+
+**- Metas:**
 
 - Cumprir as atividades diárias com eficiência;
 - Garantir que a equipe execute corretamente as tarefas;
@@ -471,38 +463,38 @@ Apesar de ser um profissional experiente, prático e comprometido, enfrenta limi
 - Conseguir economizar mensalmente, ainda que de forma modesta;
 - Proporcionar uma viagem em família.
 
-#### Necessidades
+**- Necessidades:**
 
 - Soluções simples e intuitivas para organização das tarefas;
 - Ferramentas que auxiliem no acompanhamento das atividades;
 - Redução do tempo gasto na execução e resolução de problemas.
 
-#### Desafios e Dores
+**- Desafios e Dores:**
 
 - Jornada de trabalho extensa e fisicamente desgastante;
 - Sobrecarga de responsabilidades no retiro;
 - Dificuldade em organizar informações mentalmente ou em papel;
 - Baixo nível de familiaridade com tecnologias digitais.
 
-#### Interesses
+**- Interesses:**
 
 - Estabilidade financeira e qualidade de vida familiar;
 - Momentos de descanso quando possível;
 - Manter o trabalho organizado e sem imprevistos.
 
----
-
-### Persona 2 — Luiz Felipe
+### Persona 2 - Luiz Felipe
 
 <div align="center">
-<p>Figura 4 - Persona 2</p>
+<p>Figura 6 - Persona 2 (Luiz Felipe)</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-luiz.png">  <alt="Persona 2" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-#### Informações
+**- Informações:**
+
+<p>Quadro 4 - Informações do Luiz.</p> 
 
 | Campo               | Descrição               |
 |---------------------|-------------------------|
@@ -512,51 +504,53 @@ Apesar de ser um profissional experiente, prático e comprometido, enfrenta limi
 | **Escolaridade**    | Ensino médio completo   |
 | **Letramento digital** | Intermediário        |
 
-#### Biografia
+<p>Fonte: Próprios Autores (2026) .</p>
 
-Luiz Felipe atua como supervisor na Fazenda Rocha Lima (BrPec), sendo responsável pela coordenação dos capatazes e pelo acompanhamento das operações de manejo. Possui experiência prática no campo e apresenta um perfil analítico, com foco na eficiência operacional e no desenvolvimento profissional.
+**- Biografia:**
 
-No entanto, enfrenta dificuldades relacionadas à falta de integração de informações entre os retiros e a área administrativa, além de lidar com processos pouco estruturados, o que compromete a visibilidade e o controle das operações.
+&nbsp;&nbsp;&nbsp;&nbsp;Luiz Felipe atua como supervisor na Fazenda Rocha Lima (BrPec), sendo responsável pela coordenação dos capatazes e pelo acompanhamento das operações de manejo. Possui experiência prática no campo e apresenta um perfil analítico, com foco na eficiência operacional e no desenvolvimento profissional.
 
-#### Metas
+&nbsp;&nbsp;&nbsp;&nbsp;No entanto, enfrenta dificuldades relacionadas à falta de integração de informações entre os retiros e a área administrativa, além de lidar com processos pouco estruturados, o que compromete a visibilidade e o controle das operações.
+
+**- Metas:**
 
 - Reduzir erros e retrabalho;
 - Aumentar a eficiência operacional;
 - Desenvolver maior autonomia dos capatazes;
 - Evoluir para funções de maior responsabilidade.
 
-#### Necessidades
+**- Necessidades:**
 
 - Tecnologias intuitivas que simplifiquem a gestão;
 - Ferramentas que otimizem o tempo das atividades;
 - Métodos que aumentem a produtividade da equipe.
 
-#### Desafios e Dores
+**- Desafios e Dores:**
 
 - Dificuldade em supervisionar múltiplas frentes;
 - Baixa visibilidade das operações;
 - Comunicação informal e descentralizada;
 - Retrabalho decorrente de falhas e desalinhamentos.
 
-#### Interesses
+**- Interesses:**
 
 - Ferramentas simples para acompanhamento em tempo real;
 - Visão consolidada das operações;
 - Melhor organização das rotinas;
 - Redução da dependência de comunicação informal.
 
----
-
-### Persona 3 — Marcos Ferreira
+### Persona 3 - Marcos Ferreira
 <div align="center">
-<p>Figura 4 - Persona 3</p>
+<p>Figura 7 - Persona 3 (Marcos Ferreira)</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-marcos.png">  <alt="Persona 3" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-#### Informações
+**- Informações:**
+
+<p>Quadro 5 - Informações do Marcos.</p> 
 
 | Campo               | Descrição                    |
 |---------------------|------------------------------|
@@ -566,48 +560,48 @@ No entanto, enfrenta dificuldades relacionadas à falta de integração de infor
 | **Escolaridade**    | Ensino superior completo     |
 | **Letramento digital** | Intermediário             |
 
-#### Biografia
+<p>Fontes: Próprios Autores (2026).</p>  
 
-Marcos Ferreira atua como gerente da Fazenda Rocha Lima (BrPec), sendo responsável pela supervisão da equipe e pelos resultados operacionais. Formado em Administração, possui uma visão estratégica voltada para eficiência, controle e tomada de decisão baseada em dados.
+**- Biografia:**
 
-Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilidade dos dados operacionais, especialmente os provenientes do campo, além da dependência de registros manuais, o que impacta a qualidade das informações e a agilidade na gestão.
+&nbsp;&nbsp;&nbsp;&nbsp;Marcos Ferreira atua como gerente da Fazenda Rocha Lima (BrPec), sendo responsável pela supervisão da equipe e pelos resultados operacionais. Formado em Administração, possui uma visão estratégica voltada para eficiência, controle e tomada de decisão baseada em dados.
 
-#### Metas
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilidade dos dados operacionais, especialmente os provenientes do campo, além da dependência de registros manuais, o que impacta a qualidade das informações e a agilidade na gestão.
+
+**- Metas:**
 
 - Reduzir o estresse operacional e a dependência de ações reativas;
 - Garantir maior previsibilidade dos resultados;
 - Melhorar a qualidade e agilidade das informações;
 - Possibilitar melhor equilíbrio entre vida profissional e pessoal.
 
-#### Necessidades
+**- Necessidades:**
 
 - Visão consolidada e confiável das operações;
 - Redução de erros na coleta de dados;
 - Ferramentas acessíveis para todos os níveis da operação;
 - Apoio à tomada de decisão com base em dados organizados.
 
-#### Desafios e Dores
+**- Desafios e Dores:**
 
 - Baixa integração e confiabilidade dos dados;
 - Dificuldade de acompanhamento do realizado vs. planejado;
 - Dependência de registros manuais sujeitos a erros;
 - Pressão por resultados e controle de custos.
 
-#### Interesses
+**- Interesses:**
 
 - Soluções digitais práticas e de fácil adoção;
 - Integração entre operação e gestão;
 - Indicadores claros para tomada de decisão;
 - Estabilidade financeira e qualidade de vida.
 
----
 
 ## 2.3. User Stories (sprints 1 a 5)
 
-*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST das 5 User Stories prioritárias*
+&nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BRPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17.
 
-*ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO*
-
+<p align="center">Quadro 6 - User Story 01.</p> 
 
 | Identificação | US01 |
 | - | - |
@@ -618,7 +612,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que não há conexão, quando registra, então o dado é salvo localmente. |
 | Critérios INVEST | <p>Independente: A funcionalidade pode ser desenvolvida de forma isolada, sem depender de outros módulos.</p> <p>Negociável: Os campos do formulário podem ser ajustados conforme necessidade.</p> <p>Valorosa: Elimina o uso de boletas em papel, reduzindo erros e retrabalho.</p> <p>Estimável: Possui escopo claro, envolvendo formulário e validação.</p> <p>Pequena: Restrita ao registro de movimentações.</p> <p>Testável: Pode ser validada pelo preenchimento e salvamento correto dos dados.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+--- 
+
+<p align="center">Quadro 7 - User Story 02.</p>
 
 | Identificação | US02 |
 | - | - |
@@ -629,7 +628,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que a conexão retorna, quando o sistema detecta internet, então os dados são sincronizados automaticamente. |
 | Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+---
+
+<p align="center">Quadro 8 - User Story 03.</p>
 
 | Identificação | US03 |
 | - | - |
@@ -640,7 +644,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que acessa o registro, quando visualiza, então a imagem deve estar disponível. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida como complemento aos registros existentes.</p> <p>Negociável: O tipo de evidência pode ser ampliado para vídeo ou áudio.</p> <p>Valorosa: Aumenta a confiabilidade das informações registradas.</p> <p>Estimável: Escopo claro envolvendo upload e armazenamento.</p> <p>Pequena: Restrita ao envio e visualização de imagens.</p> <p>Testável: Pode ser validada pelo upload correto e exibição da imagem.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+--- 
+
+<p align="center">Quadro 9 - User Story 04.</p>
 
 | Identificação | US04 |
 | - | - |
@@ -651,7 +660,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que acessa histórico, quando consulta, então visualiza seus chamados. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida separadamente dos demais módulos.</p> <p>Negociável: Campos como prioridade e categoria podem ser ajustados.</p> <p>Valorosa: Permite comunicação estruturada de problemas no retiro.</p> <p>Estimável: Escopo claro envolvendo criação e consulta.</p> <p>Pequena: Restrita à abertura e visualização de chamados.</p> <p>Testável: Pode ser validada pela criação e listagem dos chamados.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+---
+
+<p align="center">Quadro 10 - User Story 05.</p>
 
 | Identificação | US05 |
 | - | - |
@@ -662,7 +676,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que rejeita um registro, quando confirma, então informa o motivo. |
 | Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
+---
+
+<p align="center">Quadro 11 - User Story 06.</p>
 
 | Identificação | US06 |
 | - | - |
@@ -673,7 +692,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
-<p align="center">Quadro Y - User Story 07.</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+<p align="center">Quadro 12 - User Story 07.</p>
 </div>
 
 | Identificação        | US07 |
@@ -688,7 +712,9 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 08.</p>
+---
+
+<p align="center">Quadro 13 - User Story 08.</p>
 </div>
 
 | Identificação        | US08 |
@@ -703,7 +729,9 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 9.</p>
+---
+
+<p align="center">Quadro 14 - User Story 9.</p>
 </div>
 
 | Identificação        | US09   |
@@ -719,7 +747,9 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 10.</p>
+---
+
+<p align="center">Quadro 15 - User Story 10.</p>
 </div>
 
 | Identificação        | US10 |
@@ -731,12 +761,12 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
 | Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
 
-
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-<p align="center">Quadro Y - User Story 11.</p>
+---
+
+<p align="center">Quadro 16 - User Story 11.</p>
 </div>
 
 | Identificação        | US11 |
@@ -747,9 +777,13 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 2 | CR2: Dado que aplica filtros, quando seleciona critérios, então a lista é atualizada.  |
 | Critério de aceite 3 | CR3: Dado que acessa um chamado, quando abre, então visualiza os detalhes.  |
 | Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
-                                                                                                                        
 
-<p align="center">Quadro Y - User Story 12.</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>                                                                                                                       
+
+---
+
+<p align="center">Quadro 17 - User Story 12.</p>
 </div>
 
 | Identificação        | US12 |
@@ -761,28 +795,24 @@ Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilid
 | Critério de aceite 3 | CR3: Dado que o gerente altera o filtro, quando seleciona outro retiro, então os resultados são atualizados automaticamente.  |
 | Critérios INVEST     | <p>Independente: Pode ser desenvolvida de forma isolada, desde que os dados já estejam disponíveis no sistema.</p> <p>Negociável: Os tipos de filtros podem ser ajustados conforme necessidade.</p> <p>Valorosa: Permite análise detalhada do desempenho por unidade, apoiando a tomada de decisão.</p> <p>Estimável: O escopo é claro, envolvendo aplicação de filtros sobre dados existentes.</p> <p>Pequena: Restrita à funcionalidade de filtragem e atualização de dados.</p> <p>Testável: Pode ser validada verificando se os dados exibidos correspondem aos filtros aplicados.</p> |
 
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
-
-
-# Conclusões
-
-A análise da BRPec a partir da perspectiva das 5 Forças de Porter, mostra que ela atua em um setor difícil de entrar e sem muitos substitutos (pouca ameaça de novos entrantes e baixa ameaça de substituto), mas sofre pressão dos grandes frigoríficos e enfrenta concorrência forte entre produtores (afetado pelo poder de barganha do comprador e da forte Rivalidade entre concorrentes), o que a obriga a aceitar os preços do mercado. Por isso, o modelo "flex" aparece como uma estratégia para ganhar mais dinheiro no setor da cadeia que seja mais vantajoso a cada momento. Olhando para a SWOT, a empresa tem pontos fortes importantes, como o tamanho, a união entre agricultura e pecuária e o apoio do BTG Pactual, mas também tem pontos fracos, como a operação complexa e a dependência de trabalhadores em locais distantes. Além disso, conta com oportunidades ligadas ao ESG (Ambiental, social e governança) e à expansão agrícola, ao mesmo tempo em que precisa lidar com riscos regulatórios, climáticos e de mercado, o que exige um bom controle de riscos. Para resolver um problema do dia a dia, foi pensada uma solução simples: como os capatazes anotam tudo no papel e isso gera retrabalho e erros, criou-se um aplicativo web que funciona sem internet e sincroniza os dados depois, fácil de usar até para quem tem pouca familiaridade com tecnologia, garantindo mais rapidez e confiança nas informações. O Value Proposition Canvas mostra que essa solução está realmente alinhada com o que o cliente precisa, porque acaba com as boletas de papel, diminui o retrabalho e melhora o acompanhamento das operações, trazendo benefícios tanto para o capataz no campo quanto para o gerente que toma as decisões. Por fim, a Matriz de Riscos mostra que o projeto foi bem planejado, já que mapeia os riscos e as oportunidades com planos de ação claros, e destaca o forte engajamento do parceiro como uma oportunidade de grande impacto, que permite validar o trabalho com frequência e manter a evolução constante do projeto.
 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ## <a name="c3.1"></a>3.1. Requisitos do Sistema (sprints 1 a 5)
 
-Os requisitos do sistema representam o ponto de partida para tudo que será construído, estabelecendo um entendimento comum entre nossa equipe e o parceiro sobre o que a aplicação precisa ser, como deve se comportar e sob quais critérios será testada e aprovada.
+&nbsp;&nbsp;&nbsp;&nbsp;Os requisitos do sistema representam o ponto de partida para tudo que será construído, estabelecendo um entendimento comum entre nossa equipe e o parceiro sobre o que a aplicação precisa ser, como deve se comportar e sob quais critérios será testada e aprovada.
 
-Eles estão organizados em duas categorias complementares, os requisitos funcionais, que descrevem o que o sistema deve fazer, como o registro de movimentações, o controle de acesso por perfil e a operação offline e os requisitos não funcionais, que definem a qualidade com que essas funcionalidades devem ser entregues, abrangendo desempenho, segurança, confiabilidade e usabilidade.
+&nbsp;&nbsp;&nbsp;&nbsp;Eles estão organizados em duas categorias complementares, os requisitos funcionais, que descrevem o que o sistema deve fazer, como o registro de movimentações, o controle de acesso por perfil e a operação offline e os requisitos não funcionais, que definem a qualidade com que essas funcionalidades devem ser entregues, abrangendo desempenho, segurança, confiabilidade e usabilidade.
 
-Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
+&nbsp;&nbsp;&nbsp;&nbsp;Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
+<p align="center">Quadro 18 - Requisitos Funcionais </p>
+</div> 
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
@@ -795,9 +825,13 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
 | RF008 | O sistema deve disponibilizar um ticket de chamados de infraestrutura, permitindo que Capatazes abram chamados para a equipe de infraestrutura e que Supervisores atribuam chamados aos Capatazes.  | Média | Planejado |
 
+ <p align="center">Fonte: Próprios autores (2026).</p>
+</div> 
+
 ### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-*Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3.*
+<p align="center">Quadro 19 - Regras de Negócios </p>
+</div>
 
 | ID   | Descrição | RF associado |
 |------|-----------|--------------|
@@ -810,10 +844,13 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha só poderá ser processada utilizando dados que já foram sincronizados com o servidor (dados apenas locais/off-line não devem entrar no relatório gerado). | RF007 |
 | RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente a inclusão de pelo menos uma evidência descritiva associada ao chamado (uma mensagem escrita ou um áudio). | RF008 |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div> 
 
 ### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-*Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
+<p align="center">Quadro 20 - Requisitos Não Funcionais </p>
+</div>
 
 | Eixo                     | Requisito | Métrica / Critério | Como atendido |
 |--------------------------|-----------|--------------------|---------------|
@@ -826,9 +863,13 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | REST — Restrições Design | A identidade visual deve seguir a logo e paleta de cores da BrPec Agropecuária; a aplicação deve ser exclusivamente web | 100% das telas aprovadas pelo parceiro em revisão de UI | Aplicação de design system com tokens de cor e tipografia baseados na identidade visual da BrPec Agropecuária, validado em revisão de UI com o parceiro |
 | ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div> 
+
 ### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-*Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
+<p>Quadro 21 - Matriz RF → RN → Endpoint </p>
+</div>
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
@@ -841,19 +882,24 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RF007 | RN07    | `/usuarios` | POST   |
 | RF008 | RN08    | `/usuarios` | POST   |
 
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
 ### <a name="c3.2.1"></a>3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 ### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
+&nbsp;&nbsp;&nbsp;&nbsp;Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
 
-No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
 
----
+--- 
 
-#### UC-01 — Registrar Movimentação de Rebanho
+<p>Quadro 22 - Use Case 01 </p>
+
+#### UC-01 - Registrar Movimentação de Rebanho
 
 | Campo | Conteúdo |
 |---|---|
@@ -865,6 +911,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNFs relacionados** | USAB, CONF |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-08 [tipo = morte]; `<<extend>>` UC-09 [evidência adicional] |
 
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+--- 
 **Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem acesso ao retiro associado à sua conta. O dispositivo possui armazenamento local funcional, mesmo sem conexão com a internet.
 
 **Fluxo Principal (cenário de sucesso):**
@@ -894,8 +944,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 **Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
 
 ---
+<p>Quadro 23 - Use Case 02 </p>
 
-#### UC-02 — Sincronizar Dados Offline com o Servidor
+#### UC-02 - Sincronizar Dados Offline com o Servidor
 
 | Campo | Conteúdo |
 |---|---|
@@ -906,6 +957,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN03 |
 | **RNFs relacionados** | CONF, DES |
 | **Relacionamentos UML** | `<<include>>` UC-07 |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** Existem registros pendentes no armazenamento local do dispositivo (movimentações, tarefas concluídas, evidências ou tickets) gerados em modo offline pelo Capataz Daniel. O usuário está identificado no sistema (UC-07).
 
@@ -933,8 +989,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 **Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
 
 ---
+<p>Quadro 24 - Use Case 03 </p>
 
-#### UC-03 — Criar e Atribuir Tarefa a Capataz
+#### UC-03 - Criar e Atribuir Tarefa a Capataz
 
 | Campo | Conteúdo |
 |---|---|
@@ -945,6 +1002,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN02 |
 | **RNFs relacionados** | USAB, ORG |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um Capataz cadastrado e vinculado a um retiro sob sua coordenação. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
 
@@ -976,7 +1038,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 ---
 
-#### UC-04 — Validar Registros do Capataz
+<p>Quadro 25 - Use Case 04 </p>
+
+#### UC-04 - Validar Registros do Capataz
 
 | Campo | Conteúdo |
 |---|---|
@@ -987,6 +1051,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN06 |
 | **RNFs relacionados** | SEG, USAB |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [recusa do registro] |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div>  
+
+---
 
 **Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor" (RN06). O Supervisor escolheu a ação "Validar registros" após identificar-se. Existe pelo menos um registro (movimentação ou tarefa concluída) com status "pendente de validação" submetido pelo Capataz Daniel e já sincronizado com o servidor (UC-02).
 
@@ -1016,7 +1085,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
 
-#### UC-05 — Abrir Ticket de Infraestrutura
+---
+
+<p>Quadro 26 - Use Case 05 </p> 
+
+#### UC-05 - Abrir Ticket de Infraestrutura
 
 | Campo | Conteúdo |
 |---|---|
@@ -1027,6 +1100,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN08 |
 | **RNFs relacionados** | SUP, USAB |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz". O Capataz escolheu a ação "Abrir chamado" após identificar-se. Existe um problema de infraestrutura no retiro (cerca quebrada, falta de água, equipamento danificado, problema em edificação) que precisa ser reportado.
 
@@ -1057,7 +1135,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 ---
 
-#### UC-06 — Visualizar Dados Aprovados e Gerar Relatório
+<p>Quadro 27 - Use Case 06 </p>
+
+#### UC-06 - Visualizar Dados Aprovados e Gerar Relatório
 
 | Campo | Conteúdo |
 |---|---|
@@ -1068,6 +1148,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN07 |
 | **RNFs relacionados** | ORG, DES |
 | **Relacionamentos UML** | `<<include>>` UC-07 |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem dados de movimentação ou tarefas que já foram sincronizados (UC-02) e aprovados pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
 
@@ -1100,7 +1185,9 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 ---
 
-#### UC-07 — Identificar-se no Sistema
+<p>Quadro 28 - Use Case 07 </p>
+
+#### UC-07 - Identificar-se no Sistema
 
 | Campo | Conteúdo |
 |---|---|
@@ -1111,6 +1198,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN05 |
 | **RNFs relacionados** | USAB, SEG |
 | **Relacionamento UML** | `<<include>>` por UC-01, UC-02, UC-03, UC-04, UC-05 e UC-06 |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+--- 
 
 **Pré-condição:** O usuário possui credencial cadastrada no sistema. O dispositivo está acessível.
 
@@ -1135,9 +1227,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** O usuário está autenticado com perfil identificado e sessão ativa. O menu exibe apenas as ações do perfil: Daniel (Capataz) vê "Registrar movimentação" e "Abrir chamado"; Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". Todas as ações ficam vinculadas ao usuário para rastreabilidade e auditoria.
 
----
+--- 
+<p>Quadro 29 - Use Case 08 </p>
 
-#### UC-08 — Registrar Causa de Óbito
+#### UC-08 - Registrar Causa de Óbito
 
 | Campo | Conteúdo |
 |---|---|
@@ -1148,6 +1241,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN01 |
 | **RNFs relacionados** | USAB |
 | **Relacionamento UML** | `<<extend>>` UC-01 — condição: tipo da movimentação = "morte" |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O Capataz está executando o UC-01 (Registrar Movimentação) e selecionou "morte" como tipo de movimentação no passo 3.
 
@@ -1165,8 +1263,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** A causa do óbito está registrada como parte da movimentação de morte. O fluxo retorna ao UC-01, que prossegue normalmente com os demais campos.
 
+---
 
-#### UC-09 — Anexar Evidência
+<p>Quadro 30 - Use Case 09 </p>
+
+#### UC-09 - Anexar Evidência
 | Campo | Conteúdo |
 |---|---|
 | **UC-ID + Nome** | UC-09 — Anexar Evidência |
@@ -1176,6 +1277,11 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNs relacionadas** | RN04|
 | **RNFs relacionados** | USAB |
 | **Relacionamento UML** | UML<<extend>> UC-01, UC-03 e UC-05 — condição: usuário aciona "Anexar evidência" |
+
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 
 **Pré-condição:** O usuário está executando um dos UCs base (UC-01, UC-03 ou UC-05) e está na etapa de preenchimento onde evidências podem ser adicionadas.
 
@@ -1200,8 +1306,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 
 **Pós-condição:** A evidência está anexada ao registro principal com seus metadados (tipo, timestamp, localização quando aplicável). O fluxo retorna ao UC base.
 
+---
+<p>Quadro 31 - Use Case 10 </p>
 
-#### UC-10 — Rejeitar Registro
+#### UC-10 - Rejeitar Registro
 | Campo | Conteúdo |
 |---|---|
 | **UC-ID + Nome** | UC-10 — Rejeitar Registro |
@@ -1212,6 +1320,10 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 | **RNFs relacionados** | SEG |
 | **Relacionamento UML** | <<extend>> UC-04 — condição: Supervisor opta por rejeitar o registro |
 
+<p>Fonte: Próprios autores (2026).</p>
+</div> 
+
+---
 **Pré-condição:** O Supervisor está executando o UC-04 (Validar Registros) e identificou inconsistência ou problema no registro analisado, optando por rejeitá-lo no passo 6.
 
 **Fluxo Principal (cenário de sucesso):**
@@ -1231,7 +1343,6 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 **Pós-condição:** O registro está marcado como "Rejeitado" com justificativa visível. O Capataz Daniel é notificado e pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
 Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
 
----
 
 ### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -1443,15 +1554,32 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+APROSOJA MS. Panorama da soja em Mato Grosso do Sul. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br
+. Acesso em: 30 abr. 2026.
 
-HARLEY, Aurora. Personas Make Users Memorable for Product Team Members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 30 abr. 2026.
+BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da vegetação nativa (Código Florestal). Diário Oficial da União: seção 1, Brasília, DF, 28 maio 2012.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
-JACOBSON, Ivar; SPENCE, Ian; DE MENDONCA, Kurt Bittner. Use-Case 3.0. Ivar Jacobson International, 2024. Disponível em: https://www.ivarjacobson.com/publications/white-papers/use-case-3.0. Acesso em: 30 abr. 2026.
+DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
+. Acesso em: 30 abr. 2026.
+
+ECONODATA. Dados empresariais da BRPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
+. Acesso em: 30 abr. 2026.
+
+G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com
+. Acesso em: 30 abr. 2026.
+
+HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
+. Acesso em: 30 abr. 2026.
+
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, R. Use Case 3.0: the guide to succeeding with use cases. 2024.
+
+OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
+
+PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+
+PORTER, Michael E. Competitive Strategy: techniques for analyzing industries and competitors. New York: Free Press, 1980.
 
 # <a name="c9"></a>Anexos
 
