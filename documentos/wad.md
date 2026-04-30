@@ -681,6 +681,55 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
 No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental. Para cada caso de uso, são definidos um fluxo básico, correspondente ao caminho principal de execução, e fluxos alternativos, que representam variações, exceções e possíveis erros. Adicionalmente, são considerados os use-case slices, entendidos como unidades menores de entrega de valor, bem como casos de teste, utilizados para a verificação da implementação da solução proposta.
 
+UC-01 — Registrar Movimentação de Rebanho
+
+CampoConteúdoUC-ID + NomeUC-01 — Registrar Movimentação de RebanhoAtor primárioCapataz (Daniel)Atores secundáriosSistema de Armazenamento Local; Servidor de SincronizaçãoRFs relacionadosRF001, RF004RNs relacionadasRN01, RN04RNFs relacionadosUSAB, CONFRelacionamentos UML<<include>> UC-07; <<extend>> UC-08 [tipo = morte]; <<extend>> UC-09 [evidência adicional]
+
+Pré-condição: O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem
+acesso ao retiro associado à sua conta. O dispositivo possui armazenamento local funcional,
+mesmo sem conexão com a internet.
+Fluxo Principal (cenário de sucesso):
+1. 2. 3. O Capataz acessa o módulo "Movimentações" no menu principal.
+O sistema apresenta a tela de registro com ícones grandes e textos curtos, adequada ao
+baixo letramento digital do usuário (RN05), contendo os campos: tipo de
+movimentação, origem, destino, quantidade, estágio da vida e anexo de evidência.
+O Capataz seleciona o tipo de movimentação (nascimento, morte, transferência, compra
+ou venda).
+4. 5. 6. 7. 8. 9. O Capataz informa origem, destino, quantidade e estágio da vida dos animais.
+O Capataz anexa uma foto como evidência da movimentação.
+O sistema valida se a foto possui metadados de georreferenciamento (latitude e
+longitude).
+O Capataz confirma o registro.
+O sistema persiste a movimentação no armazenamento local do dispositivo com status
+"pendente de validação pelo Supervisor".
+O sistema exibe confirmação visual de registro bem-sucedido com indicação do estado
+de sincronização (pendente ou sincronizado).
+Fluxos Alternativos:
+A1 (no passo 3): se o Capataz seleciona "morte" como tipo de movimentação, o sistema
+dispara o UC-08 (Registrar Causa de Óbito), tornando o campo "causa do óbito"
+estritamente obrigatório e exibindo-o em destaque junto aos demais campos
+obrigatórios (RN01). <<extend>>
+A2 (no passo 5): se o Capataz opta por anexar áudio ou mensagem escrita em vez de
+foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento
+do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar
+Evidência). <<extend>>
+A3 (no passo 8): se houver conexão ativa com a internet no momento do registro, o
+sistema dispara a sincronização automática (UC-02) e marca a movimentação como
+"sincronizada" (RN03).
+Exceções:
+E1 (no passo 6): se a foto anexada não possuir metadados de georreferenciamento
+válidos, o sistema rejeita o anexo, exibe mensagem clara e visual ao Capataz solicitando
+nova foto e mantém os demais campos preenchidos (RN04).
+E2 (no passo 7): se algum campo obrigatório (origem, destino, quantidade, estágio da
+vida ou causa do óbito quando aplicável) estiver em branco, o sistema bloqueia o envio,
+destaca visualmente os campos faltantes com linguagem simples e exibe mensagem de
+erro de validação (RN01).
+E3 (no passo 8): se houver falha no armazenamento local, o sistema exibe alerta claro ao
+Capataz, mantém os dados preenchidos em memória e solicita nova tentativa.
+Pós-condição: A movimentação está registrada no armazenamento local do dispositivo,
+associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de
+validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior
+validação pelo Supervisor Luiz (UC-04).
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
