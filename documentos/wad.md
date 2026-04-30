@@ -168,27 +168,176 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 ## 2.2. Personas (sprint 1)
 
-&ensp; &ensp; Foram desenvolvidas três personas para representar o perfil de partes interessadas usuarias da solução proposta neste documento. Cada persona representa um cargo presente em todas as fazendas da BrPec, respectivamente capataz, supervisor e gerente.
+&ensp;&ensp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
-<img src="outros/assets/card-persona-daniel.png">
+&ensp;&ensp;No contexto deste projeto, foram desenvolvidas três personas com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec — capataz, supervisor e gerente —, possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
 
-&ensp; &ensp;Daniel Carvalho tem 43 anos, é casado e pai de 3 filhos. Atualmente, trabalha como capataz na Fazenda BrPec, sendo responsável pela gestão do retiro e pela coordenação de uma equipe de 12 vaqueiros. Iniciou sua carreira ainda jovem como vaqueiro em fazendas da região, função na qual desenvolveu experiência em manejo de rebanho e liderança de equipe no campo. Por seu desempenho e domínio da rotina da pecuária, foi contratado pela BrPec para assumir a função de capataz, na qual atua há mais de 10 anos. 
+---
 
-&ensp; &ensp;Daniel é um profissional comprometido e prático, focado em garantir que o retiro funcione com eficiência. Entretanto, a falta de ferramentas tecnológicas e de capacitação estruturada dificulta seu trabalho no dia a dia. Seu maior sonho é levar a esposa e os três filhos para conhecer o Rio de Janeiro, viagem que planeja há anos e para a qual guarda dinheiro mensalmente.
+### Persona 1 — Daniel Carvalho
 
-<img src="outros/assets/card-persona-luiz.png">
+<div align="center">
+<p>Figura 4 - Persona 1</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img src="outros/assets/persona-daniel.png">  <alt="Persona 1" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
-&ensp; &ensp;Luiz tem 37 anos, é solteiro, mas mantém um relacionamento estável. Atualmente, atua como supervisor dos capatazes da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por coordenar múltiplas frentes operacionais do manejo pecuário e garantir que os capatazes executem corretamente as diretrizes estabelecidas pela gestão da fazenda.
+#### Informações
 
-&ensp; &ensp;Sua trajetória começou como peão ainda jovem, passando por diferentes funções no campo até se tornar capataz. Ao longo dos anos, destacou-se pela organização, capacidade de resolver problemas e visão prática da operação, o que o levou à promoção para supervisor — cargo que ocupa há cerca de 5 anos.
+| Campo               | Descrição                      |
+|---------------------|--------------------------------|
+| **Idade**           | 43 anos                        |
+| **Localização**     | Miranda – MS                   |
+| **Cargo**           | Capataz                        |
+| **Escolaridade**    | Ensino fundamental incompleto  |
+| **Letramento digital** | Baixo                       |
 
-&ensp; &ensp;Luiz é um profissional analítico e exigente, com forte senso de responsabilidade sobre os resultados da fazenda. Ele busca garantir eficiência, padronização e produtividade, mas enfrenta dificuldades devido à falta de integração entre informações, excesso de demandas simultâneas e dependência de processos pouco estruturados. Seu objetivo pessoal é crescer profissionalmente dentro da empresa e conquistar estabilidade financeira suficiente para investir em uma casa própria.
+#### Biografia
 
-<img src="outros/assets/card-persona-marcos.png">
+Daniel Carvalho iniciou sua trajetória ainda jovem em fazendas da região, desenvolvendo experiência prática no manejo de rebanho e na coordenação de equipes. Atualmente, atua há mais de 10 anos como capataz na Fazenda BrPec, sendo responsável pela execução das atividades operacionais no retiro.
 
-&ensp; &ensp;Marcos Ferreira tem 49 anos, é casado e pai de dois filhos. Atua como gerente da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por garantir o desempenho geral da operação, conectando a estratégia da empresa com a execução no campo. Supervisiona diretamente os capatazes e o supervisor, acompanhando resultados produtivos, financeiros e operacionais da fazenda.
+Apesar de ser um profissional experiente, prático e comprometido, enfrenta limitações relacionadas à baixa digitalização dos processos, à escassez de ferramentas adequadas e à falta de capacitação para utilização de tecnologias. Essas condições impactam diretamente a organização das tarefas e a eficiência no dia a dia.
 
-&ensp; &ensp;Formado em Administração, com experiência em gestão agropecuária, Marcos possui perfil estruturado e orientado a resultados. Divide sua rotina entre atividades administrativas e presença no campo, buscando garantir que o planejamento seja executado corretamente. Apesar de já utilizar alguns sistemas, ainda enfrenta limitações na consolidação e confiabilidade das informações operacionais. Seu principal objetivo é aumentar a eficiência da fazenda com maior controle e previsibilidade dos resultados.
+#### Metas
+
+- Cumprir as atividades diárias com eficiência;
+- Garantir que a equipe execute corretamente as tarefas;
+- Manter a estabilidade profissional e o sustento familiar;
+- Conseguir economizar mensalmente, ainda que de forma modesta;
+- Proporcionar uma viagem em família.
+
+#### Necessidades
+
+- Soluções simples e intuitivas para organização das tarefas;
+- Ferramentas que auxiliem no acompanhamento das atividades;
+- Redução do tempo gasto na execução e resolução de problemas.
+
+#### Desafios e Dores
+
+- Jornada de trabalho extensa e fisicamente desgastante;
+- Sobrecarga de responsabilidades no retiro;
+- Dificuldade em organizar informações mentalmente ou em papel;
+- Baixo nível de familiaridade com tecnologias digitais.
+
+#### Interesses
+
+- Estabilidade financeira e qualidade de vida familiar;
+- Momentos de descanso quando possível;
+- Manter o trabalho organizado e sem imprevistos.
+
+---
+
+### Persona 2 — Luiz Felipe
+
+<div align="center">
+<p>Figura 4 - Persona 2</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-luiz.png">  <alt="Persona 2" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+#### Informações
+
+| Campo               | Descrição               |
+|---------------------|-------------------------|
+| **Idade**           | 37 anos                 |
+| **Localização**     | Campo Grande – MS       |
+| **Cargo**           | Supervisor              |
+| **Escolaridade**    | Ensino médio completo   |
+| **Letramento digital** | Intermediário        |
+
+#### Biografia
+
+Luiz Felipe atua como supervisor na Fazenda Rocha Lima (BrPec), sendo responsável pela coordenação dos capatazes e pelo acompanhamento das operações de manejo. Possui experiência prática no campo e apresenta um perfil analítico, com foco na eficiência operacional e no desenvolvimento profissional.
+
+No entanto, enfrenta dificuldades relacionadas à falta de integração de informações entre os retiros e a área administrativa, além de lidar com processos pouco estruturados, o que compromete a visibilidade e o controle das operações.
+
+#### Metas
+
+- Reduzir erros e retrabalho;
+- Aumentar a eficiência operacional;
+- Desenvolver maior autonomia dos capatazes;
+- Evoluir para funções de maior responsabilidade.
+
+#### Necessidades
+
+- Tecnologias intuitivas que simplifiquem a gestão;
+- Ferramentas que otimizem o tempo das atividades;
+- Métodos que aumentem a produtividade da equipe.
+
+#### Desafios e Dores
+
+- Dificuldade em supervisionar múltiplas frentes;
+- Baixa visibilidade das operações;
+- Comunicação informal e descentralizada;
+- Retrabalho decorrente de falhas e desalinhamentos.
+
+#### Interesses
+
+- Ferramentas simples para acompanhamento em tempo real;
+- Visão consolidada das operações;
+- Melhor organização das rotinas;
+- Redução da dependência de comunicação informal.
+
+---
+
+### Persona 3 — Marcos Ferreira
+<div align="center">
+<p>Figura 4 - Persona 3</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-marcos.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+#### Informações
+
+| Campo               | Descrição                    |
+|---------------------|------------------------------|
+| **Idade**           | 49 anos                      |
+| **Localização**     | Dourados – MS                |
+| **Cargo**           | Gerente da fazenda           |
+| **Escolaridade**    | Ensino superior completo     |
+| **Letramento digital** | Intermediário             |
+
+#### Biografia
+
+Marcos Ferreira atua como gerente da Fazenda Rocha Lima (BrPec), sendo responsável pela supervisão da equipe e pelos resultados operacionais. Formado em Administração, possui uma visão estratégica voltada para eficiência, controle e tomada de decisão baseada em dados.
+
+Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilidade dos dados operacionais, especialmente os provenientes do campo, além da dependência de registros manuais, o que impacta a qualidade das informações e a agilidade na gestão.
+
+#### Metas
+
+- Reduzir o estresse operacional e a dependência de ações reativas;
+- Garantir maior previsibilidade dos resultados;
+- Melhorar a qualidade e agilidade das informações;
+- Possibilitar melhor equilíbrio entre vida profissional e pessoal.
+
+#### Necessidades
+
+- Visão consolidada e confiável das operações;
+- Redução de erros na coleta de dados;
+- Ferramentas acessíveis para todos os níveis da operação;
+- Apoio à tomada de decisão com base em dados organizados.
+
+#### Desafios e Dores
+
+- Baixa integração e confiabilidade dos dados;
+- Dificuldade de acompanhamento do realizado vs. planejado;
+- Dependência de registros manuais sujeitos a erros;
+- Pressão por resultados e controle de custos.
+
+#### Interesses
+
+- Soluções digitais práticas e de fácil adoção;
+- Integração entre operação e gestão;
+- Indicadores claros para tomada de decisão;
+- Estabilidade financeira e qualidade de vida.
+
+---
 
 ## 2.3. User Stories (sprints 1 a 5)
 
@@ -262,143 +411,6 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 *Template de User Story*
 Identificação | USXX (troque XX por numeração ordenada das User Stories)
 --- | ---
@@ -428,34 +440,6 @@ O canvas evidencia o alinhamento entre a solução proposta e as reais necessida
 
 **Matriz de Riscos**
 A matriz demonstra planejamento maduro ao mapear ameaças e oportunidades com planos de ação específicos. Destaca-se o alto engajamento do parceiro como oportunidade de impacto muito alto, fator que viabiliza validações frequentes e sustenta a evolução iterativa do projeto.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
@@ -529,7 +513,276 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
+No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental. Para cada caso de uso, são definidos um fluxo básico, correspondente ao caminho principal de execução, e fluxos alternativos, que representam variações, exceções e possíveis erros. Adicionalmente, são considerados os use-case slices, entendidos como unidades menores de entrega de valor, bem como casos de teste, utilizados para a verificação da implementação da solução proposta.
+
+**Fluxo integrado:** Daniel **registra** no campo → UC-02 **sincroniza** → Luiz **valida** (aprova ou rejeita) → dados aprovados sobem para Marcos **consolidar e gerar relatórios**.
+
+---
+
+### UC-01 — Registrar Movimentação de Rebanho
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-01 — Registrar Movimentação de Rebanho |
+| **Ator primário** | Capataz (Daniel) |
+| **Atores secundários** | Sistema de Armazenamento Local; Servidor de Sincronização |
+| **RFs relacionados** | RF001, RF004 |
+| **RNs relacionadas** | RN01, RN04 |
+| **RNFs relacionados** | USAB, CONF |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-08 [tipo = morte]; `<<extend>>` UC-09 [evidência adicional] |
+
+**Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem acesso ao retiro associado à sua conta. O dispositivo possui armazenamento local funcional, mesmo sem conexão com a internet.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Capataz acessa o módulo "Movimentações" no menu principal.
+2. O sistema apresenta a tela de registro com ícones grandes e textos curtos, adequada ao baixo letramento digital do usuário (RN05), contendo os campos: tipo de movimentação, origem, destino, quantidade, estágio da vida e anexo de evidência.
+3. O Capataz seleciona o tipo de movimentação (nascimento, morte, transferência, compra ou venda).
+4. O Capataz informa origem, destino, quantidade e estágio da vida dos animais.
+5. O Capataz anexa uma foto como evidência da movimentação.
+6. O sistema valida se a foto possui metadados de georreferenciamento (latitude e longitude).
+7. O Capataz confirma o registro.
+8. O sistema persiste a movimentação no armazenamento local do dispositivo com status "pendente de validação pelo Supervisor".
+9. O sistema exibe confirmação visual de registro bem-sucedido com indicação do estado de sincronização (pendente ou sincronizado).
+
+**Fluxos Alternativos:**
+
+- **A1 (no passo 3):** se o Capataz seleciona "morte" como tipo de movimentação, o sistema dispara o UC-08 (Registrar Causa de Óbito), tornando o campo "causa do óbito" estritamente obrigatório e exibindo-o em destaque junto aos demais campos obrigatórios (RN01). `<<extend>>`
+- **A2 (no passo 5):** se o Capataz opta por anexar áudio ou mensagem escrita em vez de foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar Evidência). `<<extend>>`
+- **A3 (no passo 8):** se houver conexão ativa com a internet no momento do registro, o sistema dispara a sincronização automática (UC-02) e marca a movimentação como "sincronizada" (RN03).
+
+**Exceções:**
+
+- **E1 (no passo 6):** se a foto anexada não possuir metadados de georreferenciamento válidos, o sistema rejeita o anexo, exibe mensagem clara e visual ao Capataz solicitando nova foto e mantém os demais campos preenchidos (RN04).
+- **E2 (no passo 7):** se algum campo obrigatório (origem, destino, quantidade, estágio da vida ou causa do óbito quando aplicável) estiver em branco, o sistema bloqueia o envio, destaca visualmente os campos faltantes com linguagem simples e exibe mensagem de erro de validação (RN01).
+- **E3 (no passo 8):** se houver falha no armazenamento local, o sistema exibe alerta claro ao Capataz, mantém os dados preenchidos em memória e solicita nova tentativa.
+
+**Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
+
+---
+
+### UC-02 — Sincronizar Dados Offline com o Servidor
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-02 — Sincronizar Dados Offline com o Servidor |
+| **Ator primário** | Sistema (disparado automaticamente por evento de conexão) |
+| **Atores secundários** | Servidor de Sincronização; Capataz e Supervisor (notificados do resultado) |
+| **RFs relacionados** | RF003 |
+| **RNs relacionadas** | RN03 |
+| **RNFs relacionados** | CONF, DES |
+| **Relacionamentos UML** | `<<include>>` UC-07 |
+
+**Pré-condição:** Existem registros pendentes no armazenamento local do dispositivo (movimentações, tarefas concluídas, evidências ou tickets) gerados em modo offline pelo Capataz Daniel. O usuário está identificado no sistema (UC-07).
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O sistema monitora continuamente o status da conexão de rede do dispositivo.
+2. O sistema detecta que a conexão foi restabelecida e retorna um status HTTP válido em uma requisição de teste ao servidor.
+3. O sistema enfileira todos os registros pendentes do armazenamento local em ordem cronológica.
+4. O sistema envia cada registro ao endpoint correspondente no servidor.
+5. O servidor processa cada registro, persiste no banco central e retorna confirmação de recebimento.
+6. O sistema marca cada registro local como "sincronizado" após confirmação do servidor.
+7. O sistema exibe ao Capataz uma notificação não intrusiva indicando o número de registros sincronizados com sucesso.
+
+**Fluxos Alternativos:**
+
+- **A1 (no passo 3):** se houver muitos registros pendentes, o sistema processa a fila em lotes para evitar sobrecarga na conexão Starlink (DES — p95 < 3000ms), mantendo a ordem cronológica.
+- **A2 (no passo 7):** se a sincronização ocorre em segundo plano sem o aplicativo aberto, o sistema apenas atualiza os indicadores visuais sem notificação explícita.
+
+**Exceções:**
+
+- **E1 (no passo 2):** se o status HTTP retornado não for válido (timeout, 5xx, sem resposta), o sistema mantém o modo offline ativo, não dispara a sincronização e tenta novamente após intervalo de espera (RN03).
+- **E2 (no passo 5):** se o servidor rejeita um registro específico por erro de validação, o sistema mantém esse registro como "pendente com erro", exibe alerta detalhado ao Capataz e prossegue com os demais registros da fila.
+- **E3 (no passo 5):** se a conexão cai durante o envio, o sistema interrompe a sincronização, mantém os registros não confirmados como "pendentes" e retoma do ponto de parada quando a conexão for restabelecida.
+
+**Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
+
+---
+
+### UC-03 — Criar e Atribuir Tarefa a Capataz
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-03 — Criar e Atribuir Tarefa a Capataz |
+| **Ator primário** | Supervisor (Luiz) |
+| **Atores secundários** | Capataz Daniel (destinatário da tarefa); Sistema de Notificação |
+| **RFs relacionados** | RF002 |
+| **RNs relacionadas** | RN02 |
+| **RNFs relacionados** | USAB, ORG |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um Capataz cadastrado e vinculado a um retiro sob sua coordenação. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Supervisor acessa o módulo "Tarefas" e seleciona "Nova Tarefa".
+2. O sistema apresenta o formulário de criação com os campos: Capataz atribuído, data, horário, prioridade, categoria e descrição.
+3. O Supervisor seleciona o Capataz responsável a partir da lista de usuários do retiro.
+4. O Supervisor preenche data, horário, prioridade (alta, média, baixa) e categoria da tarefa.
+5. O Supervisor adiciona descrição textual da tarefa.
+6. O Supervisor confirma a criação.
+7. O sistema valida o preenchimento simultâneo de todos os campos obrigatórios.
+8. O sistema persiste a tarefa no servidor (ou local, se offline) e a vincula ao Capataz selecionado.
+9. O sistema notifica o Capataz atribuído sobre a nova tarefa.
+10. O sistema exibe confirmação ao Supervisor e retorna à listagem de tarefas com a nova tarefa visível.
+
+**Fluxos Alternativos:**
+
+- **A1 (no passo 5):** o Supervisor pode anexar evidências descritivas (foto georreferenciada, áudio ou mensagem) à tarefa criada, disparando o UC-09 (Anexar Evidência), conforme RF004. `<<extend>>`
+- **A2 (no passo 6):** o Supervisor pode optar por salvar a tarefa como "rascunho" para edição posterior, sem disparar a validação dos campos obrigatórios.
+
+**Exceções:**
+
+- **E1 (no passo 7):** se algum dos campos obrigatórios (Capataz atribuído, data, horário, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
+- **E2 (no passo 8):** se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
+- **E3 (no passo 9):** se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
+
+**Pós-condição:** A tarefa está registrada no sistema, vinculada ao Capataz Daniel, com status inicial "pendente" e disponível tanto na visão do Supervisor quanto na do Capataz. O Capataz Daniel recebe a tarefa e a executa no campo. Ao concluir, a tarefa entra no fluxo de validação pelo Supervisor Luiz (UC-04).
+
+---
+
+### UC-04 — Validar Registros do Capataz
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-04 — Validar Registros do Capataz |
+| **Ator primário** | Supervisor (Luiz) |
+| **Atores secundários** | Capataz Daniel (autor do registro, notificado); Gerente Marcos (recebe dados aprovados) |
+| **RFs relacionados** | RF006 |
+| **RNs relacionadas** | RN06 |
+| **RNFs relacionados** | SEG, USAB |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [recusa do registro] |
+
+**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor" (RN06). O Supervisor escolheu a ação "Validar registros" após identificar-se. Existe pelo menos um registro (movimentação ou tarefa concluída) com status "pendente de validação" submetido pelo Capataz Daniel e já sincronizado com o servidor (UC-02).
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Supervisor acessa o painel de "Validações Pendentes".
+2. O sistema lista todos os registros pendentes de validação dos Capatazes sob sua coordenação, ordenados por data e agrupados por retiro.
+3. O Supervisor seleciona um registro específico para análise.
+4. O sistema apresenta os detalhes completos do registro: autor (Capataz Daniel), data, conteúdo dos campos, evidências anexadas (foto georreferenciada, áudio ou mensagem) e localização.
+5. O Supervisor analisa as informações e as evidências.
+6. O Supervisor seleciona a ação "Aprovar".
+7. O sistema altera o status do registro para "Aprovado", grava o identificador do Supervisor validador e o timestamp da ação.
+8. O sistema envia os dados aprovados para a camada de consolidação visível ao Gerente Marcos (UC-06).
+9. O sistema notifica o Capataz Daniel sobre a aprovação.
+10. O sistema retorna o Supervisor ao painel com o registro removido da lista de pendências.
+
+**Fluxos Alternativos:**
+
+- **A1 (no passo 6):** o Supervisor pode optar por "Rejeitar" o registro, disparando o UC-10 (Rejeitar Registro). O Supervisor deve informar justificativa textual obrigatória. O registro retorna ao Capataz Daniel com status "rejeitado" e a justificativa visível, para que ele corrija e ressubmeta. `<<extend>>`
+- **A2 (no passo 6):** o Supervisor pode optar por "Solicitar mais informações", enviando uma mensagem ao Capataz Daniel sem alterar o status final do registro.
+- **A3 (no passo 2):** o Supervisor pode aplicar filtros por Capataz, tipo de registro ou período para reduzir a sobrecarga visual e focar na validação por prioridade.
+
+**Exceções:**
+
+- **E1 (no passo 1):** se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
+- **E2 (no passo 7):** se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
+
+**Pós-condição:** O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
+
+---
+
+### UC-05 — Abrir Ticket de Infraestrutura
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-05 — Abrir Ticket de Infraestrutura |
+| **Ator primário** | Capataz (Daniel) |
+| **Atores secundários** | Supervisor Luiz (notificado, pode atribuir); Equipe de Infraestrutura |
+| **RFs relacionados** | RF008, RF004 |
+| **RNs relacionadas** | RN08 |
+| **RNFs relacionados** | SUP, USAB |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+**Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz". O Capataz escolheu a ação "Abrir chamado" após identificar-se. Existe um problema de infraestrutura no retiro (cerca quebrada, falta de água, equipamento danificado, problema em edificação) que precisa ser reportado.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Capataz acessa o módulo "Chamados" e seleciona "Abrir Novo Chamado".
+2. O sistema apresenta o formulário de abertura com ícones de categoria e campos simplificados, adequados ao baixo letramento digital (RN05), contendo: categoria do problema, localização, descrição e área de evidências.
+3. O Capataz seleciona a categoria do problema via ícone (cerca, abastecimento de água, equipamento, edificação).
+4. O Capataz informa a localização aproximada dentro do retiro.
+5. O Capataz adiciona ao menos uma evidência descritiva obrigatória: mensagem escrita ou áudio (RN08).
+6. O Capataz confirma a abertura do ticket.
+7. O sistema valida a presença obrigatória de pelo menos uma evidência descritiva.
+8. O sistema persiste o ticket (no servidor ou localmente, se offline) com status "aberto" e identificador único.
+9. O sistema notifica o Supervisor Luiz (que pode atribuir o chamado) e a equipe de Infraestrutura sobre o novo chamado.
+10. O sistema exibe ao Capataz a confirmação com o número do ticket gerado.
+
+**Fluxos Alternativos:**
+
+- **A1 (no passo 5):** o Capataz pode opcionalmente anexar foto georreferenciada como evidência adicional, disparando o UC-09 (Anexar Evidência). Se a foto não tiver coordenadas válidas, o sistema rejeita apenas a foto, mas mantém o ticket válido caso já haja mensagem ou áudio (RN04). `<<extend>>`
+- **A2 (no passo 8):** se o dispositivo está offline, o ticket é salvo localmente e entra na fila de sincronização (UC-02).
+
+**Exceções:**
+
+- **E1 (no passo 7):** se o Capataz tentar enviar o ticket sem nenhuma evidência descritiva (mensagem ou áudio), o sistema bloqueia o envio e exibe mensagem clara e visual solicitando o cumprimento da obrigação (RN08).
+- **E2 (no passo 8):** se houver falha de persistência mesmo com armazenamento local disponível, o sistema mantém os dados em memória e oferece nova tentativa.
+
+**Pós-condição:** O ticket de infraestrutura está registrado com identificador único, evidência(s) anexada(s), categoria, localização e Capataz autor Daniel. O Supervisor Luiz é notificado e pode atribuir o chamado. A equipe de Infraestrutura pode iniciar o atendimento remotamente (SUP — 100% das correções sem deslocamento a campo).
+
+---
+
+### UC-06 — Visualizar Dados Aprovados e Gerar Relatório
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-06 — Visualizar Dados Aprovados e Gerar Relatório |
+| **Ator primário** | Gerente (Marcos) |
+| **Atores secundários** | Servidor de Dados Sincronizados e Aprovados |
+| **RFs relacionados** | RF007 |
+| **RNs relacionadas** | RN07 |
+| **RNFs relacionados** | ORG, DES |
+| **Relacionamentos UML** | `<<include>>` UC-07 |
+
+**Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem dados de movimentação ou tarefas que já foram sincronizados (UC-02) e aprovados pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Gerente acessa o painel de consolidação do sistema.
+2. O sistema apresenta a visão geral dos dados aprovados: movimentações, tarefas concluídas e tickets, com identificação de quem registrou (Capataz Daniel) e quem aprovou (Supervisor Luiz), data e horário de cada ação.
+3. O Gerente analisa os dados consolidados para ter visão do que aconteceu na operação.
+4. O Gerente acessa o módulo "Relatórios" e seleciona o tipo de relatório (movimentação de rebanho ou tarefas).
+5. O Gerente define o período (semanal ou mensal) e o(s) retiro(s) de interesse.
+6. O Gerente confirma a geração.
+7. O sistema consulta exclusivamente os dados que já foram sincronizados e aprovados pelo Supervisor para o filtro definido.
+8. O sistema processa os dados e gera o arquivo no formato de planilha (.xlsx ou .csv) seguindo o template do parceiro BrPec (ORG — 99,9% dos campos do modelo atual do parceiro presentes na exportação).
+9. O sistema disponibiliza o arquivo para download.
+10. O Gerente faz o download da planilha gerada e segue com o trabalho de gestão.
+
+**Fluxos Alternativos:**
+
+- **A1 (no passo 5):** o Gerente pode aplicar filtros adicionais, como tipo de movimentação (apenas mortes, apenas transferências), Capataz responsável ou Supervisor validador.
+- **A2 (no passo 9):** o sistema oferece também o envio do relatório por e-mail diretamente ao Gerente, em vez de download direto.
+- **A3 (no passo 2):** o Gerente pode consultar apenas a visão consolidada sem gerar relatório, caso queira apenas acompanhar a operação em tempo quase real.
+
+**Exceções:**
+
+- **E1 (no passo 7):** se não houver dados sincronizados e aprovados para o filtro selecionado, o sistema exibe mensagem informando ausência de dados e oferece sugestão de ampliar o período ou alterar o filtro.
+- **E2 (no passo 7):** o sistema explicitamente exclui da consulta quaisquer registros que estejam apenas em armazenamento local e ainda não sincronizados, bem como registros não aprovados pelo Supervisor, garantindo consistência do relatório oficial (RN07).
+- **E3 (no passo 8):** se houver falha no processamento (timeout ou erro do servidor), o sistema exibe erro claro ao Gerente com opção de nova tentativa.
+- **E4 (no passo 1):** se um usuário com perfil "Capataz" tentar acessar o painel de consolidação ou o módulo de relatórios, o sistema bloqueia o acesso e retorna erro 403 (SEG).
+
+**Pós-condição:** O Gerente Marcos possui visão completa da operação (quem registrou, quem aprovou, quando) e, se necessário, um arquivo de planilha no formato compatível com o template do parceiro BrPec, contendo exclusivamente dados sincronizados e aprovados, pronto para análises gerenciais e comunicação com a sede. O sistema registra em log a geração do relatório com identificação do Gerente e timestamp. O ciclo completo campo → sincronização → validação → consolidação está concluído.
+
+---
+
+### Matriz de Cobertura RF/RN/RNF × UC
+
+| UC | Persona | Ator | RFs cobertos | RNs cobertas | RNFs principais | Include/Extend |
+|---|---|---|---|---|---|---|
+| UC-01 — Registrar Movimentação | Daniel | Capataz | RF001, RF004 | RN01, RN04 | USAB, CONF | include UC-07; extend UC-08, UC-09 |
+| UC-02 — Sincronizar Dados Offline | — | Sistema | RF003 | RN03 | CONF, DES | include UC-07 |
+| UC-03 — Criar Tarefa | Luiz | Supervisor | RF002 | RN02 | USAB, ORG | include UC-07; extend UC-09 |
+| UC-04 — Validar Registros | Luiz | Supervisor | RF006 | RN06 | SEG, USAB | include UC-07; extend UC-10 |
+| UC-05 — Abrir Ticket de Infra | Daniel | Capataz | RF008, RF004 | RN08 | SUP, USAB | include UC-07; extend UC-09 |
+| UC-06 — Visualizar e Gerar Relatório | Marcos | Gerente | RF007 | RN07 | ORG, DES | include UC-07 |
+
+> **Cobertura total:** 8 dos 8 RFs (RF001 a RF008) e 8 das 8 RNs (RN01 a RN08), distribuídos entre as 3 personas do projeto. O RF005 (identificação do usuário) é coberto transversalmente pelo UC-07 (Identificar-se no Sistema), incluído (`<<include>>`) por todos os demais casos de uso como pré-condição obrigatória.
+
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -743,11 +996,15 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
+HARLEY, Aurora. Personas Make Users Memorable for Product Team Members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 30 abr. 2026.
+
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
 SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
 
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONCA, Kurt Bittner. Use-Case 3.0. Ivar Jacobson International, 2024. Disponível em: https://www.ivarjacobson.com/publications/white-papers/use-case-3.0. Acesso em: 30 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
