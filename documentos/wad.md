@@ -1008,7 +1008,7 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 1. O Supervisor acessa o painel de "Validações Pendentes".
 2. O sistema lista todos os registros pendentes de validação dos Capatazes sob sua coordenação, ordenados por data e agrupados por retiro.
 3. O Supervisor seleciona um registro específico para análise.
-4. O sistema apresenta os detalhes completos do registro: autor (Capataz Daniel), data, conteúdo dos campos, evidências anexadas (foto georreferenciada, áudio ou mensagem) e localização.
+4. O sistema apresenta os detalhes completos do registro: autor (Capataz Daniel), data, conteúdo dos campos e evidências anexadas (foto georreferenciada, áudio ou mensagem).
 5. O Supervisor analisa as informações e as evidências.
 6. O Supervisor seleciona a ação "Aprovar".
 7. O sistema altera o status do registro para "Aprovado", grava o identificador do Supervisor validador e o timestamp da ação.
@@ -1028,6 +1028,155 @@ No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme pr
 - **E2** (no passo 7): se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
 
 **Pós-condição:** O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
+
+#### UC-05 — Abrir Ticket de Infraestrutura
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-05 — Abrir Ticket de Infraestrutura |
+| **Ator primário** | Capataz (Daniel) |
+| **Atores secundários** | Supervisor Luiz (notificado, pode atribuir); Equipe de Infraestrutura |
+| **RFs relacionados** | RF008, RF004 |
+| **RNs relacionadas** | RN08 |
+| **RNFs relacionados** | SUP, USAB |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+
+**Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz". O Capataz escolheu a ação "Abrir chamado" após identificar-se. Existe um problema de infraestrutura no retiro (cerca quebrada, falta de água, equipamento danificado, problema em edificação) que precisa ser reportado.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Capataz acessa o módulo "Chamados" e seleciona "Abrir Novo Chamado".
+2. O sistema apresenta o formulário de abertura com ícones de categoria e campos simplificados, adequados ao baixo letramento digital (RN05), contendo: categoria do problema, localização, descrição e área de evidências.
+3. O Capataz seleciona a categoria do problema via ícone (cerca, abastecimento de água, equipamento, edificação).
+4. O Capataz informa a localização aproximada dentro do retiro.
+5. O Capataz adiciona ao menos uma evidência descritiva obrigatória: mensagem escrita ou áudio (RN08).
+6. O Capataz confirma a abertura do ticket.
+7. O sistema valida a presença obrigatória de pelo menos uma evidência descritiva.
+8. O sistema persiste o ticket (no servidor ou localmente, se offline) com status "aberto" e identificador único.
+9. O sistema notifica o Supervisor Luiz (que pode atribuir o chamado) e a equipe de Infraestrutura sobre o novo chamado.
+10. O sistema exibe ao Capataz a confirmação com o número do ticket gerado.
+
+**Fluxos Alternativos:**
+
+- **A1** (no passo 5): o Capataz pode opcionalmente anexar foto georreferenciada como evidência adicional, disparando o UC-09 (Anexar Evidência). Se a foto não tiver coordenadas válidas, o sistema rejeita apenas a foto, mas mantém o ticket válido caso já haja mensagem ou áudio (RN04). `<<extend>>`
+- **A2** (no passo 8): se o dispositivo está offline, o ticket é salvo localmente e entra na fila de sincronização (UC-02).
+
+**Exceções:**
+
+- **E1** (no passo 7): se o Capataz tentar enviar o ticket sem nenhuma evidência descritiva (mensagem ou áudio), o sistema bloqueia o envio e exibe mensagem clara e visual solicitando o cumprimento da obrigação (RN08).
+- **E2** (no passo 8): se houver falha de persistência mesmo com armazenamento local disponível, o sistema mantém os dados em memória e oferece nova tentativa.
+
+**Pós-condição:** O ticket de infraestrutura está registrado com identificador único, evidência(s) anexada(s), categoria, localização e Capataz autor Daniel. O Supervisor Luiz é notificado e pode atribuir o chamado. A equipe de Infraestrutura pode iniciar o atendimento remotamente (SUP — 100% das correções sem deslocamento a campo).
+
+---
+
+#### UC-06 — Visualizar Dados Aprovados e Gerar Relatório
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-06 — Visualizar Dados Aprovados e Gerar Relatório |
+| **Ator primário** | Gerente (Marcos) |
+| **Atores secundários** | Servidor de Dados Sincronizados e Aprovados |
+| **RFs relacionados** | RF007 |
+| **RNs relacionadas** | RN07 |
+| **RNFs relacionados** | ORG, DES |
+| **Relacionamentos UML** | `<<include>>` UC-07 |
+
+**Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem dados de movimentação ou tarefas que já foram sincronizados (UC-02) e aprovados pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O Gerente acessa o painel de consolidação do sistema.
+2. O sistema apresenta a visão geral dos dados aprovados: movimentações, tarefas concluídas e tickets, com identificação de quem registrou (Capataz Daniel) e quem aprovou (Supervisor Luiz), data e horário de cada ação.
+3. O Gerente analisa os dados consolidados para ter visão do que aconteceu na operação.
+4. O Gerente acessa o módulo "Relatórios" e seleciona o tipo de relatório (movimentação de rebanho ou tarefas).
+5. O Gerente define o período (semanal ou mensal) e o(s) retiro(s) de interesse.
+6. O Gerente confirma a geração.
+7. O sistema consulta exclusivamente os dados que já foram sincronizados e aprovados pelo Supervisor para o filtro definido.
+8. O sistema processa os dados e gera o arquivo no formato de planilha (.xlsx ou .csv).
+9. O sistema disponibiliza o arquivo para download.
+10. O Gerente faz o download da planilha gerada e segue com o trabalho de gestão.
+
+**Fluxos Alternativos:**
+
+- **A1** (no passo 5): o Gerente pode aplicar filtros adicionais, como tipo de movimentação (apenas mortes, apenas transferências), Capataz responsável ou Supervisor validador.
+- **A2** (no passo 2): o Gerente pode consultar apenas a visão consolidada sem gerar relatório, caso queira apenas acompanhar a operação em tempo quase real.
+
+**Exceções:**
+
+- **E1** (no passo 7): se não houver dados sincronizados e aprovados para o filtro selecionado, o sistema exibe mensagem informando ausência de dados e oferece sugestão de ampliar o período ou alterar o filtro.
+- **E2** (no passo 7): o sistema explicitamente exclui  registros não aprovados pelo Supervisor, garantindo consistência do relatório oficial (RN07).
+- **E3** (no passo 8): se houver falha no processamento (timeout ou erro do servidor), o sistema exibe erro claro ao Gerente com opção de nova tentativa.
+- **E4** (no passo 1): se um usuário com perfil "Capataz" tentar acessar o painel de consolidação ou o módulo de relatórios, o sistema bloqueia o acesso e retorna erro 403 (SEG).
+
+**Pós-condição:** O Gerente Marcos possui visão completa da operação (quem registrou, quem aprovou, quando) e, se necessário, um arquivo de planilha no formato compatível, contendo exclusivamente dados sincronizados e aprovados, pronto para análises gerenciais e comunicação com a sede. O ciclo completo: campo → sincronização → validação → consolidação.
+
+---
+
+#### UC-07 — Identificar-se no Sistema
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-07 — Identificar-se no Sistema |
+| **Ator primário** | Capataz (Daniel), Supervisor (Luiz) ou Gerente (Marcos) |
+| **Atores secundários** | Servidor de Autenticação |
+| **RFs relacionados** | RF005 |
+| **RNs relacionadas** | RN05 |
+| **RNFs relacionados** | USAB, SEG |
+| **Relacionamento UML** | `<<include>>` por UC-01, UC-02, UC-03, UC-04, UC-05 e UC-06 |
+
+**Pré-condição:** O usuário possui credencial cadastrada no sistema. O dispositivo está acessível.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O usuário acessa o sistems .
+2. O sistema apresenta a tela de identificação com elementos visuais grandes, poucos campos e instruções objetivas, adequada ao baixo letramento digital do Capataz Daniel (RN05).
+3. O usuário informa sua identificação e credencial.
+4. O sistema valida a credencial junto ao servidor de autenticação.
+5. O sistema identifica o perfil (Capataz, Supervisor ou Gerente) e o retiro vinculado.
+6. O sistema libera o menu principal contextualizado para o perfil identificado, exibindo apenas as ações disponíveis para aquele perfil.
+
+**Fluxos Alternativos:**
+
+- **A1** (no passo 1): se o usuário já tinha sessão ativa válida, o sistema pula direto para o passo 6.
+- **A2** (no passo 3): o sistema pode oferecer mecanismo simplificado de identificação (PIN visual, foto do perfil para seleção, biometria), priorizando o menor número possível de etapas (RN05).
+
+**Exceções:**
+
+- **E1** (no passo 4): se a credencial é inválida, o sistema exibe mensagem clara em linguagem objetiva e oferece nova tentativa.
+- **E2** (no passo 4): se não há conexão com o servidor, o sistema permite identificação offline com credencial armazenada localmente, mantendo a sessão limitada às funcionalidades offline.
+
+**Pós-condição:** O usuário está autenticado com perfil identificado e sessão ativa. O menu exibe apenas as ações do perfil: Daniel (Capataz) vê "Registrar movimentação" e "Abrir chamado"; Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". Todas as ações ficam vinculadas ao usuário para rastreabilidade e auditoria.
+
+---
+
+#### UC-08 — Registrar Causa de Óbito
+
+| Campo | Conteúdo |
+|---|---|
+| **UC-ID + Nome** | UC-08 — Registrar Causa de Óbito |
+| **Ator primário** | Capataz (Daniel) |
+| **Atores secundários** | — |
+| **RFs relacionados** | RF001 |
+| **RNs relacionadas** | RN01 |
+| **RNFs relacionados** | USAB |
+| **Relacionamento UML** | `<<extend>>` UC-01 — condição: tipo da movimentação = "morte" |
+
+**Pré-condição:** O Capataz está executando o UC-01 (Registrar Movimentação) e selecionou "morte" como tipo de movimentação no passo 3.
+
+**Fluxo Principal (cenário de sucesso):**
+
+1. O sistema exibe o campo "causa do óbito" como obrigatório, em destaque visual.
+2. O sistema apresenta lista pré-definida de causas comuns (predação, doença, acidente, intempérie, desconhecida) com ícones adequados ao baixo letramento digital.
+3. O Capataz seleciona a causa aplicável ou opta por descrever em campo livre.
+4. O Capataz pode adicionar observações textuais complementares.
+5. O sistema valida o preenchimento do campo e retorna o controle ao fluxo principal do UC-01 (passo 4).
+
+**Exceções:**
+
+- **E1** (no passo 5): se o campo "causa do óbito" está em branco, o sistema bloqueia o avanço do UC-01 e mantém o usuário nesta tela até o preenchimento (RN01).
+
+**Pós-condição:** A causa do óbito está registrada como parte da movimentação de morte. O fluxo retorna ao UC-01, que prossegue normalmente com os demais campos.
 
 ---
 
