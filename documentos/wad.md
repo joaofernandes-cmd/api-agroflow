@@ -174,9 +174,39 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 <img src="outros/assets/persona-daniel.png">
 
-&ensp; &ensp;Daniel Carvalho tem 43 anos, é casado e pai de 3 filhos. Atualmente, trabalha como capataz na Fazenda BrPec, sendo responsável pela gestão do retiro e pela coordenação de uma equipe de 12 vaqueiros. Iniciou sua carreira ainda jovem como vaqueiro em fazendas da região, função na qual desenvolveu experiência em manejo de rebanho e liderança de equipe no campo. Por seu desempenho e domínio da rotina da pecuária, foi contratado pela BrPec para assumir a função de capataz, na qual atua há mais de 10 anos. 
+Iformações:
+Idade: 43 anos
+Localização: Miranda – MS
+Cargo: Capataz
+Escolaridade: Ensino fundamental incompleto
+Letramento digital: Baixo
 
-&ensp; &ensp;Daniel é um profissional comprometido e prático, focado em garantir que o retiro funcione com eficiência. Entretanto, a falta de ferramentas tecnológicas e de capacitação estruturada dificulta seu trabalho no dia a dia. Seu maior sonho é levar a esposa e os três filhos para conhecer o Rio de Janeiro, viagem que planeja há anos e para a qual guarda dinheiro mensalmente.
+Biografia
+Daniel Carvalho iniciou sua trajetória ainda jovem em fazendas da região, desenvolvendo experiência prática no manejo de rebanho e na coordenação de equipes. Atualmente, atua há mais de 10 anos como capataz na Fazenda BrPec, sendo responsável pela execução das atividades operacionais no retiro.
+Apesar de ser um profissional experiente, prático e comprometido, enfrenta limitações relacionadas à baixa digitalização dos processos, à escassez de ferramentas adequadas e à falta de capacitação para utilização de tecnologias. Essas condições impactam diretamente a organização das tarefas e a eficiência no dia a dia.
+
+Metas
+Cumprir as atividades diárias com eficiência;
+Garantir que a equipe execute corretamente as tarefas;
+Manter a estabilidade profissional e o sustento familiar;
+Conseguir economizar mensalmente, ainda que de forma modesta;
+Proporcionar uma viagem em família.
+
+Necessidades
+Soluções simples e intuitivas para organização das tarefas;
+Ferramentas que auxiliem no acompanhamento das atividades;
+Redução do tempo gasto na execução e resolução de problemas.
+Desafios/Dores
+
+Jornada de trabalho extensa e fisicamente desgastante;
+Sobrecarga de responsabilidades no retiro;
+Dificuldade em organizar informações mentalmente ou em papel;
+Baixo nível de familiaridade com tecnologias digitais.
+
+Interesses
+Estabilidade financeira e qualidade de vida familiar;
+Momentos de descanso quando possível;
+Manter o trabalho organizado e sem imprevistos.
 
 <img src="outros/assets/persona-luiz.png">
 
