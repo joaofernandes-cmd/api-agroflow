@@ -1246,19 +1246,6 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ---
 
-### Matriz de Cobertura RF/RN/RNF × UC
-
-| UC | Persona | Ator | RFs cobertos | RNs cobertas | RNFs principais | Include/Extend |
-|---|---|---|---|---|---|---|
-| UC-01 — Registrar Movimentação | Daniel | Capataz | RF001, RF004 | RN01, RN04 | USAB, CONF | include UC-07; extend UC-08, UC-09 |
-| UC-02 — Sincronizar Dados Offline | — | Sistema | RF003 | RN03 | CONF, DES | include UC-07 |
-| UC-03 — Criar Tarefa | Luiz | Supervisor | RF002 | RN02 | USAB, ORG | include UC-07; extend UC-09 |
-| UC-04 — Validar Registros | Luiz | Supervisor | RF006 | RN06 | SEG, USAB | include UC-07; extend UC-10 |
-| UC-05 — Abrir Ticket de Infra | Daniel | Capataz | RF008, RF004 | RN08 | SUP, USAB | include UC-07; extend UC-09 |
-| UC-06 — Visualizar e Gerar Relatório | Marcos | Gerente | RF007 | RN07 | ORG, DES | include UC-07 |
-
-
-
 ### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
 *Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
