@@ -731,6 +731,33 @@ associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente 
 validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior
 validação pelo Supervisor Luiz (UC-04).
 
+UC-02 — Sincronizar Dados Offline com o Servidor
+CampoConteúdoUC-ID + NomeUC-02 — Sincronizar Dados Offline com o ServidorAtor primárioSistema (disparado automaticamente por evento de conexão)Atores secundáriosServidor de Sincronização; Capataz e Supervisor (notificados do resultado)RFs relacionadosRF003RNs relacionadasRN03RNFs relacionadosCONF, DESRelacionamentos UML<<include>> UC-07
+Pré-condição: Existem registros pendentes no armazenamento local do dispositivo (movimentações, tarefas concluídas, evidências ou tickets) gerados em modo offline pelo Capataz Daniel. O usuário está identificado no sistema (UC-07).
+Fluxo Principal (cenário de sucesso):
+
+O sistema monitora continuamente o status da conexão de rede do dispositivo.
+O sistema detecta que a conexão foi restabelecida e retorna um status HTTP válido em uma requisição de teste ao servidor.
+O sistema enfileira todos os registros pendentes do armazenamento local em ordem cronológica.
+O sistema envia cada registro ao endpoint correspondente no servidor.
+O servidor processa cada registro, persiste no banco central e retorna confirmação de recebimento.
+O sistema marca cada registro local como "sincronizado" após confirmação do servidor.
+O sistema exibe ao Capataz uma notificação não intrusiva indicando o número de registros sincronizados com sucesso.
+
+Fluxos Alternativos:
+
+A1 (no passo 3): se houver muitos registros pendentes, o sistema processa a fila em lotes para evitar sobrecarga na conexão Starlink (DES — p95 < 3000ms), mantendo a ordem cronológica.
+A2 (no passo 7): se a sincronização ocorre em segundo plano sem o aplicativo aberto, o sistema apenas atualiza os indicadores visuais sem notificação explícita.
+
+Exceções:
+
+E1 (no passo 2): se o status HTTP retornado não for válido (timeout, 5xx, sem resposta), o sistema mantém o modo offline ativo, não dispara a sincronização e tenta novamente após intervalo de espera (RN03).
+E2 (no passo 5): se o servidor rejeita um registro específico por erro de validação, o sistema mantém esse registro como "pendente com erro", exibe alerta detalhado ao Capataz e prossegue com os demais registros da fila.
+E3 (no passo 5): se a conexão cai durante o envio, o sistema interrompe a sincronização, mantém os registros não confirmados como "pendentes" e retoma do ponto de parada quando a conexão for restabelecida.
+
+Pós-condição: Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
+
+
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
 *Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
