@@ -757,6 +757,34 @@ E3 (no passo 5): se a conexão cai durante o envio, o sistema interrompe a sincr
 
 Pós-condição: Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
 
+UC-03 — Criar e Atribuir Tarefa a Capataz
+CampoConteúdoUC-ID + NomeUC-03 — Criar e Atribuir Tarefa a CapatazAtor primárioSupervisor (Luiz)Atores secundáriosCapataz Daniel (destinatário da tarefa); Sistema de NotificaçãoRFs relacionadosRF002RNs relacionadasRN02RNFs relacionadosUSAB, ORGRelacionamentos UML<<include>> UC-07; <<extend>> UC-09 [evidência adicional]
+Pré-condição: O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um Capataz cadastrado e vinculado a um retiro sob sua coordenação. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
+Fluxo Principal (cenário de sucesso):
+
+O Supervisor acessa o módulo "Tarefas" e seleciona "Nova Tarefa".
+O sistema apresenta o formulário de criação com os campos: Capataz atribuído, data, horário, prioridade, categoria e descrição.
+O Supervisor seleciona o Capataz responsável a partir da lista de usuários do retiro.
+O Supervisor preenche data, horário, prioridade (alta, média, baixa) e categoria da tarefa.
+O Supervisor adiciona descrição textual da tarefa.
+O Supervisor confirma a criação.
+O sistema valida o preenchimento simultâneo de todos os campos obrigatórios.
+O sistema persiste a tarefa no servidor (ou local, se offline) e a vincula ao Capataz selecionado.
+O sistema notifica o Capataz atribuído sobre a nova tarefa.
+O sistema exibe confirmação ao Supervisor e retorna à listagem de tarefas com a nova tarefa visível.
+
+Fluxos Alternativos:
+
+A1 (no passo 5): o Supervisor pode anexar evidências descritivas (foto georreferenciada, áudio ou mensagem) à tarefa criada, disparando o UC-09 (Anexar Evidência), conforme RF004. <<extend>>
+A2 (no passo 6): o Supervisor pode optar por salvar a tarefa como "rascunho" para edição posterior, sem disparar a validação dos campos obrigatórios.
+
+Exceções:
+
+E1 (no passo 7): se algum dos campos obrigatórios (Capataz atribuído, data, horário, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
+E2 (no passo 8): se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
+E3 (no passo 9): se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
+
+Pós-condição: A tarefa está registrada no sistema, vinculada ao Capataz Daniel, com status inicial "pendente" e disponível tanto na visão do Supervisor quanto na do Capataz. O Capataz Daniel recebe a tarefa e a executa no campo. Ao concluir, a tarefa entra no fluxo de validação pelo Supervisor Luiz (UC-04).
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
