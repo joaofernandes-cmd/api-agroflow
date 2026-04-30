@@ -7,27 +7,183 @@
 
 ## Nome do Grupo
 
-#### Nomes dos integrantes do grupo
+#### Integrantes do grupo:
 
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-ana.png" width="100px;" alt="" /><br><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-andre.png" width="100px;" alt=""/><br><sub><b>André Fischer de Carvalho</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img width="100px;" style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-enzo.png" width="100px;" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-fabiana.png" width="100px;" alt=""/><br><sub><b>Fabiana Dias de Souza</b></sub></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-joao.png" width="100px;" alt=""/><br><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-levi.png" width="100px;" alt=""/><br><sub><b>Levi Correia Silveira</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-matheus.png" width="100px;" alt=""/><br><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-theo.png" width="100px;" alt=""/><br><sub><b>Théo Pires Morêda</b></sub></a></td>
 
+  </table>
+</div>
 
 ## Sumário
 
 [1. Introdução](#c1)
 
+<br>
+
 [2. Visão Geral da Aplicação Web](#c2)
 
-[3. Projeto Técnico da Aplicação Web](#c3)
+<details>
+  <summary>Subtópicos</summary>
+
+  - [2.1. Escopo do Projeto](#c2.1)
+
+    - [2.1.1. Modelo de 5 Forças de Porter](#c2.1.1)
+
+    - [2.1.2. Análise SWOT da Instituição Parceira](#c2.1.2)
+
+    - [2.1.3. Solução](#c2.1.3)
+
+    - [2.1.4. Value Proposition Canvas](#c2.1.4)
+
+    - [2.1.5. Matriz de Riscos do Projeto](#c2.1.5)
+
+  - [2.2. Personas](#c2.2)
+
+  - [2.3. User Stories](#c2.3)
+
+</details>
+
+<br>
+
+[3. Projeto da Aplicação Web](#c3)
+
+<details>
+  <summary>Subtópicos</summary>
+
+  - [3.1. Requisitos do Sistema](#c3.1)
+
+    - [3.1.1. Requisitos Funcionais](#c3.1.1)
+
+    - [3.1.2. Regras de Negócio](#c3.1.2)
+
+    - [3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010](#c3.1.3)
+
+    - [3.1.4. Matriz RF → RN → Endpoint](#c3.1.4)
+
+  - [3.2. Arquitetura](#c3.2)
+
+    - [3.2.1. Diagrama de Arquitetura](#c3.2.1)
+
+    - [3.2.2. Diagrama de Casos de Uso](#c3.2.2)
+
+    - [3.2.3. Diagrama de Classes do Domínio](#c3.2.3)
+
+    - [3.2.4. Diagrama de Sequência UML](#c3.2.4)
+
+    - [3.2.5. Diagrama de Atividades ou Estados](#c3.2.5)
+
+    - [3.2.6. Diagrama de Implantação](#c3.2.6)
+
+    - [3.2.7. Padrões de Projeto Aplicados](#c3.2.7)
+
+  - [3.3. Wireframes](#c3.3)
+
+  - [3.4. Guia de estilos](#c3.4)
+
+    - [3.4.1. Cores](#c3.4.1)
+
+    - [3.4.2. Tipografia](#c3.4.2)
+
+    - [3.4.3. Iconografia e imagens](#c3.4.3)
+
+  - [3.5. Protótipo de alta fidelidade](#c3.5)
+
+  - [3.6. Modelagem do banco de dados](#c3.6)
+
+    - [3.6.1. Modelo Entidade-Relacionamento (ER)](#c3.6.1)
+
+    - [3.6.2. Diagrama Entidade-Relacionamento (DER)](#c3.6.2)
+
+    - [3.6.3. Modelo Relacional e Modelo Físico](#c3.6.3)
+
+    - [3.6.4. Consultas SQL e lógica proposicional](#c3.6.4)
+
+  - [3.7. WebAPI e endpoints](#c3.7)
+
+  - [3.8. Autenticação, Autorização e Resiliência](#c3.8)
+
+    - [3.8.1. Autenticação](#c3.8.1)
+
+    - [3.8.2. Controle de sessão](#c3.8.2)
+
+    - [3.8.3. Autorização](#c3.8.3)
+
+    - [3.8.4. Estratégias de Resiliência](#c3.8.4)
+
+  - [3.9. Matriz de Rastreabilidade (RTM)](#c3.9)
+
+</details>
+
+<br>
 
 [4. Desenvolvimento da Aplicação Web](#c4)
 
-[5. Testes da Aplicação Web](#c5)
+<details>
+  <summary>Subtópicos</summary>
+
+  - [4.1. Primeira versão da aplicação web](#c4.1)
+
+  - [4.2. Segunda versão da aplicação web](#c4.2)
+
+  - [4.3. Versão final da aplicação web](#c4.3)
+
+</details>
+
+<br>
+
+[5. Testes](#c5)
+
+<details>
+  <summary>Subtópicos</summary>
+
+  - [5.1. Relatório de testes de integração de endpoints automatizados](#c5.1)
+
+  - [5.2. Testes de usabilidade](#c5.2)
+
+    - [5.2.1. Relatório de testes de guerrilha](#c5.2.1)
+
+    - [5.2.2. Relatório de testes SUS (System Usability Scale)](#c5.2.2)
+
+</details>
+
+<br>
 
 [6. Estudo de Mercado e Plano de Marketing](#c6)
 
+<details>
+  <summary>Subtópicos</summary>
+
+  - [6.1. Resumo Executivo](#c6.1)
+
+  - [6.2. Análise de Mercado](#c6.2)
+
+  - [6.3. Análise da Concorrência](#c6.3)
+
+  - [6.4. Público-Alvo](#c6.4)
+
+  - [6.5. Posicionamento](#c6.5)
+
+  - [6.6. Estratégia de Marketing](#c6.6)
+
+</details>
+
+<br>
+
 [7. Conclusões e trabalhos futuros](#c7)
 
-[8. Referências](c#8)
+<br>
+
+[8. Referências](#c8)
 
 [Anexos](#c9)
 
@@ -44,19 +200,19 @@ A interface foi estruturada para atender a diferentes **níveis hierárquicos**:
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
-## 2.1. Escopo do Projeto (sprints 1 e 4)
+## <a name="c2.1"></a>2.1. Escopo do Projeto (sprints 1 e 4)
 
-### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter 
 
-*Preencha com até 400 palavras*
+# Análise das 5 Forças de Porter — BrPec Agropecuária
 
-*Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
+A estrutura competitiva do setor pecuário no Pantanal e Cerrado sul mato grossenses é marcada por intensividade em capital, dependência ambiental e inserção em um mercado global de commodities, o que reduz a capacidade de diferenciação e torna o produtor essencialmente tomador de preço.
 
-### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
+## 5 Forças de Porter
 
-*Preencha com até 100 palavras – sem necessidade de fonte*
+<img src="./forcas-de-porter.png">
 
-*Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
+Figura 1 - Autoria Própria (2026)
 
 
 ---
@@ -155,42 +311,128 @@ Os benefícios visados incluem a agilização da coleta e do processamento de da
 
 Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
 
-### 2.1.4. Value Proposition Canvas (sprint 1): 
-*Sem limite de palavras – usar template do curso*
+### <a name="c2.1.4"></a>2.1.4. Value Proposition Canvas (sprint 1)
 
-*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 2).
 
-### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+<div align="center">
+<p>Figura 2 - Canvas Proposta de Valor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/canva-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
+</p>
 
-*Sem limite de palavras – usar template do curso*
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
-*Registre na matriz os riscos identificados no projeto.*
+---
 
-## 2.2. Personas (sprint 1)
+#### Perfil do Cliente
 
-&ensp; &ensp; Foram desenvolvidas três personas para representar o perfil de partes interessadas usuarias da solução proposta neste documento. Cada persona representa um cargo presente em todas as fazendas da BrPec, respectivamente capataz, supervisor e gerente.
+##### Tarefas do Cliente
 
-<img src="outros/assets/card-persona-daniel.png">
+&nbsp;&nbsp;&nbsp;&nbsp;Nas tarefas do cliente, são delimitadas as tarefas que um cliente está tentando fazer, especialmente antes de utilizar uma nova solução proposta por uma determinada organização (G4 EDUCAÇÃO, 2025). Com isso, a equipe identificou as seguintes tarefas do cliente:
 
-&ensp; &ensp;Daniel Carvalho tem 43 anos, é casado e pai de 3 filhos. Atualmente, trabalha como capataz na Fazenda BrPec, sendo responsável pela gestão do retiro e pela coordenação de uma equipe de 12 vaqueiros. Iniciou sua carreira ainda jovem como vaqueiro em fazendas da região, função na qual desenvolveu experiência em manejo de rebanho e liderança de equipe no campo. Por seu desempenho e domínio da rotina da pecuária, foi contratado pela BrPec para assumir a função de capataz, na qual atua há mais de 10 anos. 
+- Controlar a movimentação do rebanho bovino (nascimentos, mortes, compras, vendas e transferências entre retiros);
+- Consolidar dados operacionais para subsidiar decisões estratégicas de negócio;
+- Gerenciar e acompanhar tarefas diárias de campo.
 
-&ensp; &ensp;Daniel é um profissional comprometido e prático, focado em garantir que o retiro funcione com eficiência. Entretanto, a falta de ferramentas tecnológicas e de capacitação estruturada dificulta seu trabalho no dia a dia. Seu maior sonho é levar a esposa e os três filhos para conhecer o Rio de Janeiro, viagem que planeja há anos e para a qual guarda dinheiro mensalmente.
+##### Dores
 
-<img src="outros/assets/card-persona-luiz.png">
+&nbsp;&nbsp;&nbsp;&nbsp;Na seção de dores do Canvas Proposta de Valor, são adicionadas as frustrações que o cliente sofre ao tentar realizar determinada tarefa (G4 EDUCAÇÃO, 2025). Desse modo, foram elencadas as seguintes dores do cliente:
 
-&ensp; &ensp;Luiz tem 37 anos, é solteiro, mas mantém um relacionamento estável. Atualmente, atua como supervisor dos capatazes da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por coordenar múltiplas frentes operacionais do manejo pecuário e garantir que os capatazes executem corretamente as diretrizes estabelecidas pela gestão da fazenda.
+- Dependência de processos manuais e anotações em papel (boletas), gerando retrabalho de redigitação em planilhas;
+- Lentidão na comunicação entre campo e escritório, dependendo de repasse humano para atualizar informações;
+- Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos;
+- Falta de visibilidade agilizada sobre o status das atividades e do rebanho.
 
-&ensp; &ensp;Sua trajetória começou como peão ainda jovem, passando por diferentes funções no campo até se tornar capataz. Ao longo dos anos, destacou-se pela organização, capacidade de resolver problemas e visão prática da operação, o que o levou à promoção para supervisor — cargo que ocupa há cerca de 5 anos.
+##### Ganhos
 
-&ensp; &ensp;Luiz é um profissional analítico e exigente, com forte senso de responsabilidade sobre os resultados da fazenda. Ele busca garantir eficiência, padronização e produtividade, mas enfrenta dificuldades devido à falta de integração entre informações, excesso de demandas simultâneas e dependência de processos pouco estruturados. Seu objetivo pessoal é crescer profissionalmente dentro da empresa e conquistar estabilidade financeira suficiente para investir em uma casa própria.
+&nbsp;&nbsp;&nbsp;&nbsp;Na seção de ganhos do Canvas Proposta de Valor, são colocados os resultados que o cliente aspira ter quando realiza uma tarefa (G4 EDUCAÇÃO, 2025). Assim, foram identificados os seguintes ganhos do cliente:
 
-<img src="outros/assets/card-persona-marcos.png">
+- Registro digital direto na fonte, eliminando a redigitação manual;
+- Acesso a dados consolidados e atualizados do rebanho para tomada de decisão estratégica;
+- Maior rastreabilidade e transparência nas operações de campo;
+- Agilidade no acompanhamento de tarefas e movimentações diariamente.
 
-&ensp; &ensp;Marcos Ferreira tem 49 anos, é casado e pai de dois filhos. Atua como gerente da Fazenda Rocha Lima (pertencente à BrPec), sendo responsável por garantir o desempenho geral da operação, conectando a estratégia da empresa com a execução no campo. Supervisiona diretamente os capatazes e o supervisor, acompanhando resultados produtivos, financeiros e operacionais da fazenda.
+---
 
-&ensp; &ensp;Formado em Administração, com experiência em gestão agropecuária, Marcos possui perfil estruturado e orientado a resultados. Divide sua rotina entre atividades administrativas e presença no campo, buscando garantir que o planejamento seja executado corretamente. Apesar de já utilizar alguns sistemas, ainda enfrenta limitações na consolidação e confiabilidade das informações operacionais. Seu principal objetivo é aumentar a eficiência da fazenda com maior controle e previsibilidade dos resultados.
+#### Proposta de Valor
 
-## 2.3. User Stories (sprints 1 a 5)
+##### Produtos e Serviços
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de produtos e serviços de um Canvas Proposta de Valor se refere aos recursos oferecidos por uma determinada organização (G4 EDUCAÇÃO, 2025). Dessa forma, é possível mencionar os seguintes no que se refere à solução proposta pela equipe:
+
+- Aplicação web com interface de campo para o Capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
+- Interface de calendarização e monitoramento de tarefas para o Gerente;
+- Funcionalidade offline com sincronização automática ao restabelecer conexão com a internet.
+
+##### Criadores de Ganho
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de criadores de ganhos de um Canvas Proposta de Valor diz respeito a como os produtos e serviços de uma determinada organização acarretam os resultados que o cliente espera (G4 EDUCAÇÃO, 2025). A partir disso, foram elencados os seguintes criadores de ganho:
+
+- Centraliza os registros do rebanho diariamente, substituindo anotações dispersas em papel;
+- Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano;
+- Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações.
+
+##### Aliviam as Dores
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de aliviadores de dor de um Canvas Proposta de Valor mostra de qual maneira os produtos e serviços propostos por uma organização tratam as dores do cliente (G4 EDUCAÇÃO, 2025). Por conseguinte, foram elaborados os seguintes aliviadores de dor:
+
+- Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo;
+- Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor;
+- Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
+- Garante operação contínua em campo mesmo sem internet via modo offline.
+
+### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
+
+A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
+
+<p align="center">Figura 3 – Matriz De Risco.</p> 
+
+<div align="center">
+<img src="outros/assets/matriz-de-risco.png">
+
+<p> Fonte: Próprios autores (2026).</p>
+</div>
+
+**Planos de ação, impacto e probabilidade**
+
+Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC (conforme os quadros 1 e 2). Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
+
+<p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
+
+
+| Ameaça                                                   | Plano de ação                                                                    | Probabilidade | Impacto    |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
+| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar alterações no backlog | 70%           | Moderado   |
+| Dependência de testes em ambiente real de campo          | Criar cenários simulados para testes antes da validação em campo                 | 50%           | Alto       |
+| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar alinhamentos frequentes com o parceiro antes da implementação           | 30%           | Moderado   |
+| Problemas de comunicação interna                         | Manter reuniões periódicas e alinhamentos constantes durante as sprints          | 30%           | Muito alto |
+| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis e critérios de aceite no início de cada sprint              | 30%           | Baixo      |
+
+
+<p align="center">Fonte: Próprios autores (2026).</p> 
+
+
+
+<p align="center">Quadro 2 – Plano de ação para as oportunidades.</p> 
+
+| Oportunidade                                        | Plano de ação                                                                    | Probabilidade | Impacto    |
+| --------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
+| Parceiro engajado com o projeto                     | Manter contato frequente e apresentar entregas parciais para validação           | 90%           | Muito alto |
+| Testes contínuos durante o desenvolvimento          | Realizar testes a cada funcionalidade desenvolvida                               | 70%           | Muito alto |
+| Validação frequente das funcionalidades             | Validar as funcionalidades ao final de cada sprint com o parceiro                | 70%           | Alto       |
+| Melhoria na rastreabilidade das atividades no campo | Estruturar os registros no sistema e garantir o preenchimento adequado dos dados | 50%           | Alto       |
+| Evolução do sistema com base em feedback prático    | Coletar feedback após cada entrega e priorizar melhorias no backlog              | 50%           | Moderado   |
+
+<p align="center">Fonte: Próprios autores (2026).</p> 
+
+
+## <a name="c2.2"></a>2.2. Personas (sprint 1)
+
+*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+
+## <a name="c2.3"></a>2.3. User Stories (sprints 1 a 5)
 
 *Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST das 5 User Stories prioritárias*
 
@@ -410,28 +652,6 @@ Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
 
-## <a name="c2.3"></a>2.4. Conclusão 
-
-# Conclusões
-
-**5 Forças de Porter**
-A BRPec atua em um setor com altas barreiras de entrada e baixa ameaça de substitutos, mas enfrenta forte pressão dos grandes frigoríficos e rivalidade intensa entre produtores, o que a coloca como tomadora de preço. O modelo "flex" surge como resposta estratégica para capturar margem no elo mais favorável da cadeia em cada ciclo.
-
-**Análise SWOT**
-A empresa combina forças relevantes, como escala, integração agricultura-pecuária e respaldo do BTG Pactual, com fraquezas ligadas à complexidade operacional e dependência de mão de obra em áreas remotas. No ambiente externo, oportunidades como ESG e expansão agrícola contrabalançam ameaças regulatórias, climáticas e de mercado, exigindo gestão de risco robusta.
-
-**Solução**
-O registro manual em papel pelos capatazes gera retrabalho e risco de inconsistências, e a aplicação web offline com sincronização automática responde diretamente a essa dor. A solução prioriza simplicidade de uso para um público com baixo repertório digital, garantindo agilidade e confiabilidade na coleta de dados em campo.
-
-**Value Proposition Canvas**
-O canvas evidencia o alinhamento entre a solução proposta e as reais necessidades do cliente, ao eliminar boletas em papel, reduzir retrabalho e aumentar a rastreabilidade das operações. Os criadores de ganho e aliviadores de dor mostram que a aplicação entrega valor tangível tanto para o capataz em campo quanto para o gerente na tomada de decisão.
-
-**Matriz de Riscos**
-A matriz demonstra planejamento maduro ao mapear ameaças e oportunidades com planos de ação específicos. Destaca-se o alto engajamento do parceiro como oportunidade de impacto muito alto, fator que viabiliza validações frequentes e sustenta a evolução iterativa do projeto.
-
-
-
-
 
 
 
@@ -460,7 +680,7 @@ A matriz demonstra planejamento maduro ao mapear ameaças e oportunidades com pl
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
-## 3.1. Requisitos do Sistema (sprints 1 a 5)
+## <a name="c3.1"></a>3.1. Requisitos do Sistema (sprints 1 a 5)
 
 Os requisitos do sistema representam o ponto de partida para tudo que será construído, estabelecendo um entendimento comum entre nossa equipe e o parceiro sobre o que a aplicação precisa ser, como deve se comportar e sob quais critérios será testada e aprovada.
 
@@ -468,7 +688,7 @@ Eles estão organizados em duas categorias complementares, os requisitos funcion
 
 Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
 
-### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
 
 | ID    | Descrição | Prioridade | Status       |
@@ -482,16 +702,23 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
 | RF008 | O sistema deve disponibilizar um ticket de chamados de infraestrutura, permitindo que Capatazes abram chamados para a equipe de infraestrutura e que Supervisores atribuam chamados aos Capatazes.  | Média | Planejado |
 
-### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
+### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
 *Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3.*
 
 | ID   | Descrição | RF associado |
 |------|-----------|--------------|
-| RN01 | ...       | RF001        |
-| RN02 | ...       | RF001        |
+| RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso os campos obrigatórios (origem, destino, quantidade e estágio da vida) estejam em branco. Se a movimentação for do tipo "morte", o campo "causa do óbito" também passa a ser estritamente obrigatório. | RF001 |
+| RN02 | A criação de uma nova tarefa no sistema deve falhar e retornar um erro de validação caso não contenha o preenchimento simultâneo de: usuário atribuído, data, horário, prioridade e categoria. | RF002 |
+| RN03 | Durante a operação em modo off-line, os dados devem ser salvos no armazenamento local do dispositivo. A sincronização (envio dos dados para o servidor) só deve ser disparada automaticamente quando o sistema detectar um status HTTP válido de conexão restabelecida. | RF003 |
+| RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude e longitude válidas). Caso não possua, a foto deve ser rejeitada pelo sistema. | RF004 |
+| RN05 | A identificação do usuário deverá ocorrer com o menor número possível de etapas, utilizando linguagem clara, instruções objetivas e elementos visuais que facilitem o uso por pessoas com baixo letramento digital. | RF005 |
+| RN06 | A ação de alterar o status de uma tarefa ou movimentação para "Validada" deve ser restrita e estar visível/habilitada apenas para usuários que acessarem o sistema com o perfil/identificação de "Supervisor". | RF006 |
+| RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha só poderá ser processada utilizando dados que já foram sincronizados com o servidor (dados apenas locais/off-line não devem entrar no relatório gerado). | RF007 |
+| RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente a inclusão de pelo menos uma evidência descritiva associada ao chamado (uma mensagem escrita ou um áudio). | RF008 |
 
-### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+
+### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
 *Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
 
@@ -506,7 +733,7 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | REST — Restrições Design | A identidade visual deve seguir a logo e paleta de cores da BrPec Agropecuária; a aplicação deve ser exclusivamente web | 100% das telas aprovadas pelo parceiro em revisão de UI | Aplicação de design system com tokens de cor e tipografia baseados na identidade visual da BrPec Agropecuária, validado em revisão de UI com o parceiro |
 | ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 *Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
 
@@ -521,77 +748,77 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 | RF007 | RN07    | `/usuarios` | POST   |
 | RF008 | RN08    | `/usuarios` | POST   |
 
-## 3.2. Arquitetura (sprints 1 a 5)
+## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### <a name="c3.2.1"></a>3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 *Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
 
-### 3.2.2. Diagrama de Casos de Uso (sprint 1)
+### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 *Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
 
-### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
+### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
 *Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
 
-### 3.2.4. Diagrama de Sequência UML (sprint 3)
+### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
 *Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados.*
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
 *Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções).*
 
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
 *Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto.*
 
-## 3.3. Wireframes (sprint 2)
+## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
 *Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
 
-## 3.4. Guia de estilos (sprint 3)
+## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
 
-### 3.4.1 Cores
+### <a name="c3.4.1"></a>3.4.1 Cores
 
 *Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções*
 
-### 3.4.2 Tipografia
+### <a name="c3.4.2"></a>3.4.2 Tipografia
 
 *Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
 
-### 3.4.3 Iconografia e imagens 
+### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens 
 
 *(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
 
 *posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
 
-## 3.5 Protótipo de alta fidelidade (sprint 3)
+## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade (sprint 3)
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 
-## 3.6. Modelagem do banco de dados (sprints 2 e 4)
+## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
-### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
 *Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
 *Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
 
-### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
 *Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
@@ -605,31 +832,31 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 
 *Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
 
 *Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500).*
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
-### 3.8.1. Autenticação
+### <a name="c3.8.1"></a>3.8.1. Autenticação
 
 *Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas.*
 
-### 3.8.2. Controle de sessão
+### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
 *Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
 
-### 3.8.3. Autorização
+### <a name="c3.8.3"></a>3.8.3. Autorização
 
 *Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
 
-### 3.8.4. Estratégias de Resiliência
+### <a name="c3.8.4"></a>3.8.4. Estratégias de Resiliência
 
 *Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
 *A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais.*
 
@@ -639,21 +866,21 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## 4.1. Primeira versão da aplicação web (sprint 3)
+## <a name="c4.1"></a>4.1. Primeira versão da aplicação web (sprint 3)
 
 *Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
 
-## 4.2. Segunda versão da aplicação web (sprint 4)
+## <a name="c4.2"></a>4.2. Segunda versão da aplicação web (sprint 4)
 
 *Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
 
-## 4.3. Versão final da aplicação web (sprint 5)
+## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
 *Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:*
 
@@ -662,25 +889,25 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 
 *Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
 
-## 5.2. Testes de usabilidade (sprint 5)
+## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
 
-### 5.2.1. Relatório de testes de guerrilha
+### <a name="c5.2.1"></a>5.2.1. Relatório de testes de guerrilha
 
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
-### 5.2.2. Relatório de testes SUS (System Usability Scale)
+### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
 
 *Posicione aqui o relatório dos testes SUS realizados.*
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
-## 6.1 Resumo Executivo
+## <a name="c6.1"></a>6.1 Resumo Executivo
 
 *Preencher com até 300 palavras, sem necessidade de fonte*
 
 *Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
 
-## 6.2 Análise de Mercado
+## <a name="c6.2"></a>6.2 Análise de Mercado
 
 *a) Visão Geral do Setor (até 250 palavras)*
 *Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
@@ -691,7 +918,7 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 *c) Tendências de Mercado (até 300 palavras)*
 *Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
 
-## 6.3 Análise da Concorrência
+## <a name="c6.3"></a>6.3 Análise da Concorrência
 
 *a) Principais Concorrentes (até 250 palavras)*
 *Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
@@ -700,7 +927,7 @@ Para garantir objetividade na avaliação dessa qualidade, os requisitos não fu
 *Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
 
 
-## 6.4 Público-Alvo
+## <a name="c6.4"></a>6.4 Público-Alvo
 
 *a) Segmentação de Mercado (até 250 palavras)*
 Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.*
@@ -709,7 +936,7 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
 
 
-## 6.5 Posicionamento
+## <a name="c6.5"></a>6.5 Posicionamento
 
 *a) Proposta de Valor Única (até 250 palavras)*
 *Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
@@ -717,7 +944,7 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *b) Estratégia de Diferenciação (até 250 palavras)*
 *Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
 
-## 6.6 Estratégia de Marketing 
+## <a name="c6.6"></a>6.6 Estratégia de Marketing 
 
 *a) Produto/Serviço (até 200 palavras)*
 *Descreva as funcionalidades, benefícios e diferenciais da aplicação*
@@ -741,13 +968,18 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+1. G4 EDUCAÇÃO. Value Proposition Canvas: o que é e como funciona essa metodologia?. [S. l.], 16 abr. 2025. Disponível em: https://g4educacao.com/blog/value-proposition-canvas. Acesso em: 24 abr. 2026.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+2. OSTERWALDER, A, PIGNEUR, Y. Business Model Generation: Inovação em Modelos de Negócios. Rio de Janeiro. Alta Books, 2011. https://www.academia.edu/37075116/Business_Model_Generation. Acesso em: 23 abr. 2026.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+3. Mesquita, A. "Aposta no modelo flex". Portal DBO, 2022.
+Disponível em: https://portaldbo.com.br/aposta-no-modelo-flex/
+
+4. Brasil de Fato. "Fusão entre Marfrig e BRF: entenda os impactos da nova gigante do setor de carnes na soberania alimentar", agosto de 2025.
+Disponível em: https://www.brasildefato.com.br/2025/08/21/fusao-marfrig-brf-impactos-gigante-carnes-soberania-alimentar/
+
+5. Higa, V. "As cinco forças competitivas de Porter". AgroTVM, 2014.
+Disponível em: https://agrotvm.wordpress.com/2014/11/12/as-cinco-forcas-competitivas-de-porter/
 
 # <a name="c9"></a>Anexos
 
