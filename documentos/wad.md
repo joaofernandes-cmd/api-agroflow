@@ -204,7 +204,7 @@
 
 #### Análise das 5 Forças de Porter - BrPec Agropecuária
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estrutura competitiva do setor pecuário no Pantanal e Cerrado sul mato grossenses é marcada por intensividade em capital, dependência ambiental e inserção em um mercado global de commodities, o que reduz a capacidade de diferenciação e torna o produtor essencialmente tomador de preço.
+&nbsp;&nbsp;&nbsp;&nbsp; A análise das Cinco Forças de Porter permite compreender a estrutura competitiva do setor em que a BRPec está inserida, avaliando fatores que impactam diretamente sua rentabilidade e posicionamento estratégico. No contexto do agronegócio, especialmente na pecuária de larga escala no Pantanal e Cerrado, essa análise se torna essencial devido à alta dependência de capital, fatores ambientais, logística e dinâmica de mercado. A partir desse modelo, é possível identificar como barreiras à entrada, produtos substitutos, relações com fornecedores e compradores, além da intensidade da concorrência, influenciam as decisões da empresa, contribuindo para uma visão mais clara dos desafios e oportunidades do negócio (PORTER, 2008).
 
 
 <div align="center">
@@ -417,7 +417,7 @@ Não se aplica.
 
 # Conclusões
 
-&nbsp;&nbsp;&nbsp;&nbsp;A análise da BRPec a partir da perspectiva das 5 Forças de Porter, mostra que ela atua em um setor difícil de entrar e sem muitos substitutos (pouca ameaça de novos entrantes e baixa ameaça de substituto), mas sofre pressão dos grandes frigoríficos e enfrenta concorrência forte entre produtores (afetado pelo poder de barganha do comprador e da forte Rivalidade entre concorrentes), o que a obriga a aceitar os preços do mercado. Por isso, o modelo "flex" aparece como uma estratégia para ganhar mais dinheiro no setor da cadeia que seja mais vantajoso a cada momento. Olhando para a SWOT, a empresa tem pontos fortes importantes, como o tamanho, a união entre agricultura e pecuária e o apoio do BTG Pactual, mas também tem pontos fracos, como a operação complexa e a dependência de trabalhadores em locais distantes. Além disso, conta com oportunidades ligadas ao ESG (Ambiental, social e governança) e à expansão agrícola, ao mesmo tempo em que precisa lidar com riscos regulatórios, climáticos e de mercado, o que exige um bom controle de riscos. Para resolver um problema do dia a dia, foi pensada uma solução simples: como os capatazes anotam tudo no papel e isso gera retrabalho e erros, criou-se um aplicativo web que funciona sem internet e sincroniza os dados depois, fácil de usar até para quem tem pouca familiaridade com tecnologia, garantindo mais rapidez e confiança nas informações. O Value Proposition Canvas mostra que essa solução está realmente alinhada com o que o cliente precisa, porque acaba com as boletas de papel, diminui o retrabalho e melhora o acompanhamento das operações, trazendo benefícios tanto para o capataz no campo quanto para o gerente que toma as decisões. Por fim, a Matriz de Riscos mostra que o projeto foi bem planejado, já que mapeia os riscos e as oportunidades com planos de ação claros, e destaca o forte engajamento do parceiro como uma oportunidade de grande impacto, que permite validar o trabalho com frequência e manter a evolução constante do projeto. 
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação integrada das análises SWOT, Cinco Forças de Porter e Business Model Canvas foi fundamental para entender melhor o problema enfrentado pela BRPec e direcionar a solução proposta. A análise SWOT ajudou a organizar os principais pontos internos e externos do negócio, evidenciando tanto a força da operação quanto limitações como a dependência de processos manuais. Já o modelo de Porter mostrou como o setor é altamente competitivo, com forte pressão de compradores e baixa diferenciação, exigindo maior eficiência operacional. Por fim, o Canvas permitiu enxergar o negócio de forma mais completa, conectando a proposta de valor com as necessidades reais da operação. No conjunto, essas análises deixaram claro que o principal desafio está na organização e confiabilidade das informações do campo, e que a digitalização dos processos é essencial para reduzir retrabalho, organizar os dados e aumentar o controle da operação.
 
 ## 2.2. Personas (sprint 1)
 
@@ -599,6 +599,7 @@ Não se aplica.
 
 ## 2.3. User Stories (sprints 1 a 5)
 
+&nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BRPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17.
 
 <p align="center">Quadro 6 - User Story 01.</p> 
 
@@ -1553,15 +1554,32 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+APROSOJA MS. Panorama da soja em Mato Grosso do Sul. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br
+. Acesso em: 30 abr. 2026.
 
-HARLEY, Aurora. Personas Make Users Memorable for Product Team Members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 30 abr. 2026.
+BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da vegetação nativa (Código Florestal). Diário Oficial da União: seção 1, Brasília, DF, 28 maio 2012.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
-JACOBSON, Ivar; SPENCE, Ian; DE MENDONCA, Kurt Bittner. Use-Case 3.0. Ivar Jacobson International, 2024. Disponível em: https://www.ivarjacobson.com/publications/white-papers/use-case-3.0. Acesso em: 30 abr. 2026.
+DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
+. Acesso em: 30 abr. 2026.
+
+ECONODATA. Dados empresariais da BRPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
+. Acesso em: 30 abr. 2026.
+
+G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com
+. Acesso em: 30 abr. 2026.
+
+HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
+. Acesso em: 30 abr. 2026.
+
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, R. Use Case 3.0: the guide to succeeding with use cases. 2024.
+
+OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
+
+PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+
+PORTER, Michael E. Competitive Strategy: techniques for analyzing industries and competitors. New York: Free Press, 1980.
 
 # <a name="c9"></a>Anexos
 
