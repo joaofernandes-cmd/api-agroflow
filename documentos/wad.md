@@ -269,6 +269,26 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 | Critério de aceite 3 | CR3: Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
 | Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
 
+| Identificação        | US10                                                                        |
+| -------------------- | --- |
+| Persona              | Marcos Ferreira  |
+| User Story           | Como gerente, posso gerar relatórios mensais, para analisar resultados da fazenda.   |
+| Critério de aceite 1 | CR1: Dado que existem dados, quando solicita relatório, então o sistema gera o arquivo.  |
+| Critério de aceite 2 | CR2: Dado que o relatório é gerado, quando aberto, então contém dados consolidados.  |
+| Critério de aceite 3 | CR3: Dado que não há dados, quando gera relatório, então o sistema informa ausência. |
+| Critérios INVEST     | <p>Independente: Depende apenas dos dados registrados.</p> <p>Negociável: O formato pode ser ajustado.</p> <p>Valorosa: Apoia a tomada de decisão.</p> <p>Estimável: Escopo claro de exportação.</p> <p>Pequena: Restrita à geração de relatório.</p> <p>Testável: Validada pela geração do arquivo.</p> |
+
+| Identificação        | US11 |
+| ---- | -- |
+| Persona              | Marcos Ferreira    |
+| User Story           | Como gerente, posso visualizar histórico de chamados, para acompanhar problemas recorrentes. |
+| Critério de aceite 1 | CR1: Dado que existem chamados, quando acessa o sistema, então visualiza a lista completa. |
+| Critério de aceite 2 | CR2: Dado que aplica filtros, quando seleciona critérios, então a lista é atualizada.  |
+| Critério de aceite 3 | CR3: Dado que acessa um chamado, quando abre, então visualiza os detalhes.  |
+| Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
+
+
+
 
 
 ## <a name="c2.3"></a>2.4. Conclusão 
