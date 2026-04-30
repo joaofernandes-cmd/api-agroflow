@@ -168,119 +168,159 @@ Será considerado sucesso se a interface for simples e compreensível por qualqu
 
 ## 2.2. Personas (sprint 1)
 
-&ensp; &ensp; Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
+&ensp;&ensp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
-&ensp; &ensp;No contexto deste projeto, foram desenvolvidas três personas com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec — capataz, supervisor e gerente —, possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
+&ensp;&ensp;No contexto deste projeto, foram desenvolvidas três personas com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec — capataz, supervisor e gerente —, possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
+
+---
+
+### Persona 1 — Daniel Carvalho
 
 <img src="outros/assets/persona-daniel.png">
 
-Iformações:
-Idade: 43 anos
-Localização: Miranda – MS
-Cargo: Capataz
-Escolaridade: Ensino fundamental incompleto
-Letramento digital: Baixo
+#### Informações
 
-Biografia
+| Campo               | Descrição                      |
+|---------------------|--------------------------------|
+| **Idade**           | 43 anos                        |
+| **Localização**     | Miranda – MS                   |
+| **Cargo**           | Capataz                        |
+| **Escolaridade**    | Ensino fundamental incompleto  |
+| **Letramento digital** | Baixo                       |
+
+#### Biografia
+
 Daniel Carvalho iniciou sua trajetória ainda jovem em fazendas da região, desenvolvendo experiência prática no manejo de rebanho e na coordenação de equipes. Atualmente, atua há mais de 10 anos como capataz na Fazenda BrPec, sendo responsável pela execução das atividades operacionais no retiro.
+
 Apesar de ser um profissional experiente, prático e comprometido, enfrenta limitações relacionadas à baixa digitalização dos processos, à escassez de ferramentas adequadas e à falta de capacitação para utilização de tecnologias. Essas condições impactam diretamente a organização das tarefas e a eficiência no dia a dia.
 
-Metas
-Cumprir as atividades diárias com eficiência;
-Garantir que a equipe execute corretamente as tarefas;
-Manter a estabilidade profissional e o sustento familiar;
-Conseguir economizar mensalmente, ainda que de forma modesta;
-Proporcionar uma viagem em família.
+#### Metas
 
-Necessidades
-Soluções simples e intuitivas para organização das tarefas;
-Ferramentas que auxiliem no acompanhamento das atividades;
-Redução do tempo gasto na execução e resolução de problemas.
-Desafios/Dores
+- Cumprir as atividades diárias com eficiência;
+- Garantir que a equipe execute corretamente as tarefas;
+- Manter a estabilidade profissional e o sustento familiar;
+- Conseguir economizar mensalmente, ainda que de forma modesta;
+- Proporcionar uma viagem em família.
 
-Jornada de trabalho extensa e fisicamente desgastante;
-Sobrecarga de responsabilidades no retiro;
-Dificuldade em organizar informações mentalmente ou em papel;
-Baixo nível de familiaridade com tecnologias digitais.
+#### Necessidades
 
-Interesses
-Estabilidade financeira e qualidade de vida familiar;
-Momentos de descanso quando possível;
-Manter o trabalho organizado e sem imprevistos.
+- Soluções simples e intuitivas para organização das tarefas;
+- Ferramentas que auxiliem no acompanhamento das atividades;
+- Redução do tempo gasto na execução e resolução de problemas.
+
+#### Desafios e Dores
+
+- Jornada de trabalho extensa e fisicamente desgastante;
+- Sobrecarga de responsabilidades no retiro;
+- Dificuldade em organizar informações mentalmente ou em papel;
+- Baixo nível de familiaridade com tecnologias digitais.
+
+#### Interesses
+
+- Estabilidade financeira e qualidade de vida familiar;
+- Momentos de descanso quando possível;
+- Manter o trabalho organizado e sem imprevistos.
+
+---
+
+### Persona 2 — Luiz Felipe
 
 <img src="outros/assets/persona-luiz.png">
 
-Informações
-Idade: 37 anos
-Localização: Campo Grande – MS
-Cargo: Supervisor
-Escolaridade: Ensino médio completo
-Letramento digital: Intermediário
+#### Informações
 
-Biografia
+| Campo               | Descrição               |
+|---------------------|-------------------------|
+| **Idade**           | 37 anos                 |
+| **Localização**     | Campo Grande – MS       |
+| **Cargo**           | Supervisor              |
+| **Escolaridade**    | Ensino médio completo   |
+| **Letramento digital** | Intermediário        |
+
+#### Biografia
+
 Luiz Felipe atua como supervisor na Fazenda Rocha Lima (BrPec), sendo responsável pela coordenação dos capatazes e pelo acompanhamento das operações de manejo. Possui experiência prática no campo e apresenta um perfil analítico, com foco na eficiência operacional e no desenvolvimento profissional.
+
 No entanto, enfrenta dificuldades relacionadas à falta de integração de informações entre os retiros e a área administrativa, além de lidar com processos pouco estruturados, o que compromete a visibilidade e o controle das operações.
 
-Metas
-Reduzir erros e retrabalho;
-Aumentar a eficiência operacional;
-Desenvolver maior autonomia dos capatazes;
-Evoluir para funções de maior responsabilidade.
+#### Metas
 
-Necessidades
-Tecnologias intuitivas que simplifiquem a gestão;
-Ferramentas que otimizem o tempo das atividades;
-Métodos que aumentem a produtividade da equipe.
+- Reduzir erros e retrabalho;
+- Aumentar a eficiência operacional;
+- Desenvolver maior autonomia dos capatazes;
+- Evoluir para funções de maior responsabilidade.
 
-Desafios/Dores
-Dificuldade em supervisionar múltiplas frentes;
-Baixa visibilidade das operações;
-Comunicação informal e descentralizada;
-Retrabalho decorrente de falhas e desalinhamentos.
+#### Necessidades
 
-Interesses
-Ferramentas simples para acompanhamento em tempo real;
-Visão consolidada das operações;
-Melhor organização das rotinas;
-Redução da dependência de comunicação informal.
+- Tecnologias intuitivas que simplifiquem a gestão;
+- Ferramentas que otimizem o tempo das atividades;
+- Métodos que aumentem a produtividade da equipe.
 
+#### Desafios e Dores
+
+- Dificuldade em supervisionar múltiplas frentes;
+- Baixa visibilidade das operações;
+- Comunicação informal e descentralizada;
+- Retrabalho decorrente de falhas e desalinhamentos.
+
+#### Interesses
+
+- Ferramentas simples para acompanhamento em tempo real;
+- Visão consolidada das operações;
+- Melhor organização das rotinas;
+- Redução da dependência de comunicação informal.
+
+---
+
+### Persona 3 — Marcos Ferreira
 
 <img src="outros/assets/persona-marcos.png">
 
-Informações
-Idade: 49 anos
-Localização: Dourados – MS
-Cargo: Gerente da fazenda
-Escolaridade: Ensino superior completo
-Letramento digital: Intermediário
+#### Informações
 
-Biografia
+| Campo               | Descrição                    |
+|---------------------|------------------------------|
+| **Idade**           | 49 anos                      |
+| **Localização**     | Dourados – MS                |
+| **Cargo**           | Gerente da fazenda           |
+| **Escolaridade**    | Ensino superior completo     |
+| **Letramento digital** | Intermediário             |
+
+#### Biografia
+
 Marcos Ferreira atua como gerente da Fazenda Rocha Lima (BrPec), sendo responsável pela supervisão da equipe e pelos resultados operacionais. Formado em Administração, possui uma visão estratégica voltada para eficiência, controle e tomada de decisão baseada em dados.
+
 Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilidade dos dados operacionais, especialmente os provenientes do campo, além da dependência de registros manuais, o que impacta a qualidade das informações e a agilidade na gestão.
 
-Metas
-Reduzir o estresse operacional e a dependência de ações reativas;
-Garantir maior previsibilidade dos resultados;
-Melhorar a qualidade e agilidade das informações;
-Possibilitar melhor equilíbrio entre vida profissional e pessoal.
+#### Metas
 
-Necessidades
-Visão consolidada e confiável das operações;
-Redução de erros na coleta de dados;
-Ferramentas acessíveis para todos os níveis da operação;
-Apoio à tomada de decisão com base em dados organizados.
+- Reduzir o estresse operacional e a dependência de ações reativas;
+- Garantir maior previsibilidade dos resultados;
+- Melhorar a qualidade e agilidade das informações;
+- Possibilitar melhor equilíbrio entre vida profissional e pessoal.
 
-Desafios/Dores
-Baixa integração e confiabilidade dos dados;
-Dificuldade de acompanhamento do realizado vs. planejado;
-Dependência de registros manuais sujeitos a erros;
-Pressão por resultados e controle de custos.
+#### Necessidades
 
-Interesses
-Soluções digitais práticas e de fácil adoção;
-Integração entre operação e gestão;
-Indicadores claros para tomada de decisão;
-Estabilidade financeira e qualidade de vida.
+- Visão consolidada e confiável das operações;
+- Redução de erros na coleta de dados;
+- Ferramentas acessíveis para todos os níveis da operação;
+- Apoio à tomada de decisão com base em dados organizados.
+
+#### Desafios e Dores
+
+- Baixa integração e confiabilidade dos dados;
+- Dificuldade de acompanhamento do realizado vs. planejado;
+- Dependência de registros manuais sujeitos a erros;
+- Pressão por resultados e controle de custos.
+
+#### Interesses
+
+- Soluções digitais práticas e de fácil adoção;
+- Integração entre operação e gestão;
+- Indicadores claros para tomada de decisão;
+- Estabilidade financeira e qualidade de vida.
+
+---
 
 ## 2.3. User Stories (sprints 1 a 5)
 
