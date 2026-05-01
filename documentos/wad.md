@@ -1590,6 +1590,14 @@ PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of 
 
 PORTER, Michael E. Competitive Strategy: techniques for analyzing industries and competitors. New York: Free Press, 1980.
 
+PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
+
+COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addison-Wesley, 2004.
+
+PATTON, Jeff. User Story Mapping: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
+
+PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
+
 # <a name="c9"></a>Anexos
 
 *Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
