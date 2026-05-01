@@ -683,7 +683,7 @@ Não se aplica.
 
 <p align="center">Quadro 11 - User Story 06.</p>
 
-| Identificação        | [US06](graduacao/2026-1b/t26/g02#41) |
+| Identificação        | [US06](graduacao/2026-1b/t26/g02#40) |
 | -------------------- | - |
 | Persona              | Luiz Felipe   |
 | User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
@@ -768,7 +768,7 @@ Não se aplica.
 <p align="center">Quadro 16 - User Story 11.</p>
 </div>
 
-| Identificação        | [US11](graduacao/2026-1b/t26/g02#46) |
+| Identificação        | [US11](graduacao/2026-1b/t26/g02#47) |
 | -------------------- | --- |
 | Persona              | Marcos Ferreira                                               |
 | User Story           | Como gerente, posso filtrar dados por retiro, para analisar o desempenho de cada unidade da fazenda.  |
@@ -807,6 +807,29 @@ Não se aplica.
 &nbsp;&nbsp;&nbsp;&nbsp;Eles estão organizados em duas categorias complementares, os requisitos funcionais, que descrevem o que o sistema deve fazer, como o registro de movimentações, o controle de acesso por perfil e a operação offline e os requisitos não funcionais, que definem a qualidade com que essas funcionalidades devem ser entregues, abrangendo desempenho, segurança, confiabilidade e usabilidade.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
+
+**Minimundo**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O sistema BrPec Agropecuária atende às demandas operacionais de gestão pecuária em 14 retiros distribuídos entre o Pantanal e Cerrado sul mato-grossenses. A estrutura organizacional é composta por três perfis hierárquicos: Capataz, Supervisor e Gerente, cada qual com responsabilidades e níveis de acesso distintos.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os Capatazes atuam no campo e registram movimentações do rebanho (nascimentos, mortes, transferências, compras e vendas) com informações obrigatórias de origem, destino, quantidade, estágio da vida e evidências (fotos georreferenciadas, áudios ou mensagens). Também abrem tickets de infraestrutura para reportar problemas como cercas danificadas, falta de água ou equipamentos avariados, devendo anexar ao menos uma evidência descritiva.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os Supervisores coordenam os Capatazes, criando e atribuindo tarefas com data, horário, prioridade e categoria. Validam os registros submetidos, podendo aprová-los (enviando para o Gerente) ou rejeitá-los com justificativa para correção. Recebem notificações de tickets abertos e podem atribuí-los conforme necessário.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O Gerente acessa o painel de consolidação, visualizando todas as movimentações, tarefas e tickets aprovados pelo Supervisor, com rastreabilidade completa de quem registrou, quem aprovou e quando. Gera relatórios semanais e mensais em formato de planilha (.xlsx ou .csv), contendo exclusivamente dados sincronizados e aprovados.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Cada retiro possui usuários vinculados, garantindo isolamento de dados por perfil (RBAC). O sistema opera em modo offline, armazenando registros localmente e sincronizando automaticamente quando a conexão é restabelecida. Apenas dados sincronizados são visíveis ao Supervisor para validação e entram nos relatórios gerenciais.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados aprovados sobem para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
+
+**Entidades principais:**
+
+Usuário (perfis: Capataz, Supervisor, Gerente) vinculado a Retiro
+Movimentação (registrada por Capataz, validada por Supervisor) associada a Evidências
+Tarefa (criada por Supervisor, atribuída a Capataz) associada a Evidências
+Ticket (aberto por Capataz, gerenciado por Supervisor) associada a Evidências
+Evidência (foto georreferenciada, áudio ou mensagem) vinculada a Movimentações, Tarefas ou Tickets
+Relatório (gerado por Gerente) consolidando dados aprovados
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
