@@ -603,30 +603,30 @@ Não se aplica.
 
 <p align="center">Quadro 6 - User Story 01.</p> 
 
-| Identificação | US01 |
+| Identificação | [US01](graduacao/2026-1b/t26/g02#36) |
 | - | - |
 | Persona | Daniel Carvalho |
-| User Story | Como capataz, posso registrar movimentações do rebanho, para substituir o uso de boletas em papel. |
-| Critério de aceite 1 | CR1: Dado que o usuário acessa o formulário, quando preenche os campos obrigatórios, então o sistema permite o registro. |
-| Critério de aceite 2 | CR2: Dado que há campos obrigatórios vazios, quando tenta salvar, então o sistema impede o envio. |
-| Critério de aceite 3 | CR3: Dado que não há conexão, quando registra, então o dado é salvo localmente. |
-| Critérios INVEST | <p>Independente: A funcionalidade pode ser desenvolvida de forma isolada, sem depender de outros módulos.</p> <p>Negociável: Os campos do formulário podem ser ajustados conforme necessidade.</p> <p>Valorosa: Elimina o uso de boletas em papel, reduzindo erros e retrabalho.</p> <p>Estimável: Possui escopo claro, envolvendo formulário e validação.</p> <p>Pequena: Restrita ao registro de movimentações.</p> <p>Testável: Pode ser validada pelo preenchimento e salvamento correto dos dados.</p> |
+| User Story | Como capataz, posso usar o sistema offline, para registrar dados sem internet. |
+| Critério de aceite 1 | Dado que não há conexão, quando acessa o sistema, então as funcionalidades principais permanecem disponíveis. |
+| Critério de aceite 2 | Dado que registra dados offline, quando salva, então o sistema armazena localmente. |
+| Critério de aceite 3 | Dado que a conexão retorna, quando o sistema detecta internet, então os dados são sincronizados automaticamente. |
+| Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
---- 
+---
 
 <p align="center">Quadro 7 - User Story 02.</p>
 
-| Identificação | US02 |
+| Identificação | [US02](graduacao/2026-1b/t26/g02#35) |
 | - | - |
 | Persona | Daniel Carvalho |
-| User Story | Como capataz, posso usar o sistema offline, para registrar dados sem internet. |
-| Critério de aceite 1 | CR1: Dado que não há conexão, quando acessa o sistema, então as funcionalidades principais permanecem disponíveis. |
-| Critério de aceite 2 | CR2: Dado que registra dados offline, quando salva, então o sistema armazena localmente. |
-| Critério de aceite 3 | CR3: Dado que a conexão retorna, quando o sistema detecta internet, então os dados são sincronizados automaticamente. |
-| Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
+| User Story | Como capataz, posso registrar movimentações do rebanho, para substituir o uso de boletas em papel. |
+| Critério de aceite 1 | Dado que o usuário acessa o formulário, quando preenche os campos obrigatórios, então o sistema permite o registro. |
+| Critério de aceite 2 | Dado que há campos obrigatórios vazios, quando tenta salvar, então o sistema impede o envio. |
+| Critério de aceite 3 | Dado que não há conexão, quando registra, então o dado é salvo localmente. |
+| Critérios INVEST | <p>Independente: A funcionalidade pode ser desenvolvida de forma isolada, sem depender de outros módulos.</p> <p>Negociável: Os campos do formulário podem ser ajustados conforme necessidade.</p> <p>Valorosa: Elimina o uso de boletas em papel, reduzindo erros e retrabalho.</p> <p>Estimável: Possui escopo claro, envolvendo formulário e validação.</p> <p>Pequena: Restrita ao registro de movimentações.</p> <p>Testável: Pode ser validada pelo preenchimento e salvamento correto dos dados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -635,30 +635,30 @@ Não se aplica.
 
 <p align="center">Quadro 8 - User Story 03.</p>
 
-| Identificação | US03 |
+| Identificação | [US03](graduacao/2026-1b/t26/g02#41) |
 | - | - |
-| Persona | Daniel Carvalho |
-| User Story | Como capataz, posso anexar fotos como evidência, para comprovar ações realizadas. |
-| Critério de aceite 1 | CR1: Dado que o usuário registra uma ação, quando anexa foto, então o sistema salva a imagem. |
-| Critério de aceite 2 | CR2: Dado que a imagem é enviada, quando salva, então fica vinculada ao registro. |
-| Critério de aceite 3 | CR3: Dado que acessa o registro, quando visualiza, então a imagem deve estar disponível. |
-| Critérios INVEST | <p>Independente: Pode ser desenvolvida como complemento aos registros existentes.</p> <p>Negociável: O tipo de evidência pode ser ampliado para vídeo ou áudio.</p> <p>Valorosa: Aumenta a confiabilidade das informações registradas.</p> <p>Estimável: Escopo claro envolvendo upload e armazenamento.</p> <p>Pequena: Restrita ao envio e visualização de imagens.</p> <p>Testável: Pode ser validada pelo upload correto e exibição da imagem.</p> |
+| Persona | Luiz Felipe |
+| User Story | Como supervisor, posso criar tarefas para os capatazes, para organizar a operação. |
+| Critério de aceite 1 | Dado que cria uma tarefa, quando preenche os dados, então o sistema permite salvar. |
+| Critério de aceite 2 | Dado que salva a tarefa, quando concluído, então ela fica visível ao capataz. |
+| Critério de aceite 3 | Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
+| Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
---- 
+---
 
 <p align="center">Quadro 9 - User Story 04.</p>
 
-| Identificação | US04 |
+| Identificação | [US04](graduacao/2026-1b/t26/g02#39) |
 | - | - |
-| Persona | Daniel Carvalho |
-| User Story | Como capataz, posso abrir chamados de infraestrutura, para reportar problemas. |
-| Critério de aceite 1 | CR1: Dado que cria um chamado, quando preenche os dados, então o sistema permite envio. |
-| Critério de aceite 2 | CR2: Dado que envia o chamado, quando salvo, então fica registrado no sistema. |
-| Critério de aceite 3 | CR3: Dado que acessa histórico, quando consulta, então visualiza seus chamados. |
-| Critérios INVEST | <p>Independente: Pode ser desenvolvida separadamente dos demais módulos.</p> <p>Negociável: Campos como prioridade e categoria podem ser ajustados.</p> <p>Valorosa: Permite comunicação estruturada de problemas no retiro.</p> <p>Estimável: Escopo claro envolvendo criação e consulta.</p> <p>Pequena: Restrita à abertura e visualização de chamados.</p> <p>Testável: Pode ser validada pela criação e listagem dos chamados.</p> |
+| Persona | Luiz Felipe |
+| User Story | Como supervisor, posso validar registros enviados, para garantir a confiabilidade dos dados. |
+| Critério de aceite 1 | Dado que existem registros pendentes, quando acessa a tela, então visualiza a lista. |
+| Critério de aceite 2 | Dado que analisa um registro, quando aprova ou rejeita, então o status é atualizado. |
+| Critério de aceite 3 | Dado que rejeita um registro, quando confirma, então informa o motivo. |
+| Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -667,14 +667,14 @@ Não se aplica.
 
 <p align="center">Quadro 10 - User Story 05.</p>
 
-| Identificação | US05 |
+| Identificação | [US05](graduacao/2026-1b/t26/g02#42) |
 | - | - |
 | Persona | Luiz Felipe |
-| User Story | Como supervisor, posso validar registros enviados, para garantir a confiabilidade dos dados. |
-| Critério de aceite 1 | CR1: Dado que existem registros pendentes, quando acessa a tela, então visualiza a lista. |
-| Critério de aceite 2 | CR2: Dado que analisa um registro, quando aprova ou rejeita, então o status é atualizado. |
-| Critério de aceite 3 | CR3: Dado que rejeita um registro, quando confirma, então informa o motivo. |
-| Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
+| User Story | Como supervisor, posso receber alertas de problemas, para agir rapidamente. |
+| Critério de aceite 1 | Dado que ocorre um problema, quando identificado, então o sistema gera um alerta. |
+| Critério de aceite 2 | Dado que há alerta, quando acessa o painel, então o supervisor visualiza a notificação. |
+| Critério de aceite 3 | Dado que clica no alerta, quando acessa, então é redirecionado ao detalhe correspondente. |
+| Critérios INVEST | <p>Independente: Depende apenas da geração de eventos no sistema.</p> <p>Negociável: Tipos de alerta podem ser ajustados.</p> <p>Valorosa: Permite resposta rápida a problemas.</p> <p>Estimável: Escopo claro de notificação.</p> <p>Pequena: Restrita à exibição de alertas.</p> <p>Testável: Validada pela geração e visualização de alertas.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -683,14 +683,14 @@ Não se aplica.
 
 <p align="center">Quadro 11 - User Story 06.</p>
 
-| Identificação | US06 |
-| - | - |
-| Persona | Luiz Felipe |
-| User Story | Como supervisor, posso criar tarefas para os capatazes, para organizar a operação. |
-| Critério de aceite 1 | CR1: Dado que cria uma tarefa, quando preenche os dados, então o sistema permite salvar. |
-| Critério de aceite 2 | CR2: Dado que salva a tarefa, quando concluído, então ela fica visível ao capataz. |
-| Critério de aceite 3 | CR3: Dado que há erro no preenchimento, quando tenta salvar, então o sistema impede a ação. |
-| Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
+| Identificação        | [US06](graduacao/2026-1b/t26/g02#41) |
+| -------------------- | - |
+| Persona              | Luiz Felipe   |
+| User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
+| Critério de aceite 1 | Dado que existem chamados, quando acessa a tela, então o sistema exibe a lista.  |
+| Critério de aceite 2 | Dado que seleciona um chamado, quando abre, então visualiza os detalhes. |
+| Critério de aceite 3 | Dado que altera o status, quando salva, então o sistema atualiza o chamado. |
+| Critérios INVEST     | <p>Independente: Pode ser desenvolvido como módulo separado.</p> <p>Negociável: Os status podem ser ajustados.</p> <p>Valorosa: Permite gestão estruturada de problemas.</p> <p>Estimável: Escopo simples de listagem e atualização.</p> <p>Pequena: Restrita à visualização e alteração de status.</p> <p>Testável: Validada pela atualização do chamado.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -700,14 +700,14 @@ Não se aplica.
 <p align="center">Quadro 12 - User Story 07.</p>
 </div>
 
-| Identificação        | US07 |
-| -------------------- | - |
-| Persona              | Luiz Felipe   |
-| User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
-| Critério de aceite 1 | CR1: Dado que existem chamados, quando acessa a tela, então o sistema exibe a lista.  |
-| Critério de aceite 2 | CR2: Dado que seleciona um chamado, quando abre, então visualiza os detalhes. |
-| Critério de aceite 3 | CR3: Dado que altera o status, quando salva, então o sistema atualiza o chamado. |
-| Critérios INVEST     | <p>Independente: Pode ser desenvolvido como módulo separado.</p> <p>Negociável: Os status podem ser ajustados.</p> <p>Valorosa: Permite gestão estruturada de problemas.</p> <p>Estimável: Escopo simples de listagem e atualização.</p> <p>Pequena: Restrta à visualização e alteração de status.</p> <p>Testável: Validada pela atualização do chamado.</p> |
+| Identificação | [US07](graduacao/2026-1b/t26/g02#38) |
+| - | - |
+| Persona | Daniel Carvalho |
+| User Story | Como capataz, posso abrir chamados de infraestrutura, para reportar problemas. |
+| Critério de aceite 1 | Dado que cria um chamado, quando preenche os dados, então o sistema permite envio. |
+| Critério de aceite 2 | Dado que envia o chamado, quando salvo, então fica registrado no sistema. |
+| Critério de aceite 3 | Dado que acessa histórico, quando consulta, então visualiza seus chamados. |
+| Critérios INVEST | <p>Independente: Pode ser desenvolvida separadamente dos demais módulos.</p> <p>Negociável: Campos como prioridade e categoria podem ser ajustados.</p> <p>Valorosa: Permite comunicação estruturada de problemas no retiro.</p> <p>Estimável: Escopo claro envolvendo criação e consulta.</p> <p>Pequena: Restrita à abertura e visualização de chamados.</p> <p>Testável: Pode ser validada pela criação e listagem dos chamados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -717,14 +717,14 @@ Não se aplica.
 <p align="center">Quadro 13 - User Story 08.</p>
 </div>
 
-| Identificação        | US08 |
-| ---- | --  |
-| Persona              | Luiz Felipe  |
-| User Story           | Como supervisor, posso receber alertas de problemas, para agir rapidamente. |
-| Critério de aceite 1 | CR1: Dado que ocorre um problema, quando identificado, então o sistema gera um alerta.  |
-| Critério de aceite 2 | CR2: Dado que há alerta, quando acessa o painel, então o supervisor visualiza a notificação. |
-| Critério de aceite 3 | CR3: Dado que clica no alerta, quando acessa, então é redirecionado ao detalhe correspondente.   |
-| Critérios INVEST     | <p>Independente: Depende apenas da geração de eventos no sistema.</p> <p>Negociável: Tipos de alerta podem ser ajustados.</p> <p>Valorosa: Permite resposta rápida a problemas.</p> <p>Estimável: Escopo claro de notificação.</p> <p>Pequena: Restrita à exibição de alertas.</p> <p>Testável: Validada pela geração e visualização de alertas.</p> |
+| Identificação        | [US08](graduacao/2026-1b/t26/g02#44) |
+| -------- | ---- |
+| Persona              | Marcos Ferreira   |
+| User Story           | Como gerente, posso visualizar um dashboard com indicadores da fazenda, para acompanhar a operação.   |
+| Critério de aceite 1 | Dado que existem dados, quando o gerente acessa o sistema, então o dashboard exibe indicadores principais.  |
+| Critério de aceite 2 | Dado que novos dados são sincronizados, quando atualizados, então o dashboard reflete as mudanças. |
+| Critério de aceite 3 | Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
+| Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -734,15 +734,14 @@ Não se aplica.
 <p align="center">Quadro 14 - User Story 9.</p>
 </div>
 
-| Identificação        | US09   |
+| Identificação        | [US09](graduacao/2026-1b/t26/g02#43)   |
 | -------------------- | -- |
 | Persona              | Luiz Felipe   |
 | User Story           | Como supervisor, posso gerar relatórios semanais, para acompanhar a operação. |
-| Critério de aceite 1 | CR1: Dado que existem dados, quando o supervisor solicita relatório, então o sistema gera o arquivo.   |
-| Critério de aceite 2 | CR2: Dado que o relatório é gerado, quando aberto, então contém dados consolidados.  |
-| Critério de aceite 3 | CR3: Dado que não há dados, quando gera relatório, então o sistema informa ausência de registros.|
+| Critério de aceite 1 | Dado que existem dados, quando o supervisor solicita relatório, então o sistema gera o arquivo.   |
+| Critério de aceite 2 | Dado que o relatório é gerado, quando aberto, então contém dados consolidados.  |
+| Critério de aceite 3 | Dado que não há dados, quando gera relatório, então o sistema informa ausência de registros.|
 | Critérios INVEST     | <p>Independente: Depende apenas dos dados já registrados.</p> <p>Negociável: O formato do relatório pode ser ajustado.</p> <p>Valorosa: Permite acompanhamento da operação.</p> <p>Estimável: Escopo claro de geração de relatório.</p> <p>Pequena: Restrita à exportação de dados.</p> <p>Testável: Validada pela geração e abertura do arquivo.</p> |
-
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -752,14 +751,14 @@ Não se aplica.
 <p align="center">Quadro 15 - User Story 10.</p>
 </div>
 
-| Identificação        | US10 |
-| -------- | ---- |
-| Persona              | Marcos Ferreira   |
-| User Story           | Como gerente, posso visualizar um dashboard com indicadores da fazenda, para acompanhar a operação.   |
-| Critério de aceite 1 | CR1: Dado que existem dados, quando o gerente acessa o sistema, então o dashboard exibe indicadores principais.  |
-| Critério de aceite 2 | CR2: Dado que novos dados são sincronizados, quando atualizados, então o dashboard reflete as mudanças. |
-| Critério de aceite 3 | CR3: Dado que o dashboard é exibido, quando acessado, então mostra a data da última atualização. |
-| Critérios INVEST     | <p>Independente: Depende apenas dos dados existentes.</p> <p>Negociável: Indicadores podem ser ajustados.</p> <p>Valorosa: Fornece visão estratégica da operação.</p> <p>Estimável: Escopo claro de visualização.</p> <p>Pequena: Restrita ao dashboard.</p> <p>Testável: Validada pela atualização dos indicadores.</p> |
+| Identificação        | [US10](graduacao/2026-1b/t26/g02#46) |
+| ---- | -- |
+| Persona              | Marcos Ferreira    |
+| User Story           | Como gerente, posso visualizar histórico de chamados, para acompanhar problemas recorrentes. |
+| Critério de aceite 1 | Dado que existem chamados, quando acessa o sistema, então visualiza a lista completa. |
+| Critério de aceite 2 | Dado que aplica filtros, quando seleciona critérios, então a lista é atualizada.  |
+| Critério de aceite 3 | Dado que acessa um chamado, quando abre, então visualiza os detalhes.  |
+| Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -769,31 +768,31 @@ Não se aplica.
 <p align="center">Quadro 16 - User Story 11.</p>
 </div>
 
-| Identificação        | US11 |
-| ---- | -- |
-| Persona              | Marcos Ferreira    |
-| User Story           | Como gerente, posso visualizar histórico de chamados, para acompanhar problemas recorrentes. |
-| Critério de aceite 1 | CR1: Dado que existem chamados, quando acessa o sistema, então visualiza a lista completa. |
-| Critério de aceite 2 | CR2: Dado que aplica filtros, quando seleciona critérios, então a lista é atualizada.  |
-| Critério de aceite 3 | CR3: Dado que acessa um chamado, quando abre, então visualiza os detalhes.  |
-| Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
+| Identificação        | [US11](graduacao/2026-1b/t26/g02#46) |
+| -------------------- | --- |
+| Persona              | Marcos Ferreira                                               |
+| User Story           | Como gerente, posso filtrar dados por retiro, para analisar o desempenho de cada unidade da fazenda.  |
+| Critério de aceite 1 | Dado que existem dados registrados, quando o gerente aplica filtro por retiro, então o sistema exibe apenas os dados correspondentes.   |
+| Critério de aceite 2 | Dado que o gerente combina filtros, quando seleciona um período, então os dados são refinados conforme os critérios definidos.                                            |
+| Critério de aceite 3 | Dado que o gerente altera o filtro, quando seleciona outro retiro, então os resultados são atualizados automaticamente.  |
+| Critérios INVEST     | <p>Independente: Pode ser desenvolvida de forma isolada, desde que os dados já estejam disponíveis no sistema.</p> <p>Negociável: Os tipos de filtros podem ser ajustados conforme necessidade.</p> <p>Valorosa: Permite análise detalhada do desempenho por unidade, apoiando a tomada de decisão.</p> <p>Estimável: O escopo é claro, envolvendo aplicação de filtros sobre dados existentes.</p> <p>Pequena: Restrita à funcionalidade de filtragem e atualização de dados.</p> <p>Testável: Pode ser validada verificando se os dados exibidos correspondem aos filtros aplicados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>                                                                                                                       
+</div>
 
 ---
 
 <p align="center">Quadro 17 - User Story 12.</p>
 </div>
 
-| Identificação        | US12 |
-| -------------------- | --- |
-| Persona              | Marcos Ferreira                                               |
-| User Story           | Como gerente, posso filtrar dados por retiro, para analisar o desempenho de cada unidade da fazenda.  |
-| Critério de aceite 1 | CR1: Dado que existem dados registrados, quando o gerente aplica filtro por retiro, então o sistema exibe apenas os dados correspondentes.   |
-| Critério de aceite 2 | CR2: Dado que o gerente combina filtros, quando seleciona um período, então os dados são refinados conforme os critérios definidos.                                            |
-| Critério de aceite 3 | CR3: Dado que o gerente altera o filtro, quando seleciona outro retiro, então os resultados são atualizados automaticamente.  |
-| Critérios INVEST     | <p>Independente: Pode ser desenvolvida de forma isolada, desde que os dados já estejam disponíveis no sistema.</p> <p>Negociável: Os tipos de filtros podem ser ajustados conforme necessidade.</p> <p>Valorosa: Permite análise detalhada do desempenho por unidade, apoiando a tomada de decisão.</p> <p>Estimável: O escopo é claro, envolvendo aplicação de filtros sobre dados existentes.</p> <p>Pequena: Restrita à funcionalidade de filtragem e atualização de dados.</p> <p>Testável: Pode ser validada verificando se os dados exibidos correspondem aos filtros aplicados.</p> |
+| Identificação | [US12](graduacao/2026-1b/t26/g02#37) |
+| - | - |
+| Persona | Daniel Carvalho |
+| User Story | Como capataz, posso anexar fotos como evidência, para comprovar ações realizadas. |
+| Critério de aceite 1 | Dado que o usuário registra uma ação, quando anexa foto, então o sistema salva a imagem. |
+| Critério de aceite 2 | Dado que a imagem é enviada, quando salva, então fica vinculada ao registro. |
+| Critério de aceite 3 | Dado que acessa o registro, quando visualiza, então a imagem deve estar disponível. |
+| Critérios INVEST | <p>Independente: Pode ser desenvolvida como complemento aos registros existentes.</p> <p>Negociável: O tipo de evidência pode ser ampliado para vídeo ou áudio.</p> <p>Valorosa: Aumenta a confiabilidade das informações registradas.</p> <p>Estimável: Escopo claro envolvendo upload e armazenamento.</p> <p>Pequena: Restrita ao envio e visualização de imagens.</p> <p>Testável: Pode ser validada pelo upload correto e exibição da imagem.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
