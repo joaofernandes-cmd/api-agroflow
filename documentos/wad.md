@@ -895,6 +895,16 @@ Não se aplica.
 
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
 
+<div align="center">
+<p>Figura 8 - Diagrama de Casos de Uso</p>
+<p align="center">
+
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-de-casos-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+</p>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 --- 
 
 <p>Quadro 22 - Use Case 01 </p>
