@@ -208,13 +208,11 @@
 
 
 <div align="center">
-<p>Figura 1 - 5 Forças de Porter</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
-</p>
-</div> 
-
-<p align="center">Fonte: Próprios autores (2026).</p>
+  <p>Figura 1 - 5 Forças de Porter</p>
+  <p>
+    <a href="https://www.inteli.edu.br/"><img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
+  </p>
+  <p>Fonte: Próprios autores (2026).</p>
 </div>
 
 **1. Ameaça de Novos Entrantes:**
@@ -304,7 +302,7 @@ Não se aplica.
 &nbsp;&nbsp;&nbsp;&nbsp;Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
-&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 2).
+&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 3).
 
 <div align="center">
 <p>Figura 3 - Canvas Proposta de Valor</p>
@@ -374,14 +372,12 @@ Não se aplica.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
-
-<p align="center">Figura 4 – Matriz De Risco.</p> 
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 4.
 
 <div align="center">
-<img src="outros/assets/matriz-de-risco.png">
-
-<p> Fonte: Próprios autores (2026).</p>
+  <p>Figura 4 – Matriz De Risco</p>
+  <img src="outros/assets/matriz-de-risco.png" alt="Matriz de Risco">
+  <p>Fonte: Próprios autores (2026).</p>
 </div>
 
 **Planos de ação, impacto e probabilidade**
