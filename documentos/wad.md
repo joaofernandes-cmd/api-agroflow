@@ -1790,7 +1790,13 @@ CREATE TABLE `evidencia_ticket`(
     PRIMARY KEY(`evidencia_id`, `ticket_id`)
 );
 
-
+ALTER TABLE `evidencia_ticket`
+    ADD CONSTRAINT `evidencia_ticket_evidencia_id_foreign`
+    FOREIGN KEY(`evidencia_id`) REFERENCES `evidencia`(`id`);
+ 
+ALTER TABLE `evidencia_ticket`
+    ADD CONSTRAINT `evidencia_ticket_ticket_id_foreign`
+    FOREIGN KEY(`ticket_id`) REFERENCES `ticket`(`id`);
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
