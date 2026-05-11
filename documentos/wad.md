@@ -1442,6 +1442,22 @@ Foram identificadas onze entidades no domínio da BRPec. Para cada uma, definiu-
 | ALERTA | Notificação automática gerada pelo sistema diante de problemas operacionais. Origem: US05. |
 | RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
 
+<p>Quadro 33 - Atributos das entidades (PK = chave primária) </p>
+
+| Entidade | Atributos |
+|-----------|------------|
+| USUARIO | id_usuario (PK), nome_completo, cpf, login, senha_hash, perfil, telefone, email, ativo |
+| RETIRO | id_retiro (PK), nome, area_hectares, localizacao, capataz_responsavel, ativo |
+| LOTE | id_lote (PK), codigo_lote, categoria, finalidade, quantidade_atual, data_formacao, observacoes |
+| ANIMAL | id_animal (PK), numero_brinco_sisbov, sexo, data_nascimento, raca, peso_atual, status_sanitario |
+| MOVIMENTACAO | id_movimentacao (PK), tipo_movimentacao, data_hora, quantidade_animais, retiro_origem, retiro_destino, observacoes, status_validacao, sincronizado |
+| VALIDACAO | id_validacao (PK), decisao, data_validacao, justificativa |
+| TAREFA | id_tarefa (PK), titulo, descricao, prioridade, data_criacao, prazo, data_conclusao, status |
+| CHAMADO | id_chamado (PK), titulo, descricao, categoria, prioridade, status, data_abertura, data_fechamento, solucao_aplicada |
+| EVIDENCIA | id_evidencia (PK), caminho_arquivo, tipo_arquivo, tamanho_bytes, data_upload, descricao |
+| ALERTA | id_alerta (PK), tipo, mensagem, severidade, data_geracao, lido, link_referencia |
+| RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
+
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
 *Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
