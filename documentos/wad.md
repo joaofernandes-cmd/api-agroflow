@@ -1396,6 +1396,55 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 &nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O objetivo é apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis para cada perfil de usuário do sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo.
 
+### Capataz
+
+<div align="center">
+<p>Figura 9 - Wireframe da aba "Entrar" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 10 - Wireframe da aba "Registrar movimentação" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 ### Supervisor 
 
 &nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional, permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
