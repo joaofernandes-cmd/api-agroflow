@@ -1458,6 +1458,25 @@ Foram identificadas onze entidades no domínio da BRPec. Para cada uma, definiu-
 | ALERTA | id_alerta (PK), tipo, mensagem, severidade, data_geracao, lido, link_referencia |
 | RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
 
+<p>Quadro 34 - Relacionamentos do modelo conceitual </p>
+
+| ID | Relacionamento | Entidades | Cardinalidade | Descrição |
+|----|----------------|------------|----------------|------------|
+| R1 | TRABALHA_EM | USUARIO ↔ RETIRO | (0,N) : (1,N) | Um usuário atua em vários retiros; um retiro tem ao menos um usuário responsável. |
+| R2 | ABRIGA | RETIRO ↔ LOTE | (0,N) : (1,1) | Um retiro abriga vários lotes; cada lote pertence a um único retiro. |
+| R3 | COMPOE | LOTE ↔ ANIMAL | (0,N) : (0,1) | Um lote é composto por vários animais; um animal pertence a no máximo um lote. |
+| R4 | REGISTRA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um capataz registra várias movimentações; toda movimentação tem um registrador. |
+| R5 | ENVOLVE | MOVIMENTACAO ↔ LOTE | (1,N) : (0,N) | Uma movimentação envolve um ou mais lotes; um lote tem várias movimentações no tempo. |
+| R6 | RECEBE_VALIDACAO | MOVIMENTACAO ↔ VALIDACAO | (0,1) : (1,1) | Toda validação pertence a uma movimentação; uma movimentação tem no máximo uma validação. |
+| R7 | EXECUTA_VALIDACAO | USUARIO ↔ VALIDACAO | (0,N) : (1,1) | Um supervisor executa várias validações; cada validação tem um responsável. |
+| R8 | ATRIBUI / EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,N) | Supervisor atribui tarefas a um ou mais capatazes; cada tarefa tem atribuidor e executor. |
+| R9 | ABRE / GERENCIA | USUARIO ↔ CHAMADO | (0,N) : (1,1) | Capataz abre chamados; supervisor pode gerenciar após a abertura. |
+| R10 | LOCALIZA | CHAMADO ↔ RETIRO | (0,N) : (1,1) | Vários chamados podem ser de um mesmo retiro; todo chamado é vinculado a um retiro. |
+| R11 | ANEXA | EVIDENCIA ↔ MOVIMENTACAO | (0,N) : (0,1) | Movimentações podem ter várias evidências; cada evidência pertence a no máximo uma movimentação. |
+| R12 | NOTIFICA | ALERTA ↔ USUARIO | (1,N) : (0,N) | Um alerta notifica um ou mais usuários; um usuário recebe vários alertas. |
+| R13 | GERA_RELATORIO | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Supervisor gera vários relatórios; cada relatório tem um solicitante. |
+| R14 | ABRANGE | RELATORIO ↔ RETIRO | (1,N) : (0,N) | Um relatório abrange um ou mais retiros; um retiro aparece em vários relatórios. |
+
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
 *Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
