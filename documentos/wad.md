@@ -1716,7 +1716,17 @@ ALTER TABLE `movimentacao`
     ADD CONSTRAINT `movimentacao_validado_por_foreign`
     FOREIGN KEY(`validado_por`) REFERENCES `usuario`(`id`);
 
-
+CREATE TABLE `ticket`(
+    `id`          CHAR(36)                                                                          NOT NULL,
+    `retiro_id`   CHAR(36)                                                                          NULL,
+    `aberto_por`  CHAR(36)                                                                          NULL,
+    `atribuido_a` CHAR(36)                                                                          NULL,
+    `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NULL,
+    `localizacao` VARCHAR(255)                                                                      NULL,
+    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                        NULL,
+    `criado_em`   TIMESTAMP                                                                         NULL,
+    PRIMARY KEY(`id`)
+);
 
 
 
