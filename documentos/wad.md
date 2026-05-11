@@ -1676,6 +1676,17 @@ CREATE TABLE `tarefa`(
     PRIMARY KEY(`id`)
 );
 
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_retiro_id_foreign`
+    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
+ 
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_criada_por_foreign`
+    FOREIGN KEY(`criada_por`) REFERENCES `usuario`(`id`);
+ 
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_atribuida_a_foreign`
+    FOREIGN KEY(`atribuida_a`) REFERENCES `usuario`(`id`);
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
