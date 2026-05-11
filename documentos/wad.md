@@ -1638,13 +1638,24 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no MySQL. A seguir, são apresentados os comandos CREATE TABLE e ALTER TABLE utilizados para a criação das tabelas e a definição das constraints e chaves estrangeiras do banco de dados do AgroFlow.
 
-CREATE TABLE `retiro`(
+```sql
+
+--------------
+Tabela: retiro
+--------------
+
+CREATE TABLE `retiro` (
     `id`        CHAR(36)     NOT NULL,
     `nome`      VARCHAR(255) NULL,
     `criado_em` TIMESTAMP    NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
-CREATE TABLE `usuario`(
+
+---------------
+Tabela: usuario
+---------------
+
+CREATE TABLE `usuario` (
     `id`         CHAR(36)                 NOT NULL,
     `retiro_id`  CHAR(36)                 NULL,
     `nome`       VARCHAR(255)             NULL,
@@ -1652,43 +1663,52 @@ CREATE TABLE `usuario`(
     `senha_hash` VARCHAR(255)             NULL,
     `status`     ENUM('ativo', 'inativo') NULL,
     `criado_em`  TIMESTAMP                NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
+
 ALTER TABLE `usuario`
-    ADD UNIQUE `usuario_login_unique`(`login`);
- 
+    ADD UNIQUE `usuario_login_unique` (`login`);
+
 ALTER TABLE `usuario`
     ADD CONSTRAINT `usuario_retiro_id_foreign`
-    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
 
-CREATE TABLE `tarefa`(
-    `id`          CHAR(36)                                                      NOT NULL,
-    `retiro_id`   CHAR(36)                                                      NULL,
-    `criada_por`  CHAR(36)                                                      NULL,
-    `atribuida_a` CHAR(36)                                                      NULL,
-    `descricao`   TEXT                                                          NULL,
-    `categoria`   VARCHAR(255)                                                  NULL,
-    `prioridade`  ENUM('alta', 'media', 'baixa')                                NULL,
-    `data`        DATE                                                          NULL,
-    `horario`     TIME                                                          NULL,
-    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada')    NULL,
-    `criado_em`   TIMESTAMP                                                     NULL,
-    PRIMARY KEY(`id`)
+--------------
+Tabela: tarefa
+--------------
+
+CREATE TABLE `tarefa` (
+    `id`          CHAR(36)                                                   NOT NULL,
+    `retiro_id`   CHAR(36)                                                   NULL,
+    `criada_por`  CHAR(36)                                                   NULL,
+    `atribuida_a` CHAR(36)                                                   NULL,
+    `descricao`   TEXT                                                       NULL,
+    `categoria`   VARCHAR(255)                                               NULL,
+    `prioridade`  ENUM('alta', 'media', 'baixa')                             NULL,
+    `data`        DATE                                                       NULL,
+    `horario`     TIME                                                       NULL,
+    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada') NULL,
+    `criado_em`   TIMESTAMP                                                  NULL,
+    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `tarefa`
     ADD CONSTRAINT `tarefa_retiro_id_foreign`
-    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
- 
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
 ALTER TABLE `tarefa`
     ADD CONSTRAINT `tarefa_criada_por_foreign`
-    FOREIGN KEY(`criada_por`) REFERENCES `usuario`(`id`);
- 
+    FOREIGN KEY (`criada_por`) REFERENCES `usuario` (`id`);
+
 ALTER TABLE `tarefa`
     ADD CONSTRAINT `tarefa_atribuida_a_foreign`
-    FOREIGN KEY(`atribuida_a`) REFERENCES `usuario`(`id`);
+    FOREIGN KEY (`atribuida_a`) REFERENCES `usuario` (`id`);
 
-CREATE TABLE `movimentacao`(
+--------------------
+Tabela: movimentacao
+--------------------
+
+CREATE TABLE `movimentacao` (
     `id`           CHAR(36)                                                        NOT NULL,
     `retiro_id`    CHAR(36)                                                        NULL,
     `capataz_id`   CHAR(36)                                                        NULL,
@@ -1701,46 +1721,54 @@ CREATE TABLE `movimentacao`(
     `sincronizado` BOOLEAN                                                         NULL DEFAULT 0,
     `causa_obito`  VARCHAR(255)                                                    NULL,
     `criado_em`    TIMESTAMP                                                       NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `movimentacao`
     ADD CONSTRAINT `movimentacao_retiro_id_foreign`
-    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
- 
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
 ALTER TABLE `movimentacao`
     ADD CONSTRAINT `movimentacao_capataz_id_foreign`
-    FOREIGN KEY(`capataz_id`) REFERENCES `usuario`(`id`);
- 
+    FOREIGN KEY (`capataz_id`) REFERENCES `usuario` (`id`);
+
 ALTER TABLE `movimentacao`
     ADD CONSTRAINT `movimentacao_validado_por_foreign`
-    FOREIGN KEY(`validado_por`) REFERENCES `usuario`(`id`);
+    FOREIGN KEY (`validado_por`) REFERENCES `usuario` (`id`);
 
-CREATE TABLE `ticket`(
-    `id`          CHAR(36)                                                                          NOT NULL,
-    `retiro_id`   CHAR(36)                                                                          NULL,
-    `aberto_por`  CHAR(36)                                                                          NULL,
-    `atribuido_a` CHAR(36)                                                                          NULL,
+--------------
+Tabela: ticket
+--------------
+
+CREATE TABLE `ticket` (
+    `id`          CHAR(36)                                                                           NOT NULL,
+    `retiro_id`   CHAR(36)                                                                           NULL,
+    `aberto_por`  CHAR(36)                                                                           NULL,
+    `atribuido_a` CHAR(36)                                                                           NULL,
     `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NULL,
-    `localizacao` VARCHAR(255)                                                                      NULL,
-    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                        NULL,
-    `criado_em`   TIMESTAMP                                                                         NULL,
-    PRIMARY KEY(`id`)
+    `localizacao` VARCHAR(255)                                                                       NULL,
+    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NULL,
+    `criado_em`   TIMESTAMP                                                                          NULL,
+    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `ticket`
     ADD CONSTRAINT `ticket_retiro_id_foreign`
-    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
- 
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
 ALTER TABLE `ticket`
     ADD CONSTRAINT `ticket_aberto_por_foreign`
-    FOREIGN KEY(`aberto_por`) REFERENCES `usuario`(`id`);
- 
+    FOREIGN KEY (`aberto_por`) REFERENCES `usuario` (`id`);
+
 ALTER TABLE `ticket`
     ADD CONSTRAINT `ticket_atribuido_a_foreign`
-    FOREIGN KEY(`atribuido_a`) REFERENCES `usuario`(`id`);
+    FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
 
-CREATE TABLE `evidencia`(
+-----------------
+Tabela: evidencia
+-----------------
+
+CREATE TABLE `evidencia` (
     `id`          CHAR(36)                          NOT NULL,
     `usuario_id`  CHAR(36)                          NULL,
     `tipo`        ENUM('foto', 'audio', 'mensagem') NULL,
@@ -1749,56 +1777,72 @@ CREATE TABLE `evidencia`(
     `latitude`    FLOAT(53)                         NULL,
     `longitude`   FLOAT(53)                         NULL,
     `criado_em`   TIMESTAMP                         NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `evidencia`
     ADD CONSTRAINT `evidencia_usuario_id_foreign`
-    FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`id`);
+    FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
 
-CREATE TABLE `evidencia_movimentacao`(
+------------------------------
+Tabela: evidencia_movimentacao
+------------------------------
+
+CREATE TABLE `evidencia_movimentacao` (
     `evidencia_id`    CHAR(36) NOT NULL,
     `movimentacao_id` CHAR(36) NOT NULL,
-    PRIMARY KEY(`evidencia_id`, `movimentacao_id`)
+    PRIMARY KEY (`evidencia_id`, `movimentacao_id`)
 );
 
 ALTER TABLE `evidencia_movimentacao`
     ADD CONSTRAINT `evidencia_movimentacao_evidencia_id_foreign`
-    FOREIGN KEY(`evidencia_id`) REFERENCES `evidencia`(`id`);
- 
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
 ALTER TABLE `evidencia_movimentacao`
     ADD CONSTRAINT `evidencia_movimentacao_movimentacao_id_foreign`
-    FOREIGN KEY(`movimentacao_id`) REFERENCES `movimentacao`(`id`);
- 
-CREATE TABLE `evidencia_tarefa`(
+    FOREIGN KEY (`movimentacao_id`) REFERENCES `movimentacao` (`id`);
+
+------------------------
+Tabela: evidencia_tarefa
+------------------------
+
+CREATE TABLE `evidencia_tarefa` (
     `evidencia_id` CHAR(36) NOT NULL,
     `tarefa_id`    CHAR(36) NOT NULL,
-    PRIMARY KEY(`evidencia_id`, `tarefa_id`)
+    PRIMARY KEY (`evidencia_id`, `tarefa_id`)
 );
 
 ALTER TABLE `evidencia_tarefa`
     ADD CONSTRAINT `evidencia_tarefa_evidencia_id_foreign`
-    FOREIGN KEY(`evidencia_id`) REFERENCES `evidencia`(`id`);
- 
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
 ALTER TABLE `evidencia_tarefa`
     ADD CONSTRAINT `evidencia_tarefa_tarefa_id_foreign`
-    FOREIGN KEY(`tarefa_id`) REFERENCES `tarefa`(`id`);
+    FOREIGN KEY (`tarefa_id`) REFERENCES `tarefa` (`id`);
 
-CREATE TABLE `evidencia_ticket`(
+-----------------------
+Tabela: evidencia_ticket
+------------------------
+
+CREATE TABLE `evidencia_ticket` (
     `evidencia_id` CHAR(36) NOT NULL,
     `ticket_id`    CHAR(36) NOT NULL,
-    PRIMARY KEY(`evidencia_id`, `ticket_id`)
+    PRIMARY KEY (`evidencia_id`, `ticket_id`)
 );
 
 ALTER TABLE `evidencia_ticket`
     ADD CONSTRAINT `evidencia_ticket_evidencia_id_foreign`
-    FOREIGN KEY(`evidencia_id`) REFERENCES `evidencia`(`id`);
- 
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
 ALTER TABLE `evidencia_ticket`
     ADD CONSTRAINT `evidencia_ticket_ticket_id_foreign`
-    FOREIGN KEY(`ticket_id`) REFERENCES `ticket`(`id`);
+    FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`);
 
-CREATE TABLE `relatorio`(
+-----------------
+Tabela: relatorio
+-----------------
+
+CREATE TABLE `relatorio` (
     `id`          CHAR(36)                                                  NOT NULL,
     `gerado_por`  CHAR(36)                                                  NULL,
     `retiro_id`   CHAR(36)                                                  NULL,
@@ -1807,16 +1851,17 @@ CREATE TABLE `relatorio`(
     `data_fim`    DATE                                                      NULL,
     `url_arquivo` VARCHAR(255)                                              NULL,
     `gerado_em`   TIMESTAMP                                                 NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `relatorio`
     ADD CONSTRAINT `relatorio_gerado_por_foreign`
-    FOREIGN KEY(`gerado_por`) REFERENCES `usuario`(`id`);
- 
+    FOREIGN KEY (`gerado_por`) REFERENCES `usuario` (`id`);
+
 ALTER TABLE `relatorio`
     ADD CONSTRAINT `relatorio_retiro_id_foreign`
-    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+```
 
 
 
