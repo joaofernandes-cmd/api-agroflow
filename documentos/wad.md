@@ -1740,6 +1740,17 @@ ALTER TABLE `ticket`
     ADD CONSTRAINT `ticket_atribuido_a_foreign`
     FOREIGN KEY(`atribuido_a`) REFERENCES `usuario`(`id`);
 
+CREATE TABLE `evidencia`(
+    `id`          CHAR(36)                          NOT NULL,
+    `usuario_id`  CHAR(36)                          NULL,
+    `tipo`        ENUM('foto', 'audio', 'mensagem') NULL,
+    `url_arquivo` VARCHAR(255)                      NULL,
+    `conteudo`    TEXT                              NULL,
+    `latitude`    FLOAT(53)                         NULL,
+    `longitude`   FLOAT(53)                         NULL,
+    `criado_em`   TIMESTAMP                         NULL,
+    PRIMARY KEY(`id`)
+);
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
