@@ -1394,7 +1394,93 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O objetivo é apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis para cada perfil de usuário do sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo.
+
+### Supervisor 
+
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional,permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
+
+**Versão Mobile - Supervisor**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha.
+
+<div align="center">
+<p>Figura 9 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 10 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 11 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Versão Desktop - Supervisor**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. O supervisor consegue monitorar registros pendentes, acompanhar alertas operacionais e delegar tarefas de maneira centralizada, facilitando a gestão dos retiros sob sua responsabilidade.
+
+<div align="center">
+<p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 13 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 14 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
