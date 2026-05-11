@@ -1704,6 +1704,19 @@ CREATE TABLE `movimentacao`(
     PRIMARY KEY(`id`)
 );
 
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_retiro_id_foreign`
+    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
+ 
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_capataz_id_foreign`
+    FOREIGN KEY(`capataz_id`) REFERENCES `usuario`(`id`);
+ 
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_validado_por_foreign`
+    FOREIGN KEY(`validado_por`) REFERENCES `usuario`(`id`);
+
+
 
 
 
