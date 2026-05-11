@@ -1398,9 +1398,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### Supervisor 
 
-&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional,permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional, permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
 
-**Versão Mobile - Supervisor**
+**Versão Mobile:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha.
 
@@ -1440,7 +1440,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**Versão Desktop - Supervisor**
+**Versão Desktop:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. O supervisor consegue monitorar registros pendentes, acompanhar alertas operacionais e delegar tarefas de maneira centralizada, facilitando a gestão dos retiros sob sua responsabilidade.
 
@@ -1448,19 +1448,16 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+<img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
-</div>
-
-<p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
 <p>Figura 13 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+<img src="outros/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
 </div>
@@ -1472,7 +1469,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p>Figura 14 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+<img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
 </div>
@@ -1480,6 +1477,56 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+<div align="center">
+<p>Figura 15 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### Gerente
+
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do gerente foram desenvolvidas com foco estratégico e gerencial, permitindo acompanhamento consolidado das operações da BRPEC. O fluxo inicial também contempla telas de login simplificadas para dispositivos mobile, organizadas de forma intuitiva para facilitar a navegação e o acesso rápido às funcionalidades do sistema.
+
+
+**Versão Mobile:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta indicadores gerais da fazenda, como quantidade de movimentações realizadas, tarefas pendentes, chamados abertos e informações consolidadas do rebanho. Além disso, a interface disponibiliza acesso rápido aos relatórios operacionais e à visualização de ocorrências recentes da fazenda.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios permitem a aplicação de filtros por período, retiro e tipo de relatório, apresentando uma prévia visual das informações antes da exportação em planilha. Dessa forma, o gerente consegue acompanhar dados consolidados da operação pecuária e apoiar a tomada de decisão de maneira centralizada.
+
+
+<div align="center">
+<p>Figura 16 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+<div align="center">
+<p>Figura 17 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, alertas e informações estratégicas da fazenda. O objetivo é proporcionar maior controle gerencial e facilitar análises administrativas mais detalhadas.
 
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
