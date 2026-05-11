@@ -1810,7 +1810,13 @@ CREATE TABLE `relatorio`(
     PRIMARY KEY(`id`)
 );
 
-
+ALTER TABLE `relatorio`
+    ADD CONSTRAINT `relatorio_gerado_por_foreign`
+    FOREIGN KEY(`gerado_por`) REFERENCES `usuario`(`id`);
+ 
+ALTER TABLE `relatorio`
+    ADD CONSTRAINT `relatorio_retiro_id_foreign`
+    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
 
 
 
