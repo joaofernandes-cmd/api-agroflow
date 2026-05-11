@@ -1644,7 +1644,16 @@ CREATE TABLE `retiro`(
     `criado_em` TIMESTAMP    NULL,
     PRIMARY KEY(`id`)
 );
-
+CREATE TABLE `usuario`(
+    `id`         CHAR(36)                 NOT NULL,
+    `retiro_id`  CHAR(36)                 NULL,
+    `nome`       VARCHAR(255)             NULL,
+    `login`      VARCHAR(255)             NULL,
+    `senha_hash` VARCHAR(255)             NULL,
+    `status`     ENUM('ativo', 'inativo') NULL,
+    `criado_em`  TIMESTAMP                NULL,
+    PRIMARY KEY(`id`)
+);
 
 
 
