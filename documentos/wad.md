@@ -1398,8 +1398,10 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### Capataz
 
+A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Como  os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado em nosso kickoff e expressado na persona, essa abordagem de disposição de elementos é assertiva. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. A interface é composta por quatro seções principais, home, movimentação do rebanho, abrir chamado e minhas tarefas, cujos wireframes se apresentam a seguir:
+
 <div align="center">
-<p>Figura 9 - Wireframe da aba "Entrar" do capataz</p>
+<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1445,6 +1447,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
 ### Supervisor 
 
 &nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional, permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
