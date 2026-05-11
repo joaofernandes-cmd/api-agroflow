@@ -1762,7 +1762,14 @@ CREATE TABLE `evidencia_movimentacao`(
     PRIMARY KEY(`evidencia_id`, `movimentacao_id`)
 );
 
-
+ALTER TABLE `evidencia_movimentacao`
+    ADD CONSTRAINT `evidencia_movimentacao_evidencia_id_foreign`
+    FOREIGN KEY(`evidencia_id`) REFERENCES `evidencia`(`id`);
+ 
+ALTER TABLE `evidencia_movimentacao`
+    ADD CONSTRAINT `evidencia_movimentacao_movimentacao_id_foreign`
+    FOREIGN KEY(`movimentacao_id`) REFERENCES `movimentacao`(`id`);
+ 
 
 
 
