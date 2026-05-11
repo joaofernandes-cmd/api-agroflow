@@ -1427,6 +1427,21 @@ O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), consiste em um
 Entidades e Atributos
 Foram identificadas onze entidades no domínio da BRPec. Para cada uma, definiu-se um conjunto de atributos descritivos e um identificador único como chave primária conceitual (PK). O Quadro 18 consolida as entidades do modelo, e o Quadro 19 apresenta a especificação de seus atributos.
 
+<p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
+| Entidade      | Descrição e origem nas User Stories |
+|---------------|-------------------------------------|
+| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo perfil. Origem: US01, US03, US08. |
+| RETIRO | Subdivisão geográfica e operacional da fazenda. Origem: US02, US07, US11. |
+| LOTE | Agrupamento de animais que compartilham categoria e finalidade; é a unidade de movimentação no campo. Origem: US02. |
+| ANIMAL | Bovino individual identificado pelo brinco SISBOV, atendendo à legislação de rastreabilidade. Origem: US02. |
+| MOVIMENTACAO | Registro de deslocamentos do rebanho ou eventos como pesagem e vacinação. Origem: US01, US02. |
+| VALIDACAO | Registro do ato de aprovação ou rejeição de uma movimentação. Origem: US04. |
+| TAREFA | Atividade atribuída pelo supervisor ao capataz. Origem: US03. |
+| CHAMADO | Solicitação de manutenção de infraestrutura aberta no sistema. Origem: US06, US07, US10. |
+| EVIDENCIA | Foto anexada como comprovação de uma movimentação. Origem: US12. |
+| ALERTA | Notificação automática gerada pelo sistema diante de problemas operacionais. Origem: US05. |
+| RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
+
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
 *Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
