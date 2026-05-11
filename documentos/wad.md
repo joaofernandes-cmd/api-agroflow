@@ -1638,6 +1638,14 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no MySQL. A seguir, são apresentados os comandos CREATE TABLE e ALTER TABLE utilizados para a criação das tabelas e a definição das constraints e chaves estrangeiras do banco de dados do AgroFlow.
 
+CREATE TABLE `retiro`(
+    `id`        CHAR(36)     NOT NULL,
+    `nome`      VARCHAR(255) NULL,
+    `criado_em` TIMESTAMP    NULL,
+    PRIMARY KEY(`id`)
+);
+
+
 
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
