@@ -1422,7 +1422,10 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+3.6.1 Modelo Entidade-Relacionamento (ER) Conceitual
+O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), consiste em uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o sistema BRPec, o modelo conceitual foi elaborado a partir das User Stories descritas na Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias de usuário permitiu identificar as informações que precisam ser persistidas para suportar os fluxos operacionais da fazenda, tais como o registro offline de movimentações do rebanho, a gestão de tarefas e chamados, a validação de registros e a geração de relatórios e indicadores gerenciais. A representação visual segue a notação Chen, na qual retângulos representam entidades, losangos representam relacionamentos e as cardinalidades são indicadas no formato (mín, máx) ao lado de cada entidade participante.
+Entidades e Atributos
+Foram identificadas onze entidades no domínio da BRPec. Para cada uma, definiu-se um conjunto de atributos descritivos e um identificador único como chave primária conceitual (PK). O Quadro 18 consolida as entidades do modelo, e o Quadro 19 apresenta a especificação de seus atributos.
 
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
