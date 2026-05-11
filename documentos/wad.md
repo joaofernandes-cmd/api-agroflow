@@ -1784,7 +1784,11 @@ ALTER TABLE `evidencia_tarefa`
     ADD CONSTRAINT `evidencia_tarefa_tarefa_id_foreign`
     FOREIGN KEY(`tarefa_id`) REFERENCES `tarefa`(`id`);
 
-
+CREATE TABLE `evidencia_ticket`(
+    `evidencia_id` CHAR(36) NOT NULL,
+    `ticket_id`    CHAR(36) NOT NULL,
+    PRIMARY KEY(`evidencia_id`, `ticket_id`)
+);
 
 
 
