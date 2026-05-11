@@ -1756,7 +1756,11 @@ ALTER TABLE `evidencia`
     ADD CONSTRAINT `evidencia_usuario_id_foreign`
     FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`id`);
 
-
+CREATE TABLE `evidencia_movimentacao`(
+    `evidencia_id`    CHAR(36) NOT NULL,
+    `movimentacao_id` CHAR(36) NOT NULL,
+    PRIMARY KEY(`evidencia_id`, `movimentacao_id`)
+);
 
 
 
