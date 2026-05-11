@@ -1752,6 +1752,19 @@ CREATE TABLE `evidencia`(
     PRIMARY KEY(`id`)
 );
 
+ALTER TABLE `evidencia`
+    ADD CONSTRAINT `evidencia_usuario_id_foreign`
+    FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`id`);
+
+
+
+
+
+
+
+
+
+
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
