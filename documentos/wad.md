@@ -1654,7 +1654,27 @@ CREATE TABLE `usuario`(
     `criado_em`  TIMESTAMP                NULL,
     PRIMARY KEY(`id`)
 );
+ALTER TABLE `usuario`
+    ADD UNIQUE `usuario_login_unique`(`login`);
+ 
+ALTER TABLE `usuario`
+    ADD CONSTRAINT `usuario_retiro_id_foreign`
+    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
 
+CREATE TABLE `tarefa`(
+    `id`          CHAR(36)                                                      NOT NULL,
+    `retiro_id`   CHAR(36)                                                      NULL,
+    `criada_por`  CHAR(36)                                                      NULL,
+    `atribuida_a` CHAR(36)                                                      NULL,
+    `descricao`   TEXT                                                          NULL,
+    `categoria`   VARCHAR(255)                                                  NULL,
+    `prioridade`  ENUM('alta', 'media', 'baixa')                                NULL,
+    `data`        DATE                                                          NULL,
+    `horario`     TIME                                                          NULL,
+    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada')    NULL,
+    `criado_em`   TIMESTAMP                                                     NULL,
+    PRIMARY KEY(`id`)
+);
 
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
