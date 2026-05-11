@@ -1688,6 +1688,26 @@ ALTER TABLE `tarefa`
     ADD CONSTRAINT `tarefa_atribuida_a_foreign`
     FOREIGN KEY(`atribuida_a`) REFERENCES `usuario`(`id`);
 
+CREATE TABLE `movimentacao`(
+    `id`           CHAR(36)                                                        NOT NULL,
+    `retiro_id`    CHAR(36)                                                        NULL,
+    `capataz_id`   CHAR(36)                                                        NULL,
+    `validado_por` CHAR(36)                                                        NULL,
+    `tipo`         ENUM('nascimento', 'morte', 'transferencia', 'compra', 'venda') NULL,
+    `origem`       VARCHAR(255)                                                    NULL,
+    `destino`      VARCHAR(255)                                                    NULL,
+    `quantidade`   INT                                                             NULL,
+    `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NULL,
+    `sincronizado` BOOLEAN                                                         NULL DEFAULT 0,
+    `causa_obito`  VARCHAR(255)                                                    NULL,
+    `criado_em`    TIMESTAMP                                                       NULL,
+    PRIMARY KEY(`id`)
+);
+
+
+
+
+
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
