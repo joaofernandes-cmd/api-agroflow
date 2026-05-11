@@ -1728,7 +1728,17 @@ CREATE TABLE `ticket`(
     PRIMARY KEY(`id`)
 );
 
-
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_retiro_id_foreign`
+    FOREIGN KEY(`retiro_id`) REFERENCES `retiro`(`id`);
+ 
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_aberto_por_foreign`
+    FOREIGN KEY(`aberto_por`) REFERENCES `usuario`(`id`);
+ 
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_atribuido_a_foreign`
+    FOREIGN KEY(`atribuido_a`) REFERENCES `usuario`(`id`);
 
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
