@@ -1615,7 +1615,263 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
-*Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
+**Modelo Relacional**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+
+ <p>Figura  – Modelo Relacional</p>
+  <img src="outros/assets/modelo-relacional.jpg" alt="Modelo Relacional">
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido utilizando a ferramenta drawSQL, tendo como banco de dados alvo o MySQL. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. O campo causa_obito da tabela movimentacao foi definido como nullable, uma vez que sua obrigatoriedade é condicional ao tipo de movimentação ser "morte", validação essa realizada na camada de backend conforme a RN01. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado da tabela movimentacao recebeu valor padrão false, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
+
+**Modelo Físico**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no MySQL. A seguir, são apresentados os comandos CREATE TABLE e ALTER TABLE utilizados para a criação das tabelas e a definição das constraints e chaves estrangeiras do banco de dados do AgroFlow.
+
+```sql
+
+--------------
+Tabela: retiro
+--------------
+
+CREATE TABLE `retiro` (
+    `id`        CHAR(36)     NOT NULL,
+    `nome`      VARCHAR(255) NULL,
+    `criado_em` TIMESTAMP    NULL,
+    PRIMARY KEY (`id`)
+);
+
+---------------
+Tabela: usuario
+---------------
+
+CREATE TABLE `usuario` (
+    `id`         CHAR(36)                 NOT NULL,
+    `retiro_id`  CHAR(36)                 NULL,
+    `nome`       VARCHAR(255)             NULL,
+    `login`      VARCHAR(255)             NULL,
+    `senha_hash` VARCHAR(255)             NULL,
+    `status`     ENUM('ativo', 'inativo') NULL,
+    `criado_em`  TIMESTAMP                NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `usuario`
+    ADD UNIQUE `usuario_login_unique` (`login`);
+
+ALTER TABLE `usuario`
+    ADD CONSTRAINT `usuario_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+--------------
+Tabela: tarefa
+--------------
+
+CREATE TABLE `tarefa` (
+    `id`          CHAR(36)                                                   NOT NULL,
+    `retiro_id`   CHAR(36)                                                   NULL,
+    `criada_por`  CHAR(36)                                                   NULL,
+    `atribuida_a` CHAR(36)                                                   NULL,
+    `descricao`   TEXT                                                       NULL,
+    `categoria`   VARCHAR(255)                                               NULL,
+    `prioridade`  ENUM('alta', 'media', 'baixa')                             NULL,
+    `data`        DATE                                                       NULL,
+    `horario`     TIME                                                       NULL,
+    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada') NULL,
+    `criado_em`   TIMESTAMP                                                  NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_criada_por_foreign`
+    FOREIGN KEY (`criada_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_atribuida_a_foreign`
+    FOREIGN KEY (`atribuida_a`) REFERENCES `usuario` (`id`);
+
+--------------------
+Tabela: movimentacao
+--------------------
+
+CREATE TABLE `movimentacao` (
+    `id`           CHAR(36)                                                        NOT NULL,
+    `retiro_id`    CHAR(36)                                                        NULL,
+    `capataz_id`   CHAR(36)                                                        NULL,
+    `validado_por` CHAR(36)                                                        NULL,
+    `tipo`         ENUM('nascimento', 'morte', 'transferencia', 'compra', 'venda') NULL,
+    `origem`       VARCHAR(255)                                                    NULL,
+    `destino`      VARCHAR(255)                                                    NULL,
+    `quantidade`   INT                                                             NULL,
+    `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NULL,
+    `sincronizado` BOOLEAN                                                         NULL DEFAULT 0,
+    `causa_obito`  VARCHAR(255)                                                    NULL,
+    `criado_em`    TIMESTAMP                                                       NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_capataz_id_foreign`
+    FOREIGN KEY (`capataz_id`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_validado_por_foreign`
+    FOREIGN KEY (`validado_por`) REFERENCES `usuario` (`id`);
+
+--------------
+Tabela: ticket
+--------------
+
+CREATE TABLE `ticket` (
+    `id`          CHAR(36)                                                                           NOT NULL,
+    `retiro_id`   CHAR(36)                                                                           NULL,
+    `aberto_por`  CHAR(36)                                                                           NULL,
+    `atribuido_a` CHAR(36)                                                                           NULL,
+    `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NULL,
+    `localizacao` VARCHAR(255)                                                                       NULL,
+    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NULL,
+    `criado_em`   TIMESTAMP                                                                          NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_aberto_por_foreign`
+    FOREIGN KEY (`aberto_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_atribuido_a_foreign`
+    FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
+
+-----------------
+Tabela: evidencia
+-----------------
+
+CREATE TABLE `evidencia` (
+    `id`          CHAR(36)                          NOT NULL,
+    `usuario_id`  CHAR(36)                          NULL,
+    `tipo`        ENUM('foto', 'audio', 'mensagem') NULL,
+    `url_arquivo` VARCHAR(255)                      NULL,
+    `conteudo`    TEXT                              NULL,
+    `latitude`    FLOAT(53)                         NULL,
+    `longitude`   FLOAT(53)                         NULL,
+    `criado_em`   TIMESTAMP                         NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `evidencia`
+    ADD CONSTRAINT `evidencia_usuario_id_foreign`
+    FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
+
+------------------------------
+Tabela: evidencia_movimentacao
+------------------------------
+
+CREATE TABLE `evidencia_movimentacao` (
+    `evidencia_id`    CHAR(36) NOT NULL,
+    `movimentacao_id` CHAR(36) NOT NULL,
+    PRIMARY KEY (`evidencia_id`, `movimentacao_id`)
+);
+
+ALTER TABLE `evidencia_movimentacao`
+    ADD CONSTRAINT `evidencia_movimentacao_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_movimentacao`
+    ADD CONSTRAINT `evidencia_movimentacao_movimentacao_id_foreign`
+    FOREIGN KEY (`movimentacao_id`) REFERENCES `movimentacao` (`id`);
+
+------------------------
+Tabela: evidencia_tarefa
+------------------------
+
+CREATE TABLE `evidencia_tarefa` (
+    `evidencia_id` CHAR(36) NOT NULL,
+    `tarefa_id`    CHAR(36) NOT NULL,
+    PRIMARY KEY (`evidencia_id`, `tarefa_id`)
+);
+
+ALTER TABLE `evidencia_tarefa`
+    ADD CONSTRAINT `evidencia_tarefa_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_tarefa`
+    ADD CONSTRAINT `evidencia_tarefa_tarefa_id_foreign`
+    FOREIGN KEY (`tarefa_id`) REFERENCES `tarefa` (`id`);
+
+-----------------------
+Tabela: evidencia_ticket
+------------------------
+
+CREATE TABLE `evidencia_ticket` (
+    `evidencia_id` CHAR(36) NOT NULL,
+    `ticket_id`    CHAR(36) NOT NULL,
+    PRIMARY KEY (`evidencia_id`, `ticket_id`)
+);
+
+ALTER TABLE `evidencia_ticket`
+    ADD CONSTRAINT `evidencia_ticket_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_ticket`
+    ADD CONSTRAINT `evidencia_ticket_ticket_id_foreign`
+    FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`);
+
+-----------------
+Tabela: relatorio
+-----------------
+
+CREATE TABLE `relatorio` (
+    `id`          CHAR(36)                                                  NOT NULL,
+    `gerado_por`  CHAR(36)                                                  NULL,
+    `retiro_id`   CHAR(36)                                                  NULL,
+    `tipo`        ENUM('movimentacao', 'tarefas', 'tickets', 'consolidado') NULL,
+    `data_inicio` DATE                                                      NULL,
+    `data_fim`    DATE                                                      NULL,
+    `url_arquivo` VARCHAR(255)                                              NULL,
+    `gerado_em`   TIMESTAMP                                                 NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `relatorio`
+    ADD CONSTRAINT `relatorio_gerado_por_foreign`
+    FOREIGN KEY (`gerado_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `relatorio`
+    ADD CONSTRAINT `relatorio_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+```
+&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Para os campos identificadores de todas as tabelas, optou-se pelo tipo CHAR(36), uma vez que o MySQL não possui suporte nativo ao tipo UUID — o CHAR(36) armazena o UUID no formato padrão de 36 caracteres, garantindo compatibilidade entre todas as tabelas do banco.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado da tabela movimentacao foi definido como BOOLEAN com valor padrão 0 (false), garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se 1 (true) apenas após a sincronização com o servidor, em conformidade com a RN07. Os campos latitude e longitude da tabela evidencia foram definidos como nullable, pois o georreferenciamento é exigido apenas para evidências do tipo foto, validação essa realizada no backend conforme a RN04. O campo criado_em, presente em todas as tabelas, utiliza o tipo TIMESTAMP, permitindo rastrear cronologicamente todas as operações realizadas no sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações, utilizando ALTER TABLE após a criação das tabelas, padrão adotado pela ferramenta drawSQL. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
+
+***Conclusão***
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no MySQL. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
+&nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
