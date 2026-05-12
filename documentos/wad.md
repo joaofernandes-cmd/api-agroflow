@@ -1581,6 +1581,9 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, alertas e informações estratégicas da fazenda. O objetivo é proporcionar maior controle gerencial e facilitar análises administrativas mais detalhadas.
 
 
+&emsp;Assim, os wireframes desenvolvidos para o site da BrPec demonstram interfaces coerentes com as necessidades específicas de cada perfil de usuário. A segmentação entre capataz, supervisor e gerente permitiu adaptar não somente o nivel de complexidade das interfaces, mas também os dispositivos priorizados e os fluxos de navegação, garantindo que as necessidades de cada cargo dentro da fazenda sejam contempladas pelo website.
+
+
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
