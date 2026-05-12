@@ -1578,8 +1578,33 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+**Versão Desktop:**
+
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, alertas e informações estratégicas da fazenda. O objetivo é proporcionar maior controle gerencial e facilitar análises administrativas mais detalhadas.
 
+<div align="center">
+<p>Figura 22 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 23 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 &emsp;Assim, os wireframes desenvolvidos para o site da BrPec demonstram interfaces coerentes com as necessidades específicas de cada perfil de usuário. A segmentação entre capataz, supervisor e gerente permitiu adaptar não somente o nivel de complexidade das interfaces, mas também os dispositivos priorizados e os fluxos de navegação, garantindo que as necessidades de cada cargo dentro da fazenda sejam contempladas pelo website.
 
