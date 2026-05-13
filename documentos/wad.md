@@ -1423,23 +1423,24 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
 O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e chamados, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
-Entidades e Atributos
+### <a name="c3.6.1"></a>Entidades e Atributos
 Foram identificadas doze entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
 <p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
-| Entidade      | Descrição e origem nas User Stories |
-|---------------|-------------------------------------|
+| Entidade | Descrição e origem nas User Stories |
+|----------|-------------------------------------|
 | USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo perfil. Origem: US01, US03, US08. |
 | RETIRO | Subdivisão geográfica e operacional da fazenda. Origem: US02, US07, US11. |
 | LOTE | Agrupamento de animais que compartilham categoria e finalidade; é a unidade de movimentação no campo. Origem: US02. |
 | ANIMAL | Bovino individual identificado pelo brinco SISBOV, atendendo à legislação de rastreabilidade. Origem: US02. |
 | MOVIMENTACAO | Registro de deslocamentos do rebanho ou eventos como pesagem e vacinação. Origem: US01, US02. |
 | VALIDACAO | Registro do ato de aprovação ou rejeição de uma movimentação. Origem: US04. |
-| TAREFA | Atividade atribuída pelo supervisor ao capataz. Origem: US03. |
-| CHAMADO | Solicitação de manutenção de infraestrutura aberta no sistema. Origem: US06, US07, US10. |
-| EVIDENCIA | Foto anexada como comprovação de uma movimentação. Origem: US12. |
+| TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
+| CHAMADO | Solicitação de manutenção de infraestrutura, com categoria e localização do problema. Origem: US06, US07, US10. |
+| EVIDENCIA | Comprovação anexada a movimentações ou chamados. Entidade generalizada em Mensagem_Escrita, Áudio e Foto_Georreferenciada. Origem: US12. |
 | ALERTA | Notificação automática gerada pelo sistema diante de problemas operacionais. Origem: US05. |
 | RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
+| FILA_SINCRONIZACAO | Estrutura que armazena registros criados em modo offline até a sincronização com o servidor. Origem: US01, US02. |
 
 <p>Quadro 33 - Atributos das entidades (PK = chave primária) </p>
 
