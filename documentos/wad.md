@@ -376,7 +376,7 @@ Não se aplica.
 
 <div align="center">
   <p>Figura 4 – Matriz De Risco</p>
-  <img src="outros/assets/matriz-de-risco.png" alt="Matriz de Risco">
+  <img src="outros/assets/matriz-de-risco-2.png" alt="Matriz de Risco">
   <p>Fonte: Próprios autores (2026).</p>
 </div>
 
