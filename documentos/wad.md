@@ -241,7 +241,7 @@
 
 **5. Rivalidade entre Concorrentes Existentes:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui o maior rebanho comercial do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
+&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui um dos maiores rebanhos comercias do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Além disso, a presença crescente de grupos agropecuários corporativos vinculados ao mercado financeiro amplia a concorrência por terras, tecnologia, mão de obra qualificada e acesso a capital. Nesse contexto, empresas com maior capacidade operacional e financeira conseguem suportar oscilações de mercado com maior estabilidade. O modelo “flex” da BrPec representa uma resposta estratégica à intensidade competitiva do setor, permitindo maior adaptação às variações de margem ao longo da cadeia produtiva.
 
@@ -279,27 +279,28 @@
 
 **1. Problema a ser resolvido**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados. Além disso, como não há um formato fixo, certas informações podem deixar de ser anotadas, como a causa da morte de um boi.
+&nbsp;&nbsp;&nbsp;&nbsp;Os capatazes da BrPec registram informações operacionais em papel durante atividades em campo, principalmente em locais sem internet. Isso gera retrabalho na transcrição para planilhas, risco de perda de dados, falta de padronização dos registros e dificuldade para consolidar informações como nascimento, morte, transferência de gado e solicitações operacionais.
 
 **2. Dados disponíveis**
 
-Não se aplica.
+&nbsp;&nbsp;&nbsp;&nbsp;Serão utilizados dados levantados no TAPI e nas informações fornecidas pela BrPec, incluindo estrutura operacional dos retiros, registros de movimentação bovina, ocorrências de nascimento, morte e transferência, solicitações de manutenção, necessidades relacionadas ao envio de evidências pelos usuários e requisitos definidos para os perfis de capataz, supervisor e gerente.
 
 **3. Solução proposta**
 
- &nbsp;&nbsp;&nbsp;&nbsp;Propusemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a planilha que será utilizada para armazenar dados sobre nascimento, morte, transferência etc., eliminando a dependência de anotações em papel e da transcrição manual.
+ &nbsp;&nbsp;&nbsp;&nbsp;A solução proposta é uma aplicação web offline-first para registrar informações operacionais em campo, com sincronização automática ao restabelecer a conexão com a internet. O sistema permitirá registrar eventos, anexar evidências multimodais, organizar dados por retiro e tipo de ocorrência, além de possibilitar exportação em Excel/CSV e acompanhamento por diferentes perfis de usuário.
 
 **4. Forma de utilização da solução**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações serão inseridas e armazenadas localmente no celular enquanto o dispositivo estiver offline e, ao se conectar à internet, serão sincronizadas automaticamente com a base central de dados, otimizando o trabalho dos capatazes ao eliminar a necessidade de transcrição manual para a planilha.
+&nbsp;&nbsp;&nbsp;&nbsp; Os capatazes utilizarão a aplicação em dispositivos móveis durante as atividades no campo, mesmo sem internet. Os dados serão salvos localmente e sincronizados automaticamente quando houver conexão disponível. Supervisores e gerentes poderão acessar os registros consolidados, acompanhar ocorrências, validar informações e exportar relatórios para apoio à gestão operacional.
 
 **5. Benefícios esperados**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios visados incluem a agilização da coleta e do processamento de dados, com a redução do trabalho manual de anotação em papel e da posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre diferentes retiros, otimizando a comunicação e a integração entre eles, o que torna as operações mais coordenadas e reduz os riscos de erros ou perda de dados.
+&nbsp;&nbsp;&nbsp;&nbsp;Espera-se reduzir o uso de papel, diminuir erros de transcrição, padronizar os registros operacionais e acelerar a consolidação das informações entre retiros. A solução também melhora a rastreabilidade das ocorrências, facilita a comunicação entre capatazes, supervisores e gerentes, e apoia decisões com dados mais organizados, completos e atualizados.
 
 **6. Critério de sucesso e como será avaliado**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
+&nbsp;&nbsp;&nbsp;&nbsp;O sucesso será avaliado por testes com usuários, considerando métricas como conclusão de registros em até três etapas, sincronização correta dos dados após reconexão, exportação funcional em Excel/CSV e facilidade de utilização da interface por usuários com baixa familiaridade digital. Também será verificada a redução de erros e retrabalho em comparação ao processo manual.
+
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 &nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 3).
