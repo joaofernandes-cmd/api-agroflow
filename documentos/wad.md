@@ -1398,10 +1398,10 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### Capataz
 
-A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Como  os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado em nosso kickoff e expressado na persona, essa abordagem de disposição de elementos é assertiva. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. A interface é composta por quatro seções principais, home, movimentação do rebanho, abrir chamado e minhas tarefas, cujos wireframes se apresentam a seguir:
+&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Como  os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado no kickoff com o parceiro e expressado na persona, essa abordagem de disposição de elementos é assertiva. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. A interface é composta por quatro seções principais, home, movimentação do rebanho, abrir chamado e minhas tarefas, cujos wireframes se apresentam a seguir:
 
 <div align="center">
-<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
+<p>Figura 9 - Wireframe das Abas "Entrar" e "Home" do Capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1413,7 +1413,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe da aba "Registrar movimentação" do capataz</p>
+<p>Figura 10 - Wireframe da Aba "Registrar Movimentação" do Capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1425,7 +1425,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
+<p>Figura 11 - Wireframe da Aba "Abrir Chamado" do Capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1437,7 +1437,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
+<p>Figura 12 - Wireframe da Aba "Minhas Tarefas" do Capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1454,10 +1454,10 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha, como demonstra os wireframes a seguir:
 
 <div align="center">
-<p>Figura 13 - Wireframe Versão Mobile do Supervisor</p>
+<p>Figura 13 - Wireframe da Aba "Login" - Versão Mobile do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
@@ -1469,7 +1469,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 14 - Wireframe Versão Mobile do Supervisor</p>
+<p>Figura 14 - Wireframe das Abas "Home" e "Relatórios" - Versão Mobile do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
@@ -1481,7 +1481,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 15 - Wireframe Versão Mobile do Supervisor</p>
+<p>Figura 15 - Wireframe das Abas "Delegar Tarefas", "Registros Pendentes" e "Alertas" - Versão Mobile do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
@@ -1497,7 +1497,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 &nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. O supervisor consegue monitorar registros pendentes, acompanhar alertas operacionais e delegar tarefas de maneira centralizada, facilitando a gestão dos retiros sob sua responsabilidade.
 
 <div align="center">
-<p>Figura 16 - Wireframe Versão Desktop do Supervisor</p>
+<p>Figura 16 - Wireframe da Aba "Login" - Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
@@ -1506,7 +1506,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 17 - Wireframe Versão Desktop do Supervisor</p>
+<p>Figura 17 - Wireframe da Aba "Home" e "Relatórios" - Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
@@ -1518,7 +1518,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 18 - Wireframe Versão Desktop do Supervisor</p>
+<p>Figura 18 - Wireframe das Abas "Delegar Tarefas" e "Registros Pendentes" - Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
@@ -1530,7 +1530,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 19 - Wireframe Versão Desktop do Supervisor</p>
+<p>Figura 19 - Wireframe da Aba de "Alertas" - Versão Desktop do Supervisor</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
@@ -1554,7 +1554,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 
 <div align="center">
-<p>Figura 20 - Wireframe Versão Mobile do Gerente</p>
+<p>Figura 20 - Wireframe da Aba de "Login" - Versão Mobile do Gerente</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
@@ -1567,7 +1567,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 
 <div align="center">
-<p>Figura 21 - Wireframe Versão Mobile do Gerente</p>
+<p>Figura 21 - Wireframe das Abas "Home" e "Relatórios" - Versão Mobile do Gerente</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
@@ -1583,7 +1583,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, alertas e informações estratégicas da fazenda. O objetivo é proporcionar maior controle gerencial e facilitar análises administrativas mais detalhadas.
 
 <div align="center">
-<p>Figura 22 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
+<p>Figura 22 - Wireframe da Aba "Login" - Versão Desktop do Gerente</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
@@ -1595,7 +1595,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 23 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
+<p>Figura 23 - Wireframe das Abas "Home" e "Relatórios" - Versão Desktop do Gerente</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
@@ -1606,7 +1606,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&emsp;Assim, os wireframes desenvolvidos para o site da BrPec demonstram interfaces coerentes com as necessidades específicas de cada perfil de usuário. A segmentação entre capataz, supervisor e gerente permitiu adaptar não somente o nivel de complexidade das interfaces, mas também os dispositivos priorizados e os fluxos de navegação, garantindo que as necessidades de cada cargo dentro da fazenda sejam contempladas pelo website.
+&nbsp;&nbsp;&nbsp;&nbsp;Assim, os wireframes desenvolvidos para o site da BrPec demonstram interfaces coerentes com as necessidades específicas de cada perfil de usuário. A segmentação entre capataz, supervisor e gerente permitiu adaptar não somente o nivel de complexidade das interfaces, mas também os dispositivos priorizados e os fluxos de navegação, garantindo que as necessidades de cada cargo dentro da fazenda sejam contempladas pelo website.
 
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
