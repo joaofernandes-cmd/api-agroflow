@@ -1658,7 +1658,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 &nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. O campo causa_obito da tabela movimentacao foi definido como nullable, uma vez que sua obrigatoriedade é condicional ao tipo de movimentação ser "morte", validação essa realizada na camada de backend conforme a RN01. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado da tabela movimentacao recebeu valor padrão false, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade fora m aplicadas conforme as regras de negócio levantadas junto ao parceiro. O campo causa_obito da tabela movimentacao foi definido como nullable, uma vez que sua obrigatoriedade é condicional ao tipo de movimentação ser "morte", validação essa realizada na camada de backend conforme a RN01. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado da tabela movimentacao recebeu valor padrão false, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
 
@@ -1674,8 +1674,7 @@ Tabela: retiro
 
 CREATE TABLE `retiro` (
     `id`        CHAR(36)     NOT NULL,
-    `nome`      VARCHAR(255) NULL,
-    `criado_em` TIMESTAMP    NULL,
+    `nome`      VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -1685,12 +1684,13 @@ Tabela: usuario
 
 CREATE TABLE `usuario` (
     `id`         CHAR(36)                 NOT NULL,
-    `retiro_id`  CHAR(36)                 NULL,
-    `nome`       VARCHAR(255)             NULL,
-    `login`      VARCHAR(255)             NULL,
-    `senha_hash` VARCHAR(255)             NULL,
-    `status`     ENUM('ativo', 'inativo') NULL,
-    `criado_em`  TIMESTAMP                NULL,
+    `retiro_id`  CHAR(36)                 NOT NULL,
+    `nome`       VARCHAR(255)             NOT NULL,
+    `login`      VARCHAR(255)             NOT NULL,
+    `senha_hash` VARCHAR(255)             NOT NULL,
+    `status`     ENUM('ativo', 'inativo') NOT NULL,
+    `criado_em`  TIMESTAMP                NOT NULL,
+    `cargo`     ENUM('capataz', 'supervisor', 'gerente') NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -1707,16 +1707,14 @@ Tabela: tarefa
 
 CREATE TABLE `tarefa` (
     `id`          CHAR(36)                                                   NOT NULL,
-    `retiro_id`   CHAR(36)                                                   NULL,
-    `criada_por`  CHAR(36)                                                   NULL,
-    `atribuida_a` CHAR(36)                                                   NULL,
-    `descricao`   TEXT                                                       NULL,
-    `categoria`   VARCHAR(255)                                               NULL,
-    `prioridade`  ENUM('alta', 'media', 'baixa')                             NULL,
-    `data`        DATE                                                       NULL,
-    `horario`     TIME                                                       NULL,
-    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada') NULL,
-    `criado_em`   TIMESTAMP                                                  NULL,
+    `retiro_id`   CHAR(36)                                                   NOT NULL,
+    `criada_por`  CHAR(36)                                                   NOT NULL,
+    `atribuida_a` CHAR(36)                                                   NOT NULL,
+    `descricao`   TEXT                                                       NOT NULL,
+    `categoria`   VARCHAR(255)                                               NOT NULL,
+    `prioridade`  ENUM('alta', 'media', 'baixa')                             NOT NULL,
+    `data`        TIMESTAMP                                                       NOT NULL,
+    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada') NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -1738,17 +1736,19 @@ Tabela: movimentacao
 
 CREATE TABLE `movimentacao` (
     `id`           CHAR(36)                                                        NOT NULL,
-    `retiro_id`    CHAR(36)                                                        NULL,
-    `capataz_id`   CHAR(36)                                                        NULL,
-    `validado_por` CHAR(36)                                                        NULL,
-    `tipo`         ENUM('nascimento', 'morte', 'transferencia', 'compra', 'venda') NULL,
+    `retiro_id`    CHAR(36)                                                        NOT NULL,
+    `capataz_id`   CHAR(36)                                                        NOT NULL,
+    `validado_por` CHAR(36)                                                        NOT NULL,
+    `tipo`         ENUM('nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros') NOT NULL,
     `origem`       VARCHAR(255)                                                    NULL,
     `destino`      VARCHAR(255)                                                    NULL,
-    `quantidade`   INT                                                             NULL,
-    `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NULL,
-    `sincronizado` BOOLEAN                                                         NULL DEFAULT 0,
+    `quantidade`   INT                                                             NOT NULL,
+    `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NOT NULL,
+    `sincronizado` BOOLEAN                                                         NOT NULL DEFAULT 0,
+    `criado_em`    TIMESTAMP                                                       NOT NULL,
     `causa_obito`  VARCHAR(255)                                                    NULL,
-    `criado_em`    TIMESTAMP                                                       NULL,
+    `estagio_vida` VARCHAR(25)                                                     NOT NULL,
+
     PRIMARY KEY (`id`)
 );
 
@@ -1764,19 +1764,33 @@ ALTER TABLE `movimentacao`
     ADD CONSTRAINT `movimentacao_validado_por_foreign`
     FOREIGN KEY (`validado_por`) REFERENCES `usuario` (`id`);
 
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `chk_causa_obito_obrigatoria`
+    CHECK (
+        `tipo` != 'morte' OR `causa_obito` IS NOT NULL
+    );
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `chk_transferencia_campos_obrigatorios`
+    CHECK (
+        `tipo` != 'transferencia' 
+        OR (`origem` IS NOT NULL AND `destino` IS NOT NULL)
+    );
+
 --------------
 Tabela: ticket
 --------------
 
 CREATE TABLE `ticket` (
     `id`          CHAR(36)                                                                           NOT NULL,
-    `retiro_id`   CHAR(36)                                                                           NULL,
-    `aberto_por`  CHAR(36)                                                                           NULL,
-    `atribuido_a` CHAR(36)                                                                           NULL,
-    `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NULL,
-    `localizacao` VARCHAR(255)                                                                       NULL,
-    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NULL,
-    `criado_em`   TIMESTAMP                                                                          NULL,
+    `retiro_id`   CHAR(36)                                                                           NOT NULL,
+    `aberto_por`  CHAR(36)                                                                           NOT NULL,
+    `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NOT NULL,
+    `localizacao` VARCHAR(255)                                                                       NOT NULL,
+    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NOT NULL,
+    `atribuido_a` VARCHAR(255)                                                                           NOT NULL,
+    `descricao` VARCHAR(255)                                                                         NOT NULL,
+  
     PRIMARY KEY (`id`)
 );
 
@@ -1792,25 +1806,73 @@ ALTER TABLE `ticket`
     ADD CONSTRAINT `ticket_atribuido_a_foreign`
     FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
 
+
 -----------------
 Tabela: evidencia
 -----------------
 
 CREATE TABLE `evidencia` (
     `id`          CHAR(36)                          NOT NULL,
-    `usuario_id`  CHAR(36)                          NULL,
-    `tipo`        ENUM('foto', 'audio', 'mensagem') NULL,
-    `url_arquivo` VARCHAR(255)                      NULL,
-    `conteudo`    TEXT                              NULL,
-    `latitude`    FLOAT(53)                         NULL,
-    `longitude`   FLOAT(53)                         NULL,
-    `criado_em`   TIMESTAMP                         NULL,
+    `usuario_id`  CHAR(36)                          NOT NULL,
+    `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
+    `criado_em`   TIMESTAMP                         NOT NULL,
     PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `evidencia`
     ADD CONSTRAINT `evidencia_usuario_id_foreign`
     FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
+
+------------------------------
+Tabela: evidencia_foto
+------------------------------
+CREATE TABLE `evidencia_foto` (
+    `evidencia_id` CHAR(36)     NOT NULL,
+    `url_arquivo`  VARCHAR(255) NOT NULL,
+    `latitude`     FLOAT(53)    NOT NULL,
+    `longitude`    FLOAT(53)    NOT NULL,
+    PRIMARY KEY (`evidencia_id`)
+);
+
+ALTER TABLE `evidencia_foto`
+    ADD CONSTRAINT `evidencia_foto_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_foto`
+    ADD CONSTRAINT `chk_latitude_valida`
+    CHECK (`latitude` >= -90 AND `latitude` <= 90);
+
+ALTER TABLE `evidencia_foto`
+    ADD CONSTRAINT `chk_longitude_valida`
+    CHECK (`longitude` >= -180 AND `longitude` <= 180);
+
+------------------------------
+Tabela: evidencia_audio
+------------------------------
+
+CREATE TABLE `evidencia_audio` (
+    `evidencia_id` CHAR(36)     NOT NULL,
+    `url_arquivo`  VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`evidencia_id`)
+);
+
+ALTER TABLE `evidencia_audio`
+    ADD CONSTRAINT `evidencia_audio_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+------------------------------
+Tabela: evidencia_mensagem
+------------------------------
+
+CREATE TABLE `evidencia_mensagem` (
+    `evidencia_id` CHAR(36) NOT NULL,
+    `conteudo`     TEXT     NOT NULL,
+    PRIMARY KEY (`evidencia_id`)
+);
+
+ALTER TABLE `evidencia_mensagem`
+    ADD CONSTRAINT `evidencia_mensagem_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
 
 ------------------------------
 Tabela: evidencia_movimentacao
@@ -1872,13 +1934,13 @@ Tabela: relatorio
 
 CREATE TABLE `relatorio` (
     `id`          CHAR(36)                                                  NOT NULL,
-    `gerado_por`  CHAR(36)                                                  NULL,
-    `retiro_id`   CHAR(36)                                                  NULL,
-    `tipo`        ENUM('movimentacao', 'tarefas', 'tickets', 'consolidado') NULL,
-    `data_inicio` DATE                                                      NULL,
-    `data_fim`    DATE                                                      NULL,
-    `url_arquivo` VARCHAR(255)                                              NULL,
-    `gerado_em`   TIMESTAMP                                                 NULL,
+    `gerado_por`  CHAR(36)                                                  NOT NULL,
+    `retiro_id`   CHAR(36)                                                  NOT NULL,
+    `tipo`        ENUM('movimentacao', 'tarefas', 'tickets', 'consolidado') NOT NULL,
+    `data_inicio` DATE                                                      NOT NULL,
+    `data_fim`    DATE                                                      NOT NULL,
+    `data_gerado`   TIMESTAMP                                               NOT NULL,
+    `url_arquivo`  VARCHAR(255)                                             NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -1895,6 +1957,8 @@ ALTER TABLE `relatorio`
 &nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado da tabela movimentacao foi definido como BOOLEAN com valor padrão 0 (false), garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se 1 (true) apenas após a sincronização com o servidor, em conformidade com a RN07. Os campos latitude e longitude da tabela evidencia foram definidos como nullable, pois o georreferenciamento é exigido apenas para evidências do tipo foto, validação essa realizada no backend conforme a RN04. O campo criado_em, presente em todas as tabelas, utiliza o tipo TIMESTAMP, permitindo rastrear cronologicamente todas as operações realizadas no sistema.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações, utilizando ALTER TABLE após a criação das tabelas, padrão adotado pela ferramenta drawSQL. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
 ***Conclusão***
 
