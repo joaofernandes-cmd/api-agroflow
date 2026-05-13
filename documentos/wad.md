@@ -1463,10 +1463,14 @@ Foram identificadas doze entidades no domínio da BRPec, com destaque para a ent
 | RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
 | FILA_SINCRONIZACAO | id_fila (PK), tipo_registro, payload, data_criacao, data_sincronizacao, status_envio, tentativas |
 
+### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
+
+Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. Os vínculos entre USUARIO e TAREFA, assim como entre USUARIO e CHAMADO, foram desdobrados em dois relacionamentos distintos (CRIA/EXECUTA e ABRE/GERENCIA) para diferenciar os papéis de criador e executor no fluxo operacional. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
+
 <p>Quadro 34 - Relacionamentos do modelo conceitual </p>
 
 | ID | Relacionamento | Entidades | Cardinalidade | Descrição |
-|----|----------------|------------|----------------|------------|
+|----|----------------|-----------|---------------|-----------|
 | R1 | TRABALHA_EM | USUARIO ↔ RETIRO | (0,N) : (1,N) | Um usuário atua em vários retiros; um retiro tem ao menos um usuário responsável. |
 | R2 | ABRIGA | RETIRO ↔ LOTE | (0,N) : (1,1) | Um retiro abriga vários lotes; cada lote pertence a um único retiro. |
 | R3 | COMPOE | LOTE ↔ ANIMAL | (0,N) : (0,1) | Um lote é composto por vários animais; um animal pertence a no máximo um lote. |
@@ -1474,13 +1478,17 @@ Foram identificadas doze entidades no domínio da BRPec, com destaque para a ent
 | R5 | ENVOLVE | MOVIMENTACAO ↔ LOTE | (1,N) : (0,N) | Uma movimentação envolve um ou mais lotes; um lote tem várias movimentações no tempo. |
 | R6 | RECEBE_VALIDACAO | MOVIMENTACAO ↔ VALIDACAO | (0,1) : (1,1) | Toda validação pertence a uma movimentação; uma movimentação tem no máximo uma validação. |
 | R7 | EXECUTA_VALIDACAO | USUARIO ↔ VALIDACAO | (0,N) : (1,1) | Um supervisor executa várias validações; cada validação tem um responsável. |
-| R8 | ATRIBUI / EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,N) | Supervisor atribui tarefas a um ou mais capatazes; cada tarefa tem atribuidor e executor. |
-| R9 | ABRE / GERENCIA | USUARIO ↔ CHAMADO | (0,N) : (1,1) | Capataz abre chamados; supervisor pode gerenciar após a abertura. |
-| R10 | LOCALIZA | CHAMADO ↔ RETIRO | (0,N) : (1,1) | Vários chamados podem ser de um mesmo retiro; todo chamado é vinculado a um retiro. |
-| R11 | ANEXA | EVIDENCIA ↔ MOVIMENTACAO | (0,N) : (0,1) | Movimentações podem ter várias evidências; cada evidência pertence a no máximo uma movimentação. |
-| R12 | NOTIFICA | ALERTA ↔ USUARIO | (1,N) : (0,N) | Um alerta notifica um ou mais usuários; um usuário recebe vários alertas. |
-| R13 | GERA_RELATORIO | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Supervisor gera vários relatórios; cada relatório tem um solicitante. |
-| R14 | ABRANGE | RELATORIO ↔ RETIRO | (1,N) : (0,N) | Um relatório abrange um ou mais retiros; um retiro aparece em vários relatórios. |
+| R8 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria várias tarefas; cada tarefa tem um único criador. |
+| R9 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,N) | Uma tarefa é executada por um ou mais capatazes; um capataz executa várias tarefas. |
+| R10 | ABRE | USUARIO ↔ CHAMADO | (0,N) : (1,1) | Um capataz abre vários chamados; todo chamado tem um único autor. |
+| R11 | GERENCIA | USUARIO ↔ CHAMADO | (0,N) : (0,1) | Um supervisor gerencia vários chamados; um chamado pode estar sob gestão de no máximo um supervisor. |
+| R12 | LOCALIZA | CHAMADO ↔ RETIRO | (0,N) : (1,1) | Vários chamados podem ser de um mesmo retiro; todo chamado é vinculado a um retiro. |
+| R13 | ANEXA_MOV | EVIDENCIA ↔ MOVIMENTACAO | (0,N) : (0,1) | Movimentações podem ter várias evidências; cada evidência pertence a no máximo uma movimentação. |
+| R14 | ANEXA_CHAM | EVIDENCIA ↔ CHAMADO | (1,N) : (0,1) | Todo chamado deve ter ao menos uma evidência (RN08); cada evidência pertence a no máximo um chamado. |
+| R15 | NOTIFICA | ALERTA ↔ USUARIO | (1,N) : (0,N) | Um alerta notifica um ou mais usuários; um usuário recebe vários alertas. |
+| R16 | GERA_RELATORIO | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um supervisor gera vários relatórios; cada relatório tem um solicitante. |
+| R17 | ABRANGE | RELATORIO ↔ RETIRO | (1,N) : (0,N) | Um relatório abrange um ou mais retiros; um retiro aparece em vários relatórios. |
+| R18 | ENFILEIRA_MOV | MOVIMENTACAO ↔ FILA_SINCRONIZACAO | (0,1) : (0,1) | Uma movimentação criada offline é enfileirada para sincronização posterior. |
 
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
