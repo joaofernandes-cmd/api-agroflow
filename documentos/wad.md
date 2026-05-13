@@ -1427,6 +1427,7 @@ O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma represe
 Foram identificadas doze entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
 <p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
+
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
 | USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo perfil. Origem: US01, US03, US08. |
@@ -1442,21 +1443,25 @@ Foram identificadas doze entidades no domínio da BRPec, com destaque para a ent
 | RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
 | FILA_SINCRONIZACAO | Estrutura que armazena registros criados em modo offline até a sincronização com o servidor. Origem: US01, US02. |
 
-<p>Quadro 33 - Atributos das entidades (PK = chave primária) </p>
+<p>Quadro 33 - Atributos das entidades  </p>
 
 | Entidade | Atributos |
-|-----------|------------|
-| USUARIO | id_usuario (PK), nome_completo, cpf, login, senha_hash, perfil, telefone, email, ativo |
-| RETIRO | id_retiro (PK), nome, area_hectares, localizacao, capataz_responsavel, ativo |
+|----------|-----------|
+| USUARIO | id_usuario (PK), nome_completo, cpf, login, senha_hash, perfil, telefone, email, status, criado_em |
+| RETIRO | id_retiro (PK), nome, area_hectares, localizacao, capataz_responsavel, criado_em, ativo |
 | LOTE | id_lote (PK), codigo_lote, categoria, finalidade, quantidade_atual, data_formacao, observacoes |
 | ANIMAL | id_animal (PK), numero_brinco_sisbov, sexo, data_nascimento, raca, peso_atual, status_sanitario |
-| MOVIMENTACAO | id_movimentacao (PK), tipo_movimentacao, data_hora, quantidade_animais, retiro_origem, retiro_destino, observacoes, status_validacao, sincronizado |
+| MOVIMENTACAO | id_movimentacao (PK), tipo_movimentacao, data_hora, quantidade_animais, retiro_origem, retiro_destino, observacoes, status, sincronizado, validado_por |
 | VALIDACAO | id_validacao (PK), decisao, data_validacao, justificativa |
 | TAREFA | id_tarefa (PK), titulo, descricao, prioridade, data_criacao, prazo, data_conclusao, status |
-| CHAMADO | id_chamado (PK), titulo, descricao, categoria, prioridade, status, data_abertura, data_fechamento, solucao_aplicada |
-| EVIDENCIA | id_evidencia (PK), caminho_arquivo, tipo_arquivo, tamanho_bytes, data_upload, descricao |
+| CHAMADO | id_chamado (PK), titulo, descricao, categoria, localizacao, prioridade, status, data_abertura, data_fechamento, solucao_aplicada |
+| EVIDENCIA (generalização) | id_evidencia (PK), caminho_arquivo, tamanho_bytes, data_upload, descricao |
+| ↳ Mensagem_Escrita | conteudo_texto |
+| ↳ Áudio | duracao_segundos, formato_audio |
+| ↳ Foto_Georreferenciada | latitude, longitude, resolucao |
 | ALERTA | id_alerta (PK), tipo, mensagem, severidade, data_geracao, lido, link_referencia |
 | RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
+| FILA_SINCRONIZACAO | id_fila (PK), tipo_registro, payload, data_criacao, data_sincronizacao, status_envio, tentativas |
 
 <p>Quadro 34 - Relacionamentos do modelo conceitual </p>
 
