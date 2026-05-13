@@ -309,7 +309,7 @@
 <p>Figura 3 - Canvas Proposta de Valor</p>
 <p align="center">
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/canvas-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -322,27 +322,30 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Nas tarefas do cliente, são delimitadas as tarefas que um cliente está tentando fazer, especialmente antes de utilizar uma nova solução proposta por uma determinada organização (G4 EDUCAÇÃO, 2025). Com isso, a equipe identificou as seguintes tarefas do cliente:
 
-- Controlar a movimentação do rebanho bovino (nascimentos, mortes, compras, vendas e transferências entre retiros);
-- Consolidar dados operacionais para subsidiar decisões estratégicas de negócio;
-- Gerenciar e acompanhar tarefas diárias de campo.
+- Consolidar dados operacionais para subsidiar decisões estratégicas de negócios;
+- Garantir rastreabilidade e controle consolidado das movimentações do rebanho para apoiar decisões operacionais e estratégicas;
+- Consolidar informações operacionais de diferentes retiros para facilitar análises e planejamento da fazenda;
+- Monitorar atividades dos retiros para reduzir falhas operacionais e melhorar a gestão de equipes de campo.
+
 
 **- Dores:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na seção de dores do Canvas Proposta de Valor, são adicionadas as frustrações que o cliente sofre ao tentar realizar determinada tarefa (G4 EDUCAÇÃO, 2025). Desse modo, foram elencadas as seguintes dores do cliente:
 
 - Dependência de processos manuais e anotações em papel (boletas), gerando retrabalho de redigitação em planilhas;
+- Falta de visibilidade agilizada sobre o status das atividades e do rebanho;
 - Lentidão na comunicação entre campo e escritório, dependendo de repasse humano para atualizar informações;
-- Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos;
-- Falta de visibilidade agilizada sobre o status das atividades e do rebanho.
+- Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos.
+
 
 **- Ganhos:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na seção de ganhos do Canvas Proposta de Valor, são colocados os resultados que o cliente aspira ter quando realiza uma tarefa (G4 EDUCAÇÃO, 2025). Assim, foram identificados os seguintes ganhos do cliente:
 
+- Redução do tempo gasto na consolidação manual de informações e no repasse entre campo e escritório;
 - Registro digital direto na fonte, eliminando a redigitação manual;
-- Acesso a dados consolidados e atualizados do rebanho para tomada de decisão estratégica;
-- Maior rastreabilidade e transparência nas operações de campo;
-- Agilidade no acompanhamento de tarefas e movimentações diariamente.
+- Acesso rápido a dados consolidados dos retiros para tomada de decisão operacional estratégica;
+- Maior rastreabilidade e controle nas operações, permitindo identificar responsáveis, reduzir inconsistências e acompanhar ocorrências em tempo real.
 
 ### Proposta de Valor
 
@@ -350,8 +353,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de produtos e serviços de um Canvas Proposta de Valor se refere aos recursos oferecidos por uma determinada organização (G4 EDUCAÇÃO, 2025). Dessa forma, é possível mencionar os seguintes no que se refere à solução proposta pela equipe:
 
-- Aplicação web com interface de campo para o Capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
-- Interface de calendarização e monitoramento de tarefas para o Gerente;
+- Interface de calendarização e acompanhamento operacional para supervisores e gerentes;
+- Aplicação web com interface de campo para o capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
 - Funcionalidade offline com sincronização automática ao restabelecer conexão com a internet.
 
 **- Criadores de Ganho:**
@@ -359,17 +362,18 @@
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de criadores de ganhos de um Canvas Proposta de Valor diz respeito a como os produtos e serviços de uma determinada organização acarretam os resultados que o cliente espera (G4 EDUCAÇÃO, 2025). A partir disso, foram elencados os seguintes criadores de ganho:
 
 - Centraliza os registros do rebanho diariamente, substituindo anotações dispersas em papel;
-- Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano;
+- Permite acompanhamento centralizado das operações dos retiros, reduzindo atrasos na comunicação e melhorando a tomada de decisão;
 - Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações.
 
-**- Aliviadores das dores:**
+**- Aliviadores de Dores:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de aliviadores de dor de um Canvas Proposta de Valor mostra de qual maneira os produtos e serviços propostos por uma organização tratam as dores do cliente (G4 EDUCAÇÃO, 2025). Por conseguinte, foram elaborados os seguintes aliviadores de dor:
 
-- Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo;
-- Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor;
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
-- Garante operação contínua em campo mesmo sem internet via modo offline.
+- Reduz retrabalho operacional ao eliminar a necessidade de transcrição manual entre papel e planilha;
+- Garante operação contínua em campo mesmo sem internet via modo offline;
+- Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
+
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
