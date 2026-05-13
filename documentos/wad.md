@@ -185,8 +185,6 @@
 
 [Anexos](#c9)
 
-<br>
-
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
@@ -1625,9 +1623,10 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e chamados, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+
 ### <a name="c3.6.1"></a>Entidades e Atributos
-Foram identificadas doze entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+Foram identificadas entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
 <p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
 
