@@ -252,7 +252,7 @@
 <div align="center">
 <p>Figura 2 - Análise de SWOT</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot.png" alt="Análise de SWOT" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
