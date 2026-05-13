@@ -1761,7 +1761,8 @@ CREATE TABLE `ticket` (
     `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NOT NULL,
     `atribuido_a` CHAR(36)                                                                           NOT NULL,
     `descricao` VARCHAR(255)                                                                         NOT NULL,
-  
+    `data_criacao`                          DATE                                                     NOT NULL,
+    `data_realizado`                          DATE                                                     NOT NULL,
     PRIMARY KEY (`id`)
 );
 
