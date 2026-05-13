@@ -1607,7 +1607,73 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e chamados, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+### <a name="c3.6.1"></a>Entidades e Atributos
+Foram identificadas doze entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+
+<p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
+
+| Entidade | Descrição e origem nas User Stories |
+|----------|-------------------------------------|
+| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo perfil. Origem: US01, US03, US08. |
+| RETIRO | Subdivisão geográfica e operacional da fazenda. Origem: US02, US07, US11. |
+| LOTE | Agrupamento de animais que compartilham categoria e finalidade; é a unidade de movimentação no campo. Origem: US02. |
+| ANIMAL | Bovino individual identificado pelo brinco SISBOV, atendendo à legislação de rastreabilidade. Origem: US02. |
+| MOVIMENTACAO | Registro de deslocamentos do rebanho ou eventos como pesagem e vacinação. Origem: US01, US02. |
+| VALIDACAO | Registro do ato de aprovação ou rejeição de uma movimentação. Origem: US04. |
+| TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
+| CHAMADO | Solicitação de manutenção de infraestrutura, com categoria e localização do problema. Origem: US06, US07, US10. |
+| EVIDENCIA | Comprovação anexada a movimentações ou chamados. Entidade generalizada em Mensagem_Escrita, Áudio e Foto_Georreferenciada. Origem: US12. |
+| ALERTA | Notificação automática gerada pelo sistema diante de problemas operacionais. Origem: US05. |
+| RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
+| FILA_SINCRONIZACAO | Estrutura que armazena registros criados em modo offline até a sincronização com o servidor. Origem: US01, US02. |
+
+<p>Quadro 33 - Atributos das entidades  </p>
+
+| Entidade | Atributos |
+|----------|-----------|
+| USUARIO | id_usuario (PK), nome_completo, cpf, login, senha_hash, perfil, telefone, email, status, criado_em |
+| RETIRO | id_retiro (PK), nome, area_hectares, localizacao, capataz_responsavel, criado_em, ativo |
+| LOTE | id_lote (PK), codigo_lote, categoria, finalidade, quantidade_atual, data_formacao, observacoes |
+| ANIMAL | id_animal (PK), numero_brinco_sisbov, sexo, data_nascimento, raca, peso_atual, status_sanitario |
+| MOVIMENTACAO | id_movimentacao (PK), tipo_movimentacao, data_hora, quantidade_animais, retiro_origem, retiro_destino, observacoes, status, sincronizado, validado_por |
+| VALIDACAO | id_validacao (PK), decisao, data_validacao, justificativa |
+| TAREFA | id_tarefa (PK), titulo, descricao, prioridade, data_criacao, prazo, data_conclusao, status |
+| CHAMADO | id_chamado (PK), titulo, descricao, categoria, localizacao, prioridade, status, data_abertura, data_fechamento, solucao_aplicada |
+| EVIDENCIA (generalização) | id_evidencia (PK), caminho_arquivo, tamanho_bytes, data_upload, descricao |
+| ↳ Mensagem_Escrita | conteudo_texto |
+| ↳ Áudio | duracao_segundos, formato_audio |
+| ↳ Foto_Georreferenciada | latitude, longitude, resolucao |
+| ALERTA | id_alerta (PK), tipo, mensagem, severidade, data_geracao, lido, link_referencia |
+| RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
+| FILA_SINCRONIZACAO | id_fila (PK), tipo_registro, payload, data_criacao, data_sincronizacao, status_envio, tentativas |
+
+### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
+
+Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. Os vínculos entre USUARIO e TAREFA, assim como entre USUARIO e CHAMADO, foram desdobrados em dois relacionamentos distintos (CRIA/EXECUTA e ABRE/GERENCIA) para diferenciar os papéis de criador e executor no fluxo operacional. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
+
+<p>Quadro 34 - Relacionamentos do modelo conceitual </p>
+
+| ID | Relacionamento | Entidades | Cardinalidade | Descrição |
+|----|----------------|-----------|---------------|-----------|
+| R1 | TRABALHA_EM | USUARIO ↔ RETIRO | (0,N) : (1,N) | Um usuário atua em vários retiros; um retiro tem ao menos um usuário responsável. |
+| R2 | ABRIGA | RETIRO ↔ LOTE | (0,N) : (1,1) | Um retiro abriga vários lotes; cada lote pertence a um único retiro. |
+| R3 | COMPOE | LOTE ↔ ANIMAL | (0,N) : (0,1) | Um lote é composto por vários animais; um animal pertence a no máximo um lote. |
+| R4 | REGISTRA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um capataz registra várias movimentações; toda movimentação tem um registrador. |
+| R5 | ENVOLVE | MOVIMENTACAO ↔ LOTE | (1,N) : (0,N) | Uma movimentação envolve um ou mais lotes; um lote tem várias movimentações no tempo. |
+| R6 | RECEBE_VALIDACAO | MOVIMENTACAO ↔ VALIDACAO | (0,1) : (1,1) | Toda validação pertence a uma movimentação; uma movimentação tem no máximo uma validação. |
+| R7 | EXECUTA_VALIDACAO | USUARIO ↔ VALIDACAO | (0,N) : (1,1) | Um supervisor executa várias validações; cada validação tem um responsável. |
+| R8 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria várias tarefas; cada tarefa tem um único criador. |
+| R9 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,N) | Uma tarefa é executada por um ou mais capatazes; um capataz executa várias tarefas. |
+| R10 | ABRE | USUARIO ↔ CHAMADO | (0,N) : (1,1) | Um capataz abre vários chamados; todo chamado tem um único autor. |
+| R11 | GERENCIA | USUARIO ↔ CHAMADO | (0,N) : (0,1) | Um supervisor gerencia vários chamados; um chamado pode estar sob gestão de no máximo um supervisor. |
+| R12 | LOCALIZA | CHAMADO ↔ RETIRO | (0,N) : (1,1) | Vários chamados podem ser de um mesmo retiro; todo chamado é vinculado a um retiro. |
+| R13 | ANEXA_MOV | EVIDENCIA ↔ MOVIMENTACAO | (0,N) : (0,1) | Movimentações podem ter várias evidências; cada evidência pertence a no máximo uma movimentação. |
+| R14 | ANEXA_CHAM | EVIDENCIA ↔ CHAMADO | (1,N) : (0,1) | Todo chamado deve ter ao menos uma evidência (RN08); cada evidência pertence a no máximo um chamado. |
+| R15 | NOTIFICA | ALERTA ↔ USUARIO | (1,N) : (0,N) | Um alerta notifica um ou mais usuários; um usuário recebe vários alertas. |
+| R16 | GERA_RELATORIO | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um supervisor gera vários relatórios; cada relatório tem um solicitante. |
+| R17 | ABRANGE | RELATORIO ↔ RETIRO | (1,N) : (0,N) | Um relatório abrange um ou mais retiros; um retiro aparece em vários relatórios. |
+| R18 | ENFILEIRA_MOV | MOVIMENTACAO ↔ FILA_SINCRONIZACAO | (0,1) : (0,1) | Uma movimentação criada offline é enfileirada para sincronização posterior. |
 
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
