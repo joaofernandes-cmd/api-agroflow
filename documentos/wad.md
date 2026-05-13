@@ -252,7 +252,7 @@
 <div align="center">
 <p>Figura 2 - Análise de SWOT</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot.png" alt="Análise de SWOT" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -376,7 +376,7 @@ Não se aplica.
 
 <div align="center">
   <p>Figura 4 – Matriz De Risco</p>
-  <img src="outros/assets/matriz-de-risco.png" alt="Matriz de Risco">
+  <img src="outros/assets/matriz-de-risco-2.png" alt="Matriz de Risco">
   <p>Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -386,13 +386,18 @@ Não se aplica.
 
 <p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
 
-| Ameaça                                                   | Plano de ação                                                                    | Probabilidade | Impacto    |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
-| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar alterações no backlog | 70%           | Moderado   |
-| Dependência de testes em ambiente real de campo          | Criar cenários simulados para testes antes da validação em campo                 | 50%           | Alto       |
-| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar alinhamentos frequentes com o parceiro antes da implementação           | 30%           | Moderado   |
-| Problemas de comunicação interna                         | Manter reuniões periódicas e alinhamentos constantes durante as sprints          | 30%           | Muito alto |
-| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis e critérios de aceite no início de cada sprint              | 30%           | Baixo      |
+| Ameaça                                                   | Plano de ação                                                                                                                            | Probabilidade | Impacto    |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------- |
+| Baixa conectividade nas fazendas                         | Desenvolver funcionalidades offline-first, permitindo o registro de informações mesmo sem conexão com a internet.                        | 90%           | Alto       |
+| Falha na sincronização offline dos dados                 | Implementar validações automáticas e testes de sincronização para garantir o envio correto dos dados quando a conexão for restabelecida. | 70%           | Muito Alto |
+| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar mudanças no backlog do projeto.                                               | 70%           | Moderado   |
+| Dependência de testes em ambiente real de campo          | Criar cenários simulados de uso para antecipar falhas antes da validação em campo.                                                       | 50%           | Alto       |
+| Perda de dados durante uso offline                       | Implementar salvamento automático local e mecanismos de recuperação de dados não sincronizados.                                          | 50%           | Muito Alto |
+| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis, prazos e critérios de aceite antes do início de cada sprint.                                                       | 30%           | Baixo      |
+| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar revisões frequentes dos requisitos com o parceiro antes da implementação das funcionalidades.                                   | 30%           | Moderado   |
+| Baixa adesão dos capatazes ao sistema                    | Desenvolver interface simples, com botões claros e fluxo de uso intuitivo, além de realizar validações com usuários finais.              | 30%           | Alto       |
+| Problemas de comunicação interna                         | Manter reuniões periódicas, registrar decisões importantes e acompanhar o andamento das tarefas no quadro de gestão do projeto.          | 30%           | Muito Alto |
+
 
 
 <p align="center">Fonte: Próprios autores (2026).</p> 
