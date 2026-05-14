@@ -185,8 +185,6 @@
 
 [Anexos](#c9)
 
-<br>
-
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
@@ -1384,7 +1382,19 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
-*Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
+&nbsp;&nbsp;&nbsp;&nbsp;Um diagrama de classes do domínio é um modelo visual da linguagem UML que representa as principais entidades de um sistema, seus atributos, operações e os relacionamentos entre elas. Diferente de um diagrama de implementação, seu foco está no domínio do negócio, ou seja, em como os conceitos do mundo real se traduzem em estruturas de software, estabelecendo uma linguagem comum entre as equipes técnica e de negócio.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. A FilaSincronizacao garante a operação offline, enfileirando dados localmente até que a conexão seja restabelecida, enquanto a classe Sessão sustenta o controle de autenticação e rastreabilidade das ações.
+
+<div align="center">
+<p>Figura X - Diagrama de Classes de Domínio</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-classes-dominio.jpg">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Mais do que um artefato técnico, o diagrama de classes do AgroFlow é o reflexo digital de uma operação que historicamente dependia de papel, memória e repasse verbal. Ao estruturar com precisão as responsabilidades de cada perfil, as regras que governam cada registro e os vínculos entre campo e gestão, o modelo estabelece a base sobre a qual toda a aplicação será construída, garantindo que nenhuma decisão de implementação precise ser tomada no escuro.
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
@@ -1617,73 +1627,83 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e chamados, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+
 ### <a name="c3.6.1"></a>Entidades e Atributos
-Foram identificadas doze entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas treze entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) na entidade MOVIMENTACAO, inicializado como false no momento do registro. Isso significa que toda movimentação criada em campo é armazenada localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização na própria entidade, em conformidade com a US01, US02 e RN03.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
 <p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
 
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
-| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo perfil. Origem: US01, US03, US08. |
-| RETIRO | Subdivisão geográfica e operacional da fazenda. Origem: US02, US07, US11. |
-| LOTE | Agrupamento de animais que compartilham categoria e finalidade; é a unidade de movimentação no campo. Origem: US02. |
-| ANIMAL | Bovino individual identificado pelo brinco SISBOV, atendendo à legislação de rastreabilidade. Origem: US02. |
-| MOVIMENTACAO | Registro de deslocamentos do rebanho ou eventos como pesagem e vacinação. Origem: US01, US02. |
-| VALIDACAO | Registro do ato de aprovação ou rejeição de uma movimentação. Origem: US04. |
+| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US08. |
+| RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US06, US07, US11.|
+| MOVIMENTACAO | Registro de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém status e validado_por para o fluxo de validação pelo supervisor (US04, RN06), sincronizado para controle de operação offline (US01, RN03), e causa_obito e estagio_vida como atributos específicos do rebanho (RN01). Origem: US01, US02, US04.|
 | TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
-| CHAMADO | Solicitação de manutenção de infraestrutura, com categoria e localização do problema. Origem: US06, US07, US10. |
-| EVIDENCIA | Comprovação anexada a movimentações ou chamados. Entidade generalizada em Mensagem_Escrita, Áudio e Foto_Georreferenciada. Origem: US12. |
-| ALERTA | Notificação automática gerada pelo sistema diante de problemas operacionais. Origem: US05. |
-| RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
-| FILA_SINCRONIZACAO | Estrutura que armazena registros criados em modo offline até a sincronização com o servidor. Origem: US01, US02. |
+| TICKET | Solicitação de manutenção de infraestrutura. O supervisor gerencia o chamado e o atribui a um capataz para execução, conforme RF008. Origem: US06, US07, US10. |
+| EVIDENCIA | Comprovação anexada a movimentações, tarefas ou tickets. Generalizada em três subclasses: EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM. Origem: US07, US12. |
+| EVIDENCIA_FOTO | Especialização de EVIDENCIA com atributos de georreferenciamento (latitude e longitude). Origem: US12. |
+| EVIDENCIA_AUDIO | Especialização de EVIDENCIA que armazena o caminho do arquivo de áudio. Origem: US07, US12. |
+| EVIDENCIA_MENSAGEM | Especialização de EVIDENCIA que armazena conteúdo textual. Origem: US07, US12. |
+| EVIDENCIA_MOVIMENTACAO | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e MOVIMENTACAO. Origem: US01, US12. |
+| EVIDENCIA_TAREFA | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TAREFA. Origem: US03, US12. |
+| EVIDENCIA_TICKET | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TICKET. Origem: US06, US07, US12. |
+| RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados com sincronizado = true compõem o relatório, conforme RN07. Origem: US08, US09, US11. |
 
 <p>Quadro 33 - Atributos das entidades  </p>
 
 | Entidade | Atributos |
 |----------|-----------|
-| USUARIO | id_usuario (PK), nome_completo, cpf, login, senha_hash, perfil, telefone, email, status, criado_em |
-| RETIRO | id_retiro (PK), nome, area_hectares, localizacao, capataz_responsavel, criado_em, ativo |
-| LOTE | id_lote (PK), codigo_lote, categoria, finalidade, quantidade_atual, data_formacao, observacoes |
-| ANIMAL | id_animal (PK), numero_brinco_sisbov, sexo, data_nascimento, raca, peso_atual, status_sanitario |
-| MOVIMENTACAO | id_movimentacao (PK), tipo_movimentacao, data_hora, quantidade_animais, retiro_origem, retiro_destino, observacoes, status, sincronizado, validado_por |
-| VALIDACAO | id_validacao (PK), decisao, data_validacao, justificativa |
-| TAREFA | id_tarefa (PK), titulo, descricao, prioridade, data_criacao, prazo, data_conclusao, status |
-| CHAMADO | id_chamado (PK), titulo, descricao, categoria, localizacao, prioridade, status, data_abertura, data_fechamento, solucao_aplicada |
-| EVIDENCIA (generalização) | id_evidencia (PK), caminho_arquivo, tamanho_bytes, data_upload, descricao |
-| ↳ Mensagem_Escrita | conteudo_texto |
-| ↳ Áudio | duracao_segundos, formato_audio |
-| ↳ Foto_Georreferenciada | latitude, longitude, resolucao |
-| ALERTA | id_alerta (PK), tipo, mensagem, severidade, data_geracao, lido, link_referencia |
-| RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
-| FILA_SINCRONIZACAO | id_fila (PK), tipo_registro, payload, data_criacao, data_sincronizacao, status_envio, tentativas |
+| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, criado_em, cargo|
+| RETIRO| id (PK), nome.|
+| MOVIMENTACAO |id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, origem, destino, quantidade, status, sincronizado, criado_em, causa_obito, estagio_vida.|
+| TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data, status |
+| TICKET | iid (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), categoria, localizacao, descricao, status, data_criacao, data_realizado |
+| EVIDENCIA | Cid (PK), usuario_id (FK), tipo, criado_em |
+| EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
+| EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
+| EVIDENCIA_MENSAGEM | evidencia_id (PK/FK), conteudo |
+| EVIDENCIA_MOVIMENTACAO | evidencia_id (PK/FK), movimentacao_id (PK/FK) |
+| EVIDENCIA_TAREFA | evidencia_id (PK/FK), tarefa_id (PK/FK) |
+| EVIDENCIA_TICKET | evidencia_id (PK/FK), ticket_id (PK/FK) |
+| RELATORIO | id (PK), gerado_por (FK), retiro_id (FK), tipo, data_inicio, data_fim, data_gerado, url_arquivo |
 
 ### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
 
-Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. Os vínculos entre USUARIO e TAREFA, assim como entre USUARIO e CHAMADO, foram desdobrados em dois relacionamentos distintos (CRIA/EXECUTA e ABRE/GERENCIA) para diferenciar os papéis de criador e executor no fluxo operacional. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
 
-<p>Quadro 34 - Relacionamentos do modelo conceitual </p>
+<p>Quadro 34 - Relacionamentos do modelo conceitual.</p>
 
 | ID | Relacionamento | Entidades | Cardinalidade | Descrição |
-|----|----------------|-----------|---------------|-----------|
-| R1 | TRABALHA_EM | USUARIO ↔ RETIRO | (0,N) : (1,N) | Um usuário atua em vários retiros; um retiro tem ao menos um usuário responsável. |
-| R2 | ABRIGA | RETIRO ↔ LOTE | (0,N) : (1,1) | Um retiro abriga vários lotes; cada lote pertence a um único retiro. |
-| R3 | COMPOE | LOTE ↔ ANIMAL | (0,N) : (0,1) | Um lote é composto por vários animais; um animal pertence a no máximo um lote. |
-| R4 | REGISTRA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um capataz registra várias movimentações; toda movimentação tem um registrador. |
-| R5 | ENVOLVE | MOVIMENTACAO ↔ LOTE | (1,N) : (0,N) | Uma movimentação envolve um ou mais lotes; um lote tem várias movimentações no tempo. |
-| R6 | RECEBE_VALIDACAO | MOVIMENTACAO ↔ VALIDACAO | (0,1) : (1,1) | Toda validação pertence a uma movimentação; uma movimentação tem no máximo uma validação. |
-| R7 | EXECUTA_VALIDACAO | USUARIO ↔ VALIDACAO | (0,N) : (1,1) | Um supervisor executa várias validações; cada validação tem um responsável. |
-| R8 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria várias tarefas; cada tarefa tem um único criador. |
-| R9 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,N) | Uma tarefa é executada por um ou mais capatazes; um capataz executa várias tarefas. |
-| R10 | ABRE | USUARIO ↔ CHAMADO | (0,N) : (1,1) | Um capataz abre vários chamados; todo chamado tem um único autor. |
-| R11 | GERENCIA | USUARIO ↔ CHAMADO | (0,N) : (0,1) | Um supervisor gerencia vários chamados; um chamado pode estar sob gestão de no máximo um supervisor. |
-| R12 | LOCALIZA | CHAMADO ↔ RETIRO | (0,N) : (1,1) | Vários chamados podem ser de um mesmo retiro; todo chamado é vinculado a um retiro. |
-| R13 | ANEXA_MOV | EVIDENCIA ↔ MOVIMENTACAO | (0,N) : (0,1) | Movimentações podem ter várias evidências; cada evidência pertence a no máximo uma movimentação. |
-| R14 | ANEXA_CHAM | EVIDENCIA ↔ CHAMADO | (1,N) : (0,1) | Todo chamado deve ter ao menos uma evidência (RN08); cada evidência pertence a no máximo um chamado. |
-| R15 | NOTIFICA | ALERTA ↔ USUARIO | (1,N) : (0,N) | Um alerta notifica um ou mais usuários; um usuário recebe vários alertas. |
-| R16 | GERA_RELATORIO | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um supervisor gera vários relatórios; cada relatório tem um solicitante. |
-| R17 | ABRANGE | RELATORIO ↔ RETIRO | (1,N) : (0,N) | Um relatório abrange um ou mais retiros; um retiro aparece em vários relatórios. |
-| R18 | ENFILEIRA_MOV | MOVIMENTACAO ↔ FILA_SINCRONIZACAO | (0,1) : (0,1) | Uma movimentação criada offline é enfileirada para sincronização posterior. |
+|----|----------------|-----------|:-------------:|-----------|
+| R1 | PERTENCE_A | USUARIO ↔ RETIRO | (1,1) : (0,N) | Cada usuário pertence a exatamente um retiro; um retiro pode ter zero ou vários usuários. Origem: US01, US03. |
+| R2 | REGISTRA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um capataz registra zero ou várias movimentações; toda movimentação tem exatamente um capataz registrador. Origem: US01, US02, RN01. |
+| R3 | VALIDA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um supervisor valida zero ou várias movimentações; toda movimentação referencia exatamente um usuário validador. Origem: US04, RN06. |
+| R4 | OCORRE_EM | MOVIMENTACAO ↔ RETIRO | (1,1) : (0,N) | Toda movimentação ocorre em exatamente um retiro; um retiro pode ter zero ou várias movimentações. Origem: US01, US02. |
+| R5 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria zero ou várias tarefas; toda tarefa tem exatamente um criador. Origem: US03, RN02. |
+| R6 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um capataz executa zero ou várias tarefas; toda tarefa é atribuída a exatamente um capataz. Origem: US03, RN02. |
+| R7 | VINCULADA_A | TAREFA ↔ RETIRO | (1,1) : (0,N) | Toda tarefa está vinculada a exatamente um retiro; um retiro pode ter zero ou várias tarefas. Origem: US03. |
+| R8 | ABRE | USUARIO ↔ TICKET | (0,N) : (1,1) | Um capataz abre zero ou vários tickets; todo ticket tem exatamente um capataz autor. Origem: US07, RN08. |
+| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (1,1) : (0,N) | Todo ticket é atribuído pelo supervisor a exatamente um capataz executor; um capataz pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
+| R10 | LOCALIZADO_EM | TICKET ↔ RETIRO | (1,1) : (0,N) | Todo ticket está vinculado a exatamente um retiro; um retiro pode ter zero ou vários tickets. Origem: US06, US07. |
+| R11 | REGISTRADA_POR | EVIDENCIA ↔ USUARIO | (1,1) : (0,N) | Toda evidência é registrada por exatamente um usuário; um usuário pode registrar zero ou várias evidências. Origem: RF004. |
+| R12 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias movimentações. Origem: RF004, US01. |
+| R13 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ MOVIMENTACAO | (0,N) : (1,1) | Cada associação referencia exatamente uma movimentação; uma movimentação pode ter zero ou várias evidências vinculadas. Origem: RF004, US01. |
+| R14 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias tarefas. Origem: RF004, US03. |
+| R15 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ TAREFA | (0,N) : (1,1) | Cada associação referencia exatamente uma tarefa; uma tarefa pode ter zero ou várias evidências vinculadas. Origem: RF004, US03. |
+| R16 | ANEXA_TKT | EVIDENCIA_TICKET ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou vários tickets. Origem: RF004, US07. |
+| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (1,N) : (1,1) | Todo ticket possui ao menos uma evidência associada (RN08); cada associação referencia exatamente um ticket. Origem: US06, US07, RN08. |
+| R18 | GERA | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um usuário gera zero ou vários relatórios; todo relatório tem exatamente um gerador. Origem: US08, US09, RN07. |
+| R19 | ABRANGE | RELATORIO ↔ RETIRO | (1,1) : (0,N) | Todo relatório está associado a exatamente um retiro; um retiro pode aparecer em zero ou vários relatórios. Origem: US08, US09, US11. |
+| R20 | ESPECIALIZA_FOTO | EVIDENCIA_FOTO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_FOTO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo, latitude e longitude, obrigatórios conforme RN04. Origem: RF004, RN04. |
+| R21 | ESPECIALIZA_AUDIO | EVIDENCIA_AUDIO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_AUDIO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo do arquivo de áudio. Origem: RF004, US07. |
+| R22 | ESPECIALIZA_MSG | EVIDENCIA_MENSAGEM ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_MENSAGEM especializa EVIDENCIA herdando seu identificador; acrescenta o atributo conteudo textual. Origem: RF004, US07, RN08. |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
