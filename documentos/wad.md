@@ -1757,7 +1757,7 @@ CREATE TABLE `usuario` (
     `login`      VARCHAR(255)             NOT NULL,
     `senha_hash` VARCHAR(255)             NOT NULL,
     `status`     ENUM('ativo', 'inativo') NOT NULL,
-    `criado_em`  TIMESTAMP                NOT NULL,
+    `data_criacao`  TIMESTAMP                NOT NULL,
     `cargo`     ENUM('capataz', 'supervisor', 'gerente') NOT NULL,
     PRIMARY KEY (`id`)
 );
@@ -1813,7 +1813,7 @@ CREATE TABLE `movimentacao` (
     `quantidade`   INT                                                             NOT NULL,
     `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NOT NULL,
     `sincronizado` BOOLEAN                                                         NOT NULL DEFAULT 0,
-    `criado_em`    TIMESTAMP                                                       NOT NULL,
+    `data_criacao`    TIMESTAMP                                                       NOT NULL,
     `causa_obito`  VARCHAR(255)                                                    NULL,
     `estagio_vida` ENUM('BEZERRO 0 A 7 MESES','BEZERRO 0 A 7 MESES', 'GARROTE 8 A 12 MESES','NOVILHA 8 A 12 MESES','GARROTE 13 A 24 MESES', 'NOVILHA 13 A 24 MESES', 'BOI 25 A 36 MESES', 'NOVILHA 25 A 36 MESES', 'TOURO 25 A 36 MESES', 'VACA ACIMA 36 MESES', 'BOI ACIMA 36 MESES', 'TOURO ACIMA 36 MESES')                                                     NOT NULL,
 
@@ -1886,7 +1886,7 @@ CREATE TABLE `evidencia` (
     `id`          CHAR(36)                          NOT NULL,
     `usuario_id`  CHAR(36)                          NOT NULL,
     `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
-    `criado_em`   TIMESTAMP                         NOT NULL,
+    `data_criacao`   TIMESTAMP                         NOT NULL,
     PRIMARY KEY (`id`)
 );
 
