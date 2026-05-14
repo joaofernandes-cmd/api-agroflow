@@ -1728,6 +1728,8 @@ Para facilitar a interpretação dos elementos gráficos e a semântica do model
 
 A estrutura dos dados foi pensada para que seja fácil acompanhar tudo o que acontece no sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias provas registradas, como fotos, áudios ou mensagens.
 
+Em resumo, essa modelagem foi desenhada para garantir que o sistema seja robusto e que as informações não se percam ou fiquem duplicadas. Com essa estrutura bem planejada, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
+
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
