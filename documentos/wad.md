@@ -1718,6 +1718,14 @@ Para compreender a persistência de dados do sistema por trás da aplicação we
 </p>
 </div>
 
+Para facilitar a interpretação dos elementos gráficos e a semântica do modelo, foi adotado o seguinte padrão de cores e formas:
+
+- **Retangulos azuis:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
+- **Losangos Verdes:** Indicam os **Relacionamentos** e a lógica de interação entre as entidades, acompanhados de sua respectiva cardinalidade (ex: 1:N).
+- **Elipses Vermelhas:** Identificam a **Chave Primária (PK)**, o identificador único de cada registro na tabela.
+- **Elipses Verdes Escuras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
+- **Elipses Rosas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
+
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
