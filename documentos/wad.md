@@ -369,7 +369,7 @@
 
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
 - Reduz retrabalho operacional ao eliminar a necessidade de transcrição manual entre papel e planilha;
-- Garante operação contínua em campo mesmo sem internet via modo offline;
+- Garante operação contínua em campo mesmo sem conexão com a internet (via modo offline);
 - Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
 
 
