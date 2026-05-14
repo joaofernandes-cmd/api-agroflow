@@ -1726,6 +1726,8 @@ Para facilitar a interpretação dos elementos gráficos e a semântica do model
 - **Elipses Verdes Escuras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
 - **Elipses Rosas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
 
+A estrutura dos dados foi pensada para que seja fácil acompanhar tudo o que acontece no sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias provas registradas, como fotos, áudios ou mensagens.
+
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
