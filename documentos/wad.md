@@ -1410,12 +1410,11 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O desenvolvimento dessas interfaces foi realizado com base nas User Stories apresentadas na seção 2.3 deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
-
+&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#23-user-stories-sprints-1-a-5) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
 
 ### Capataz
 
-&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona Daniel Carvalho, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
+&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para atender à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada de forma a permitir acesso rápido às funcionalidades principais mesmo em ambientes com baixa ou ausência de conexão com a internet. Além disso, os registros realizados pelo usuário podem ser armazenados localmente até que a conexão seja restabelecida e os dados sincronizados automaticamente.
 
@@ -1481,7 +1480,17 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar as funcionalidades mais utilizadas pelos supervisores no dia a dia operacional. A interface apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais operações do sistema de forma simplificada e organizada.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para atender à US05, relacionada ao recebimento de alertas operacionais, foi desenvolvida a funcionalidade de visualização de alertas, permitindo que o supervisor acompanhe notificações relacionadas a problemas identificados nos retiros. Dessa forma, o sistema possibilita respostas mais rápidas às ocorrências registradas durante as operações da fazenda.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Visando atender à US04, foi implementada a funcionalidade de registros pendentes, permitindo que o supervisor visualize informações enviadas pelos capatazes para posterior análise e validação. Por meio dessa interface, os registros podem ser acompanhados de forma centralizada, contribuindo para maior confiabilidade e controle das informações operacionais armazenadas no sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas foi desenvolvida para atender à US03, permitindo que os supervisores distribuam atividades operacionais aos capatazes de maneira estruturada. Nessa tela, o supervisor consegue definir período, capataz responsável, atividade solicitada e nível de prioridade da tarefa, facilitando a organização das demandas operacionais realizadas nos retiros.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, foi implementada a funcionalidade de geração de relatórios operacionais, relacionada à US09. A interface permite a utilização de filtros por período, retiro e tipo de relatório, além da visualização prévia das informações antes da exportação da planilha. Dessa forma, o sistema auxilia o supervisor no acompanhamento e análise das operações realizadas na fazenda, permitindo acesso mais organizado aos dados operacionais.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do supervisor são Dashboard, Relatórios, Registros Pendentes, Alertas e Delegação de Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
 <p>Figura 9 - Wireframe Versão Mobile do Supervisor</p>
@@ -1521,7 +1530,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 **Versão Desktop:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. O supervisor consegue monitorar registros pendentes, acompanhar alertas operacionais e delegar tarefas de maneira centralizada, facilitando a gestão dos retiros sob sua responsabilidade.
+&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05, US06 e US09, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
 
 <div align="center">
 <p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
