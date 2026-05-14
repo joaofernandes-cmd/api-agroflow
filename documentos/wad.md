@@ -1433,7 +1433,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe da aba "Registrar movimentação" do capataz</p>
+<p>Figura 10 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
