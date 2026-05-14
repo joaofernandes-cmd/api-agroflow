@@ -1716,7 +1716,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
  <p>Figura  – Modelo Relacional</p>
-  <img src="outros/assets/modelo-relacional.jpg" alt="Modelo Relacional">
+  <img src="outros/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
