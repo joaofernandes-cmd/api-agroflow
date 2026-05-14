@@ -307,7 +307,7 @@
 <p>Figura 3 - Canvas Proposta de Valor</p>
 <p align="center">
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/canvas-proposta-valor.png" alt="Canvas Proposta de Valor" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -320,27 +320,30 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Nas tarefas do cliente, são delimitadas as tarefas que um cliente está tentando fazer, especialmente antes de utilizar uma nova solução proposta por uma determinada organização (G4 EDUCAÇÃO, 2025). Com isso, a equipe identificou as seguintes tarefas do cliente:
 
-- Controlar a movimentação do rebanho bovino (nascimentos, mortes, compras, vendas e transferências entre retiros);
-- Consolidar dados operacionais para subsidiar decisões estratégicas de negócio;
-- Gerenciar e acompanhar tarefas diárias de campo.
+- Consolidar dados operacionais para subsidiar decisões estratégicas de negócios;
+- Garantir rastreabilidade e controle consolidado das movimentações do rebanho para apoiar decisões operacionais e estratégicas;
+- Consolidar informações operacionais de diferentes retiros para facilitar análises e planejamento da fazenda;
+- Monitorar atividades dos retiros para reduzir falhas operacionais e melhorar a gestão de equipes de campo.
+
 
 **- Dores:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na seção de dores do Canvas Proposta de Valor, são adicionadas as frustrações que o cliente sofre ao tentar realizar determinada tarefa (G4 EDUCAÇÃO, 2025). Desse modo, foram elencadas as seguintes dores do cliente:
 
 - Dependência de processos manuais e anotações em papel (boletas), gerando retrabalho de redigitação em planilhas;
+- Falta de visibilidade agilizada sobre o status das atividades e do rebanho;
 - Lentidão na comunicação entre campo e escritório, dependendo de repasse humano para atualizar informações;
-- Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos;
-- Falta de visibilidade agilizada sobre o status das atividades e do rebanho.
+- Risco de falhas e inconsistências na transcrição de dados operacionais e zootécnicos.
+
 
 **- Ganhos:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na seção de ganhos do Canvas Proposta de Valor, são colocados os resultados que o cliente aspira ter quando realiza uma tarefa (G4 EDUCAÇÃO, 2025). Assim, foram identificados os seguintes ganhos do cliente:
 
+- Redução do tempo gasto na consolidação manual de informações e no repasse entre campo e escritório;
 - Registro digital direto na fonte, eliminando a redigitação manual;
-- Acesso a dados consolidados e atualizados do rebanho para tomada de decisão estratégica;
-- Maior rastreabilidade e transparência nas operações de campo;
-- Agilidade no acompanhamento de tarefas e movimentações diariamente.
+- Acesso rápido a dados consolidados dos retiros para tomada de decisão operacional estratégica;
+- Maior rastreabilidade e controle nas operações, permitindo identificar responsáveis, reduzir inconsistências e acompanhar ocorrências em tempo real.
 
 ### Proposta de Valor
 
@@ -348,8 +351,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de produtos e serviços de um Canvas Proposta de Valor se refere aos recursos oferecidos por uma determinada organização (G4 EDUCAÇÃO, 2025). Dessa forma, é possível mencionar os seguintes no que se refere à solução proposta pela equipe:
 
-- Aplicação web com interface de campo para o Capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
-- Interface de calendarização e monitoramento de tarefas para o Gerente;
+- Interface de calendarização e acompanhamento operacional para supervisores e gerentes;
+- Aplicação web com interface de campo para o capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
 - Funcionalidade offline com sincronização automática ao restabelecer conexão com a internet.
 
 **- Criadores de Ganho:**
@@ -357,17 +360,18 @@
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de criadores de ganhos de um Canvas Proposta de Valor diz respeito a como os produtos e serviços de uma determinada organização acarretam os resultados que o cliente espera (G4 EDUCAÇÃO, 2025). A partir disso, foram elencados os seguintes criadores de ganho:
 
 - Centraliza os registros do rebanho diariamente, substituindo anotações dispersas em papel;
-- Permite ao Gerente acompanhar o status das tarefas de campo sem depender de repasse humano;
+- Permite acompanhamento centralizado das operações dos retiros, reduzindo atrasos na comunicação e melhorando a tomada de decisão;
 - Registra a identificação do usuário em cada ação, aumentando a rastreabilidade das operações.
 
-**- Aliviadores das dores:**
+**- Aliviadores de Dores:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de aliviadores de dor de um Canvas Proposta de Valor mostra de qual maneira os produtos e serviços propostos por uma organização tratam as dores do cliente (G4 EDUCAÇÃO, 2025). Por conseguinte, foram elaborados os seguintes aliviadores de dor:
 
-- Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo;
-- Reduz o retrabalho de redigitação ao sincronizar automaticamente os dados com o servidor;
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
-- Garante operação contínua em campo mesmo sem internet via modo offline.
+- Reduz retrabalho operacional ao eliminar a necessidade de transcrição manual entre papel e planilha;
+- Garante operação contínua em campo mesmo sem conexão com a internet (via modo offline);
+- Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
+
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
@@ -1623,14 +1627,14 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### <a name="c3.6.1"></a>Entidades e Atributos
-Foram identificadas treze entidades no domínio da BRPec.  A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas treze entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
-O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) na entidade MOVIMENTACAO, inicializado como false no momento do registro. Isso significa que toda movimentação criada em campo é armazenada localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização na própria entidade, em conformidade com a US01, US02 e RN03.
+&nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) na entidade MOVIMENTACAO, inicializado como false no momento do registro. Isso significa que toda movimentação criada em campo é armazenada localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização na própria entidade, em conformidade com a US01, US02 e RN03.
 
-Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+&nbsp;&nbsp;&nbsp;&nbsp;Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
 <p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
 
@@ -1670,7 +1674,7 @@ Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam inf
 
 ### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
 
-Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
 
 <p>Quadro 34 - Relacionamentos do modelo conceitual.</p>
 
@@ -1726,7 +1730,7 @@ Para compreender a persistência de dados do sistema por trás da aplicação we
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
  <p>Figura  – Modelo Relacional</p>
-  <img src="outros/assets/modelo-relacional.jpg" alt="Modelo Relacional">
+  <img src="outros/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -1767,7 +1771,7 @@ CREATE TABLE `usuario` (
     `login`      VARCHAR(255)             NOT NULL,
     `senha_hash` VARCHAR(255)             NOT NULL,
     `status`     ENUM('ativo', 'inativo') NOT NULL,
-    `criado_em`  TIMESTAMP                NOT NULL,
+    `data_criacao`  TIMESTAMP                NOT NULL,
     `cargo`     ENUM('capataz', 'supervisor', 'gerente') NOT NULL,
     PRIMARY KEY (`id`)
 );
@@ -1823,7 +1827,7 @@ CREATE TABLE `movimentacao` (
     `quantidade`   INT                                                             NOT NULL,
     `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NOT NULL,
     `sincronizado` BOOLEAN                                                         NOT NULL DEFAULT 0,
-    `criado_em`    TIMESTAMP                                                       NOT NULL,
+    `data_criacao`    TIMESTAMP                                                       NOT NULL,
     `causa_obito`  VARCHAR(255)                                                    NULL,
     `estagio_vida` ENUM('BEZERRO 0 A 7 MESES','BEZERRO 0 A 7 MESES', 'GARROTE 8 A 12 MESES','NOVILHA 8 A 12 MESES','GARROTE 13 A 24 MESES', 'NOVILHA 13 A 24 MESES', 'BOI 25 A 36 MESES', 'NOVILHA 25 A 36 MESES', 'TOURO 25 A 36 MESES', 'VACA ACIMA 36 MESES', 'BOI ACIMA 36 MESES', 'TOURO ACIMA 36 MESES')                                                     NOT NULL,
 
@@ -1896,7 +1900,7 @@ CREATE TABLE `evidencia` (
     `id`          CHAR(36)                          NOT NULL,
     `usuario_id`  CHAR(36)                          NOT NULL,
     `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
-    `criado_em`   TIMESTAMP                         NOT NULL,
+    `data_criacao`   TIMESTAMP                         NOT NULL,
     PRIMARY KEY (`id`)
 );
 
