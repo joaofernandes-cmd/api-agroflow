@@ -880,14 +880,14 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 | Eixo                     | Requisito | Métrica / Critério | Como atendido |
 |--------------------------|-----------|--------------------|---------------|
-| USAB — Usabilidade       | A interface deve ser operável por usuários com baixa alfabetização, sem necessidade de treinamento extenso | Usuário conclui tarefa básica (ex: registrar movimentação) em até 3 minutos sem auxílio | Uso de ícones grandes, botões visuais, textos curtos e fluxos simplificados |
-| CONF — Confiabilidade    | O sistema deve garantir que nenhum dado registrado offline seja perdido durante a sincronização | 0% de perda de registros em ciclos de sincronização testados | Armazenamento local persistente, com fila de sincronização e confirmação de envio ao servidor |
+| USAB — Usabilidade       | A interface deve ser operável por usuários com baixa alfabetização, sem necessidade de treinamento extenso | Usuário conclui tarefa básica (ex: registrar movimentação) em até 3 minutos sem auxílio; ≥ 80% dos participantes concluem em até 2 tentativas em sessão de teste com ≥ 5 usuários do perfil Capataz (ensino fundamental incompleto, sem experiência prévia com apps de gestão) | Uso de ícones grandes, botões visuais, textos curtos e fluxos simplificados |
+| CONF — Confiabilidade    | O sistema deve garantir que nenhum dado registrado offline seja perdido durante a sincronização | 0% de perda de registros em 100 ciclos de sincronização com 50 registros cada, cobrindo os cenários de queda de rede, timeout de servidor e conflito de versão; retomada automática em até 5 minutos após reconexão| Armazenamento local persistente, com fila de sincronização e confirmação de envio ao servidor |
 | DES — Desempenho         | As telas principais devem carregar de forma responsiva mesmo em conexões instáveis | p95 < 3000 ms em conexão Starlink; operações offline sem latência perceptível | Assets leves, dados carregados localmente no modo offline, requisições otimizadas |
 | SUP — Suportabilidade    | O sistema deve operar sem suporte técnico presencial nos retiros, sendo mantido remotamente pela sede | 100% das atualizações e correções realizadas sem deslocamento a campo | Arquitetura web centralizada, atualizações via deploy remoto, logs de erro acessíveis pela sede |
-| SEG — Segurança          | O acesso às funcionalidades deve ser restrito por perfil, impedindo que um Capataz acesse dados de outro retiro | 0 ocorrências de acesso indevido entre retiros em testes de perfil | Controle de acesso baseado em perfil (RBAC), com isolamento de dados por retiro no nível do banco de dados |
-| CAP — Capacidade         | O sistema deve suportar os 20–25 usuários simultâneos previstos e os 14 retiros ativos sem degradação | p95 < 3000 ms com 25 usuários simultâneos em carga simulada | Infraestrutura escalável em nuvem, banco de dados particionado por retiro |
+| SEG — Segurança          | O acesso às funcionalidades deve ser restrito por perfil, impedindo que um Capataz acesse dados de outro retiro | 0 ocorrências de acesso indevido entre retiros em matriz de testes cobrindo 100% das combinações de perfil (Capataz, Supervisor, Gerente) versus retiro; 100% das tentativas de acesso registradas em trilha de auditoria com perfil, recurso, resultado e timestamp | Controle de acesso baseado em perfil (RBAC), com isolamento de dados por retiro no nível do banco de dados |
+| CAP — Capacidade         | O sistema deve suportar os 20–25 usuários simultâneos previstos e os 14 retiros ativos sem degradação | p95 < 3000 ms com 25 usuários simultâneos em carga simulada. Sustentado por 30 minutos contínuos; requisições acima do limite respondidas com erro 503 e mensagem amigável| Infraestrutura escalável em nuvem, banco de dados particionado por retiro |
 | REST — Restrições Design | A identidade visual deve seguir a logo e paleta de cores da BrPec Agropecuária; a aplicação deve ser exclusivamente web | 100% das telas aprovadas pelo parceiro em revisão de UI | Aplicação de design system com tokens de cor e tipografia baseados na identidade visual da BrPec Agropecuária, validado em revisão de UI com o parceiro |
-| ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
+| ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação, destinguindo campos obrigatórios e opcionais | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1968,7 +1968,7 @@ CREATE TABLE `evidencia` (
     `usuario_id`  CHAR(36)                          NOT NULL,
     `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
     `data_criacao`   TIMESTAMP                         NOT NULL,
-    PRIMARY KEY (`id`)
+0    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `evidencia`
