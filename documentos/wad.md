@@ -1626,44 +1626,43 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### <a name="c3.6.1"></a>Entidades e Atributos
-Foram identificadas entidades no domínio da BRPec, com destaque para a entidade EVIDENCIA, que é generalizada em três subclasses (Mensagem_Escrita, Áudio e Foto_Georreferenciada), e para a FILA_SINCRONIZACAO, responsável por armazenar registros gerados offline até a sincronização com o servidor. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+Foram identificadas treze entidades no domínio da BRPec.  A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
 
 <p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
 
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
-| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo perfil. Origem: US01, US03, US08. |
-| RETIRO | Subdivisão geográfica e operacional da fazenda. Origem: US02, US07, US11. |
-| LOTE | Agrupamento de animais que compartilham categoria e finalidade; é a unidade de movimentação no campo. Origem: US02. |
-| ANIMAL | Bovino individual identificado pelo brinco SISBOV, atendendo à legislação de rastreabilidade. Origem: US02. |
-| MOVIMENTACAO | Registro de deslocamentos do rebanho ou eventos como pesagem e vacinação. Origem: US01, US02. |
-| VALIDACAO | Registro do ato de aprovação ou rejeição de uma movimentação. Origem: US04. |
+| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US08. |
+| RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US06, US07, US11.|
+| MOVIMENTACAO | Registro de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém os atributos status e validado_por para o fluxo de validação pelo supervisor, e sincronizado para controle de operação offline. Origem: US01, US02, US04.|
 | TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
-| CHAMADO | Solicitação de manutenção de infraestrutura, com categoria e localização do problema. Origem: US06, US07, US10. |
-| EVIDENCIA | Comprovação anexada a movimentações ou chamados. Entidade generalizada em Mensagem_Escrita, Áudio e Foto_Georreferenciada. Origem: US12. |
-| ALERTA | Notificação automática gerada pelo sistema diante de problemas operacionais. Origem: US05. |
-| RELATORIO | Documento consolidado periódico com indicadores e dados operacionais. Origem: US08, US09, US11. |
-| FILA_SINCRONIZACAO | Estrutura que armazena registros criados em modo offline até a sincronização com o servidor. Origem: US01, US02. |
+| TICKET | Solicitação de manutenção de infraestrutura. O supervisor gerencia o chamado e o atribui a um capataz para execução, conforme RF008. Origem: US06, US07, US10. |
+| EVIDENCIA | Comprovação anexada a movimentações, tarefas ou tickets. Generalizada em três subclasses: EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM. Origem: US07, US12. |
+| EVIDENCIA_FOTO | Especialização de EVIDENCIA com atributos de georreferenciamento (latitude e longitude). Origem: US12. |
+| EVIDENCIA_AUDIO | Especialização de EVIDENCIA que armazena o caminho do arquivo de áudio. Origem: US07, US12. |
+| EVIDENCIA_MENSAGEM | Especialização de EVIDENCIA que armazena conteúdo textual. Origem: US07, US12. |
+| EVIDENCIA_MOVIMENTACAO | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e MOVIMENTACAO. Origem: US01, US12. |
+| EVIDENCIA_TAREFA | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TAREFA. Origem: US03, US12. |
+| EVIDENCIA_TICKET | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TICKET. Origem: US06, US07, US12. |
+| RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados sincronizados compõem o relatório. Origem: US08, US09, US11. |
 
 <p>Quadro 33 - Atributos das entidades  </p>
 
 | Entidade | Atributos |
 |----------|-----------|
-| USUARIO | id_usuario (PK), nome_completo, cpf, login, senha_hash, perfil, telefone, email, status, criado_em |
-| RETIRO | id_retiro (PK), nome, area_hectares, localizacao, capataz_responsavel, criado_em, ativo |
-| LOTE | id_lote (PK), codigo_lote, categoria, finalidade, quantidade_atual, data_formacao, observacoes |
-| ANIMAL | id_animal (PK), numero_brinco_sisbov, sexo, data_nascimento, raca, peso_atual, status_sanitario |
-| MOVIMENTACAO | id_movimentacao (PK), tipo_movimentacao, data_hora, quantidade_animais, retiro_origem, retiro_destino, observacoes, status, sincronizado, validado_por |
-| VALIDACAO | id_validacao (PK), decisao, data_validacao, justificativa |
-| TAREFA | id_tarefa (PK), titulo, descricao, prioridade, data_criacao, prazo, data_conclusao, status |
-| CHAMADO | id_chamado (PK), titulo, descricao, categoria, localizacao, prioridade, status, data_abertura, data_fechamento, solucao_aplicada |
-| EVIDENCIA (generalização) | id_evidencia (PK), caminho_arquivo, tamanho_bytes, data_upload, descricao |
-| ↳ Mensagem_Escrita | conteudo_texto |
-| ↳ Áudio | duracao_segundos, formato_audio |
-| ↳ Foto_Georreferenciada | latitude, longitude, resolucao |
-| ALERTA | id_alerta (PK), tipo, mensagem, severidade, data_geracao, lido, link_referencia |
-| RELATORIO | id_relatorio (PK), tipo, periodo_inicio, periodo_fim, data_geracao, formato, caminho_arquivo |
-| FILA_SINCRONIZACAO | id_fila (PK), tipo_registro, payload, data_criacao, data_sincronizacao, status_envio, tentativas |
+| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, criado_em, cargo|
+| RETIRO| id (PK), nome.|
+| MOVIMENTACAO |id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, origem, destino, quantidade, status, sincronizado, criado_em, causa_obito, estagio_vida.|
+| TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data, status |
+| TICKET | iid (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), categoria, localizacao, descricao, status, data_criacao, data_realizado |
+| EVIDENCIA | Cid (PK), usuario_id (FK), tipo, criado_em |
+| EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
+| EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
+| EVIDENCIA_MENSAGEM | evidencia_id (PK/FK), conteudo |
+| EVIDENCIA_MOVIMENTACAO | evidencia_id (PK/FK), movimentacao_id (PK/FK) |
+| EVIDENCIA_TAREFA | evidencia_id (PK/FK), tarefa_id (PK/FK) |
+| EVIDENCIA_TICKET | evidencia_id (PK/FK), ticket_id (PK/FK) |
+| RELATORIO | id (PK), gerado_por (FK), retiro_id (FK), tipo, data_inicio, data_fim, data_gerado, url_arquivo |
 
 ### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
 
