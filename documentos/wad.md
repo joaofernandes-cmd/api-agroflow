@@ -185,16 +185,14 @@
 
 [Anexos](#c9)
 
-<br>
-
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa dificulta o acompanhamento estratégico em **tempo real** e a precisão do inventário pecuário.
+&nbsp;&nbsp;&nbsp;&nbsp;No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa compromete a precisão do inventário pecuário e impede maior agilidade na consolidação das informações, fator crítico para a gestão eficiente.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização automática** de dados assim que a conexão for restabelecida.
+&nbsp;&nbsp;&nbsp;&nbsp;Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização** de dados assim que a conexão for restabelecida, eliminando a dependência de processos manuais e reduzindo a janela de inconsistência entre campo e escritório.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos**: tarefas calendarizadas são atribuídas por **gerentes**, enquanto a execução é reportada por capatazes mediante o envio de **evidências digitais**, como fotos e áudios. Por fim, as informações são validadas por **coordenadores**, sendo os dados consolidados **exportados em formatos Excel ou CSV** para suporte à tomada de decisão. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
+&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos** da operação: gerentes definem e distribuem as tarefas calendarizadas, o que impacta diretamente a previsibilidade e o controle dos ciclos produtivos; capatazes registram a execução mediante envio de evidências digitais, como fotos e áudios; e coordenadores validam as informações antes da consolidação final. Os dados aprovados são exportados em formatos Excel ou CSV, suportando a tomada de decisão administrativa. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
@@ -208,13 +206,11 @@
 
 
 <div align="center">
-<p>Figura 1 - 5 Forças de Porter</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
-</p>
-</div> 
-
-<p align="center">Fonte: Próprios autores (2026).</p>
+  <p>Figura 1 - 5 Forças de Porter</p>
+  <p>
+    <a href="https://www.inteli.edu.br/"><img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
+  </p>
+  <p>Fonte: Próprios autores (2026).</p>
 </div>
 
 **1. Ameaça de Novos Entrantes:**
@@ -231,9 +227,9 @@
 
 **3. Poder de Barganha dos Fornecedores:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O poder de barganha dos fornecedores é moderado, com variações por segmento. A genética bovina de alta qualidade está concentrada em poucos grupos especializados, o que aumenta a dependência tecnológica e eleva os custos de substituição ao longo do ciclo produtivo.
+&nbsp;&nbsp;&nbsp;&nbsp;O poder de barganha dos fornecedores é moderado, com variações por segmento da cadeia produtiva. A genética bovina de alta qualidade está concentrada em poucos grupos especializados, elevando a dependência tecnológica e os custos de substituição ao longo do ciclo produtivo. Além disso, mercados ligados a insumos veterinários, defensivos, suplementação animal e maquinário agrícola apresentam forte concentração tecnológica e sanitária, especialmente em empresas líderes do setor, o que reduz o poder de negociação dos produtores rurais.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, insumos veterinários, suplementos e maquinário contam com diversos fornecedores, e a escala da BrPec confere poder de negociação em compras de volume. Contudo, a mão de obra especializada em manejo pantaneiro é escassa e de difícil substituição, elevando o poder de barganha nesse segmento. O modelo "flex" da empresa funciona como mecanismo de mitigação ao ajustar a demanda por insumos conforme o cenário econômico.
+&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a escala da BrPec confere poder de negociação em compras de volume. Contudo, a mão de obra especializada em manejo pantaneiro é escassa e de difícil substituição, ampliando o poder de barganha nesse segmento. O modelo "flex" da empresa funciona como mecanismo de mitigação ao ajustar a demanda por insumos conforme o cenário econômico.
 
 **4. Poder de Barganha dos Compradores:**
 
@@ -243,18 +239,18 @@
 
 **5. Rivalidade entre Concorrentes Existentes:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada. O Brasil possui o maior rebanho comercial do mundo, distribuído entre milhares de produtores, e a escolha do comprador é condicionada primariamente ao preço e à logística, não à empresa responsável pela produção. Isso reduz a diferenciação e intensifica a competição por eficiência operacional.
+&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui um dos maiores rebanhos comercias do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade se acentua com a entrada de operadores corporativos ligados ao mercado financeiro as chamadas "fazendas Faria Lima", que acessam capital a custo mais baixo e utilizam ferramentas financeiras sofisticadas. Os custos fixos elevados forçam operação contínua mesmo em margens negativas, mantendo a pressão sobre preços. O modelo "flex" da BrPec representa resposta estratégica direta a essa intensidade competitiva, ao capturar margem no elo da cadeia mais favorável em cada ciclo.
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, a presença crescente de grupos agropecuários corporativos vinculados ao mercado financeiro amplia a concorrência por terras, tecnologia, mão de obra qualificada e acesso a capital. Nesse contexto, empresas com maior capacidade operacional e financeira conseguem suportar oscilações de mercado com maior estabilidade. O modelo “flex” da BrPec representa uma resposta estratégica à intensidade competitiva do setor, permitindo maior adaptação às variações de margem ao longo da cadeia produtiva.
 
 ### <a name="c2.1.2"></a>2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças (PORTER, 1980). Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado, como demonstra a figura 2.
+&nbsp;&nbsp;&nbsp;&nbsp;A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças. Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado, como demonstra a figura 2.
 
 <div align="center">
 <p>Figura 2 - Análise de SWOT</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot.png" alt="Análise de SWOT" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -262,49 +258,50 @@
 
 **- Forças:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, sua localização estratégica, com acesso a diferentes modais logísticos, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
+&nbsp;&nbsp;&nbsp;&nbsp;A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, a consolidação de suas operações e sua localização logística estratégica, com acesso a diferentes modais de transporte, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
 
 **- Fraquezas:** 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a exposição a riscos ambientais e regulatórios, que podem gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012). 
+&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a presença de gargalos operacionais relacionados à utilização de boletas físicas, ao retrabalho na consolidação de dados e à ausência de rastreabilidade das informações de campo. Adicionalmente, a exposição a riscos ambientais e regulatórios pode gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012).
 
 **- Oportunidades:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;No ambiente externo, observa-se um cenário favorável à expansão, impulsionado pela crescente demanda global por proteína animal e pela valorização de práticas sustentáveis. Nesse contexto, iniciativas ligadas a ESG e créditos de carbono surgem como potenciais fontes de geração de valor (DE OLHO NOS RURALISTAS, 2025). Além disso, o avanço da fronteira agrícola e o crescimento projetado da produção de soja no Mato Grosso do Sul ampliam as possibilidades de expansão das áreas produtivas, aumento da oferta de insumos para alimentação animal e maior integração entre agricultura e pecuária, fortalecendo a eficiência e a escala das operações da empresa (APROSOJA MS, 2024).
+&nbsp;&nbsp;&nbsp;&nbsp; No ambiente externo, a digitalização das operações de campo surge como oportunidade estratégica para aumentar eficiência, integração e controle operacional, reduzindo falhas de comunicação, retrabalho e atrasos na consolidação das informações. Além disso, a crescente demanda global por proteína animal, a valorização de práticas sustentáveis ligadas à agenda ESG e créditos de carbono (DE OLHO NOS RURALISTAS, 2025), bem como o avanço de tecnologias aplicadas ao agronegócio, ampliam o potencial competitivo da BRPec e fortalecem suas possibilidades de expansão e otimização operacional (APROSOJA MS, 2024).
 
 **- Ameaças:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo (PORTER, 1980).
+&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a continuidade de processos manuais e descentralizados pode ampliar riscos de falhas na comunicação, perda de informações e atrasos na consolidação dos dados operacionais. Soma-se isso a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo.
 
 
 ### <a name="c2.1.3"></a>2.1.3. Solução
 
 **1. Problema a ser resolvido**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Ao sair do retiro e seguir para os campos da fazenda, os capatazes precisam registrar todas as informações em papel, devido à ausência de uma ferramenta que funcione offline. Isso gera excesso de trabalho na transcrição posterior para a planilha digital e aumenta o risco de perda ou inconsistência de dados. Além disso, como não há um formato fixo, certas informações podem deixar de ser anotadas, como a causa da morte de um boi.
+&nbsp;&nbsp;&nbsp;&nbsp;Os capatazes da BrPec registram informações operacionais em papel durante atividades em campo, principalmente em locais sem internet. Isso gera retrabalho na transcrição para planilhas, risco de perda de dados, falta de padronização dos registros e dificuldade para consolidar informações como nascimento, morte, transferência de gado e solicitações operacionais.
 
 **2. Dados disponíveis**
 
-Não se aplica.
+&nbsp;&nbsp;&nbsp;&nbsp;Serão utilizados dados levantados no TAPI e nas informações fornecidas pela BrPec, incluindo estrutura operacional dos retiros, registros de movimentação bovina, ocorrências de nascimento, morte e transferência, solicitações de manutenção, necessidades relacionadas ao envio de evidências pelos usuários e requisitos definidos para os perfis de capataz, supervisor e gerente.
 
 **3. Solução proposta**
 
- &nbsp;&nbsp;&nbsp;&nbsp;Propusemos desenvolver uma aplicação web com funcionamento offline que, ao restabelecer a conexão com a internet quando o capataz chegar ao retiro, envia automaticamente as informações registradas para a planilha que será utilizada para armazenar dados sobre nascimento, morte, transferência etc., eliminando a dependência de anotações em papel e da transcrição manual.
+ &nbsp;&nbsp;&nbsp;&nbsp;A solução proposta é uma aplicação web offline-first para registrar informações operacionais em campo, com sincronização automática ao restabelecer a conexão com a internet. O sistema permitirá registrar eventos, anexar evidências multimodais, organizar dados por retiro e tipo de ocorrência, além de possibilitar exportação em Excel/CSV e acompanhamento por diferentes perfis de usuário.
 
 **4. Forma de utilização da solução**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A aplicação será utilizada pelos capatazes em campo, fora do retiro. As informações serão inseridas e armazenadas localmente no celular enquanto o dispositivo estiver offline e, ao se conectar à internet, serão sincronizadas automaticamente com a base central de dados, otimizando o trabalho dos capatazes ao eliminar a necessidade de transcrição manual para a planilha.
+&nbsp;&nbsp;&nbsp;&nbsp; Os capatazes utilizarão a aplicação em dispositivos móveis durante as atividades no campo, mesmo sem internet. Os dados serão salvos localmente e sincronizados automaticamente quando houver conexão disponível. Supervisores e gerentes poderão acessar os registros consolidados, acompanhar ocorrências, validar informações e exportar relatórios para apoio à gestão operacional.
 
 **5. Benefícios esperados**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios visados incluem a agilização da coleta e do processamento de dados, com a redução do trabalho manual de anotação em papel e da posterior transcrição em planilhas no retiro. Além disso, a solução facilita a conciliação de informações entre diferentes retiros, otimizando a comunicação e a integração entre eles, o que torna as operações mais coordenadas e reduz os riscos de erros ou perda de dados.
+&nbsp;&nbsp;&nbsp;&nbsp;Espera-se reduzir o uso de papel, diminuir erros de transcrição, padronizar os registros operacionais e acelerar a consolidação das informações entre retiros. A solução também melhora a rastreabilidade das ocorrências, facilita a comunicação entre capatazes, supervisores e gerentes, e apoia decisões com dados mais organizados, completos e atualizados.
 
 **6. Critério de sucesso e como será avaliado**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Será considerado sucesso se a interface for simples e compreensível por qualquer público, sem complicações no uso, garantindo agilidade e redução significativa do tempo atualmente gasto para inserir as informações na base central de dados. É necessário que o público sem repertório digital também seja capaz de usar a aplicação web sem dificuldades, pois se trata de maior parte de nosso público alvo.
+&nbsp;&nbsp;&nbsp;&nbsp;O sucesso será avaliado por testes com usuários, considerando métricas como conclusão de registros em até três etapas, sincronização correta dos dados após reconexão, exportação funcional em Excel/CSV e facilidade de utilização da interface por usuários com baixa familiaridade digital. Também será verificada a redução de erros e retrabalho em comparação ao processo manual.
+
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
-&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 2).
+&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 3).
 
 <div align="center">
 <p>Figura 3 - Canvas Proposta de Valor</p>
@@ -374,14 +371,12 @@ Não se aplica.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 3.
-
-<p align="center">Figura 4 – Matriz De Risco.</p> 
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 4.
 
 <div align="center">
-<img src="outros/assets/matriz-de-risco.png">
-
-<p> Fonte: Próprios autores (2026).</p>
+  <p>Figura 4 – Matriz De Risco</p>
+  <img src="outros/assets/matriz-de-risco-2.png" alt="Matriz de Risco">
+  <p>Fonte: Próprios autores (2026).</p>
 </div>
 
 **Planos de ação, impacto e probabilidade**
@@ -390,13 +385,18 @@ Não se aplica.
 
 <p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
 
-| Ameaça                                                   | Plano de ação                                                                    | Probabilidade | Impacto    |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
-| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar alterações no backlog | 70%           | Moderado   |
-| Dependência de testes em ambiente real de campo          | Criar cenários simulados para testes antes da validação em campo                 | 50%           | Alto       |
-| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar alinhamentos frequentes com o parceiro antes da implementação           | 30%           | Moderado   |
-| Problemas de comunicação interna                         | Manter reuniões periódicas e alinhamentos constantes durante as sprints          | 30%           | Muito alto |
-| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis e critérios de aceite no início de cada sprint              | 30%           | Baixo      |
+| Ameaça                                                   | Plano de ação                                                                                                                            | Probabilidade | Impacto    |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------- |
+| Baixa conectividade nas fazendas                         | Desenvolver funcionalidades offline-first, permitindo o registro de informações mesmo sem conexão com a internet.                        | 90%           | Alto       |
+| Falha na sincronização offline dos dados                 | Implementar validações automáticas e testes de sincronização para garantir o envio correto dos dados quando a conexão for restabelecida. | 70%           | Muito Alto |
+| Ajustes de escopo ao longo do projeto                    | Validar os requisitos no início de cada sprint e registrar mudanças no backlog do projeto.                                               | 70%           | Moderado   |
+| Dependência de testes em ambiente real de campo          | Criar cenários simulados de uso para antecipar falhas antes da validação em campo.                                                       | 50%           | Alto       |
+| Perda de dados durante uso offline                       | Implementar salvamento automático local e mecanismos de recuperação de dados não sincronizados.                                          | 50%           | Muito Alto |
+| Desalinhamentos pontuais na definição de tarefas         | Definir responsáveis, prazos e critérios de aceite antes do início de cada sprint.                                                       | 30%           | Baixo      |
+| Retrabalho por ajustes de requisitos ao longo do projeto | Realizar revisões frequentes dos requisitos com o parceiro antes da implementação das funcionalidades.                                   | 30%           | Moderado   |
+| Baixa adesão dos capatazes ao sistema                    | Desenvolver interface simples, com botões claros e fluxo de uso intuitivo, além de realizar validações com usuários finais.              | 30%           | Alto       |
+| Problemas de comunicação interna                         | Manter reuniões periódicas, registrar decisões importantes e acompanhar o andamento das tarefas no quadro de gestão do projeto.          | 30%           | Muito Alto |
+
 
 
 <p align="center">Fonte: Próprios autores (2026).</p> 
@@ -1378,7 +1378,19 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
-*Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
+&nbsp;&nbsp;&nbsp;&nbsp;Um diagrama de classes do domínio é um modelo visual da linguagem UML que representa as principais entidades de um sistema, seus atributos, operações e os relacionamentos entre elas. Diferente de um diagrama de implementação, seu foco está no domínio do negócio, ou seja, em como os conceitos do mundo real se traduzem em estruturas de software, estabelecendo uma linguagem comum entre as equipes técnica e de negócio.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. A FilaSincronizacao garante a operação offline, enfileirando dados localmente até que a conexão seja restabelecida, enquanto a classe Sessão sustenta o controle de autenticação e rastreabilidade das ações.
+
+<div align="center">
+<p>Figura X - Diagrama de Classes de Domínio</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-classes-dominio.jpg">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Mais do que um artefato técnico, o diagrama de classes do AgroFlow é o reflexo digital de uma operação que historicamente dependia de papel, memória e repasse verbal. Ao estruturar com precisão as responsabilidades de cada perfil, as regras que governam cada registro e os vínculos entre campo e gestão, o modelo estabelece a base sobre a qual toda a aplicação será construída, garantindo que nenhuma decisão de implementação precise ser tomada no escuro.
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
@@ -1398,7 +1410,192 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O objetivo é apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis para cada perfil de usuário do sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo.
+
+### Capataz
+
+A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Como  os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado em nosso kickoff e expressado na persona, essa abordagem de disposição de elementos é assertiva. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. A interface é composta por quatro seções principais, home, movimentação do rebanho, abrir chamado e minhas tarefas, cujos wireframes se apresentam a seguir:
+
+<div align="center">
+<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 10 - Wireframe da aba "Registrar movimentação" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### Supervisor 
+
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional, permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
+
+**Versão Mobile:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha.
+
+<div align="center">
+<p>Figura 9 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 10 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 11 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Versão Desktop:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. O supervisor consegue monitorar registros pendentes, acompanhar alertas operacionais e delegar tarefas de maneira centralizada, facilitando a gestão dos retiros sob sua responsabilidade.
+
+<div align="center">
+<p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<div align="center">
+<p>Figura 13 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 14 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 15 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### Gerente
+
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do gerente foram desenvolvidas com foco estratégico e gerencial, permitindo acompanhamento consolidado das operações da BRPEC. O fluxo inicial também contempla telas de login simplificadas para dispositivos mobile, organizadas de forma intuitiva para facilitar a navegação e o acesso rápido às funcionalidades do sistema.
+
+
+**Versão Mobile:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta indicadores gerais da fazenda, como quantidade de movimentações realizadas, tarefas pendentes, chamados abertos e informações consolidadas do rebanho. Além disso, a interface disponibiliza acesso rápido aos relatórios operacionais e à visualização de ocorrências recentes da fazenda.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios permitem a aplicação de filtros por período, retiro e tipo de relatório, apresentando uma prévia visual das informações antes da exportação em planilha. Dessa forma, o gerente consegue acompanhar dados consolidados da operação pecuária e apoiar a tomada de decisão de maneira centralizada.
+
+
+<div align="center">
+<p>Figura 16 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+<div align="center">
+<p>Figura 17 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, alertas e informações estratégicas da fazenda. O objetivo é proporcionar maior controle gerencial e facilitar análises administrativas mais detalhadas.
+
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
@@ -1426,7 +1623,83 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+
+### <a name="c3.6.1"></a>Entidades e Atributos
+Foram identificadas treze entidades no domínio da BRPec.  A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+
+O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) na entidade MOVIMENTACAO, inicializado como false no momento do registro. Isso significa que toda movimentação criada em campo é armazenada localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização na própria entidade, em conformidade com a US01, US02 e RN03.
+
+Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+
+<p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
+
+| Entidade | Descrição e origem nas User Stories |
+|----------|-------------------------------------|
+| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US08. |
+| RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US06, US07, US11.|
+| MOVIMENTACAO | Registro de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém status e validado_por para o fluxo de validação pelo supervisor (US04, RN06), sincronizado para controle de operação offline (US01, RN03), e causa_obito e estagio_vida como atributos específicos do rebanho (RN01). Origem: US01, US02, US04.|
+| TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
+| TICKET | Solicitação de manutenção de infraestrutura. O supervisor gerencia o chamado e o atribui a um capataz para execução, conforme RF008. Origem: US06, US07, US10. |
+| EVIDENCIA | Comprovação anexada a movimentações, tarefas ou tickets. Generalizada em três subclasses: EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM. Origem: US07, US12. |
+| EVIDENCIA_FOTO | Especialização de EVIDENCIA com atributos de georreferenciamento (latitude e longitude). Origem: US12. |
+| EVIDENCIA_AUDIO | Especialização de EVIDENCIA que armazena o caminho do arquivo de áudio. Origem: US07, US12. |
+| EVIDENCIA_MENSAGEM | Especialização de EVIDENCIA que armazena conteúdo textual. Origem: US07, US12. |
+| EVIDENCIA_MOVIMENTACAO | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e MOVIMENTACAO. Origem: US01, US12. |
+| EVIDENCIA_TAREFA | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TAREFA. Origem: US03, US12. |
+| EVIDENCIA_TICKET | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TICKET. Origem: US06, US07, US12. |
+| RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados com sincronizado = true compõem o relatório, conforme RN07. Origem: US08, US09, US11. |
+
+<p>Quadro 33 - Atributos das entidades  </p>
+
+| Entidade | Atributos |
+|----------|-----------|
+| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, criado_em, cargo|
+| RETIRO| id (PK), nome.|
+| MOVIMENTACAO |id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, origem, destino, quantidade, status, sincronizado, criado_em, causa_obito, estagio_vida.|
+| TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data, status |
+| TICKET | iid (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), categoria, localizacao, descricao, status, data_criacao, data_realizado |
+| EVIDENCIA | Cid (PK), usuario_id (FK), tipo, criado_em |
+| EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
+| EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
+| EVIDENCIA_MENSAGEM | evidencia_id (PK/FK), conteudo |
+| EVIDENCIA_MOVIMENTACAO | evidencia_id (PK/FK), movimentacao_id (PK/FK) |
+| EVIDENCIA_TAREFA | evidencia_id (PK/FK), tarefa_id (PK/FK) |
+| EVIDENCIA_TICKET | evidencia_id (PK/FK), ticket_id (PK/FK) |
+| RELATORIO | id (PK), gerado_por (FK), retiro_id (FK), tipo, data_inicio, data_fim, data_gerado, url_arquivo |
+
+### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
+
+Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
+
+<p>Quadro 34 - Relacionamentos do modelo conceitual.</p>
+
+| ID | Relacionamento | Entidades | Cardinalidade | Descrição |
+|----|----------------|-----------|:-------------:|-----------|
+| R1 | PERTENCE_A | USUARIO ↔ RETIRO | (1,1) : (0,N) | Cada usuário pertence a exatamente um retiro; um retiro pode ter zero ou vários usuários. Origem: US01, US03. |
+| R2 | REGISTRA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um capataz registra zero ou várias movimentações; toda movimentação tem exatamente um capataz registrador. Origem: US01, US02, RN01. |
+| R3 | VALIDA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um supervisor valida zero ou várias movimentações; toda movimentação referencia exatamente um usuário validador. Origem: US04, RN06. |
+| R4 | OCORRE_EM | MOVIMENTACAO ↔ RETIRO | (1,1) : (0,N) | Toda movimentação ocorre em exatamente um retiro; um retiro pode ter zero ou várias movimentações. Origem: US01, US02. |
+| R5 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria zero ou várias tarefas; toda tarefa tem exatamente um criador. Origem: US03, RN02. |
+| R6 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um capataz executa zero ou várias tarefas; toda tarefa é atribuída a exatamente um capataz. Origem: US03, RN02. |
+| R7 | VINCULADA_A | TAREFA ↔ RETIRO | (1,1) : (0,N) | Toda tarefa está vinculada a exatamente um retiro; um retiro pode ter zero ou várias tarefas. Origem: US03. |
+| R8 | ABRE | USUARIO ↔ TICKET | (0,N) : (1,1) | Um capataz abre zero ou vários tickets; todo ticket tem exatamente um capataz autor. Origem: US07, RN08. |
+| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (1,1) : (0,N) | Todo ticket é atribuído pelo supervisor a exatamente um capataz executor; um capataz pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
+| R10 | LOCALIZADO_EM | TICKET ↔ RETIRO | (1,1) : (0,N) | Todo ticket está vinculado a exatamente um retiro; um retiro pode ter zero ou vários tickets. Origem: US06, US07. |
+| R11 | REGISTRADA_POR | EVIDENCIA ↔ USUARIO | (1,1) : (0,N) | Toda evidência é registrada por exatamente um usuário; um usuário pode registrar zero ou várias evidências. Origem: RF004. |
+| R12 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias movimentações. Origem: RF004, US01. |
+| R13 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ MOVIMENTACAO | (0,N) : (1,1) | Cada associação referencia exatamente uma movimentação; uma movimentação pode ter zero ou várias evidências vinculadas. Origem: RF004, US01. |
+| R14 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias tarefas. Origem: RF004, US03. |
+| R15 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ TAREFA | (0,N) : (1,1) | Cada associação referencia exatamente uma tarefa; uma tarefa pode ter zero ou várias evidências vinculadas. Origem: RF004, US03. |
+| R16 | ANEXA_TKT | EVIDENCIA_TICKET ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou vários tickets. Origem: RF004, US07. |
+| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (1,N) : (1,1) | Todo ticket possui ao menos uma evidência associada (RN08); cada associação referencia exatamente um ticket. Origem: US06, US07, RN08. |
+| R18 | GERA | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um usuário gera zero ou vários relatórios; todo relatório tem exatamente um gerador. Origem: US08, US09, RN07. |
+| R19 | ABRANGE | RELATORIO ↔ RETIRO | (1,1) : (0,N) | Todo relatório está associado a exatamente um retiro; um retiro pode aparecer em zero ou vários relatórios. Origem: US08, US09, US11. |
+| R20 | ESPECIALIZA_FOTO | EVIDENCIA_FOTO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_FOTO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo, latitude e longitude, obrigatórios conforme RN04. Origem: RF004, RN04. |
+| R21 | ESPECIALIZA_AUDIO | EVIDENCIA_AUDIO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_AUDIO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo do arquivo de áudio. Origem: RF004, US07. |
+| R22 | ESPECIALIZA_MSG | EVIDENCIA_MENSAGEM ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_MENSAGEM especializa EVIDENCIA herdando seu identificador; acrescenta o atributo conteudo textual. Origem: RF004, US07, RN08. |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
@@ -1434,7 +1707,330 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
-*Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
+**Modelo Relacional**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+
+ <p>Figura  – Modelo Relacional</p>
+  <img src="outros/assets/modelo-relacional.jpg" alt="Modelo Relacional">
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido utilizando a ferramenta drawSQL, tendo como banco de dados alvo o MySQL. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. O campo causa_obito da tabela movimentacao foi definido como nullable, uma vez que sua obrigatoriedade é condicional ao tipo de movimentação ser "morte", validação essa realizada na camada de backend conforme a RN01. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado da tabela movimentacao recebeu valor padrão false, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
+
+**Modelo Físico**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no MySQL. A seguir, são apresentados os comandos CREATE TABLE e ALTER TABLE utilizados para a criação das tabelas e a definição das constraints e chaves estrangeiras do banco de dados do AgroFlow.
+
+```sql
+
+--------------
+Tabela: retiro
+--------------
+
+CREATE TABLE `retiro` (
+    `id`        CHAR(36)     NOT NULL,
+    `nome`      VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+---------------
+Tabela: usuario
+---------------
+
+CREATE TABLE `usuario` (
+    `id`         CHAR(36)                 NOT NULL,
+    `retiro_id`  CHAR(36)                 NOT NULL,
+    `nome`       VARCHAR(255)             NOT NULL,
+    `login`      VARCHAR(255)             NOT NULL,
+    `senha_hash` VARCHAR(255)             NOT NULL,
+    `status`     ENUM('ativo', 'inativo') NOT NULL,
+    `criado_em`  TIMESTAMP                NOT NULL,
+    `cargo`     ENUM('capataz', 'supervisor', 'gerente') NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `usuario`
+    ADD UNIQUE `usuario_login_unique` (`login`);
+
+ALTER TABLE `usuario`
+    ADD CONSTRAINT `usuario_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+--------------
+Tabela: tarefa
+--------------
+
+CREATE TABLE `tarefa` (
+    `id`          CHAR(36)                                                   NOT NULL,
+    `retiro_id`   CHAR(36)                                                   NOT NULL,
+    `criada_por`  CHAR(36)                                                   NOT NULL,
+    `atribuida_a` CHAR(36)                                                   NOT NULL,
+    `descricao`   TEXT                                                       NOT NULL,
+    `categoria`   VARCHAR(255)                                               NOT NULL,
+    `prioridade`  ENUM('alta', 'media', 'baixa')                             NOT NULL,
+    `data`        TIMESTAMP                                                       NOT NULL,
+    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada') NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_criada_por_foreign`
+    FOREIGN KEY (`criada_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `tarefa`
+    ADD CONSTRAINT `tarefa_atribuida_a_foreign`
+    FOREIGN KEY (`atribuida_a`) REFERENCES `usuario` (`id`);
+
+--------------------
+Tabela: movimentacao
+--------------------
+
+CREATE TABLE `movimentacao` (
+    `id`           CHAR(36)                                                        NOT NULL,
+    `retiro_id`    CHAR(36)                                                        NOT NULL,
+    `capataz_id`   CHAR(36)                                                        NOT NULL,
+    `validado_por` CHAR(36)                                                        NOT NULL,
+    `tipo`         ENUM('nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros') NOT NULL,
+    `origem`       ENUM('Acurizal', 'Aroeira', 'Baia Bonita', 'Bodoquena 1', 'Bonoquena 2', 'Boqueirão', 'Caieira', 'CMB', 'Confinamento', 'Cristo', 'Morada Nova', 'Morro Azul', 'Puga', 'São Miguel', 'Vista Alegre')                                                 NULL,
+    `destino`      ENUM('Acurizal', 'Aroeira', 'Baia Bonita', 'Bodoquena 1', 'Bonoquena 2', 'Boqueirão', 'Caieira', 'CMB', 'Confinamento', 'Cristo', 'Morada Nova', 'Morro Azul', 'Puga', 'São Miguel', 'Vista Alegre')                                                            NULL,
+    `quantidade`   INT                                                             NOT NULL,
+    `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NOT NULL,
+    `sincronizado` BOOLEAN                                                         NOT NULL DEFAULT 0,
+    `criado_em`    TIMESTAMP                                                       NOT NULL,
+    `causa_obito`  VARCHAR(255)                                                    NULL,
+    `estagio_vida` ENUM('BEZERRO 0 A 7 MESES','BEZERRO 0 A 7 MESES', 'GARROTE 8 A 12 MESES','NOVILHA 8 A 12 MESES','GARROTE 13 A 24 MESES', 'NOVILHA 13 A 24 MESES', 'BOI 25 A 36 MESES', 'NOVILHA 25 A 36 MESES', 'TOURO 25 A 36 MESES', 'VACA ACIMA 36 MESES', 'BOI ACIMA 36 MESES', 'TOURO ACIMA 36 MESES')                                                     NOT NULL,
+
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_capataz_id_foreign`
+    FOREIGN KEY (`capataz_id`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `movimentacao_validado_por_foreign`
+    FOREIGN KEY (`validado_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `chk_causa_obito_obrigatoria`
+    CHECK (
+        `tipo` != 'morte' OR `causa_obito` IS NOT NULL
+    );
+
+ALTER TABLE `movimentacao`
+    ADD CONSTRAINT `chk_transferencia_campos_obrigatorios`
+    CHECK (
+        `tipo` != 'transferencia' 
+        OR (`origem` IS NOT NULL AND `destino` IS NOT NULL)
+    );
+--------------
+Tabela: ticket
+--------------
+
+CREATE TABLE `ticket` (
+    `id`          CHAR(36)                                                                           NOT NULL,
+    `retiro_id`   CHAR(36)                                                                           NOT NULL,
+    `aberto_por`  CHAR(36)                                                                           NOT NULL,
+    `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NOT NULL,
+    `localizacao` VARCHAR(255)                                                                       NOT NULL,
+    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NOT NULL,
+    `atribuido_a` CHAR(36)                                                                           NOT NULL,
+    `descricao` VARCHAR(255)                                                                         NOT NULL,
+    `data_criacao`                          DATE                                                     NOT NULL,
+    `data_realizado`                          DATE                                                     NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_aberto_por_foreign`
+    FOREIGN KEY (`aberto_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_atribuido_a_foreign`
+    FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `ticket`
+    ADD CONSTRAINT `ticket_atribuido_a_foreign`
+    FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
+
+-----------------
+Tabela: evidencia
+-----------------
+
+CREATE TABLE `evidencia` (
+    `id`          CHAR(36)                          NOT NULL,
+    `usuario_id`  CHAR(36)                          NOT NULL,
+    `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
+    `criado_em`   TIMESTAMP                         NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `evidencia`
+    ADD CONSTRAINT `evidencia_usuario_id_foreign`
+    FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
+
+------------------------------
+Tabela: evidencia_foto
+------------------------------
+CREATE TABLE `evidencia_foto` (
+    `evidencia_id` CHAR(36)     NOT NULL,
+    `url_arquivo`  VARCHAR(255) NOT NULL,
+    `latitude`     FLOAT(53)    NOT NULL,
+    `longitude`    FLOAT(53)    NOT NULL,
+    PRIMARY KEY (`evidencia_id`)
+);
+
+ALTER TABLE `evidencia_foto`
+    ADD CONSTRAINT `evidencia_foto_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_foto`
+    ADD CONSTRAINT `chk_latitude_valida`
+    CHECK (`latitude` >= -90 AND `latitude` <= 90);
+
+ALTER TABLE `evidencia_foto`
+    ADD CONSTRAINT `chk_longitude_valida`
+    CHECK (`longitude` >= -180 AND `longitude` <= 180);
+
+------------------------------
+Tabela: evidencia_audio
+------------------------------
+
+CREATE TABLE `evidencia_audio` (
+    `evidencia_id` CHAR(36)     NOT NULL,
+    `url_arquivo`  VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`evidencia_id`)
+);
+
+ALTER TABLE `evidencia_audio`
+    ADD CONSTRAINT `evidencia_audio_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+------------------------------
+Tabela: evidencia_mensagem
+------------------------------
+
+CREATE TABLE `evidencia_mensagem` (
+    `evidencia_id` CHAR(36) NOT NULL,
+    `conteudo`     TEXT     NOT NULL,
+    PRIMARY KEY (`evidencia_id`)
+);
+
+ALTER TABLE `evidencia_mensagem`
+    ADD CONSTRAINT `evidencia_mensagem_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+------------------------------
+Tabela: evidencia_movimentacao
+------------------------------
+
+CREATE TABLE `evidencia_movimentacao` (
+    `evidencia_id`    CHAR(36) NOT NULL,
+    `movimentacao_id` CHAR(36) NOT NULL,
+    PRIMARY KEY (`evidencia_id`, `movimentacao_id`)
+);
+
+ALTER TABLE `evidencia_movimentacao`
+    ADD CONSTRAINT `evidencia_movimentacao_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_movimentacao`
+    ADD CONSTRAINT `evidencia_movimentacao_movimentacao_id_foreign`
+    FOREIGN KEY (`movimentacao_id`) REFERENCES `movimentacao` (`id`);
+
+------------------------
+Tabela: evidencia_tarefa
+------------------------
+
+CREATE TABLE `evidencia_tarefa` (
+    `evidencia_id` CHAR(36) NOT NULL,
+    `tarefa_id`    CHAR(36) NOT NULL,
+    PRIMARY KEY (`evidencia_id`, `tarefa_id`)
+);
+
+ALTER TABLE `evidencia_tarefa`
+    ADD CONSTRAINT `evidencia_tarefa_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_tarefa`
+    ADD CONSTRAINT `evidencia_tarefa_tarefa_id_foreign`
+    FOREIGN KEY (`tarefa_id`) REFERENCES `tarefa` (`id`);
+
+-----------------------
+Tabela: evidencia_ticket
+------------------------
+
+CREATE TABLE `evidencia_ticket` (
+    `evidencia_id` CHAR(36) NOT NULL,
+    `ticket_id`    CHAR(36) NOT NULL,
+    PRIMARY KEY (`evidencia_id`, `ticket_id`)
+);
+
+ALTER TABLE `evidencia_ticket`
+    ADD CONSTRAINT `evidencia_ticket_evidencia_id_foreign`
+    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
+
+ALTER TABLE `evidencia_ticket`
+    ADD CONSTRAINT `evidencia_ticket_ticket_id_foreign`
+    FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`);
+
+-----------------
+Tabela: relatorio
+-----------------
+
+CREATE TABLE `relatorio` (
+    `id`          CHAR(36)                                                  NOT NULL,
+    `gerado_por`  CHAR(36)                                                  NULL,
+    `retiro_id`   CHAR(36)                                                  NULL,
+    `tipo`        ENUM('movimentacao', 'tarefas', 'tickets', 'consolidado') NULL,
+    `data_inicio` DATE                                                      NULL,
+    `data_fim`    DATE                                                      NULL,
+    `gD`   TIMESTAMP                                                 NULL,
+    `url_arquivo`  VARCHAR(255)                                             NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `relatorio`
+    ADD CONSTRAINT `relatorio_gerado_por_foreign`
+    FOREIGN KEY (`gerado_por`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `relatorio`
+    ADD CONSTRAINT `relatorio_retiro_id_foreign`
+    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+```
+&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Para os campos identificadores de todas as tabelas, optou-se pelo tipo CHAR(36), uma vez que o MySQL não possui suporte nativo ao tipo UUID — o CHAR(36) armazena o UUID no formato padrão de 36 caracteres, garantindo compatibilidade entre todas as tabelas do banco.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado da tabela movimentacao foi definido como BOOLEAN com valor padrão 0 (false), garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se 1 (true) apenas após a sincronização com o servidor, em conformidade com a RN07. Os campos latitude e longitude da tabela evidencia foram definidos como nullable, pois o georreferenciamento é exigido apenas para evidências do tipo foto, validação essa realizada no backend conforme a RN04. O campo criado_em, presente em todas as tabelas, utiliza o tipo TIMESTAMP, permitindo rastrear cronologicamente todas as operações realizadas no sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações, utilizando ALTER TABLE após a criação das tabelas, padrão adotado pela ferramenta drawSQL. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
+
+***Conclusão***
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no MySQL. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
+&nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
