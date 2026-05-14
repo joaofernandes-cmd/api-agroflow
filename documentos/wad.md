@@ -1414,14 +1414,24 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O objetivo é apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis para cada perfil de usuário do sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo.
+&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#23-user-stories-sprints-1-a-5) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
 
 ### Capataz
 
-A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Como  os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado em nosso kickoff e expressado na persona, essa abordagem de disposição de elementos é assertiva. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. A interface é composta por quatro seções principais, home, movimentação do rebanho, abrir chamado e minhas tarefas, cujos wireframes se apresentam a seguir:
+&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para atender à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada de forma a permitir acesso rápido às funcionalidades principais mesmo em ambientes com baixa ou ausência de conexão com a internet. Além disso, os registros realizados pelo usuário podem ser armazenados localmente até que a conexão seja restabelecida e os dados sincronizados automaticamente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dentro da seção de operações de campo, foi desenvolvida a funcionalidade de movimentação do rebanho que foi implementada para atender à US02, permitindo que os capatazes realizem registros digitais das movimentações bovinas, substituindo o uso de boletas em papel. Para isso, foram desenvolvidos formulários simplificados e adaptados ao uso em campo, priorizando rapidez no preenchimento e facilidade de utilização. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Já a funcionalidade de abertura de chamados foi desenvolvida para atender à US07, permitindo que os capatazes reportem problemas de infraestrutura identificados nos retiros. Nessa interface, o usuário pode selecionar a categoria do problema, descrever a ocorrência e registrar o chamado diretamente pelo dispositivo móvel. Complementando essa funcionalidade, foi implementado o envio de imagens como evidência, atendendo à US12, possibilitando o anexo de fotografias aos chamados e aumentando a confiabilidade das informações registradas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a funcionalidade “Minhas tarefas” foi desenvolvida para atender à US03, permitindo que os capatazes visualizem as atividades atribuídas pelos supervisores, incluindo descrições e níveis de prioridade. Dessa forma, a interface contribui para uma melhor organização das atividades operacionais realizadas diariamente na fazenda.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do capataz são Home, Operações, Abrir Chamado e Minhas Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
+<p>Figura 9 - Wireframe da aba "Entrar e Home" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1433,7 +1443,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe da aba "Registrar operação" do capataz</p>
+<p>Figura 10 - Wireframe da aba "Registrar Operação" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1474,7 +1484,17 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais funcionalidades utilizadas no dia a dia da fazenda. Além disso, o supervisor consegue visualizar relatórios operacionais com filtros por período, retiro e tipo de relatório, incluindo uma prévia das informações antes da exportação da planilha.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar as funcionalidades mais utilizadas pelos supervisores no dia a dia operacional. A interface apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais operações do sistema de forma simplificada e organizada.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para atender à US05, relacionada ao recebimento de alertas operacionais, foi desenvolvida a funcionalidade de visualização de alertas, permitindo que o supervisor acompanhe notificações relacionadas a problemas identificados nos retiros. Dessa forma, o sistema possibilita respostas mais rápidas às ocorrências registradas durante as operações da fazenda.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Visando atender à US04, foi implementada a funcionalidade de registros pendentes, permitindo que o supervisor visualize informações enviadas pelos capatazes para posterior análise e validação. Por meio dessa interface, os registros podem ser acompanhados de forma centralizada, contribuindo para maior confiabilidade e controle das informações operacionais armazenadas no sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas foi desenvolvida para atender à US03, permitindo que os supervisores distribuam atividades operacionais aos capatazes de maneira estruturada. Nessa tela, o supervisor consegue definir período, capataz responsável, atividade solicitada e nível de prioridade da tarefa, facilitando a organização das demandas operacionais realizadas nos retiros.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, foi implementada a funcionalidade de geração de relatórios operacionais, relacionada à US09. A interface permite a utilização de filtros por período, retiro e tipo de relatório, além da visualização prévia das informações antes da exportação da planilha. Dessa forma, o sistema auxilia o supervisor no acompanhamento e análise das operações realizadas na fazenda, permitindo acesso mais organizado aos dados operacionais.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do supervisor são Dashboard, Relatórios, Registros Pendentes, Alertas e Delegação de Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
 <p>Figura 9 - Wireframe Versão Mobile do Supervisor</p>
@@ -1514,7 +1534,7 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 **Versão Desktop:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. O supervisor consegue monitorar registros pendentes, acompanhar alertas operacionais e delegar tarefas de maneira centralizada, facilitando a gestão dos retiros sob sua responsabilidade.
+&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05, US06 e US09, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
 
 <div align="center">
 <p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
@@ -1563,15 +1583,16 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 
 ### Gerente
 
-&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do gerente foram desenvolvidas com foco estratégico e gerencial, permitindo acompanhamento consolidado das operações da BRPEC. O fluxo inicial também contempla telas de login simplificadas para dispositivos mobile, organizadas de forma intuitiva para facilitar a navegação e o acesso rápido às funcionalidades do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do gerente foram desenvolvidas com foco estratégico e gerencial, permitindo acompanhamento consolidado das operações da BRPEC. O fluxo inicial também contempla telas de login simplificadas, organizadas de forma intuitiva para facilitar a navegação e o acesso rápido às funcionalidades do sistema.
 
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal apresenta indicadores gerais da fazenda, como quantidade de movimentações realizadas, tarefas pendentes, chamados abertos e informações consolidadas do rebanho. Além disso, a interface disponibiliza acesso rápido aos relatórios operacionais e à visualização de ocorrências recentes da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar indicadores gerais da fazenda, permitindo que o gerente acompanhe informações relacionadas ao rebanho, chamados abertos, tarefas pendentes e movimentações realizadas na operação. Essa funcionalidade foi implementada para atender à US08, relacionada à visualização de dashboards com indicadores operacionais da fazenda, permitindo uma visão mais estratégica e consolidada das atividades realizadas nos retiros.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios permitem a aplicação de filtros por período, retiro e tipo de relatório, apresentando uma prévia visual das informações antes da exportação em planilha. Dessa forma, o gerente consegue acompanhar dados consolidados da operação pecuária e apoiar a tomada de decisão de maneira centralizada.
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, a interface apresenta acesso rápido aos relatórios operacionais e à visualização de ocorrências recentes da fazenda, facilitando o acompanhamento das principais atividades registradas no sistema.
 
+&nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios foram desenvolvidas para atender à US11, permitindo a aplicação de filtros por período, retiro e tipo de relatório. Dessa forma, o gerente consegue analisar informações específicas de cada unidade da fazenda de maneira mais organizada e detalhada. Além disso, a interface disponibiliza uma prévia visual das informações antes da exportação em planilha, auxiliando no acompanhamento consolidado das operações pecuárias e apoiando a tomada de decisão de forma centralizada.
 
 <div align="center">
 <p>Figura 16 - Wireframe Versão Mobile do Gerente</p>
@@ -1598,7 +1619,32 @@ A interface de uso para capatazes foi construida visando maximizar a simplicidad
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, alertas e informações estratégicas da fazenda. O objetivo é proporcionar maior controle gerencial e facilitar análises administrativas mais detalhadas.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, indicadores estratégicos e informações consolidadas da fazenda. Nessa versão, foram mantidas as funcionalidades relacionadas às US08 e US11, possibilitando ao gerente visualizar dashboards gerenciais, acompanhar ocorrências recentes e analisar dados operacionais utilizando filtros por período e retiro de forma centralizada e mais detalhada.
+
+<div align="center">
+<p>Figura 22 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura 23 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
+</a>
+</p>
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
