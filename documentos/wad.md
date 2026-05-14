@@ -894,22 +894,36 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-<p>Quadro 21 - Matriz RF → RN → Endpoint </p>
+### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+
+&nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na Seção 3.1.1, a Regra de Negócio (RN) que o restringe (Seção 3.1.2) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na Seção 3.6.3, utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. O Quadro 21 consolida o mapeamento, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
+
+<p <div align="center">Quadro 21 - Matriz RF → RN → Endpoint </p>
 </div>
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
-| RF001 | RN01    | `/usuarios` | POST   |
-| RF002 | RN02    | `/usuarios` | POST   |
-| RF003 | RN03    | `/usuarios` | POST   |
-| RF004 | RN04    | `/usuarios` | POST   |
-| RF005 | RN05    | `/usuarios` | POST   |
-| RF006 | RN06    | `/usuarios` | POST   |
-| RF007 | RN07    | `/usuarios` | POST   |
-| RF008 | RN08    | `/usuarios` | POST   |
+| RF001 | RN01    | `/movimentacoes` | POST   |
+| RF002 | RN02    | `/tarefas` | POST   |
+| RF003 | RN03    | `/sincronizacao` | POST   |
+| RF004 | RN04    | `/evidencias` | POST   |
+| RF005 | RN05    | `/auth/login` | POST   |
+| RF006 | RN06    | `/movimentacoes/{id}/validar` | PATCH   |
+| RF007 | RN07    | `/relatorios` | GET   |
+| RF008 | RN08    | `/tickets` | POST   |
 
-<p>Fonte: Próprios autores (2026).</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
+
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 21 espelha o fluxo operacional descrito no minimundo da Seção 3.1, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04 e RN08, respectivamente. Essas validações ocorrem no backend antes da persistência, retornando erro 422 (Unprocessable Entity) sempre que um requisito não é atendido.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Três endpoints fogem desse padrão de criação simples. O `/sincronizacao` (RF003) recebe um lote de registros produzidos offline e os processa em ordem cronológica, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais, dada a intermitência da conectividade Starlink nos retiros. O `/movimentacoes/{id}/validar` (RF006) usa PATCH por alterar apenas o campo `status` de um registro existente; a RN06 restringe essa ação ao perfil Supervisor, retornando erro 403 para tentativas indevidas. Já o `/relatorios` (RF007) usa GET por ser operação exclusivamente de leitura, e a RN07 filtra a resposta para conter apenas dados sincronizados e aprovados.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/auth/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, cria uma sessão vinculada ao usuário, justificando o uso de POST.
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
@@ -1904,7 +1918,7 @@ CREATE TABLE `ticket` (
     `atribuido_a` CHAR(36)                                                                           NOT NULL,
     `descricao` VARCHAR(255)                                                                         NOT NULL,
     `data_criacao`                          DATE                                                     NOT NULL,
-    `data_realizado`                          DATE                                                     NOT NULL,
+    `data_realizado`                          DATE                                                   NOT NULL,
     PRIMARY KEY (`id`)
 );
 
