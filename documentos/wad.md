@@ -939,7 +939,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 <p>Figura 8 - Diagrama de Casos de Uso</p>
 <p align="center">
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-de-casos-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -959,7 +959,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF001, RF004 |
 | **RNs relacionadas** | RN01, RN04 |
 | **RNFs relacionados** | USAB, CONF |
-| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-08 [tipo = morte]; `<<extend>>` UC-09 [evidência adicional] |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<include>>` UC-09; `<<extend>>` UC-08 [condição: tipo = morte] |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -982,7 +982,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 **Fluxos Alternativos:**
 
 - **A1** (no passo 3): se o Capataz seleciona "morte" como tipo de movimentação, o sistema dispara o UC-08 (Registrar Causa de Óbito), tornando o campo "causa do óbito" estritamente obrigatório e exibindo-o em destaque junto aos demais campos obrigatórios (RN01). `<<extend>>`
-- **A2** (no passo 5): se o Capataz opta por anexar áudio ou mensagem escrita em vez de foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar Evidência). `<<extend>>`
+- **A2** (no passo 5): se o Capataz opta por anexar áudio ou mensagem escrita em vez de foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar Evidência). `<<include>>`
 - **A3** (no passo 8): se houver conexão ativa com a internet no momento do registro, o sistema dispara a sincronização automática (UC-02) e marca a movimentação como "sincronizada" (RN03).
 
 **Exceções:**
@@ -1006,7 +1006,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF003 |
 | **RNs relacionadas** | RN03 |
 | **RNFs relacionados** | CONF, DES |
-| **Relacionamentos UML** | `<<include>>` UC-07 |
+| **Relacionamentos UML** | sem relacionamentos UML — ator é o sistema automático|
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1051,7 +1051,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF002 |
 | **RNs relacionadas** | RN02 |
 | **RNFs relacionados** | USAB, ORG |
-| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [condição: supervisor opta por anexar evidência] |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1100,7 +1100,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF006 |
 | **RNs relacionadas** | RN06 |
 | **RNFs relacionados** | SEG, USAB |
-| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [recusa do registro] |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [condição: supervisor opta por rejeitar] |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div>  
@@ -1149,7 +1149,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF008, RF004 |
 | **RNs relacionadas** | RN08 |
 | **RNFs relacionados** | SUP, USAB |
-| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [evidência adicional] |
+| **Relacionamentos UML** | `<<include>>` UC-07; `<<include>>` UC-09 |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1173,7 +1173,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 **Fluxos Alternativos:**
 
-- **A1** (no passo 5): o Capataz pode opcionalmente anexar foto georreferenciada como evidência adicional, disparando o UC-09 (Anexar Evidência). Se a foto não tiver coordenadas válidas, o sistema rejeita apenas a foto, mas mantém o ticket válido caso já haja mensagem ou áudio (RN04). `<<extend>>`
+- **A1** (no passo 5): o Capataz pode opcionalmente anexar foto georreferenciada como evidência adicional, disparando o UC-09 (Anexar Evidência). Se a foto não tiver coordenadas válidas, o sistema rejeita apenas a foto, mas mantém o ticket válido caso já haja mensagem ou áudio (RN04). `<<include>>`
 - **A2** (no passo 8): se o dispositivo está offline, o ticket é salvo localmente e entra na fila de sincronização (UC-02).
 
 **Exceções:**
@@ -1247,7 +1247,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF005 |
 | **RNs relacionadas** | RN05 |
 | **RNFs relacionados** | USAB, SEG |
-| **Relacionamento UML** | `<<include>>` por UC-01, UC-02, UC-03, UC-04, UC-05 e UC-06 |
+| **Relacionamento UML** | `<<include>>` por UC-01, UC-03, UC-04, UC-05 e UC-06 |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1290,7 +1290,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF001 |
 | **RNs relacionadas** | RN01 |
 | **RNFs relacionados** | USAB |
-| **Relacionamento UML** | `<<extend>>` UC-01 — condição: tipo da movimentação = "morte" |
+| **Relacionamento UML** | `<<extend>>` UC-01 [condição: tipo da movimentação = "morte"] |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1326,7 +1326,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF004 |
 | **RNs relacionadas** | RN04|
 | **RNFs relacionados** | USAB |
-| **Relacionamento UML** | UML<<extend>> UC-01, UC-03 e UC-05 — condição: usuário aciona "Anexar evidência" |
+| **Relacionamento UML** | `<<include>>` por UC-01 e UC-05; `<<extend>>` UC-03 [condição: usuário opta por anexar evidência] |
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
@@ -1368,7 +1368,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RFs relacionados** | RF006 |
 | **RNs relacionadas** | RN06|
 | **RNFs relacionados** | SEG |
-| **Relacionamento UML** | <<extend>> UC-04 — condição: Supervisor opta por rejeitar o registro |
+| **Relacionamento UML** | <<extend>> UC-04 [condição: Supervisor opta por rejeitar o registro]|
 
 <p>Fonte: Próprios autores (2026).</p>
 </div> 
