@@ -1767,7 +1767,28 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
-*Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
+&nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
+
+<div align="center">
+<p>Figura 18 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">
+<img src="outros/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
+</p>
+</div>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para facilitar a interpretação dos elementos gráficos e a semântica do modelo, foi adotado o seguinte padrão de cores e formas:
+
+- **Retangulos azuis:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
+- **Losangos Verdes:** Indicam os **Relacionamentos** e a lógica de interação entre as entidades, acompanhados de sua respectiva cardinalidade (ex: 1:N).
+- **Elipses Vermelhas:** Identificam a **Chave Primária (PK)**, o identificador único de cada registro na tabela.
+- **Elipses Verdes Escuras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
+- **Elipses Rosas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
+
+&nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi pensada para que seja fácil acompanhar tudo o que acontece no sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias provas registradas, como fotos, áudios ou mensagens.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Em resumo, essa modelagem foi desenhada para garantir que o sistema seja robusto e que as informações não se percam ou fiquem duplicadas. Com essa estrutura bem planejada, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
