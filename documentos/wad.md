@@ -1413,7 +1413,111 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
-*Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados.*
+## Introdução
+ 
+Os diagramas de sequência mostram como as partes de um sistema conversam entre si para realizar uma ação. Em vez de descrever só o resultado final, eles mostram o passo a passo dessa conversa, na ordem em que acontece.
+ 
+No caso do AgroFlow, cada diagrama representa uma funcionalidade do sistema, como fazer login, registrar uma movimentação de gado ou abrir um chamado. Em todos eles, a comunicação segue sempre a mesma lógica: o usuário faz alguma coisa na tela, a interface manda o pedido para o controlador, que aciona o serviço responsável, que por fim acessa o banco de dados para buscar ou salvar as informações. Depois disso, a resposta volta pelo mesmo caminho até chegar na tela do usuário.
+ 
+Essa organização em camadas existe para deixar o sistema mais organizado e fácil de manter. Se um dia precisar mudar a forma de salvar os dados, por exemplo, não é necessário mexer em tudo, só na parte responsável por isso.
+ 
+Os diagramas também mostram o que acontece quando algo dá errado, como senha incorreta, campo vazio ou falta de permissão. Isso é importante porque um bom sistema precisa saber lidar com erros e avisar o usuário de forma clara.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF005)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf005.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 1. Login (`/auth/login`)
+O usuário digita o login e a senha. O sistema vai lá no banco de dados verificar se essa pessoa existe e se a senha tá certa. Se tiver tudo ok, libera o acesso com um token. Se a senha estiver errada, manda mensagem de erro.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF001)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf001.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 2. Registrar Movimentação (`/movimentacoes`)
+O capataz preenche um formulário com informações sobre o gado (morte, nascimento, etc.). Se não tiver internet, salva no celular mesmo e manda depois. Se tiver internet, o sistema valida as informações e salva no banco. Se for registro de morte sem causa informada, bloqueia e pede pra preencher.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF002)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf002.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 3. Criar Tarefa (`/tarefas`)
+O supervisor cria uma tarefa e atribui pra alguém. O sistema checa se ele tem permissão pra isso e se preencheu tudo certinho. Se tiver ok, salva a tarefa e já manda uma notificação pro capataz avisando que tem trabalho novo.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF003)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf003.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 4. Sincronização Offline (`/sync`)
+Quando a internet volta, o sistema pega tudo que foi salvo localmente no celular e manda pro servidor de uma vez. Para cada registro, verifica se é movimentação ou ticket e salva no lugar certo. Se der erro em algum, marca como falha pra tentar de novo.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF004)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf004.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 5. Anexar Evidência (`/evidencias`)
+O usuário pode anexar foto, áudio ou mensagem como prova de alguma coisa. Se for foto, o sistema exige que ela tenha localização GPS. Sem isso, não aceita. Se for áudio ou mensagem, sobe o arquivo direto e salva normalmente.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF006)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf006.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
+O supervisor olha uma movimentação registrada e decide se aprova ou rejeita. Se aprovar, atualiza o status e notifica o capataz. Se rejeitar, precisa escrever o motivo. Sem justificativa, o sistema não deixa rejeitar.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF007)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf007.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 7. Gerar Relatório (`/relatorios`)
+O gerente escolhe filtros (período, fazenda, etc.) e pede o relatório. O sistema busca só as movimentações que foram aprovadas e sincronizadas, gera uma planilha e disponibiliza pra download. Se não tiver dado nenhum, avisa que não há informações.
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF008)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf008.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+## 8. Abrir Chamado (`/tickets`)
+O capataz abre um chamado de problema de infraestrutura (cerca quebrada, bebedouro, etc.). É obrigatório anexar uma evidência, áudio ou mensagem. Se tiver tudo certo, salva o chamado e notifica tanto o supervisor quanto a equipe de infraestrutura.
+
+## Conclusão
+ 
+Os oito diagramas apresentados cobrem as principais funcionalidades do AgroFlow, desde o acesso ao sistema até a geração de relatórios. Juntos, eles mostram como o sistema foi pensado para atender diferentes perfis de usuário, sendo o capataz responsável pelos registros do campo, o supervisor pela validação e atribuição de tarefas, e o gerente pelo acompanhamento geral por meio de relatórios.
+ 
+Um ponto importante que aparece em todos os diagramas é a preocupação com a validação dos dados. O sistema não aceita informações incompletas ou incorretas e sempre avisa o usuário quando algo está errado. Isso evita que dados ruins cheguem ao banco e comprometam as informações da fazenda.
+ 
+Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para funcionar mesmo em áreas rurais com sinal instável, salvando os dados localmente e sincronizando assim que a conexão volta. Isso mostra que o sistema foi planejado pensando na realidade de quem vai usar no dia a dia.
 
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -1446,9 +1550,14 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do capataz são Home, Operações, Abrir Chamado e Minhas Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p>Figura 9 - Wireframe da aba "Entrar e Home" do capataz</p>
+<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
 <img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1457,9 +1566,14 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe da aba "Registrar Operação" do capataz</p>
+<p>Figura 10 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
 <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-registrar-movimentacao-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1470,7 +1584,12 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
 <img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1481,7 +1600,12 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
 <img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
+<a href="https://www.inteli.edu.br/">
+<img src="outros/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
