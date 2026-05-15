@@ -1925,13 +1925,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 18 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
-<<<<<<< HEAD
-<img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
-=======
-<a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
->>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
-</a>
+  <a href="https://www.inteli.edu.br/">
+    <img src="outros/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+  </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1939,13 +1935,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 19 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
-<<<<<<< HEAD
-<img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
-=======
-<a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-registrar-movimentacao-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
->>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
-</a>
+  <a href="https://www.inteli.edu.br/">
+    <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+  </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
