@@ -1048,7 +1048,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 <p align="center">
 
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+<img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1513,7 +1513,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 9 - Diagrama de Classes de Domínio</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
+<img src="outros/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1526,16 +1526,16 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto do sistema AgroFlow, desenvolvido para a BrPec Agropecuária S.A., cada diagrama de sequência documenta uma funcionalidade crítica do sistema, incluindo autenticação de usuários, registro de movimentações do rebanho, abertura de tickets de manutenção de infraestrutura, entre outras operações centrais. Em todas as representações, a arquitetura segue o padrão de separação em camadas (layered architecture), no qual a camada de apresentação (Frontend) envia requisições à camada de controle (Controller), que delega a lógica de negócio à camada de serviço (Service), a qual, por sua vez, interage com a camada de persistência (Repository) para executar operações no banco de dados. O fluxo de retorno percorre o caminho inverso, propagando a resposta até a interface do usuário final.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência apresentados também contemplam fluxos alternativos e de exceção, modelando cenários como falhas de autenticação, violação de regras de validação (campos obrigatórios não preenchidos, conforme RN01 e RN02) e restrições de autorização (tentativas de acesso a recursos protegidos por perfil de usuário, conforme RN06). A explicitação desses fluxos é fundamental para assegurar que o sistema trate adequadamente condições de erro, retornando mensagens claras e acionáveis ao usuário, em alinhamento com os requisitos não funcionais de usabilidade (USAB) definidos na Seção 3.1.3.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência apresentados também contemplam fluxos alternativos e de exceção, modelando cenários como falhas de autenticação, violação de regras de validação (campos obrigatórios não preenchidos, conforme RN01 e RN02) e restrições de autorização (tentativas de acesso a recursos protegidos por perfil de usuário, conforme RN06). A explicitação desses fluxos é fundamental para assegurar que o sistema trate adequadamente condições de erro, retornando mensagens claras e acionáveis ao usuário, em alinhamento com os requisitos não funcionais de usabilidade (USAB) definidos na [Seção 3.1.3](#c3.1.3) 
 
 
 #### 1. Login (`/auth/login`)
-&nbsp;&nbsp;&nbsp;&nbsp;O usuário digita o login e a senha. O sistema vai lá no banco de dados verificar se essa pessoa existe e se a senha tá certa. Se tiver tudo ok, libera o acesso com um token. Se a senha estiver errada, manda mensagem de erro.
+&nbsp;&nbsp;&nbsp;&nbsp;O processo de autenticação inicia quando o usuário informa seu login e senha na interface da aplicação. Após isso, a interface envia uma requisição HTTP do tipo POST para o endpoint /auth/login, contendo as credenciais digitadas. Ao receber a requisição, o controlador de autenticação (ControladorAutenticacao) encaminha os dados para o serviço responsável pela regra de negócio (ServicoAutenticacao). Em seguida, o serviço solicita ao repositório de usuários (RepositorioUsuario) a busca do usuário correspondente ao login informado. O repositório realiza uma consulta no banco de dados para verificar se o usuário está cadastrado e retorna suas informações ao serviço. Com os dados recuperados, o serviço compara a senha enviada pelo usuário com a senha armazenada no sistema. Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra essa sessão no banco de dados e gera um token de acesso associado ao perfil do usuário. Posteriormente, o token é retornado ao controlador, que responde à interface com status 200 – Sucesso, permitindo o acesso ao sistema. Por outro lado, caso o login não exista ou a senha esteja incorreta, o serviço retorna um erro de autenticação ao controlador. Nesse cenário, a interface recebe uma resposta 401 – Não Autorizado e exibe ao usuário uma mensagem informando que o login ou a senha estão inválidos.
 
 <div align="center">
 <p align="center">Figura 10 - Diagrama Sequencial (RF005)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
+<img src="outros/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1546,7 +1546,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 11 - Diagrama Sequencial (RF001)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
+<img src="outros/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1700,12 +1700,8 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 20 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
-<<<<<<< HEAD
-<img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
-=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
->>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1714,12 +1710,8 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 21 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
-<<<<<<< HEAD
-<img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
-=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
->>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
