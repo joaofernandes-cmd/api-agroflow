@@ -850,6 +850,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF006 | O sistema deve permitir que o Supervisor visualize e valide tarefas e movimentações registradas pelos Capatazes.  | Média | Planejado |
 | RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
 | RF008 | O sistema deve disponibilizar um ticket de chamados de infraestrutura, permitindo que Capatazes abram chamados para a equipe de infraestrutura e que Supervisores atribuam chamados aos Capatazes.  | Média | Planejado |
+| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/aprovado/rejeitado) na interface de validação. | Média | Planejado |
+| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro. | Média | Planejado |
+| RF011 | O sistema deve permitir que o Supervisor e Capataz atribuam prioridade aos tickets de infraestrutura (crítica, alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
 
  <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
@@ -870,6 +873,11 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RN06 | A ação de alterar o status de uma tarefa ou movimentação para "Validada" (ou "Aprovada") deve ser restrita e estar visível/habilitada apenas para usuários com perfil "Supervisor". Usuários com perfil "Capataz" ou "Gerente" não devem ter acesso a essa funcionalidade. | RF006 | Dado que um usuário com perfil "Capataz" tenta validar uma movimentação, quando a requisição é enviada, então o sistema retorna HTTP 403. Dado que um usuário com perfil "Supervisor" valida uma movimentação, então o sistema retorna HTTP 200 e atualiza o status para "Aprovada". |
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha (.xlsx ou .csv) só poderá ser processada utilizando dados com `sincronizado = true` no banco de dados. Dados com `sincronizado = false` (apenas locais/offline) não devem entrar no relatório gerado. | RF007 | Dado que um gerente solicita relatório semanal, quando o sistema processa os dados, então apenas registros com `sincronizado = true` são incluídos no arquivo exportado. |
 | RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente ao menos uma evidência descritiva associada ao chamado (mensagem escrita com mínimo 10 caracteres ou áudio com mínimo 3 segundos de duração). Tickets sem evidência devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência válida foi anexada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
+| RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, aprovado, rejeitado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="rejeitado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
+| RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes) considerando exclusivamente movimentações e tarefas com status="aprovado" e flag sincronizado=true. Registros pendentes, rejeitados ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros das tabelas movimentacao e tarefa com status="aprovado" e sincronizado=true são incluídos no cálculo. Dado que existem movimentações pendentes ou rejeitadas, quando o dashboard carrega, então essas movimentações não aparecem nos totalizadores exibidos. |
+| RN11 | A prioridade do ticket (crítica, alta, média ou baixa) deve ser obrigatoriamente selecionada tanto pelo Supervisor quanto pelo Capataz no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida e registrada no log de auditoria do sistema, indicando usuário responsável pela alteração e timestamp. | RF011 | Dado que um Supervisor ou Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
+
+
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
@@ -981,50 +989,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **Como será atendido** | Geração de arquivo .xlsx via biblioteca SheetJS no backend, mapeamento de colunas conforme template do parceiro, query SQL filtrando exclusivamente registros com `sincronizado=true AND status='Aprovada'`, validação de tipos de dados (datas em DD/MM/YYYY, números com 2 casas decimais), testes automatizados comparando estrutura gerada vs. estrutura esperada. |
 
 ---
-
-<p align="center">Fonte: Próprios autores (2026).</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-| Eixo                     | Requisito | Métrica / Critério | Como atendido |
-|--------------------------|-----------|--------------------|---------------|
-| USAB — Usabilidade       | A interface deve ser operável por usuários com baixa alfabetização, sem necessidade de treinamento extenso | Usuário conclui tarefa básica (ex: registrar movimentação) em até 3 minutos sem auxílio; ≥ 80% dos participantes concluem em até 2 tentativas em sessão de teste com ≥ 5 usuários do perfil Capataz (ensino fundamental incompleto, sem experiência prévia com apps de gestão) | Uso de ícones grandes, botões visuais, textos curtos e fluxos simplificados |
-| CONF — Confiabilidade    | O sistema deve garantir que nenhum dado registrado offline seja perdido durante a sincronização | 0% de perda de registros em 100 ciclos de sincronização com 50 registros cada, cobrindo os cenários de queda de rede, timeout de servidor e conflito de versão; retomada automática em até 5 minutos após reconexão| Armazenamento local persistente, com fila de sincronização e confirmação de envio ao servidor |
-| DES — Desempenho         | As telas principais devem carregar de forma responsiva mesmo em conexões instáveis | p95 < 3000 ms em conexão Starlink; operações offline sem latência perceptível | Assets leves, dados carregados localmente no modo offline, requisições otimizadas |
-| SUP — Suportabilidade    | O sistema deve operar sem suporte técnico presencial nos retiros, sendo mantido remotamente pela sede | 100% das atualizações e correções realizadas sem deslocamento a campo | Arquitetura web centralizada, atualizações via deploy remoto, logs de erro acessíveis pela sede |
-| SEG — Segurança          | O acesso às funcionalidades deve ser restrito por perfil, impedindo que um Capataz acesse dados de outro retiro | 0 ocorrências de acesso indevido entre retiros em matriz de testes cobrindo 100% das combinações de perfil (Capataz, Supervisor, Gerente) versus retiro; 100% das tentativas de acesso registradas em trilha de auditoria com perfil, recurso, resultado e timestamp | Controle de acesso baseado em perfil (RBAC), com isolamento de dados por retiro no nível do banco de dados |
-| CAP — Capacidade         | O sistema deve suportar os 20–25 usuários simultâneos previstos e os 14 retiros ativos sem degradação | p95 < 3000 ms com 25 usuários simultâneos em carga simulada. Sustentado por 30 minutos contínuos; requisições acima do limite respondidas com erro 503 e mensagem amigável| Infraestrutura escalável em nuvem, banco de dados particionado por retiro |
-| REST — Restrições Design | A identidade visual deve seguir a logo e paleta de cores da BrPec Agropecuária; a aplicação deve ser exclusivamente web | 100% das telas aprovadas pelo parceiro em revisão de UI | Aplicação de design system com tokens de cor e tipografia baseados na identidade visual da BrPec Agropecuária, validado em revisão de UI com o parceiro |
-| ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação, destinguindo campos obrigatórios e opcionais | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
-
-### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 ### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
@@ -1032,7 +998,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na Seção 3.6.3, utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. O Quadro 21 consolida o mapeamento, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
 
-<p <div align="center">Quadro 21 - Matriz RF → RN → Endpoint </p>
+<p align="center">Quadro 21 - Matriz RF → RN → Endpoint</p>
 </div>
 
 | RF    | RN associadas | Endpoint    | Método |
@@ -1045,6 +1011,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF006 | RN06    | `/movimentacoes/{id}/validar` | PATCH   |
 | RF007 | RN07    | `/relatorios` | GET   |
 | RF008 | RN08    | `/tickets` | POST   |
+| RF009 | RN09    | `/movimentacoes/filtrar` | GET   |
+| RF010 | RN10    | `/dashboard/indicadores` | GET   |
+| RF011 | RN11    | `/tickets/{id}/prioridade` | PATCH   |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
