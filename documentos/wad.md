@@ -1423,6 +1423,70 @@ Essa organização em camadas existe para deixar o sistema mais organizado e fá
  
 Os diagramas também mostram o que acontece quando algo dá errado, como senha incorreta, campo vazio ou falta de permissão. Isso é importante porque um bom sistema precisa saber lidar com erros e avisar o usuário de forma clara.
 
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF005)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf005.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF001)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf001.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF002)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf002.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF003)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf003.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF004)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf004.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF006)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf006.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF007)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf007.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p>Figura X - Diagrama Sequencial (RF008)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf008.png">  <alt="Persona 3" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
 *Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções).*
