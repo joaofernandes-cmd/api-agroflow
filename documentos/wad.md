@@ -1530,7 +1530,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 1. Login (`/auth/login`)
+
 **Fluxo Principal**
+
 • O processo inicia quando o usuário informa seu login e senha na interface da aplicação.
 
 • Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/auth/login`, encaminhando as credenciais ao *ControladorAutenticacao*.
@@ -1567,6 +1569,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+----
 #### 2. Registrar Movimentação (`/movimentacoes`)
 **Fluxo Principal**
 
@@ -1612,10 +1615,12 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+----
 
 #### 3. Criar Tarefa (`/tarefas`)
 
-**Fluxo Principal — Criar Tarefa (`/tarefas`)**
+**Fluxo Principal**
+
 • O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, responsável e prazo.
 
 • Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tarefas`, encaminhando os dados ao *ControladorTarefa*.
@@ -1633,7 +1638,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao supervisor a confirmação de que a tarefa foi atribuída corretamente.
 
 
-**Fluxo Alternativo — Usuário sem permissão**
+**Fluxo Alternativo - Usuário sem permissão**
 
 • Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
 
@@ -1642,7 +1647,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 • Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para criar tarefas.
 
 
-**Fluxo Alternativo — Campos obrigatórios inválidos**
+**Fluxo Alternativo - Campos obrigatórios inválidos**
 
 • Durante a validação dos dados, o *ServicoTarefa* verifica se todos os campos obrigatórios foram preenchidos corretamente.
 
@@ -1658,7 +1663,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 4. Sincronização Offline (`/sync`)
 
@@ -1700,7 +1705,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 5. Anexar Evidência (`/evidencias`)
 
@@ -1736,7 +1741,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
 
@@ -1793,7 +1798,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 7. Gerar Relatório (`/relatorios`)
 
@@ -1841,6 +1846,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+-----
 
 #### 8. Abrir Chamado (`/tickets`)
 
