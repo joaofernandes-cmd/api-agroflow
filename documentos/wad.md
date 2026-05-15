@@ -1531,7 +1531,6 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 #### 1. Login (`/auth/login`)
 **Fluxo Principal**
-
 • O processo inicia quando o usuário informa seu login e senha na interface da aplicação.
 
 • Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/auth/login`, encaminhando as credenciais ao *ControladorAutenticacao*.
@@ -1581,7 +1580,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 • Caso todas as informações estejam corretas, o serviço solicita ao *RepositorioMovimentacao* o salvamento da movimentação no banco de dados.
 
-• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente.
+• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente./
 
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação do registro da movimentação.
 
@@ -1617,7 +1616,6 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 #### 3. Criar Tarefa (`/tarefas`)
 
 **Fluxo Principal — Criar Tarefa (`/tarefas`)**
-
 • O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, responsável e prazo.
 
 • Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tarefas`, encaminhando os dados ao *ControladorTarefa*.
@@ -1762,7 +1760,6 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 • Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, confirmando que o status foi atualizado corretamente.
 
-
 **Fluxo Alternativo - Usuário sem permissão**
 
 • Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
@@ -1771,6 +1768,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 • Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para validar movimentações.
 
+
 **Fluxo Alternativo - Movimentação não encontrada**
 
 • Durante a busca da movimentação, o *RepositorioMovimentacao* verifica se existe um registro correspondente ao identificador informado.
@@ -1778,7 +1776,6 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 • Caso a movimentação não seja encontrada, o serviço retorna um erro ao controlador.
 
 • O sistema então responde à interface com status `404 – Não Encontrado`, informando que a movimentação solicitada não existe.
-
 
 **Fluxo Alternativo - Rejeição sem justificativa**
 
@@ -1799,7 +1796,42 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 7. Gerar Relatório (`/relatorios`)
-&nbsp;&nbsp;&nbsp;&nbsp;O gerente escolhe filtros (período, fazenda, etc.) e pede o relatório. O sistema busca só as movimentações que foram aprovadas e sincronizadas, gera uma planilha e disponibiliza pra download. Se não tiver dado nenhum, avisa que não há informações.
+
+**Fluxo Principal**
+
+• O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação./
+
+• Em seguida, a interface envia uma requisição `GET` para o endpoint `/relatorios/filtros`, encaminhando os parâmetros ao *ControladorRelatorio*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar a funcionalidade de relatórios.
+
+• Caso o perfil seja válido, o controlador encaminha a solicitação ao *ServicoRelatorio*, responsável pelas regras de geração do relatório.
+
+• O serviço solicita ao *RepositorioMovimentacao* a busca das movimentações aprovadas e sincronizadas conforme os filtros informados.
+
+• Após a consulta no banco de dados, o repositório retorna os dados encontrados ao serviço.
+
+• Quando existem registros disponíveis, o *ServicoRelatorio* aciona o *ServicoPlanilha*, responsável por gerar o arquivo da planilha com os dados consolidados.
+
+• Após a geração do arquivo, o serviço retorna a planilha ao controlador, que responde à interface com status `200 – Sucesso`, disponibilizando o download do relatório ao gerente.
+
+**Fluxo Alternativo - Usuário sem permissão**
+
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
+
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorRelatorio* retorna uma resposta `403 – Proibido`.
+
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para acessar os relatórios.
+
+
+**Fluxo Alternativo - Nenhum dado encontrado**
+
+• Após a consulta das movimentações, o *RepositorioMovimentacao* pode retornar uma lista vazia caso não existam registros compatíveis com os filtros selecionados.
+
+• Nesse cenário, o *ServicoRelatorio* informa ao controlador que não há dados disponíveis para geração da planilha.
+
+• Por fim, o sistema responde à interface com status `200 – Sucesso`, exibindo uma mensagem indicando que não foram encontrados dados para o relatório solicitado.
+
 
 <div align="center">
 <p align="center">Figura 16 - Diagrama Sequencial (RF007)</p>
@@ -1810,11 +1842,37 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 </div>
 
 
-
-
-
 #### 8. Abrir Chamado (`/tickets`)
-&nbsp;&nbsp;&nbsp;&nbsp;O capataz abre um chamado de problema de infraestrutura (cerca quebrada, bebedouro, etc.). É obrigatório anexar uma evidência, áudio ou mensagem. Se tiver tudo certo, salva o chamado e notifica tanto o supervisor quanto a equipe de infraestrutura.
+
+**Fluxo Principal**
+
+• O processo inicia quando o capataz preenche as informações do chamado na interface da aplicação.
+
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tickets`, encaminhando os dados ao *ControladorTicket*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que ele possui permissão para abrir chamados no sistema.
+
+• Em seguida, os dados são encaminhados ao *ServicoTicket*, responsável pelas regras de negócio da operação.
+
+• O serviço verifica se o chamado possui alguma evidência anexada, como mensagem, áudio ou imagem.
+
+• Caso as informações estejam corretas, o *ServicoTicket* solicita ao *RepositorioTicket* o salvamento do chamado no banco de dados.
+
+• Após a persistência, o banco retorna o identificador do chamado criado, confirmando o sucesso da operação.
+
+• Em seguida, o *ServicoNotificacao* é acionado para enviar notificações ao supervisor e à equipe responsável.
+
+• Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação de que o chamado foi aberto corretamente.
+
+**Fluxo Alternativo - Chamado sem evidência**
+
+• Durante a validação do chamado, o *ServicoTicket* verifica se existe ao menos uma evidência anexada ao registro.
+
+• Caso nenhuma evidência seja enviada, o serviço retorna um erro de validação ao controlador.
+
+• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`.
+
+• Por fim, a interface exibe uma mensagem solicitando que o usuário inclua uma mensagem, áudio ou outra evidência antes de abrir o chamado.
 
 <div align="center">
 <p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
@@ -1824,16 +1882,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
- 
-
-**Conclusão:**
-
-&nbsp;&nbsp;&nbsp;&nbsp;Os oito diagramas apresentados cobrem as principais funcionalidades do AgroFlow, desde o acesso ao sistema até a geração de relatórios. Juntos, eles mostram como o sistema foi pensado para atender diferentes perfis de usuário, sendo o capataz responsável pelos registros do campo, o supervisor pela validação e atribuição de tarefas, e o gerente pelo acompanhamento geral por meio de relatórios.
- 
-&nbsp;&nbsp;&nbsp;&nbsp;Um ponto importante que aparece em todos os diagramas é a preocupação com a validação dos dados. O sistema não aceita informações incompletas ou incorretas e sempre avisa o usuário quando algo está errado. Isso evita que dados ruins cheguem ao banco e comprometam as informações da fazenda.
- 
-&nbsp;&nbsp;&nbsp;&nbsp;Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para funcionar mesmo em áreas rurais com sinal instável, salvando os dados localmente e sincronizando assim que a conexão volta. Isso mostra que o sistema foi planejado pensando na realidade de quem vai usar no dia a dia.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BRPEC.
 
 
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
