@@ -2224,18 +2224,18 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 33 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
-<img src="outros/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
+<img src="/documentos/outros/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para facilitar a interpretação dos elementos gráficos e a semântica do modelo, foi adotado o seguinte padrão de cores e formas:
 
-- **Retangulos azuis:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
-- **Losangos Verdes:** Indicam os **Relacionamentos** e a lógica de interação entre as entidades, acompanhados de sua respectiva cardinalidade (ex: 1:N).
-- **Elipses Vermelhas:** Identificam a **Chave Primária (PK)**, o identificador único de cada registro na tabela.
-- **Elipses Verdes Escuras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
-- **Elipses Rosas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
+- **Retangulos Verdes Escuros:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
+- **Losangos Brancos:** Indicam os **Relacionamentos** e a lógica de interação entre as entidades, acompanhados de sua respectiva cardinalidade (ex: 1:N).
+- **Elipses Azuis Claras:** Identificam a **Chave Primária (PK)**, o identificador único de cada registro na tabela.
+- **Elipses Verdes Claras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
+- **Elipses Cinzas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi pensada para que seja fácil acompanhar tudo o que acontece no sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias provas registradas, como fotos, áudios ou mensagens.
 
