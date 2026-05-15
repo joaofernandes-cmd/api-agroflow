@@ -850,6 +850,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF006 | O sistema deve permitir que o Supervisor visualize e valide tarefas e movimentações registradas pelos Capatazes.  | Média | Planejado |
 | RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
 | RF008 | O sistema deve disponibilizar um ticket de chamados de infraestrutura, permitindo que Capatazes abram chamados para a equipe de infraestrutura e que Supervisores atribuam chamados aos Capatazes.  | Média | Planejado |
+| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/aprovado/rejeitado) na interface de validação. | Média | Planejado |
+| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro. | Média | Planejado |
+| RF011 | O sistema deve permitir que o Supervisor e Capataz atribuam prioridade aos tickets de infraestrutura (crítica, alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
 
  <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
@@ -870,30 +873,124 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RN06 | A ação de alterar o status de uma tarefa ou movimentação para "Validada" (ou "Aprovada") deve ser restrita e estar visível/habilitada apenas para usuários com perfil "Supervisor". Usuários com perfil "Capataz" ou "Gerente" não devem ter acesso a essa funcionalidade. | RF006 | Dado que um usuário com perfil "Capataz" tenta validar uma movimentação, quando a requisição é enviada, então o sistema retorna HTTP 403. Dado que um usuário com perfil "Supervisor" valida uma movimentação, então o sistema retorna HTTP 200 e atualiza o status para "Aprovada". |
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha (.xlsx ou .csv) só poderá ser processada utilizando dados com `sincronizado = true` no banco de dados. Dados com `sincronizado = false` (apenas locais/offline) não devem entrar no relatório gerado. | RF007 | Dado que um gerente solicita relatório semanal, quando o sistema processa os dados, então apenas registros com `sincronizado = true` são incluídos no arquivo exportado. |
 | RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente ao menos uma evidência descritiva associada ao chamado (mensagem escrita com mínimo 10 caracteres ou áudio com mínimo 3 segundos de duração). Tickets sem evidência devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência válida foi anexada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
+| RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, aprovado, rejeitado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="rejeitado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
+| RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes) considerando exclusivamente movimentações e tarefas com status="aprovado" e flag sincronizado=true. Registros pendentes, rejeitados ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros das tabelas movimentacao e tarefa com status="aprovado" e sincronizado=true são incluídos no cálculo. Dado que existem movimentações pendentes ou rejeitadas, quando o dashboard carrega, então essas movimentações não aparecem nos totalizadores exibidos. |
+| RN11 | A prioridade do ticket (crítica, alta, média ou baixa) deve ser obrigatoriamente selecionada tanto pelo Supervisor quanto pelo Capataz no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida e registrada no log de auditoria do sistema, indicando usuário responsável pela alteração e timestamp. | RF011 | Dado que um Supervisor ou Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
+
+
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
 
 ### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
+&nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Não Funcionais (RNF) estabelecem os critérios de qualidade que o sistema deve atender, traduzindo características operacionais, técnicas e organizacionais da BrPec Agropecuária em especificações mensuráveis e testáveis. Cada RNF foi estruturado segundo a norma ISO/IEC 25010, abrangendo oito eixos de qualidade de software, e derivado diretamente do contexto operacional do parceiro: os 14 retiros distribuídos no Pantanal e Cerrado, a conectividade instável via Starlink, o perfil dos usuários (capatazes com ensino fundamental incompleto), a criticidade da rastreabilidade de dados do rebanho e as restrições de suporte técnico remoto.
+&nbsp;&nbsp;&nbsp;&nbsp;A derivação de cada RNF partiu da análise dos Requisitos Funcionais (RF), das Regras de Negócio (RN), das restrições organizacionais identificadas nas entrevistas com o parceiro e das limitações de infraestrutura dos retiros.Os critérios de aceite foram definidos com métricas objetivas, limites quantitativos e protocolos de teste específicos, permitindo validação em sessões controladas com usuários reais, testes de carga automatizados e auditorias de segurança. Essa estrutura garante rastreabilidade completa entre o contexto do parceiro, os requisitos funcionais e os atributos de qualidade esperados, estabelecendo uma base sólida para validação técnica e aceite do produto final.
+
+
+
 <p align="center">Quadro 20 - Requisitos Não Funcionais </p>
 </div>
 
-| Eixo                     | Requisito | Métrica / Critério | Como atendido |
-|--------------------------|-----------|--------------------|---------------|
-| USAB — Usabilidade       | A interface deve ser operável por usuários com baixa alfabetização, sem necessidade de treinamento extenso | Usuário conclui tarefa básica (ex: registrar movimentação) em até 3 minutos sem auxílio; ≥ 80% dos participantes concluem em até 2 tentativas em sessão de teste com ≥ 5 usuários do perfil Capataz (ensino fundamental incompleto, sem experiência prévia com apps de gestão) | Uso de ícones grandes, botões visuais, textos curtos e fluxos simplificados |
-| CONF — Confiabilidade    | O sistema deve garantir que nenhum dado registrado offline seja perdido durante a sincronização | 0% de perda de registros em 100 ciclos de sincronização com 50 registros cada, cobrindo os cenários de queda de rede, timeout de servidor e conflito de versão; retomada automática em até 5 minutos após reconexão| Armazenamento local persistente, com fila de sincronização e confirmação de envio ao servidor |
-| DES — Desempenho         | As telas principais devem carregar de forma responsiva mesmo em conexões instáveis | p95 < 3000 ms em conexão Starlink; operações offline sem latência perceptível | Assets leves, dados carregados localmente no modo offline, requisições otimizadas |
-| SUP — Suportabilidade    | O sistema deve operar sem suporte técnico presencial nos retiros, sendo mantido remotamente pela sede | 100% das atualizações e correções realizadas sem deslocamento a campo | Arquitetura web centralizada, atualizações via deploy remoto, logs de erro acessíveis pela sede |
-| SEG — Segurança          | O acesso às funcionalidades deve ser restrito por perfil, impedindo que um Capataz acesse dados de outro retiro | 0 ocorrências de acesso indevido entre retiros em matriz de testes cobrindo 100% das combinações de perfil (Capataz, Supervisor, Gerente) versus retiro; 100% das tentativas de acesso registradas em trilha de auditoria com perfil, recurso, resultado e timestamp | Controle de acesso baseado em perfil (RBAC), com isolamento de dados por retiro no nível do banco de dados |
-| CAP — Capacidade         | O sistema deve suportar os 20–25 usuários simultâneos previstos e os 14 retiros ativos sem degradação | p95 < 3000 ms com 25 usuários simultâneos em carga simulada. Sustentado por 30 minutos contínuos; requisições acima do limite respondidas com erro 503 e mensagem amigável| Infraestrutura escalável em nuvem, banco de dados particionado por retiro |
-| REST — Restrições Design | A identidade visual deve seguir a logo e paleta de cores da BrPec Agropecuária; a aplicação deve ser exclusivamente web | 100% das telas aprovadas pelo parceiro em revisão de UI | Aplicação de design system com tokens de cor e tipografia baseados na identidade visual da BrPec Agropecuária, validado em revisão de UI com o parceiro |
-| ORG — Organizacionais    | O sistema deve exportar relatórios no formato de planilha compatível com o modelo já utilizado pelo parceiro | 99,9% dos campos do modelo atual do parceiro presentes na exportação, destinguindo campos obrigatórios e opcionais | Geração de arquivo .xlsx/.csv mapeado conforme template fornecido pelo parceiro |
+---
 
+**USAB — Usabilidade**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | A interface deve ser operável por usuários com baixa alfabetização digital (ensino fundamental incompleto), sem necessidade de treinamento extenso ou suporte presencial. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** ≥80% dos capatazes testados (mínimo 5 participantes do perfil real: ensino fundamental incompleto, sem experiência com apps de gestão) concluem a tarefa de registrar uma movimentação de rebanho completa em até 3 minutos, sem auxílio externo, em no máximo 2 tentativas. **Protocolo de teste:** Sessão de usabilidade observada, com registro de tempo, número de tentativas e taxa de conclusão. Captura de erros de navegação e pontos de travamento. |
+| **Derivação do Contexto do Parceiro** | Derivado do perfil dos capatazes da BrPec (baixo letramento digital, conforme personas Daniel e Luiz), da ausência de suporte técnico nos retiros isolados (restrição organizacional) e da necessidade de operação autônoma em campo. O RF005 exige identificação simples e intuitiva, traduzindo-se aqui em um critério de usabilidade mensurável aplicado ao fluxo crítico do sistema. |
+| **RF/RN Associados** | RF001, RF005, RN05 |
+| **Como será atendido** | Interface com ícones grandes, botões visuais autoexplicativos, textos curtos em linguagem simples (nível fundamental), fluxos de no máximo 3 etapas e feedback visual imediato. Design validado com usuários reais em sessões iterativas. |
+
+---
+
+**CONF — Confiabilidade**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | O sistema deve garantir integridade total dos dados registrados em modo offline, sem perda de informações durante o processo de sincronização com o servidor, mesmo em cenários adversos de conectividade. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 0% de perda de registros em bateria de 100 ciclos de sincronização, cada ciclo contendo 50 registros de movimentação, cobrindo os cenários: (1) queda abrupta de rede durante envio, (2) timeout de servidor (>30s sem resposta), (3) conflito de versão entre cliente e servidor. **Protocolo de teste:** Testes automatizados de sincronização com simulação de falhas de rede (desconexão forçada, latência induzida, perda de pacotes). Logs de auditoria validando correspondência 1:1 entre registros locais e registros no servidor. Retomada automática em até 5 minutos após reconexão detectada. |
+| **Derivação do Contexto do Parceiro** | Derivado da realidade de conectividade instável via Starlink nos retiros (identificada em entrevistas), da criticidade dos dados de movimentação bovina (registros de nascimento, morte, transferência são base para decisões de negócio e conformidade sanitária) e do RF003, que exige operação offline/online. A RN03 define a flag `sincronizado=false` como controle obrigatório, tornando este RNF crítico para evitar perda de informações operacionais e financeiras. |
+| **RF/RN Associados** | RF003, RF004, RN03, RN07 |
+| **Como será atendido** | Armazenamento local persistente com IndexedDB, fila de sincronização com retry automático exponencial, confirmação de envio com ACK do servidor, versionamento de registros com timestamp, logs locais de auditoria e tela de status de sincronização visível ao usuário. |
+
+---
+
+**DES — Desempenho**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | As telas principais (registro de movimentação, listagem de tarefas, painel de tickets) devem carregar de forma responsiva, mesmo em conexões de baixa qualidade, sem latência perceptível para operações realizadas em modo offline. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (tablets Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
+| **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
+| **RF/RN Associados** | RF001, RF002, RF003, RF004 |
+| **Como será atendido** | Assets leves otimizados (imagens WebP, minificação de JS/CSS), lazy loading de componentes, dados carregados do IndexedDB local no modo offline (sem requisições de rede), cache de recursos estáticos via Service Worker, compressão gzip/brotli no servidor. |
+
+---
+
+**SUP — Suportabilidade**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | O sistema deve operar sem necessidade de suporte técnico presencial nos retiros, sendo mantido, atualizado e corrigido remotamente pela equipe técnica na sede em São Paulo. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das atualizações de versão, correções de bugs e ajustes de configuração realizadas sem deslocamento físico a campo. Tempo de deployment de atualizações < 10 minutos. Logs de erro centralizados e acessíveis em tempo real pela equipe de suporte. **Protocolo de teste:** Simulação de ciclo completo de atualização (desenvolvimento → staging → produção) sem intervenção local. Validação de rollback automático em caso de falha de deploy. Testes de acesso remoto a logs via painel de monitoramento. |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional de ausência de equipe técnica nos retiros (identificada em entrevistas), da distância geográfica entre os 14 retiros e a sede (São Paulo) e do custo/tempo de deslocamento para manutenção presencial. O parceiro exige autonomia operacional completa sem dependência de técnicos no campo. |
+| **RF/RN Associados** | Restrição organizacional (ausência de suporte local), RF003 |
+| **Como será atendido** | Arquitetura web centralizada (frontend SPA + backend REST), deploy via CI/CD automatizado (GitHub Actions), atualizações via cache bust automático do Service Worker, logs centralizados com ELK Stack ou similar, monitoramento proativo com alertas (Sentry/New Relic), acesso SSH restrito via VPN para emergências. |
+
+---
+
+**SEG — Segurança**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | O acesso às funcionalidades e aos dados do sistema deve ser estritamente controlado por perfil de usuário (RBAC), garantindo que capatazes acessem exclusivamente os dados do retiro ao qual estão vinculados, impedindo vazamento de informações entre retiros ou acesso indevido a funcionalidades administrativas. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 0 ocorrências de acesso indevido entre retiros em matriz de testes cobrindo 100% das combinações de perfil (Capataz, Supervisor, Gerente) versus recursos do sistema. 100% das tentativas de acesso (autorizadas ou não) registradas em trilha de auditoria imutável, contendo: perfil do usuário, recurso solicitado, timestamp, IP de origem e resultado (permitido/negado). **Protocolo de teste:** Testes de penetração automatizados (OWASP ZAP), testes manuais de escalada de privilégios, validação de isolamento de dados via queries SQL diretas no banco, auditoria de logs com verificação de completude e integridade. |
+| **Derivação do Contexto do Parceiro** | Derivado da estrutura organizacional da BrPec (14 retiros independentes, cada um com sua equipe de capatazes), da necessidade de isolamento de dados por retiro (confidencialidade operacional e concorrencial entre unidades) e da RN06, que exige validação de movimentações restrita ao perfil Supervisor. A análise SWOT identificou a complexidade de gestão em áreas geograficamente dispersas como fraqueza, tornando o controle de acesso crítico. |
+| **RF/RN Associados** | RF006, RN06, Restrição organizacional (isolamento por retiro) |
+| **Como será atendido** | RBAC implementado no backend (middleware de autorização por perfil e retiro), JWT com claims de perfil e `retiro_id`, isolamento de dados no nível do banco (queries com `WHERE retiro_id`), validação de permissões em cada endpoint, auditoria com trigger de banco registrando todas as operações, criptografia TLS 1.3 em trânsito, hash bcrypt para senhas. |
+
+---
+
+**CAP — Capacidade**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | O sistema deve suportar os 20–25 usuários simultâneos previstos (distribuídos nos 14 retiros) e o volume de dados operacionais sem degradação de desempenho, garantindo escalabilidade para crescimento futuro da operação. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** p95 < 3000ms para requisições HTTP sob carga de 25 usuários simultâneos gerando requisições contínuas por 30 minutos. Taxa de erro < 1% (máximo 10 erros em 1000 requisições). Requisições acima do limite de capacidade respondidas com HTTP 503 e mensagem amigável ao usuário. **Protocolo de teste:** Testes de carga com JMeter ou k6, simulando 25 usuários em operações típicas (registro de movimentação, criação de tarefa, upload de evidência, consulta de relatórios). Monitoramento de CPU, memória e latência de banco. Testes de stress para identificar ponto de ruptura. |
+| **Derivação do Contexto do Parceiro** | Derivado do levantamento de usuários ativos da BrPec (20–25 usuários distribuídos nos 14 retiros) e da necessidade de suportar picos de acesso em horários de maior atividade no campo (início da manhã e final da tarde). O RF007 (geração de relatórios) exige processamento de volume significativo de dados sincronizados. A restrição de infraestrutura centralizada exige dimensionamento adequado do servidor. |
+| **RF/RN Associados** | RF001, RF002, RF007, Restrição organizacional (infraestrutura centralizada) |
+| **Como será atendido** | Infraestrutura escalável em nuvem (AWS EC2 ou equivalente com auto-scaling), banco de dados MySQL otimizado com índices nas colunas críticas (`retiro_id`, `criado_em`, `sincronizado`), particionamento lógico de dados por retiro, cache de queries frequentes com Redis, rate limiting no backend (throttling por IP/usuário), balanceamento de carga se necessário. |
+
+---
+
+**REST — Restrições de Design**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para tablets Android. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e tablets Android (viewport 768px–1024px). |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica tablets Android como dispositivos de campo dos capatazes. |
+| **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
+| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para tablets (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
+
+---
+
+**ORG — Organizacionais**
+
+| Campo | Conteúdo |
+|:--|:--|
+| **Requisito Não Funcional** | O sistema deve exportar relatórios semanais e mensais no formato de planilha (.xlsx ou .csv) compatível com o modelo/template já utilizado pelo parceiro, contendo exclusivamente dados validados e sincronizados, preservando a estrutura de colunas e nomenclaturas existentes. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 99,9% dos campos do template de planilha atual do parceiro presentes na exportação gerada pelo sistema, distinguindo corretamente campos obrigatórios vs. opcionais. 100% dos relatórios gerados contêm apenas registros com `sincronizado=true` e `status='Aprovada'`. **Protocolo de aceite:** Comparação estrutural entre planilha exportada e template de referência (nomes de colunas, ordem, tipos de dados, formatação de datas/números). Testes com datasets reais contendo registros sincronizados e não sincronizados. Aprovação formal do Gerente (Marcos Ferreira). |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional de compatibilidade com processos de gestão já estabelecidos na BrPec (o parceiro possui modelo de planilha consolidado usado há anos para tomada de decisão, e sua substituição total geraria resistência). O RF007 exige exportação em formato de planilha, e a RN07 determina que apenas dados sincronizados entrem no relatório. |
+| **RF/RN Associados** | RF007, RN07, Restrição organizacional (compatibilidade com template existente) |
+| **Como será atendido** | Geração de arquivo .xlsx via biblioteca SheetJS no backend, mapeamento de colunas conforme template do parceiro, query SQL filtrando exclusivamente registros com `sincronizado=true AND status='Aprovada'`, validação de tipos de dados (datas em DD/MM/YYYY, números com 2 casas decimais), testes automatizados comparando estrutura gerada vs. estrutura esperada. |
+
+---
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
-
-### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 ### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
@@ -901,7 +998,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na Seção 3.6.3, utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. O Quadro 21 consolida o mapeamento, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
 
-<p <div align="center">Quadro 21 - Matriz RF → RN → Endpoint </p>
+<p align="center">Quadro 21 - Matriz RF → RN → Endpoint</p>
 </div>
 
 | RF    | RN associadas | Endpoint    | Método |
@@ -914,6 +1011,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF006 | RN06    | `/movimentacoes/{id}/validar` | PATCH   |
 | RF007 | RN07    | `/relatorios` | GET   |
 | RF008 | RN08    | `/tickets` | POST   |
+| RF009 | RN09    | `/movimentacoes/filtrar` | GET   |
+| RF010 | RN10    | `/dashboard/indicadores` | GET   |
+| RF011 | RN11    | `/tickets/{id}/prioridade` | PATCH   |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
@@ -2001,7 +2101,7 @@ CREATE TABLE `movimentacao` (
     `sincronizado` BOOLEAN                                                         NOT NULL DEFAULT 0,
     `data_criacao`    TIMESTAMP                                                       NOT NULL,
     `causa_obito`  VARCHAR(255)                                                    NULL,
-    `estagio_vida` ENUM('BEZERRO 0 A 7 MESES','BEZERRO 0 A 7 MESES', 'GARROTE 8 A 12 MESES','NOVILHA 8 A 12 MESES','GARROTE 13 A 24 MESES', 'NOVILHA 13 A 24 MESES', 'BOI 25 A 36 MESES', 'NOVILHA 25 A 36 MESES', 'TOURO 25 A 36 MESES', 'VACA ACIMA 36 MESES', 'BOI ACIMA 36 MESES', 'TOURO ACIMA 36 MESES')                                                     NOT NULL,
+    `estagio_vida` ENUM('BEZERRO 0 A 7 MESES', 'GARROTE 8 A 12 MESES','NOVILHA 8 A 12 MESES','GARROTE 13 A 24 MESES', 'NOVILHA 13 A 24 MESES', 'BOI 25 A 36 MESES', 'NOVILHA 25 A 36 MESES', 'TOURO 25 A 36 MESES', 'VACA ACIMA 36 MESES', 'BOI ACIMA 36 MESES', 'TOURO ACIMA 36 MESES')                                                     NOT NULL,
 
     PRIMARY KEY (`id`)
 );
@@ -2060,10 +2160,6 @@ ALTER TABLE `ticket`
     ADD CONSTRAINT `ticket_atribuido_a_foreign`
     FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
 
-ALTER TABLE `ticket`
-    ADD CONSTRAINT `ticket_atribuido_a_foreign`
-    FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
-
 -----------------
 Tabela: evidencia
 -----------------
@@ -2073,7 +2169,7 @@ CREATE TABLE `evidencia` (
     `usuario_id`  CHAR(36)                          NOT NULL,
     `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
     `data_criacao`   TIMESTAMP                         NOT NULL,
-0    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `evidencia`
@@ -2196,7 +2292,7 @@ CREATE TABLE `relatorio` (
     `tipo`        ENUM('movimentacao', 'tarefas', 'tickets', 'consolidado') NULL,
     `data_inicio` DATE                                                      NULL,
     `data_fim`    DATE                                                      NULL,
-    `gD`   TIMESTAMP                                                 NULL,
+    `data_gerado`   TIMESTAMP                                                 NULL,
     `url_arquivo`  VARCHAR(255)                                             NOT NULL,
     PRIMARY KEY (`id`)
 );
