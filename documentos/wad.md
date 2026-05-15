@@ -1,4 +1,4 @@
-<img src="../assets/logointeli.png">
+<img src="../assets/logointeli.png" alt="Logo Inteli">
 
 
 # WAD - Web Application Document - Módulo 2 - Inteli
@@ -12,13 +12,13 @@
     <tr>
       <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-ana.png" width="100px;" alt="" /><br><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-andre.png" width="100px;" alt=""/><br><sub><b>André Fischer de Carvalho</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img width="100px;" style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-enzo.png" width="100px;" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-enzo.png" width="100px;" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-fabiana.png" width="100px;" alt=""/><br><sub><b>Fabiana Dias de Souza</b></sub></a></td>
        <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-joao.png" width="100px;" alt=""/><br><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-levi.png" width="100px;" alt=""/><br><sub><b>Levi Correia Silveira</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-matheus.png" width="100px;" alt=""/><br><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-theo.png" width="100px;" alt=""/><br><sub><b>Théo Pires Morêda</b></sub></a></td>
-
+    </tr>
   </table>
 </div>
 
@@ -198,19 +198,19 @@
 
 ## <a name="c2.1"></a>2.1. Escopo do Projeto (sprints 1 e 4)
 
-### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter 
+### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter
 
 #### Análise das 5 Forças de Porter - BrPec Agropecuária
 
-&nbsp;&nbsp;&nbsp;&nbsp; A análise das Cinco Forças de Porter permite compreender a estrutura competitiva do setor em que a BRPec está inserida, avaliando fatores que impactam diretamente sua rentabilidade e posicionamento estratégico. No contexto do agronegócio, especialmente na pecuária de larga escala no Pantanal e Cerrado, essa análise se torna essencial devido à alta dependência de capital, fatores ambientais, logística e dinâmica de mercado. A partir desse modelo, é possível identificar como barreiras à entrada, produtos substitutos, relações com fornecedores e compradores, além da intensidade da concorrência, influenciam as decisões da empresa, contribuindo para uma visão mais clara dos desafios e oportunidades do negócio (PORTER, 2008).
+&nbsp;&nbsp;&nbsp;&nbsp;A análise das Cinco Forças de Porter permite compreender a estrutura competitiva do setor em que a BRPec está inserida, avaliando fatores que impactam diretamente sua rentabilidade e posicionamento estratégico. No contexto do agronegócio, especialmente na pecuária de larga escala no Pantanal e Cerrado, essa análise se torna essencial devido à alta dependência de capital, fatores ambientais, logística e dinâmica de mercado. A partir desse modelo, é possível identificar como barreiras à entrada, produtos substitutos, relações com fornecedores e compradores, além da intensidade da concorrência, influenciam as decisões da empresa, contribuindo para uma visão mais clara dos desafios e oportunidades do negócio (PORTER, 2008).
 
 
 <div align="center">
-  <p>Figura 1 - 5 Forças de Porter</p>
+  <p align="center">Figura 1 - 5 Forças de Porter</p>
   <p>
     <img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
   </p>
-  <p>Fonte: Próprios autores (2026).</p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 **1. Ameaça de Novos Entrantes:**
@@ -248,7 +248,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças. Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado, como demonstra a figura 2.
 
 <div align="center">
-<p>Figura 2 - Análise de SWOT</p>
+<p align="center">Figura 2 - Análise de SWOT</p>
 <p align="center">
 <img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
 </p>
@@ -256,19 +256,19 @@
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**- Forças:**
+**1. Forças:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, a consolidação de suas operações e sua localização logística estratégica, com acesso a diferentes modais de transporte, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
 
-**- Fraquezas:** 
+**2. Fraquezas:** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a presença de gargalos operacionais relacionados à utilização de boletas físicas, ao retrabalho na consolidação de dados e à ausência de rastreabilidade das informações de campo. Adicionalmente, a exposição a riscos ambientais e regulatórios pode gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012).
 
-**- Oportunidades:**
+**3. Oportunidades:**
 
 &nbsp;&nbsp;&nbsp;&nbsp; No ambiente externo, a digitalização das operações de campo surge como oportunidade estratégica para aumentar eficiência, integração e controle operacional, reduzindo falhas de comunicação, retrabalho e atrasos na consolidação das informações. Além disso, a crescente demanda global por proteína animal, a valorização de práticas sustentáveis ligadas à agenda ESG e créditos de carbono (DE OLHO NOS RURALISTAS, 2025), bem como o avanço de tecnologias aplicadas ao agronegócio, ampliam o potencial competitivo da BRPec e fortalecem suas possibilidades de expansão e otimização operacional (APROSOJA MS, 2024).
 
-**- Ameaças:**
+**4. Ameaças:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a continuidade de processos manuais e descentralizados pode ampliar riscos de falhas na comunicação, perda de informações e atrasos na consolidação dos dados operacionais. Soma-se isso a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo.
 
@@ -300,11 +300,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;O sucesso será avaliado por testes com usuários, considerando métricas como conclusão de registros em até três etapas, sincronização correta dos dados após reconexão, exportação funcional em Excel/CSV e facilidade de utilização da interface por usuários com baixa familiaridade digital. Também será verificada a redução de erros e retrabalho em comparação ao processo manual.
 
 
-### 2.1.4. Value Proposition Canvas (sprint 1): 
-&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2011), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A (Conforme a figura 3).
+### <a name="c2.1.4"></a>2.1.4. Value Proposition Canvas (sprint 1)
+&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2014), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A. Conforme a figura 3.
 
 <div align="center">
-<p>Figura 3 - Canvas Proposta de Valor</p>
+<p align="center">Figura 3 - Canvas Proposta de Valor</p>
 <p align="center">
 
 ><img src="outros/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
@@ -373,21 +373,21 @@
 - Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
 
 
-### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
 &nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 4.
 
 <div align="center">
-  <p>Figura 4 – Matriz De Risco</p>
+  <p align="center">Figura 4 - Matriz de Risco</p>
   <img src="outros/assets/matriz-de-risco-2.png" alt="Matriz de Risco">
-  <p>Fonte: Próprios autores (2026).</p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 **Planos de ação, impacto e probabilidade**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC, de acordo com os quadros 1 e 2. Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
 
-<p align="center">Quadro 1 – Plano de ação para as ameaças.</p> 
+<p align="center">Quadro 1 - Plano de ação para as ameaças.</p>
 
 | Ameaça                                                   | Plano de ação                                                                                                                            | Probabilidade | Impacto    |
 | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------- |
@@ -403,27 +403,30 @@
 
 
 
-<p align="center">Fonte: Próprios autores (2026).</p> 
+<p align="center">Fonte: Próprios autores (2026).</p>
 
----
+------
 
-<p align="center">Quadro 2 – Plano de ação para as oportunidades.</p> 
+
+
+<p align="center">Quadro 2 - Plano de ação para as oportunidades.</p>
 
 | Oportunidade                                        | Plano de ação                                                                    | Probabilidade | Impacto    |
 | --------------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ---------- |
-| Parceiro engajado com o projeto                     | Manter contato frequente e apresentar entregas parciais para validação           | 90%           | Muito alto |
-| Testes contínuos durante o desenvolvimento          | Realizar testes a cada funcionalidade desenvolvida                               | 70%           | Muito alto |
+| Parceiro engajado com o projeto                     | Manter contato frequente e apresentar entregas parciais para validação           | 90%           | Muito Alto |
+| Testes contínuos durante o desenvolvimento          | Realizar testes a cada funcionalidade desenvolvida                               | 70%           | Muito Alto |
 | Validação frequente das funcionalidades             | Validar as funcionalidades ao final de cada sprint com o parceiro                | 70%           | Alto       |
 | Melhoria na rastreabilidade das atividades no campo | Estruturar os registros no sistema e garantir o preenchimento adequado dos dados | 50%           | Alto       |
 | Evolução do sistema com base em feedback prático    | Coletar feedback após cada entrega e priorizar melhorias no backlog              | 50%           | Moderado   |
 
-<p align="center">Fonte: Próprios autores (2026).</p> 
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-# Conclusões
+
+***Conclusão***
 
 &nbsp;&nbsp;&nbsp;&nbsp;A aplicação integrada das análises SWOT, Cinco Forças de Porter e Business Model Canvas foi fundamental para entender melhor o problema enfrentado pela BRPec e direcionar a solução proposta. A análise SWOT ajudou a organizar os principais pontos internos e externos do negócio, evidenciando tanto a força da operação quanto limitações como a dependência de processos manuais. Já o modelo de Porter mostrou como o setor é altamente competitivo, com forte pressão de compradores e baixa diferenciação, exigindo maior eficiência operacional. Por fim, o Canvas permitiu enxergar o negócio de forma mais completa, conectando a proposta de valor com as necessidades reais da operação. No conjunto, essas análises deixaram claro que o principal desafio está na organização e confiabilidade das informações do campo, e que a digitalização dos processos é essencial para reduzir retrabalho, organizar os dados e aumentar o controle da operação.
 
-## 2.2. Personas (sprint 1)
+## <a name="c2.2"></a>2.2. Personas (sprint 1)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
@@ -432,16 +435,16 @@
 ### Persona 1 - Daniel Carvalho
 
 <div align="center">
-<p>Figura 5 - Persona 1 (Daniel Carvalho)</p>
+<p align="center">Figura 5 - Persona 1 (Daniel Carvalho)</p>
 <p align="center">
-<img <img src="outros/assets/persona-daniel.png">  <alt="Persona 1" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/persona-daniel.png" alt="Persona 1" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 #### Informações
 
-<p>Quadro 3 - Informações do Daniel .</p>  
+<p align="center">Quadro 3 - Informações do Daniel.</p>
 
 | Campo               | Descrição                      |
 |---------------------|--------------------------------|
@@ -451,15 +454,15 @@
 | **Escolaridade**    | Ensino fundamental incompleto  |
 | **Letramento digital** | Baixo                       |
 
-<p>Fonte: Próprios Autores (2026) .</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-**- Biografia:**
+**Biografia:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Daniel Carvalho iniciou sua trajetória ainda jovem em fazendas da região, desenvolvendo experiência prática no manejo de rebanho e na coordenação de equipes. Atualmente, atua há mais de 10 anos como capataz na Fazenda BrPec, sendo responsável pela execução das atividades operacionais no retiro.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Apesar de ser um profissional experiente, prático e comprometido, enfrenta limitações relacionadas à baixa digitalização dos processos, à escassez de ferramentas adequadas e à falta de capacitação para utilização de tecnologias. Essas condições impactam diretamente a organização das tarefas e a eficiência no dia a dia.
 
-**- Metas:**
+**Metas:**
 
 - Cumprir as atividades diárias com eficiência;
 - Garantir que a equipe execute corretamente as tarefas;
@@ -467,20 +470,20 @@
 - Conseguir economizar mensalmente, ainda que de forma modesta;
 - Proporcionar uma viagem em família.
 
-**- Necessidades:**
+**Necessidades:**
 
 - Soluções simples e intuitivas para organização das tarefas;
 - Ferramentas que auxiliem no acompanhamento das atividades;
 - Redução do tempo gasto na execução e resolução de problemas.
 
-**- Desafios e Dores:**
+**Desafios e Dores:**
 
 - Jornada de trabalho extensa e fisicamente desgastante;
 - Sobrecarga de responsabilidades no retiro;
 - Dificuldade em organizar informações mentalmente ou em papel;
 - Baixo nível de familiaridade com tecnologias digitais.
 
-**- Interesses:**
+**Interesses:**
 
 - Estabilidade financeira e qualidade de vida familiar;
 - Momentos de descanso quando possível;
@@ -489,16 +492,16 @@
 ### Persona 2 - Luiz Felipe
 
 <div align="center">
-<p>Figura 6 - Persona 2 (Luiz Felipe)</p>
+<p align="center">Figura 6 - Persona 2 (Luiz Felipe)</p>
 <p align="center">
-<img <img <img src="outros/assets/persona-luiz.png">  <alt="Persona 2" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/persona-luiz.png" alt="Persona 2" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**- Informações:**
+**Informações:**
 
-<p>Quadro 4 - Informações do Luiz.</p> 
+<p align="center">Quadro 4 - Informações do Luiz.</p>
 
 | Campo               | Descrição               |
 |---------------------|-------------------------|
@@ -508,35 +511,35 @@
 | **Escolaridade**    | Ensino médio completo   |
 | **Letramento digital** | Intermediário        |
 
-<p>Fonte: Próprios Autores (2026) .</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-**- Biografia:**
+**Biografia:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Luiz Felipe atua como supervisor na Fazenda Rocha Lima (BrPec), sendo responsável pela coordenação dos capatazes e pelo acompanhamento das operações de manejo. Possui experiência prática no campo e apresenta um perfil analítico, com foco na eficiência operacional e no desenvolvimento profissional.
 
 &nbsp;&nbsp;&nbsp;&nbsp;No entanto, enfrenta dificuldades relacionadas à falta de integração de informações entre os retiros e a área administrativa, além de lidar com processos pouco estruturados, o que compromete a visibilidade e o controle das operações.
 
-**- Metas:**
+**Metas:**
 
 - Reduzir erros e retrabalho;
 - Aumentar a eficiência operacional;
 - Desenvolver maior autonomia dos capatazes;
 - Evoluir para funções de maior responsabilidade.
 
-**- Necessidades:**
+**Necessidades:**
 
 - Tecnologias intuitivas que simplifiquem a gestão;
 - Ferramentas que otimizem o tempo das atividades;
 - Métodos que aumentem a produtividade da equipe.
 
-**- Desafios e Dores:**
+**Desafios e Dores:**
 
 - Dificuldade em supervisionar múltiplas frentes;
 - Baixa visibilidade das operações;
 - Comunicação informal e descentralizada;
 - Retrabalho decorrente de falhas e desalinhamentos.
 
-**- Interesses:**
+**Interesses:**
 
 - Ferramentas simples para acompanhamento em tempo real;
 - Visão consolidada das operações;
@@ -545,16 +548,16 @@
 
 ### Persona 3 - Marcos Ferreira
 <div align="center">
-<p>Figura 7 - Persona 3 (Marcos Ferreira)</p>
+<p align="center">Figura 7 - Persona 3 (Marcos Ferreira)</p>
 <p align="center">
-<img <img <img src="outros/assets/persona-marcos.png">  <alt="Persona 3" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/persona-marcos.png" alt="Persona 3" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**- Informações:**
+**Informações:**
 
-<p>Quadro 5 - Informações do Marcos.</p> 
+<p align="center">Quadro 5 - Informações do Marcos.</p>
 
 | Campo               | Descrição                    |
 |---------------------|------------------------------|
@@ -564,36 +567,36 @@
 | **Escolaridade**    | Ensino superior completo     |
 | **Letramento digital** | Intermediário             |
 
-<p>Fontes: Próprios Autores (2026).</p>  
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-**- Biografia:**
+**Biografia:**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Marcos Ferreira atua como gerente da Fazenda Rocha Lima (BrPec), sendo responsável pela supervisão da equipe e pelos resultados operacionais. Formado em Administração, possui uma visão estratégica voltada para eficiência, controle e tomada de decisão baseada em dados.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Apesar disso, enfrenta desafios relacionados à baixa integração e confiabilidade dos dados operacionais, especialmente os provenientes do campo, além da dependência de registros manuais, o que impacta a qualidade das informações e a agilidade na gestão.
 
-**- Metas:**
+**Metas:**
 
 - Reduzir o estresse operacional e a dependência de ações reativas;
 - Garantir maior previsibilidade dos resultados;
 - Melhorar a qualidade e agilidade das informações;
 - Possibilitar melhor equilíbrio entre vida profissional e pessoal.
 
-**- Necessidades:**
+**Necessidades:**
 
 - Visão consolidada e confiável das operações;
 - Redução de erros na coleta de dados;
 - Ferramentas acessíveis para todos os níveis da operação;
 - Apoio à tomada de decisão com base em dados organizados.
 
-**- Desafios e Dores:**
+**Desafios e Dores:**
 
 - Baixa integração e confiabilidade dos dados;
 - Dificuldade de acompanhamento do realizado vs. planejado;
 - Dependência de registros manuais sujeitos a erros;
 - Pressão por resultados e controle de custos.
 
-**- Interesses:**
+**Interesses:**
 
 - Soluções digitais práticas e de fácil adoção;
 - Integração entre operação e gestão;
@@ -601,11 +604,11 @@
 - Estabilidade financeira e qualidade de vida.
 
 
-## 2.3. User Stories (sprints 1 a 5)
+## <a name="c2.3"></a>2.3. User Stories (sprints 1 a 5)
 
 &nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BRPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17.
 
-<p align="center">Quadro 6 - User Story 01.</p> 
+<p align="center">Quadro 6 - User Story 01.</p>
 
 | Identificação | [US01](graduacao/2026-1b/t26/g02#36) |
 | - | - |
@@ -617,7 +620,6 @@
 | Critérios INVEST | <p>Independente: Pode ser implementada sem depender de outros módulos além do armazenamento local.</p> <p>Negociável: A estratégia de sincronização pode ser ajustada conforme decisão técnica.</p> <p>Valorosa: Permite o uso do sistema em campo sem acesso à internet.</p> <p>Estimável: O fluxo offline e sincronização está claramente definido.</p> <p>Pequena: Pode ser implementada inicialmente para funções essenciais.</p> <p>Testável: Pode ser validada simulando ausência e retorno de conexão.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
@@ -633,7 +635,6 @@
 | Critérios INVEST | <p>Independente: A funcionalidade pode ser desenvolvida de forma isolada, sem depender de outros módulos.</p> <p>Negociável: Os campos do formulário podem ser ajustados conforme necessidade.</p> <p>Valorosa: Elimina o uso de boletas em papel, reduzindo erros e retrabalho.</p> <p>Estimável: Possui escopo claro, envolvendo formulário e validação.</p> <p>Pequena: Restrita ao registro de movimentações.</p> <p>Testável: Pode ser validada pelo preenchimento e salvamento correto dos dados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
@@ -649,7 +650,6 @@
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida sem depender da execução das tarefas.</p> <p>Negociável: Campos e categorias podem ser ajustados.</p> <p>Valorosa: Organiza a distribuição das atividades.</p> <p>Estimável: Escopo claro de criação de tarefas.</p> <p>Pequena: Funcionalidade simples de cadastro.</p> <p>Testável: Pode ser validada pela criação correta da tarefa.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
@@ -665,7 +665,6 @@
 | Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
@@ -681,7 +680,6 @@
 | Critérios INVEST | <p>Independente: Depende apenas da geração de eventos no sistema.</p> <p>Negociável: Tipos de alerta podem ser ajustados.</p> <p>Valorosa: Permite resposta rápida a problemas.</p> <p>Estimável: Escopo claro de notificação.</p> <p>Pequena: Restrita à exibição de alertas.</p> <p>Testável: Validada pela geração e visualização de alertas.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
@@ -697,12 +695,10 @@
 | Critérios INVEST     | <p>Independente: Pode ser desenvolvido como módulo separado.</p> <p>Negociável: Os status podem ser ajustados.</p> <p>Valorosa: Permite gestão estruturada de problemas.</p> <p>Estimável: Escopo simples de listagem e atualização.</p> <p>Pequena: Restrita à visualização e alteração de status.</p> <p>Testável: Validada pela atualização do chamado.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
 <p align="center">Quadro 12 - User Story 07.</p>
-</div>
 
 | Identificação | [US07](graduacao/2026-1b/t26/g02#38) |
 | - | - |
@@ -714,12 +710,10 @@
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida separadamente dos demais módulos.</p> <p>Negociável: Campos como prioridade e categoria podem ser ajustados.</p> <p>Valorosa: Permite comunicação estruturada de problemas no retiro.</p> <p>Estimável: Escopo claro envolvendo criação e consulta.</p> <p>Pequena: Restrita à abertura e visualização de chamados.</p> <p>Testável: Pode ser validada pela criação e listagem dos chamados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
 <p align="center">Quadro 13 - User Story 08.</p>
-</div>
 
 | Identificação        | [US08](graduacao/2026-1b/t26/g02#44) |
 | -------- | ---- |
@@ -735,8 +729,7 @@
 
 ---
 
-<p align="center">Quadro 14 - User Story 9.</p>
-</div>
+<p align="center">Quadro 14 - User Story 09.</p>
 
 | Identificação        | [US09](graduacao/2026-1b/t26/g02#43)   |
 | -------------------- | -- |
@@ -748,12 +741,10 @@
 | Critérios INVEST     | <p>Independente: Depende apenas dos dados já registrados.</p> <p>Negociável: O formato do relatório pode ser ajustado.</p> <p>Valorosa: Permite acompanhamento da operação.</p> <p>Estimável: Escopo claro de geração de relatório.</p> <p>Pequena: Restrita à exportação de dados.</p> <p>Testável: Validada pela geração e abertura do arquivo.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
 <p align="center">Quadro 15 - User Story 10.</p>
-</div>
 
 | Identificação        | [US10](graduacao/2026-1b/t26/g02#46) |
 | ---- | -- |
@@ -765,12 +756,10 @@
 | Critérios INVEST     | <p>Independente: Depende do módulo de chamados.</p> <p>Negociável: Os filtros podem ser ajustados.</p> <p>Valorosa: Permite análise de problemas recorrentes.</p> <p>Estimável: Escopo claro de consulta.</p> <p>Pequena: Restrita à visualização e filtragem.</p> <p>Testável: Validada pela listagem correta dos chamados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
 <p align="center">Quadro 16 - User Story 11.</p>
-</div>
 
 | Identificação        | [US11](graduacao/2026-1b/t26/g02#47) |
 | -------------------- | --- |
@@ -782,12 +771,10 @@
 | Critérios INVEST     | <p>Independente: Pode ser desenvolvida de forma isolada, desde que os dados já estejam disponíveis no sistema.</p> <p>Negociável: Os tipos de filtros podem ser ajustados conforme necessidade.</p> <p>Valorosa: Permite análise detalhada do desempenho por unidade, apoiando a tomada de decisão.</p> <p>Estimável: O escopo é claro, envolvendo aplicação de filtros sobre dados existentes.</p> <p>Pequena: Restrita à funcionalidade de filtragem e atualização de dados.</p> <p>Testável: Pode ser validada verificando se os dados exibidos correspondem aos filtros aplicados.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ---
 
 <p align="center">Quadro 17 - User Story 12.</p>
-</div>
 
 | Identificação | [US12](graduacao/2026-1b/t26/g02#37) |
 | - | - |
@@ -799,7 +786,6 @@
 | Critérios INVEST | <p>Independente: Pode ser desenvolvida como complemento aos registros existentes.</p> <p>Negociável: O tipo de evidência pode ser ampliado para vídeo ou áudio.</p> <p>Valorosa: Aumenta a confiabilidade das informações registradas.</p> <p>Estimável: Escopo claro envolvendo upload e armazenamento.</p> <p>Pequena: Restrita ao envio e visualização de imagens.</p> <p>Testável: Pode ser validada pelo upload correto e exibição da imagem.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
@@ -810,7 +796,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Eles estão organizados em duas categorias complementares, os requisitos funcionais, que descrevem o que o sistema deve fazer, como o registro de movimentações, o controle de acesso por perfil e a operação offline e os requisitos não funcionais, que definem a qualidade com que essas funcionalidades devem ser entregues, abrangendo desempenho, segurança, confiabilidade e usabilidade.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010. Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
+&nbsp;&nbsp;&nbsp;&nbsp;Para garantir objetividade na avaliação dessa qualidade, os requisitos não funcionais foram estruturados com base na norma ISO/IEC 25010 (ISO/IEC 25010, 2023). Todo o conteúdo desta seção foi levantado junto ao parceiro BrPec Agropecuária, considerando a realidade operacional dos retiros e o perfil dos usuários finais.
 
 **Minimundo**
 
@@ -837,8 +823,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-<p align="center">Quadro 18 - Requisitos Funcionais </p>
-</div> 
+<p align="center">Quadro 18 - Requisitos Funcionais</p>
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
@@ -854,8 +839,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro. | Média | Planejado |
 | RF011 | O sistema deve permitir que o Supervisor e Capataz atribuam prioridade aos tickets de infraestrutura (crítica, alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
 
- <p align="center">Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
@@ -880,17 +864,16 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div> 
 
 ### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Não Funcionais (RNF) estabelecem os critérios de qualidade que o sistema deve atender, traduzindo características operacionais, técnicas e organizacionais da BrPec Agropecuária em especificações mensuráveis e testáveis. Cada RNF foi estruturado segundo a norma ISO/IEC 25010, abrangendo oito eixos de qualidade de software, e derivado diretamente do contexto operacional do parceiro: os 14 retiros distribuídos no Pantanal e Cerrado, a conectividade instável via Starlink, o perfil dos usuários (capatazes com ensino fundamental incompleto), a criticidade da rastreabilidade de dados do rebanho e as restrições de suporte técnico remoto.
+&nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Não Funcionais (RNF) estabelecem os critérios de qualidade que o sistema deve atender, traduzindo características operacionais, técnicas e organizacionais da BrPec Agropecuária em especificações mensuráveis e testáveis. Cada RNF foi estruturado segundo a norma ISO/IEC 25010 (ISO/IEC 25010, 2023), abrangendo oito eixos de qualidade de software, e derivado diretamente do contexto operacional do parceiro: os 14 retiros distribuídos no Pantanal e Cerrado, a conectividade instável via Starlink, o perfil dos usuários (capatazes com ensino fundamental incompleto), a criticidade da rastreabilidade de dados do rebanho e as restrições de suporte técnico remoto.
+
 &nbsp;&nbsp;&nbsp;&nbsp;A derivação de cada RNF partiu da análise dos Requisitos Funcionais (RF), das Regras de Negócio (RN), das restrições organizacionais identificadas nas entrevistas com o parceiro e das limitações de infraestrutura dos retiros.Os critérios de aceite foram definidos com métricas objetivas, limites quantitativos e protocolos de teste específicos, permitindo validação em sessões controladas com usuários reais, testes de carga automatizados e auditorias de segurança. Essa estrutura garante rastreabilidade completa entre o contexto do parceiro, os requisitos funcionais e os atributos de qualidade esperados, estabelecendo uma base sólida para validação técnica e aceite do produto final.
 
 
 
-<p align="center">Quadro 20 - Requisitos Não Funcionais </p>
-</div>
+<p align="center">Quadro 20 - Requisitos Não Funcionais — USAB — Usabilidade</p>
 
 ---
 
@@ -906,6 +889,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
+
+<p align="center">Quadro 21 - Requisitos Não Funcionais — CONF — Confiabilidade</p>
+</div>
+
 **CONF — Confiabilidade**
 
 | Campo | Conteúdo |
@@ -917,6 +904,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **Como será atendido** | Armazenamento local persistente com IndexedDB, fila de sincronização com retry automático exponencial, confirmação de envio com ACK do servidor, versionamento de registros com timestamp, logs locais de auditoria e tela de status de sincronização visível ao usuário. |
 
 ---
+
+<p align="center">Quadro 22 - Requisitos Não Funcionais — DES — Desempenho</p>
+</div>
 
 **DES — Desempenho**
 
@@ -930,6 +920,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
+
+<p align="center">Quadro 23 - Requisitos Não Funcionais — SUP — Suportabilidade</p>
+</div>
+
 **SUP — Suportabilidade**
 
 | Campo | Conteúdo |
@@ -941,6 +935,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **Como será atendido** | Arquitetura web centralizada (frontend SPA + backend REST), deploy via CI/CD automatizado (GitHub Actions), atualizações via cache bust automático do Service Worker, logs centralizados com ELK Stack ou similar, monitoramento proativo com alertas (Sentry/New Relic), acesso SSH restrito via VPN para emergências. |
 
 ---
+
+
+<p align="center">Quadro 24 - Requisitos Não Funcionais — SEG — Segurança</p>
+</div>
 
 **SEG — Segurança**
 
@@ -954,6 +952,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
+<p align="center">Quadro 25 - Requisitos Não Funcionais — CAP — Capacidade</p>
+</div>
+
 **CAP — Capacidade**
 
 | Campo | Conteúdo |
@@ -966,6 +967,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
+
+<p align="center">Quadro 26 - Requisitos Não Funcionais — REST — Restrições de Design</p>
+</div>
+
 **REST — Restrições de Design**
 
 | Campo | Conteúdo |
@@ -977,6 +982,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para tablets (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
 
 ---
+
+
+<p align="center">Quadro 27 - Requisitos Não Funcionais — ORG — Organizacionais</p>
+</div>
 
 **ORG — Organizacionais**
 
@@ -996,10 +1005,12 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 &nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na Seção 3.1.1, a Regra de Negócio (RN) que o restringe (Seção 3.1.2) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na Seção 3.6.3, utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. O Quadro 21 consolida o mapeamento, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na Seção 3.6.3, utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
 
-<p align="center">Quadro 21 - Matriz RF → RN → Endpoint</p>
-</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da Seção 3.1, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
+
+<p align="center">Quadro 28 - Matriz RF → RN → Endpoint</p>
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
@@ -1016,9 +1027,6 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF011 | RN11    | `/tickets/{id}/prioridade` | PATCH   |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div> 
-
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 21 espelha o fluxo operacional descrito no minimundo da Seção 3.1, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04 e RN08, respectivamente. Essas validações ocorrem no backend antes da persistência, retornando erro 422 (Unprocessable Entity) sempre que um requisito não é atendido.
 
@@ -1036,11 +1044,11 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
 
-<div align="center">
-<p>Figura 8 - Diagrama de Casos de Uso</p>
+<div align="center"><p align="center">Figura 8 - Diagrama de Casos de Uso</p>
 <p align="center">
 
-<img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1048,7 +1056,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 --- 
 
-<p>Quadro 22 - Use Case 01 </p>
+<p align="center">Quadro 29 - Use Case 01</p>
 
 #### UC-01 - Registrar Movimentação de Rebanho
 
@@ -1062,10 +1070,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | USAB, CONF |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<include>>` UC-09; `<<extend>>` UC-08 [condição: tipo = morte] |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
---- 
+---
 **Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem acesso ao retiro associado à sua conta. O dispositivo possui armazenamento local funcional, mesmo sem conexão com a internet.
 
 **Fluxo Principal (cenário de sucesso):**
@@ -1095,7 +1103,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 **Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
 
 ---
-<p>Quadro 23 - Use Case 02 </p>
+<p align="center">Quadro 30 - Use Case 02</p>
 
 #### UC-02 - Sincronizar Dados Offline com o Servidor
 
@@ -1109,8 +1117,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | CONF, DES |
 | **Relacionamentos UML** | sem relacionamentos UML — ator é o sistema automático|
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -1140,7 +1148,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 **Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
 
 ---
-<p>Quadro 24 - Use Case 03 </p>
+<p align="center">Quadro 31 - Use Case 03</p>
 
 #### UC-03 - Criar e Atribuir Tarefa a Capataz
 
@@ -1154,8 +1162,9 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | USAB, ORG |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-09 [condição: supervisor opta por anexar evidência] |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 
 ---
 
@@ -1189,7 +1198,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-<p>Quadro 25 - Use Case 04 </p>
+<p align="center">Quadro 32 - Use Case 04</p>
 
 #### UC-04 - Validar Registros do Capataz
 
@@ -1203,8 +1212,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | SEG, USAB |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [condição: supervisor opta por rejeitar] |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div>  
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -1238,7 +1247,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-<p>Quadro 26 - Use Case 05 </p> 
+<p align="center">Quadro 33 - Use Case 05</p>
 
 #### UC-05 - Abrir Ticket de Infraestrutura
 
@@ -1252,8 +1261,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | SUP, USAB |
 | **Relacionamentos UML** | `<<include>>` UC-07; `<<include>>` UC-09 |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -1286,7 +1295,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-<p>Quadro 27 - Use Case 06 </p>
+<p align="center">Quadro 34 - Use Case 06</p>
 
 #### UC-06 - Visualizar Dados Aprovados e Gerar Relatório
 
@@ -1300,8 +1309,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | ORG, DES |
 | **Relacionamentos UML** | `<<include>>` UC-07 |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -1336,7 +1345,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-<p>Quadro 28 - Use Case 07 </p>
+<p align="center">Quadro 35 - Use Case 07</p>
 
 #### UC-07 - Identificar-se no Sistema
 
@@ -1350,8 +1359,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | USAB, SEG |
 | **Relacionamento UML** | `<<include>>` por UC-01, UC-03, UC-04, UC-05 e UC-06 |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 --- 
 
@@ -1359,7 +1368,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 **Fluxo Principal (cenário de sucesso):**
 
-1. O usuário acessa o sistems .
+1. O usuário acessa o sistema.
 2. O sistema apresenta a tela de identificação com elementos visuais grandes, poucos campos e instruções objetivas, adequada ao baixo letramento digital do Capataz Daniel (RN05).
 3. O usuário informa sua identificação e credencial.
 4. O sistema valida a credencial junto ao servidor de autenticação.
@@ -1379,7 +1388,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 **Pós-condição:** O usuário está autenticado com perfil identificado e sessão ativa. O menu exibe apenas as ações do perfil: Daniel (Capataz) vê "Registrar movimentação" e "Abrir chamado"; Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". Todas as ações ficam vinculadas ao usuário para rastreabilidade e auditoria.
 
 --- 
-<p>Quadro 29 - Use Case 08 </p>
+<p align="center">Quadro 36 - Use Case 08</p>
 
 #### UC-08 - Registrar Causa de Óbito
 
@@ -1393,8 +1402,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | USAB |
 | **Relacionamento UML** | `<<extend>>` UC-01 [condição: tipo da movimentação = "morte"] |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -1416,7 +1425,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-<p>Quadro 30 - Use Case 09 </p>
+<p align="center">Quadro 37 - Use Case 09</p>
 
 #### UC-09 - Anexar Evidência
 | Campo | Conteúdo |
@@ -1429,8 +1438,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | USAB |
 | **Relacionamento UML** | `<<include>>` por UC-01 e UC-05; `<<extend>>` UC-03 [condição: usuário opta por anexar evidência] |
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 
@@ -1458,7 +1467,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 **Pós-condição:** A evidência está anexada ao registro principal com seus metadados (tipo, timestamp, localização quando aplicável). O fluxo retorna ao UC base.
 
 ---
-<p>Quadro 31 - Use Case 10 </p>
+<p align="center">Quadro 38 - Use Case 10</p>
 
 #### UC-10 - Rejeitar Registro
 | Campo | Conteúdo |
@@ -1471,8 +1480,8 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **RNFs relacionados** | SEG |
 | **Relacionamento UML** | <<extend>> UC-04 [condição: Supervisor opta por rejeitar o registro]|
 
-<p>Fonte: Próprios autores (2026).</p>
-</div> 
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ---
 **Pré-condição:** O Supervisor está executando o UC-04 (Validar Registros) e identificou inconsistência ou problema no registro analisado, optando por rejeitá-lo no passo 6.
@@ -1502,9 +1511,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. A FilaSincronizacao garante a operação offline, enfileirando dados localmente até que a conexão seja restabelecida, enquanto a classe Sessão sustenta o controle de autenticação e rastreabilidade das ações.
 
 <div align="center">
-<p>Figura X - Diagrama de Classes de Domínio</p>
+<p align="center">Figura 9 - Diagrama de Classes de Domínio</p>
 <p align="center">
-<img <img <img src="outros/assets/diagrama-classes-dominio.jpg">  <alt="Persona 3" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1513,111 +1522,121 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
-## Introdução
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência UML constituem representações visuais que modelam a interação temporal entre os componentes de um sistema de software durante a execução de funcionalidades específicas. Diferentemente de outros artefatos que descrevem apenas estados ou resultados finais, os diagramas de sequência explicitam o fluxo completo de mensagens trocadas entre objetos, preservando a ordenação cronológica das interações (LARMAN, 2004).
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do sistema AgroFlow, desenvolvido para a BrPec Agropecuária S.A., cada diagrama de sequência documenta uma funcionalidade crítica do sistema, incluindo autenticação de usuários, registro de movimentações do rebanho, abertura de tickets de manutenção de infraestrutura, entre outras operações centrais. Em todas as representações, a arquitetura segue o padrão de separação em camadas (layered architecture), no qual a camada de apresentação (Frontend) envia requisições à camada de controle (Controller), que delega a lógica de negócio à camada de serviço (Service), a qual, por sua vez, interage com a camada de persistência (Repository) para executar operações no banco de dados. O fluxo de retorno percorre o caminho inverso, propagando a resposta até a interface do usuário final.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência apresentados também contemplam fluxos alternativos e de exceção, modelando cenários como falhas de autenticação, violação de regras de validação (campos obrigatórios não preenchidos, conforme RN01 e RN02) e restrições de autorização (tentativas de acesso a recursos protegidos por perfil de usuário, conforme RN06). A explicitação desses fluxos é fundamental para assegurar que o sistema trate adequadamente condições de erro, retornando mensagens claras e acionáveis ao usuário, em alinhamento com os requisitos não funcionais de usabilidade (USAB) definidos na Seção 3.1.3.
+
+
+#### 1. Login (`/auth/login`)
+&nbsp;&nbsp;&nbsp;&nbsp;O usuário digita o login e a senha. O sistema vai lá no banco de dados verificar se essa pessoa existe e se a senha tá certa. Se tiver tudo ok, libera o acesso com um token. Se a senha estiver errada, manda mensagem de erro.
+
+<div align="center">
+<p align="center">Figura 10 - Diagrama Sequencial (RF005)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+#### 2. Registrar Movimentação (`/movimentacoes`)
+&nbsp;&nbsp;&nbsp;&nbsp;O capataz preenche um formulário com informações sobre o gado (morte, nascimento, etc.). Se não tiver internet, salva no celular mesmo e manda depois. Se tiver internet, o sistema valida as informações e salva no banco. Se for registro de morte sem causa informada, bloqueia e pede pra preencher.
+
+<div align="center">
+<p align="center">Figura 11 - Diagrama Sequencial (RF001)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+#### 3. Criar Tarefa (`/tarefas`)
+&nbsp;&nbsp;&nbsp;&nbsp;O supervisor cria uma tarefa e atribui pra alguém. O sistema checa se ele tem permissão pra isso e se preencheu tudo certinho. Se tiver ok, salva a tarefa e já manda uma notificação pro capataz avisando que tem trabalho novo.
+<div align="center">
+<p align="center">Figura 12 - Diagrama Sequencial (RF002)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf002.png" alt="Diagrama Sequencial RF002" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+
+#### 4. Sincronização Offline (`/sync`)
+&nbsp;&nbsp;&nbsp;&nbsp;Quando a internet volta, o sistema pega tudo que foi salvo localmente no celular e manda pro servidor de uma vez. Para cada registro, verifica se é movimentação ou ticket e salva no lugar certo. Se der erro em algum, marca como falha pra tentar de novo.
+<div align="center">
+<p align="center">Figura 13 - Diagrama Sequencial (RF003)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf003.png" alt="Diagrama Sequencial RF003" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+
+#### 5. Anexar Evidência (`/evidencias`)
+&nbsp;&nbsp;&nbsp;&nbsp;O usuário pode anexar foto, áudio ou mensagem como prova de alguma coisa. Se for foto, o sistema exige que ela tenha localização GPS. Sem isso, não aceita. Se for áudio ou mensagem, sobe o arquivo direto e salva normalmente.
+<div align="center">
+<p align="center">Figura 14 - Diagrama Sequencial (RF004)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf004.png" alt="Diagrama Sequencial RF004" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+
+#### 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
+&nbsp;&nbsp;&nbsp;&nbsp;O supervisor olha uma movimentação registrada e decide se aprova ou rejeita. Se aprovar, atualiza o status e notifica o capataz. Se rejeitar, precisa escrever o motivo. Sem justificativa, o sistema não deixa rejeitar.
+<div align="center">
+<p align="center">Figura 15 - Diagrama Sequencial (RF006)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf006.png" alt="Diagrama Sequencial RF006" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+
+#### 7. Gerar Relatório (`/relatorios`)
+&nbsp;&nbsp;&nbsp;&nbsp;O gerente escolhe filtros (período, fazenda, etc.) e pede o relatório. O sistema busca só as movimentações que foram aprovadas e sincronizadas, gera uma planilha e disponibiliza pra download. Se não tiver dado nenhum, avisa que não há informações.
+
+<div align="center">
+<p align="center">Figura 16 - Diagrama Sequencial (RF007)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf007.png" alt="Diagrama Sequencial RF007" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
+
+
+
+#### 8. Abrir Chamado (`/tickets`)
+&nbsp;&nbsp;&nbsp;&nbsp;O capataz abre um chamado de problema de infraestrutura (cerca quebrada, bebedouro, etc.). É obrigatório anexar uma evidência, áudio ou mensagem. Se tiver tudo certo, salva o chamado e notifica tanto o supervisor quanto a equipe de infraestrutura.
+
+<div align="center">
+<p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
+<p align="center">
+<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf008.png" alt="Diagrama Sequencial RF008" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
  
-Os diagramas de sequência mostram como as partes de um sistema conversam entre si para realizar uma ação. Em vez de descrever só o resultado final, eles mostram o passo a passo dessa conversa, na ordem em que acontece.
+
+**Conclusão:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os oito diagramas apresentados cobrem as principais funcionalidades do AgroFlow, desde o acesso ao sistema até a geração de relatórios. Juntos, eles mostram como o sistema foi pensado para atender diferentes perfis de usuário, sendo o capataz responsável pelos registros do campo, o supervisor pela validação e atribuição de tarefas, e o gerente pelo acompanhamento geral por meio de relatórios.
  
-No caso do AgroFlow, cada diagrama representa uma funcionalidade do sistema, como fazer login, registrar uma movimentação de gado ou abrir um chamado. Em todos eles, a comunicação segue sempre a mesma lógica: o usuário faz alguma coisa na tela, a interface manda o pedido para o controlador, que aciona o serviço responsável, que por fim acessa o banco de dados para buscar ou salvar as informações. Depois disso, a resposta volta pelo mesmo caminho até chegar na tela do usuário.
+&nbsp;&nbsp;&nbsp;&nbsp;Um ponto importante que aparece em todos os diagramas é a preocupação com a validação dos dados. O sistema não aceita informações incompletas ou incorretas e sempre avisa o usuário quando algo está errado. Isso evita que dados ruins cheguem ao banco e comprometam as informações da fazenda.
  
-Essa organização em camadas existe para deixar o sistema mais organizado e fácil de manter. Se um dia precisar mudar a forma de salvar os dados, por exemplo, não é necessário mexer em tudo, só na parte responsável por isso.
- 
-Os diagramas também mostram o que acontece quando algo dá errado, como senha incorreta, campo vazio ou falta de permissão. Isso é importante porque um bom sistema precisa saber lidar com erros e avisar o usuário de forma clara.
+&nbsp;&nbsp;&nbsp;&nbsp;Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para funcionar mesmo em áreas rurais com sinal instável, salvando os dados localmente e sincronizando assim que a conexão volta. Isso mostra que o sistema foi planejado pensando na realidade de quem vai usar no dia a dia.
 
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF005)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf005.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 1. Login (`/auth/login`)
-O usuário digita o login e a senha. O sistema vai lá no banco de dados verificar se essa pessoa existe e se a senha tá certa. Se tiver tudo ok, libera o acesso com um token. Se a senha estiver errada, manda mensagem de erro.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF001)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf001.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 2. Registrar Movimentação (`/movimentacoes`)
-O capataz preenche um formulário com informações sobre o gado (morte, nascimento, etc.). Se não tiver internet, salva no celular mesmo e manda depois. Se tiver internet, o sistema valida as informações e salva no banco. Se for registro de morte sem causa informada, bloqueia e pede pra preencher.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF002)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf002.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 3. Criar Tarefa (`/tarefas`)
-O supervisor cria uma tarefa e atribui pra alguém. O sistema checa se ele tem permissão pra isso e se preencheu tudo certinho. Se tiver ok, salva a tarefa e já manda uma notificação pro capataz avisando que tem trabalho novo.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF003)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf003.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 4. Sincronização Offline (`/sync`)
-Quando a internet volta, o sistema pega tudo que foi salvo localmente no celular e manda pro servidor de uma vez. Para cada registro, verifica se é movimentação ou ticket e salva no lugar certo. Se der erro em algum, marca como falha pra tentar de novo.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF004)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf004.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 5. Anexar Evidência (`/evidencias`)
-O usuário pode anexar foto, áudio ou mensagem como prova de alguma coisa. Se for foto, o sistema exige que ela tenha localização GPS. Sem isso, não aceita. Se for áudio ou mensagem, sobe o arquivo direto e salva normalmente.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF006)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf006.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
-O supervisor olha uma movimentação registrada e decide se aprova ou rejeita. Se aprovar, atualiza o status e notifica o capataz. Se rejeitar, precisa escrever o motivo. Sem justificativa, o sistema não deixa rejeitar.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF007)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf007.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 7. Gerar Relatório (`/relatorios`)
-O gerente escolhe filtros (período, fazenda, etc.) e pede o relatório. O sistema busca só as movimentações que foram aprovadas e sincronizadas, gera uma planilha e disponibiliza pra download. Se não tiver dado nenhum, avisa que não há informações.
-
-<div align="center">
-<p>Figura X - Diagrama Sequencial (RF008)</p>
-<p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-sequencial-rf008.png">  <alt="Persona 3" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
-
-## 8. Abrir Chamado (`/tickets`)
-O capataz abre um chamado de problema de infraestrutura (cerca quebrada, bebedouro, etc.). É obrigatório anexar uma evidência, áudio ou mensagem. Se tiver tudo certo, salva o chamado e notifica tanto o supervisor quanto a equipe de infraestrutura.
-
-## Conclusão
- 
-Os oito diagramas apresentados cobrem as principais funcionalidades do AgroFlow, desde o acesso ao sistema até a geração de relatórios. Juntos, eles mostram como o sistema foi pensado para atender diferentes perfis de usuário, sendo o capataz responsável pelos registros do campo, o supervisor pela validação e atribuição de tarefas, e o gerente pelo acompanhamento geral por meio de relatórios.
- 
-Um ponto importante que aparece em todos os diagramas é a preocupação com a validação dos dados. O sistema não aceita informações incompletas ou incorretas e sempre avisa o usuário quando algo está errado. Isso evita que dados ruins cheguem ao banco e comprometam as informações da fazenda.
- 
-Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para funcionar mesmo em áreas rurais com sinal instável, salvando os dados localmente e sincronizando assim que a conexão volta. Isso mostra que o sistema foi planejado pensando na realidade de quem vai usar no dia a dia.
 
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -1633,7 +1652,8 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#23-user-stories-sprints-1-a-5) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
+&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. 
+&nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#23-user-stories-sprints-1-a-5) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
 
 ### Capataz
 
@@ -1650,7 +1670,7 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do capataz são Home, Operações, Abrir Chamado e Minhas Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
+<p align="center">Figura 18 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
 <<<<<<< HEAD
 <img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1660,13 +1680,11 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 >>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe da aba "Registrar operação" do capataz</p>
+<p align="center">Figura 19 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
 <<<<<<< HEAD
 <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1676,13 +1694,11 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 >>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
+<p align="center">Figura 20 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
 <<<<<<< HEAD
 <img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1692,13 +1708,11 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 >>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
+<p align="center">Figura 21 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
 <<<<<<< HEAD
 <img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -1708,12 +1722,10 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 >>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-### Supervisor 
+### Supervisor
 
 &nbsp;&nbsp;&nbsp;&nbsp;As interfaces do supervisor foram desenvolvidas com foco técnico e operacional, permitindo o acompanhamento das atividades realizadas nos retiros e a validação das informações registradas pelos capatazes. O fluxo inicial contempla telas de login simplificadas para dispositivos mobile, organizadas com poucos elementos visuais e campos objetivos, facilitando o acesso rápido ao sistema.
 
@@ -1732,35 +1744,29 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do supervisor são Dashboard, Relatórios, Registros Pendentes, Alertas e Delegação de Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p>Figura 9 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 22 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 23 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 11 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 24 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -1769,43 +1775,38 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 &nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05, US06 e US09, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
 
 <div align="center">
-<p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 25 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
+<p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 13 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 26 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 14 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 27 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 15 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 28 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -1823,49 +1824,41 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 &nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios foram desenvolvidas para atender à US11, permitindo a aplicação de filtros por período, retiro e tipo de relatório. Dessa forma, o gerente consegue analisar informações específicas de cada unidade da fazenda de maneira mais organizada e detalhada. Além disso, a interface disponibiliza uma prévia visual das informações antes da exportação em planilha, auxiliando no acompanhamento consolidado das operações pecuárias e apoiando a tomada de decisão de forma centralizada.
 
 <div align="center">
-<p>Figura 16 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">Figura 29 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
 <img src="outros/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 
 <div align="center">
-<p>Figura 17 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">Figura 30 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
 <img src="outros/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, indicadores estratégicos e informações consolidadas da fazenda. Nessa versão, foram mantidas as funcionalidades relacionadas às US08 e US11, possibilitando ao gerente visualizar dashboards gerenciais, acompanhar ocorrências recentes e analisar dados operacionais utilizando filtros por período e retiro de forma centralizada e mais detalhada.
 
 <div align="center">
-<p>Figura 22 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
+<p align="center">Figura 31 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
 <p align="center">
 <img src="outros/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-<p>Figura 23 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
+<p align="center">Figura 32 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
 <p align="center">
 <img src="outros/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
 </p>
-</div>
-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -1883,7 +1876,7 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 
 *Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
 
-### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens 
+### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
 *(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
 
@@ -1899,14 +1892,14 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
-### <a name="c3.6.1"></a>Entidades e Atributos
-&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas treze entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+### Entidades e Atributos
+&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas treze entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) na entidade MOVIMENTACAO, inicializado como false no momento do registro. Isso significa que toda movimentação criada em campo é armazenada localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização na própria entidade, em conformidade com a US01, US02 e RN03.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 32 consolida as entidades e o Quadro 33 apresenta seus atributos.
+&nbsp;&nbsp;&nbsp;&nbsp;Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
 
-<p>Quadro 32 - Entidades do modelo conceitual da BRPec. </p>
+<p align="center">Quadro 39 - Entidades do modelo conceitual da BRPec.</p>
 
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
@@ -1923,8 +1916,9 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 | EVIDENCIA_TAREFA | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TAREFA. Origem: US03, US12. |
 | EVIDENCIA_TICKET | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TICKET. Origem: US06, US07, US12. |
 | RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados com sincronizado = true compõem o relatório, conforme RN07. Origem: US08, US09, US11. |
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-<p>Quadro 33 - Atributos das entidades  </p>
+<p align="center">Quadro 40 - Atributos das entidades</p>
 
 | Entidade | Atributos |
 |----------|-----------|
@@ -1932,8 +1926,8 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 | RETIRO| id (PK), nome.|
 | MOVIMENTACAO |id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, origem, destino, quantidade, status, sincronizado, criado_em, causa_obito, estagio_vida.|
 | TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data, status |
-| TICKET | iid (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), categoria, localizacao, descricao, status, data_criacao, data_realizado |
-| EVIDENCIA | Cid (PK), usuario_id (FK), tipo, criado_em |
+| TICKET | id (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), categoria, localizacao, descricao, status, data_criacao, data_realizado |
+| EVIDENCIA | id (PK), usuario_id (FK), tipo, criado_em |
 | EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
 | EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
 | EVIDENCIA_MENSAGEM | evidencia_id (PK/FK), conteudo |
@@ -1942,11 +1936,14 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 | EVIDENCIA_TICKET | evidencia_id (PK/FK), ticket_id (PK/FK) |
 | RELATORIO | id (PK), gerado_por (FK), retiro_id (FK), tipo, data_inicio, data_fim, data_gerado, url_arquivo |
 
-### <a name="c3.6.1"></a>Relacionamentos e Cardinalidades
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 34 apresenta o conjunto de relacionamentos do modelo.
+### Relacionamentos e Cardinalidades
 
-<p>Quadro 34 - Relacionamentos do modelo conceitual.</p>
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 41 apresenta o conjunto de relacionamentos do modelo.
+
+
+<p align="center">Quadro 41 - Relacionamentos do modelo conceitual</p>
 
 | ID | Relacionamento | Entidades | Cardinalidade | Descrição |
 |----|----------------|-----------|:-------------:|-----------|
@@ -1980,11 +1977,10 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
 <div align="center">
-<p>Figura 18 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">Figura 33 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
 <img src="outros/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
-</div>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -2006,9 +2002,10 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
- <p>Figura  – Modelo Relacional</p>
-  <img src="outros/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
-  <p align="center">Fonte: Próprios autores (2026).</p>
+<div align="center">
+<p align="center">Figura 34 – Modelo Relacional</p>
+<img src="outros/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
+<p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido utilizando a ferramenta drawSQL, tendo como banco de dados alvo o MySQL. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
@@ -2449,7 +2446,7 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *b) Estratégia de Diferenciação (até 250 palavras)*
 *Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
 
-## <a name="c6.6"></a>6.6 Estratégia de Marketing 
+## <a name="c6.6"></a>6.6. Estratégia de Marketing
 
 *a) Produto/Serviço (até 200 palavras)*
 *Descreva as funcionalidades, benefícios e diferenciais da aplicação*
@@ -2486,19 +2483,23 @@ DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível 
 ECONODATA. Dados empresariais da BRPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
 . Acesso em: 30 abr. 2026.
 
+FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Software Architectures. 2000. Tese (Doutorado em Ciência da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 15 maio 2026.
+
 G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com
 . Acesso em: 30 abr. 2026.
 
 HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
 . Acesso em: 30 abr. 2026.
 
-JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, R. Use Case 3.0: the guide to succeeding with use cases. 2024.
+ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model. Genebra: ISO, 2023.
+
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succeeding with use cases. [S.l.]: Ivar Jacobson International, 2024.
+
+LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
 
 OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
 
 PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
-
-PORTER, Michael E. Competitive Strategy: techniques for analyzing industries and competitors. New York: Free Press, 1980.
 
 PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
 
