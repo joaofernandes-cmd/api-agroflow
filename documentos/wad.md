@@ -1530,7 +1530,35 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 1. Login (`/auth/login`)
-&nbsp;&nbsp;&nbsp;&nbsp;O processo de autenticação inicia quando o usuário informa seu login e senha na interface da aplicação. Após isso, a interface envia uma requisição HTTP do tipo POST para o endpoint /auth/login, contendo as credenciais digitadas. Ao receber a requisição, o controlador de autenticação (ControladorAutenticacao) encaminha os dados para o serviço responsável pela regra de negócio (ServicoAutenticacao). Em seguida, o serviço solicita ao repositório de usuários (RepositorioUsuario) a busca do usuário correspondente ao login informado. O repositório realiza uma consulta no banco de dados para verificar se o usuário está cadastrado e retorna suas informações ao serviço. Com os dados recuperados, o serviço compara a senha enviada pelo usuário com a senha armazenada no sistema. Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra essa sessão no banco de dados e gera um token de acesso associado ao perfil do usuário. Posteriormente, o token é retornado ao controlador, que responde à interface com status 200 – Sucesso, permitindo o acesso ao sistema. Por outro lado, caso o login não exista ou a senha esteja incorreta, o serviço retorna um erro de autenticação ao controlador. Nesse cenário, a interface recebe uma resposta 401 – Não Autorizado e exibe ao usuário uma mensagem informando que o login ou a senha estão inválidos.
+**Fluxo Principal**
+
+• O processo inicia quando o usuário informa seu login e senha na interface da aplicação.
+
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/auth/login`, encaminhando as credenciais ao *ControladorAutenticacao*.
+
+• O controlador encaminha os dados ao *ServicoAutenticacao*, responsável pelas regras de autenticação do sistema.
+
+• Em seguida, o serviço solicita ao *RepositorioUsuario* a busca do usuário correspondente ao login informado.
+
+• O repositório realiza a consulta no banco de dados e retorna as informações do usuário ao serviço.
+
+• Com os dados recuperados, o *ServicoAutenticacao* compara a senha enviada pelo usuário com a senha armazenada no sistema.
+
+• Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra a sessão no banco de dados e gera um token de acesso associado ao perfil do usuário.
+
+• Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, permitindo o acesso ao sistema.
+
+
+**Fluxo Alternativo - Login ou senha inválidos**
+
+• Durante a validação das credenciais, o *ServicoAutenticacao* verifica se o usuário existe e se a senha informada corresponde ao registro armazenado no banco de dados.
+
+• Caso o login não exista ou a senha esteja incorreta, o serviço retorna um erro de autenticação ao controlador.
+
+• Nesse cenário, o sistema responde à interface com status `401 – Não Autorizado`.
+
+• Por fim, a interface exibe ao usuário uma mensagem informando que o login ou a senha estão inválidos.
+
 
 <div align="center">
 <p align="center">Figura 10 - Diagrama Sequencial (RF005)</p>
@@ -1541,7 +1569,40 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 </div>
 
 #### 2. Registrar Movimentação (`/movimentacoes`)
-&nbsp;&nbsp;&nbsp;&nbsp;O processo de registro de movimentação inicia quando o capataz preenche o formulário de manejo na interface da aplicação, informando os dados relacionados ao rebanho, como nascimento, morte, compra, venda ou transferência de animais entre retiros. A aplicação foi projetada para funcionar tanto online quanto offline, considerando as limitações de conectividade no ambiente de campo. Dessa forma, caso o dispositivo esteja sem acesso à internet no momento do preenchimento, os dados da movimentação são armazenados localmente no dispositivo do usuário. Após o salvamento local, o sistema exibe uma confirmação ao capataz, garantindo que o registro não seja perdido e possa ser sincronizado posteriormente quando houver conexão disponível. Quando existe conexão com a internet, a interface envia uma requisição POST para o endpoint /movimentacoes, encaminhando os dados preenchidos ao controlador de movimentação (ControladorMovimentacao). Inicialmente, o controlador valida o token de autenticação e o perfil do usuário para garantir que ele possui permissão para realizar a operação. Em seguida, o controlador encaminha os dados ao serviço responsável (ServicoMovimentacao), que executa as validações de negócio necessárias. Nesse momento, o sistema verifica se todos os campos obrigatórios foram preenchidos corretamente, de acordo com o tipo de movimentação selecionado. Caso a movimentação registrada seja do tipo “morte” e a causa do óbito não tenha sido informada, o serviço retorna um erro de validação. O controlador então responde à interface com o código 422 – Entidade Não Processável, e o usuário recebe uma mensagem solicitando o preenchimento obrigatório da causa do óbito. Se todas as informações estiverem válidas, o serviço encaminha os dados ao repositório de movimentações (RepositorioMovimentacao), responsável por persistir os registros no banco de dados. Após a gravação bem-sucedida, o banco retorna o identificador da movimentação criada, confirmando que o registro foi salvo corretamente. Por fim, o sistema retorna uma resposta 201 – Criado para a interface, exibindo ao capataz uma mensagem de sucesso informando que a movimentação foi registrada corretamente.
+**Fluxo Principal**
+
+• O processo inicia quando o capataz preenche o formulário de manejo na interface da aplicação, informando dados como nascimento, morte, compra, venda ou transferência de animais entre retiros.
+
+• Quando existe conexão com a internet, a interface envia uma requisição `POST` para o endpoint `/movimentacoes`, encaminhando os dados ao *ControladorMovimentacao*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que ele possui permissão para realizar a operação.
+
+• Em seguida, os dados são encaminhados ao *ServicoMovimentacao*, responsável por executar as regras de negócio e validar os campos obrigatórios conforme o tipo de movimentação informado.
+
+• Caso todas as informações estejam corretas, o serviço solicita ao *RepositorioMovimentacao* o salvamento da movimentação no banco de dados.
+
+• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente.
+
+• Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação do registro da movimentação.
+
+
+**Fluxo Alternativo - Operação offline**
+
+• Caso o dispositivo esteja sem conexão com a internet durante o preenchimento do formulário, a aplicação ativa o modo offline automaticamente.
+
+• Nesse cenário, os dados da movimentação são armazenados localmente no dispositivo do usuário.
+
+• Após o salvamento local, a interface exibe uma mensagem confirmando que o registro foi salvo e será sincronizado posteriormente quando houver conexão disponível.
+
+
+**Fluxo Alternativo - Registro de morte sem causa informada**
+
+• Durante a validação dos dados, o *ServicoMovimentacao* verifica se movimentações do tipo “morte” possuem a causa do óbito preenchida corretamente.
+
+• Caso a causa não seja informada, o serviço retorna um erro de validação ao controlador.
+
+• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da causa da morte antes do salvamento da movimentação.
+
 
 
 <div align="center">
@@ -1554,8 +1615,43 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 3. Criar Tarefa (`/tarefas`)
-&nbsp;&nbsp;&nbsp;&nbsp;O processo de criação de tarefas inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional. Entre os dados informados estão descrição da tarefa, prioridade, responsável, prazo e demais informações relevantes para execução em campo. Após o preenchimento, a interface envia uma requisição POST para o endpoint /tarefas, encaminhando os dados ao controlador de tarefas (ControladorTarefa). Inicialmente, o controlador realiza a validação do token de autenticação e do perfil do usuário, garantindo que apenas usuários com permissão adequada possam criar tarefas no sistema. Caso o usuário autenticado não possua perfil de supervisor, o sistema interrompe o fluxo da operação e retorna uma resposta 403 – Proibido, impedindo a criação da tarefa por falta de autorização. Se o perfil for válido, o controlador encaminha os dados ao serviço responsável (ServicoTarefa), que executa as regras de negócio e valida os campos obrigatórios do formulário. Nesse processo, o sistema verifica se todas as informações necessárias foram preenchidas corretamente. Caso algum campo obrigatório esteja vazio ou inválido, o serviço retorna um erro de validação ao controlador. A interface então recebe uma resposta 422 – Entidade Não Processável, exibindo ao usuário uma mensagem solicitando o preenchimento correto dos campos obrigatórios. Quando todos os dados estão válidos, o serviço solicita ao repositório de tarefas (RepositorioTarefa) o salvamento da nova tarefa no banco de dados. Após a persistência, o banco retorna o identificador da tarefa criada, confirmando o sucesso da operação. Em seguida, o serviço aciona o módulo de notificações (ServicoNotificacao), responsável por enviar o aviso ao capataz designado para execução da atividade. Após a confirmação do envio da notificação, o sistema retorna ao controlador a informação de que a tarefa foi criada com sucesso. Por fim, o controlador responde à interface com o código 201 – Criado, e o supervisor recebe uma mensagem confirmando que a tarefa foi atribuída corretamente ao responsável indicado.
- 
+
+**Fluxo Principal — Criar Tarefa (`/tarefas`)**
+
+• O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, responsável e prazo.
+
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tarefas`, encaminhando os dados ao *ControladorTarefa*.
+
+• Inicialmente, o controlador realiza a validação do token e do perfil do usuário, garantindo que apenas supervisores possam criar tarefas no sistema.
+
+• Caso o perfil seja válido, os dados são encaminhados ao *ServicoTarefa*, responsável por executar as regras de negócio e validar os campos obrigatórios.
+
+• Quando todas as informações estão corretas, o serviço solicita ao *RepositorioTarefa* o salvamento da nova tarefa no banco de dados.
+
+• Após a persistência, o banco retorna o identificador da tarefa criada, confirmando o sucesso da operação.
+
+• Em seguida, o *ServicoTarefa* aciona o *ServicoNotificacao*, responsável por enviar o aviso ao capataz designado para execução da atividade.
+
+• Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao supervisor a confirmação de que a tarefa foi atribuída corretamente.
+
+
+**Fluxo Alternativo — Usuário sem permissão**
+
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
+
+• Caso o perfil seja diferente do permitido, o fluxo é interrompido e o *ControladorTarefa* retorna uma resposta `403 – Proibido`.
+
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para criar tarefas.
+
+
+**Fluxo Alternativo — Campos obrigatórios inválidos**
+
+• Durante a validação dos dados, o *ServicoTarefa* verifica se todos os campos obrigatórios foram preenchidos corretamente.
+
+• Caso alguma informação esteja vazia ou inválida, o serviço retorna um erro de validação ao controlador.
+
+• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando ao usuário o preenchimento correto dos campos obrigatórios.
+
 <div align="center">
 <p align="center">Figura 12 - Diagrama Sequencial (RF002)</p>
 <p align="center">
@@ -1567,7 +1663,36 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 4. Sincronização Offline (`/sync`)
-&nbsp;&nbsp;&nbsp;&nbsp;O processo de sincronização offline é iniciado automaticamente quando a aplicação detecta que a conexão com a internet foi restabelecida no dispositivo utilizado em campo. Nesse momento, a interface identifica os registros que haviam sido armazenados localmente durante o período sem conectividade e prepara um lote de dados para envio ao servidor. Após a leitura dos registros locais, a interface envia uma requisição POST para o endpoint /sync, contendo todas as informações pendentes de sincronização. O controlador de sincronização (ControladorSincronizacao) recebe esse lote e o encaminha ao serviço responsável (ServicoSincronizacao), que inicia o processamento individual de cada registro armazenado. Durante o processamento, o sistema percorre todos os itens do lote em um fluxo iterativo (loop), identificando o tipo de cada registro recebido. Caso o item corresponda a uma movimentação bovina, o serviço encaminha os dados ao repositório de movimentações (RepositorioMovimentacao), responsável por persistir essas informações no banco de dados. Por outro lado, se o registro for um ticket ou chamado operacional, os dados são direcionados ao repositório de tickets (RepositorioTicket), onde serão armazenados adequadamente. Após a tentativa de salvamento, o banco de dados retorna o resultado da operação ao serviço de sincronização. Quando o registro é salvo com sucesso, o sistema recebe o identificador gerado pelo banco e marca aquele item como sincronizado localmente, evitando que ele seja reenviado futuramente. Entretanto, caso ocorra algum erro durante o processo de persistência — como falha de validação, inconsistência de dados ou indisponibilidade temporária do servidor — o sistema registra o item como falha de sincronização. Dessa forma, o dado permanece armazenado localmente para que uma nova tentativa de sincronização possa ser realizada posteriormente, sem risco de perda das informações coletadas em campo. Ao final do processamento de todos os registros do lote, o serviço retorna ao controlador o resultado consolidado da sincronização. O controlador então responde à interface com status 200 – Sucesso, e a aplicação atualiza o status local dos registros conforme o resultado obtido para cada item sincronizado.
+
+**Fluxo Principal**
+
+• O processo inicia automaticamente quando a aplicação detecta que a conexão com a internet foi restabelecida no dispositivo utilizado em campo. Nesse momento, a interface identifica os registros armazenados localmente durante o período offline e prepara um lote de dados para sincronização.
+
+• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sync`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
+
+• O controlador encaminha o lote ao *ServicoSincronizacao*, responsável por processar individualmente cada registro armazenado localmente.
+
+• Durante o processamento, o serviço percorre os itens do lote em um fluxo iterativo (*loop*), identificando o tipo de cada registro recebido.
+
+• Caso o registro seja uma movimentação bovina, os dados são enviados ao *RepositorioMovimentacao*, responsável por persistir as informações no banco de dados. Se o item for um ticket ou chamado operacional, o registro é encaminhado ao *RepositorioTicket*.
+
+• Após o salvamento, o banco de dados retorna o identificador do registro criado, confirmando que a sincronização foi realizada corretamente.
+
+• Em seguida, o sistema marca o item como sincronizado localmente, evitando que ele seja reenviado em futuras sincronizações.
+
+• Ao final do processamento de todos os registros, o serviço retorna ao controlador o resultado consolidado da sincronização. O controlador então responde à interface com status `200 – Sucesso`, e a aplicação atualiza o status local dos registros sincronizados.
+
+
+**Fluxo Alternativo - Falha na sincronização**
+
+• Durante o processamento do lote, podem ocorrer falhas relacionadas a inconsistências de dados, erros de validação ou indisponibilidade temporária do servidor.
+
+• Caso algum registro apresente erro durante a tentativa de salvamento, o *ServicoSincronizacao* identifica a falha e interrompe apenas o processamento daquele item específico.
+
+• Nesse cenário, o sistema marca o registro como “falha de sincronização”, mantendo os dados armazenados localmente no dispositivo.
+
+• Dessa forma, o item permanece disponível para uma nova tentativa automática de sincronização quando houver conexão estável, evitando perda das informações registradas em campo.
+
 
 <div align="center">
 <p align="center">Figura 13 - Diagrama Sequencial (RF003)</p>
@@ -1580,7 +1705,31 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 5. Anexar Evidência (`/evidencias`)
-&nbsp;&nbsp;&nbsp;&nbsp;O usuário pode anexar foto, áudio ou mensagem como prova de alguma coisa. Se for foto, o sistema exige que ela tenha localização GPS. Sem isso, não aceita. Se for áudio ou mensagem, sobe o arquivo direto e salva normalmente.
+
+**Fluxo Principal**
+
+• O processo inicia quando o usuário seleciona o tipo de evidência que deseja anexar na aplicação, podendo ser uma foto, áudio ou mensagem de texto. Em seguida, a interface captura a mídia selecionada e envia uma requisição `POST` para o endpoint `/evidencias`, encaminhando os dados ao controlador de evidências (*ControladorEvidencia*).
+
+• Ao receber a requisição, o controlador encaminha os dados ao serviço responsável (*ServicoEvidencia*), que identifica o tipo de evidência enviado e executa as validações necessárias.
+
+• Quando a evidência corresponde a uma foto, o sistema realiza a leitura da localização geográfica associada ao arquivo, verificando se a imagem possui informações de GPS. Caso a foto esteja válida, o serviço envia o arquivo para o módulo de armazenamento (*Armazenamento*), responsável por salvar a mídia e retornar o link de acesso ao arquivo.
+
+• Após o armazenamento da evidência, o serviço solicita ao repositório de evidências (*RepositorioEvidencia*) o salvamento das informações no banco de dados, incluindo o tipo da evidência, o link do arquivo e os metadados associados. O banco então retorna o identificador do registro criado, confirmando que a evidência foi salva corretamente.
+
+• No caso de evidências do tipo áudio ou mensagem, o fluxo ocorre de maneira semelhante. O arquivo ou conteúdo textual é enviado ao módulo de armazenamento, o link correspondente é gerado e as informações são persistidas no banco de dados pelo repositório de evidências.
+
+• Por fim, após a conclusão bem-sucedida do processo, o sistema retorna uma resposta `201 – Criado` para a interface, exibindo ao usuário a confirmação de que a evidência foi anexada corretamente.
+
+
+**Fluxo Alternativo - Foto sem localização GPS**
+
+• Durante o envio de evidências do tipo foto, o sistema valida se a imagem contém informações de geolocalização associadas ao arquivo. Essa validação é importante para garantir a rastreabilidade das atividades realizadas em campo.
+
+• Caso a foto enviada não possua dados de GPS, o serviço de evidências identifica a inconsistência e retorna um erro de validação ao controlador. O controlador então responde à interface com o código `422 – Entidade Não Processável`.
+
+• Ao receber a resposta, a interface exibe ao usuário uma mensagem informando que a foto não contém localização válida, solicitando o envio de uma nova imagem com GPS habilitado no dispositivo. Nesse cenário, a evidência não é armazenada nem registrada no banco de dados até que a inconsistência seja corrigida.
+
+
 <div align="center">
 <p align="center">Figura 14 - Diagrama Sequencial (RF004)</p>
 <p align="center">
@@ -1592,7 +1741,53 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 #### 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
-&nbsp;&nbsp;&nbsp;&nbsp;O supervisor olha uma movimentação registrada e decide se aprova ou rejeita. Se aprovar, atualiza o status e notifica o capataz. Se rejeitar, precisa escrever o motivo. Sem justificativa, o sistema não deixa rejeitar.
+
+**Fluxo Principal**
+
+• O processo inicia quando o supervisor aprova ou rejeita uma movimentação registrada no sistema.
+
+• A interface envia uma requisição `PATCH` para o endpoint `/movimentacoes/{id}/validar`, encaminhando a ação ao *ControladorValidacao*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores possam realizar a validação das movimentações.
+
+• Caso o perfil seja válido, o controlador encaminha os dados ao *ServicoValidacao*, responsável pelas regras de negócio da operação.
+
+• O serviço solicita ao *RepositorioMovimentacao* a busca da movimentação correspondente ao identificador informado.
+
+• Após localizar o registro, o supervisor pode aprovar ou rejeitar a movimentação.
+
+• Quando a ação escolhida é “aprovar”, o serviço atualiza o status da movimentação para “aprovado” no banco de dados.
+
+• Em seguida, o *ServicoNotificacao* é acionado para enviar uma notificação ao capataz informando que a movimentação foi aprovada.
+
+• Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, confirmando que o status foi atualizado corretamente.
+
+
+**Fluxo Alternativo - Usuário sem permissão**
+
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
+
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorValidacao* retorna uma resposta `403 – Proibido`.
+
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para validar movimentações.
+
+**Fluxo Alternativo - Movimentação não encontrada**
+
+• Durante a busca da movimentação, o *RepositorioMovimentacao* verifica se existe um registro correspondente ao identificador informado.
+
+• Caso a movimentação não seja encontrada, o serviço retorna um erro ao controlador.
+
+• O sistema então responde à interface com status `404 – Não Encontrado`, informando que a movimentação solicitada não existe.
+
+
+**Fluxo Alternativo - Rejeição sem justificativa**
+
+• Quando o supervisor escolhe rejeitar uma movimentação, o *ServicoValidacao* verifica se foi informada uma justificativa para a rejeição.
+
+• Caso a justificativa esteja vazia, o serviço retorna um erro de validação ao controlador.
+
+• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da justificativa antes da rejeição da movimentação.
+
 <div align="center">
 <p align="center">Figura 15 - Diagrama Sequencial (RF006)</p>
 <p align="center">
