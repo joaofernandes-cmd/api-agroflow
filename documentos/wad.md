@@ -1446,10 +1446,10 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do capataz são Home, Operações, Abrir Chamado e Minhas Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p>Figura 9 - Wireframe da aba "Entrar e Home" do capataz</p>
+<p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+<img src="outros/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
 </a>
 </p>
 </div>
@@ -1458,10 +1458,10 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 </div>
 
 <div align="center">
-<p>Figura 10 - Wireframe da aba "Registrar Operação" do capataz</p>
+<p>Figura 10 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+<img src="outros/assets/wireframe-registrar-movimentacao-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
 </a>
 </p>
 </div>
@@ -1473,7 +1473,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+<img src="outros/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
 </a>
 </p>
 </div>
@@ -1485,7 +1485,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+<img src="outros/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
 </a>
 </p>
 </div>
