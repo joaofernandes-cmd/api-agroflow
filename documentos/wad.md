@@ -1413,7 +1413,15 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
-*Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados.*
+## Introdução
+ 
+Os diagramas de sequência mostram como as partes de um sistema conversam entre si para realizar uma ação. Em vez de descrever só o resultado final, eles mostram o passo a passo dessa conversa, na ordem em que acontece.
+ 
+No caso do AgroFlow, cada diagrama representa uma funcionalidade do sistema, como fazer login, registrar uma movimentação de gado ou abrir um chamado. Em todos eles, a comunicação segue sempre a mesma lógica: o usuário faz alguma coisa na tela, a interface manda o pedido para o controlador, que aciona o serviço responsável, que por fim acessa o banco de dados para buscar ou salvar as informações. Depois disso, a resposta volta pelo mesmo caminho até chegar na tela do usuário.
+ 
+Essa organização em camadas existe para deixar o sistema mais organizado e fácil de manter. Se um dia precisar mudar a forma de salvar os dados, por exemplo, não é necessário mexer em tudo, só na parte responsável por isso.
+ 
+Os diagramas também mostram o que acontece quando algo dá errado, como senha incorreta, campo vazio ou falta de permissão. Isso é importante porque um bom sistema precisa saber lidar com erros e avisar o usuário de forma clara.
 
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
