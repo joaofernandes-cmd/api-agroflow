@@ -1048,7 +1048,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 <p align="center">
 
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+<img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1513,7 +1513,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 9 - Diagrama de Classes de Domínio</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
+<img src="outros/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1526,34 +1526,135 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto do sistema AgroFlow, desenvolvido para a BrPec Agropecuária S.A., cada diagrama de sequência documenta uma funcionalidade crítica do sistema, incluindo autenticação de usuários, registro de movimentações do rebanho, abertura de tickets de manutenção de infraestrutura, entre outras operações centrais. Em todas as representações, a arquitetura segue o padrão de separação em camadas (layered architecture), no qual a camada de apresentação (Frontend) envia requisições à camada de controle (Controller), que delega a lógica de negócio à camada de serviço (Service), a qual, por sua vez, interage com a camada de persistência (Repository) para executar operações no banco de dados. O fluxo de retorno percorre o caminho inverso, propagando a resposta até a interface do usuário final.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência apresentados também contemplam fluxos alternativos e de exceção, modelando cenários como falhas de autenticação, violação de regras de validação (campos obrigatórios não preenchidos, conforme RN01 e RN02) e restrições de autorização (tentativas de acesso a recursos protegidos por perfil de usuário, conforme RN06). A explicitação desses fluxos é fundamental para assegurar que o sistema trate adequadamente condições de erro, retornando mensagens claras e acionáveis ao usuário, em alinhamento com os requisitos não funcionais de usabilidade (USAB) definidos na Seção 3.1.3.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência apresentados também contemplam fluxos alternativos e de exceção, modelando cenários como falhas de autenticação, violação de regras de validação (campos obrigatórios não preenchidos, conforme RN01 e RN02) e restrições de autorização (tentativas de acesso a recursos protegidos por perfil de usuário, conforme RN06). A explicitação desses fluxos é fundamental para assegurar que o sistema trate adequadamente condições de erro, retornando mensagens claras e acionáveis ao usuário, em alinhamento com os requisitos não funcionais de usabilidade (USAB) definidos na [Seção 3.1.3](#c3.1.3) 
 
 
 #### 1. Login (`/auth/login`)
-&nbsp;&nbsp;&nbsp;&nbsp;O usuário digita o login e a senha. O sistema vai lá no banco de dados verificar se essa pessoa existe e se a senha tá certa. Se tiver tudo ok, libera o acesso com um token. Se a senha estiver errada, manda mensagem de erro.
+
+**Fluxo Principal**
+
+• O processo inicia quando o usuário informa seu login e senha na interface da aplicação.
+
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/auth/login`, encaminhando as credenciais ao *ControladorAutenticacao*.
+
+• O controlador encaminha os dados ao *ServicoAutenticacao*, responsável pelas regras de autenticação do sistema.
+
+• Em seguida, o serviço solicita ao *RepositorioUsuario* a busca do usuário correspondente ao login informado.
+
+• O repositório realiza a consulta no banco de dados e retorna as informações do usuário ao serviço.
+
+• Com os dados recuperados, o *ServicoAutenticacao* compara a senha enviada pelo usuário com a senha armazenada no sistema.
+
+• Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra a sessão no banco de dados e gera um token de acesso associado ao perfil do usuário.
+
+• Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, permitindo o acesso ao sistema.
+
+
+**Fluxo Alternativo - Login ou senha inválidos**
+
+• Durante a validação das credenciais, o *ServicoAutenticacao* verifica se o usuário existe e se a senha informada corresponde ao registro armazenado no banco de dados.
+
+• Caso o login não exista ou a senha esteja incorreta, o serviço retorna um erro de autenticação ao controlador.
+
+• Nesse cenário, o sistema responde à interface com status `401 – Não Autorizado`.
+
+• Por fim, a interface exibe ao usuário uma mensagem informando que o login ou a senha estão inválidos.
+
 
 <div align="center">
 <p align="center">Figura 10 - Diagrama Sequencial (RF005)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
+<img src="outros/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+----
 #### 2. Registrar Movimentação (`/movimentacoes`)
-&nbsp;&nbsp;&nbsp;&nbsp;O capataz preenche um formulário com informações sobre o gado (morte, nascimento, etc.). Se não tiver internet, salva no celular mesmo e manda depois. Se tiver internet, o sistema valida as informações e salva no banco. Se for registro de morte sem causa informada, bloqueia e pede pra preencher.
+**Fluxo Principal**
+
+• O processo inicia quando o capataz preenche o formulário de manejo na interface da aplicação, informando dados como nascimento, morte, compra, venda ou transferência de animais entre retiros.
+
+• Quando existe conexão com a internet, a interface envia uma requisição `POST` para o endpoint `/movimentacoes`, encaminhando os dados ao *ControladorMovimentacao*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que ele possui permissão para realizar a operação.
+
+• Em seguida, os dados são encaminhados ao *ServicoMovimentacao*, responsável por executar as regras de negócio e validar os campos obrigatórios conforme o tipo de movimentação informado.
+
+• Caso todas as informações estejam corretas, o serviço solicita ao *RepositorioMovimentacao* o salvamento da movimentação no banco de dados.
+
+• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente./
+
+• Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação do registro da movimentação.
+
+
+**Fluxo Alternativo - Operação offline**
+
+• Caso o dispositivo esteja sem conexão com a internet durante o preenchimento do formulário, a aplicação ativa o modo offline automaticamente.
+
+• Nesse cenário, os dados da movimentação são armazenados localmente no dispositivo do usuário.
+
+• Após o salvamento local, a interface exibe uma mensagem confirmando que o registro foi salvo e será sincronizado posteriormente quando houver conexão disponível.
+
+
+**Fluxo Alternativo - Registro de morte sem causa informada**
+
+• Durante a validação dos dados, o *ServicoMovimentacao* verifica se movimentações do tipo “morte” possuem a causa do óbito preenchida corretamente.
+
+• Caso a causa não seja informada, o serviço retorna um erro de validação ao controlador.
+
+• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da causa da morte antes do salvamento da movimentação.
+
+
 
 <div align="center">
 <p align="center">Figura 11 - Diagrama Sequencial (RF001)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
+<img src="outros/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+----
 
 #### 3. Criar Tarefa (`/tarefas`)
-&nbsp;&nbsp;&nbsp;&nbsp;O supervisor cria uma tarefa e atribui pra alguém. O sistema checa se ele tem permissão pra isso e se preencheu tudo certinho. Se tiver ok, salva a tarefa e já manda uma notificação pro capataz avisando que tem trabalho novo.
+
+**Fluxo Principal**
+
+• O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, responsável e prazo.
+
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tarefas`, encaminhando os dados ao *ControladorTarefa*.
+
+• Inicialmente, o controlador realiza a validação do token e do perfil do usuário, garantindo que apenas supervisores possam criar tarefas no sistema.
+
+• Caso o perfil seja válido, os dados são encaminhados ao *ServicoTarefa*, responsável por executar as regras de negócio e validar os campos obrigatórios.
+
+• Quando todas as informações estão corretas, o serviço solicita ao *RepositorioTarefa* o salvamento da nova tarefa no banco de dados.
+
+• Após a persistência, o banco retorna o identificador da tarefa criada, confirmando o sucesso da operação.
+
+• Em seguida, o *ServicoTarefa* aciona o *ServicoNotificacao*, responsável por enviar o aviso ao capataz designado para execução da atividade.
+
+• Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao supervisor a confirmação de que a tarefa foi atribuída corretamente.
+
+
+**Fluxo Alternativo - Usuário sem permissão**
+
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
+
+• Caso o perfil seja diferente do permitido, o fluxo é interrompido e o *ControladorTarefa* retorna uma resposta `403 – Proibido`.
+
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para criar tarefas.
+
+
+**Fluxo Alternativo - Campos obrigatórios inválidos**
+
+• Durante a validação dos dados, o *ServicoTarefa* verifica se todos os campos obrigatórios foram preenchidos corretamente.
+
+• Caso alguma informação esteja vazia ou inválida, o serviço retorna um erro de validação ao controlador.
+
+• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando ao usuário o preenchimento correto dos campos obrigatórios.
+
 <div align="center">
 <p align="center">Figura 12 - Diagrama Sequencial (RF002)</p>
 <p align="center">
@@ -1562,10 +1663,40 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 4. Sincronização Offline (`/sync`)
-&nbsp;&nbsp;&nbsp;&nbsp;Quando a internet volta, o sistema pega tudo que foi salvo localmente no celular e manda pro servidor de uma vez. Para cada registro, verifica se é movimentação ou ticket e salva no lugar certo. Se der erro em algum, marca como falha pra tentar de novo.
+
+**Fluxo Principal**
+
+• O processo inicia automaticamente quando a aplicação detecta que a conexão com a internet foi restabelecida no dispositivo utilizado em campo. Nesse momento, a interface identifica os registros armazenados localmente durante o período offline e prepara um lote de dados para sincronização.
+
+• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sync`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
+
+• O controlador encaminha o lote ao *ServicoSincronizacao*, responsável por processar individualmente cada registro armazenado localmente.
+
+• Durante o processamento, o serviço percorre os itens do lote em um fluxo iterativo (*loop*), identificando o tipo de cada registro recebido.
+
+• Caso o registro seja uma movimentação bovina, os dados são enviados ao *RepositorioMovimentacao*, responsável por persistir as informações no banco de dados. Se o item for um ticket ou chamado operacional, o registro é encaminhado ao *RepositorioTicket*.
+
+• Após o salvamento, o banco de dados retorna o identificador do registro criado, confirmando que a sincronização foi realizada corretamente.
+
+• Em seguida, o sistema marca o item como sincronizado localmente, evitando que ele seja reenviado em futuras sincronizações.
+
+• Ao final do processamento de todos os registros, o serviço retorna ao controlador o resultado consolidado da sincronização. O controlador então responde à interface com status `200 – Sucesso`, e a aplicação atualiza o status local dos registros sincronizados.
+
+
+**Fluxo Alternativo - Falha na sincronização**
+
+• Durante o processamento do lote, podem ocorrer falhas relacionadas a inconsistências de dados, erros de validação ou indisponibilidade temporária do servidor.
+
+• Caso algum registro apresente erro durante a tentativa de salvamento, o *ServicoSincronizacao* identifica a falha e interrompe apenas o processamento daquele item específico.
+
+• Nesse cenário, o sistema marca o registro como “falha de sincronização”, mantendo os dados armazenados localmente no dispositivo.
+
+• Dessa forma, o item permanece disponível para uma nova tentativa automática de sincronização quando houver conexão estável, evitando perda das informações registradas em campo.
+
+
 <div align="center">
 <p align="center">Figura 13 - Diagrama Sequencial (RF003)</p>
 <p align="center">
@@ -1574,10 +1705,34 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 5. Anexar Evidência (`/evidencias`)
-&nbsp;&nbsp;&nbsp;&nbsp;O usuário pode anexar foto, áudio ou mensagem como prova de alguma coisa. Se for foto, o sistema exige que ela tenha localização GPS. Sem isso, não aceita. Se for áudio ou mensagem, sobe o arquivo direto e salva normalmente.
+
+**Fluxo Principal**
+
+• O processo inicia quando o usuário seleciona o tipo de evidência que deseja anexar na aplicação, podendo ser uma foto, áudio ou mensagem de texto. Em seguida, a interface captura a mídia selecionada e envia uma requisição `POST` para o endpoint `/evidencias`, encaminhando os dados ao controlador de evidências (*ControladorEvidencia*).
+
+• Ao receber a requisição, o controlador encaminha os dados ao serviço responsável (*ServicoEvidencia*), que identifica o tipo de evidência enviado e executa as validações necessárias.
+
+• Quando a evidência corresponde a uma foto, o sistema realiza a leitura da localização geográfica associada ao arquivo, verificando se a imagem possui informações de GPS. Caso a foto esteja válida, o serviço envia o arquivo para o módulo de armazenamento (*Armazenamento*), responsável por salvar a mídia e retornar o link de acesso ao arquivo.
+
+• Após o armazenamento da evidência, o serviço solicita ao repositório de evidências (*RepositorioEvidencia*) o salvamento das informações no banco de dados, incluindo o tipo da evidência, o link do arquivo e os metadados associados. O banco então retorna o identificador do registro criado, confirmando que a evidência foi salva corretamente.
+
+• No caso de evidências do tipo áudio ou mensagem, o fluxo ocorre de maneira semelhante. O arquivo ou conteúdo textual é enviado ao módulo de armazenamento, o link correspondente é gerado e as informações são persistidas no banco de dados pelo repositório de evidências.
+
+• Por fim, após a conclusão bem-sucedida do processo, o sistema retorna uma resposta `201 – Criado` para a interface, exibindo ao usuário a confirmação de que a evidência foi anexada corretamente.
+
+
+**Fluxo Alternativo - Foto sem localização GPS**
+
+• Durante o envio de evidências do tipo foto, o sistema valida se a imagem contém informações de geolocalização associadas ao arquivo. Essa validação é importante para garantir a rastreabilidade das atividades realizadas em campo.
+
+• Caso a foto enviada não possua dados de GPS, o serviço de evidências identifica a inconsistência e retorna um erro de validação ao controlador. O controlador então responde à interface com o código `422 – Entidade Não Processável`.
+
+• Ao receber a resposta, a interface exibe ao usuário uma mensagem informando que a foto não contém localização válida, solicitando o envio de uma nova imagem com GPS habilitado no dispositivo. Nesse cenário, a evidência não é armazenada nem registrada no banco de dados até que a inconsistência seja corrigida.
+
+
 <div align="center">
 <p align="center">Figura 14 - Diagrama Sequencial (RF004)</p>
 <p align="center">
@@ -1586,10 +1741,55 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
-&nbsp;&nbsp;&nbsp;&nbsp;O supervisor olha uma movimentação registrada e decide se aprova ou rejeita. Se aprovar, atualiza o status e notifica o capataz. Se rejeitar, precisa escrever o motivo. Sem justificativa, o sistema não deixa rejeitar.
+
+**Fluxo Principal**
+
+• O processo inicia quando o supervisor aprova ou rejeita uma movimentação registrada no sistema.
+
+• A interface envia uma requisição `PATCH` para o endpoint `/movimentacoes/{id}/validar`, encaminhando a ação ao *ControladorValidacao*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores possam realizar a validação das movimentações.
+
+• Caso o perfil seja válido, o controlador encaminha os dados ao *ServicoValidacao*, responsável pelas regras de negócio da operação.
+
+• O serviço solicita ao *RepositorioMovimentacao* a busca da movimentação correspondente ao identificador informado.
+
+• Após localizar o registro, o supervisor pode aprovar ou rejeitar a movimentação.
+
+• Quando a ação escolhida é “aprovar”, o serviço atualiza o status da movimentação para “aprovado” no banco de dados.
+
+• Em seguida, o *ServicoNotificacao* é acionado para enviar uma notificação ao capataz informando que a movimentação foi aprovada.
+
+• Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, confirmando que o status foi atualizado corretamente.
+
+**Fluxo Alternativo - Usuário sem permissão**
+
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
+
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorValidacao* retorna uma resposta `403 – Proibido`.
+
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para validar movimentações.
+
+
+**Fluxo Alternativo - Movimentação não encontrada**
+
+• Durante a busca da movimentação, o *RepositorioMovimentacao* verifica se existe um registro correspondente ao identificador informado.
+
+• Caso a movimentação não seja encontrada, o serviço retorna um erro ao controlador.
+
+• O sistema então responde à interface com status `404 – Não Encontrado`, informando que a movimentação solicitada não existe.
+
+**Fluxo Alternativo - Rejeição sem justificativa**
+
+• Quando o supervisor escolhe rejeitar uma movimentação, o *ServicoValidacao* verifica se foi informada uma justificativa para a rejeição.
+
+• Caso a justificativa esteja vazia, o serviço retorna um erro de validação ao controlador.
+
+• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da justificativa antes da rejeição da movimentação.
+
 <div align="center">
 <p align="center">Figura 15 - Diagrama Sequencial (RF006)</p>
 <p align="center">
@@ -1598,10 +1798,45 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
+----
 
 #### 7. Gerar Relatório (`/relatorios`)
-&nbsp;&nbsp;&nbsp;&nbsp;O gerente escolhe filtros (período, fazenda, etc.) e pede o relatório. O sistema busca só as movimentações que foram aprovadas e sincronizadas, gera uma planilha e disponibiliza pra download. Se não tiver dado nenhum, avisa que não há informações.
+
+**Fluxo Principal**
+
+• O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação./
+
+• Em seguida, a interface envia uma requisição `GET` para o endpoint `/relatorios/filtros`, encaminhando os parâmetros ao *ControladorRelatorio*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar a funcionalidade de relatórios.
+
+• Caso o perfil seja válido, o controlador encaminha a solicitação ao *ServicoRelatorio*, responsável pelas regras de geração do relatório.
+
+• O serviço solicita ao *RepositorioMovimentacao* a busca das movimentações aprovadas e sincronizadas conforme os filtros informados.
+
+• Após a consulta no banco de dados, o repositório retorna os dados encontrados ao serviço.
+
+• Quando existem registros disponíveis, o *ServicoRelatorio* aciona o *ServicoPlanilha*, responsável por gerar o arquivo da planilha com os dados consolidados.
+
+• Após a geração do arquivo, o serviço retorna a planilha ao controlador, que responde à interface com status `200 – Sucesso`, disponibilizando o download do relatório ao gerente.
+
+**Fluxo Alternativo - Usuário sem permissão**
+
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
+
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorRelatorio* retorna uma resposta `403 – Proibido`.
+
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para acessar os relatórios.
+
+
+**Fluxo Alternativo - Nenhum dado encontrado**
+
+• Após a consulta das movimentações, o *RepositorioMovimentacao* pode retornar uma lista vazia caso não existam registros compatíveis com os filtros selecionados.
+
+• Nesse cenário, o *ServicoRelatorio* informa ao controlador que não há dados disponíveis para geração da planilha.
+
+• Por fim, o sistema responde à interface com status `200 – Sucesso`, exibindo uma mensagem indicando que não foram encontrados dados para o relatório solicitado.
+
 
 <div align="center">
 <p align="center">Figura 16 - Diagrama Sequencial (RF007)</p>
@@ -1611,12 +1846,39 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
-
-
+-----
 
 #### 8. Abrir Chamado (`/tickets`)
-&nbsp;&nbsp;&nbsp;&nbsp;O capataz abre um chamado de problema de infraestrutura (cerca quebrada, bebedouro, etc.). É obrigatório anexar uma evidência, áudio ou mensagem. Se tiver tudo certo, salva o chamado e notifica tanto o supervisor quanto a equipe de infraestrutura.
+
+**Fluxo Principal**
+
+• O processo inicia quando o capataz preenche as informações do chamado na interface da aplicação.
+
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tickets`, encaminhando os dados ao *ControladorTicket*.
+
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que ele possui permissão para abrir chamados no sistema.
+
+• Em seguida, os dados são encaminhados ao *ServicoTicket*, responsável pelas regras de negócio da operação.
+
+• O serviço verifica se o chamado possui alguma evidência anexada, como mensagem, áudio ou imagem.
+
+• Caso as informações estejam corretas, o *ServicoTicket* solicita ao *RepositorioTicket* o salvamento do chamado no banco de dados.
+
+• Após a persistência, o banco retorna o identificador do chamado criado, confirmando o sucesso da operação.
+
+• Em seguida, o *ServicoNotificacao* é acionado para enviar notificações ao supervisor e à equipe responsável.
+
+• Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação de que o chamado foi aberto corretamente.
+
+**Fluxo Alternativo - Chamado sem evidência**
+
+• Durante a validação do chamado, o *ServicoTicket* verifica se existe ao menos uma evidência anexada ao registro.
+
+• Caso nenhuma evidência seja enviada, o serviço retorna um erro de validação ao controlador.
+
+• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`.
+
+• Por fim, a interface exibe uma mensagem solicitando que o usuário inclua uma mensagem, áudio ou outra evidência antes de abrir o chamado.
 
 <div align="center">
 <p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
@@ -1626,16 +1888,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-
- 
-
-**Conclusão:**
-
-&nbsp;&nbsp;&nbsp;&nbsp;Os oito diagramas apresentados cobrem as principais funcionalidades do AgroFlow, desde o acesso ao sistema até a geração de relatórios. Juntos, eles mostram como o sistema foi pensado para atender diferentes perfis de usuário, sendo o capataz responsável pelos registros do campo, o supervisor pela validação e atribuição de tarefas, e o gerente pelo acompanhamento geral por meio de relatórios.
- 
-&nbsp;&nbsp;&nbsp;&nbsp;Um ponto importante que aparece em todos os diagramas é a preocupação com a validação dos dados. O sistema não aceita informações incompletas ou incorretas e sempre avisa o usuário quando algo está errado. Isso evita que dados ruins cheguem ao banco e comprometam as informações da fazenda.
- 
-&nbsp;&nbsp;&nbsp;&nbsp;Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para funcionar mesmo em áreas rurais com sinal instável, salvando os dados localmente e sincronizando assim que a conexão volta. Isso mostra que o sistema foi planejado pensando na realidade de quem vai usar no dia a dia.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BRPEC.
 
 
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
@@ -1700,12 +1953,8 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 20 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
-<<<<<<< HEAD
-<img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
-=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
->>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1714,12 +1963,8 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 21 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
-<<<<<<< HEAD
-<img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
-=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
->>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
