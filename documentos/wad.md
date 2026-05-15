@@ -208,7 +208,7 @@
 <div align="center">
   <p>Figura 1 - 5 Forças de Porter</p>
   <p>
-    <a href="https://www.inteli.edu.br/"><img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
+    <img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
   </p>
   <p>Fonte: Próprios autores (2026).</p>
 </div>
@@ -250,7 +250,7 @@
 <div align="center">
 <p>Figura 2 - Análise de SWOT</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
+<img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -307,7 +307,7 @@
 <p>Figura 3 - Canvas Proposta de Valor</p>
 <p align="center">
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
+><img src="outros/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -434,7 +434,7 @@
 <div align="center">
 <p>Figura 5 - Persona 1 (Daniel Carvalho)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img <img src="outros/assets/persona-daniel.png">  <alt="Persona 1" border="0"></a>
+<img <img src="outros/assets/persona-daniel.png">  <alt="Persona 1" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -491,7 +491,7 @@
 <div align="center">
 <p>Figura 6 - Persona 2 (Luiz Felipe)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-luiz.png">  <alt="Persona 2" border="0"></a>
+<img <img <img src="outros/assets/persona-luiz.png">  <alt="Persona 2" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -547,7 +547,7 @@
 <div align="center">
 <p>Figura 7 - Persona 3 (Marcos Ferreira)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/persona-marcos.png">  <alt="Persona 3" border="0"></a>
+<img <img <img src="outros/assets/persona-marcos.png">  <alt="Persona 3" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1040,7 +1040,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 <p>Figura 8 - Diagrama de Casos de Uso</p>
 <p align="center">
 
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+<img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1504,7 +1504,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p>Figura X - Diagrama de Classes de Domínio</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img <img <img src="outros/assets/diagrama-classes-dominio.jpg">  <alt="Persona 3" border="0"></a>
+<img <img <img src="outros/assets/diagrama-classes-dominio.jpg">  <alt="Persona 3" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1652,8 +1652,12 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 9 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
+<img src="outros/assets/entrar-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1664,8 +1668,12 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 10 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
+<img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-registrar-movimentacao-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1676,8 +1684,12 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 11 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
+<img src="outros/assets/abrir-chamado-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1688,8 +1700,12 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 12 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
+<<<<<<< HEAD
+<img src="outros/assets/minhas-tarefas-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+=======
 <a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+>>>>>>> aa65818031955539b53ced052e1c31352db9d4dd
 </a>
 </p>
 </div>
@@ -1718,7 +1734,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 9 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
@@ -1730,7 +1745,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 10 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
@@ -1742,7 +1756,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 11 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
@@ -1758,7 +1771,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 12 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
@@ -1767,7 +1779,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 13 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
@@ -1779,7 +1790,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 14 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
@@ -1791,7 +1801,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 15 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
@@ -1816,7 +1825,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 16 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
 </p>
@@ -1829,7 +1837,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 17 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
 </p>
@@ -1843,7 +1850,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 22 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
 </p>
@@ -1855,7 +1861,6 @@ Outro destaque é o suporte ao uso sem internet. O AgroFlow foi projetado para f
 <div align="center">
 <p>Figura 23 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/">
 <img src="outros/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
 </p>
