@@ -1,0 +1,40 @@
+{
+  "name": "g02",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">\r <a href= \"https://www.inteli.edu.br/\"><img src=\"/assets/inteli.png\" alt=\"Inteli - Instituto de Tecnologia e Liderança\" border=\"0\"></a>\r </p>",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "node": "^22.22.3",
+    "pg": "^8.21.0",
+    "postgres": "^3.4.9"
+  },
+  "scripts": {
+    "dev": "tsx watch src/backend/server.ts",
+    "build": "tsc",
+    "start": "node dist/backend/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "ts-node": {
+    "compilerOptions": 
+    {"module": "commonjs"}},
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.9.0",
+    "@types/pg": "^8.20.0",
+    "@types/supertest": "^7.2.0",
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.10",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}
