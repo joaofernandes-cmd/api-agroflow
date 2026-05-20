@@ -2107,6 +2107,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.4.1"></a>3.4.1 Cores
 
+&nbsp;&nbsp;&nbsp;&nbsp;A paleta de cores da aplicação constitui um dos principais elementos da identidade visual do sistema, sendo responsável por transmitir organização, clareza e coerência visual durante a utilização da interface. Além do aspecto estético, a definição cromática contribui diretamente para a legibilidade, hierarquia das informações e identificação rápida de elementos importantes dentro da aplicação. Em sistemas utilizados em ambientes operacionais e dispositivos móveis, como no contexto da BRPEC, a escolha das cores também precisa considerar fatores como contraste, acessibilidade e visibilidade em ambientes externos com alta luminosidade.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a paleta cromática da aplicação foi desenvolvida considerando o contexto do agronegócio e as necessidades operacionais da fazenda. Os tons de verde foram definidos como cores principais por remeterem visualmente ao campo, à natureza e à identidade do setor agropecuário, além de transmitirem sensação de estabilidade, confiabilidade e equilíbrio.
 
 <div align="center">
 <p align="center">Figura 33 - Cores</p>
@@ -2116,6 +2119,52 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
+**Hierarquia Visual das Cores**
+
+&nbsp;&nbsp;&nbsp;&nbsp;A hierarquia visual das cores foi definida com base na frequência de uso e na importância dos elementos dentro da interface da aplicação. Dessa forma, as cores foram organizadas em categorias que representam desde componentes principais do sistema até elementos de apoio, interações e feedbacks operacionais. Essa organização contribui para uma navegação mais intuitiva, facilitando a identificação rápida das informações pelos usuários durante a utilização da aplicação em campo.
+
+
+**Alta prioridade de uso:**
+
+As cores desta categoria representam os elementos principais da interface, sendo utilizadas com maior frequência durante a navegação e interação com o sistema.
+
+- Botões principais (HEX #2F6B3D): representa as ações centrais da aplicação, como salvar, confirmar e acessar funcionalidades importantes. O verde foi escolhido por remeter ao agronegócio e transmitir estabilidade e confiabilidade.
+
+- Texto principal (HEX #1F1F1F): utilizado em títulos e informações prioritárias, garantindo alto contraste e boa legibilidade em diferentes condições de luminosidade.
+
+- Fundo da aplicação (HEX #F7F8F5): utilizado como base visual da interface, proporcionando conforto visual e reduzindo o cansaço durante o uso contínuo da aplicação.
+
+
+**Uso secundário:**
+
+As cores secundárias atuam como elementos de apoio visual, auxiliando na organização das informações e na construção da hierarquia da interface.
+
+- Indicadores positivos (HEX #7FBF3F): utilizado em gráficos, métricas e estados positivos do sistema, facilitando a rápida interpretação visual das informações.
+
+- Texto secundário (HEX #7C847C): aplicado em descrições, legendas e informações complementares, mantendo equilíbrio visual sem competir com os conteúdos principais.
+
+- Bordas (HEX #D9DED8): utilizado em divisórias, tabelas e separação de componentes, contribuindo para uma interface mais limpa e organizada.
+
+
+**Estados de interação:**
+
+As cores desta categoria representam interações e estados visuais dos elementos da interface.
+
+- Destaques e interação (HEX #0F5F36): utilizado em estados de hover, seleção e destaque visual, auxiliando o usuário na percepção de interação com os componentes da aplicação.
+
+
+**Feedbacks e estados do sistema:**
+
+As cores semânticas são utilizadas para representar alertas, prioridades e feedbacks operacionais dentro do sistema.
+
+- Prioridade alta e alertas (HEX #FF3B30): utilizado em situações críticas e alertas importantes devido ao seu forte destaque visual e rápida associação com urgência.
+
+- Prioridade média (HEX #D99A00): representa estados intermediários de atenção e pendências operacionais, auxiliando na identificação de tarefas que exigem acompanhamento.
+
+- Sucesso e sincronização (HEX #3D7EA6): utilizado em confirmações, sincronizações e feedbacks positivos do sistema, transmitindo sensação de estabilidade e segurança durante a navegação.
+
+
 
 ### <a name="c3.4.2"></a>3.4.2 Tipografia
 
