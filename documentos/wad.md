@@ -2111,7 +2111,16 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.4.2"></a>3.4.2 Tipografia
 
-*Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
+<div align="center">
+<p align="center">Figura 33 - Tipografia</p>
+<p align="center">
+<img src="outros/assets/tipografia.png" alt="Tipografia" border="0">
+</a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
