@@ -2593,6 +2593,22 @@ WHERE sincronizado = FALSE
 ```
  
 ---
+
+#### Consulta 3 — DELETE
+ 
+**Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura (RF008). Periodicamente, o sistema executa uma rotina de limpeza que remove tickets antigos já encerrados — categorias de baixa criticidade (`hidraulica` ou `eletrica`) **e** com status `resolvido` ou `cancelado` **e** sem nenhuma evidência associada na tabela `evidencia_ticket`. A consulta preserva tickets que ainda possuem evidências (úteis para auditoria) e tickets de categorias críticas.
+ 
+**Código SQL:**
+ 
+```sql
+DELETE FROM ticket 
+WHERE categoria IN ('hidraulica', 'eletrica') 
+  AND status IN ('resolvido', 'cancelado') 
+  AND id NOT IN (SELECT ticket_id FROM evidencia_ticket);
+```
+
+---
+
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
 *Template de SQL + lógica proposicional*
