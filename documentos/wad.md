@@ -2559,7 +2559,7 @@ ALTER TABLE `relatorio`
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
 
-#### Consulta 1 — SELECT
+#### Consulta 1 — SELECT (Filtro de operações prioritárias)
  
 **Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho (nascimento, morte, transferência, compra, venda) feitos pelos capatazes em campo. Conforme o RF006 e o RF009, o Supervisor precisa priorizar a validação de movimentações sensíveis: registros do tipo `morte` (que demandam auditoria conforme RN01) **ou** transferências de grandes lotes (quantidade acima de 50 cabeças), desde que estejam pendentes e já sincronizadas com o servidor.
  
@@ -2574,9 +2574,9 @@ WHERE (tipo = 'morte' OR quantidade > 50)
  
 ---
 
-#### Consulta 2 — UPDATE
+#### Consulta 2 — UPDATE (Sincronização de registros)
  
-**Descrição:** A tabela `movimentacao` possui o campo booleano `sincronizado`, inicializado como `FALSE` quando o registro é criado offline pelo capataz (RN07). Quando a conectividade Starlink é restabelecida (RN03), o serviço de sincronização marca como sincronizados todos os registros pendentes de envio, exceto aqueles em estado terminal de erro (`rejeitado`), e desde que a movimentação seja recente (criada nas últimas 72 horas) ou que tenha sido criada por um capataz vinculado a um retiro prioritário.
+**Descrição:** A tabela `movimentacao` possui o campo booleano `sincronizado`, inicializado como `FALSE` quando o registro é criado offline pelo capataz (RN07). Quando a conectividade Starlink é restabelecida (RN03), o serviço de sincronização marca como sincronizados todos os registros pendentes de envio, exceto aqueles em estado terminal de erro (`rejeitado`), e desde que a movimentação seja recente (criada nas últimas 72 horas).
  
 **Código SQL:**
  
@@ -2585,26 +2585,24 @@ UPDATE movimentacao
 SET sincronizado = TRUE 
 WHERE sincronizado = FALSE 
   AND NOT (status = 'rejeitado') 
-  AND (data_criacao >= NOW() - INTERVAL 72 HOUR 
-       OR capataz_id IN (
-            SELECT id FROM usuario 
-            WHERE retiro_id IN ('r-puga', 'r-morro-azul')
-       ));
+  AND (data_criacao >= NOW() - INTERVAL 72 HOUR );
 ```
  
 ---
 
-#### Consulta 3 — DELETE
+#### Consulta 3 — UPDATE (Validação pelo Supervisor)
  
-**Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura (RF008). Periodicamente, o sistema executa uma rotina de limpeza que remove tickets antigos já encerrados — categorias de baixa criticidade (`hidraulica` ou `eletrica`) **e** com status `resolvido` ou `cancelado` **e** sem nenhuma evidência associada na tabela `evidencia_ticket`. A consulta preserva tickets que ainda possuem evidências (úteis para auditoria) e tickets de categorias críticas.
+**Descrição:** A tabela `movimentacao` possui os campos `status` e `validado_por`, que registram o resultado da validação feita pelo Supervisor sobre os registros enviados pelos Capatazes. Conforme o RF006 e a RN06, apenas usuários com cargo `supervisor` podem alterar o status de uma movimentação para `aprovado`, e essa ação só pode ser realizada sobre movimentações que estejam pendentes de validação e já sincronizadas com o servidor. A consulta abaixo atualiza o status para `aprovado` e registra qual supervisor realizou a validação.
  
 **Código SQL:**
  
 ```sql
-DELETE FROM ticket 
-WHERE categoria IN ('hidraulica', 'eletrica') 
-  AND status IN ('resolvido', 'cancelado') 
-  AND id NOT IN (SELECT ticket_id FROM evidencia_ticket);
+UPDATE movimentacao 
+SET status = 'aprovado', 
+    validado_por = ? 
+WHERE id = ? 
+  AND status = 'pendente' 
+  AND sincronizado = TRUE;
 ```
 
 ---
