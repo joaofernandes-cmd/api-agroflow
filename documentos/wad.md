@@ -2573,6 +2573,26 @@ WHERE (tipo = 'morte' OR quantidade > 50)
 ```
  
 ---
+
+#### Consulta 2 — UPDATE
+ 
+**Descrição:** A tabela `movimentacao` possui o campo booleano `sincronizado`, inicializado como `FALSE` quando o registro é criado offline pelo capataz (RN07). Quando a conectividade Starlink é restabelecida (RN03), o serviço de sincronização marca como sincronizados todos os registros pendentes de envio, exceto aqueles em estado terminal de erro (`rejeitado`), e desde que a movimentação seja recente (criada nas últimas 72 horas) ou que tenha sido criada por um capataz vinculado a um retiro prioritário.
+ 
+**Código SQL:**
+ 
+```sql
+UPDATE movimentacao 
+SET sincronizado = TRUE 
+WHERE sincronizado = FALSE 
+  AND NOT (status = 'rejeitado') 
+  AND (data_criacao >= NOW() - INTERVAL 72 HOUR 
+       OR capataz_id IN (
+            SELECT id FROM usuario 
+            WHERE retiro_id IN ('r-puga', 'r-morro-azul')
+       ));
+```
+ 
+---
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
 *Template de SQL + lógica proposicional*
