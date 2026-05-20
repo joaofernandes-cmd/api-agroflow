@@ -22,8 +22,10 @@
   "license": "ISC",
   "type": "commonjs",
   "ts-node": {
-    "compilerOptions": 
-    {"module": "commonjs"}},
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
