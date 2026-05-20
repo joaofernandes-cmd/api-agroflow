@@ -2103,7 +2103,9 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
-*Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
+&nbsp;&nbsp;&nbsp;&nbsp;O guia de estilos da aplicação tem como objetivo garantir consistência visual, organização e padronização em toda a interface do sistema desenvolvido para a BRPEC. Ele funciona como uma referência central para o desenvolvimento das telas, definindo diretrizes relacionadas ao uso de cores, tipografia, hierarquia visual e elementos gráficos da aplicação. Dessa forma, o guia auxilia na construção de interfaces mais intuitivas, acessíveis e visualmente coerentes entre os diferentes perfis de usuários do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além de fortalecer a identidade visual da aplicação, o guia de estilos contribui para a manutenção da clareza visual e da experiência de uso em ambientes operacionais de campo, nos quais fatores como legibilidade, simplicidade e rápida interpretação das informações são essenciais. A padronização dos componentes também reduz inconsistências durante o desenvolvimento da interface, promovendo maior escalabilidade, facilidade de manutenção e alinhamento visual entre todas as telas do sistema.
 
 ### <a name="c3.4.1"></a>3.4.1 Cores
 
