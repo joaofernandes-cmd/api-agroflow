@@ -2557,8 +2557,22 @@ ALTER TABLE `relatorio`
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no MySQL. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
 &nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
-### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
 
+#### Consulta 1 — SELECT
+ 
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho (nascimento, morte, transferência, compra, venda) feitos pelos capatazes em campo. Conforme o RF006 e o RF009, o Supervisor precisa priorizar a validação de movimentações sensíveis: registros do tipo `morte` (que demandam auditoria conforme RN01) **ou** transferências de grandes lotes (quantidade acima de 50 cabeças), desde que estejam pendentes e já sincronizadas com o servidor.
+ 
+**Código SQL:**
+ 
+```sql
+SELECT * FROM movimentacao 
+WHERE (tipo = 'morte' OR quantidade > 50) 
+  AND status = 'pendente' 
+  AND sincronizado = TRUE;
+```
+ 
+---
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
 *Template de SQL + lógica proposicional*
