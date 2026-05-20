@@ -2107,7 +2107,15 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.4.1"></a>3.4.1 Cores
 
-*Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções*
+
+<div align="center">
+<p align="center">Figura 33 - Cores</p>
+<p align="center">
+<img src="outros/assets/cores.png" alt="Cores" border="0">
+</a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ### <a name="c3.4.2"></a>3.4.2 Tipografia
 
@@ -2117,7 +2125,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 
 <div align="center">
-<p align="center">Figura 33 - Tipografia</p>
+<p align="center">Figura 34 - Tipografia</p>
 <p align="center">
 <img src="outros/assets/tipografia.png" alt="Tipografia" border="0">
 </a>
