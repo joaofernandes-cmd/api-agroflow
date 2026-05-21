@@ -2607,6 +2607,21 @@ WHERE movimentacao_id = ?
 
 ---
 
+#### Consulta 4 — INSERT (registro de movimentação do rebanho)
+
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho — nascimento, morte, transferência, compra, venda ou outros — feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com os campos obrigatórios definidos no modelo físico. A consulta abaixo insere uma nova movimentação no estado inicial pendente, aguardando validação posterior pelo Supervisor (conforme o RF006). O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A inserção é validada automaticamente pelos CHECK constraints definidos no schema da tabela: `chk_causa_obito_obrigatoria`, que aplica a expressão lógica tipo `!= 'morte' OR causa_obito IS NOT NULL` (ou seja, se o tipo for morte, então causa_obito deve ser informado); e `chk_transferencia_campos_obrigatorios`, que aplica `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)` (ou seja, se o tipo for transferencia, então origem e destino devem ser informados). Caso essas condições não sejam satisfeitas pelos valores recebidos, o banco rejeita a inserção e retorna erro de violação de restrição.
+
+**Código SQL:**
+
+```sql
+INSERT INTO movimentacao 
+    (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, 
+     quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente', ?, NOW(), ?, ?);
+```
+
+---
+
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
 *Template de SQL + lógica proposicional*
