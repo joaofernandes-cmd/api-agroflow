@@ -2559,19 +2559,21 @@ ALTER TABLE `relatorio`
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
 
-#### Consulta 1 — SELECT (Filtro de operações prioritárias)
- 
-**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho (nascimento, morte, transferência, compra, venda) feitos pelos capatazes em campo. Conforme o RF006 e o RF009, o Supervisor precisa priorizar a validação de movimentações sensíveis: registros do tipo `morte` (que demandam auditoria conforme RN01) **ou** transferências de grandes lotes (quantidade acima de 50 cabeças), desde que estejam pendentes e já sincronizadas com o servidor.
- 
+#### Consulta 1 — SELECT (filtro de movimentações pelo Supervisor)
+
+**Descrição:** A tabela `movimentacao`armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor — afinal, registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+
 **Código SQL:**
- 
+
 ```sql
 SELECT * FROM movimentacao 
-WHERE (tipo = 'morte' OR quantidade > 50) 
-  AND status = 'pendente' 
+WHERE retiro_id = ? 
+  AND tipo = ? 
+  AND status = ? 
+  AND data_criacao BETWEEN ? AND ? 
   AND sincronizado = TRUE;
 ```
- 
+
 ---
 
 #### Consulta 2 — UPDATE (Sincronização de registros)
