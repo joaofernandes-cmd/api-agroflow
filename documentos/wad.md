@@ -2576,18 +2576,19 @@ WHERE retiro_id = ?
 
 ---
 
-#### Consulta 2 — UPDATE (Sincronização de registros)
- 
-**Descrição:** A tabela `movimentacao` possui o campo booleano `sincronizado`, inicializado como `FALSE` quando o registro é criado offline pelo capataz (RN07). Quando a conectividade Starlink é restabelecida (RN03), o serviço de sincronização marca como sincronizados todos os registros pendentes de envio, exceto aqueles em estado terminal de erro (`rejeitado`), e desde que a movimentação seja recente (criada nas últimas 72 horas).
- 
+#### Consulta 2 — UPDATE (atualização de ticket pelo Supervisor)
+
+**Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. Conforme o mesmo RF, o Supervisor é responsável por atribuir chamados a Capatazes para execução, o que envolve atualizar três campos do ticket: o campo `atribuido_a` (que recebe o ID do Capataz designado), o campo `status` (que avança no ciclo de vida aberto → em_atendimento → resolvido/cancelado definido pelo ENUM) e, quando o chamado é encerrado, o campo `data_realizado` (que registra quando o serviço foi concluído). A consulta abaixo atualiza esses três campos para um ticket específico, desde que ele ainda não esteja em um estado terminal (resolvido ou cancelado), pois tickets encerrados não devem ser reabertos por meio dessa operação.
+
 **Código SQL:**
- 
+
 ```sql
-UPDATE movimentacao 
-SET sincronizado = TRUE 
-WHERE sincronizado = FALSE 
-  AND NOT (status = 'rejeitado') 
-  AND (data_criacao >= NOW() - INTERVAL 72 HOUR );
+UPDATE ticket 
+SET status = ?, 
+    atribuido_a = ?, 
+    data_realizado = ? 
+WHERE id = ? 
+  AND status NOT IN ('resolvido', 'cancelado');
 ```
  
 ---
