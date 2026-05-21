@@ -1522,18 +1522,13 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ### <a name="c3.2.3.1"></a>3.2.3.1 Criar diagrama de classes arquitetural
 
-Introdução ao Diagrama Arquitetural — Sistema BRPEC
-O diagrama apresentado ilustra a arquitetura de software em três camadas (3-tier) de um sistema de gestão pecuária, organizado segundo o padrão MVC (Model-View-Controller). A estrutura está dividida em três grandes blocos que representam a separação clara de responsabilidades entre apresentação, lógica de negócio e persistência de dados.
-Visão Geral das Camadas
-Cliente (App Mobile) — Representa a interface utilizada pelos perfis operacionais do sistema: Capataz, Supervisor e Gerente. É o ponto de entrada do usuário, responsável pela interação direta com as funcionalidades do sistema através de um aplicativo móvel.
-Servidor — Núcleo da aplicação, onde reside toda a lógica de negócio. Está subdividido em três módulos internos que seguem o padrão MVC:
+# Diagrama Arquitetural — Sistema BRPEC
 
-Views: 19 telas que compõem a experiência do usuário, abrangendo desde Login, Cadastro e Dashboard até módulos especializados como Retiros, Lotes, Animais, Movimentação, Validação, Tarefas, Chamados, Evidências, Alertas, Relatórios, Sincronização e o Módulo Administrativo.
-Controllers: 13 controladores que orquestram as requisições, processam regras de negócio e fazem a ponte entre as views e os models. Destacam-se controladores como AuthController (autenticação JWT), SincronController (sincronização offline) e MovimentacaoController (com suporte a operação offline).
-Models: 15 entidades de domínio que representam os objetos de negócio, como Usuario, Retiro, Lote, Animal, Movimentacao, Validacao, além de entidades de apoio como Auditoria, Sessao e FilaSincronizacao.
+O diagrama a seguir ilustra a arquitetura do sistema **BRPEC**, estruturada em três camadas segundo o padrão **MVC (Model-View-Controller)**, com clara separação entre apresentação, lógica de negócio e persistência de dados.
 
-Banco de Dados (PostgreSQL) — Camada de persistência implementada em PostgreSQL, contendo 12 entidades com herança e 18 relacionamentos, responsável pelo armazenamento estruturado de todos os dados do sistema.
+A camada de **Cliente** corresponde ao aplicativo móvel utilizado pelos perfis *Capataz*, *Supervisor* e *Gerente*. A camada de **Servidor** concentra a lógica de negócio e subdivide-se em *Views* (19 telas), *Controllers* (13 controladores responsáveis pela orquestração das requisições) e *Models* (15 entidades de domínio). Por fim, a camada de **Banco de Dados**, implementada em **PostgreSQL**, contempla 12 entidades com herança e 18 relacionamentos.
 
+Dentre as características arquiteturais relevantes, destacam-se a integração com o **SISBOV**, o suporte à operação **offline** com fila de sincronização, a captura de evidências multimídia e os mecanismos de auditoria, permissões e alertas. O fluxo de comunicação segue um modelo unidirecional — *Cliente → Views → Controllers → Models → Banco de Dados* — assegurando baixo acoplamento e alta coesão entre os componentes.
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
