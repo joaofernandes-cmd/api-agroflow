@@ -2593,19 +2593,16 @@ WHERE id = ?
  
 ---
 
-#### Consulta 3 — UPDATE (Validação pelo Supervisor)
- 
-**Descrição:** A tabela `movimentacao` possui os campos `status` e `validado_por`, que registram o resultado da validação feita pelo Supervisor sobre os registros enviados pelos Capatazes. Conforme o RF006 e a RN06, apenas usuários com cargo `supervisor` podem alterar o status de uma movimentação para `aprovado`, e essa ação só pode ser realizada sobre movimentações que estejam pendentes de validação e já sincronizadas com o servidor. A consulta abaixo atualiza o status para `aprovado` e registra qual supervisor realizou a validação.
- 
+#### Consulta 3 — DELETE (remoção de vínculo entre evidência e movimentação)
+
+**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre evidencia e movimentacao, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18 — ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão — todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
+
 **Código SQL:**
- 
+
 ```sql
-UPDATE movimentacao 
-SET status = 'aprovado', 
-    validado_por = ? 
-WHERE id = ? 
-  AND status = 'pendente' 
-  AND sincronizado = TRUE;
+DELETE FROM evidencia_movimentacao 
+WHERE movimentacao_id = ? 
+  AND evidencia_id = ?;
 ```
 
 ---
