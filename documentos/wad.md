@@ -1520,6 +1520,21 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 &nbsp;&nbsp;&nbsp;&nbsp;Mais do que um artefato técnico, o diagrama de classes do AgroFlow é o reflexo digital de uma operação que historicamente dependia de papel, memória e repasse verbal. Ao estruturar com precisão as responsabilidades de cada perfil, as regras que governam cada registro e os vínculos entre campo e gestão, o modelo estabelece a base sobre a qual toda a aplicação será construída, garantindo que nenhuma decisão de implementação precise ser tomada no escuro.
 
+### <a name="c3.2.3.1"></a>3.2.3.1 Criar diagrama de classes arquitetural
+
+Introdução ao Diagrama Arquitetural — Sistema BRPEC
+O diagrama apresentado ilustra a arquitetura de software em três camadas (3-tier) de um sistema de gestão pecuária, organizado segundo o padrão MVC (Model-View-Controller). A estrutura está dividida em três grandes blocos que representam a separação clara de responsabilidades entre apresentação, lógica de negócio e persistência de dados.
+Visão Geral das Camadas
+Cliente (App Mobile) — Representa a interface utilizada pelos perfis operacionais do sistema: Capataz, Supervisor e Gerente. É o ponto de entrada do usuário, responsável pela interação direta com as funcionalidades do sistema através de um aplicativo móvel.
+Servidor — Núcleo da aplicação, onde reside toda a lógica de negócio. Está subdividido em três módulos internos que seguem o padrão MVC:
+
+Views: 19 telas que compõem a experiência do usuário, abrangendo desde Login, Cadastro e Dashboard até módulos especializados como Retiros, Lotes, Animais, Movimentação, Validação, Tarefas, Chamados, Evidências, Alertas, Relatórios, Sincronização e o Módulo Administrativo.
+Controllers: 13 controladores que orquestram as requisições, processam regras de negócio e fazem a ponte entre as views e os models. Destacam-se controladores como AuthController (autenticação JWT), SincronController (sincronização offline) e MovimentacaoController (com suporte a operação offline).
+Models: 15 entidades de domínio que representam os objetos de negócio, como Usuario, Retiro, Lote, Animal, Movimentacao, Validacao, além de entidades de apoio como Auditoria, Sessao e FilaSincronizacao.
+
+Banco de Dados (PostgreSQL) — Camada de persistência implementada em PostgreSQL, contendo 12 entidades com herança e 18 relacionamentos, responsável pelo armazenamento estruturado de todos os dados do sistema.
+
+
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência UML constituem representações visuais que modelam a interação temporal entre os componentes de um sistema de software durante a execução de funcionalidades específicas. Diferentemente de outros artefatos que descrevem apenas estados ou resultados finais, os diagramas de sequência explicitam o fluxo completo de mensagens trocadas entre objetos, preservando a ordenação cronológica das interações (LARMAN, 2004).
