@@ -2630,7 +2630,70 @@ ALTER TABLE `relatorio`
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no MySQL. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
 &nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
-### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+
+#### Consulta 1 — SELECT (filtro de movimentações pelo Supervisor)
+
+**Descrição:** A tabela `movimentacao`armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor — afinal, registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+
+**Código SQL:**
+
+```sql
+SELECT * FROM movimentacao 
+WHERE retiro_id = ? 
+  AND tipo = ? 
+  AND status = ? 
+  AND data_criacao BETWEEN ? AND ? 
+  AND sincronizado = TRUE;
+```
+
+---
+
+#### Consulta 2 — UPDATE (atualização de ticket pelo Supervisor)
+
+**Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. Conforme o mesmo RF, o Supervisor é responsável por atribuir chamados a Capatazes para execução, o que envolve atualizar três campos do ticket: o campo `atribuido_a` (que recebe o ID do Capataz designado), o campo `status` (que avança no ciclo de vida aberto → em_atendimento → resolvido/cancelado definido pelo ENUM) e, quando o chamado é encerrado, o campo `data_realizado` (que registra quando o serviço foi concluído). A consulta abaixo atualiza esses três campos para um ticket específico, desde que ele ainda não esteja em um estado terminal (resolvido ou cancelado), pois tickets encerrados não devem ser reabertos por meio dessa operação.
+
+**Código SQL:**
+
+```sql
+UPDATE ticket 
+SET status = ?, 
+    atribuido_a = ?, 
+    data_realizado = ? 
+WHERE id = ? 
+  AND status NOT IN ('resolvido', 'cancelado');
+```
+ 
+---
+
+#### Consulta 3 — DELETE (remoção de vínculo entre evidência e movimentação)
+
+**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre evidencia e movimentacao, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18 — ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão — todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
+
+**Código SQL:**
+
+```sql
+DELETE FROM evidencia_movimentacao 
+WHERE movimentacao_id = ? 
+  AND evidencia_id = ?;
+```
+
+---
+
+#### Consulta 4 — INSERT (registro de movimentação do rebanho)
+
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho — nascimento, morte, transferência, compra, venda ou outros — feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com os campos obrigatórios definidos no modelo físico. A consulta abaixo insere uma nova movimentação no estado inicial pendente, aguardando validação posterior pelo Supervisor (conforme o RF006). O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A inserção é validada automaticamente pelos CHECK constraints definidos no schema da tabela: `chk_causa_obito_obrigatoria`, que aplica a expressão lógica tipo `!= 'morte' OR causa_obito IS NOT NULL` (ou seja, se o tipo for morte, então causa_obito deve ser informado); e `chk_transferencia_campos_obrigatorios`, que aplica `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)` (ou seja, se o tipo for transferencia, então origem e destino devem ser informados). Caso essas condições não sejam satisfeitas pelos valores recebidos, o banco rejeita a inserção e retorna erro de violação de restrição.
+
+**Código SQL:**
+
+```sql
+INSERT INTO movimentacao 
+    (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, 
+     quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente', ?, NOW(), ?, ?);
+```
+
+---
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
