@@ -2103,15 +2103,88 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
-*Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
+&nbsp;&nbsp;&nbsp;&nbsp;O guia de estilos da aplicação tem como objetivo garantir consistência visual, organização e padronização em toda a interface do sistema desenvolvido para a BRPEC. Ele funciona como uma referência central para o desenvolvimento das telas, definindo diretrizes relacionadas ao uso de cores, tipografia, hierarquia visual e elementos gráficos da aplicação. Dessa forma, o guia auxilia na construção de interfaces mais intuitivas, acessíveis e visualmente coerentes entre os diferentes perfis de usuários do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além de fortalecer a identidade visual da aplicação, o guia de estilos contribui para a manutenção da clareza visual e da experiência de uso em ambientes operacionais de campo, nos quais fatores como legibilidade, simplicidade e rápida interpretação das informações são essenciais. A padronização dos componentes também reduz inconsistências durante o desenvolvimento da interface, promovendo maior escalabilidade, facilidade de manutenção e alinhamento visual entre todas as telas do sistema.
 
 ### <a name="c3.4.1"></a>3.4.1 Cores
 
-*Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções*
+&nbsp;&nbsp;&nbsp;&nbsp;A paleta de cores da aplicação constitui um dos principais elementos da identidade visual do sistema, sendo responsável por transmitir organização, clareza e coerência visual durante a utilização da interface. Além do aspecto estético, a definição cromática contribui diretamente para a legibilidade, hierarquia das informações e identificação rápida de elementos importantes dentro da aplicação. Em sistemas utilizados em ambientes operacionais e dispositivos móveis, como no contexto da BRPEC, a escolha das cores também precisa considerar fatores como contraste, acessibilidade e visibilidade em ambientes externos com alta luminosidade.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a paleta cromática da aplicação foi desenvolvida considerando o contexto do agronegócio e as necessidades operacionais da fazenda. Os tons de verde foram definidos como cores principais por remeterem visualmente ao campo, à natureza e à identidade do setor agropecuário, além de transmitirem sensação de estabilidade, confiabilidade e equilíbrio.
+
+<div align="center">
+<p align="center">Figura 33 - Cores</p>
+<p align="center">
+<img src="outros/assets/cores.png" alt="Cores" border="0">
+</a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Hierarquia Visual das Cores**
+
+&nbsp;&nbsp;&nbsp;&nbsp;A hierarquia visual das cores foi definida com base na frequência de uso e na importância dos elementos dentro da interface da aplicação. Dessa forma, as cores foram organizadas em categorias que representam desde componentes principais do sistema até elementos de apoio, interações e feedbacks operacionais. Essa organização contribui para uma navegação mais intuitiva, facilitando a identificação rápida das informações pelos usuários durante a utilização da aplicação em campo.
+
+
+**Alta prioridade de uso:**
+
+As cores desta categoria representam os elementos principais da interface, sendo utilizadas com maior frequência durante a navegação e interação com o sistema.
+
+- Botões principais (HEX #2F6B3D): representa as ações centrais da aplicação, como salvar, confirmar e acessar funcionalidades importantes. O verde foi escolhido por remeter ao agronegócio e transmitir estabilidade e confiabilidade.
+
+- Texto principal (HEX #1F1F1F): utilizado em títulos e informações prioritárias, garantindo alto contraste e boa legibilidade em diferentes condições de luminosidade.
+
+- Fundo da aplicação (HEX #F7F8F5): utilizado como base visual da interface, proporcionando conforto visual e reduzindo o cansaço durante o uso contínuo da aplicação.
+
+
+**Uso secundário:**
+
+As cores secundárias atuam como elementos de apoio visual, auxiliando na organização das informações e na construção da hierarquia da interface.
+
+- Indicadores positivos (HEX #7FBF3F): utilizado em gráficos, métricas e estados positivos do sistema, facilitando a rápida interpretação visual das informações.
+
+- Texto secundário (HEX #7C847C): aplicado em descrições, legendas e informações complementares, mantendo equilíbrio visual sem competir com os conteúdos principais.
+
+- Bordas (HEX #D9DED8): utilizado em divisórias, tabelas e separação de componentes, contribuindo para uma interface mais limpa e organizada.
+
+
+**Estados de interação:**
+
+As cores desta categoria representam interações e estados visuais dos elementos da interface.
+
+- Destaques e interação (HEX #0F5F36): utilizado em estados de hover, seleção e destaque visual, auxiliando o usuário na percepção de interação com os componentes da aplicação.
+
+
+**Feedbacks e estados do sistema:**
+
+As cores semânticas são utilizadas para representar alertas, prioridades e feedbacks operacionais dentro do sistema.
+
+- Prioridade alta e alertas (HEX #FF3B30): utilizado em situações críticas e alertas importantes devido ao seu forte destaque visual e rápida associação com urgência.
+
+- Prioridade média (HEX #D99A00): representa estados intermediários de atenção e pendências operacionais, auxiliando na identificação de tarefas que exigem acompanhamento.
+
+- Sucesso e sincronização (HEX #3D7EA6): utilizado em confirmações, sincronizações e feedbacks positivos do sistema, transmitindo sensação de estabilidade e segurança durante a navegação.
+
+
 
 ### <a name="c3.4.2"></a>3.4.2 Tipografia
 
-*Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
+&nbsp;&nbsp;&nbsp;&nbsp;A tipografia constitui um dos principais elementos da identidade visual de uma interface digital, sendo responsável por influenciar diretamente a legibilidade, a organização das informações e a experiência de navegação do usuário. A definição padronizada de fontes, tamanhos, pesos e espaçamentos contribui para a criação de interfaces mais consistentes, acessíveis e visualmente organizadas, facilitando a interpretação rápida dos conteúdos apresentados. Além disso, em aplicações utilizadas em dispositivos móveis e ambientes externos, como no contexto operacional da BRPEC, a escolha tipográfica torna-se ainda mais relevante devido à necessidade de boa visualização em diferentes condições de luminosidade e uso contínuo em campo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a aplicação adota a família tipográfica Poppins, escolhida por sua aparência moderna, limpa e alta legibilidade em interfaces digitais. A tipografia é aplicada em diferentes pesos e tamanhos conforme a hierarquia textual definida no sistema, contribuindo para a clareza visual, organização dos conteúdos e melhor experiência de uso dos usuários da aplicação.
+
+
+<div align="center">
+<p align="center">Figura 34 - Tipografia</p>
+<p align="center">
+<img src="outros/assets/tipografia.png" alt="Tipografia" border="0">
+</a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a utilização padronizada da tipografia contribui para uma interface mais clara, organizada e alinhada à identidade visual da aplicação. A definição hierárquica dos textos facilita a navegação e a interpretação das informações pelos usuários, especialmente no contexto operacional da BRPEC, no qual rapidez e facilidade de leitura são fatores essenciais para o uso eficiente da aplicação em campo.
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
@@ -2214,7 +2287,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
 <div align="center">
-<p align="center">Figura 33 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">Figura 34 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
 <img src="/documentos/outros/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
@@ -2240,7 +2313,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 <div align="center">
-<p align="center">Figura 34 – Modelo Relacional</p>
+<p align="center">Figura 35 – Modelo Relacional</p>
 <img src="outros/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2557,7 +2630,70 @@ ALTER TABLE `relatorio`
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no MySQL. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
 &nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
-### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+
+#### Consulta 1 — SELECT (filtro de movimentações pelo Supervisor)
+
+**Descrição:** A tabela `movimentacao`armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor — afinal, registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+
+**Código SQL:**
+
+```sql
+SELECT * FROM movimentacao 
+WHERE retiro_id = ? 
+  AND tipo = ? 
+  AND status = ? 
+  AND data_criacao BETWEEN ? AND ? 
+  AND sincronizado = TRUE;
+```
+
+---
+
+#### Consulta 2 — UPDATE (atualização de ticket pelo Supervisor)
+
+**Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. Conforme o mesmo RF, o Supervisor é responsável por atribuir chamados a Capatazes para execução, o que envolve atualizar três campos do ticket: o campo `atribuido_a` (que recebe o ID do Capataz designado), o campo `status` (que avança no ciclo de vida aberto → em_atendimento → resolvido/cancelado definido pelo ENUM) e, quando o chamado é encerrado, o campo `data_realizado` (que registra quando o serviço foi concluído). A consulta abaixo atualiza esses três campos para um ticket específico, desde que ele ainda não esteja em um estado terminal (resolvido ou cancelado), pois tickets encerrados não devem ser reabertos por meio dessa operação.
+
+**Código SQL:**
+
+```sql
+UPDATE ticket 
+SET status = ?, 
+    atribuido_a = ?, 
+    data_realizado = ? 
+WHERE id = ? 
+  AND status NOT IN ('resolvido', 'cancelado');
+```
+ 
+---
+
+#### Consulta 3 — DELETE (remoção de vínculo entre evidência e movimentação)
+
+**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre evidencia e movimentacao, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18 — ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão — todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
+
+**Código SQL:**
+
+```sql
+DELETE FROM evidencia_movimentacao 
+WHERE movimentacao_id = ? 
+  AND evidencia_id = ?;
+```
+
+---
+
+#### Consulta 4 — INSERT (registro de movimentação do rebanho)
+
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho — nascimento, morte, transferência, compra, venda ou outros — feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com os campos obrigatórios definidos no modelo físico. A consulta abaixo insere uma nova movimentação no estado inicial pendente, aguardando validação posterior pelo Supervisor (conforme o RF006). O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A inserção é validada automaticamente pelos CHECK constraints definidos no schema da tabela: `chk_causa_obito_obrigatoria`, que aplica a expressão lógica tipo `!= 'morte' OR causa_obito IS NOT NULL` (ou seja, se o tipo for morte, então causa_obito deve ser informado); e `chk_transferencia_campos_obrigatorios`, que aplica `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)` (ou seja, se o tipo for transferencia, então origem e destino devem ser informados). Caso essas condições não sejam satisfeitas pelos valores recebidos, o banco rejeita a inserção e retorna erro de violação de restrição.
+
+**Código SQL:**
+
+```sql
+INSERT INTO movimentacao 
+    (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, 
+     quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente', ?, NOW(), ?, ?);
+```
+
+---
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
