@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { pool } from '../connection';
+import sql from '../connection';
 
 if (!process.env.DATABASE_URL) {
   console.error('DATABASE_URL não definida no .env');
@@ -12,11 +12,11 @@ async function migrate() {
   const files = fs.readdirSync(dir).filter(file => file.endsWith('.sql')).sort();
 
   for (const file of files) {
-    const sql = fs.readFileSync(path.join(dir, file), 'utf-8');
+    const migration = fs.readFileSync(path.join(dir, file), 'utf-8');
     console.log(`Running migration: ${file}`);
-    await pool.query(sql);
+    await sql.unsafe(migration);
   }
-  await pool.end();
+  await sql.end();
   console.log('Migrations completed successfully');
 }
 

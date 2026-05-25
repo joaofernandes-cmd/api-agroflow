@@ -1,7 +1,8 @@
 import sql from '../database/connection' 
+import { randomUUID } from 'crypto'
 import { Usuario, UsuarioInput } from '../models/usuario.model'
 
-// Retorna todos os usuários cadastrados.
+// Retorna todos os usuários cadastrados
 export const UsuarioRepository = {
 
   // Ordena usuários por nome
@@ -13,8 +14,7 @@ export const UsuarioRepository = {
     `
   },
 
-  // Busca um usuário pelo seu id.
-  // Retorna null se não encontrar.
+  // Busca um usuário pelo seu id e retorna null se não encontrar. 
   async findById(id: string): Promise<Usuario | null> {
     const usuario = await sql<Usuario[]>`
       SELECT id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
@@ -26,7 +26,7 @@ export const UsuarioRepository = {
     return usuario[0] ?? null
   },
 
-  // Busca um usuário pelo login (nome de usuário).
+  // Busca um usuário pelo login (nome de usuário)
   async findByLogin(login: string): Promise<Usuario | null> {
     const usuario = await sql<Usuario[]>`
       SELECT id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
@@ -38,16 +38,18 @@ export const UsuarioRepository = {
     return usuario[0] ?? null
   },
 
-  // Cria um novo usuário no banco de dados.
+  // Cria um novo usuário no banco de dados
   async create(data: UsuarioInput): Promise<Usuario> {
     const [created] = await sql<Usuario[]>`
-      INSERT INTO usuario (retiro_id, nome, login, senha_hash, status, cargo)
+      INSERT INTO usuario (id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo)
       VALUES (
+        ${randomUUID()},
         ${data.retiro_id},
         ${data.nome},
         ${data.login},
         ${data.senha_hash},
         ${data.status},
+        ${new Date()},
         ${data.cargo}
       )
       RETURNING id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
@@ -56,8 +58,8 @@ export const UsuarioRepository = {
     return created
   },
 
-  // Atualiza os dados de um usuário existente.
-  // Campos não enviados permanecem com os valores atuais.
+  // Atualiza os dados de um usuário existente
+  // Campos não enviados permanecem com os valores atuais
   async update(id: string, data: Partial<UsuarioInput>): Promise<Usuario | null> {
     const updated = await sql<Usuario[]>`
       UPDATE usuario
@@ -75,7 +77,7 @@ export const UsuarioRepository = {
     return updated[0] ?? null
   },
 
-  // Remove um usuário pelo id.  
+  // Remove um usuário pelo id
   async delete(id: string): Promise<void> {
     await sql`
       DELETE FROM usuario
