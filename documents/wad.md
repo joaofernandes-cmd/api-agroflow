@@ -10,14 +10,14 @@
 <div align="center">
   <table>
     <tr>
-      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-ana.png" width="100px;" alt="" /><br><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-andre.png" width="100px;" alt=""/><br><sub><b>André Fischer de Carvalho</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-enzo.png" width="100px;" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-fabiana.png" width="100px;" alt=""/><br><sub><b>Fabiana Dias de Souza</b></sub></a></td>
-       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-joao.png" width="100px;" alt=""/><br><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-levi.png" width="100px;" alt=""/><br><sub><b>Levi Correia Silveira</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-matheus.png" width="100px;" alt=""/><br><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%;" src="outros/assets/fotos-integrantes/foto-theo.png" width="100px;" alt=""/><br><sub><b>Théo Pires Morêda</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-ana.png" width="100px;" alt="" /><br><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-andre.png" width="100px;" alt=""/><br><sub><b>André Fischer de Carvalho</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-enzo.png" width="100px;" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-fabiana.png" width="100px;" alt=""/><br><sub><b>Fabiana Dias de Souza</b></sub></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-joao.png" width="100px;" alt=""/><br><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-levi.png" width="100px;" alt=""/><br><sub><b>Levi Correia Silveira</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-matheus.png" width="100px;" alt=""/><br><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%;" src="others/assets/fotos-integrantes/foto-theo.png" width="100px;" alt=""/><br><sub><b>Théo Pires Morêda</b></sub></a></td>
     </tr>
   </table>
 </div>
@@ -208,7 +208,7 @@
 <div align="center">
   <p align="center">Figura 1 - 5 Forças de Porter</p>
   <p>
-    <img src="outros/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
+    <img src="others/assets/forcas-de-porter.png" alt="5 Forças de Porter" border="0"></a>
   </p>
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -250,7 +250,7 @@
 <div align="center">
 <p align="center">Figura 2 - Análise de SWOT</p>
 <p align="center">
-<img src="outros/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
+<img src="others/assets/analise-swot-2.png" alt="Análise de SWOT" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -307,7 +307,7 @@
 <p align="center">Figura 3 - Canvas Proposta de Valor</p>
 <p align="center">
 
-><img src="outros/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
+><img src="others/assets/canvas-proposta-de-valor-2.png" alt="Canvas Proposta de Valor" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -379,7 +379,7 @@
 
 <div align="center">
   <p align="center">Figura 4 - Matriz de Risco</p>
-  <img src="outros/assets/matriz-de-risco-2.png" alt="Matriz de Risco">
+  <img src="others/assets/matriz-de-risco-2.png" alt="Matriz de Risco">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -437,7 +437,7 @@
 <div align="center">
 <p align="center">Figura 5 - Persona 1 (Daniel Carvalho)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/persona-daniel.png" alt="Persona 1" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/persona-daniel.png" alt="Persona 1" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -494,7 +494,7 @@
 <div align="center">
 <p align="center">Figura 6 - Persona 2 (Luiz Felipe)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/persona-luiz.png" alt="Persona 2" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/persona-luiz.png" alt="Persona 2" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -550,7 +550,7 @@
 <div align="center">
 <p align="center">Figura 7 - Persona 3 (Marcos Ferreira)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/persona-marcos.png" alt="Persona 3" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/persona-marcos.png" alt="Persona 3" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1048,7 +1048,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 <p align="center">
 
 
-<img src="outros/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
+<img src="others/assets/diagrama-caso-de-uso.png" alt="Diagrama de Casos de Uso" border="0"></a>
 </p>
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1513,7 +1513,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 9 - Diagrama de Classes de Domínio</p>
 <p align="center">
-<img src="outros/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
+<img src="others/assets/diagrama-classes-dominio.jpg" alt="Diagrama de Classes de Domínio" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1564,7 +1564,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 10 - Diagrama Sequencial (RF005)</p>
 <p align="center">
-<img src="outros/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
+<img src="others/assets/diagrama-sequencial-rf005.png" alt="Diagrama Sequencial RF005" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1610,7 +1610,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 11 - Diagrama Sequencial (RF001)</p>
 <p align="center">
-<img src="outros/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
+<img src="others/assets/diagrama-sequencial-rf001.png" alt="Diagrama Sequencial RF001" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1658,7 +1658,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 12 - Diagrama Sequencial (RF002)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf002.png" alt="Diagrama Sequencial RF002" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf002.png" alt="Diagrama Sequencial RF002" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1700,7 +1700,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 13 - Diagrama Sequencial (RF003)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf003.png" alt="Diagrama Sequencial RF003" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf003.png" alt="Diagrama Sequencial RF003" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1736,7 +1736,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 14 - Diagrama Sequencial (RF004)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf004.png" alt="Diagrama Sequencial RF004" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf004.png" alt="Diagrama Sequencial RF004" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1793,7 +1793,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 15 - Diagrama Sequencial (RF006)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf006.png" alt="Diagrama Sequencial RF006" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf006.png" alt="Diagrama Sequencial RF006" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1841,7 +1841,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 16 - Diagrama Sequencial (RF007)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf007.png" alt="Diagrama Sequencial RF007" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf007.png" alt="Diagrama Sequencial RF007" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1883,7 +1883,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
 <p align="center">
-<a href="https://www.inteli.edu.br/"><img src="outros/assets/diagrama-sequencial-rf008.png" alt="Diagrama Sequencial RF008" border="0"></a>
+<a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf008.png" alt="Diagrama Sequencial RF008" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -1926,7 +1926,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Figura 18 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
   <a href="https://www.inteli.edu.br/">
-    <img src="outros/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+    <img src="others/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
   </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1936,7 +1936,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Figura 19 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
   <a href="https://www.inteli.edu.br/">
-    <img src="outros/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+    <img src="others/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
   </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1946,7 +1946,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Figura 20 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+<img src="others/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1956,7 +1956,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Figura 21 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
-<img src="outros/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
+<img src="others/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1983,7 +1983,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 22 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+<img src="others/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1992,7 +1992,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 23 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+<img src="others/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2001,7 +2001,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 24 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
+<img src="others/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2014,7 +2014,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 25 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+<img src="others/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2023,7 +2023,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 26 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+<img src="others/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2032,7 +2032,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 27 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+<img src="others/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2041,7 +2041,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 28 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
-<img src="outros/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
+<img src="others/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2063,7 +2063,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 29 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
-<img src="outros/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
+<img src="others/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2073,7 +2073,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 30 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
-<img src="outros/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
+<img src="others/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2084,7 +2084,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 31 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
 <p align="center">
-<img src="outros/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
+<img src="others/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2093,7 +2093,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 32 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
 <p align="center">
-<img src="outros/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
+<img src="others/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2116,7 +2116,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <div align="center">
 <p align="center">Figura 33 - Cores</p>
 <p align="center">
-<img src="outros/assets/cores.png" alt="Cores" border="0">
+<img src="others/assets/cores.png" alt="Cores" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2178,7 +2178,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <div align="center">
 <p align="center">Figura 34 - Tipografia</p>
 <p align="center">
-<img src="outros/assets/tipografia.png" alt="Tipografia" border="0">
+<img src="others/assets/tipografia.png" alt="Tipografia" border="0">
 </a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2289,7 +2289,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <div align="center">
 <p align="center">Figura 34 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
-<img src="/documentos/outros/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
+<img src="/documentos/others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2314,7 +2314,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 <div align="center">
 <p align="center">Figura 35 – Modelo Relacional</p>
-<img src="outros/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
+<img src="others/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
