@@ -10,7 +10,7 @@ export interface Tarefa {
   descricao: string
   categoria: string
   prioridade: TarefaPrioridade
-  data: Date
+  data_criacao: Date
   status: TarefaStatus
 }
 
@@ -21,6 +21,6 @@ export interface TarefaInput {
   descricao: string
   categoria: string
   prioridade: TarefaPrioridade
-  data: Date
+  data_criacao: Date
   status: TarefaStatus
 }
