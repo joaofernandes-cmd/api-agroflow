@@ -2708,12 +2708,12 @@ Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um
  
 ---
 
-#### Consulta 2 — UPDATE (atualização de ticket pelo Supervisor)
-
+#### Consulta 2: UPDATE (atualização de ticket pelo Supervisor)
+ 
 **Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. Conforme o mesmo RF, o Supervisor é responsável por atribuir chamados a Capatazes para execução, o que envolve atualizar três campos do ticket: o campo `atribuido_a` (que recebe o ID do Capataz designado), o campo `status` (que avança no ciclo de vida aberto → em_atendimento → resolvido/cancelado definido pelo ENUM) e, quando o chamado é encerrado, o campo `data_realizado` (que registra quando o serviço foi concluído). A consulta abaixo atualiza esses três campos para um ticket específico, desde que ele ainda não esteja em um estado terminal (resolvido ou cancelado), pois tickets encerrados não devem ser reabertos por meio dessa operação.
-
+ 
 **Código SQL:**
-
+ 
 ```sql
 UPDATE ticket 
 SET status = ?, 
@@ -2722,6 +2722,37 @@ SET status = ?,
 WHERE id = ? 
   AND status NOT IN ('resolvido', 'cancelado');
 ```
+ 
+**Proposições lógicas:**
+ 
+- $P$: o ticket é aquele identificado pelo parâmetro (`id = ?`)
+- $A$: o ticket está no estado resolvido (`status = 'resolvido'`)
+- $B$: o ticket está no estado cancelado (`status = 'cancelado'`)
+A cláusula `status NOT IN ('resolvido', 'cancelado')` é equivalente a $\neg(A \lor B)$, ou seja, "não é resolvido e não é cancelado".
+ 
+**Expressão lógica proposicional:** $P \land \neg(A \lor B)$
+ 
+Aplicando De Morgan, a expressão pode ser reescrita como $P \land \neg A \land \neg B$. Os conectivos utilizados são conjunção (∧), negação (¬) e disjunção (∨). A negação da disjunção traduz semanticamente o operador `NOT IN` do SQL: ele rejeita o registro caso o status seja qualquer um dos valores listados.
+ 
+As proposições $A$ e $B$ não podem ser simultaneamente verdadeiras no banco real, já que um ticket não assume dois estados ao mesmo tempo. Mesmo assim, a tabela verdade inclui essa linha para ficar completa do ponto de vista lógico.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 43 - Tabela verdade da Consulta 2 (UPDATE).</p>
+
+| $P$ | $A$ | $B$ | $A \lor B$ | $\neg(A \lor B)$ | $P \land \neg(A \lor B)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | F | V | **F** |
+| F | F | V | V | F | **F** |
+| F | V | F | V | F | **F** |
+| F | V | V | V | F | **F** |
+| V | F | F | F | V | **V** |
+| V | F | V | V | F | **F** |
+| V | V | F | V | F | **F** |
+| V | V | V | V | F | **F** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+O UPDATE só é aplicado na linha 5, em que o ticket identificado existe ($P$ = V) e seu status não é nem resolvido nem cancelado ($A$ = F e $B$ = F). Isso protege o banco contra a reabertura indevida de tickets já encerrados por meio dessa operação.
  
 ---
 
