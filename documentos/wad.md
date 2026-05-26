@@ -1524,11 +1524,11 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 # Diagrama Arquitetural — Sistema BRPEC
 
-O diagrama a seguir ilustra a arquitetura do sistema **BRPEC**, estruturada em três camadas segundo o padrão **MVC (Model-View-Controller)**, com clara separação entre apresentação, lógica de negócio e persistência de dados.
+O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão MVC (Model-View-Controller) com a adoção de uma camada de Service e do Repository Pattern, promovendo a clara separação de responsabilidades entre apresentação, lógica de negócio, acesso a dados e persistência.
 
-A camada de **Cliente** corresponde ao aplicativo móvel utilizado pelos perfis *Capataz*, *Supervisor* e *Gerente*. A camada de **Servidor** concentra a lógica de negócio e subdivide-se em *Views* (19 telas), *Controllers* (13 controladores responsáveis pela orquestração das requisições) e *Models* (15 entidades de domínio). Por fim, a camada de **Banco de Dados**, implementada em **PostgreSQL**, contempla 12 entidades com herança e 18 relacionamentos.
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views (19 telas) compõem a interface do usuário; os Controllers (14 controladores) orquestram as requisições HTTP; os Services (14 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (14 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (15 entidades de domínio) representam os objetos do sistema, persistidos em um banco PostgreSQL com 12 entidades, herança e 18 relacionamentos.
 
-Dentre as características arquiteturais relevantes, destacam-se a integração com o **SISBOV**, o suporte à operação **offline** com fila de sincronização, a captura de evidências multimídia e os mecanismos de auditoria, permissões e alertas. O fluxo de comunicação segue um modelo unidirecional — *Cliente → Views → Controllers → Models → Banco de Dados* — assegurando baixo acoplamento e alta coesão entre os componentes.
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional — Cliente → Views → Controllers → Services → Repositories → Models → Banco de Dados —, garantindo baixo acoplamento, alta coesão e maior testabilidade entre as camadas do sistema.
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
