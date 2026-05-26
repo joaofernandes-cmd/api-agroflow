@@ -2660,6 +2660,7 @@ WHERE retiro_id = ?
 - $R$: o status do registro corresponde ao filtro (`status = ?`)
 - $S$: a data de criação está dentro do intervalo informado (`data_criacao BETWEEN ? AND ?`). Internamente, essa proposição é uma conjunção: $S = S_1 \land S_2$, onde $S_1$: `data_criacao ≥ data_inicial` e $S_2$: `data_criacao ≤ data_final`.
 - $T$: o registro já foi sincronizado (`sincronizado = TRUE`)
+
 **Expressão lógica proposicional:** $P \land Q \land R \land S \land T$
  
 As cinco condições são ligadas por conjunção (∧). Como todos os conectivos são AND, o registro só aparece no resultado quando todas as cinco proposições são verdadeiras ao mesmo tempo. Se qualquer uma delas for falsa, o registro é descartado.
@@ -2704,6 +2705,7 @@ As cinco condições são ligadas por conjunção (∧). Como todos os conectivo
 | V | V | V | V | V | **V** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
+
 Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um filtro feito só com conjunções é bem restritivo: basta uma condição falhar para o registro ser eliminado.
  
 ---
@@ -2752,6 +2754,7 @@ As proposições $A$ e $B$ não podem ser simultaneamente verdadeiras no banco r
 | V | V | V | V | F | **F** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
+
 O UPDATE só é aplicado na linha 5, em que o ticket identificado existe ($P$ = V) e seu status não é nem resolvido nem cancelado ($A$ = F e $B$ = F). Isso protege o banco contra a reabertura indevida de tickets já encerrados por meio dessa operação.
  
 ---
@@ -2772,6 +2775,7 @@ WHERE movimentacao_id = ?
  
 - $P$: o registro pertence à movimentação informada (`movimentacao_id = ?`)
 - $Q$: o registro corresponde à evidência informada (`evidencia_id = ?`)
+
 **Expressão lógica proposicional:** $P \land Q$
  
 A expressão utiliza apenas o conectivo de conjunção (∧). Como `evidencia_movimentacao` é uma tabela associativa, os dois identificadores juntos formam a chave que individualiza o vínculo a ser removido, o que justifica a exigência de que ambas as proposições sejam verdadeiras.
@@ -2788,6 +2792,7 @@ A expressão utiliza apenas o conectivo de conjunção (∧). Como `evidencia_mo
 | V | V | **V** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
+
 Apenas o par exato (linha 4) é removido. Quando algum dos identificadores não corresponde, nada é apagado, o que torna a consulta segura por construção.
  
 ---
@@ -2815,6 +2820,7 @@ O INSERT não possui cláusula `WHERE`, mas é governado por dois `CHECK` constr
  
 - $M$: o tipo da movimentação é "morte" (`tipo = 'morte'`)
 - $C$: a causa do óbito foi informada (`causa_obito IS NOT NULL`)
+
 **Expressão lógica proposicional:** $\neg M \lor C$
  
 Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, o constraint é escrito diretamente em SQL usando o operador `OR`.
@@ -2842,6 +2848,7 @@ O banco rejeita a inserção apenas na linha 3, quando o tipo é "morte" mas a c
 - $T$: o tipo da movimentação é "transferência" (`tipo = 'transferencia'`)
 - $O$: o retiro de origem foi informado (`origem IS NOT NULL`)
 - $D$: o retiro de destino foi informado (`destino IS NOT NULL`)
+
 **Expressão lógica proposicional:** $\neg T \lor (O \land D)$
  
 Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D)$, lida como "se o tipo for transferência, então origem **e** destino devem estar preenchidos".
@@ -2849,6 +2856,7 @@ Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (�
 **Tabela verdade:**
  
 <p align="center">Quadro 46 - Tabela verdade da Constraint 4.2.</p>
+
 | $T$ | $O$ | $D$ | $\neg T$ | $O \land D$ | $\neg T \lor (O \land D)$ |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | F | F | F | V | F | **V** |
@@ -2861,10 +2869,32 @@ Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (�
 | V | V | V | F | V | **V** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
+
 O banco rejeita a inserção nas linhas 5, 6 e 7, quando o tipo é "transferência" mas pelo menos um dos campos (origem ou destino) está vazio. Quando o tipo é transferência, o único cenário aceito é a linha 8, que exige ambos os campos preenchidos. Quando o tipo não é transferência (linhas 1 a 4), a constraint é satisfeita independentemente dos valores de origem e destino.
  
 ---
+#### Conclusão:
+ 
+As quatro consultas escolhidas variam em vários aspectos: o tipo de operação SQL, os conectivos lógicos usados na condição e o contexto operacional do AgroFlow em que cada uma se aplica. O Quadro 47 resume essa variedade.
+ 
+<p align="center">Quadro 47 - Síntese da diversidade das consultas.</p>
 
+| Consulta | Operação | Conectivos | Padrão estrutural | Contexto operacional |
+|:---:|:---:|:---:|---|---|
+| 1 | SELECT | ∧ | Conjunção encadeada (5 condições) | Filtro de movimentações pelo Supervisor (RF009) |
+| 2 | UPDATE | ∧, ¬, ∨ | Conjunção com negação de disjunção (`NOT IN`) | Atribuição de chamado a Capataz (RF008) |
+| 3 | DELETE | ∧ | Conjunção simples (2 condições) | Remoção de vínculo evidência-movimentação (suporte ao RF004) |
+| 4 (restrição 1) | INSERT (CHECK) | ¬, ∨ | Implicação na forma disjuntiva ($M \rightarrow C$) | Obrigatoriedade de causa em movimentação de morte (RN01) |
+| 4 (restrição 2) | INSERT (CHECK) | ¬, ∨, ∧ | Implicação com consequente conjuntivo ($T \rightarrow O \land D$) | Obrigatoriedade de origem e destino em transferência (RN01) |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+Em relação aos **tipos de operação**, o conjunto cobre as quatro operações relacionais fundamentais (SELECT, UPDATE, DELETE e INSERT), evitando que o artefato fique limitado a um único padrão de manipulação de dados. Cada operação se encaixa em um momento diferente do ciclo de vida dos registros no sistema.
+ 
+Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 combina conjunção com a negação de uma disjunção, que é a tradução semântica do operador `NOT IN`; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
+ 
+Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, atualização do ciclo de vida de um chamado, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não fica só no plano formal, ela está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
+ 
+No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: filtros restritivos usam só conjunção, validações de pertinência usam negação de disjunção (`NOT IN`), e regras de domínio (CHECK constraints) usam implicação. Ou seja, a lógica proposicional aparece naturalmente na hora de escrever as regras de negócio em SQL.
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
