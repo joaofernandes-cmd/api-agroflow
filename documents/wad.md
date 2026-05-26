@@ -2638,12 +2638,12 @@ Esta seção traz quatro consultas SQL do back-end do AgroFlow, uma de cada tipo
  
 ---
 
-#### Consulta 1 — SELECT (filtro de movimentações pelo Supervisor)
-
-**Descrição:** A tabela `movimentacao`armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor — afinal, registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
-
+#### Consulta 1: SELECT (filtro de movimentações pelo Supervisor)
+ 
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor, pois registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+ 
 **Código SQL:**
-
+ 
 ```sql
 SELECT * FROM movimentacao 
 WHERE retiro_id = ? 
@@ -2652,7 +2652,60 @@ WHERE retiro_id = ?
   AND data_criacao BETWEEN ? AND ? 
   AND sincronizado = TRUE;
 ```
+ 
+**Proposições lógicas:**
+ 
+- $P$: o retiro do registro corresponde ao filtro (`retiro_id = ?`)
+- $Q$: o tipo da movimentação corresponde ao filtro (`tipo = ?`)
+- $R$: o status do registro corresponde ao filtro (`status = ?`)
+- $S$: a data de criação está dentro do intervalo informado (`data_criacao BETWEEN ? AND ?`). Internamente, essa proposição é uma conjunção: $S = S_1 \land S_2$, onde $S_1$: `data_criacao ≥ data_inicial` e $S_2$: `data_criacao ≤ data_final`.
+- $T$: o registro já foi sincronizado (`sincronizado = TRUE`)
+**Expressão lógica proposicional:** $P \land Q \land R \land S \land T$
+ 
+As cinco condições são ligadas por conjunção (∧). Como todos os conectivos são AND, o registro só aparece no resultado quando todas as cinco proposições são verdadeiras ao mesmo tempo. Se qualquer uma delas for falsa, o registro é descartado.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 42 - Tabela verdade da Consulta 1 (SELECT).</p>
 
+| $P$ | $Q$ | $R$ | $S$ | $T$ | $P \land Q \land R \land S \land T$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | F | F | **F** |
+| F | F | F | F | V | **F** |
+| F | F | F | V | F | **F** |
+| F | F | F | V | V | **F** |
+| F | F | V | F | F | **F** |
+| F | F | V | F | V | **F** |
+| F | F | V | V | F | **F** |
+| F | F | V | V | V | **F** |
+| F | V | F | F | F | **F** |
+| F | V | F | F | V | **F** |
+| F | V | F | V | F | **F** |
+| F | V | F | V | V | **F** |
+| F | V | V | F | F | **F** |
+| F | V | V | F | V | **F** |
+| F | V | V | V | F | **F** |
+| F | V | V | V | V | **F** |
+| V | F | F | F | F | **F** |
+| V | F | F | F | V | **F** |
+| V | F | F | V | F | **F** |
+| V | F | F | V | V | **F** |
+| V | F | V | F | F | **F** |
+| V | F | V | F | V | **F** |
+| V | F | V | V | F | **F** |
+| V | F | V | V | V | **F** |
+| V | V | F | F | F | **F** |
+| V | V | F | F | V | **F** |
+| V | V | F | V | F | **F** |
+| V | V | F | V | V | **F** |
+| V | V | V | F | F | **F** |
+| V | V | V | F | V | **F** |
+| V | V | V | V | F | **F** |
+| V | V | V | V | V | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um filtro feito só com conjunções é bem restritivo: basta uma condição falhar para o registro ser eliminado.
+ 
 ---
 
 #### Consulta 2 — UPDATE (atualização de ticket pelo Supervisor)
