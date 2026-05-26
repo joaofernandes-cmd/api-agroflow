@@ -2631,13 +2631,19 @@ ALTER TABLE `relatorio`
 &nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+ 
+Esta seção traz quatro consultas SQL do back-end do AgroFlow, uma de cada tipo principal de operação relacional (SELECT, UPDATE, DELETE e INSERT). Para cada consulta são apresentados o código SQL, a descrição em palavras, as proposições atômicas presentes na condição, a expressão lógica proposicional correspondente e a tabela verdade. No final, uma síntese discute os diferentes padrões lógicos usados ao longo do conjunto.
+ 
+**Convenções adotadas:** V = Verdadeiro, F = Falso. Conectivos lógicos: ∧ (conjunção / AND), ∨ (disjunção / OR), ¬ (negação / NOT). A coluna **Resultado** das tabelas verdade indica se o registro passa pela cláusula `WHERE` (consultas 1, 2 e 3) ou se a inserção é aceita pelo `CHECK` constraint (consulta 4).
+ 
+---
 
-#### Consulta 1 — SELECT (filtro de movimentações pelo Supervisor)
-
-**Descrição:** A tabela `movimentacao`armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor — afinal, registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
-
+#### Consulta 1: SELECT (filtro de movimentações pelo Supervisor)
+ 
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor, pois registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+ 
 **Código SQL:**
-
+ 
 ```sql
 SELECT * FROM movimentacao 
 WHERE retiro_id = ? 
@@ -2646,15 +2652,70 @@ WHERE retiro_id = ?
   AND data_criacao BETWEEN ? AND ? 
   AND sincronizado = TRUE;
 ```
+ 
+**Proposições lógicas:**
+ 
+- $P$: o retiro do registro corresponde ao filtro (`retiro_id = ?`)
+- $Q$: o tipo da movimentação corresponde ao filtro (`tipo = ?`)
+- $R$: o status do registro corresponde ao filtro (`status = ?`)
+- $S$: a data de criação está dentro do intervalo informado (`data_criacao BETWEEN ? AND ?`). Internamente, essa proposição é uma conjunção: $S = S_1 \land S_2$, onde $S_1$: `data_criacao ≥ data_inicial` e $S_2$: `data_criacao ≤ data_final`.
+- $T$: o registro já foi sincronizado (`sincronizado = TRUE`)
 
+**Expressão lógica proposicional:** $P \land Q \land R \land S \land T$
+ 
+As cinco condições são ligadas por conjunção (∧). Como todos os conectivos são AND, o registro só aparece no resultado quando todas as cinco proposições são verdadeiras ao mesmo tempo. Se qualquer uma delas for falsa, o registro é descartado.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 42 - Tabela verdade da Consulta 1 (SELECT).</p>
+
+| $P$ | $Q$ | $R$ | $S$ | $T$ | $P \land Q \land R \land S \land T$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | F | F | **F** |
+| F | F | F | F | V | **F** |
+| F | F | F | V | F | **F** |
+| F | F | F | V | V | **F** |
+| F | F | V | F | F | **F** |
+| F | F | V | F | V | **F** |
+| F | F | V | V | F | **F** |
+| F | F | V | V | V | **F** |
+| F | V | F | F | F | **F** |
+| F | V | F | F | V | **F** |
+| F | V | F | V | F | **F** |
+| F | V | F | V | V | **F** |
+| F | V | V | F | F | **F** |
+| F | V | V | F | V | **F** |
+| F | V | V | V | F | **F** |
+| F | V | V | V | V | **F** |
+| V | F | F | F | F | **F** |
+| V | F | F | F | V | **F** |
+| V | F | F | V | F | **F** |
+| V | F | F | V | V | **F** |
+| V | F | V | F | F | **F** |
+| V | F | V | F | V | **F** |
+| V | F | V | V | F | **F** |
+| V | F | V | V | V | **F** |
+| V | V | F | F | F | **F** |
+| V | V | F | F | V | **F** |
+| V | V | F | V | F | **F** |
+| V | V | F | V | V | **F** |
+| V | V | V | F | F | **F** |
+| V | V | V | F | V | **F** |
+| V | V | V | V | F | **F** |
+| V | V | V | V | V | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um filtro feito só com conjunções é bem restritivo: basta uma condição falhar para o registro ser eliminado.
+ 
 ---
 
-#### Consulta 2 — UPDATE (atualização de ticket pelo Supervisor)
-
+#### Consulta 2: UPDATE (atualização de ticket pelo Supervisor)
+ 
 **Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. Conforme o mesmo RF, o Supervisor é responsável por atribuir chamados a Capatazes para execução, o que envolve atualizar três campos do ticket: o campo `atribuido_a` (que recebe o ID do Capataz designado), o campo `status` (que avança no ciclo de vida aberto → em_atendimento → resolvido/cancelado definido pelo ENUM) e, quando o chamado é encerrado, o campo `data_realizado` (que registra quando o serviço foi concluído). A consulta abaixo atualiza esses três campos para um ticket específico, desde que ele ainda não esteja em um estado terminal (resolvido ou cancelado), pois tickets encerrados não devem ser reabertos por meio dessa operação.
-
+ 
 **Código SQL:**
-
+ 
 ```sql
 UPDATE ticket 
 SET status = ?, 
@@ -2664,48 +2725,177 @@ WHERE id = ?
   AND status NOT IN ('resolvido', 'cancelado');
 ```
  
+**Proposições lógicas:**
+ 
+- $P$: o ticket é aquele identificado pelo parâmetro (`id = ?`)
+- $A$: o ticket está no estado resolvido (`status = 'resolvido'`)
+- $B$: o ticket está no estado cancelado (`status = 'cancelado'`)
+A cláusula `status NOT IN ('resolvido', 'cancelado')` é equivalente a $\neg(A \lor B)$, ou seja, "não é resolvido e não é cancelado".
+ 
+**Expressão lógica proposicional:** $P \land \neg(A \lor B)$
+ 
+Aplicando De Morgan, a expressão pode ser reescrita como $P \land \neg A \land \neg B$. Os conectivos utilizados são conjunção (∧), negação (¬) e disjunção (∨). A negação da disjunção traduz semanticamente o operador `NOT IN` do SQL: ele rejeita o registro caso o status seja qualquer um dos valores listados.
+ 
+As proposições $A$ e $B$ não podem ser simultaneamente verdadeiras no banco real, já que um ticket não assume dois estados ao mesmo tempo. Mesmo assim, a tabela verdade inclui essa linha para ficar completa do ponto de vista lógico.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 43 - Tabela verdade da Consulta 2 (UPDATE).</p>
+
+| $P$ | $A$ | $B$ | $A \lor B$ | $\neg(A \lor B)$ | $P \land \neg(A \lor B)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | F | V | **F** |
+| F | F | V | V | F | **F** |
+| F | V | F | V | F | **F** |
+| F | V | V | V | F | **F** |
+| V | F | F | F | V | **V** |
+| V | F | V | V | F | **F** |
+| V | V | F | V | F | **F** |
+| V | V | V | V | F | **F** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+O UPDATE só é aplicado na linha 5, em que o ticket identificado existe ($P$ = V) e seu status não é nem resolvido nem cancelado ($A$ = F e $B$ = F). Isso protege o banco contra a reabertura indevida de tickets já encerrados por meio dessa operação.
+ 
 ---
 
-#### Consulta 3 — DELETE (remoção de vínculo entre evidência e movimentação)
-
-**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre evidencia e movimentacao, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18 — ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão — todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
-
+#### Consulta 3: DELETE (remoção de vínculo entre evidência e movimentação)
+ 
+**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre `evidencia` e `movimentacao`, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18. Ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão, e todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
+ 
 **Código SQL:**
-
+ 
 ```sql
 DELETE FROM evidencia_movimentacao 
 WHERE movimentacao_id = ? 
   AND evidencia_id = ?;
 ```
+ 
+**Proposições lógicas:**
+ 
+- $P$: o registro pertence à movimentação informada (`movimentacao_id = ?`)
+- $Q$: o registro corresponde à evidência informada (`evidencia_id = ?`)
 
+**Expressão lógica proposicional:** $P \land Q$
+ 
+A expressão utiliza apenas o conectivo de conjunção (∧). Como `evidencia_movimentacao` é uma tabela associativa, os dois identificadores juntos formam a chave que individualiza o vínculo a ser removido, o que justifica a exigência de que ambas as proposições sejam verdadeiras.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 44 - Tabela verdade da Consulta 3 (DELETE).</p>
+
+| $P$ | $Q$ | $P \land Q$ |
+|:---:|:---:|:---:|
+| F | F | **F** |
+| F | V | **F** |
+| V | F | **F** |
+| V | V | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+Apenas o par exato (linha 4) é removido. Quando algum dos identificadores não corresponde, nada é apagado, o que torna a consulta segura por construção.
+ 
 ---
 
-#### Consulta 4 — INSERT (registro de movimentação do rebanho)
-
-**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho — nascimento, morte, transferência, compra, venda ou outros — feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com os campos obrigatórios definidos no modelo físico. A consulta abaixo insere uma nova movimentação no estado inicial pendente, aguardando validação posterior pelo Supervisor (conforme o RF006). O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A inserção é validada automaticamente pelos CHECK constraints definidos no schema da tabela: `chk_causa_obito_obrigatoria`, que aplica a expressão lógica tipo `!= 'morte' OR causa_obito IS NOT NULL` (ou seja, se o tipo for morte, então causa_obito deve ser informado); e `chk_transferencia_campos_obrigatorios`, que aplica `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)` (ou seja, se o tipo for transferencia, então origem e destino devem ser informados). Caso essas condições não sejam satisfeitas pelos valores recebidos, o banco rejeita a inserção e retorna erro de violação de restrição.
-
+#### Consulta 4: INSERT (registro de movimentação do rebanho)
+ 
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com os campos obrigatórios definidos no modelo físico. A consulta abaixo insere uma nova movimentação no estado inicial pendente, aguardando validação posterior pelo Supervisor (conforme o RF006). O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A inserção é validada automaticamente pelos CHECK constraints definidos no schema da tabela: `chk_causa_obito_obrigatoria`, que aplica a expressão lógica tipo `!= 'morte' OR causa_obito IS NOT NULL` (ou seja, se o tipo for morte, então causa_obito deve ser informado); e `chk_transferencia_campos_obrigatorios`, que aplica `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)` (ou seja, se o tipo for transferencia, então origem e destino devem ser informados). Caso essas condições não sejam satisfeitas pelos valores recebidos, o banco rejeita a inserção e retorna erro de violação de restrição.
+ 
 **Código SQL:**
-
+ 
 ```sql
 INSERT INTO movimentacao 
     (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, 
      quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente', ?, NOW(), ?, ?);
 ```
+ 
+O INSERT não possui cláusula `WHERE`, mas é governado por dois `CHECK` constraints definidos no schema da tabela `movimentacao`. Cada constraint corresponde a uma expressão lógica que precisa ser verdadeira para que o banco aceite a inserção. Cada uma delas é analisada separadamente a seguir.
+ 
+##### Restrição 1: `chk_causa_obito_obrigatoria`
+ 
+**Regra:** `tipo != 'morte' OR causa_obito IS NOT NULL`
+ 
+**Proposições lógicas:**
+ 
+- $M$: o tipo da movimentação é "morte" (`tipo = 'morte'`)
+- $C$: a causa do óbito foi informada (`causa_obito IS NOT NULL`)
 
+**Expressão lógica proposicional:** $\neg M \lor C$
+ 
+Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, o constraint é escrito diretamente em SQL usando o operador `OR`.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 45 - Tabela verdade da Constraint 4.1.</p>
+
+| $M$ | $C$ | $\neg M$ | $\neg M \lor C$ |
+|:---:|:---:|:---:|:---:|
+| F | F | V | **V** |
+| F | V | V | **V** |
+| V | F | F | **F** |
+| V | V | F | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+O banco rejeita a inserção apenas na linha 3, quando o tipo é "morte" mas a causa do óbito não foi informada. Nas demais combinações, a inserção é aceita.
+
+##### Restrição 2: `chk_transferencia_campos_obrigatorios`
+ 
+**Regra:** `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)`
+ 
+**Proposições lógicas:**
+ 
+- $T$: o tipo da movimentação é "transferência" (`tipo = 'transferencia'`)
+- $O$: o retiro de origem foi informado (`origem IS NOT NULL`)
+- $D$: o retiro de destino foi informado (`destino IS NOT NULL`)
+
+**Expressão lógica proposicional:** $\neg T \lor (O \land D)$
+ 
+Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D)$, lida como "se o tipo for transferência, então origem **e** destino devem estar preenchidos".
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 46 - Tabela verdade da Constraint 4.2.</p>
+
+| $T$ | $O$ | $D$ | $\neg T$ | $O \land D$ | $\neg T \lor (O \land D)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | V | F | **V** |
+| F | F | V | V | F | **V** |
+| F | V | F | V | F | **V** |
+| F | V | V | V | V | **V** |
+| V | F | F | F | F | **F** |
+| V | F | V | F | F | **F** |
+| V | V | F | F | F | **F** |
+| V | V | V | F | V | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+O banco rejeita a inserção nas linhas 5, 6 e 7, quando o tipo é "transferência" mas pelo menos um dos campos (origem ou destino) está vazio. Quando o tipo é transferência, o único cenário aceito é a linha 8, que exige ambos os campos preenchidos. Quando o tipo não é transferência (linhas 1 a 4), a constraint é satisfeita independentemente dos valores de origem e destino.
+ 
 ---
+#### Conclusão:
+ 
+As quatro consultas escolhidas variam em vários aspectos: o tipo de operação SQL, os conectivos lógicos usados na condição e o contexto operacional do AgroFlow em que cada uma se aplica. O Quadro 47 resume essa variedade.
+ 
+<p align="center">Quadro 47 - Síntese da diversidade das consultas.</p>
 
-*posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
+| Consulta | Operação | Conectivos | Padrão estrutural | Contexto operacional |
+|:---:|:---:|:---:|---|---|
+| 1 | SELECT | ∧ | Conjunção encadeada (5 condições) | Filtro de movimentações pelo Supervisor (RF009) |
+| 2 | UPDATE | ∧, ¬, ∨ | Conjunção com negação de disjunção (`NOT IN`) | Atribuição de chamado a Capataz (RF008) |
+| 3 | DELETE | ∧ | Conjunção simples (2 condições) | Remoção de vínculo evidência-movimentação (suporte ao RF004) |
+| 4 (restrição 1) | INSERT (CHECK) | ¬, ∨ | Implicação na forma disjuntiva ($M \rightarrow C$) | Obrigatoriedade de causa em movimentação de morte (RN01) |
+| 4 (restrição 2) | INSERT (CHECK) | ¬, ∨, ∧ | Implicação com consequente conjuntivo ($T \rightarrow O \land D$) | Obrigatoriedade de origem e destino em transferência (RN01) |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
 
-*Template de SQL + lógica proposicional*
-#1 | ---
---- | ---
-**Expressão SQL** | SELECT * FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100); 
-**Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
-**Expressão lógica proposicional** | $(A \land B) \lor C$
-**Tabela Verdade** | <table> <thead> <tr> <th>$A$</th> <th>$B$</th> <th>$C$</th> <th>$(A \land B)$</th> <th>$(A \land B) \lor C$</th> </tr> </thead> <tbody> <tr> <td>F</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>F</td> <td>V</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>V</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>V</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>F</td> <td>V</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>V</td> <td>V</td> <td>V</td> </tr> </tbody> </table>
-
-*Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
+Em relação aos **tipos de operação**, o conjunto cobre as quatro operações relacionais fundamentais (SELECT, UPDATE, DELETE e INSERT), evitando que o artefato fique limitado a um único padrão de manipulação de dados. Cada operação se encaixa em um momento diferente do ciclo de vida dos registros no sistema.
+ 
+Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 combina conjunção com a negação de uma disjunção, que é a tradução semântica do operador `NOT IN`; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
+ 
+Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, atualização do ciclo de vida de um chamado, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não fica só no plano formal, ela está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
+ 
+No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: filtros restritivos usam só conjunção, validações de pertinência usam negação de disjunção (`NOT IN`), e regras de domínio (CHECK constraints) usam implicação. Ou seja, a lógica proposicional aparece naturalmente na hora de escrever as regras de negócio em SQL.
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
