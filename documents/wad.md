@@ -2756,18 +2756,40 @@ O UPDATE só é aplicado na linha 5, em que o ticket identificado existe ($P$ = 
  
 ---
 
-#### Consulta 3 — DELETE (remoção de vínculo entre evidência e movimentação)
-
-**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre evidencia e movimentacao, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18 — ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão — todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
-
+#### Consulta 3: DELETE (remoção de vínculo entre evidência e movimentação)
+ 
+**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre `evidencia` e `movimentacao`, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18. Ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão, e todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
+ 
 **Código SQL:**
-
+ 
 ```sql
 DELETE FROM evidencia_movimentacao 
 WHERE movimentacao_id = ? 
   AND evidencia_id = ?;
 ```
+ 
+**Proposições lógicas:**
+ 
+- $P$: o registro pertence à movimentação informada (`movimentacao_id = ?`)
+- $Q$: o registro corresponde à evidência informada (`evidencia_id = ?`)
+**Expressão lógica proposicional:** $P \land Q$
+ 
+A expressão utiliza apenas o conectivo de conjunção (∧). Como `evidencia_movimentacao` é uma tabela associativa, os dois identificadores juntos formam a chave que individualiza o vínculo a ser removido, o que justifica a exigência de que ambas as proposições sejam verdadeiras.
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 44 - Tabela verdade da Consulta 3 (DELETE).</p>
 
+| $P$ | $Q$ | $P \land Q$ |
+|:---:|:---:|:---:|
+| F | F | **F** |
+| F | V | **F** |
+| V | F | **F** |
+| V | V | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+Apenas o par exato (linha 4) é removido. Quando algum dos identificadores não corresponde, nada é apagado, o que torna a consulta segura por construção.
+ 
 ---
 
 #### Consulta 4 — INSERT (registro de movimentação do rebanho)
