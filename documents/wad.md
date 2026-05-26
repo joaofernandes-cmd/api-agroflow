@@ -2888,6 +2888,7 @@ As quatro consultas escolhidas variam em vários aspectos: o tipo de operação 
 | 4 (restrição 2) | INSERT (CHECK) | ¬, ∨, ∧ | Implicação com consequente conjuntivo ($T \rightarrow O \land D$) | Obrigatoriedade de origem e destino em transferência (RN01) |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
+
 Em relação aos **tipos de operação**, o conjunto cobre as quatro operações relacionais fundamentais (SELECT, UPDATE, DELETE e INSERT), evitando que o artefato fique limitado a um único padrão de manipulação de dados. Cada operação se encaixa em um momento diferente do ciclo de vida dos registros no sistema.
  
 Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 combina conjunção com a negação de uma disjunção, que é a tradução semântica do operador `NOT IN`; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
