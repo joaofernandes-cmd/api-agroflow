@@ -2833,6 +2833,39 @@ Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressã
 <p align="center">Fonte: Próprios autores (2026).</p>
 O banco rejeita a inserção apenas na linha 3, quando o tipo é "morte" mas a causa do óbito não foi informada. Nas demais combinações, a inserção é aceita.
 
+##### Restrição 2: `chk_transferencia_campos_obrigatorios`
+ 
+**Regra:** `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)`
+ 
+**Proposições lógicas:**
+ 
+- $T$: o tipo da movimentação é "transferência" (`tipo = 'transferencia'`)
+- $O$: o retiro de origem foi informado (`origem IS NOT NULL`)
+- $D$: o retiro de destino foi informado (`destino IS NOT NULL`)
+**Expressão lógica proposicional:** $\neg T \lor (O \land D)$
+ 
+Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D)$, lida como "se o tipo for transferência, então origem **e** destino devem estar preenchidos".
+ 
+**Tabela verdade:**
+ 
+<p align="center">Quadro 46 - Tabela verdade da Constraint 4.2.</p>
+| $T$ | $O$ | $D$ | $\neg T$ | $O \land D$ | $\neg T \lor (O \land D)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | V | F | **V** |
+| F | F | V | V | F | **V** |
+| F | V | F | V | F | **V** |
+| F | V | V | V | V | **V** |
+| V | F | F | F | F | **F** |
+| V | F | V | F | F | **F** |
+| V | V | F | F | F | **F** |
+| V | V | V | F | V | **V** |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+O banco rejeita a inserção nas linhas 5, 6 e 7, quando o tipo é "transferência" mas pelo menos um dos campos (origem ou destino) está vazio. Quando o tipo é transferência, o único cenário aceito é a linha 8, que exige ambos os campos preenchidos. Quando o tipo não é transferência (linhas 1 a 4), a constraint é satisfeita independentemente dos valores de origem e destino.
+ 
+---
+
+
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
