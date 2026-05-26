@@ -2,6 +2,8 @@ export type TicketCategoria = 'cerca' | 'hidraulica' | 'eletrica' | 'edificacao'
 
 export type TicketStatus = 'aberto' | 'em_atendimento' | 'resolvido' | 'cancelado'
 
+export type TicketPrioridade = 'alta' | 'media' | 'baixa'
+
 export interface Ticket {
   id: string
   retiro_id: string
@@ -11,6 +13,7 @@ export interface Ticket {
   status: TicketStatus
   atribuido_a: string
   descricao: string
+  prioridade: TicketPrioridade
   data_criacao: Date
   data_realizado: Date
 }
@@ -23,6 +26,7 @@ export interface TicketInput {
   status: TicketStatus
   atribuido_a: string
   descricao: string
-  data_criacao: Date
-  data_realizado: Date
+  prioridade: TicketPrioridade
+  data_criacao?: Date
+  data_realizado?: Date
 }
