@@ -6,6 +6,7 @@ export interface EvidenciaFoto {
 }
 
 export interface EvidenciaFotoInput {
+  evidencia_id: string
   url_arquivo: string
   latitude: number
   longitude: number

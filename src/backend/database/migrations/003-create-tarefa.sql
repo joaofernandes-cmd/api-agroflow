@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS tarefa (
   descricao TEXT NOT NULL,
   categoria VARCHAR(255) NOT NULL,
   prioridade TEXT NOT NULL CHECK (prioridade IN ('alta', 'media', 'baixa')),
-  data TIMESTAMP NOT NULL,
+  data_criacao TIMESTAMP NOT NULL,
   status TEXT NOT NULL CHECK (status IN ('pendente', 'em_andamento', 'concluida', 'cancelada'))
 );
 

@@ -2,21 +2,21 @@ export type TipoRelatorio = 'movimentacao' | 'tarefas' | 'tickets' | 'consolidad
 
 export interface Relatorio {
   id: string
-  gerado_por: string | null
-  retiro_id: string | null
-  tipo: TipoRelatorio | null
-  data_inicio: Date | null
-  data_fim: Date | null
-  data_gerado: Date | null
+  gerado_por: string
+  retiro_id: string
+  tipo: TipoRelatorio
+  data_inicio: Date
+  data_fim: Date
+  data_gerado: Date
   url_arquivo: string
 }
 
 export interface RelatorioInput {
-  gerado_por?: string | null
-  retiro_id?: string | null
-  tipo?: TipoRelatorio | null
-  data_inicio?: Date | null
-  data_fim?: Date | null
-  data_gerado?: Date | null
+  gerado_por: string
+  retiro_id: string
+  tipo: TipoRelatorio
+  data_inicio: Date
+  data_fim: Date
+  data_gerado?: Date
   url_arquivo: string
 }
