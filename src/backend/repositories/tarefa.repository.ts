@@ -14,7 +14,7 @@ export const TarefaRepository = {
         `
     },
 
-    // Busca uma tarefa pelo seu id e retorna null se não encontrar.
+    // Busca uma tarefa pelo seu id e retorna null se não encontrar
     async findById(id: string): Promise<Tarefa | null> {
         const tarefa = await sql<Tarefa[]>`
             SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status

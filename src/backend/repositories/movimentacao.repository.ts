@@ -2,10 +2,10 @@ import sql from '../database/connection'
 import { randomUUID } from 'crypto'
 import { Movimentacao, MovimentacaoInput } from '../models/movimentacao.model'
 
-// Retorna todas as movimentacoes cadastradas
+// Retorna todas as movimentações cadastradas
 export const MovimentacaoRepository = {
 
-  // Ordena movimentacoes por data de criacao
+  // Ordena movimentações por data de criação
   async findAll(): Promise<Movimentacao[]> {
     return sql<Movimentacao[]>`
       SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
@@ -14,7 +14,7 @@ export const MovimentacaoRepository = {
     `
   },
 
-  // Busca uma movimentacao pelo seu id e retorna null se nao encontrar
+  // Busca uma movimentação pelo seu id e retorna null se não encontrar
   async findById(id: string): Promise<Movimentacao | null> {
     const movimentacao = await sql<Movimentacao[]>`
       SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
@@ -26,7 +26,7 @@ export const MovimentacaoRepository = {
     return movimentacao[0] ?? null
   },
 
-  // Cria uma nova movimentacao no banco de dados
+  // Cria uma nova movimentação no banco de dados
   async create(input: MovimentacaoInput): Promise<Movimentacao> {
     const [created] = await sql<Movimentacao[]>`
       INSERT INTO movimentacao (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida)
@@ -51,7 +51,7 @@ export const MovimentacaoRepository = {
     return created
   },
 
-  // Atualiza uma movimentacao existente
+  // Atualiza uma movimentação existente
   async update(id: string, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     const [updated] = await sql<Movimentacao[]>`
       UPDATE movimentacao
@@ -75,7 +75,7 @@ export const MovimentacaoRepository = {
     return updated ?? null
   },
 
-  // Remove uma movimentacao pelo id
+  // Remove uma movimentação pelo id
   async delete(id: string): Promise<void> {
     await sql`
       DELETE FROM movimentacao

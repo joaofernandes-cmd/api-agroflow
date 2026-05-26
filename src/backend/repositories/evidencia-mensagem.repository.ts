@@ -1,10 +1,10 @@
 import sql from '../database/connection'
 import { EvidenciaMensagem, EvidenciaMensagemInput } from '../models/evidencia-mensagem.model'
 
-// Retorna todas as evidencias de mensagem cadastradas
+// Retorna todas as evidências de mensagem cadastradas
 export const EvidenciaMensagemRepository = {
 
-    // Ordena evidencias de mensagem por evidencia
+    // Ordena evidências de mensagem por evidência
     async findAll(): Promise<EvidenciaMensagem[]> {
         return sql<EvidenciaMensagem[]>`
             SELECT evidencia_id, conteudo
@@ -13,7 +13,7 @@ export const EvidenciaMensagemRepository = {
         `
     },
 
-    // Busca uma evidencia de mensagem pelo id da evidencia e retorna null se nao encontrar
+    // Busca uma evidência de mensagem pelo id da evidência e retorna null se não encontrar
     async findById(evidencia_id: string): Promise<EvidenciaMensagem | null> {
         const evidenciaMensagem = await sql<EvidenciaMensagem[]>`
             SELECT evidencia_id, conteudo
@@ -25,7 +25,7 @@ export const EvidenciaMensagemRepository = {
         return evidenciaMensagem[0] ?? null
     },
 
-    // Cria uma nova evidencia de mensagem no banco de dados
+    // Cria uma nova evidência de mensagem no banco de dados
     async create(input: EvidenciaMensagemInput): Promise<EvidenciaMensagem> {
         const [created] = await sql<EvidenciaMensagem[]>`
             INSERT INTO evidencia_mensagem (evidencia_id, conteudo)
@@ -36,7 +36,7 @@ export const EvidenciaMensagemRepository = {
         return created
     },
 
-    // Atualiza uma evidencia de mensagem existente
+    // Atualiza uma evidência de mensagem existente
     async update(evidencia_id: string, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
         const [updated] = await sql<EvidenciaMensagem[]>`
             UPDATE evidencia_mensagem
@@ -49,7 +49,7 @@ export const EvidenciaMensagemRepository = {
         return updated ?? null
     },
 
-    // Remove uma evidencia de mensagem pelo id da evidencia
+    // Remove uma evidência de mensagem pelo id da evidência
     async delete(evidencia_id: string): Promise<void> {
         await sql`
             DELETE FROM evidencia_mensagem

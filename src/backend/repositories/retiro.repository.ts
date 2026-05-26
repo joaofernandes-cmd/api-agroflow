@@ -14,7 +14,7 @@ export const RetiroRepository = {
         `
     },
 
-    // Busca um retiro pelo seu id e retorna null se não encontrar.
+    // Busca um retiro pelo seu id e retorna null se não encontrar
     async findById(id: string): Promise<Retiro | null> {
         const retiro = await sql<Retiro[]>`
             SELECT id, nome

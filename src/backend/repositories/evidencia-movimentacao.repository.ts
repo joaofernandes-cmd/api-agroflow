@@ -1,10 +1,10 @@
 import sql from '../database/connection'
 import { EvidenciaMovimentacao, EvidenciaMovimentacaoInput } from '../models/evidencia-movimentacao.model'
 
-// Retorna todas as evidencias de movimentacoes cadastradas
+// Retorna todas as evidências de movimentações cadastradas
 export const EvidenciaMovimentacaoRepository = {
 
-    // Ordena evidencias de movimentacoes por evidencia
+    // Ordena evidências de movimentações por evidência
     async findAll(): Promise<EvidenciaMovimentacao[]> {
         return sql<EvidenciaMovimentacao[]>`
             SELECT evidencia_id, movimentacao_id
@@ -13,7 +13,7 @@ export const EvidenciaMovimentacaoRepository = {
         `
     },
 
-    // Busca uma evidencia de movimentacao pela chave composta e retorna null se nao encontrar
+    // Busca uma evidência de movimentação pela chave composta e retorna null se não encontrar
     async findById(evidencia_id: string, movimentacao_id: string): Promise<EvidenciaMovimentacao | null> {
         const evidenciaMovimentacao = await sql<EvidenciaMovimentacao[]>`
             SELECT evidencia_id, movimentacao_id
@@ -25,7 +25,7 @@ export const EvidenciaMovimentacaoRepository = {
         return evidenciaMovimentacao[0] ?? null
     },
 
-    // Cria uma nova evidencia de movimentacao no banco de dados
+    // Cria uma nova evidência de movimentação no banco de dados
     async create(input: EvidenciaMovimentacaoInput): Promise<EvidenciaMovimentacao> {
         const [created] = await sql<EvidenciaMovimentacao[]>`
             INSERT INTO evidencia_movimentacao (evidencia_id, movimentacao_id)

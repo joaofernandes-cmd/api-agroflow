@@ -1,9 +1,9 @@
 import sql from '../database/connection'
 import { EvidenciaTicket, EvidenciaTicketInput } from '../models/evidencia-ticket.model'
 
-// Retorna todas as evidencias de tickets cadastradas
+// Retorna todas as evidências de tickets cadastradas
 export const EvidenciaTicketRepository = {
-    // Ordena evidencias de tickets por data de criacao
+    // Ordena evidências de tickets por data de criacao
     async findAll(): Promise<EvidenciaTicket[]> {           
         return sql<EvidenciaTicket[]>`
             SELECT evidencia_id, ticket_id
@@ -12,7 +12,7 @@ export const EvidenciaTicketRepository = {
         `
     },
 
-    // Busca uma evidencia de ticket pelo seu id e retorna null se nao encontrar
+    // Busca uma evidência de ticket pelo seu id e retorna null se não encontrar
     async findById(evidencia_id: string, ticket_id: string): Promise<EvidenciaTicket | null> {
         const evidenciaTicket = await sql<EvidenciaTicket[]>`
             SELECT evidencia_id, ticket_id
@@ -23,7 +23,7 @@ export const EvidenciaTicketRepository = {
         return evidenciaTicket[0] ?? null
     },
 
-    // Cria uma nova evidencia de ticket no banco de dados
+    // Cria uma nova evidência de ticket no banco de dados
     async create(input: EvidenciaTicketInput): Promise<EvidenciaTicket> {
         const [created] = await sql<EvidenciaTicket[]>`
             INSERT INTO evidencia_ticket (evidencia_id, ticket_id)

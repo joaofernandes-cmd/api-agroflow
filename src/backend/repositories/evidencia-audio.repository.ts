@@ -13,7 +13,7 @@ export const EvidenciaAudioRepository = {
         `
     },
 
-    // Busca uma evidencia de audio pelo id da evidencia e retorna null se nao encontrar
+    // Busca uma evidência de áudio pelo id da evidência e retorna null se não encontrar
     async findById(evidencia_id: string): Promise<EvidenciaAudio | null> {
         const evidenciaAudio = await sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo
@@ -25,7 +25,7 @@ export const EvidenciaAudioRepository = {
         return evidenciaAudio[0] ?? null
     },
 
-    // Cria uma nova evidencia de audio no banco de dados
+    // Cria uma nova evidência de áudio no banco de dados
     async create(input: EvidenciaAudioInput): Promise<EvidenciaAudio> {
         const [created] = await sql<EvidenciaAudio[]>`
             INSERT INTO evidencia_audio (evidencia_id, url_arquivo)
@@ -36,7 +36,7 @@ export const EvidenciaAudioRepository = {
         return created
     },
 
-    // Atualiza uma evidencia de audio existente
+    // Atualiza uma evidência de áudio existente
     async update(evidencia_id: string, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
         const [updated] = await sql<EvidenciaAudio[]>`
             UPDATE evidencia_audio
@@ -49,7 +49,7 @@ export const EvidenciaAudioRepository = {
         return updated ?? null
     },
 
-    // Remove uma evidencia de audio pelo id da evidencia
+    // Remove uma evidência de áudio pelo id da evidência 
     async delete(evidencia_id: string): Promise<void> {
         await sql`
             DELETE FROM evidencia_audio

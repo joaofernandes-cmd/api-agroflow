@@ -2,10 +2,10 @@ import sql from '../database/connection'
 import { randomUUID } from 'crypto'
 import { Evidencia, EvidenciaInput } from '../models/evidencia.model'
 
-// Retorna todas as evidencias cadastradas
+// Retorna todas as evidências cadastradas
 export const EvidenciaRepository = {
 
-  // Ordena evidencias por data de criacao
+  // Ordena evidências por data de criação
   async findAll(): Promise<Evidencia[]> {
     return sql<Evidencia[]>`
       SELECT id, usuario_id, tipo, data_criacao
@@ -14,7 +14,7 @@ export const EvidenciaRepository = {
     `
   },
 
-  // Busca uma evidencia pelo seu id e retorna null se nao encontrar
+  // Busca uma evidência pelo seu id e retorna null se não encontrar
   async findById(id: string): Promise<Evidencia | null> {
     const evidencia = await sql<Evidencia[]>`
       SELECT id, usuario_id, tipo, data_criacao
@@ -26,7 +26,7 @@ export const EvidenciaRepository = {
     return evidencia[0] ?? null
   },
 
-  // Cria uma nova evidencia no banco de dados
+  // Cria uma nova evidência no banco de dados
   async create(input: EvidenciaInput): Promise<Evidencia> {
     const [created] = await sql<Evidencia[]>`
       INSERT INTO evidencia (id, usuario_id, tipo, data_criacao)
@@ -42,7 +42,7 @@ export const EvidenciaRepository = {
     return created
   },
 
-  // Atualiza uma evidencia existente
+  // Atualiza uma evidência existente
   async update(id: string, input: Partial<EvidenciaInput>): Promise<Evidencia | null> {
     const [updated] = await sql<Evidencia[]>`
       UPDATE evidencia
@@ -57,7 +57,7 @@ export const EvidenciaRepository = {
     return updated ?? null
   },
 
-  // Remove uma evidencia pelo id
+  // Remove uma evidência pelo id
   async delete(id: string): Promise<void> {
     await sql`
       DELETE FROM evidencia

@@ -14,7 +14,7 @@ export const UsuarioRepository = {
     `
   },
 
-  // Busca um usuário pelo seu id e retorna null se não encontrar. 
+  // Busca um usuário pelo seu id e retorna null se não encontrar 
   async findById(id: string): Promise<Usuario | null> {
     const usuario = await sql<Usuario[]>`
       SELECT id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo

@@ -5,7 +5,7 @@ import { Relatorio, RelatorioInput } from '../models/relatorio.model'
 // Retorna todos os relatorios
 export const RelatorioRepository = {
 
-	// Ordena relatorios por data que foi gerado
+	// Ordena relatórios por data que foi gerado
 	async findAll(): Promise<Relatorio[]> {
 		return sql<Relatorio[]>`
 			SELECT id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
@@ -14,7 +14,7 @@ export const RelatorioRepository = {
 		`
 	},
 
-	// Busca relatorio pelo seu id e retorna nulo se nao encontrar
+	// Busca relatório pelo seu id e retorna nulo se não encontrar
 	async findById(id: string): Promise<Relatorio | null> {
 		const relatorios = await sql<Relatorio[]>`
 			SELECT id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
@@ -26,7 +26,7 @@ export const RelatorioRepository = {
 		return relatorios[0] ?? null
 	},
 
-	// Cria um novo relatorio no banco de dados
+	// Cria um novo relatório no banco de dados
 	async create(input: RelatorioInput): Promise<Relatorio> {
 		const [created] = await sql<Relatorio[]>`
 			INSERT INTO relatorio (id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo)
@@ -46,7 +46,7 @@ export const RelatorioRepository = {
 		return created
 	},
 
-	// Atualiza um relatorio existente no banco de dados
+	// Atualiza um relatório existente no banco de dados
 	async update(id: string, input: Partial<RelatorioInput>): Promise<Relatorio | null> {
 		const [updated] = await sql<Relatorio[]>`
 			UPDATE relatorio
