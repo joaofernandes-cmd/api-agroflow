@@ -30,15 +30,17 @@ export const MovimentacaoService = {
   },
 
   // RN03: Criar movimentação com flag sincronizado = false no modo offline
+  // data_criacao é gerada automaticamente pelo sistema (timestamp)
   // Sincronização será disparada automaticamente quando houver conexão
-  async criar(dados: MovimentacaoInput): Promise<Movimentacao> {
-    this.validarCamposObrigatorios(dados)
+  async criar(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por'>): Promise<Movimentacao> {
+    this.validarCamposObrigatorios(dados as MovimentacaoInput)
 
     const movimentacao = await MovimentacaoRepository.create({
       ...dados,
       status: 'pendente',
       sincronizado: dados.sincronizado ?? false,
-    })
+      validado_por: '',
+    } as MovimentacaoInput)
 
     return movimentacao
   },

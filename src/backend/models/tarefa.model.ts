@@ -21,6 +21,6 @@ export interface TarefaInput {
   descricao: string
   categoria: string
   prioridade: TarefaPrioridade
-  data_criacao: Date
+  data_criacao?: Date
   status: TarefaStatus
 }

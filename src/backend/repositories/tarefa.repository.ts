@@ -26,8 +26,8 @@ export const TarefaRepository = {
         return tarefa[0] ?? null
     },
 
-    // Cria uma nova tarefa no banco de dados      
-    async create(input: TarefaInput): Promise<Tarefa> {  
+    // Cria uma nova tarefa no banco de dados
+    async create(input: TarefaInput): Promise<Tarefa> {
         const [created] = await sql<Tarefa[]>`
             INSERT INTO tarefa (id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status)
             VALUES (
@@ -38,11 +38,11 @@ export const TarefaRepository = {
                 ${input.descricao},
                 ${input.categoria},
                 ${input.prioridade},
-                ${input.data_criacao},
+                ${input.data_criacao ?? new Date()},
                 ${input.status}
             )
             RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status
-        `   
+        `
 
         return created
     },

@@ -1,0 +1,243 @@
+import { Tarefa, TarefaInput, TarefaStatus, TarefaPrioridade } from '../models/tarefa.model'
+import { TarefaRepository } from '../repositories/tarefa.repository'
+import { Usuario } from '../models/usuario.model'
+import { UsuarioService } from './usuario.service'
+
+export const TarefaService = {
+  // RN02: Validar campos obrigatórios na criação de tarefa
+  // Obrigatórios: usuário atribuído, prioridade, categoria, descrição
+  // data_criacao é gerada automaticamente pelo sistema (timestamp)
+  validarCamposObrigatorios(dados: TarefaInput): void {
+    if (!dados.atribuida_a) {
+      throw new Error('Campo "atribuida_a" (usuário) é obrigatório')
+    }
+
+    if (!dados.prioridade) {
+      throw new Error('Campo "prioridade" é obrigatório')
+    }
+
+    if (!dados.categoria) {
+      throw new Error('Campo "categoria" é obrigatório')
+    }
+
+    if (!dados.descricao || dados.descricao.trim().length === 0) {
+      throw new Error('Campo "descricao" é obrigatório')
+    }
+  },
+
+  
+  // RN02: Criar tarefa com validação de campos obrigatórios
+  // data_criacao é gerada automaticamente pelo sistema (timestamp)
+  async criar(dados: Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'status'>, usuarioCriador: Usuario): Promise<Tarefa> { // Usuário só envia ISSO: retiro_id, atribuida_a, prioridade, categoria, descricao
+
+
+    // Supervisor e Capataz podem criar tarefas
+    if (usuarioCriador.cargo !== 'supervisor' && usuarioCriador.cargo !== 'capataz') {
+      throw new Error('Apenas Supervisores e Capatazes podem criar tarefas')
+    }
+
+    // Valida se todos os campos obrigatórios foram preenchidos
+    this.validarCamposObrigatorios(dados as TarefaInput)
+
+    // Cria tarefa no banco com campos fornecidos + campos gerados automaticamente
+    const tarefa = await TarefaRepository.create({
+      ...dados,                         // Spread dos dados do usuário: retiro_id, atribuida_a, prioridade, categoria, descricao
+      criada_por: usuarioCriador.id,    // Preenchido automaticamente com o ID do usuário logado
+      status: 'pendente',               // Preenchido automaticamente como pendente
+    } as TarefaInput)
+
+    // Retorna tarefa criada com ID gerado pelo banco
+    return tarefa
+  },
+
+
+
+  // RN10: Buscar tarefas para dashboard (apenas concluídas)
+  async buscarParaDashboard(retiroId?: string): Promise<Tarefa[]> {
+    // Busca todas as tarefas do banco
+    const tarefas = await TarefaRepository.findAll()
+
+    // Filtra apenas tarefas concluídas (e opcionalmente por retiro)
+    return tarefas.filter(t => {
+      if (t.status !== 'concluida') {
+        return false
+      }
+
+      // Se retiroId foi informado, filtra por esse retiro
+      if (retiroId && t.retiro_id !== retiroId) {
+        return false
+      }
+
+      // Passou em todos os filtros? Inclui no resultado
+      return true
+    })
+  },
+
+
+  // Listar tarefas filtradas por status e opcionalmente por retiro
+  async listarPorStatus(status: TarefaStatus, retiroId?: string): Promise<Tarefa[]> {
+    // Busca todas as tarefas do banco
+    const tarefas = await TarefaRepository.findAll()
+
+    // Filtra tarefas por status (e opcionalmente por retiro)
+    return tarefas.filter(t => {
+      // Verifica se o status da tarefa corresponde ao filtro solicitado
+      if (t.status !== status) {
+        return false
+      }
+
+      // Se retiroId foi informado, verifica se pertence a esse retiro
+      if (retiroId && t.retiro_id !== retiroId) {
+        return false
+      }
+
+      // Passou em todos os filtros? Inclui no resultado
+      return true
+    })
+  },
+
+
+  // Listar tarefas atribuídas a um usuário
+  async listarPorUsuario(usuarioId: string): Promise<Tarefa[]> {
+    const tarefas = await TarefaRepository.findAll()
+    return tarefas.filter(t => t.atribuida_a === usuarioId)
+  },
+
+
+  // Listar tarefas filtradas por prioridade e opcionalmente por retiro
+  async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: string): Promise<Tarefa[]> {
+    // Busca todas as tarefas do banco
+    const tarefas = await TarefaRepository.findAll()
+
+    // Filtra tarefas por prioridade (alta, media, baixa)
+    return tarefas.filter(t => {
+      // Verifica se a prioridade da tarefa corresponde ao filtro
+      if (t.prioridade !== prioridade) {
+        return false
+      }
+
+      // Se retiroId foi informado, verifica se pertence a esse retiro
+      if (retiroId && t.retiro_id !== retiroId) {
+        return false
+      }
+
+      // Passou em todos os filtros? Inclui no resultado
+      return true
+    })
+  },
+  // Listar tarefas filtradas por categoria e opcionalmente por retiro
+  async listarPorCategoria(categoria: string, retiroId?: string): Promise<Tarefa[]> {
+    // Busca todas as tarefas do banco
+    const tarefas = await TarefaRepository.findAll()
+
+    // Filtra tarefas por categoria
+    return tarefas.filter(t => {
+      // Verifica se a categoria da tarefa corresponde ao filtro
+      if (t.categoria !== categoria) {
+        return false
+      }
+
+      // Se retiroId foi informado, verifica se pertence a esse retiro
+      if (retiroId && t.retiro_id !== retiroId) {
+        return false
+      }
+
+      // Passou em todos os filtros? Inclui no resultado
+      return true
+    })
+  },
+
+
+  // Buscar uma tarefa específica pelo ID
+  async buscarPorId(id: string): Promise<Tarefa | null> {
+    // Retorna a tarefa ou null se não encontrar
+    return TarefaRepository.findById(id)
+  },
+
+
+  // Listar todas as tarefas sem filtros
+  async listarTodas(): Promise<Tarefa[]> {
+    // Retorna todas as tarefas do banco
+    return TarefaRepository.findAll()
+  },
+
+
+  // Atualizar apenas o status de uma tarefa
+  async atualizarStatus(id: string, novoStatus: TarefaStatus): Promise<Tarefa | null> {
+    // Busca a tarefa atual no banco
+    const tarefa = await TarefaRepository.findById(id)
+
+    // Se tarefa não existe, retorna null
+    if (!tarefa) {
+      return null
+    }
+
+    // Atualiza apenas o campo status mantendo outros campos intactos
+    return TarefaRepository.update(id, {
+      ...tarefa,            // Mantém todos os campos atuais
+      status: novoStatus,   // Sobrescreve apenas o status
+    })
+  },
+
+
+
+  // Atualizar tarefa com validação de campos obrigatórios
+  // Campos que NÃO podem ser alterados: data_criacao, criada_por, retiro_id, status
+  async atualizar(id: string, dados: Partial<Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'retiro_id' | 'status'>>): Promise<Tarefa | null> {
+    // Busca a tarefa atual no banco
+    const tarefaAtual = await TarefaRepository.findById(id)
+    // Se tarefa não existe, retorna null
+    if (!tarefaAtual) {
+      return null
+    }
+
+    // Se está alterando campos críticos, revalida para garantir integridade
+    if (dados.atribuida_a || dados.prioridade || dados.categoria || dados.descricao) {
+      // Mescla dados atuais com novos dados para validação completa
+      const dadosCompletos = {
+        ...tarefaAtual,
+        ...dados,
+      } as TarefaInput
+
+      // Revalida se todos os campos obrigatórios estão presentes
+      this.validarCamposObrigatorios(dadosCompletos)
+    }
+
+    // Atualiza a tarefa no banco com os novos dados
+    return TarefaRepository.update(id, dados)
+  },
+
+
+
+  // Contar quantas tarefas existem em cada status
+  async contarPorStatus(retiroId?: string): Promise<Record<TarefaStatus, number>> {
+    // Busca todas as tarefas do banco
+    const tarefas = await TarefaRepository.findAll()
+
+    // Inicializa contador para cada status possível
+    const contagem: Record<TarefaStatus, number> = {
+      pendente: 0,
+      em_andamento: 0,
+      concluida: 0,
+      cancelada: 0,
+    }
+
+    // Itera sobre todas as tarefas e incrementa o contador do status correspondente
+    tarefas.forEach(t => {
+      // Se retiroId foi informado, filtra por esse retiro; senão conta todas
+      if (!retiroId || t.retiro_id === retiroId) {
+        contagem[t.status]++
+      }
+    })
+
+    // Retorna objeto com contagem de tarefas por status
+    return contagem
+  },
+
+
+  // Remover uma tarefa do banco de dados
+  async remover(id: string): Promise<void> {
+    // Deleta a tarefa do banco de dados permanentemente
+    await TarefaRepository.delete(id)
+  },
+}
