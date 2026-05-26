@@ -2631,6 +2631,12 @@ ALTER TABLE `relatorio`
 &nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+ 
+Esta seção traz quatro consultas SQL do back-end do AgroFlow, uma de cada tipo principal de operação relacional (SELECT, UPDATE, DELETE e INSERT). Para cada consulta são apresentados o código SQL, a descrição em palavras, as proposições atômicas presentes na condição, a expressão lógica proposicional correspondente e a tabela verdade. No final, uma síntese discute os diferentes padrões lógicos usados ao longo do conjunto.
+ 
+**Convenções adotadas:** V = Verdadeiro, F = Falso. Conectivos lógicos: ∧ (conjunção / AND), ∨ (disjunção / OR), ¬ (negação / NOT). A coluna **Resultado** das tabelas verdade indica se o registro passa pela cláusula `WHERE` (consultas 1, 2 e 3) ou se a inserção é aceita pelo `CHECK` constraint (consulta 4).
+ 
+---
 
 #### Consulta 1 — SELECT (filtro de movimentações pelo Supervisor)
 
