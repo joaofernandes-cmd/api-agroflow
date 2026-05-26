@@ -27,22 +27,22 @@ export const TicketRepository = {
     },
 
     // Cria um novo ticket no banco de dados
-    async create(data: TicketInput): Promise<Ticket> { 
+    async create(input: TicketInput): Promise<Ticket> { 
 
         // Retorna o ticket criado, incluindo o id gerado pelo banco de dados
         const [created] = await sql<Ticket[]>` 
             INSERT INTO ticket (id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, descricao, data_criacao, data_realizado)
             VALUES (
                 ${randomUUID()},
-                ${data.retiro_id},
-                ${data.aberto_por},
-                ${data.categoria},
-                ${data.localizacao},
-                ${data.status},
-                ${data.atribuido_a},
-                ${data.descricao},
-                ${data.data_criacao},
-                ${data.data_realizado}
+                ${input.retiro_id},
+                ${input.aberto_por},
+                ${input.categoria},
+                ${input.localizacao},
+                ${input.status},
+                ${input.atribuido_a},
+                ${input.descricao},
+                ${input.data_criacao},
+                ${input.data_realizado}
             )
             RETURNING id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, descricao, data_criacao, data_realizado
         `
@@ -51,19 +51,19 @@ export const TicketRepository = {
 
     // Atualiza os dados de um ticket existente
     // Campos não enviados permanecem com os valores atuais
-    async update(id: string, data: Partial<TicketInput>): Promise<Ticket | null> {
+    async update(id: string, input: Partial<TicketInput>): Promise<Ticket | null> {
         const updated = await sql<Ticket[]>`
             UPDATE ticket
             SET 
-            retiro_id = COALESCE(${data.retiro_id ?? null}, retiro_id),
-            aberto_por = COALESCE(${data.aberto_por ?? null}, aberto_por),
-            categoria = COALESCE(${data.categoria ?? null}, categoria),
-            localizacao = COALESCE(${data.localizacao ?? null}, localizacao),
-            status = COALESCE(${data.status ?? null}, status),
-            atribuido_a = COALESCE(${data.atribuido_a ?? null}, atribuido_a),
-            descricao = COALESCE(${data.descricao ?? null}, descricao),
-            data_criacao = COALESCE(${data.data_criacao ?? null}, data_criacao),
-            data_realizado = COALESCE(${data.data_realizado ?? null}, data_realizado)
+            retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
+            aberto_por = COALESCE(${input.aberto_por ?? null}, aberto_por),
+            categoria = COALESCE(${input.categoria ?? null}, categoria),
+            localizacao = COALESCE(${input.localizacao ?? null}, localizacao),
+            status = COALESCE(${input.status ?? null}, status),
+            atribuido_a = COALESCE(${input.atribuido_a ?? null}, atribuido_a),
+            descricao = COALESCE(${input.descricao ?? null}, descricao),
+            data_criacao = COALESCE(${input.data_criacao ?? null}, data_criacao),
+            data_realizado = COALESCE(${input.data_realizado ?? null}, data_realizado)
             WHERE id = ${id}
             RETURNING id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, descricao, data_criacao, data_realizado
         `

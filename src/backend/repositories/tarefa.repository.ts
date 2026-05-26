@@ -27,19 +27,19 @@ export const TarefaRepository = {
     },
 
     // Cria uma nova tarefa no banco de dados      
-    async create(data: TarefaInput): Promise<Tarefa> {  
+    async create(input: TarefaInput): Promise<Tarefa> {  
         const [created] = await sql<Tarefa[]>`
             INSERT INTO tarefa (id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status)
             VALUES (
                 ${randomUUID()},
-                ${data.retiro_id},
-                ${data.criada_por},
-                ${data.atribuida_a},
-                ${data.descricao},
-                ${data.categoria},
-                ${data.prioridade},
-                ${data.data_criacao},
-                ${data.status}
+                ${input.retiro_id},
+                ${input.criada_por},
+                ${input.atribuida_a},
+                ${input.descricao},
+                ${input.categoria},
+                ${input.prioridade},
+                ${input.data_criacao},
+                ${input.status}
             )
             RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status
         `   
@@ -48,18 +48,18 @@ export const TarefaRepository = {
     },
 
     // Atualiza uma tarefa existente no banco de dados
-    async update(id: string, data: Partial<TarefaInput>): Promise<Tarefa | null> {
+    async update(id: string, input: Partial<TarefaInput>): Promise<Tarefa | null> {
         const [updated] = await sql<Tarefa[]>`
             UPDATE tarefa
             SET
-            retiro_id = COALESCE(${data.retiro_id ?? null}, retiro_id),
-            criada_por = COALESCE(${data.criada_por ?? null}, criada_por),
-            atribuida_a = COALESCE(${data.atribuida_a ?? null}, atribuida_a),
-            categoria = COALESCE(${data.categoria ?? null}, categoria),
-            prioridade = COALESCE(${data.prioridade ?? null}, prioridade),
-            descricao = COALESCE(${data.descricao ?? null}, descricao),
-            data_criacao = COALESCE(${data.data_criacao ?? null}, data_criacao),
-            status = COALESCE(${data.status ?? null}, status)
+            retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
+            criada_por = COALESCE(${input.criada_por ?? null}, criada_por),
+            atribuida_a = COALESCE(${input.atribuida_a ?? null}, atribuida_a),
+            categoria = COALESCE(${input.categoria ?? null}, categoria),
+            prioridade = COALESCE(${input.prioridade ?? null}, prioridade),
+            descricao = COALESCE(${input.descricao ?? null}, descricao),
+            data_criacao = COALESCE(${input.data_criacao ?? null}, data_criacao),
+            status = COALESCE(${input.status ?? null}, status)
             WHERE id = ${id}
             RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status
         `

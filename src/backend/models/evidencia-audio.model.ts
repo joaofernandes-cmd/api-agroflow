@@ -4,5 +4,6 @@ export interface EvidenciaAudio {
 }
 
 export interface EvidenciaAudioInput {
+  evidencia_id: string
   url_arquivo: string
 }

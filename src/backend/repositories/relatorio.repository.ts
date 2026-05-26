@@ -1,0 +1,67 @@
+import sql from '../database/connection'
+import { randomUUID } from 'crypto'
+import { Relatorio, RelatorioInput } from '../models/relatorio.model'
+
+// Retorna todos os relatorios
+export const RelatorioRepository = {
+
+	// Ordena relatorios por data que foi gerado
+	async findAll(): Promise<Relatorio[]> {
+		return sql<Relatorio[]>`
+			SELECT id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
+			FROM relatorio
+			ORDER BY data_gerado
+		`
+	},
+
+	// Busca relatorio pelo seu id e retorna nulo se nao encontrar
+	async findById(id: string): Promise<Relatorio | null> {
+		const relatorios = await sql<Relatorio[]>`
+			SELECT id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
+			FROM relatorio
+			WHERE id = ${id}
+			LIMIT 1
+		`
+
+		return relatorios[0] ?? null
+	},
+
+	// Cria um novo relatorio no banco de dados
+	async create(input: RelatorioInput): Promise<Relatorio> {
+		const [created] = await sql<Relatorio[]>`
+			INSERT INTO relatorio (id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo)
+			VALUES (
+				${randomUUID()},
+				${input.gerado_por},
+				${input.retiro_id},
+				${input.tipo},
+				${input.data_inicio},
+				${input.data_fim},
+				${input.data_gerado ?? new Date()},
+				${input.url_arquivo}
+			)
+			RETURNING id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
+		`
+
+		return created
+	},
+
+	// Atualiza um relatorio existente no banco de dados
+	async update(id: string, input: Partial<RelatorioInput>): Promise<Relatorio | null> {
+		const [updated] = await sql<Relatorio[]>`
+			UPDATE relatorio
+			SET
+				gerado_por = COALESCE(${input.gerado_por ?? null}, gerado_por),
+				retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
+				tipo = COALESCE(${input.tipo ?? null}, tipo),
+				data_inicio = COALESCE(${input.data_inicio ?? null}, data_inicio),
+				data_fim = COALESCE(${input.data_fim ?? null}, data_fim),
+				data_gerado = COALESCE(${input.data_gerado ?? null}, data_gerado),
+				url_arquivo = COALESCE(${input.url_arquivo ?? null}, url_arquivo)
+			WHERE id = ${id}
+			RETURNING id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
+		`
+
+		return updated ?? null
+	}
+}

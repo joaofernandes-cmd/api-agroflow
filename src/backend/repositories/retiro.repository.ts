@@ -26,21 +26,21 @@ export const RetiroRepository = {
     },
 
     // Cria um novo retiro no banco de dados
-    async create(data: RetiroInput): Promise<Retiro> {
+    async create(input: RetiroInput): Promise<Retiro> {
         const [created] = await sql<Retiro[]>`
             INSERT INTO retiro (id, nome)
-            VALUES (${randomUUID()}, ${data.nome})
+            VALUES (${randomUUID()}, ${input.nome})
             RETURNING id, nome
         `
         return created
     },
 
     // Atualiza os dados de um retiro existente
-    async update(id: string, data: Partial<RetiroInput>): Promise<Retiro | null> {
+    async update(id: string, input: Partial<RetiroInput>): Promise<Retiro | null> {
         const updated = await sql<Retiro[]>`
             UPDATE retiro
             SET
-                nome = COALESCE(${data.nome ?? null}, nome)
+                nome = COALESCE(${input.nome ?? null}, nome)
             WHERE id = ${id}
             RETURNING id, nome
         `

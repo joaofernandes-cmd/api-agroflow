@@ -4,5 +4,6 @@ export interface EvidenciaMensagem {
 }
 
 export interface EvidenciaMensagemInput {
+  evidencia_id: string
   conteudo: string
 }

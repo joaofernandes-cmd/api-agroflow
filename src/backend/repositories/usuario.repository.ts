@@ -39,18 +39,18 @@ export const UsuarioRepository = {
   },
 
   // Cria um novo usuário no banco de dados
-  async create(data: UsuarioInput): Promise<Usuario> {
+  async create(input: UsuarioInput): Promise<Usuario> {
     const [created] = await sql<Usuario[]>`
       INSERT INTO usuario (id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo)
       VALUES (
         ${randomUUID()},
-        ${data.retiro_id},
-        ${data.nome},
-        ${data.login},
-        ${data.senha_hash},
-        ${data.status},
+        ${input.retiro_id},
+        ${input.nome},
+        ${input.login},
+        ${input.senha_hash},
+        ${input.status},
         ${new Date()},
-        ${data.cargo}
+        ${input.cargo}
       )
       RETURNING id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
     `
@@ -60,16 +60,16 @@ export const UsuarioRepository = {
 
   // Atualiza os dados de um usuário existente
   // Campos não enviados permanecem com os valores atuais
-  async update(id: string, data: Partial<UsuarioInput>): Promise<Usuario | null> {
+  async update(id: string, input: Partial<UsuarioInput>): Promise<Usuario | null> {
     const updated = await sql<Usuario[]>`
       UPDATE usuario
       SET
-        retiro_id = COALESCE(${data.retiro_id ?? null}, retiro_id),
-        nome = COALESCE(${data.nome ?? null}, nome),
-        login = COALESCE(${data.login ?? null}, login),
-        senha_hash = COALESCE(${data.senha_hash ?? null}, senha_hash),
-        status = COALESCE(${data.status ?? null}, status),
-        cargo = COALESCE(${data.cargo ?? null}, cargo)
+        retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
+        nome = COALESCE(${input.nome ?? null}, nome),
+        login = COALESCE(${input.login ?? null}, login),
+        senha_hash = COALESCE(${input.senha_hash ?? null}, senha_hash),
+        status = COALESCE(${input.status ?? null}, status),
+        cargo = COALESCE(${input.cargo ?? null}, cargo)
       WHERE id = ${id}
       RETURNING id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
     `
