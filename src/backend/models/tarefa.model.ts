@@ -12,6 +12,7 @@ export interface Tarefa {
   prioridade: TarefaPrioridade
   data_criacao: Date
   status: TarefaStatus
+  sincronizado: boolean
 }
 
 export interface TarefaInput {
@@ -23,4 +24,5 @@ export interface TarefaInput {
   prioridade: TarefaPrioridade
   data_criacao?: Date
   status: TarefaStatus
+  sincronizado?: boolean
 }
