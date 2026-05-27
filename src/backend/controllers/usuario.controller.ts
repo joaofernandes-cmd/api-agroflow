@@ -38,7 +38,7 @@ export const UsuarioController = {
 
     async buscarPorId(req: Request, res: Response) {
         try {
-            const { id } = req.params;
+            const id = String(req.params.id);
             const usuario = await UsuarioService.buscarPorId(id);
 
             if (!usuario) {
@@ -53,7 +53,7 @@ export const UsuarioController = {
 
     async listarPorRetiro(req: Request, res: Response) {
         try {
-            const { retiroId } = req.params;
+            const retiroId = String(req.params.retiroId);
             
             const usuarios = await UsuarioService.listarPorRetiro(retiroId);
 
@@ -88,7 +88,7 @@ export const UsuarioController = {
 
     async atualizar(req: Request, res: Response) {
         try {
-            const { id } = req.params;
+            const id = String(req.params.id);
             const usuario = await UsuarioService.atualizar(id, req.body);
 
             if (!usuario) {
@@ -103,7 +103,7 @@ export const UsuarioController = {
 
     async remover(req: Request, res: Response) {
         try {
-            const { id } = req.params;
+            const id = String(req.params.id);
             const usuario = await UsuarioService.buscarPorId(id);
 
             if (!usuario) {
