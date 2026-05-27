@@ -3,6 +3,7 @@ import { MovimentacaoController } from '../controllers/movimentacao.controller'
 
 const movimentacaoRoutes = Router()
 
+// Lista todas as movimentações ou aplica filtros quando retiroId é informado.
 function listarOuFiltrar(req: Request, res: Response) {
   if (req.query.retiroId) {
     return MovimentacaoController.filtrar(req, res)
@@ -15,9 +16,14 @@ function listarOuFiltrar(req: Request, res: Response) {
   return MovimentacaoController.listarTodas(req, res)
 }
 
+// Criação e listagem de movimentações do rebanho.
 movimentacaoRoutes.post('/', MovimentacaoController.criar)
 movimentacaoRoutes.get('/', listarOuFiltrar)
+
+// Consulta movimentações ainda aguardando validação.
 movimentacaoRoutes.get('/pendentes', MovimentacaoController.listarPendentes)
+
+// Rotas por ID ficam por último para não capturar rotas específicas.
 movimentacaoRoutes.get('/:id', MovimentacaoController.buscarPorId)
 movimentacaoRoutes.patch('/:id', MovimentacaoController.atualizar)
 movimentacaoRoutes.patch('/:id/validacao', MovimentacaoController.validar)
