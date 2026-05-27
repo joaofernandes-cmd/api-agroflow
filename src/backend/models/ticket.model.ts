@@ -16,6 +16,7 @@ export interface Ticket {
   prioridade: TicketPrioridade
   data_criacao: Date
   data_realizado: Date
+  sincronizado: boolean
 }
 
 export interface TicketInput {
@@ -29,4 +30,5 @@ export interface TicketInput {
   prioridade: TicketPrioridade
   data_criacao?: Date
   data_realizado?: Date
+  sincronizado?: boolean
 }
