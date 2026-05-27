@@ -1,0 +1,121 @@
+import {  Request, Response } from 'express';
+import { UsuarioService } from '../services/usuario.service';
+
+function  removerSenha(usuario: any) {
+    const { senha_hash, ...usuarioSemSenha } = usuario;
+    return usuarioSemSenha;
+}
+
+export const UsuarioController = {
+    async autenticar(req: Request, res: Response) {
+        try {
+            const { login, senha } = req.body;
+
+            if (!login || !senha) {
+                return res.status(400).json({ error: 'Login e senha são obrigatórios' })
+            }
+
+            const usuario = await UsuarioService.autenticar(login, senha);
+
+            if (!usuario) {
+                return res.status(401).json({ error: 'Login ou senha incorretos' });
+            }
+
+            return res.status(200).json(removerSenha(usuario));
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao autenticar usuário' });
+        }
+    },
+
+    async listarTodos(req: Request, res: Response) {
+        try {
+            const usuarios = await UsuarioService.listarTodos();
+            return res.status(200).json(usuarios.map(removerSenha));
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao listar usuários' });
+        }
+        },
+
+    async buscarPorId(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const usuario = await UsuarioService.buscarPorId(id);
+
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+
+            return res.status(200).json(removerSenha(usuario));
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao buscar usuário' });
+        }
+        },
+
+    async listarPorRetiro(req: Request, res: Response) {
+        try {
+            const { retiroId } = req.params;
+            
+            const usuarios = await UsuarioService.listarPorRetiro(retiroId);
+
+            return res.status(200).json(usuarios.map(removerSenha));
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao listar usuários por retiro' });
+        }
+    },
+
+    async criar(req: Request, res: Response) {
+        try {
+            const { retiro_id, nome, login, senha_hash, status, cargo } = req.body;
+
+            if (!retiro_id || !nome || !login || !senha_hash || !status || !cargo) {
+                return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+            }
+
+            const usuario = await UsuarioService.criar({
+                retiro_id,
+                nome,
+                login,
+                senha_hash,
+                status,
+                cargo
+            })
+
+            return res.status(201).json(removerSenha(usuario));
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao criar usuário' });
+        }
+    },
+
+    async atualizar(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const usuario = await UsuarioService.atualizar(id, req.body);
+
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+
+            return res.status(200).json(removerSenha(usuario));
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao atualizar usuário' });
+        }
+    },
+
+    async remover(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const usuario = await UsuarioService.buscarPorId(id);
+
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+
+            await UsuarioService.remover(id);
+
+            return res.status(204).send();
+        } catch (error) {
+            return res.status(500).json({ erro: 'Erro ao remover usuário' });
+        }
+    },
+
+    }
