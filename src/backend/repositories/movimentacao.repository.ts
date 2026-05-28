@@ -7,7 +7,7 @@ export const MovimentacaoRepository = {
   // Ordena movimentações por data de criação
   async findAll(): Promise<Movimentacao[]> {
     return sql<Movimentacao[]>`
-      SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
+      SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
       FROM movimentacao
       ORDER BY data_criacao
     `
@@ -16,7 +16,7 @@ export const MovimentacaoRepository = {
   // Busca uma movimentação pelo seu id e retorna null se não encontrar
   async findById(id: number): Promise<Movimentacao | null> {
     const movimentacao = await sql<Movimentacao[]>`
-      SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
+      SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
       FROM movimentacao
       WHERE id = ${id}
       LIMIT 1
@@ -28,7 +28,7 @@ export const MovimentacaoRepository = {
   // Cria uma nova movimentação no banco de dados
   async create(input: MovimentacaoInput): Promise<Movimentacao> {
     const [created] = await sql<Movimentacao[]>`
-      INSERT INTO movimentacao (retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida)
+      INSERT INTO movimentacao (retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao)
       VALUES (
         ${input.retiro_id},
         ${input.capataz_id},
@@ -41,9 +41,10 @@ export const MovimentacaoRepository = {
         ${input.sincronizado ?? false},
         ${input.data_criacao ?? new Date()},
         ${input.causa_obito ?? null},
-        ${input.estagio_vida}
+        ${input.estagio_vida},
+        ${input.motivo_rejeicao ?? null}
       )
-      RETURNING id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
+      RETURNING id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
     `
 
     return created
@@ -65,9 +66,10 @@ export const MovimentacaoRepository = {
         sincronizado = COALESCE(${input.sincronizado ?? null}, sincronizado),
         data_criacao = COALESCE(${input.data_criacao ?? null}, data_criacao),
         causa_obito = COALESCE(${input.causa_obito ?? null}, causa_obito),
-        estagio_vida = COALESCE(${input.estagio_vida ?? null}, estagio_vida)
+        estagio_vida = COALESCE(${input.estagio_vida ?? null}, estagio_vida),
+        motivo_rejeicao = COALESCE(${input.motivo_rejeicao ?? null}, motivo_rejeicao)
       WHERE id = ${id}
-      RETURNING id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
+      RETURNING id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
     `
 
     return updated ?? null

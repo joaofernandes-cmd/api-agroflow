@@ -34,8 +34,10 @@ export const EvidenciaService = {
       }
     }
     if (tipo === 'audio') {
-     
-
+      // Rejeita áudios com menos de 3 segundos (duracao em segundos)
+      if (!dados.duracao || dados.duracao < 3) {
+        throw new Error('Áudio rejeitado: mínimo 3 segundos obrigatório')
+      }
     }
   },
 
@@ -54,7 +56,7 @@ export const EvidenciaService = {
     }
 
     // Valida que latitude e longitude extraídas dos metadados estão corretas
-    this.validarGeorreferenciamento(latitude, longitude)
+    EvidenciaService.validarGeorreferenciamento(latitude, longitude)
 
     // Cria registro base de evidência (tabela: evidencia)
     const evidencia = await EvidenciaRepository.create({
@@ -99,7 +101,7 @@ export const EvidenciaService = {
   // RN08: Criar evidência de mensagem + validar mínimo 10 caracteres
   async criarMensagem(usuarioId: string, conteudo: string): Promise<{ evidencia: Evidencia; mensagem: EvidenciaMensagem }> {
     // RN08: Valida que mensagem atende requisitos mínimos (10 caracteres)
-    this.validarEvidenciaDescritiva('mensagem', { conteudo })
+    EvidenciaService.validarEvidenciaDescritiva('mensagem', { conteudo })
 
     // Cria registro base de evidência (tabela: evidencia)
     const evidencia = await EvidenciaRepository.create({

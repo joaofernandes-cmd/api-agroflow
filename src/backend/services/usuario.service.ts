@@ -11,9 +11,11 @@ export const UsuarioService = {
       return null
     }
 
-    // TODO: Validar senha contra senha_hash usando bcrypt ou similar
-    // Exemplo: const senhaValida = await bcrypt.compare(senha, usuario.senha_hash)
-    // if (!senhaValida) return null
+    // RN05: Validar senha contra senha_hash (implementar com bcrypt quando disponível)
+    // Por enquanto, comparação simples (remover em produção com bcrypt.compare)
+    if (usuario.senha_hash !== senha) {
+      return null
+    }
 
     return usuario
   },
@@ -42,9 +44,31 @@ export const UsuarioService = {
 
   // Criar novo usuário
   async criar(dados: UsuarioInput): Promise<Usuario> {
-    // TODO: Validar campos obrigatórios
-    // TODO: Hash da senha usando bcrypt
-    // TODO: Validar formato de email (login)
+    // Validar campos obrigatórios
+    if (!dados.nome || dados.nome.trim().length === 0) {
+      throw new Error('Campo "nome" é obrigatório')
+    }
+    if (!dados.login || dados.login.trim().length === 0) {
+      throw new Error('Campo "login" é obrigatório')
+    }
+    if (!dados.senha_hash || dados.senha_hash.length === 0) {
+      throw new Error('Campo "senha_hash" é obrigatório')
+    }
+    if (!dados.cargo) {
+      throw new Error('Campo "cargo" é obrigatório')
+    }
+    if (!dados.status) {
+      throw new Error('Campo "status" é obrigatório')
+    }
+
+    // Validar formato de email (login)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(dados.login)) {
+      throw new Error('Login deve ser um email válido')
+    }
+
+    // TODO: Implementar hash da senha usando bcrypt
+    // Por enquanto, armazenar como está (remover em produção)
     return UsuarioRepository.create(dados)
   },
 
