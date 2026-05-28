@@ -1,7 +1,9 @@
 import express from 'express'
-import dashboardRoutes from './routes/dashboard.routes'
-import movimentacaoRoutes from './routes/movimentacao.routes'
-import relatorioRoutes from './routes/relatorio.routes'
+import movimentacaoRoutes from './routes/movimentacao.route'
+import relatorioRoutes from './routes/relatorio.route'
+import tarefaRoutes from './routes/tarefa.route'
+import ticketRoutes from './routes/ticket.routes'
+import usuarioRoutes from './routes/usuario.route'
 
 const app = express()
 
@@ -12,7 +14,9 @@ app.get('/health', (_req, res) => {
 })
 
 app.use('/movimentacoes', movimentacaoRoutes)
-app.use('/dashboard', dashboardRoutes)
 app.use('/relatorios', relatorioRoutes)
+app.use('/tarefas', tarefaRoutes)
+app.use('/tickets', ticketRoutes)
+app.use('/usuarios', usuarioRoutes)
 
 export default app
