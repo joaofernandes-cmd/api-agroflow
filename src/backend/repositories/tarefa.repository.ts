@@ -1,34 +1,30 @@
 import sql from '../database/connection'
 import { Tarefa, TarefaInput } from '../models/tarefa.model'
 
-// Retorna todas as tarefas cadastradas
 export const TarefaRepository = {
 
-    // Ordena tarefas por data de criação
     async findAll(): Promise<Tarefa[]> {
         return sql<Tarefa[]>`
-            SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, status, data_criacao, sincronizado
+            SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, status, aprovado_por, data_criacao, sincronizado
             FROM tarefa
             ORDER BY data_criacao
         `
     },
 
-    // Busca uma tarefa pelo seu id e retorna null se não encontrar
     async findById(id: number): Promise<Tarefa | null> {
         const tarefa = await sql<Tarefa[]>`
-            SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, sincronizado
+            SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
             FROM tarefa
             WHERE id = ${id}
             LIMIT 1
-        `   
+        `
 
         return tarefa[0] ?? null
     },
 
-    // Cria uma nova tarefa no banco de dados
     async create(input: TarefaInput): Promise<Tarefa> {
         const [created] = await sql<Tarefa[]>`
-            INSERT INTO tarefa (retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, sincronizado)
+            INSERT INTO tarefa (retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado)
             VALUES (
                 ${input.retiro_id},
                 ${input.criada_por},
@@ -38,15 +34,15 @@ export const TarefaRepository = {
                 ${input.prioridade},
                 ${input.data_criacao ?? new Date()},
                 ${input.status},
+                ${input.aprovado_por ?? null},
                 ${input.sincronizado ?? false}
             )
-            RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, sincronizado
+            RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
         `
 
         return created
     },
 
-    // Atualiza uma tarefa existente no banco de dados
     async update(id: number, input: Partial<TarefaInput>): Promise<Tarefa | null> {
         const [updated] = await sql<Tarefa[]>`
             UPDATE tarefa
@@ -59,19 +55,19 @@ export const TarefaRepository = {
             descricao = COALESCE(${input.descricao ?? null}, descricao),
             data_criacao = COALESCE(${input.data_criacao ?? null}, data_criacao),
             status = COALESCE(${input.status ?? null}, status),
+            aprovado_por = COALESCE(${input.aprovado_por ?? null}, aprovado_por),
             sincronizado = COALESCE(${input.sincronizado ?? null}, sincronizado)
             WHERE id = ${id}
-            RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, sincronizado
+            RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
         `
 
         return updated ?? null
-    }, 
+    },
 
-    // Exclui uma tarefa do banco de dados
     async delete(id: number): Promise<void> {
         await sql`
             DELETE FROM tarefa
             WHERE id = ${id}
         `
-    }   
+    }
 }

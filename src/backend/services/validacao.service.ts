@@ -1,25 +1,25 @@
 import { MovimentacaoRepository } from '../repositories/movimentacao.repository'
 import { TarefaRepository } from '../repositories/tarefa.repository'
+import { TicketRepository } from '../repositories/ticket.repository'
 import { Movimentacao } from '../models/movimentacao.model'
 import { Tarefa } from '../models/tarefa.model'
+import { Ticket } from '../models/ticket.model'
 import { Usuario } from '../models/usuario.model'
+import { UUID } from '../models/uuid'
 
 // RN06: Validação e aprovação de registros - apenas Supervisor pode validar
 export const ValidacaoService = {
   // RN06: Validar se usuário tem permissão para aprovar registros
-  // Apenas Supervisor pode validar/aprovar
   podeValidar(usuario: Usuario): boolean {
     return usuario.cargo === 'supervisor'
   },
 
-  // RN06: Aprovar movimentação (altera status de pendente → aprovado)
-  // Apenas Supervisor pode fazer isso
+  // RN06: Aprovar movimentação (pendente → aprovado)
   async aprovarMovimentacao(
     movimentacaoId: number,
-    supervisorId: string,
+    supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; movimentacao?: Movimentacao }> {
-    // RN06: Verifica se quem está tentando validar é Supervisor
     if (supervisorCargo !== 'supervisor') {
       return {
         sucesso: false,
@@ -27,17 +27,12 @@ export const ValidacaoService = {
       }
     }
 
-    // Busca a movimentação no banco
     const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
 
     if (!movimentacao) {
-      return {
-        sucesso: false,
-        mensagem: 'Movimentação não encontrada.',
-      }
+      return { sucesso: false, mensagem: 'Movimentação não encontrada.' }
     }
 
-    // RN06: Só pode aprovar se estiver pendente
     if (movimentacao.status !== 'pendente') {
       return {
         sucesso: false,
@@ -45,16 +40,11 @@ export const ValidacaoService = {
       }
     }
 
-    // Aprova a movimentação (altera status para aprovado)
-    // e registra quem validou (validado_por)
-    const movimentacaoAtualizada = await MovimentacaoRepository.update(
-      movimentacaoId,
-      {
-        ...movimentacao,
-        status: 'aprovado',
-        validado_por: supervisorId,
-      }
-    )
+    const movimentacaoAtualizada = await MovimentacaoRepository.update(movimentacaoId, {
+      ...movimentacao,
+      status: 'aprovado',
+      validado_por: supervisorId,
+    })
 
     return {
       sucesso: true,
@@ -63,15 +53,12 @@ export const ValidacaoService = {
     }
   },
 
-  // RN06: Rejeitar movimentação (altera status de pendente → rejeitado)
-  // Apenas Supervisor pode fazer isso
+  // RN06: Rejeitar movimentação (pendente → rejeitado)
   async rejeitarMovimentacao(
     movimentacaoId: number,
-    supervisorId: string,
-    supervisorCargo: string,
-    motivo: string
+    supervisorId: UUID,
+    supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; movimentacao?: Movimentacao }> {
-    // RN06: Verifica se quem está rejeitando é Supervisor
     if (supervisorCargo !== 'supervisor') {
       return {
         sucesso: false,
@@ -79,17 +66,12 @@ export const ValidacaoService = {
       }
     }
 
-    // Busca a movimentação
     const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
 
     if (!movimentacao) {
-      return {
-        sucesso: false,
-        mensagem: 'Movimentação não encontrada.',
-      }
+      return { sucesso: false, mensagem: 'Movimentação não encontrada.' }
     }
 
-    // Só pode rejeitar se estiver pendente
     if (movimentacao.status !== 'pendente') {
       return {
         sucesso: false,
@@ -97,31 +79,64 @@ export const ValidacaoService = {
       }
     }
 
-    // Rejeita a movimentação
-    const movimentacaoAtualizada = await MovimentacaoRepository.update(
-      movimentacaoId,
-      {
-        ...movimentacao,
-        status: 'rejeitado',
-        validado_por: supervisorId,
-      }
-    )
+    const movimentacaoAtualizada = await MovimentacaoRepository.update(movimentacaoId, {
+      ...movimentacao,
+      status: 'rejeitado',
+      validado_por: supervisorId,
+    })
 
     return {
       sucesso: true,
-      mensagem: `Movimentação rejeitada. Motivo: ${motivo}`,
+      mensagem: 'Movimentação rejeitada com sucesso.',
       movimentacao: movimentacaoAtualizada || undefined,
     }
   },
 
-  // RN06: Aprovar tarefa (altera status de pendente → concluida)
-  // Apenas Supervisor pode fazer isso
+  // RN06: Aprovar ticket (pendente → aprovado) — apenas Supervisor
+  async aprovarTicket(
+    ticketId: number,
+    supervisorId: UUID,
+    supervisorCargo: string
+  ): Promise<{ sucesso: boolean; mensagem: string; ticket?: Ticket }> {
+    if (supervisorCargo !== 'supervisor') {
+      return {
+        sucesso: false,
+        mensagem: 'Apenas Supervisores podem aprovar tickets. Acesso negado.',
+      }
+    }
+
+    const ticket = await TicketRepository.findById(ticketId)
+
+    if (!ticket) {
+      return { sucesso: false, mensagem: 'Ticket não encontrado.' }
+    }
+
+    if (ticket.status !== 'pendente') {
+      return {
+        sucesso: false,
+        mensagem: `Ticket já foi ${ticket.status}. Não pode ser alterado.`,
+      }
+    }
+
+    const ticketAtualizado = await TicketRepository.update(ticketId, {
+      ...ticket,
+      status: 'aprovado',
+      aprovado_por: supervisorId,
+    })
+
+    return {
+      sucesso: true,
+      mensagem: 'Ticket aprovado com sucesso.',
+      ticket: ticketAtualizado || undefined,
+    }
+  },
+
+  // RN06: Aprovar tarefa (pendente → aprovado) — apenas Supervisor
   async aprovarTarefa(
     tarefaId: number,
-    supervisorId: string,
+    supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; tarefa?: Tarefa }> {
-    // RN06: Verifica se quem está aprovando é Supervisor
     if (supervisorCargo !== 'supervisor') {
       return {
         sucesso: false,
@@ -129,17 +144,12 @@ export const ValidacaoService = {
       }
     }
 
-    // Busca a tarefa no banco
     const tarefa = await TarefaRepository.findById(tarefaId)
 
     if (!tarefa) {
-      return {
-        sucesso: false,
-        mensagem: 'Tarefa não encontrada.',
-      }
+      return { sucesso: false, mensagem: 'Tarefa não encontrada.' }
     }
 
-    // Só pode aprovar se estiver pendente
     if (tarefa.status !== 'pendente') {
       return {
         sucesso: false,
@@ -147,63 +157,15 @@ export const ValidacaoService = {
       }
     }
 
-    // Aprova a tarefa (altera status para concluida)
-    // Nota: RN06 define que aprovação por supervisor = conclusão imediata (pendente → concluida)
     const tarefaAtualizada = await TarefaRepository.update(tarefaId, {
       ...tarefa,
-      status: 'concluida',
+      status: 'aprovado',
+      aprovado_por: supervisorId,
     })
 
     return {
       sucesso: true,
-      mensagem: 'Tarefa aprovada e marcada como concluída.',
-      tarefa: tarefaAtualizada || undefined,
-    }
-  },
-
-  // RN06: Rejeitar tarefa (altera status para cancelada)
-  // Apenas Supervisor pode fazer isso
-  async rejeitarTarefa(
-    tarefaId: number,
-    supervisorId: string,
-    supervisorCargo: string,
-    motivo: string
-  ): Promise<{ sucesso: boolean; mensagem: string; tarefa?: Tarefa }> {
-    // RN06: Verifica se quem está rejeitando é Supervisor
-    if (supervisorCargo !== 'supervisor') {
-      return {
-        sucesso: false,
-        mensagem: 'Apenas Supervisores podem rejeitar tarefas. Acesso negado.',
-      }
-    }
-
-    // Busca a tarefa
-    const tarefa = await TarefaRepository.findById(tarefaId)
-
-    if (!tarefa) {
-      return {
-        sucesso: false,
-        mensagem: 'Tarefa não encontrada.',
-      }
-    }
-
-    // Só pode rejeitar se estiver pendente
-    if (tarefa.status !== 'pendente') {
-      return {
-        sucesso: false,
-        mensagem: `Tarefa já foi ${tarefa.status}. Não pode ser alterada.`,
-      }
-    }
-
-    // Rejeita a tarefa (altera status para cancelada)
-    const tarefaAtualizada = await TarefaRepository.update(tarefaId, {
-      ...tarefa,
-      status: 'cancelada',
-    })
-
-    return {
-      sucesso: true,
-      mensagem: `Tarefa rejeitada e cancelada. Motivo: ${motivo}`,
+      mensagem: 'Tarefa aprovada com sucesso.',
       tarefa: tarefaAtualizada || undefined,
     }
   },

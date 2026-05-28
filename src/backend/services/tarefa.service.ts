@@ -1,7 +1,7 @@
 import { Tarefa, TarefaInput, TarefaStatus, TarefaPrioridade } from '../models/tarefa.model'
 import { TarefaRepository } from '../repositories/tarefa.repository'
 import { Usuario } from '../models/usuario.model'
-import { UsuarioService } from './usuario.service'
+import { UUID } from '../models/uuid'
 
 export const TarefaService = {
   // RN02: Validar campos obrigatórios na criação de tarefa
@@ -31,9 +31,8 @@ export const TarefaService = {
   async criar(dados: Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'status'>, usuarioCriador: Usuario): Promise<Tarefa> { // Usuário só envia ISSO: retiro_id, atribuida_a, prioridade, categoria, descricao
 
 
-    // Supervisor e Capataz podem criar tarefas
-    if (usuarioCriador.cargo !== 'supervisor' && usuarioCriador.cargo !== 'capataz') {
-      throw new Error('Apenas Supervisores e Capatazes podem criar tarefas')
+    if (usuarioCriador.cargo !== 'supervisor') {
+      throw new Error('Apenas Supervisores podem criar tarefas')
     }
 
     // Valida se todos os campos obrigatórios foram preenchidos
@@ -57,9 +56,9 @@ export const TarefaService = {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.findAll()
 
-    // Filtra apenas tarefas concluídas (e opcionalmente por retiro)
+    // Filtra apenas tarefas aprovadas (e opcionalmente por retiro)
     return tarefas.filter(t => {
-      if (t.status !== 'concluida') {
+      if (t.status !== 'aprovado') {
         return false
       }
 
@@ -98,7 +97,7 @@ export const TarefaService = {
 
 
   // Listar tarefas atribuídas a um usuário
-  async listarPorUsuario(usuarioId: string): Promise<Tarefa[]> {
+  async listarPorUsuario(usuarioId: UUID): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.findAll()
     return tarefas.filter(t => t.atribuida_a === usuarioId)
   },
@@ -217,9 +216,7 @@ export const TarefaService = {
     // Inicializa contador para cada status possível
     const contagem: Record<TarefaStatus, number> = {
       pendente: 0,
-      em_andamento: 0,
-      concluida: 0,
-      cancelada: 0,
+      aprovado: 0,
     }
 
     // Itera sobre todas as tarefas e incrementa o contador do status correspondente

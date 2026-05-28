@@ -121,36 +121,36 @@ export const SincronizacaoService = {
   },
 
   // RN07: Buscar tarefas sincronizadas para relatórios
-  // Retorna apenas registros com sincronizado=true e status=concluida
+  // Retorna apenas registros com sincronizado=true e status=aprovado
   async buscarTarefasParaRelatrio(retiroId?: number): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.findAll()
 
     return tarefas.filter(t => {
       const sincronizado = t.sincronizado === true
-      const concluida = t.status === 'concluida'
+      const aprovado = t.status === 'aprovado'
 
       if (retiroId && t.retiro_id !== retiroId) {
         return false
       }
 
-      return sincronizado && concluida
+      return sincronizado && aprovado
     })
   },
 
   // RN10: Buscar tickets sincronizados para dashboard
-  // Retorna apenas tickets com sincronizado=true e status=aberto (tickets abertos)
+  // Retorna apenas tickets com sincronizado=true e status=aprovado
   async buscarTicketsParaDashboard(retiroId?: number): Promise<Ticket[]> {
     const tickets = await TicketRepository.findAll()
 
     return tickets.filter(t => {
       const sincronizado = t.sincronizado === true
-      const aberto = t.status === 'aberto'
+      const aprovado = t.status === 'aprovado'
 
       if (retiroId && t.retiro_id !== retiroId) {
         return false
       }
 
-      return sincronizado && aberto
+      return sincronizado && aprovado
     })
   },
 
