@@ -1,4 +1,5 @@
 import express from 'express'
+import evidenciaRoutes from './routes/evidencia.route'
 import movimentacaoRoutes from './routes/movimentacao.route'
 import relatorioRoutes from './routes/relatorio.route'
 import sincronizacaoRoutes from './routes/sincronizacao.route'
@@ -14,6 +15,7 @@ app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' })
 })
 
+app.use('/evidencias', evidenciaRoutes)
 app.use('/movimentacoes', movimentacaoRoutes)
 app.use('/relatorios', relatorioRoutes)
 app.use('/sincronizacao', sincronizacaoRoutes)
