@@ -8,6 +8,10 @@ export const MovimentacaoService = {
   // Origem, destino, quantidade, estagio_vida sempre obrigatórios
   // Causa_obito obrigatório apenas se tipo = 'morte'
   validarCamposObrigatorios(dados: MovimentacaoInput): void {
+    if (!dados.capataz_id) {
+      throw new Error('Campo "capataz_id" é obrigatório')
+    }
+
     if (!dados.origem) {
       throw new Error('Campo "origem" é obrigatório')
     }
@@ -32,6 +36,7 @@ export const MovimentacaoService = {
   // RN03: Criar movimentação com flag sincronizado = false no modo offline
   // data_criacao é gerada automaticamente pelo sistema (timestamp)
   // Sincronização será disparada automaticamente quando houver conexão
+  // Nota: capataz_id é esperado nos dados (deve vir do usuário autenticado para segurança)
   async criar(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por'>): Promise<Movimentacao> {
     this.validarCamposObrigatorios(dados as MovimentacaoInput)
 
@@ -61,6 +66,7 @@ export const MovimentacaoService = {
     return MovimentacaoRepository.update(id, {
       status: novoStatus,
       validado_por: usuario.id,
+      motivo_rejeicao: !aprovado ? motivo_rejeicao : null,
     })
   },
 

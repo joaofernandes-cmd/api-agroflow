@@ -47,7 +47,10 @@ export const SincronizacaoService = {
           // Envia para o servidor (que valida integridade e armazena)
           await SincronizacaoService.enviarMovimentacao(mov)
           // Após receber confirmação do servidor, marca como sincronizado
-          await MovimentacaoRepository.update(mov.id, { ...mov, sincronizado: true })
+          await MovimentacaoRepository.update(mov.id, {
+            ...mov,
+            sincronizado: true,
+          } as any)
           registrosSincronizados++
         } catch (error) {
           erros.push(`Erro ao sincronizar movimentação ${mov.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
@@ -63,7 +66,10 @@ export const SincronizacaoService = {
           // Envia para o servidor
           await SincronizacaoService.enviarTarefa(tarefa)
           // Marca como sincronizado após confirmação
-          await TarefaRepository.update(tarefa.id, { ...tarefa, sincronizado: true })
+          await TarefaRepository.update(tarefa.id, {
+            ...tarefa,
+            sincronizado: true,
+          } as any)
           registrosSincronizados++
         } catch (error) {
           erros.push(`Erro ao sincronizar tarefa ${tarefa.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
@@ -79,7 +85,10 @@ export const SincronizacaoService = {
           // Envia para o servidor
           await SincronizacaoService.enviarTicket(ticket)
           // Marca como sincronizado após confirmação
-          await TicketRepository.update(ticket.id, { ...ticket, sincronizado: true })
+          await TicketRepository.update(ticket.id, {
+            ...ticket,
+            sincronizado: true,
+          } as any)
           registrosSincronizados++
         } catch (error) {
           erros.push(`Erro ao sincronizar ticket ${ticket.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)

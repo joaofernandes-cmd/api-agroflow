@@ -20,6 +20,7 @@ export interface Movimentacao {
   data_criacao: Date
   causa_obito: string | null
   estagio_vida: EstagioVida
+  motivo_rejeicao: string | null
 }
 
 export interface MovimentacaoInput {
@@ -35,4 +36,5 @@ export interface MovimentacaoInput {
   data_criacao?: Date
   causa_obito?: string | null
   estagio_vida: EstagioVida
+  motivo_rejeicao?: string | null
 }
