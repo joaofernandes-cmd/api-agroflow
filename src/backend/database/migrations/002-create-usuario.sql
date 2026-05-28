@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS usuario (
-  id CHAR(36) PRIMARY KEY,
-  retiro_id CHAR(36) NOT NULL,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  retiro_id BIGINT NOT NULL,
   nome VARCHAR(255) NOT NULL,
   login VARCHAR(255) NOT NULL UNIQUE,
   senha_hash VARCHAR(255) NOT NULL,
-  status TEXT NOT NULL CHECK (status IN ('ativo', 'inativo')),
-  data_criacao TIMESTAMP NOT NULL,
-  cargo TEXT NOT NULL CHECK (cargo IN ('capataz', 'supervisor', 'gerente'))
+  status usuario_status NOT NULL,
+  data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
+  cargo usuario_cargo NOT NULL
 );
 
 ALTER TABLE usuario
