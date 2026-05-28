@@ -660,9 +660,9 @@
 | Persona | Luiz Felipe |
 | User Story | Como supervisor, posso validar registros enviados, para garantir a confiabilidade dos dados. |
 | Critério de aceite 1 | Dado que existem registros pendentes, quando acessa a tela, então visualiza a lista. |
-| Critério de aceite 2 | Dado que analisa um registro, quando aprova ou rejeita, então o status é atualizado. |
-| Critério de aceite 3 | Dado que rejeita um registro, quando confirma, então informa o motivo. |
-| Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de aprovação ou rejeição.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
+| Critério de aceite 2 | Dado que analisa uma movimentação pendente, quando valida, então o status é atualizado para validado. |
+| Critério de aceite 3 | Dado que encontra inconsistência, quando solicita correção, então o registro permanece pendente para ajuste. |
+| Critérios INVEST | <p>Independente: Pode ser executada após o registro dos dados.</p> <p>Negociável: As regras de validação podem ser ajustadas.</p> <p>Valorosa: Garante maior qualidade das informações.</p> <p>Estimável: Fluxo simples de conferência e validação.</p> <p>Pequena: Restrita à validação de registros.</p> <p>Testável: Pode ser validada pela alteração de status.</p> |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -802,15 +802,15 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;O sistema BrPec Agropecuária atende às demandas operacionais de gestão pecuária em 14 retiros distribuídos entre o Pantanal e Cerrado sul mato-grossenses. A estrutura organizacional é composta por três perfis hierárquicos: Capataz, Supervisor e Gerente, cada qual com responsabilidades e níveis de acesso distintos.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os Capatazes atuam no campo e registram movimentações do rebanho (nascimentos, mortes, transferências, compras e vendas) com informações obrigatórias de origem, destino, quantidade, estágio da vida e evidências (fotos georreferenciadas, áudios ou mensagens). Também abrem tickets de infraestrutura para reportar problemas como cercas danificadas, falta de água ou equipamentos avariados, devendo anexar ao menos uma evidência descritiva.
+&nbsp;&nbsp;&nbsp;&nbsp;Os Capatazes atuam no campo e registram movimentações do rebanho (nascimentos, mortes, transferências, compras e vendas), informando o estágio de vida e os dados específicos de cada tipo de movimentação, como origem, destino, quantidade ou causa do óbito quando aplicáveis. Também abrem tickets de infraestrutura para reportar problemas como cercas danificadas, falta de água ou equipamentos avariados, devendo anexar ao menos uma evidência descritiva.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os Supervisores coordenam os Capatazes, criando e atribuindo tarefas com data, horário, prioridade e categoria. Validam os registros submetidos, podendo aprová-los (enviando para o Gerente) ou rejeitá-los com justificativa para correção. Recebem notificações de tickets abertos e podem atribuí-los conforme necessário.
+&nbsp;&nbsp;&nbsp;&nbsp;Os Supervisores coordenam os Capatazes, criando e atribuindo tarefas com prioridade, categoria e descrição. Validam movimentações como conferência operacional e podem aprovar tarefas e tickets. Recebem notificações de tickets pendentes e podem atribuí-los conforme necessário.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Gerente acessa o painel de consolidação, visualizando todas as movimentações, tarefas e tickets aprovados pelo Supervisor, com rastreabilidade completa de quem registrou, quem aprovou e quando. Gera relatórios semanais e mensais em formato de planilha (.xlsx ou .csv), contendo exclusivamente dados sincronizados e aprovados.
+&nbsp;&nbsp;&nbsp;&nbsp;O Gerente acessa o painel de consolidação, visualizando todas as movimentações validadas e tarefas e tickets aprovados pelo Supervisor, com rastreabilidade completa de quem registrou, quem validou ou aprovou e quando. Gera relatórios semanais e mensais em formato de planilha (.xlsx ou .csv), contendo exclusivamente dados sincronizados e conferidos.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Cada retiro possui usuários vinculados, garantindo isolamento de dados por perfil (RBAC). O sistema opera em modo offline, armazenando registros localmente e sincronizando automaticamente quando a conexão é restabelecida. Apenas dados sincronizados são visíveis ao Supervisor para validação e entram nos relatórios gerenciais.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados aprovados sobem para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados conferidos sobem para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
 
 **Entidades principais:**
 
@@ -819,7 +819,7 @@ Movimentação (registrada por Capataz, validada por Supervisor) associada a Evi
 Tarefa (criada por Supervisor, atribuída a Capataz) associada a Evidências
 Ticket (aberto por Capataz, gerenciado por Supervisor) associada a Evidências
 Evidência (foto georreferenciada, áudio ou mensagem) vinculada a Movimentações, Tarefas ou Tickets
-Relatório (gerado por Gerente) consolidando dados aprovados
+Relatório (gerado por Gerente) consolidando dados conferidos
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
@@ -827,17 +827,17 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com campos obrigatórios de origem, destino, quantidade, estágio da vida e causa do óbito.  | Alta       | Planejado |
-| RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com data, horário, prioridade e categoria.  | Alta      | Planejado    |
+| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Planejado |
+| RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Planejado    |
 | RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Planejado |
-| RF004 | O sistema deve permitir o anexo de evidências às tarefas e movimentações, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Planejado |
+| RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Planejado |
 | RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Planejado |
-| RF006 | O sistema deve permitir que o Supervisor visualize e valide tarefas e movimentações registradas pelos Capatazes.  | Média | Planejado |
+| RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Planejado |
 | RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
-| RF008 | O sistema deve disponibilizar um ticket de chamados de infraestrutura, permitindo que Capatazes abram chamados para a equipe de infraestrutura e que Supervisores atribuam chamados aos Capatazes.  | Média | Planejado |
-| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/aprovado/rejeitado) na interface de validação. | Média | Planejado |
-| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro. | Média | Planejado |
-| RF011 | O sistema deve permitir que o Supervisor e Capataz atribuam prioridade aos tickets de infraestrutura (crítica, alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
+| RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Planejado |
+| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Planejado |
+| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Planejado |
+| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -849,17 +849,17 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 | ID   | Descrição | RF Associado | Critério de Teste |
 |:----:|-----------|:------------:|-------------------|
-| RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso os campos obrigatórios (origem, destino, quantidade e estágio da vida) estejam em branco ou nulos. Se a movimentação for do tipo "morte", o campo "causa do óbito" também DEVE ser estritamente obrigatório. | RF001 | Dado que um usuário tenta registrar uma movimentação, quando algum campo obrigatório está vazio, então o sistema retorna erro HTTP 400 com mensagem específica do campo faltante. |
-| RN02 | A criação de uma nova tarefa no sistema deve falhar e retornar um erro de validação HTTP 400 caso não contenha o preenchimento simultâneo de: usuário atribuído, data, horário, prioridade e categoria. | RF002 | Dado que um supervisor tenta criar uma tarefa, quando qualquer campo obrigatório (usuário, data, horário, prioridade ou categoria) está ausente, então o sistema retorna HTTP 400 e lista os campos faltantes. |
+| RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso o estágio de vida esteja ausente ou caso os campos específicos do tipo não sejam informados: compra e venda exigem quantidade; transferência exige origem, destino e quantidade; nascimento exige origem e quantidade; morte exige origem e causa do óbito. | RF001 | Dado que um usuário tenta registrar uma movimentação, quando algum campo obrigatório para o tipo selecionado está vazio, então o sistema retorna erro HTTP 400 com mensagem específica do campo faltante. |
+| RN02 | A criação de uma nova tarefa no sistema deve falhar e retornar um erro de validação HTTP 400 caso não contenha o preenchimento simultâneo de: usuário atribuído, descrição, prioridade e categoria. | RF002 | Dado que um supervisor tenta criar uma tarefa, quando qualquer campo obrigatório (usuário, descrição, prioridade ou categoria) está ausente, então o sistema retorna HTTP 400 e lista os campos faltantes. |
 | RN03 | Durante a operação em modo offline, os dados devem ser salvos no armazenamento local do dispositivo com flag `sincronizado = false`. A sincronização só deve ser disparada automaticamente quando o sistema detectar um status HTTP 200 válido de conexão restabelecida. | RF003 | Dado que o dispositivo está offline, quando uma movimentação é registrada, então o sistema salva localmente com `sincronizado = false` e dispara sincronização automática assim que receber HTTP 200 do servidor. |
 | RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude entre −90 e +90, longitude entre −180 e +180). Caso não possua ou os valores sejam inválidos, a foto deve ser rejeitada com erro HTTP 422. | RF004 | Dado que um usuário anexa uma foto, quando latitude ou longitude estão ausentes ou fora dos intervalos válidos, então o sistema retorna HTTP 422 com mensagem "Foto rejeitada: georreferenciamento inválido ou ausente". |
 | RN05 | A identificação do usuário deve ocorrer com no máximo 3 interações, utilizando linguagem clara (nível de escolaridade: ensino fundamental), instruções objetivas e elementos visuais (ícones, botões grandes) que facilitem o uso por pessoas com baixo letramento digital. | RF005 | Dado que um usuário acessa a tela de login, quando realiza a identificação, então o fluxo é concluído em até 3 interações (ex: selecionar perfil visual, inserir PIN, confirmar). |
-| RN06 | A ação de alterar o status de uma tarefa ou movimentação para "Validada" (ou "Aprovada") deve ser restrita e estar visível/habilitada apenas para usuários com perfil "Supervisor". Usuários com perfil "Capataz" ou "Gerente" não devem ter acesso a essa funcionalidade. | RF006 | Dado que um usuário com perfil "Capataz" tenta validar uma movimentação, quando a requisição é enviada, então o sistema retorna HTTP 403. Dado que um usuário com perfil "Supervisor" valida uma movimentação, então o sistema retorna HTTP 200 e atualiza o status para "Aprovada". |
+| RN06 | A ação de validar uma movimentação ou aprovar uma tarefa/ticket deve ser restrita e estar visível/habilitada apenas para usuários com perfil "Supervisor". Usuários com perfil "Capataz" ou "Gerente" não devem ter acesso a essa funcionalidade. | RF006 | Dado que um usuário com perfil "Capataz" tenta validar uma movimentação, quando a requisição é enviada, então o sistema retorna HTTP 403. Dado que um usuário com perfil "Supervisor" valida uma movimentação, então o sistema retorna HTTP 200 e atualiza o status para "validado". |
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha (.xlsx ou .csv) só poderá ser processada utilizando dados com `sincronizado = true` no banco de dados. Dados com `sincronizado = false` (apenas locais/offline) não devem entrar no relatório gerado. | RF007 | Dado que um gerente solicita relatório semanal, quando o sistema processa os dados, então apenas registros com `sincronizado = true` são incluídos no arquivo exportado. |
 | RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente ao menos uma evidência descritiva associada ao chamado (mensagem escrita com mínimo 10 caracteres ou áudio com mínimo 3 segundos de duração). Tickets sem evidência devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência válida foi anexada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
-| RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, aprovado, rejeitado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="rejeitado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
-| RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes) considerando exclusivamente movimentações e tarefas com status="aprovado" e flag sincronizado=true. Registros pendentes, rejeitados ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros das tabelas movimentacao e tarefa com status="aprovado" e sincronizado=true são incluídos no cálculo. Dado que existem movimentações pendentes ou rejeitadas, quando o dashboard carrega, então essas movimentações não aparecem nos totalizadores exibidos. |
-| RN11 | A prioridade do ticket (crítica, alta, média ou baixa) deve ser obrigatoriamente selecionada tanto pelo Supervisor quanto pelo Capataz no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida e registrada no log de auditoria do sistema, indicando usuário responsável pela alteração e timestamp. | RF011 | Dado que um Supervisor ou Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
+| RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, validado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="validado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
+| RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas) considerando exclusivamente movimentações com status="validado" e tarefas/tickets com status="aprovado", sempre com flag sincronizado=true. Registros pendentes ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros conferidos e sincronizados são incluídos no cálculo. Dado que existem registros pendentes, quando o dashboard carrega, então esses registros não aparecem nos totalizadores exibidos. |
+| RN11 | A prioridade do ticket (alta, média ou baixa) deve ser obrigatoriamente selecionada no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida para reorganização da demanda operacional. | RF011 | Dado que um Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
 
 
 
@@ -963,7 +963,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | **Métrica / Critério de Aceite** | **Quantitativa:** p95 < 3000ms para requisições HTTP sob carga de 25 usuários simultâneos gerando requisições contínuas por 30 minutos. Taxa de erro < 1% (máximo 10 erros em 1000 requisições). Requisições acima do limite de capacidade respondidas com HTTP 503 e mensagem amigável ao usuário. **Protocolo de teste:** Testes de carga com JMeter ou k6, simulando 25 usuários em operações típicas (registro de movimentação, criação de tarefa, upload de evidência, consulta de relatórios). Monitoramento de CPU, memória e latência de banco. Testes de stress para identificar ponto de ruptura. |
 | **Derivação do Contexto do Parceiro** | Derivado do levantamento de usuários ativos da BrPec (20–25 usuários distribuídos nos 14 retiros) e da necessidade de suportar picos de acesso em horários de maior atividade no campo (início da manhã e final da tarde). O RF007 (geração de relatórios) exige processamento de volume significativo de dados sincronizados. A restrição de infraestrutura centralizada exige dimensionamento adequado do servidor. |
 | **RF/RN Associados** | RF001, RF002, RF007, Restrição organizacional (infraestrutura centralizada) |
-| **Como será atendido** | Infraestrutura escalável em nuvem (AWS EC2 ou equivalente com auto-scaling), banco de dados MySQL otimizado com índices nas colunas críticas (`retiro_id`, `criado_em`, `sincronizado`), particionamento lógico de dados por retiro, cache de queries frequentes com Redis, rate limiting no backend (throttling por IP/usuário), balanceamento de carga se necessário. |
+| **Como será atendido** | Infraestrutura escalável em nuvem (AWS EC2 ou equivalente com auto-scaling), banco de dados PostgreSQL/Supabase otimizado com índices nas colunas críticas (`retiro_id`, `data_criacao`, `sincronizado`), particionamento lógico de dados por retiro, cache de queries frequentes com Redis, rate limiting no backend (throttling por IP/usuário), balanceamento de carga se necessário. |
 
 ---
 
@@ -992,10 +992,10 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | Campo | Conteúdo |
 |:--|:--|
 | **Requisito Não Funcional** | O sistema deve exportar relatórios semanais e mensais no formato de planilha (.xlsx ou .csv) compatível com o modelo/template já utilizado pelo parceiro, contendo exclusivamente dados validados e sincronizados, preservando a estrutura de colunas e nomenclaturas existentes. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** 99,9% dos campos do template de planilha atual do parceiro presentes na exportação gerada pelo sistema, distinguindo corretamente campos obrigatórios vs. opcionais. 100% dos relatórios gerados contêm apenas registros com `sincronizado=true` e `status='Aprovada'`. **Protocolo de aceite:** Comparação estrutural entre planilha exportada e template de referência (nomes de colunas, ordem, tipos de dados, formatação de datas/números). Testes com datasets reais contendo registros sincronizados e não sincronizados. Aprovação formal do Gerente (Marcos Ferreira). |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 99,9% dos campos do template de planilha atual do parceiro presentes na exportação gerada pelo sistema, distinguindo corretamente campos obrigatórios vs. opcionais. 100% dos relatórios gerados contêm apenas movimentações com `sincronizado=true` e `status='validado'` e tarefas/tickets com `sincronizado=true` e `status='aprovado'`. **Protocolo de aceite:** Comparação estrutural entre planilha exportada e template de referência (nomes de colunas, ordem, tipos de dados, formatação de datas/números). Testes com datasets reais contendo registros sincronizados e não sincronizados. Aprovação formal do Gerente (Marcos Ferreira). |
 | **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional de compatibilidade com processos de gestão já estabelecidos na BrPec (o parceiro possui modelo de planilha consolidado usado há anos para tomada de decisão, e sua substituição total geraria resistência). O RF007 exige exportação em formato de planilha, e a RN07 determina que apenas dados sincronizados entrem no relatório. |
 | **RF/RN Associados** | RF007, RN07, Restrição organizacional (compatibilidade com template existente) |
-| **Como será atendido** | Geração de arquivo .xlsx via biblioteca SheetJS no backend, mapeamento de colunas conforme template do parceiro, query SQL filtrando exclusivamente registros com `sincronizado=true AND status='Aprovada'`, validação de tipos de dados (datas em DD/MM/YYYY, números com 2 casas decimais), testes automatizados comparando estrutura gerada vs. estrutura esperada. |
+| **Como será atendido** | Geração de arquivo .xlsx via biblioteca SheetJS no backend, mapeamento de colunas conforme template do parceiro, query SQL filtrando exclusivamente registros sincronizados e conferidos, validação de tipos de dados (datas em DD/MM/YYYY, números com 2 casas decimais), testes automatizados comparando estrutura gerada vs. estrutura esperada. |
 
 ---
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -1018,21 +1018,21 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 | RF002 | RN02    | `/tarefas` | POST   |
 | RF003 | RN03    | `/sincronizacao` | POST   |
 | RF004 | RN04    | `/evidencias` | POST   |
-| RF005 | RN05    | `/auth/login` | POST   |
-| RF006 | RN06    | `/movimentacoes/{id}/validar` | PATCH   |
+| RF005 | RN05    | `/usuarios/login` | POST   |
+| RF006 | RN06    | `/validacoes/movimentacoes/{id}/validar` | PATCH   |
 | RF007 | RN07    | `/relatorios` | GET   |
 | RF008 | RN08    | `/tickets` | POST   |
 | RF009 | RN09    | `/movimentacoes/filtrar` | GET   |
-| RF010 | RN10    | `/dashboard/indicadores` | GET   |
+| RF010 | RN10    | `/movimentacoes/dashboard`, `/tarefas/dashboard`, `/sincronizacao/dashboard/tickets` | GET   |
 | RF011 | RN11    | `/tickets/{id}/prioridade` | PATCH   |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04 e RN08, respectivamente. Essas validações ocorrem no backend antes da persistência, retornando erro 422 (Unprocessable Entity) sempre que um requisito não é atendido.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Três endpoints fogem desse padrão de criação simples. O `/sincronizacao` (RF003) recebe um lote de registros produzidos offline e os processa em ordem cronológica, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais, dada a intermitência da conectividade Starlink nos retiros. O `/movimentacoes/{id}/validar` (RF006) usa PATCH por alterar apenas o campo `status` de um registro existente; a RN06 restringe essa ação ao perfil Supervisor, retornando erro 403 para tentativas indevidas. Já o `/relatorios` (RF007) usa GET por ser operação exclusivamente de leitura, e a RN07 filtra a resposta para conter apenas dados sincronizados e aprovados.
+&nbsp;&nbsp;&nbsp;&nbsp;Três endpoints fogem desse padrão de criação simples. O `/sincronizacao` (RF003) recebe um lote de registros produzidos offline e os processa em ordem cronológica, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais, dada a intermitência da conectividade Starlink nos retiros. O `/validacoes/movimentacoes/{id}/validar` (RF006) usa PATCH por alterar apenas o campo `status` de um registro existente; a RN06 restringe essa ação ao perfil Supervisor, retornando erro 403 para tentativas indevidas. Já o `/relatorios` (RF007) usa GET por ser operação exclusivamente de leitura, e a RN07 filtra a resposta para conter apenas dados sincronizados e conferidos.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/auth/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, cria uma sessão vinculada ao usuário, justificando o uso de POST.
+&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/usuarios/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, valida a identificação do usuário, justificando o uso de POST.
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
@@ -1122,7 +1122,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-**Pré-condição:** Existem registros pendentes no armazenamento local do dispositivo (movimentações, tarefas concluídas, evidências ou tickets) gerados em modo offline pelo Capataz Daniel. O usuário está identificado no sistema (UC-07).
+**Pré-condição:** Existem registros pendentes no armazenamento local do dispositivo (movimentações, tarefas, evidências ou tickets) gerados em modo offline pelo Capataz Daniel. O usuário está identificado no sistema (UC-07).
 
 **Fluxo Principal (cenário de sucesso):**
 
@@ -1206,18 +1206,18 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 |---|---|
 | **UC-ID + Nome** | UC-04 — Validar Registros do Capataz |
 | **Ator primário** | Supervisor (Luiz) |
-| **Atores secundários** | Capataz Daniel (autor do registro, notificado); Gerente Marcos (recebe dados aprovados) |
+| **Atores secundários** | Capataz Daniel (autor do registro, notificado); Gerente Marcos (recebe dados conferidos) |
 | **RFs relacionados** | RF006 |
 | **RNs relacionadas** | RN06 |
 | **RNFs relacionados** | SEG, USAB |
-| **Relacionamentos UML** | `<<include>>` UC-07; `<<extend>>` UC-10 [condição: supervisor opta por rejeitar] |
+| **Relacionamentos UML** | `<<include>>` UC-07 |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 ---
 
-**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor" (RN06). O Supervisor escolheu a ação "Validar registros" após identificar-se. Existe pelo menos um registro (movimentação ou tarefa concluída) com status "pendente de validação" submetido pelo Capataz Daniel e já sincronizado com o servidor (UC-02).
+**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor" (RN06). O Supervisor escolheu a ação "Validar registros" após identificar-se. Existe pelo menos um registro (movimentação ou tarefa) com status "pendente de validação" submetido pelo Capataz Daniel e já sincronizado com o servidor (UC-02).
 
 **Fluxo Principal (cenário de sucesso):**
 
@@ -1226,15 +1226,15 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 3. O Supervisor seleciona um registro específico para análise.
 4. O sistema apresenta os detalhes completos do registro: autor (Capataz Daniel), data, conteúdo dos campos e evidências anexadas (foto georreferenciada, áudio ou mensagem).
 5. O Supervisor analisa as informações e as evidências.
-6. O Supervisor seleciona a ação "Aprovar".
-7. O sistema altera o status do registro para "Aprovado", grava o identificador do Supervisor validador e o timestamp da ação.
-8. O sistema envia os dados aprovados para a camada de consolidação visível ao Gerente Marcos (UC-06).
-9. O sistema notifica o Capataz Daniel sobre a aprovação.
+6. O Supervisor seleciona a ação "Validar".
+7. O sistema altera o status da movimentação para "Validado", grava o identificador do Supervisor validador e o timestamp da ação.
+8. O sistema envia os dados conferidos para a camada de consolidação visível ao Gerente Marcos (UC-06).
+9. O sistema notifica o Capataz Daniel sobre a validação.
 10. O sistema retorna o Supervisor ao painel com o registro removido da lista de pendências.
 
 **Fluxos Alternativos:**
 
-- **A1** (no passo 6): o Supervisor pode optar por "Rejeitar" o registro, disparando o UC-10 (Rejeitar Registro). O Supervisor deve informar justificativa textual obrigatória. O registro retorna ao Capataz Daniel com status "rejeitado" e a justificativa visível, para que ele corrija e ressubmeta. `<<extend>>`
+- **A1** (no passo 6): se o Supervisor identificar inconsistência durante a conferência, o registro permanece pendente e deve ser corrigido antes de ser validado. O sistema mantém o fluxo como uma etapa de check operacional.
 - **A2** (no passo 6): o Supervisor pode optar por "Solicitar mais informações", enviando uma mensagem ao Capataz Daniel sem alterar o status final do registro.
 - **A3** (no passo 2): o Supervisor pode aplicar filtros por Capataz, tipo de registro ou período para reduzir a sobrecarga visual e focar na validação por prioridade.
 
@@ -1243,7 +1243,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 - **E1** (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
 - **E2** (no passo 7): se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
 
-**Pós-condição:** O registro está aprovado, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados aprovados ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem aprovou. Apenas registros aprovados entram nos relatórios oficiais (UC-06). Se rejeitado, o registro volta ao Capataz Daniel para correção.
+**Pós-condição:** A movimentação está validada, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados conferidos ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem validou. Apenas registros conferidos entram nos relatórios oficiais (UC-06).
 
 ---
 
@@ -1277,7 +1277,7 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 5. O Capataz adiciona ao menos uma evidência descritiva obrigatória: mensagem escrita ou áudio (RN08).
 6. O Capataz confirma a abertura do ticket.
 7. O sistema valida a presença obrigatória de pelo menos uma evidência descritiva.
-8. O sistema persiste o ticket (no servidor ou localmente, se offline) com status "aberto" e identificador único.
+8. O sistema persiste o ticket (no servidor ou localmente, se offline) com status "pendente" e identificador único.
 9. O sistema notifica o Supervisor Luiz (que pode atribuir o chamado) e a equipe de Infraestrutura sobre o novo chamado.
 10. O sistema exibe ao Capataz a confirmação com o número do ticket gerado.
 
@@ -1314,17 +1314,17 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 ---
 
-**Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem dados de movimentação ou tarefas que já foram sincronizados (UC-02) e aprovados pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
+**Pré-condição:** O Gerente está identificado no sistema (UC-07) com perfil "Gerente" e possui conexão ativa com a internet. Existem movimentações já sincronizadas e validadas ou tarefas já sincronizadas e aprovadas pelo Supervisor Luiz (UC-04) para o período desejado (RN07).
 
 **Fluxo Principal (cenário de sucesso):**
 
 1. O Gerente acessa o painel de consolidação do sistema.
-2. O sistema apresenta a visão geral dos dados aprovados: movimentações, tarefas concluídas e tickets, com identificação de quem registrou (Capataz Daniel) e quem aprovou (Supervisor Luiz), data e horário de cada ação.
+2. O sistema apresenta a visão geral dos dados conferidos: movimentações validadas, tarefas aprovadas e tickets aprovados, com identificação de quem registrou (Capataz Daniel) e quem validou ou aprovou (Supervisor Luiz), data e horário de cada ação.
 3. O Gerente analisa os dados consolidados para ter visão do que aconteceu na operação.
 4. O Gerente acessa o módulo "Relatórios" e seleciona o tipo de relatório (movimentação de rebanho ou tarefas).
 5. O Gerente define o período (semanal ou mensal) e o(s) retiro(s) de interesse.
 6. O Gerente confirma a geração.
-7. O sistema consulta exclusivamente os dados que já foram sincronizados e aprovados pelo Supervisor para o filtro definido.
+7. O sistema consulta exclusivamente os dados que já foram sincronizados e conferidos pelo Supervisor para o filtro definido.
 8. O sistema processa os dados e gera o arquivo no formato de planilha (.xlsx ou .csv).
 9. O sistema disponibiliza o arquivo para download.
 10. O Gerente faz o download da planilha gerada e segue com o trabalho de gestão.
@@ -1336,12 +1336,12 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 
 **Exceções:**
 
-- **E1** (no passo 7): se não houver dados sincronizados e aprovados para o filtro selecionado, o sistema exibe mensagem informando ausência de dados e oferece sugestão de ampliar o período ou alterar o filtro.
-- **E2** (no passo 7): o sistema explicitamente exclui  registros não aprovados pelo Supervisor, garantindo consistência do relatório oficial (RN07).
+- **E1** (no passo 7): se não houver dados sincronizados e conferidos para o filtro selecionado, o sistema exibe mensagem informando ausência de dados e oferece sugestão de ampliar o período ou alterar o filtro.
+- **E2** (no passo 7): o sistema explicitamente exclui registros pendentes, garantindo consistência do relatório oficial (RN07).
 - **E3** (no passo 8): se houver falha no processamento (timeout ou erro do servidor), o sistema exibe erro claro ao Gerente com opção de nova tentativa.
 - **E4** (no passo 1): se um usuário com perfil "Capataz" tentar acessar o painel de consolidação ou o módulo de relatórios, o sistema bloqueia o acesso e retorna erro 403 (SEG).
 
-**Pós-condição:** O Gerente Marcos possui visão completa da operação (quem registrou, quem aprovou, quando) e, se necessário, um arquivo de planilha no formato compatível, contendo exclusivamente dados sincronizados e aprovados, pronto para análises gerenciais e comunicação com a sede. O ciclo completo: campo → sincronização → validação → consolidação.
+**Pós-condição:** O Gerente Marcos possui visão completa da operação (quem registrou, quem validou ou aprovou, quando) e, se necessário, um arquivo de planilha no formato compatível, contendo exclusivamente dados sincronizados e conferidos, pronto para análises gerenciais e comunicação com a sede. O ciclo completo: campo → sincronização → validação → consolidação.
 
 ---
 
@@ -1469,39 +1469,39 @@ Relatório (gerado por Gerente) consolidando dados aprovados
 ---
 <p align="center">Quadro 38 - Use Case 10</p>
 
-#### UC-10 - Rejeitar Registro
+#### UC-10 - Solicitar Correção de Registro
 | Campo | Conteúdo |
 |---|---|
-| **UC-ID + Nome** | UC-10 — Rejeitar Registro |
+| **UC-ID + Nome** | UC-10 — Solicitar Correção de Registro |
 | **Ator primário** | Supervisor (Luiz) |
-| **Atores secundários** | Capataz Daniel (notificado da rejeição) |
+| **Atores secundários** | Capataz Daniel (notificado da solicitação) |
 | **RFs relacionados** | RF006 |
 | **RNs relacionadas** | RN06|
 | **RNFs relacionados** | SEG |
-| **Relacionamento UML** | <<extend>> UC-04 [condição: Supervisor opta por rejeitar o registro]|
+| **Relacionamento UML** | <<extend>> UC-04 [condição: Supervisor identifica inconsistência no registro]|
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 ---
-**Pré-condição:** O Supervisor está executando o UC-04 (Validar Registros) e identificou inconsistência ou problema no registro analisado, optando por rejeitá-lo no passo 6.
+**Pré-condição:** O Supervisor está executando o UC-04 (Validar Registros) e identificou inconsistência ou problema no registro analisado, optando por solicitar correção antes da validação.
 
 **Fluxo Principal (cenário de sucesso):**
 
-1. O Supervisor seleciona a ação "Rejeitar".
-2. O sistema apresenta campo obrigatório de justificativa textual.
-3. O Supervisor preenche a justificativa explicando o motivo da rejeição.
-4. O Supervisor confirma a rejeição.
-5. O sistema altera o status do registro para "Rejeitado", grava o identificador do Supervisor, timestamp e a justificativa.
-6. O sistema notifica o Capataz Daniel sobre a rejeição, exibindo o motivo.
+1. O Supervisor seleciona a ação "Solicitar correção".
+2. O sistema apresenta campo de observação textual.
+3. O Supervisor preenche a observação explicando a inconsistência encontrada.
+4. O Supervisor confirma a solicitação.
+5. O sistema mantém o registro como pendente e envia a observação ao Capataz responsável.
+6. O sistema notifica o Capataz Daniel sobre a solicitação, exibindo a observação.
 7. O sistema retorna o Supervisor ao painel de validações (UC-04).
 
 **Exceções:**
 
-- **E1** (no passo 4): se a justificativa está em branco, o sistema bloqueia a confirmação e exige preenchimento.
+- **E1** (no passo 4): se a observação está em branco, o sistema bloqueia a confirmação e exige preenchimento.
 
-**Pós-condição:** O registro está marcado como "Rejeitado" com justificativa visível. O Capataz Daniel é notificado e pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
-Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
+**Pós-condição:** O registro permanece pendente com observação visível. O Capataz Daniel é notificado e pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
+Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
 
 
 ### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
@@ -1529,21 +1529,21 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência apresentados também contemplam fluxos alternativos e de exceção, modelando cenários como falhas de autenticação, violação de regras de validação (campos obrigatórios não preenchidos, conforme RN01 e RN02) e restrições de autorização (tentativas de acesso a recursos protegidos por perfil de usuário, conforme RN06). A explicitação desses fluxos é fundamental para assegurar que o sistema trate adequadamente condições de erro, retornando mensagens claras e acionáveis ao usuário, em alinhamento com os requisitos não funcionais de usabilidade (USAB) definidos na [Seção 3.1.3](#c3.1.3) 
 
 
-#### 1. Login (`/auth/login`)
+#### 1. Login (`/usuarios/login`)
 
 **Fluxo Principal**
 
 • O processo inicia quando o usuário informa seu login e senha na interface da aplicação.
 
-• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/auth/login`, encaminhando as credenciais ao *ControladorAutenticacao*.
+• Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/usuarios/login`, encaminhando as credenciais ao *ControladorUsuario*.
 
-• O controlador encaminha os dados ao *ServicoAutenticacao*, responsável pelas regras de autenticação do sistema.
+• O controlador encaminha os dados ao *ServicoUsuario*, responsável pelas regras de autenticação do sistema.
 
 • Em seguida, o serviço solicita ao *RepositorioUsuario* a busca do usuário correspondente ao login informado.
 
 • O repositório realiza a consulta no banco de dados e retorna as informações do usuário ao serviço.
 
-• Com os dados recuperados, o *ServicoAutenticacao* compara a senha enviada pelo usuário com a senha armazenada no sistema.
+• Com os dados recuperados, o *ServicoUsuario* compara a senha enviada pelo usuário com a senha armazenada no sistema.
 
 • Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra a sessão no banco de dados e gera um token de acesso associado ao perfil do usuário.
 
@@ -1743,13 +1743,13 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ----
 
-#### 6. Validar Movimentação (`/movimentacoes/{id}/validar`)
+#### 6. Validar Movimentação (`/validacoes/movimentacoes/{id}/validar`)
 
 **Fluxo Principal**
 
-• O processo inicia quando o supervisor aprova ou rejeita uma movimentação registrada no sistema.
+• O processo inicia quando o supervisor confere uma movimentação registrada no sistema.
 
-• A interface envia uma requisição `PATCH` para o endpoint `/movimentacoes/{id}/validar`, encaminhando a ação ao *ControladorValidacao*.
+• A interface envia uma requisição `PATCH` para o endpoint `/validacoes/movimentacoes/{id}/validar`, encaminhando a ação ao *ControladorValidacao*.
 
 • Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores possam realizar a validação das movimentações.
 
@@ -1757,11 +1757,11 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 • O serviço solicita ao *RepositorioMovimentacao* a busca da movimentação correspondente ao identificador informado.
 
-• Após localizar o registro, o supervisor pode aprovar ou rejeitar a movimentação.
+• Após localizar o registro, o supervisor pode validar a movimentação ou mantê-la pendente para correção.
 
-• Quando a ação escolhida é “aprovar”, o serviço atualiza o status da movimentação para “aprovado” no banco de dados.
+• Quando a ação escolhida é “validar”, o serviço atualiza o status da movimentação para “validado” no banco de dados.
 
-• Em seguida, o *ServicoNotificacao* é acionado para enviar uma notificação ao capataz informando que a movimentação foi aprovada.
+• Em seguida, o *ServicoNotificacao* é acionado para enviar uma notificação ao capataz informando que a movimentação foi validada.
 
 • Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, confirmando que o status foi atualizado corretamente.
 
@@ -1782,13 +1782,13 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 • O sistema então responde à interface com status `404 – Não Encontrado`, informando que a movimentação solicitada não existe.
 
-**Fluxo Alternativo - Rejeição sem justificativa**
+**Fluxo Alternativo - Registro com inconsistência**
 
-• Quando o supervisor escolhe rejeitar uma movimentação, o *ServicoValidacao* verifica se foi informada uma justificativa para a rejeição.
+• Quando o supervisor identifica inconsistência na movimentação, o registro permanece com status "pendente" para correção antes da validação.
 
-• Caso a justificativa esteja vazia, o serviço retorna um erro de validação ao controlador.
+• Como a movimentação possui apenas os estados "pendente" e "validado", o serviço não altera o status nessa etapa.
 
-• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da justificativa antes da rejeição da movimentação.
+• Nesse cenário, a interface orienta o capataz a corrigir as informações e reenviar o registro quando necessário.
 
 <div align="center">
 <p align="center">Figura 15 - Diagrama Sequencial (RF006)</p>
@@ -1812,7 +1812,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 • Caso o perfil seja válido, o controlador encaminha a solicitação ao *ServicoRelatorio*, responsável pelas regras de geração do relatório.
 
-• O serviço solicita ao *RepositorioMovimentacao* a busca das movimentações aprovadas e sincronizadas conforme os filtros informados.
+• O serviço solicita ao *RepositorioMovimentacao* a busca das movimentações validadas e sincronizadas conforme os filtros informados.
 
 • Após a consulta no banco de dados, o repositório retorna os dados encontrados ao serviço.
 
@@ -1944,39 +1944,39 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ----
 
-#### 10. Dashboard de Indicadores (`/dashboard/indicadores`)
+#### 10. Dashboard de Indicadores (`/movimentacoes/dashboard`, `/tarefas/dashboard`, `/sincronizacao/dashboard/tickets`)
  
 **Fluxo Principal**
  
 • O processo inicia quando o gerente acessa o painel de indicadores da fazenda na interface da aplicação.
  
-• A interface envia uma requisição `GET` para o endpoint `/dashboard/indicadores`, encaminhando o pedido ao *ControladorDashboard*.
+• A interface envia requisições `GET` para os endpoints `/movimentacoes/dashboard`, `/tarefas/dashboard` e `/sincronizacao/dashboard/tickets`, encaminhando os pedidos aos controladores responsáveis por cada domínio.
  
-• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar o dashboard consolidado.
+• Inicialmente, os controladores validam o token e o perfil do usuário, garantindo que apenas gerentes possam acessar o dashboard consolidado.
  
-• Caso o perfil seja válido, o controlador encaminha a requisição ao *ServicoDashboard*, responsável por consolidar os indicadores operacionais.
+• Caso o perfil seja válido, os controladores encaminham as requisições aos serviços de movimentação, tarefa e sincronização, responsáveis por retornar os dados operacionais já filtrados.
  
-• O serviço solicita ao *RepositorioMovimentacao* o total de movimentações aprovadas e sincronizadas, segmentadas por tipo (nascimentos, mortes, transferências) e por retiro.
+• O *ServicoMovimentacao* solicita ao *RepositorioMovimentacao* as movimentações validadas e sincronizadas, segmentáveis por tipo (nascimentos, mortes, transferências) e por retiro.
  
-• Em seguida, o serviço solicita ao *RepositorioTarefa* o total de tarefas pendentes e ao *RepositorioTicket* o total de tickets abertos, ambos segmentados por retiro.
+• Em seguida, o *ServicoTarefa* retorna tarefas aprovadas e o *ServicoSincronizacao* retorna tickets aprovados, ambos podendo ser filtrados por retiro.
  
-• Após receber todos os dados, o *ServicoDashboard* consolida os indicadores calculando totais individuais por retiro e um totalizador geral, conforme determinado pela RN10.
+• Após receber todos os dados, a interface consolida os indicadores calculando totais individuais por retiro e um totalizador geral, conforme determinado pela RN10.
  
-• Por fim, o controlador responde à interface com status `200 – Sucesso`, exibindo ao gerente o dashboard atualizado com os indicadores consolidados.
+• Por fim, os controladores respondem à interface com status `200 – Sucesso`, permitindo que o dashboard seja exibido ao gerente com os indicadores consolidados.
  
  
 **Fluxo Alternativo - Usuário sem permissão**
  
 • Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
  
-• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorDashboard* retorna uma resposta `403 – Proibido`.
+• Caso o perfil seja inválido, o fluxo é interrompido e o backend retorna uma resposta `403 – Proibido`.
  
 • Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para acessar o dashboard.
  
  
 **Fluxo Alternativo - Sem dados disponíveis**
  
-• Caso não existam registros aprovados e sincronizados no banco, o *ServicoDashboard* retorna indicadores zerados ao controlador.
+• Caso não existam registros conferidos e sincronizados no banco, os serviços retornam listas vazias para consolidação.
  
 • Nesse cenário, o sistema responde à interface com status `200 – Sucesso`, exibindo o dashboard com valores zerados e uma mensagem informativa indicando ausência de dados consolidados no período.
  
@@ -1995,7 +1995,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
  
 **Fluxo Principal**
  
-• O processo inicia quando o supervisor ou capataz seleciona um ticket e altera sua prioridade (crítica, alta, média ou baixa) na interface da aplicação.
+• O processo inicia quando o supervisor ou capataz seleciona um ticket e altera sua prioridade (alta, média ou baixa) na interface da aplicação.
  
 • A interface envia uma requisição `PATCH` para o endpoint `/tickets/{id}/prioridade`, encaminhando a nova prioridade ao *ControladorTicket*.
  
@@ -2032,7 +2032,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
  
 **Fluxo Alternativo - Prioridade inválida**
  
-• Durante a validação dos dados, o *ServicoTicket* verifica se a prioridade informada corresponde a um dos valores aceitos (crítica, alta, média ou baixa).
+• Durante a validação dos dados, o *ServicoTicket* verifica se a prioridade informada corresponde a um dos valores aceitos (alta, média ou baixa).
  
 • Caso o valor seja inválido ou não tenha sido preenchido, o serviço retorna um erro de validação ao controlador.
  
@@ -2213,7 +2213,7 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar indicadores gerais da fazenda, permitindo que o gerente acompanhe informações relacionadas ao rebanho, chamados abertos, tarefas pendentes e movimentações realizadas na operação. Essa funcionalidade foi implementada para atender à US08, relacionada à visualização de dashboards com indicadores operacionais da fazenda, permitindo uma visão mais estratégica e consolidada das atividades realizadas nos retiros.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar indicadores gerais da fazenda, permitindo que o gerente acompanhe informações relacionadas ao rebanho, tickets aprovados, tarefas aprovadas e movimentações realizadas na operação. Essa funcionalidade foi implementada para atender à US08, relacionada à visualização de dashboards com indicadores operacionais da fazenda, permitindo uma visão mais estratégica e consolidada das atividades realizadas nos retiros.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Além disso, a interface apresenta acesso rápido aos relatórios operacionais e à visualização de ocorrências recentes da fazenda, facilitando o acompanhamento das principais atividades registradas no sistema.
 
@@ -2362,11 +2362,11 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### Entidades e Atributos
-&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas treze entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. O controle de sincronização offline é representado pelo atributo sincronizado na própria entidade MOVIMENTACAO, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status e validado_por dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
+&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas dezoito entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. Além disso, os dados específicos de movimentação foram separados nas entidades MOVIMENTACAO_COMPRA, MOVIMENTACAO_VENDA, MOVIMENTACAO_TRANSFERENCIA, MOVIMENTACAO_NASCIMENTO e MOVIMENTACAO_MORTE. O controle de sincronização offline é representado pelo atributo sincronizado nas entidades operacionais que passam por sincronização, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status, validado_por e data_validacao dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) na entidade MOVIMENTACAO, inicializado como false no momento do registro. Isso significa que toda movimentação criada em campo é armazenada localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização na própria entidade, em conformidade com a US01, US02 e RN03.
+&nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) nas entidades operacionais aplicáveis, inicializado como false no momento do registro. Isso significa que registros criados em campo podem ser armazenados localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização nos próprios registros, em conformidade com a US01, US02 e RN03.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os atributos causa_obito e estagio_vida da entidade MOVIMENTACAO representam informações específicas do rebanho. Embora o diagrama de classes de domínio os detalhe como classes especializadas para maior expressividade semântica, no modelo físico são implementados como atributos diretos de MOVIMENTACAO, com restrições de integridade definidas via ALTER TABLE, conforme RN01. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
+&nbsp;&nbsp;&nbsp;&nbsp;O atributo estagio_vida permanece na entidade MOVIMENTACAO por ser comum ao registro do rebanho. Já atributos específicos, como causa_obito, origem, destino e quantidade, são distribuídos nas tabelas especializadas de movimentação conforme o tipo do evento registrado. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
 
 <p align="center">Quadro 39 - Entidades do modelo conceitual da BRPec.</p>
 
@@ -2374,7 +2374,12 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 |----------|-------------------------------------|
 | USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US08. |
 | RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US06, US07, US11.|
-| MOVIMENTACAO | Registro de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém status e validado_por para o fluxo de validação pelo supervisor (US04, RN06), sincronizado para controle de operação offline (US01, RN03), e causa_obito e estagio_vida como atributos específicos do rebanho (RN01). Origem: US01, US02, US04.|
+| MOVIMENTACAO | Registro base de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém status, validado_por e data_validacao para o fluxo de validação pelo supervisor (US04, RN06), sincronizado para controle de operação offline (US01, RN03), e estagio_vida como atributo comum do rebanho. Origem: US01, US02, US04.|
+| MOVIMENTACAO_COMPRA | Especialização de MOVIMENTACAO para registros de compra, contendo a quantidade comprada. Origem: US01, RN01. |
+| MOVIMENTACAO_VENDA | Especialização de MOVIMENTACAO para registros de venda, contendo a quantidade vendida. Origem: US01, RN01. |
+| MOVIMENTACAO_TRANSFERENCIA | Especialização de MOVIMENTACAO para registros de transferência, contendo origem, destino e quantidade. Origem: US01, RN01. |
+| MOVIMENTACAO_NASCIMENTO | Especialização de MOVIMENTACAO para registros de nascimento, contendo origem e quantidade. Origem: US01, RN01. |
+| MOVIMENTACAO_MORTE | Especialização de MOVIMENTACAO para registros de morte, contendo origem e causa do óbito. Origem: US01, RN01. |
 | TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
 | TICKET | Solicitação de manutenção de infraestrutura. O supervisor gerencia o chamado e o atribui a um capataz para execução, conforme RF008. Origem: US06, US07, US10. |
 | EVIDENCIA | Comprovação anexada a movimentações, tarefas ou tickets. Generalizada em três subclasses: EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM. Origem: US07, US12. |
@@ -2393,9 +2398,14 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 |----------|-----------|
 | USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, criado_em, cargo|
 | RETIRO| id (PK), nome.|
-| MOVIMENTACAO |id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, origem, destino, quantidade, status, sincronizado, criado_em, causa_obito, estagio_vida.|
-| TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data, status |
-| TICKET | id (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), categoria, localizacao, descricao, status, data_criacao, data_realizado |
+| MOVIMENTACAO | id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, status, sincronizado, data_criacao, data_validacao, estagio_vida |
+| MOVIMENTACAO_COMPRA | movimentacao_id (PK/FK), quantidade |
+| MOVIMENTACAO_VENDA | movimentacao_id (PK/FK), quantidade |
+| MOVIMENTACAO_TRANSFERENCIA | movimentacao_id (PK/FK), origem, destino, quantidade |
+| MOVIMENTACAO_NASCIMENTO | movimentacao_id (PK/FK), origem, quantidade |
+| MOVIMENTACAO_MORTE | movimentacao_id (PK/FK), origem, causa_obito |
+| TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data_criacao, status, aprovado_por (FK), sincronizado |
+| TICKET | id (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), aprovado_por (FK), categoria, localizacao, descricao, prioridade, status, data_criacao, data_realizado, sincronizado |
 | EVIDENCIA | id (PK), usuario_id (FK), tipo, criado_em |
 | EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
 | EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
@@ -2409,7 +2419,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### Relacionamentos e Cardinalidades
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela aprovação ou rejeição, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 41 apresenta o conjunto de relacionamentos do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela conferência e validação, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 41 apresenta o conjunto de relacionamentos do modelo.
 
 
 <p align="center">Quadro 41 - Relacionamentos do modelo conceitual</p>
@@ -2418,7 +2428,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 |----|----------------|-----------|:-------------:|-----------|
 | R1 | PERTENCE_A | USUARIO ↔ RETIRO | (1,1) : (0,N) | Cada usuário pertence a exatamente um retiro; um retiro pode ter zero ou vários usuários. Origem: US01, US03. |
 | R2 | REGISTRA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um capataz registra zero ou várias movimentações; toda movimentação tem exatamente um capataz registrador. Origem: US01, US02, RN01. |
-| R3 | VALIDA | USUARIO ↔ MOVIMENTACAO | (0,N) : (1,1) | Um supervisor valida zero ou várias movimentações; toda movimentação referencia exatamente um usuário validador. Origem: US04, RN06. |
+| R3 | VALIDA | USUARIO ↔ MOVIMENTACAO | (0,N) : (0,1) | Um supervisor valida zero ou várias movimentações; uma movimentação pendente pode não ter validador e uma movimentação validada referencia exatamente um usuário validador. Origem: US04, RN06. |
 | R4 | OCORRE_EM | MOVIMENTACAO ↔ RETIRO | (1,1) : (0,N) | Toda movimentação ocorre em exatamente um retiro; um retiro pode ter zero ou várias movimentações. Origem: US01, US02. |
 | R5 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria zero ou várias tarefas; toda tarefa tem exatamente um criador. Origem: US03, RN02. |
 | R6 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um capataz executa zero ou várias tarefas; toda tarefa é atribuída a exatamente um capataz. Origem: US03, RN02. |
@@ -2477,316 +2487,204 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido utilizando a ferramenta drawSQL, tendo como banco de dados alvo o MySQL. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL, utilizado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. O campo causa_obito da tabela movimentacao foi definido como nullable, uma vez que sua obrigatoriedade é condicional ao tipo de movimentação ser "morte", validação essa realizada na camada de backend conforme a RN01. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado da tabela movimentacao recebeu valor padrão false, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. A tabela movimentacao armazena os dados comuns do registro, enquanto os dados específicos de compra, venda, transferência, nascimento e morte foram separados em tabelas especializadas. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado recebeu valor padrão false nas tabelas operacionais, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
 
 **Modelo Físico**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no MySQL. A seguir, são apresentados os comandos CREATE TABLE e ALTER TABLE utilizados para a criação das tabelas e a definição das constraints e chaves estrangeiras do banco de dados do AgroFlow.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no PostgreSQL/Supabase. A seguir, são apresentados os comandos CREATE TYPE e CREATE TABLE utilizados para a criação dos tipos enumerados, tabelas, constraints e chaves estrangeiras do banco de dados do AgroFlow.
 
 ```sql
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
---------------
-Tabela: retiro
---------------
+CREATE TYPE usuario_status AS ENUM ('ativo', 'inativo');
+CREATE TYPE usuario_cargo AS ENUM ('capataz', 'supervisor', 'gerente');
+CREATE TYPE tarefa_prioridade AS ENUM ('alta', 'media', 'baixa');
+CREATE TYPE tarefa_status AS ENUM ('pendente', 'aprovado');
+CREATE TYPE ticket_categoria AS ENUM ('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro');
+CREATE TYPE ticket_status AS ENUM ('pendente', 'aprovado');
+CREATE TYPE ticket_prioridade AS ENUM ('alta', 'media', 'baixa');
+CREATE TYPE movimentacao_tipo AS ENUM ('nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros');
+CREATE TYPE movimentacao_status AS ENUM ('pendente', 'validado');
+CREATE TYPE movimentacao_estagio_vida AS ENUM (
+    'BEZERRO 0 A 7 MESES',
+    'GARROTE 8 A 12 MESES',
+    'NOVILHA 8 A 12 MESES',
+    'GARROTE 13 A 24 MESES',
+    'NOVILHA 13 A 24 MESES',
+    'BOI 25 A 36 MESES',
+    'NOVILHA 25 A 36 MESES',
+    'TOURO 25 A 36 MESES',
+    'VACA ACIMA 36 MESES',
+    'BOI ACIMA 36 MESES',
+    'TOURO ACIMA 36 MESES'
+);
+CREATE TYPE evidencia_tipo AS ENUM ('foto', 'audio', 'mensagem');
+CREATE TYPE relatorio_tipo AS ENUM ('movimentacao', 'tarefas', 'tickets', 'consolidado');
 
-CREATE TABLE `retiro` (
-    `id`        CHAR(36)     NOT NULL,
-    `nome`      VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`id`)
+CREATE TABLE retiro (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
 );
 
----------------
-Tabela: usuario
----------------
-
-CREATE TABLE `usuario` (
-    `id`         CHAR(36)                 NOT NULL,
-    `retiro_id`  CHAR(36)                 NOT NULL,
-    `nome`       VARCHAR(255)             NOT NULL,
-    `login`      VARCHAR(255)             NOT NULL,
-    `senha_hash` VARCHAR(255)             NOT NULL,
-    `status`     ENUM('ativo', 'inativo') NOT NULL,
-    `data_criacao`  TIMESTAMP                NOT NULL,
-    `cargo`     ENUM('capataz', 'supervisor', 'gerente') NOT NULL,
-    PRIMARY KEY (`id`)
+CREATE TABLE usuario (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    retiro_id BIGINT NOT NULL REFERENCES retiro(id),
+    nome VARCHAR(255) NOT NULL,
+    login VARCHAR(255) NOT NULL UNIQUE,
+    senha_hash VARCHAR(255) NOT NULL,
+    status usuario_status NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
+    cargo usuario_cargo NOT NULL
 );
 
-ALTER TABLE `usuario`
-    ADD UNIQUE `usuario_login_unique` (`login`);
-
-ALTER TABLE `usuario`
-    ADD CONSTRAINT `usuario_retiro_id_foreign`
-    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
-
---------------
-Tabela: tarefa
---------------
-
-CREATE TABLE `tarefa` (
-    `id`          CHAR(36)                                                   NOT NULL,
-    `retiro_id`   CHAR(36)                                                   NOT NULL,
-    `criada_por`  CHAR(36)                                                   NOT NULL,
-    `atribuida_a` CHAR(36)                                                   NOT NULL,
-    `descricao`   TEXT                                                       NOT NULL,
-    `categoria`   VARCHAR(255)                                               NOT NULL,
-    `prioridade`  ENUM('alta', 'media', 'baixa')                             NOT NULL,
-    `data`        TIMESTAMP                                                       NOT NULL,
-    `status`      ENUM('pendente', 'em_andamento', 'concluida', 'cancelada') NOT NULL,
-    PRIMARY KEY (`id`)
+CREATE TABLE tarefa (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    retiro_id BIGINT NOT NULL REFERENCES retiro(id),
+    criada_por UUID NOT NULL REFERENCES usuario(id),
+    atribuida_a UUID NOT NULL REFERENCES usuario(id),
+    descricao TEXT NOT NULL,
+    categoria VARCHAR(255) NOT NULL,
+    prioridade tarefa_prioridade NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
+    status tarefa_status NOT NULL,
+    aprovado_por UUID NULL REFERENCES usuario(id),
+    sincronizado BOOLEAN NOT NULL DEFAULT false
 );
 
-ALTER TABLE `tarefa`
-    ADD CONSTRAINT `tarefa_retiro_id_foreign`
-    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
-
-ALTER TABLE `tarefa`
-    ADD CONSTRAINT `tarefa_criada_por_foreign`
-    FOREIGN KEY (`criada_por`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `tarefa`
-    ADD CONSTRAINT `tarefa_atribuida_a_foreign`
-    FOREIGN KEY (`atribuida_a`) REFERENCES `usuario` (`id`);
-
---------------------
-Tabela: movimentacao
---------------------
-
-CREATE TABLE `movimentacao` (
-    `id`           CHAR(36)                                                        NOT NULL,
-    `retiro_id`    CHAR(36)                                                        NOT NULL,
-    `capataz_id`   CHAR(36)                                                        NOT NULL,
-    `validado_por` CHAR(36)                                                        NOT NULL,
-    `tipo`         ENUM('nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros') NOT NULL,
-    `origem`       ENUM('Acurizal', 'Aroeira', 'Baia Bonita', 'Bodoquena 1', 'Bonoquena 2', 'Boqueirão', 'Caieira', 'CMB', 'Confinamento', 'Cristo', 'Morada Nova', 'Morro Azul', 'Puga', 'São Miguel', 'Vista Alegre')                                                 NULL,
-    `destino`      ENUM('Acurizal', 'Aroeira', 'Baia Bonita', 'Bodoquena 1', 'Bonoquena 2', 'Boqueirão', 'Caieira', 'CMB', 'Confinamento', 'Cristo', 'Morada Nova', 'Morro Azul', 'Puga', 'São Miguel', 'Vista Alegre')                                                            NULL,
-    `quantidade`   INT                                                             NOT NULL,
-    `status`       ENUM('pendente', 'aprovado', 'rejeitado')                       NOT NULL,
-    `sincronizado` BOOLEAN                                                         NOT NULL DEFAULT 0,
-    `data_criacao`    TIMESTAMP                                                       NOT NULL,
-    `causa_obito`  VARCHAR(255)                                                    NULL,
-    `estagio_vida` ENUM('BEZERRO 0 A 7 MESES', 'GARROTE 8 A 12 MESES','NOVILHA 8 A 12 MESES','GARROTE 13 A 24 MESES', 'NOVILHA 13 A 24 MESES', 'BOI 25 A 36 MESES', 'NOVILHA 25 A 36 MESES', 'TOURO 25 A 36 MESES', 'VACA ACIMA 36 MESES', 'BOI ACIMA 36 MESES', 'TOURO ACIMA 36 MESES')                                                     NOT NULL,
-
-    PRIMARY KEY (`id`)
+CREATE TABLE movimentacao (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    retiro_id BIGINT NOT NULL REFERENCES retiro(id),
+    capataz_id UUID NOT NULL REFERENCES usuario(id),
+    validado_por UUID NULL REFERENCES usuario(id),
+    tipo movimentacao_tipo NOT NULL,
+    status movimentacao_status NOT NULL,
+    sincronizado BOOLEAN NOT NULL DEFAULT false,
+    data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
+    estagio_vida movimentacao_estagio_vida NOT NULL,
+    data_validacao TIMESTAMP NULL
 );
 
-ALTER TABLE `movimentacao`
-    ADD CONSTRAINT `movimentacao_retiro_id_foreign`
-    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
-
-ALTER TABLE `movimentacao`
-    ADD CONSTRAINT `movimentacao_capataz_id_foreign`
-    FOREIGN KEY (`capataz_id`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `movimentacao`
-    ADD CONSTRAINT `movimentacao_validado_por_foreign`
-    FOREIGN KEY (`validado_por`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `movimentacao`
-    ADD CONSTRAINT `chk_causa_obito_obrigatoria`
-    CHECK (
-        `tipo` != 'morte' OR `causa_obito` IS NOT NULL
-    );
-
-ALTER TABLE `movimentacao`
-    ADD CONSTRAINT `chk_transferencia_campos_obrigatorios`
-    CHECK (
-        `tipo` != 'transferencia' 
-        OR (`origem` IS NOT NULL AND `destino` IS NOT NULL)
-    );
---------------
-Tabela: ticket
---------------
-
-CREATE TABLE `ticket` (
-    `id`          CHAR(36)                                                                           NOT NULL,
-    `retiro_id`   CHAR(36)                                                                           NOT NULL,
-    `aberto_por`  CHAR(36)                                                                           NOT NULL,
-    `categoria`   ENUM('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro') NOT NULL,
-    `localizacao` VARCHAR(255)                                                                       NOT NULL,
-    `status`      ENUM('aberto', 'em_atendimento', 'resolvido', 'cancelado')                         NOT NULL,
-    `atribuido_a` CHAR(36)                                                                           NOT NULL,
-    `descricao` VARCHAR(255)                                                                         NOT NULL,
-    `data_criacao`                          DATE                                                     NOT NULL,
-    `data_realizado`                          DATE                                                   NOT NULL,
-    PRIMARY KEY (`id`)
+CREATE TABLE movimentacao_compra (
+    movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    quantidade INT NOT NULL,
+    CHECK (quantidade > 0)
 );
 
-ALTER TABLE `ticket`
-    ADD CONSTRAINT `ticket_retiro_id_foreign`
-    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
-
-ALTER TABLE `ticket`
-    ADD CONSTRAINT `ticket_aberto_por_foreign`
-    FOREIGN KEY (`aberto_por`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `ticket`
-    ADD CONSTRAINT `ticket_atribuido_a_foreign`
-    FOREIGN KEY (`atribuido_a`) REFERENCES `usuario` (`id`);
-
------------------
-Tabela: evidencia
------------------
-
-CREATE TABLE `evidencia` (
-    `id`          CHAR(36)                          NOT NULL,
-    `usuario_id`  CHAR(36)                          NOT NULL,
-    `tipo`        ENUM('foto', 'audio', 'mensagem') NOT NULL,
-    `data_criacao`   TIMESTAMP                         NOT NULL,
-    PRIMARY KEY (`id`)
+CREATE TABLE movimentacao_venda (
+    movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    quantidade INT NOT NULL,
+    CHECK (quantidade > 0)
 );
 
-ALTER TABLE `evidencia`
-    ADD CONSTRAINT `evidencia_usuario_id_foreign`
-    FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
-
-------------------------------
-Tabela: evidencia_foto
-------------------------------
-CREATE TABLE `evidencia_foto` (
-    `evidencia_id` CHAR(36)     NOT NULL,
-    `url_arquivo`  VARCHAR(255) NOT NULL,
-    `latitude`     FLOAT(53)    NOT NULL,
-    `longitude`    FLOAT(53)    NOT NULL,
-    PRIMARY KEY (`evidencia_id`)
+CREATE TABLE movimentacao_transferencia (
+    movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    origem VARCHAR(255) NOT NULL,
+    destino VARCHAR(255) NOT NULL,
+    quantidade INT NOT NULL,
+    CHECK (quantidade > 0)
 );
 
-ALTER TABLE `evidencia_foto`
-    ADD CONSTRAINT `evidencia_foto_evidencia_id_foreign`
-    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
-
-ALTER TABLE `evidencia_foto`
-    ADD CONSTRAINT `chk_latitude_valida`
-    CHECK (`latitude` >= -90 AND `latitude` <= 90);
-
-ALTER TABLE `evidencia_foto`
-    ADD CONSTRAINT `chk_longitude_valida`
-    CHECK (`longitude` >= -180 AND `longitude` <= 180);
-
-------------------------------
-Tabela: evidencia_audio
-------------------------------
-
-CREATE TABLE `evidencia_audio` (
-    `evidencia_id` CHAR(36)     NOT NULL,
-    `url_arquivo`  VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`evidencia_id`)
+CREATE TABLE movimentacao_nascimento (
+    movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    origem VARCHAR(255) NOT NULL,
+    quantidade INT NOT NULL,
+    CHECK (quantidade > 0)
 );
 
-ALTER TABLE `evidencia_audio`
-    ADD CONSTRAINT `evidencia_audio_evidencia_id_foreign`
-    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
-
-------------------------------
-Tabela: evidencia_mensagem
-------------------------------
-
-CREATE TABLE `evidencia_mensagem` (
-    `evidencia_id` CHAR(36) NOT NULL,
-    `conteudo`     TEXT     NOT NULL,
-    PRIMARY KEY (`evidencia_id`)
+CREATE TABLE movimentacao_morte (
+    movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    origem VARCHAR(255) NOT NULL,
+    causa_obito VARCHAR(255) NOT NULL
 );
 
-ALTER TABLE `evidencia_mensagem`
-    ADD CONSTRAINT `evidencia_mensagem_evidencia_id_foreign`
-    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
-
-------------------------------
-Tabela: evidencia_movimentacao
-------------------------------
-
-CREATE TABLE `evidencia_movimentacao` (
-    `evidencia_id`    CHAR(36) NOT NULL,
-    `movimentacao_id` CHAR(36) NOT NULL,
-    PRIMARY KEY (`evidencia_id`, `movimentacao_id`)
+CREATE TABLE ticket (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    retiro_id BIGINT NOT NULL REFERENCES retiro(id),
+    aberto_por UUID NOT NULL REFERENCES usuario(id),
+    categoria ticket_categoria NOT NULL,
+    localizacao VARCHAR(255) NOT NULL,
+    status ticket_status NOT NULL,
+    atribuido_a UUID NULL REFERENCES usuario(id),
+    aprovado_por UUID NULL REFERENCES usuario(id),
+    descricao VARCHAR(255) NOT NULL,
+    prioridade ticket_prioridade NOT NULL,
+    sincronizado BOOLEAN NOT NULL DEFAULT false,
+    data_criacao DATE NOT NULL DEFAULT CURRENT_DATE,
+    data_realizado DATE NOT NULL DEFAULT CURRENT_DATE
 );
 
-ALTER TABLE `evidencia_movimentacao`
-    ADD CONSTRAINT `evidencia_movimentacao_evidencia_id_foreign`
-    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
-
-ALTER TABLE `evidencia_movimentacao`
-    ADD CONSTRAINT `evidencia_movimentacao_movimentacao_id_foreign`
-    FOREIGN KEY (`movimentacao_id`) REFERENCES `movimentacao` (`id`);
-
-------------------------
-Tabela: evidencia_tarefa
-------------------------
-
-CREATE TABLE `evidencia_tarefa` (
-    `evidencia_id` CHAR(36) NOT NULL,
-    `tarefa_id`    CHAR(36) NOT NULL,
-    PRIMARY KEY (`evidencia_id`, `tarefa_id`)
+CREATE TABLE evidencia (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    usuario_id UUID NOT NULL REFERENCES usuario(id),
+    tipo evidencia_tipo NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-ALTER TABLE `evidencia_tarefa`
-    ADD CONSTRAINT `evidencia_tarefa_evidencia_id_foreign`
-    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
-
-ALTER TABLE `evidencia_tarefa`
-    ADD CONSTRAINT `evidencia_tarefa_tarefa_id_foreign`
-    FOREIGN KEY (`tarefa_id`) REFERENCES `tarefa` (`id`);
-
------------------------
-Tabela: evidencia_ticket
-------------------------
-
-CREATE TABLE `evidencia_ticket` (
-    `evidencia_id` CHAR(36) NOT NULL,
-    `ticket_id`    CHAR(36) NOT NULL,
-    PRIMARY KEY (`evidencia_id`, `ticket_id`)
+CREATE TABLE evidencia_foto (
+    evidencia_id BIGINT PRIMARY KEY REFERENCES evidencia(id) ON DELETE CASCADE,
+    url_arquivo TEXT NOT NULL,
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL
 );
 
-ALTER TABLE `evidencia_ticket`
-    ADD CONSTRAINT `evidencia_ticket_evidencia_id_foreign`
-    FOREIGN KEY (`evidencia_id`) REFERENCES `evidencia` (`id`);
-
-ALTER TABLE `evidencia_ticket`
-    ADD CONSTRAINT `evidencia_ticket_ticket_id_foreign`
-    FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`);
-
------------------
-Tabela: relatorio
------------------
-
-CREATE TABLE `relatorio` (
-    `id`          CHAR(36)                                                  NOT NULL,
-    `gerado_por`  CHAR(36)                                                  NULL,
-    `retiro_id`   CHAR(36)                                                  NULL,
-    `tipo`        ENUM('movimentacao', 'tarefas', 'tickets', 'consolidado') NULL,
-    `data_inicio` DATE                                                      NULL,
-    `data_fim`    DATE                                                      NULL,
-    `data_gerado`   TIMESTAMP                                                 NULL,
-    `url_arquivo`  VARCHAR(255)                                             NOT NULL,
-    PRIMARY KEY (`id`)
+CREATE TABLE evidencia_audio (
+    evidencia_id BIGINT PRIMARY KEY REFERENCES evidencia(id) ON DELETE CASCADE,
+    url_arquivo TEXT NOT NULL
 );
 
-ALTER TABLE `relatorio`
-    ADD CONSTRAINT `relatorio_gerado_por_foreign`
-    FOREIGN KEY (`gerado_por`) REFERENCES `usuario` (`id`);
+CREATE TABLE evidencia_mensagem (
+    evidencia_id BIGINT PRIMARY KEY REFERENCES evidencia(id) ON DELETE CASCADE,
+    conteudo TEXT NOT NULL
+);
 
-ALTER TABLE `relatorio`
-    ADD CONSTRAINT `relatorio_retiro_id_foreign`
-    FOREIGN KEY (`retiro_id`) REFERENCES `retiro` (`id`);
+CREATE TABLE evidencia_movimentacao (
+    evidencia_id BIGINT NOT NULL REFERENCES evidencia(id) ON DELETE CASCADE,
+    movimentacao_id BIGINT NOT NULL REFERENCES movimentacao(id) ON DELETE CASCADE,
+    PRIMARY KEY (evidencia_id, movimentacao_id)
+);
+
+CREATE TABLE evidencia_tarefa (
+    evidencia_id BIGINT NOT NULL REFERENCES evidencia(id) ON DELETE CASCADE,
+    tarefa_id BIGINT NOT NULL REFERENCES tarefa(id) ON DELETE CASCADE,
+    PRIMARY KEY (evidencia_id, tarefa_id)
+);
+
+CREATE TABLE evidencia_ticket (
+    evidencia_id BIGINT NOT NULL REFERENCES evidencia(id) ON DELETE CASCADE,
+    ticket_id BIGINT NOT NULL REFERENCES ticket(id) ON DELETE CASCADE,
+    PRIMARY KEY (evidencia_id, ticket_id)
+);
+
+CREATE TABLE relatorio (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    gerado_por UUID NOT NULL REFERENCES usuario(id),
+    retiro_id BIGINT NOT NULL REFERENCES retiro(id),
+    tipo relatorio_tipo NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+    data_gerado TIMESTAMP NOT NULL DEFAULT NOW(),
+    url_arquivo TEXT NOT NULL
+);
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Para os campos identificadores de todas as tabelas, optou-se pelo tipo CHAR(36), uma vez que o MySQL não possui suporte nativo ao tipo UUID — o CHAR(36) armazena o UUID no formato padrão de 36 caracteres, garantindo compatibilidade entre todas as tabelas do banco.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Para a tabela usuario, optou-se pelo tipo UUID, considerando a sensibilidade dos dados de identificação dos usuários. Para as demais entidades operacionais, foram utilizados identificadores numéricos BIGINT gerados automaticamente por identidade, simplificando chaves primárias, chaves estrangeiras e consultas internas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado da tabela movimentacao foi definido como BOOLEAN com valor padrão 0 (false), garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se 1 (true) apenas após a sincronização com o servidor, em conformidade com a RN07. Os campos latitude e longitude da tabela evidencia foram definidos como nullable, pois o georreferenciamento é exigido apenas para evidências do tipo foto, validação essa realizada no backend conforme a RN04. O campo criado_em, presente em todas as tabelas, utiliza o tipo TIMESTAMP, permitindo rastrear cronologicamente todas as operações realizadas no sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado foi definido como BOOLEAN com valor padrão false nas tabelas operacionais que passam pelo fluxo offline, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se true apenas após a sincronização com o servidor, em conformidade com a RN07. Os campos latitude e longitude foram concentrados na tabela evidencia_foto, pois o georreferenciamento é exigido apenas para evidências do tipo foto. Os campos de data utilizam DATE ou TIMESTAMP conforme a necessidade de registrar apenas o dia ou o momento completo da operação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações, utilizando ALTER TABLE após a criação das tabelas, padrão adotado pela ferramenta drawSQL. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
 ***Conclusão***
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no MySQL. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL/Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
 &nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
@@ -2799,7 +2697,7 @@ Esta seção traz quatro consultas SQL do back-end do AgroFlow, uma de cada tipo
 
 #### Consulta 1: SELECT (filtro de movimentações pelo Supervisor)
  
-**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente, aprovado ou rejeitado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor, pois registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente ou validado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor, pois registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
  
 **Código SQL:**
  
@@ -2869,52 +2767,43 @@ Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um
  
 ---
 
-#### Consulta 2: UPDATE (atualização de ticket pelo Supervisor)
+#### Consulta 2: UPDATE (aprovação de ticket pelo Supervisor)
  
-**Descrição:** A tabela `ticket` registra chamados de manutenção de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. Conforme o mesmo RF, o Supervisor é responsável por atribuir chamados a Capatazes para execução, o que envolve atualizar três campos do ticket: o campo `atribuido_a` (que recebe o ID do Capataz designado), o campo `status` (que avança no ciclo de vida aberto → em_atendimento → resolvido/cancelado definido pelo ENUM) e, quando o chamado é encerrado, o campo `data_realizado` (que registra quando o serviço foi concluído). A consulta abaixo atualiza esses três campos para um ticket específico, desde que ele ainda não esteja em um estado terminal (resolvido ou cancelado), pois tickets encerrados não devem ser reabertos por meio dessa operação.
+**Descrição:** A tabela `ticket` registra chamados de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. No modelo implementado, esses chamados entram inicialmente com status pendente e podem ser aprovados por um Supervisor. A consulta abaixo atualiza o status do ticket para aprovado e registra o usuário responsável pela aprovação no campo `aprovado_por`, desde que o ticket ainda esteja pendente.
  
 **Código SQL:**
  
 ```sql
 UPDATE ticket 
-SET status = ?, 
-    atribuido_a = ?, 
-    data_realizado = ? 
+SET status = 'aprovado',
+    aprovado_por = ?
 WHERE id = ? 
-  AND status NOT IN ('resolvido', 'cancelado');
+  AND status = 'pendente';
 ```
  
 **Proposições lógicas:**
  
 - $P$: o ticket é aquele identificado pelo parâmetro (`id = ?`)
-- $A$: o ticket está no estado resolvido (`status = 'resolvido'`)
-- $B$: o ticket está no estado cancelado (`status = 'cancelado'`)
-A cláusula `status NOT IN ('resolvido', 'cancelado')` é equivalente a $\neg(A \lor B)$, ou seja, "não é resolvido e não é cancelado".
+- $S$: o ticket está pendente (`status = 'pendente'`)
  
-**Expressão lógica proposicional:** $P \land \neg(A \lor B)$
+**Expressão lógica proposicional:** $P \land S$
  
-Aplicando De Morgan, a expressão pode ser reescrita como $P \land \neg A \land \neg B$. Os conectivos utilizados são conjunção (∧), negação (¬) e disjunção (∨). A negação da disjunção traduz semanticamente o operador `NOT IN` do SQL: ele rejeita o registro caso o status seja qualquer um dos valores listados.
- 
-As proposições $A$ e $B$ não podem ser simultaneamente verdadeiras no banco real, já que um ticket não assume dois estados ao mesmo tempo. Mesmo assim, a tabela verdade inclui essa linha para ficar completa do ponto de vista lógico.
+O conectivo utilizado é a conjunção (∧). A atualização só deve ocorrer quando as duas condições forem verdadeiras: o ticket precisa corresponder ao identificador informado e ainda precisa estar pendente.
  
 **Tabela verdade:**
  
 <p align="center">Quadro 43 - Tabela verdade da Consulta 2 (UPDATE).</p>
 
-| $P$ | $A$ | $B$ | $A \lor B$ | $\neg(A \lor B)$ | $P \land \neg(A \lor B)$ |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| F | F | F | F | V | **F** |
-| F | F | V | V | F | **F** |
-| F | V | F | V | F | **F** |
-| F | V | V | V | F | **F** |
-| V | F | F | F | V | **V** |
-| V | F | V | V | F | **F** |
-| V | V | F | V | F | **F** |
-| V | V | V | V | F | **F** |
+| $P$ | $S$ | $P \land S$ |
+|:---:|:---:|:---:|
+| F | F | **F** |
+| F | V | **F** |
+| V | F | **F** |
+| V | V | **V** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-O UPDATE só é aplicado na linha 5, em que o ticket identificado existe ($P$ = V) e seu status não é nem resolvido nem cancelado ($A$ = F e $B$ = F). Isso protege o banco contra a reabertura indevida de tickets já encerrados por meio dessa operação.
+O UPDATE só é aplicado na linha 4, em que o ticket identificado existe ($P$ = V) e ainda está pendente ($S$ = V). Isso impede que tickets já aprovados sejam reaprovados indevidamente.
  
 ---
 
@@ -2958,20 +2847,24 @@ Apenas o par exato (linha 4) é removido. Quando algum dos identificadores não 
 
 #### Consulta 4: INSERT (registro de movimentação do rebanho)
  
-**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com os campos obrigatórios definidos no modelo físico. A consulta abaixo insere uma nova movimentação no estado inicial pendente, aguardando validação posterior pelo Supervisor (conforme o RF006). O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A inserção é validada automaticamente pelos CHECK constraints definidos no schema da tabela: `chk_causa_obito_obrigatoria`, que aplica a expressão lógica tipo `!= 'morte' OR causa_obito IS NOT NULL` (ou seja, se o tipo for morte, então causa_obito deve ser informado); e `chk_transferencia_campos_obrigatorios`, que aplica `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)` (ou seja, se o tipo for transferencia, então origem e destino devem ser informados). Caso essas condições não sejam satisfeitas pelos valores recebidos, o banco rejeita a inserção e retorna erro de violação de restrição.
+**Descrição:** A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
  
 **Código SQL:**
  
 ```sql
 INSERT INTO movimentacao 
-    (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, 
-     quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente', ?, NOW(), ?, ?);
+    (retiro_id, capataz_id, validado_por, tipo, status, sincronizado, data_criacao, estagio_vida, data_validacao) 
+VALUES (?, ?, NULL, ?, 'pendente', ?, NOW(), ?, NULL)
+RETURNING id;
+
+INSERT INTO movimentacao_transferencia
+    (movimentacao_id, origem, destino, quantidade)
+VALUES (?, ?, ?, ?);
 ```
  
-O INSERT não possui cláusula `WHERE`, mas é governado por dois `CHECK` constraints definidos no schema da tabela `movimentacao`. Cada constraint corresponde a uma expressão lógica que precisa ser verdadeira para que o banco aceite a inserção. Cada uma delas é analisada separadamente a seguir.
+O INSERT não possui cláusula `WHERE`, mas é precedido por validações de negócio na camada de serviço. Cada validação corresponde a uma expressão lógica que precisa ser verdadeira para que o backend envie a inserção ao banco. Duas dessas validações são analisadas separadamente a seguir.
  
-##### Restrição 1: `chk_causa_obito_obrigatoria`
+##### Validação 1: `causa_obito` obrigatória para morte
  
 **Regra:** `tipo != 'morte' OR causa_obito IS NOT NULL`
  
@@ -2982,7 +2875,7 @@ O INSERT não possui cláusula `WHERE`, mas é governado por dois `CHECK` constr
 
 **Expressão lógica proposicional:** $\neg M \lor C$
  
-Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, o constraint é escrito diretamente em SQL usando o operador `OR`.
+Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, essa regra é aplicada antes da inserção dos dados específicos na tabela `movimentacao_morte`.
  
 **Tabela verdade:**
  
@@ -2996,40 +2889,49 @@ Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressã
 | V | V | F | **V** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
-O banco rejeita a inserção apenas na linha 3, quando o tipo é "morte" mas a causa do óbito não foi informada. Nas demais combinações, a inserção é aceita.
+O backend bloqueia a inserção apenas na linha 3, quando o tipo é "morte" mas a causa do óbito não foi informada. Nas demais combinações, a inserção pode prosseguir.
 
-##### Restrição 2: `chk_transferencia_campos_obrigatorios`
+##### Validação 2: campos obrigatórios para transferência
  
-**Regra:** `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL)`
+**Regra:** `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL AND quantidade > 0)`
  
 **Proposições lógicas:**
  
 - $T$: o tipo da movimentação é "transferência" (`tipo = 'transferencia'`)
 - $O$: o retiro de origem foi informado (`origem IS NOT NULL`)
 - $D$: o retiro de destino foi informado (`destino IS NOT NULL`)
+- $Q$: a quantidade foi informada e é maior que zero (`quantidade > 0`)
 
-**Expressão lógica proposicional:** $\neg T \lor (O \land D)$
+**Expressão lógica proposicional:** $\neg T \lor (O \land D \land Q)$
  
-Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D)$, lida como "se o tipo for transferência, então origem **e** destino devem estar preenchidos".
+Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D \land Q)$, lida como "se o tipo for transferência, então origem, destino e quantidade devem estar preenchidos".
  
 **Tabela verdade:**
  
 <p align="center">Quadro 46 - Tabela verdade da Constraint 4.2.</p>
 
-| $T$ | $O$ | $D$ | $\neg T$ | $O \land D$ | $\neg T \lor (O \land D)$ |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| F | F | F | V | F | **V** |
-| F | F | V | V | F | **V** |
-| F | V | F | V | F | **V** |
-| F | V | V | V | V | **V** |
-| V | F | F | F | F | **F** |
-| V | F | V | F | F | **F** |
-| V | V | F | F | F | **F** |
-| V | V | V | F | V | **V** |
+| $T$ | $O$ | $D$ | $Q$ | $\neg T$ | $O \land D \land Q$ | $\neg T \lor (O \land D \land Q)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | F | V | F | **V** |
+| F | F | F | V | V | F | **V** |
+| F | F | V | F | V | F | **V** |
+| F | F | V | V | V | F | **V** |
+| F | V | F | F | V | F | **V** |
+| F | V | F | V | V | F | **V** |
+| F | V | V | F | V | F | **V** |
+| F | V | V | V | V | V | **V** |
+| V | F | F | F | F | F | **F** |
+| V | F | F | V | F | F | **F** |
+| V | F | V | F | F | F | **F** |
+| V | F | V | V | F | F | **F** |
+| V | V | F | F | F | F | **F** |
+| V | V | F | V | F | F | **F** |
+| V | V | V | F | F | F | **F** |
+| V | V | V | V | F | V | **V** |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-O banco rejeita a inserção nas linhas 5, 6 e 7, quando o tipo é "transferência" mas pelo menos um dos campos (origem ou destino) está vazio. Quando o tipo é transferência, o único cenário aceito é a linha 8, que exige ambos os campos preenchidos. Quando o tipo não é transferência (linhas 1 a 4), a constraint é satisfeita independentemente dos valores de origem e destino.
+O backend rejeita a inserção nas linhas em que o tipo é "transferência" mas pelo menos um dos campos obrigatórios (origem, destino ou quantidade) está ausente ou inválido. Quando o tipo é transferência, o único cenário aceito é a última linha, que exige todos os campos preenchidos corretamente. Quando o tipo não é transferência, essa validação específica não bloqueia o registro.
  
 ---
 #### Conclusão:
@@ -3041,20 +2943,20 @@ As quatro consultas escolhidas variam em vários aspectos: o tipo de operação 
 | Consulta | Operação | Conectivos | Padrão estrutural | Contexto operacional |
 |:---:|:---:|:---:|---|---|
 | 1 | SELECT | ∧ | Conjunção encadeada (5 condições) | Filtro de movimentações pelo Supervisor (RF009) |
-| 2 | UPDATE | ∧, ¬, ∨ | Conjunção com negação de disjunção (`NOT IN`) | Atribuição de chamado a Capataz (RF008) |
+| 2 | UPDATE | ∧ | Conjunção simples | Aprovação de ticket pelo Supervisor (RF008/RF006) |
 | 3 | DELETE | ∧ | Conjunção simples (2 condições) | Remoção de vínculo evidência-movimentação (suporte ao RF004) |
-| 4 (restrição 1) | INSERT (CHECK) | ¬, ∨ | Implicação na forma disjuntiva ($M \rightarrow C$) | Obrigatoriedade de causa em movimentação de morte (RN01) |
-| 4 (restrição 2) | INSERT (CHECK) | ¬, ∨, ∧ | Implicação com consequente conjuntivo ($T \rightarrow O \land D$) | Obrigatoriedade de origem e destino em transferência (RN01) |
+| 4 (validação 1) | INSERT | ¬, ∨ | Implicação na forma disjuntiva ($M \rightarrow C$) | Obrigatoriedade de causa em movimentação de morte (RN01) |
+| 4 (validação 2) | INSERT | ¬, ∨, ∧ | Implicação com consequente conjuntivo ($T \rightarrow O \land D \land Q$) | Obrigatoriedade de origem, destino e quantidade em transferência (RN01) |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 Em relação aos **tipos de operação**, o conjunto cobre as quatro operações relacionais fundamentais (SELECT, UPDATE, DELETE e INSERT), evitando que o artefato fique limitado a um único padrão de manipulação de dados. Cada operação se encaixa em um momento diferente do ciclo de vida dos registros no sistema.
  
-Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 combina conjunção com a negação de uma disjunção, que é a tradução semântica do operador `NOT IN`; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
+Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 utiliza uma conjunção simples para garantir que apenas tickets pendentes sejam aprovados; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
  
-Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, atualização do ciclo de vida de um chamado, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não fica só no plano formal, ela está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
+Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, aprovação de ticket pelo Supervisor, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não fica só no plano formal, ela está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
  
-No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: filtros restritivos usam só conjunção, validações de pertinência usam negação de disjunção (`NOT IN`), e regras de domínio (CHECK constraints) usam implicação. Ou seja, a lógica proposicional aparece naturalmente na hora de escrever as regras de negócio em SQL.
+No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: filtros restritivos usam conjunções encadeadas, aprovações usam conjunções simples sobre identidade e status, e regras de domínio usam implicações aplicadas antes da persistência. Ou seja, a lógica proposicional aparece naturalmente na hora de escrever e validar as regras de negócio do backend.
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 

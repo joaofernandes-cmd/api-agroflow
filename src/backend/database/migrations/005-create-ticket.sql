@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS ticket (
   localizacao VARCHAR(255) NOT NULL,
   status ticket_status NOT NULL,
   atribuido_a UUID NULL,
+  aprovado_por UUID NULL,
   descricao VARCHAR(255) NOT NULL,
   prioridade ticket_prioridade NOT NULL,
   sincronizado BOOLEAN NOT NULL DEFAULT false,
@@ -24,3 +25,7 @@ ALTER TABLE ticket
 ALTER TABLE ticket
   ADD CONSTRAINT ticket_atribuido_a_foreign
   FOREIGN KEY (atribuido_a) REFERENCES usuario(id);
+
+ALTER TABLE ticket
+  ADD CONSTRAINT ticket_aprovado_por_foreign
+  FOREIGN KEY (aprovado_por) REFERENCES usuario(id);

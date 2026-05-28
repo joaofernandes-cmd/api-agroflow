@@ -6,11 +6,10 @@ const validacaoRoutes = Router()
 // Verifica se um usuário tem permissão para validar registros
 validacaoRoutes.post('/permissao', ValidacaoController.podeValidar)
 
-// Aprovação e rejeição de movimentações pendentes
-validacaoRoutes.patch('/movimentacoes/:id/aprovar', ValidacaoController.aprovarMovimentacao)
-validacaoRoutes.patch('/movimentacoes/:id/rejeitar', ValidacaoController.rejeitarMovimentacao)
+// Validação de movimentações pendentes
+validacaoRoutes.patch('/movimentacoes/:id/validar', ValidacaoController.validarMovimentacao)
 
-// Aprovação de tickets e tarefas pendentes (sem rejeição)
+// Aprovação de tickets e tarefas pendentes
 validacaoRoutes.patch('/tickets/:id/aprovar', ValidacaoController.aprovarTicket)
 validacaoRoutes.patch('/tarefas/:id/aprovar', ValidacaoController.aprovarTarefa)
 

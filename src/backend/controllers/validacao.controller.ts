@@ -25,8 +25,8 @@ export const ValidacaoController = {
     }
   },
 
-  // RN06: Aprova uma movimentação pendente — apenas supervisor
-  async aprovarMovimentacao(req: Request, res: Response) {
+  // RN06: Valida uma movimentação pendente — apenas supervisor
+  async validarMovimentacao(req: Request, res: Response) {
     try {
       const movimentacaoId = parseNumber(req.params.id)
       const { supervisorId, supervisorCargo } = req.body
@@ -41,7 +41,7 @@ export const ValidacaoController = {
         })
       }
 
-      const resultado = await ValidacaoService.aprovarMovimentacao(
+      const resultado = await ValidacaoService.validarMovimentacao(
         movimentacaoId,
         String(supervisorId),
         String(supervisorCargo)
@@ -50,37 +50,7 @@ export const ValidacaoController = {
       return res.status(resultado.sucesso ? 200 : 400).json(resultado)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao aprovar movimentação',
-      })
-    }
-  },
-
-  // RN06: Rejeita uma movimentação pendente — apenas supervisor
-  async rejeitarMovimentacao(req: Request, res: Response) {
-    try {
-      const movimentacaoId = parseNumber(req.params.id)
-      const { supervisorId, supervisorCargo } = req.body
-
-      if (movimentacaoId === null) {
-        return res.status(400).json({ error: 'ID inválido' })
-      }
-
-      if (!supervisorId || !supervisorCargo) {
-        return res.status(400).json({
-          error: 'Campos "supervisorId" e "supervisorCargo" são obrigatórios',
-        })
-      }
-
-      const resultado = await ValidacaoService.rejeitarMovimentacao(
-        movimentacaoId,
-        String(supervisorId),
-        String(supervisorCargo)
-      )
-
-      return res.status(resultado.sucesso ? 200 : 400).json(resultado)
-    } catch (error) {
-      return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao rejeitar movimentação',
+        error: error instanceof Error ? error.message : 'Erro ao validar movimentação',
       })
     }
   },

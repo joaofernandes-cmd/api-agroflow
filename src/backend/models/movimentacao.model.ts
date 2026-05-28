@@ -2,7 +2,7 @@ import { UUID } from './uuid'
 
 export type MovimentacaoTipo = 'nascimento' | 'morte' | 'transferencia' | 'compra' | 'venda' | 'outros'
 
-export type MovimentacaoStatus = 'pendente' | 'aprovado' | 'rejeitado'
+export type MovimentacaoStatus = 'pendente' | 'validado'
 
 export type RetiroNome = 'Acurizal' | 'Aroeira' | 'Baia Bonita' | 'Bodoquena 1' | 'Bonoquena 2' | 'Boqueirão' | 'Caieira' | 'CMB' | 'Confinamento' | 'Cristo' | 'Morada Nova' | 'Morro Azul' | 'Puga' | 'São Miguel' | 'Vista Alegre'
 

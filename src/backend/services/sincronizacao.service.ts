@@ -25,7 +25,7 @@ export const SincronizacaoService = {
 
   // RN03: Sincronizar dados pendentes (sincronizado = false) com o servidor
   // Fluxo: offline (sincronizado=false) → detecta internet → envia → servidor marca sincronizado=true
-  // A validação (status=aprovado) acontece depois pelo Supervisor
+  // A validação (status=validado) acontece depois pelo Supervisor
   async sincronizar(): Promise<{ sucesso: boolean; registrosSincronizados: number; erros: string[] }> {
     const erros: string[] = []
     let registrosSincronizados = 0
@@ -104,19 +104,19 @@ export const SincronizacaoService = {
   },
 
   // RN07: Buscar movimentações sincronizadas para relatórios
-  // Retorna apenas registros com sincronizado=true e status=aprovado
+  // Retorna apenas registros com sincronizado=true e status=validado
   async buscarMovimentacoesParaRelatrio(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
       const sincronizado = m.sincronizado === true
-      const aprovado = m.status === 'aprovado'
+      const validado = m.status === 'validado'
 
       if (retiroId && m.retiro_id !== retiroId) {
         return false
       }
 
-      return sincronizado && aprovado
+      return sincronizado && validado
     })
   },
 

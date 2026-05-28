@@ -5,13 +5,13 @@ import { Tarefa } from '../models/tarefa.model'
 // RN07: Relatórios com apenas dados sincronizados (sincronizado=true) e validados
 export const RelatorioService = {
   // RN07: Buscar dados de movimentações para relatório
-  // Apenas registros sincronizados (enviados pro servidor) + aprovados (validados pelo Supervisor)
+  // Apenas registros sincronizados (enviados pro servidor) + validados pelo Supervisor
   async buscarDadosMovimentacoes(
     dataInicio?: Date,
     dataFim?: Date,
     retiroId?: number
   ): Promise<Movimentacao[]> {
-    // Busca movimentações que já foram sincronizadas e aprovadas
+    // Busca movimentações que já foram sincronizadas e validadas
     let movimentacoes = await SincronizacaoService.buscarMovimentacoesParaRelatrio(retiroId)
 
     // RN07: Filtra por período se informado (para relatórios semanais/mensais)
@@ -37,13 +37,13 @@ export const RelatorioService = {
   },
 
   // RN07: Buscar dados de tarefas para relatório
-  // Apenas registros sincronizados (enviados pro servidor) + concluídos
+  // Apenas registros sincronizados (enviados pro servidor) + aprovados
   async buscarDadosTarefas(
     dataInicio?: Date,
     dataFim?: Date,
     retiroId?: number
   ): Promise<Tarefa[]> {
-    // Busca tarefas que já foram sincronizadas e concluídas
+    // Busca tarefas que já foram sincronizadas e aprovadas
     let tarefas = await SincronizacaoService.buscarTarefasParaRelatrio(retiroId)
 
     // RN07: Filtra por período se informado

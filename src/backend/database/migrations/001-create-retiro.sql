@@ -20,7 +20,7 @@ END $$;
 
 DO $$
 BEGIN
-  CREATE TYPE tarefa_status AS ENUM ('pendente', 'em_andamento', 'concluida', 'cancelada');
+  CREATE TYPE tarefa_status AS ENUM ('pendente', 'aprovado');
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 
@@ -39,7 +39,7 @@ END $$;
 
 DO $$
 BEGIN
-  CREATE TYPE ticket_status AS ENUM ('aberto', 'em_atendimento', 'resolvido', 'cancelado');
+  CREATE TYPE ticket_status AS ENUM ('pendente', 'aprovado');
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 
@@ -64,7 +64,7 @@ END $$;
 
 DO $$
 BEGIN
-  CREATE TYPE movimentacao_status AS ENUM ('pendente', 'aprovado', 'rejeitado');
+  CREATE TYPE movimentacao_status AS ENUM ('pendente', 'validado');
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 

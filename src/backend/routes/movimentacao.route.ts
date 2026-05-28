@@ -23,10 +23,13 @@ movimentacaoRoutes.get('/', listarOuFiltrar)
 // Consulta movimentações ainda aguardando validação.
 movimentacaoRoutes.get('/pendentes', MovimentacaoController.listarPendentes)
 
+// Dados consolidados para dashboard.
+movimentacaoRoutes.get('/dashboard', MovimentacaoController.buscarParaDashboard)
+movimentacaoRoutes.get('/contagem/tipo', MovimentacaoController.contarPorTipo)
+
 // Rotas por ID ficam por último para não capturar rotas específicas.
 movimentacaoRoutes.get('/:id', MovimentacaoController.buscarPorId)
 movimentacaoRoutes.patch('/:id', MovimentacaoController.atualizar)
-movimentacaoRoutes.patch('/:id/validacao', MovimentacaoController.validar)
 movimentacaoRoutes.patch('/:id/sincronizar', MovimentacaoController.sincronizar)
 movimentacaoRoutes.delete('/:id', MovimentacaoController.remover)
 
