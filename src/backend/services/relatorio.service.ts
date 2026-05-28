@@ -83,7 +83,7 @@ export const RelatorioService = {
       'Retiro': m.retiro_id,
       'Origem': m.origem || '-',
       'Destino': m.destino || '-',
-      'Quantidade': m.quantidade,
+      'Quantidade': m.quantidade ?? '-',
       'Estágio de Vida': m.estagio_vida,
       'Causa do Óbito': m.causa_obito || '-',
     }))

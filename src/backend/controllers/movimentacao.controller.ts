@@ -33,14 +33,19 @@ export const MovimentacaoController = {
       const { retiro_id, capataz_id, tipo, origem, destino, quantidade, sincronizado, causa_obito, estagio_vida } =
         req.body
 
-      if (!retiro_id || !capataz_id || !tipo || !origem || !destino || !quantidade || !estagio_vida) {
+      if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
       const retiroId = parseNumber(retiro_id)
+      const quantidadeNumber = quantidade === undefined || quantidade === null ? null : parseNumber(quantidade)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      if (quantidadeNumber === null && quantidade !== undefined && quantidade !== null) {
+        return res.status(400).json({ error: 'Quantidade inválida' })
       }
 
       const movimentacao = await MovimentacaoService.criar({
@@ -49,7 +54,7 @@ export const MovimentacaoController = {
         tipo,
         origem,
         destino,
-        quantidade,
+        quantidade: quantidadeNumber,
         sincronizado,
         causa_obito,
         estagio_vida,
