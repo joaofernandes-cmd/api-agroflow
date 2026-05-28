@@ -1941,6 +1941,54 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
+----
+
+#### 10. Dashboard de Indicadores (`/dashboard/indicadores`)
+ 
+**Fluxo Principal**
+ 
+• O processo inicia quando o gerente acessa o painel de indicadores da fazenda na interface da aplicação.
+ 
+• A interface envia uma requisição `GET` para o endpoint `/dashboard/indicadores`, encaminhando o pedido ao *ControladorDashboard*.
+ 
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar o dashboard consolidado.
+ 
+• Caso o perfil seja válido, o controlador encaminha a requisição ao *ServicoDashboard*, responsável por consolidar os indicadores operacionais.
+ 
+• O serviço solicita ao *RepositorioMovimentacao* o total de movimentações aprovadas e sincronizadas, segmentadas por tipo (nascimentos, mortes, transferências) e por retiro.
+ 
+• Em seguida, o serviço solicita ao *RepositorioTarefa* o total de tarefas pendentes e ao *RepositorioTicket* o total de tickets abertos, ambos segmentados por retiro.
+ 
+• Após receber todos os dados, o *ServicoDashboard* consolida os indicadores calculando totais individuais por retiro e um totalizador geral, conforme determinado pela RN10.
+ 
+• Por fim, o controlador responde à interface com status `200 – Sucesso`, exibindo ao gerente o dashboard atualizado com os indicadores consolidados.
+ 
+ 
+**Fluxo Alternativo - Usuário sem permissão**
+ 
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
+ 
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorDashboard* retorna uma resposta `403 – Proibido`.
+ 
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para acessar o dashboard.
+ 
+ 
+**Fluxo Alternativo - Sem dados disponíveis**
+ 
+• Caso não existam registros aprovados e sincronizados no banco, o *ServicoDashboard* retorna indicadores zerados ao controlador.
+ 
+• Nesse cenário, o sistema responde à interface com status `200 – Sucesso`, exibindo o dashboard com valores zerados e uma mensagem informativa indicando ausência de dados consolidados no período.
+ 
+ 
+<div align="center">
+<p align="center">Figura 19 - Diagrama Sequencial (RF010)</p>
+<p align="center">
+<img src="others/assets/diagrama-sequencial-rf010.png" alt="Diagrama Sequencial RF010" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 ----
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BRPEC.
