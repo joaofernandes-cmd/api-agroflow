@@ -1528,11 +1528,12 @@ O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views (19 telas) compõem a interface do usuário; os Controllers (14 controladores) orquestram as requisições HTTP; os Services (14 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (14 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (15 entidades de domínio) representam os objetos do sistema, persistidos em um banco PostgreSQL com 12 entidades, herança e 18 relacionamentos.
 
+[Protótipo no Figma](https://www.figma.com/design/RGkg3OaXZglm57yWaLhb6u/Diagrama-Arquitetural?node-id=0-1)
 
 <div align="center">
-<p align="center">Figura 10 - Diagrama Arquiteturial </p>
+<p align="center">Figura 10 - Diagrama Arquitetural </p>
 <p align="center">
-<img src="outros/assets/diagrama-arquiteturial.jpg" alt="Diagrama Sequencial RF005" border="0"></a>
+<img src="outros/assets/diagrama-arquitetural.png" alt="Diagrama Arquitetural" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
