@@ -3,6 +3,11 @@ import { TicketService } from '../services/ticket.service'
 import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
 
+function parseNumber(value: unknown): number | null {
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 export const TicketController = {
   async listarTodos(req: Request, res: Response) {
     try {
@@ -15,7 +20,12 @@ export const TicketController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const ticket = await TicketService.buscarPorId(id)
 
       if (!ticket) {
@@ -44,9 +54,15 @@ export const TicketController = {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
+      const retiroId = parseNumber(retiro_id)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const ticket = await TicketService.criar(
         {
-          retiro_id,
+          retiro_id: retiroId,
           categoria,
           localizacao,
           descricao,
@@ -67,7 +83,11 @@ export const TicketController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.query.status ?? '')
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
 
       if (!status) {
         return res.status(400).json({ error: 'Campo "status" é obrigatório' })
@@ -85,7 +105,11 @@ export const TicketController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.query.prioridade ?? '')
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
 
       if (!prioridade) {
         return res.status(400).json({ error: 'Campo "prioridade" é obrigatório' })
@@ -103,7 +127,11 @@ export const TicketController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.query.categoria ?? '')
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
 
       if (!categoria) {
         return res.status(400).json({ error: 'Campo "categoria" é obrigatório' })
@@ -120,7 +148,11 @@ export const TicketController = {
 
   async listarAbertos(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
       const tickets = await TicketService.listarAbertos(retiroId)
       return res.status(200).json(tickets)
     } catch (error) {
@@ -130,7 +162,11 @@ export const TicketController = {
 
   async contarPorPrioridade(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
       const contagem = await TicketService.contarPorPrioridade(retiroId)
       return res.status(200).json(contagem)
     } catch (error) {
@@ -140,8 +176,12 @@ export const TicketController = {
 
   async atualizarStatus(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
       const { novoStatus } = req.body
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
 
       if (!novoStatus) {
         return res.status(400).json({ error: 'Campo "novoStatus" é obrigatório' })
@@ -163,8 +203,12 @@ export const TicketController = {
 
   async alterarPrioridade(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
       const { novaPrioridade, usuarioResponsavel } = req.body
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
 
       if (!novaPrioridade || !usuarioResponsavel) {
         return res.status(400).json({ error: 'Campos "novaPrioridade" e "usuarioResponsavel" são obrigatórios' })
@@ -190,8 +234,12 @@ export const TicketController = {
 
   async atribuirA(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
       const { usuarioId } = req.body
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
 
       if (!usuarioId) {
         return res.status(400).json({ error: 'Campo "usuarioId" é obrigatório' })

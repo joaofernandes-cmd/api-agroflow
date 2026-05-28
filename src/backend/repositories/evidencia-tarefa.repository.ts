@@ -14,7 +14,7 @@ export const EvidenciaTarefaRepository = {
     },
 
     // Busca uma evidência de tarefa pela chave composta e retorna null se não encontrar
-    async findById(evidencia_id: string, tarefa_id: string): Promise<EvidenciaTarefa | null> {
+    async findById(evidencia_id: number, tarefa_id: number): Promise<EvidenciaTarefa | null> {
         const evidenciaTarefa = await sql<EvidenciaTarefa[]>`
             SELECT evidencia_id, tarefa_id
             FROM evidencia_tarefa

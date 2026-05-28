@@ -35,7 +35,7 @@ export const UsuarioService = {
   },
 
   // Listar usuários por retiro
-  async listarPorRetiro(retiroId: string): Promise<Usuario[]> {
+  async listarPorRetiro(retiroId: number): Promise<Usuario[]> {
     const usuarios = await UsuarioRepository.findAll()
     return usuarios.filter(u => u.retiro_id === retiroId)
   },

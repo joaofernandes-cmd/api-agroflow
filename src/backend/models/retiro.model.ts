@@ -1,5 +1,5 @@
 export interface Retiro {
-  id: string
+  id: number
   nome: string
 }
 

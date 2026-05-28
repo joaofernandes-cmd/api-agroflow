@@ -1,7 +1,7 @@
 export type TipoEvidencia = 'foto' | 'audio' | 'mensagem'
 
 export interface Evidencia {
-  id: string
+  id: number
   usuario_id: string
   tipo: TipoEvidencia
   data_criacao: Date

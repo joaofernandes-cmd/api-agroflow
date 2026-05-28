@@ -14,7 +14,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Busca uma evidência de mensagem pelo id da evidência e retorna null se não encontrar
-    async findById(evidencia_id: string): Promise<EvidenciaMensagem | null> {
+    async findById(evidencia_id: number): Promise<EvidenciaMensagem | null> {
         const evidenciaMensagem = await sql<EvidenciaMensagem[]>`
             SELECT evidencia_id, conteudo
             FROM evidencia_mensagem
@@ -37,7 +37,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Atualiza uma evidência de mensagem existente
-    async update(evidencia_id: string, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
+    async update(evidencia_id: number, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
         const [updated] = await sql<EvidenciaMensagem[]>`
             UPDATE evidencia_mensagem
             SET
@@ -50,7 +50,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Remove uma evidência de mensagem pelo id da evidência
-    async delete(evidencia_id: string): Promise<void> {
+    async delete(evidencia_id: number): Promise<void> {
         await sql`
             DELETE FROM evidencia_mensagem
             WHERE evidencia_id = ${evidencia_id}

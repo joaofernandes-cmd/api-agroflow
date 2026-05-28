@@ -39,14 +39,14 @@ export const MovimentacaoService = {
       ...dados,
       status: 'pendente',
       sincronizado: dados.sincronizado ?? false,
-      validado_por: '',
+      validado_por: null,
     } as MovimentacaoInput)
 
     return movimentacao
   },
 
   // RN06: Apenas Supervisor pode validar/aprovar movimentações
-  async validar(id: string, usuario: Usuario, aprovado: boolean, motivo_rejeicao?: string): Promise<Movimentacao | null> {
+  async validar(id: number, usuario: Usuario, aprovado: boolean, motivo_rejeicao?: string): Promise<Movimentacao | null> {
     if (!UsuarioService.podeValidar(usuario)) {
       throw new Error('Apenas Supervisores podem validar movimentações')
     }
@@ -67,7 +67,7 @@ export const MovimentacaoService = {
   // RN09: Filtrar movimentações por tipo e status
   // Permite filtro múltiplo para tipo e status, apenas um retiro por vez
   async filtrar(
-    retiroId: string,
+    retiroId: number,
     tipos?: MovimentacaoTipo[],
     status?: MovimentacaoStatus[]
   ): Promise<Movimentacao[]> {
@@ -94,7 +94,7 @@ export const MovimentacaoService = {
   },
 
   // RN07: Relatório usa apenas dados sincronizados (sincronizado = true)
-  async buscarParaRelatorio(retiroId?: string): Promise<Movimentacao[]> {
+  async buscarParaRelatorio(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
@@ -118,7 +118,7 @@ export const MovimentacaoService = {
   },
 
   // RN10: Buscar movimentações para dashboard (apenas aprovadas e sincronizadas)
-  async buscarParaDashboard(retiroId?: string): Promise<Movimentacao[]> {
+  async buscarParaDashboard(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
@@ -142,7 +142,7 @@ export const MovimentacaoService = {
   },
 
   // RN03: Sincronizar movimentações offline (flag sincronizado = false)
-  async sincronizar(movimentacaoId: string): Promise<Movimentacao | null> {
+  async sincronizar(movimentacaoId: number): Promise<Movimentacao | null> {
     const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
 
     if (!movimentacao) {
@@ -156,7 +156,7 @@ export const MovimentacaoService = {
   },
 
   // Buscar movimentação por ID
-  async buscarPorId(id: string): Promise<Movimentacao | null> {
+  async buscarPorId(id: number): Promise<Movimentacao | null> {
     return MovimentacaoRepository.findById(id)
   },
 
@@ -166,7 +166,7 @@ export const MovimentacaoService = {
   },
 
   // Listar movimentações pendentes de validação
-  async listarPendentes(retiroId?: string): Promise<Movimentacao[]> {
+  async listarPendentes(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
@@ -183,7 +183,7 @@ export const MovimentacaoService = {
   },
 
   // Contar movimentações por tipo (para dashboard)
-  async contarPorTipo(retiroId?: string): Promise<Record<MovimentacaoTipo, number>> {
+  async contarPorTipo(retiroId?: number): Promise<Record<MovimentacaoTipo, number>> {
     const movimentacoes = await this.buscarParaDashboard(retiroId)
 
     const contagem: Record<MovimentacaoTipo, number> = {
@@ -203,7 +203,7 @@ export const MovimentacaoService = {
   },
 
   // Atualizar movimentação
-  async atualizar(id: string, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
+  async atualizar(id: number, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     // Se atualizando campos críticos, revalidar
     if (dados.tipo || dados.origem || dados.destino || dados.quantidade || dados.estagio_vida) {
       const movimentacaoAtual = await MovimentacaoRepository.findById(id)
@@ -223,7 +223,7 @@ export const MovimentacaoService = {
   },
 
   // Remover movimentação
-  async remover(id: string): Promise<void> {
+  async remover(id: number): Promise<void> {
     await MovimentacaoRepository.delete(id)
   },
 }

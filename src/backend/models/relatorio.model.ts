@@ -1,9 +1,9 @@
 export type TipoRelatorio = 'movimentacao' | 'tarefas' | 'tickets' | 'consolidado'
 
 export interface Relatorio {
-  id: string
+  id: number
   gerado_por: string
-  retiro_id: string
+  retiro_id: number
   tipo: TipoRelatorio
   data_inicio: Date
   data_fim: Date
@@ -13,7 +13,7 @@ export interface Relatorio {
 
 export interface RelatorioInput {
   gerado_por: string
-  retiro_id: string
+  retiro_id: number
   tipo: TipoRelatorio
   data_inicio: Date
   data_fim: Date

@@ -53,7 +53,7 @@ export const TarefaService = {
 
 
   // RN10: Buscar tarefas para dashboard (apenas concluídas)
-  async buscarParaDashboard(retiroId?: string): Promise<Tarefa[]> {
+  async buscarParaDashboard(retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.findAll()
 
@@ -75,7 +75,7 @@ export const TarefaService = {
 
 
   // Listar tarefas filtradas por status e opcionalmente por retiro
-  async listarPorStatus(status: TarefaStatus, retiroId?: string): Promise<Tarefa[]> {
+  async listarPorStatus(status: TarefaStatus, retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.findAll()
 
@@ -105,7 +105,7 @@ export const TarefaService = {
 
 
   // Listar tarefas filtradas por prioridade e opcionalmente por retiro
-  async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: string): Promise<Tarefa[]> {
+  async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.findAll()
 
@@ -126,7 +126,7 @@ export const TarefaService = {
     })
   },
   // Listar tarefas filtradas por categoria e opcionalmente por retiro
-  async listarPorCategoria(categoria: string, retiroId?: string): Promise<Tarefa[]> {
+  async listarPorCategoria(categoria: string, retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.findAll()
 
@@ -149,7 +149,7 @@ export const TarefaService = {
 
 
   // Buscar uma tarefa específica pelo ID
-  async buscarPorId(id: string): Promise<Tarefa | null> {
+  async buscarPorId(id: number): Promise<Tarefa | null> {
     // Retorna a tarefa ou null se não encontrar
     return TarefaRepository.findById(id)
   },
@@ -163,7 +163,7 @@ export const TarefaService = {
 
 
   // Atualizar apenas o status de uma tarefa
-  async atualizarStatus(id: string, novoStatus: TarefaStatus): Promise<Tarefa | null> {
+  async atualizarStatus(id: number, novoStatus: TarefaStatus): Promise<Tarefa | null> {
     // Busca a tarefa atual no banco
     const tarefa = await TarefaRepository.findById(id)
 
@@ -183,7 +183,7 @@ export const TarefaService = {
 
   // Atualizar tarefa com validação de campos obrigatórios
   // Campos que NÃO podem ser alterados: data_criacao, criada_por, retiro_id, status
-  async atualizar(id: string, dados: Partial<Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'retiro_id' | 'status'>>): Promise<Tarefa | null> {
+  async atualizar(id: number, dados: Partial<Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'retiro_id' | 'status'>>): Promise<Tarefa | null> {
     // Busca a tarefa atual no banco
     const tarefaAtual = await TarefaRepository.findById(id)
     // Se tarefa não existe, retorna null
@@ -210,7 +210,7 @@ export const TarefaService = {
 
 
   // Contar quantas tarefas existem em cada status
-  async contarPorStatus(retiroId?: string): Promise<Record<TarefaStatus, number>> {
+  async contarPorStatus(retiroId?: number): Promise<Record<TarefaStatus, number>> {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.findAll()
 
@@ -236,7 +236,7 @@ export const TarefaService = {
 
 
   // Remover uma tarefa do banco de dados
-  async remover(id: string): Promise<void> {
+  async remover(id: number): Promise<void> {
     // Deleta a tarefa do banco de dados permanentemente
     await TarefaRepository.delete(id)
   },

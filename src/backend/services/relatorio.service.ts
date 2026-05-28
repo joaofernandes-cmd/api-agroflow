@@ -9,7 +9,7 @@ export const RelatorioService = {
   async buscarDadosMovimentacoes(
     dataInicio?: Date,
     dataFim?: Date,
-    retiroId?: string
+    retiroId?: number
   ): Promise<Movimentacao[]> {
     // Busca movimentações que já foram sincronizadas e aprovadas
     let movimentacoes = await SincronizacaoService.buscarMovimentacoesParaRelatrio(retiroId)
@@ -41,7 +41,7 @@ export const RelatorioService = {
   async buscarDadosTarefas(
     dataInicio?: Date,
     dataFim?: Date,
-    retiroId?: string
+    retiroId?: number
   ): Promise<Tarefa[]> {
     // Busca tarefas que já foram sincronizadas e concluídas
     let tarefas = await SincronizacaoService.buscarTarefasParaRelatrio(retiroId)
@@ -71,7 +71,7 @@ export const RelatorioService = {
   async formatarRelatorioMovimentacoes(
     dataInicio?: Date,
     dataFim?: Date,
-    retiroId?: string
+    retiroId?: number
   ): Promise<Array<Record<string, string | number>>> {
     // Busca dados sincronizados e validados
     const movimentacoes = await RelatorioService.buscarDadosMovimentacoes(dataInicio, dataFim, retiroId)
@@ -91,7 +91,7 @@ export const RelatorioService = {
 
   // RN07: Gerar relatório semanal
   // Exporta movimentações dos últimos 7 dias em formato de planilha
-  async gerarRelatorioSemanal(retiroId?: string): Promise<Array<Record<string, string | number>>> {
+  async gerarRelatorioSemanal(retiroId?: number): Promise<Array<Record<string, string | number>>> {
     const dataFim = new Date()
     const dataInicio = new Date()
     dataInicio.setDate(dataInicio.getDate() - 7)
@@ -101,7 +101,7 @@ export const RelatorioService = {
 
   // RN07: Gerar relatório mensal
   // Exporta movimentações dos últimos 30 dias em formato de planilha
-  async gerarRelatorioMensal(retiroId?: string): Promise<Array<Record<string, string | number>>> {
+  async gerarRelatorioMensal(retiroId?: number): Promise<Array<Record<string, string | number>>> {
     const dataFim = new Date()
     const dataInicio = new Date()
     dataInicio.setDate(dataInicio.getDate() - 30)

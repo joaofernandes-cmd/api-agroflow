@@ -49,7 +49,7 @@ export const TicketService = {
       status: 'aberto',
       data_criacao: new Date(),
       data_realizado: new Date(),
-      atribuido_a: '',
+      atribuido_a: null,
     } as TicketInput)
 
     return ticket
@@ -57,7 +57,7 @@ export const TicketService = {
 
   // RN11: Alterar prioridade de um ticket
   // A alteração deve ser registrada no log de auditoria (timestamp + usuário)
-  async alterarPrioridade(id: string, novaPrioridade: TicketPrioridade, usuarioResponsavel: Usuario): Promise<Ticket | null> {
+  async alterarPrioridade(id: number, novaPrioridade: TicketPrioridade, usuarioResponsavel: Usuario): Promise<Ticket | null> {
     // Busca ticket atual
     const ticket = await TicketRepository.findById(id)
 
@@ -79,7 +79,7 @@ export const TicketService = {
   },
 
   // Listar tickets por status
-  async listarPorStatus(status: TicketStatus, retiroId?: string): Promise<Ticket[]> {
+  async listarPorStatus(status: TicketStatus, retiroId?: number): Promise<Ticket[]> {
     // Busca todos os tickets do banco
     const tickets = await TicketRepository.findAll()
 
@@ -101,7 +101,7 @@ export const TicketService = {
   },
 
   // Listar tickets por prioridade
-  async listarPorPrioridade(prioridade: TicketPrioridade, retiroId?: string): Promise<Ticket[]> {
+  async listarPorPrioridade(prioridade: TicketPrioridade, retiroId?: number): Promise<Ticket[]> {
     // Busca todos os tickets do banco
     const tickets = await TicketRepository.findAll()
 
@@ -123,7 +123,7 @@ export const TicketService = {
   },
 
   // Listar tickets por categoria
-  async listarPorCategoria(categoria: TicketCategoria, retiroId?: string): Promise<Ticket[]> {
+  async listarPorCategoria(categoria: TicketCategoria, retiroId?: number): Promise<Ticket[]> {
     // Busca todos os tickets do banco
     const tickets = await TicketRepository.findAll()
 
@@ -145,7 +145,7 @@ export const TicketService = {
   },
 
   // Atualizar status do ticket
-  async atualizarStatus(id: string, novoStatus: TicketStatus): Promise<Ticket | null> {
+  async atualizarStatus(id: number, novoStatus: TicketStatus): Promise<Ticket | null> {
     // Busca o ticket atual no banco
     const ticket = await TicketRepository.findById(id)
 
@@ -162,7 +162,7 @@ export const TicketService = {
   },
 
   // Atribuir ticket a um usuário
-  async atribuirA(id: string, usuarioId: string): Promise<Ticket | null> {
+  async atribuirA(id: number, usuarioId: string): Promise<Ticket | null> {
     // Busca o ticket atual no banco
     const ticket = await TicketRepository.findById(id)
 
@@ -179,7 +179,7 @@ export const TicketService = {
   },
 
   // Buscar ticket por ID
-  async buscarPorId(id: string): Promise<Ticket | null> {
+  async buscarPorId(id: number): Promise<Ticket | null> {
     // Retorna o ticket ou null se não encontrar
     return TicketRepository.findById(id)
   },
@@ -191,7 +191,7 @@ export const TicketService = {
   },
 
   // Listar tickets abertos
-  async listarAbertos(retiroId?: string): Promise<Ticket[]> {
+  async listarAbertos(retiroId?: number): Promise<Ticket[]> {
     // Busca todos os tickets do banco
     const tickets = await TicketRepository.findAll()
 
@@ -211,7 +211,7 @@ export const TicketService = {
   },
 
   // Contar tickets por prioridade
-  async contarPorPrioridade(retiroId?: string): Promise<Record<TicketPrioridade, number>> {
+  async contarPorPrioridade(retiroId?: number): Promise<Record<TicketPrioridade, number>> {
     // Busca todos os tickets do banco
     const tickets = await TicketRepository.findAll()
 

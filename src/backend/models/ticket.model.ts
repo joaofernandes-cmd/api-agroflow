@@ -5,13 +5,13 @@ export type TicketStatus = 'aberto' | 'em_atendimento' | 'resolvido' | 'cancelad
 export type TicketPrioridade = 'alta' | 'media' | 'baixa'
 
 export interface Ticket {
-  id: string
-  retiro_id: string
+  id: number
+  retiro_id: number
   aberto_por: string
   categoria: TicketCategoria
   localizacao: string
   status: TicketStatus
-  atribuido_a: string
+  atribuido_a: string | null
   descricao: string
   prioridade: TicketPrioridade
   data_criacao: Date
@@ -20,12 +20,12 @@ export interface Ticket {
 }
 
 export interface TicketInput {
-  retiro_id: string
+  retiro_id: number
   aberto_por: string
   categoria: TicketCategoria
   localizacao: string
   status: TicketStatus
-  atribuido_a: string
+  atribuido_a: string | null
   descricao: string
   prioridade: TicketPrioridade
   data_criacao?: Date

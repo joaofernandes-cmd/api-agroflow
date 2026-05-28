@@ -15,7 +15,7 @@ export const ValidacaoService = {
   // RN06: Aprovar movimentação (altera status de pendente → aprovado)
   // Apenas Supervisor pode fazer isso
   async aprovarMovimentacao(
-    movimentacaoId: string,
+    movimentacaoId: number,
     supervisorId: string,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; movimentacao?: Movimentacao }> {
@@ -66,7 +66,7 @@ export const ValidacaoService = {
   // RN06: Rejeitar movimentação (altera status de pendente → rejeitado)
   // Apenas Supervisor pode fazer isso
   async rejeitarMovimentacao(
-    movimentacaoId: string,
+    movimentacaoId: number,
     supervisorId: string,
     supervisorCargo: string,
     motivo: string
@@ -117,7 +117,7 @@ export const ValidacaoService = {
   // RN06: Aprovar tarefa (altera status de pendente → concluida)
   // Apenas Supervisor pode fazer isso
   async aprovarTarefa(
-    tarefaId: string,
+    tarefaId: number,
     supervisorId: string,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; tarefa?: Tarefa }> {
@@ -163,7 +163,7 @@ export const ValidacaoService = {
   // RN06: Rejeitar tarefa (altera status para cancelada)
   // Apenas Supervisor pode fazer isso
   async rejeitarTarefa(
-    tarefaId: string,
+    tarefaId: number,
     supervisorId: string,
     supervisorCargo: string,
     motivo: string

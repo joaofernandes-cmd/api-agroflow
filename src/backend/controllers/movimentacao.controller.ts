@@ -7,6 +7,11 @@ function queryString(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
 }
 
+function parseNumber(value: unknown): number | null {
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 function queryArray<T extends string>(value: unknown): T[] | undefined {
   if (!value) {
     return undefined
@@ -29,11 +34,17 @@ export const MovimentacaoController = {
         req.body
 
       if (!retiro_id || !capataz_id || !tipo || !origem || !destino || !quantidade || !estagio_vida) {
-        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+        return res.status(400).json({ error: 'Campos obrigatórios não informados' })
+      }
+
+      const retiroId = parseNumber(retiro_id)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const movimentacao = await MovimentacaoService.criar({
-        retiro_id,
+        retiro_id: retiroId,
         capataz_id,
         tipo,
         origem,
@@ -47,7 +58,7 @@ export const MovimentacaoController = {
       return res.status(201).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar movimentacao',
+        error: error instanceof Error ? error.message : 'Erro ao criar movimentação',
       })
     }
   },
@@ -57,44 +68,53 @@ export const MovimentacaoController = {
       const movimentacoes = await MovimentacaoService.listarTodas()
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar movimentacoes' })
+      return res.status(500).json({ error: 'Erro ao listar movimentações' })
     }
   },
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentacao' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentação' })
     }
   },
 
   async validar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
       const { usuario, aprovado, motivo_rejeicao } = req.body
 
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       if (!usuario || typeof aprovado !== 'boolean') {
-        return res.status(400).json({ error: 'Usuario e aprovacao sao obrigatorios' })
+        return res.status(400).json({ error: 'Usuário e aprovação são obrigatórios' })
       }
 
       const movimentacao = await MovimentacaoService.validar(id, usuario as Usuario, aprovado, motivo_rejeicao)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao validar movimentacao',
+        error: error instanceof Error ? error.message : 'Erro ao validar movimentação',
       })
     }
   },
@@ -106,106 +126,150 @@ export const MovimentacaoController = {
       const status = queryArray<MovimentacaoStatus>(req.query.status)
 
       if (!retiroId) {
-        return res.status(400).json({ error: 'Retiro e obrigatorio' })
+        return res.status(400).json({ error: 'Retiro é obrigatório' })
       }
 
-      const movimentacoes = await MovimentacaoService.filtrar(retiroId, tipos, status)
+      const retiroIdNumber = parseNumber(retiroId)
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const movimentacoes = await MovimentacaoService.filtrar(retiroIdNumber, tipos, status)
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao filtrar movimentacoes' })
+      return res.status(500).json({ error: 'Erro ao filtrar movimentações' })
     }
   },
 
   async buscarParaRelatorio(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+      const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentacoes para relatorio' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentações para relatório' })
     }
   },
 
   async buscarParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentacoes para dashboard' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentações para dashboard' })
     }
   },
 
   async sincronizar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.sincronizar(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao sincronizar movimentacao' })
+      return res.status(500).json({ error: 'Erro ao sincronizar movimentação' })
     }
   },
 
   async listarPendentes(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const movimentacoes = await MovimentacaoService.listarPendentes(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const movimentacoes = await MovimentacaoService.listarPendentes(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar movimentacoes pendentes' })
+      return res.status(500).json({ error: 'Erro ao listar movimentações pendentes' })
     }
   },
 
   async contarPorTipo(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const contagem = await MovimentacaoService.contarPorTipo(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const contagem = await MovimentacaoService.contarPorTipo(retiroIdNumber)
 
       return res.status(200).json(contagem)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao contar movimentacoes por tipo' })
+      return res.status(500).json({ error: 'Erro ao contar movimentações por tipo' })
     }
   },
 
   async atualizar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.atualizar(id, req.body)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentacao',
+        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentação',
       })
     }
   },
 
   async remover(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       await MovimentacaoService.remover(id)
 
       return res.status(204).send()
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao remover movimentacao' })
+      return res.status(500).json({ error: 'Erro ao remover movimentação' })
     }
   },
 }

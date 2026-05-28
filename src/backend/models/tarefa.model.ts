@@ -3,8 +3,8 @@ export type TarefaPrioridade = 'alta' | 'media' | 'baixa'
 export type TarefaStatus = 'pendente' | 'em_andamento' | 'concluida' | 'cancelada'
 
 export interface Tarefa {
-  id: string
-  retiro_id: string
+  id: number
+  retiro_id: number
   criada_por: string
   atribuida_a: string
   descricao: string
@@ -16,7 +16,7 @@ export interface Tarefa {
 }
 
 export interface TarefaInput {
-  retiro_id: string
+  retiro_id: number
   criada_por: string
   atribuida_a: string
   descricao: string

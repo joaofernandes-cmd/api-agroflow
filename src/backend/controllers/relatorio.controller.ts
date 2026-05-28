@@ -18,6 +18,15 @@ function parseQueryDate(value: unknown): Date | undefined | null {
   return date
 }
 
+function parseQueryNumber(value: unknown): number | undefined | null {
+  if (value === undefined || value === null || value === '') {
+    return undefined
+  }
+
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 export const RelatorioController = {
   // RN07: Busca dados de movimentações já sincronizadas e validadas,
   // com filtro opcional por período e retiro.
@@ -25,10 +34,14 @@ export const RelatorioController = {
     try {
       const dataInicio = parseQueryDate(req.query.dataInicio)
       const dataFim = parseQueryDate(req.query.dataFim)
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
+      }
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const dados = await RelatorioService.buscarDadosMovimentacoes(dataInicio, dataFim, retiroId)
@@ -47,10 +60,14 @@ export const RelatorioController = {
     try {
       const dataInicio = parseQueryDate(req.query.dataInicio)
       const dataFim = parseQueryDate(req.query.dataFim)
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
+      }
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const dados = await RelatorioService.buscarDadosTarefas(dataInicio, dataFim, retiroId)
@@ -68,10 +85,14 @@ export const RelatorioController = {
     try {
       const dataInicio = parseQueryDate(req.query.dataInicio)
       const dataFim = parseQueryDate(req.query.dataFim)
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
+      }
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const relatorio = await RelatorioService.formatarRelatorioMovimentacoes(dataInicio, dataFim, retiroId)
@@ -87,7 +108,12 @@ export const RelatorioController = {
   // RN07: Gera o relatório semanal usando os últimos 7 dias.
   async gerarRelatorioSemanal(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const relatorio = await RelatorioService.gerarRelatorioSemanal(retiroId)
 
       return res.status(200).json(relatorio)
@@ -101,7 +127,12 @@ export const RelatorioController = {
   // RN07: Gera o relatório mensal usando os últimos 30 dias.
   async gerarRelatorioMensal(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const relatorio = await RelatorioService.gerarRelatorioMensal(retiroId)
 
       return res.status(200).json(relatorio)

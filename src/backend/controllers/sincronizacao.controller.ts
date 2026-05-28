@@ -1,6 +1,15 @@
 import { Request, Response } from 'express'
 import { SincronizacaoService } from '../services/sincronizacao.service'
 
+function parseQueryNumber(value: unknown): number | undefined | null {
+  if (value === undefined || value === null || value === '') {
+    return undefined
+  }
+
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 export const SincronizacaoController = {
   // RN03: Verifica se há conexão disponível com o servidor.
   async detectarConexao(_req: Request, res: Response) {
@@ -29,7 +38,12 @@ export const SincronizacaoController = {
   // RN07: Busca movimentações sincronizadas e aprovadas para relatórios.
   async buscarMovimentacoesParaRelatrio(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const dados = await SincronizacaoService.buscarMovimentacoesParaRelatrio(retiroId)
 
       return res.status(200).json(dados)
@@ -43,7 +57,12 @@ export const SincronizacaoController = {
   // RN07: Busca tarefas sincronizadas e concluídas para relatórios.
   async buscarTarefasParaRelatrio(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const dados = await SincronizacaoService.buscarTarefasParaRelatrio(retiroId)
 
       return res.status(200).json(dados)
@@ -57,7 +76,12 @@ export const SincronizacaoController = {
   // RN10: Busca tickets sincronizados e abertos para o dashboard.
   async buscarTicketsParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? String(req.query.retiroId) : undefined
+      const retiroId = parseQueryNumber(req.query.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const dados = await SincronizacaoService.buscarTicketsParaDashboard(retiroId)
 
       return res.status(200).json(dados)

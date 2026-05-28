@@ -96,7 +96,7 @@ export const SincronizacaoService = {
 
   // RN07: Buscar movimentações sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=aprovado
-  async buscarMovimentacoesParaRelatrio(retiroId?: string): Promise<Movimentacao[]> {
+  async buscarMovimentacoesParaRelatrio(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
@@ -113,7 +113,7 @@ export const SincronizacaoService = {
 
   // RN07: Buscar tarefas sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=concluida
-  async buscarTarefasParaRelatrio(retiroId?: string): Promise<Tarefa[]> {
+  async buscarTarefasParaRelatrio(retiroId?: number): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.findAll()
 
     return tarefas.filter(t => {
@@ -130,7 +130,7 @@ export const SincronizacaoService = {
 
   // RN10: Buscar tickets sincronizados para dashboard
   // Retorna apenas tickets com sincronizado=true e status=aberto (tickets abertos)
-  async buscarTicketsParaDashboard(retiroId?: string): Promise<Ticket[]> {
+  async buscarTicketsParaDashboard(retiroId?: number): Promise<Ticket[]> {
     const tickets = await TicketRepository.findAll()
 
     return tickets.filter(t => {

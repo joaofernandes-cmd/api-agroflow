@@ -7,6 +7,11 @@ function queryString(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
 }
 
+function parseNumber(value: unknown): number | null {
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 export const TarefaController = {
   async criar(req: Request, res: Response) {
     try {
@@ -16,9 +21,15 @@ export const TarefaController = {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
       }
 
+      const retiroId = parseNumber(retiro_id)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const tarefa = await TarefaService.criar(
         {
-          retiro_id,
+          retiro_id: retiroId,
           atribuida_a,
           descricao,
           categoria,
@@ -46,7 +57,12 @@ export const TarefaController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const tarefa = await TarefaService.buscarPorId(id)
 
       if (!tarefa) {
@@ -62,7 +78,13 @@ export const TarefaController = {
   async buscarParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const tarefas = await TarefaService.buscarParaDashboard(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const tarefas = await TarefaService.buscarParaDashboard(retiroIdNumber)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -74,7 +96,13 @@ export const TarefaController = {
     try {
       const status = String(req.params.status) as TarefaStatus
       const retiroId = queryString(req.query.retiroId)
-      const tarefas = await TarefaService.listarPorStatus(status, retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const tarefas = await TarefaService.listarPorStatus(status, retiroIdNumber)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -97,7 +125,13 @@ export const TarefaController = {
     try {
       const prioridade = String(req.params.prioridade) as TarefaPrioridade
       const retiroId = queryString(req.query.retiroId)
-      const tarefas = await TarefaService.listarPorPrioridade(prioridade, retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const tarefas = await TarefaService.listarPorPrioridade(prioridade, retiroIdNumber)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -109,7 +143,13 @@ export const TarefaController = {
     try {
       const categoria = String(req.params.categoria)
       const retiroId = queryString(req.query.retiroId)
-      const tarefas = await TarefaService.listarPorCategoria(categoria, retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const tarefas = await TarefaService.listarPorCategoria(categoria, retiroIdNumber)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -119,8 +159,12 @@ export const TarefaController = {
 
   async atualizarStatus(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
       const { status } = req.body
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
 
       if (!status) {
         return res.status(400).json({ error: 'Status e obrigatorio' })
@@ -140,7 +184,12 @@ export const TarefaController = {
 
   async atualizar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const tarefa = await TarefaService.atualizar(id, req.body)
 
       if (!tarefa) {
@@ -158,7 +207,13 @@ export const TarefaController = {
   async contarPorStatus(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const contagem = await TarefaService.contarPorStatus(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const contagem = await TarefaService.contarPorStatus(retiroIdNumber)
 
       return res.status(200).json(contagem)
     } catch (error) {
@@ -168,7 +223,12 @@ export const TarefaController = {
 
   async remover(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const tarefa = await TarefaService.buscarPorId(id)
 
       if (!tarefa) {

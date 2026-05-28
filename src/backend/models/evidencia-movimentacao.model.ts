@@ -1,9 +1,9 @@
 export interface EvidenciaMovimentacao {
-  evidencia_id: string
-  movimentacao_id: string
+  evidencia_id: number
+  movimentacao_id: number
 }
 
 export interface EvidenciaMovimentacaoInput {
-  evidencia_id: string
-  movimentacao_id: string
+  evidencia_id: number
+  movimentacao_id: number
 }
