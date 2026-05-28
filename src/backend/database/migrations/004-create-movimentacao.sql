@@ -4,16 +4,11 @@ CREATE TABLE IF NOT EXISTS movimentacao (
   capataz_id UUID NOT NULL,
   validado_por UUID NULL,
   tipo movimentacao_tipo NOT NULL,
-  origem TEXT NULL,
-  destino TEXT NULL,
-  quantidade INT NOT NULL,
   status movimentacao_status NOT NULL,
   sincronizado BOOLEAN NOT NULL DEFAULT false,
   data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
-  causa_obito VARCHAR(255) NULL,
   estagio_vida movimentacao_estagio_vida NOT NULL,
-  CHECK (tipo <> 'morte'::movimentacao_tipo OR causa_obito IS NOT NULL),
-  CHECK (tipo <> 'transferencia'::movimentacao_tipo OR (origem IS NOT NULL AND destino IS NOT NULL))
+  data_validacao TIMESTAMP NULL
 );
 
 ALTER TABLE movimentacao

@@ -14,10 +14,11 @@ export interface Movimentacao {
   tipo: MovimentacaoTipo
   origem: RetiroNome | null
   destino: RetiroNome | null
-  quantidade: number
+  quantidade: number | null
   status: MovimentacaoStatus
   sincronizado: boolean
   data_criacao: Date
+  data_validacao: Date | null
   causa_obito: string | null
   estagio_vida: EstagioVida
 }
@@ -29,10 +30,11 @@ export interface MovimentacaoInput {
   tipo: MovimentacaoTipo
   origem?: RetiroNome | null
   destino?: RetiroNome | null
-  quantidade: number
+  quantidade?: number | null
   status: MovimentacaoStatus
   sincronizado?: boolean
   data_criacao?: Date
+  data_validacao?: Date | null
   causa_obito?: string | null
   estagio_vida: EstagioVida
 }
