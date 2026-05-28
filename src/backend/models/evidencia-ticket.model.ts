@@ -1,9 +1,9 @@
 export interface EvidenciaTicket {
-  evidencia_id: string
-  ticket_id: string
+  evidencia_id: number
+  ticket_id: number
 }
 
 export interface EvidenciaTicketInput {
-  evidencia_id: string
-  ticket_id: string
+  evidencia_id: number
+  ticket_id: number
 }

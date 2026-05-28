@@ -6,6 +6,11 @@ function  removerSenha(usuario: any) {
     return usuarioSemSenha;
 }
 
+function parseNumber(value: unknown): number | null {
+    const parsed = Number(value)
+    return Number.isNaN(parsed) ? null : parsed
+}
+
 export const UsuarioController = {
     async autenticar(req: Request, res: Response) {
         try {
@@ -53,7 +58,11 @@ export const UsuarioController = {
 
     async listarPorRetiro(req: Request, res: Response) {
         try {
-            const retiroId = String(req.params.retiroId);
+            const retiroId = parseNumber(req.params.retiroId);
+
+            if (retiroId === null) {
+                return res.status(400).json({ error: 'Retiro inválido' });
+            }
             
             const usuarios = await UsuarioService.listarPorRetiro(retiroId);
 

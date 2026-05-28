@@ -14,7 +14,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Busca uma evidência de áudio pelo id da evidência e retorna null se não encontrar
-    async findById(evidencia_id: string): Promise<EvidenciaAudio | null> {
+    async findById(evidencia_id: number): Promise<EvidenciaAudio | null> {
         const evidenciaAudio = await sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo
             FROM evidencia_audio
@@ -37,7 +37,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Atualiza uma evidência de áudio existente
-    async update(evidencia_id: string, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
+    async update(evidencia_id: number, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
         const [updated] = await sql<EvidenciaAudio[]>`
             UPDATE evidencia_audio
             SET
@@ -50,7 +50,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Remove uma evidência de áudio pelo id da evidência 
-    async delete(evidencia_id: string): Promise<void> {
+    async delete(evidencia_id: number): Promise<void> {
         await sql`
             DELETE FROM evidencia_audio
             WHERE evidencia_id = ${evidencia_id}

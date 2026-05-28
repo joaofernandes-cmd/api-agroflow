@@ -14,7 +14,7 @@ export const EvidenciaMovimentacaoRepository = {
     },
 
     // Busca uma evidência de movimentação pela chave composta e retorna null se não encontrar
-    async findById(evidencia_id: string, movimentacao_id: string): Promise<EvidenciaMovimentacao | null> {
+    async findById(evidencia_id: number, movimentacao_id: number): Promise<EvidenciaMovimentacao | null> {
         const evidenciaMovimentacao = await sql<EvidenciaMovimentacao[]>`
             SELECT evidencia_id, movimentacao_id
             FROM evidencia_movimentacao

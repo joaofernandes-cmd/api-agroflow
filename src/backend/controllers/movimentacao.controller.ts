@@ -7,6 +7,11 @@ function queryString(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
 }
 
+function parseNumber(value: unknown): number | null {
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 function queryArray<T extends string>(value: unknown): T[] | undefined {
   if (!value) {
     return undefined
@@ -32,8 +37,14 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
+      const retiroId = parseNumber(retiro_id)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.criar({
-        retiro_id,
+        retiro_id: retiroId,
         capataz_id,
         tipo,
         origem,
@@ -63,7 +74,12 @@ export const MovimentacaoController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
@@ -78,8 +94,12 @@ export const MovimentacaoController = {
 
   async validar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
       const { usuario, aprovado, motivo_rejeicao } = req.body
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
 
       if (!usuario || typeof aprovado !== 'boolean') {
         return res.status(400).json({ error: 'Usuário e aprovação são obrigatórios' })
@@ -109,7 +129,13 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Retiro é obrigatório' })
       }
 
-      const movimentacoes = await MovimentacaoService.filtrar(retiroId, tipos, status)
+      const retiroIdNumber = parseNumber(retiroId)
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const movimentacoes = await MovimentacaoService.filtrar(retiroIdNumber, tipos, status)
       return res.status(200).json(movimentacoes)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao filtrar movimentações' })
@@ -119,7 +145,12 @@ export const MovimentacaoController = {
   async buscarParaRelatorio(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+      const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
@@ -130,7 +161,13 @@ export const MovimentacaoController = {
   async buscarParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
@@ -140,7 +177,12 @@ export const MovimentacaoController = {
 
   async sincronizar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.sincronizar(id)
 
       if (!movimentacao) {
@@ -156,7 +198,13 @@ export const MovimentacaoController = {
   async listarPendentes(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const movimentacoes = await MovimentacaoService.listarPendentes(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const movimentacoes = await MovimentacaoService.listarPendentes(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
@@ -167,7 +215,13 @@ export const MovimentacaoController = {
   async contarPorTipo(req: Request, res: Response) {
     try {
       const retiroId = queryString(req.query.retiroId)
-      const contagem = await MovimentacaoService.contarPorTipo(retiroId)
+      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+
+      if (retiroIdNumber === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const contagem = await MovimentacaoService.contarPorTipo(retiroIdNumber)
 
       return res.status(200).json(contagem)
     } catch (error) {
@@ -177,7 +231,12 @@ export const MovimentacaoController = {
 
   async atualizar(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.atualizar(id, req.body)
 
       if (!movimentacao) {
@@ -194,7 +253,12 @@ export const MovimentacaoController = {
 
   async remover(req: Request, res: Response) {
     try {
-      const id = String(req.params.id)
+      const id = parseNumber(req.params.id)
+
+      if (id === null) {
+        return res.status(400).json({ error: 'ID inválido' })
+      }
+
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {

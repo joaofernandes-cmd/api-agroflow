@@ -1,5 +1,4 @@
 import sql from '../database/connection'
-import { randomUUID } from 'crypto'
 import { Retiro, RetiroInput } from '../models/retiro.model'
 
 // Retorna todas os retiros cadastrados
@@ -15,7 +14,7 @@ export const RetiroRepository = {
     },
 
     // Busca um retiro pelo seu id e retorna null se não encontrar
-    async findById(id: string): Promise<Retiro | null> {
+    async findById(id: number): Promise<Retiro | null> {
         const retiro = await sql<Retiro[]>`
             SELECT id, nome
             FROM retiro
@@ -28,15 +27,15 @@ export const RetiroRepository = {
     // Cria um novo retiro no banco de dados
     async create(input: RetiroInput): Promise<Retiro> {
         const [created] = await sql<Retiro[]>`
-            INSERT INTO retiro (id, nome)
-            VALUES (${randomUUID()}, ${input.nome})
+            INSERT INTO retiro (nome)
+            VALUES (${input.nome})
             RETURNING id, nome
         `
         return created
     },
 
     // Atualiza os dados de um retiro existente
-    async update(id: string, input: Partial<RetiroInput>): Promise<Retiro | null> {
+    async update(id: number, input: Partial<RetiroInput>): Promise<Retiro | null> {
         const updated = await sql<Retiro[]>`
             UPDATE retiro
             SET

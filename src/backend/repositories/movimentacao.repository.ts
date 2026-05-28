@@ -1,5 +1,4 @@
 import sql from '../database/connection'
-import { randomUUID } from 'crypto'
 import { Movimentacao, MovimentacaoInput } from '../models/movimentacao.model'
 
 // Retorna todas as movimentações cadastradas
@@ -15,7 +14,7 @@ export const MovimentacaoRepository = {
   },
 
   // Busca uma movimentação pelo seu id e retorna null se não encontrar
-  async findById(id: string): Promise<Movimentacao | null> {
+  async findById(id: number): Promise<Movimentacao | null> {
     const movimentacao = await sql<Movimentacao[]>`
       SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida
       FROM movimentacao
@@ -29,9 +28,8 @@ export const MovimentacaoRepository = {
   // Cria uma nova movimentação no banco de dados
   async create(input: MovimentacaoInput): Promise<Movimentacao> {
     const [created] = await sql<Movimentacao[]>`
-      INSERT INTO movimentacao (id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida)
+      INSERT INTO movimentacao (retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida)
       VALUES (
-        ${randomUUID()},
         ${input.retiro_id},
         ${input.capataz_id},
         ${input.validado_por},
@@ -52,7 +50,7 @@ export const MovimentacaoRepository = {
   },
 
   // Atualiza uma movimentação existente
-  async update(id: string, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
+  async update(id: number, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     const [updated] = await sql<Movimentacao[]>`
       UPDATE movimentacao
       SET
@@ -76,7 +74,7 @@ export const MovimentacaoRepository = {
   },
 
   // Remove uma movimentação pelo id
-  async delete(id: string): Promise<void> {
+  async delete(id: number): Promise<void> {
     await sql`
       DELETE FROM movimentacao
       WHERE id = ${id}

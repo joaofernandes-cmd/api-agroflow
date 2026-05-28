@@ -14,7 +14,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Busca uma evidência de foto pelo id da evidência e retorna null se não encontrar
-    async findById(evidencia_id: string): Promise<EvidenciaFoto | null> {
+    async findById(evidencia_id: number): Promise<EvidenciaFoto | null> {
         const evidenciaFoto = await sql<EvidenciaFoto[]>`
             SELECT evidencia_id, url_arquivo, latitude, longitude
             FROM evidencia_foto
@@ -37,7 +37,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Atualiza uma evidência de foto existente
-    async update(evidencia_id: string, input: Partial<EvidenciaFotoInput>): Promise<EvidenciaFoto | null> {
+    async update(evidencia_id: number, input: Partial<EvidenciaFotoInput>): Promise<EvidenciaFoto | null> {
         const [updated] = await sql<EvidenciaFoto[]>`
             UPDATE evidencia_foto
             SET
@@ -52,7 +52,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Remove uma evidência de foto pelo id da evidência
-    async delete(evidencia_id: string): Promise<void> {
+    async delete(evidencia_id: number): Promise<void> {
         await sql`
             DELETE FROM evidencia_foto
             WHERE evidencia_id = ${evidencia_id}

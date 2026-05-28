@@ -13,7 +13,7 @@ export const EvidenciaTicketRepository = {
     },
 
     // Busca uma evidência de ticket pelo seu id e retorna null se não encontrar
-    async findById(evidencia_id: string, ticket_id: string): Promise<EvidenciaTicket | null> {
+    async findById(evidencia_id: number, ticket_id: number): Promise<EvidenciaTicket | null> {
         const evidenciaTicket = await sql<EvidenciaTicket[]>`
             SELECT evidencia_id, ticket_id
             FROM evidencia_ticket

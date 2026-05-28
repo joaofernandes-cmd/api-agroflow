@@ -7,10 +7,10 @@ export type RetiroNome = 'Acurizal' | 'Aroeira' | 'Baia Bonita' | 'Bodoquena 1' 
 export type EstagioVida = 'BEZERRO 0 A 7 MESES' | 'GARROTE 8 A 12 MESES' | 'NOVILHA 8 A 12 MESES' | 'GARROTE 13 A 24 MESES' | 'NOVILHA 13 A 24 MESES' | 'BOI 25 A 36 MESES' | 'NOVILHA 25 A 36 MESES' | 'TOURO 25 A 36 MESES' | 'VACA ACIMA 36 MESES' | 'BOI ACIMA 36 MESES' | 'TOURO ACIMA 36 MESES'
 
 export interface Movimentacao {
-  id: string
-  retiro_id: string
+  id: number
+  retiro_id: number
   capataz_id: string
-  validado_por: string
+  validado_por: string | null
   tipo: MovimentacaoTipo
   origem: RetiroNome | null
   destino: RetiroNome | null
@@ -23,9 +23,9 @@ export interface Movimentacao {
 }
 
 export interface MovimentacaoInput {
-  retiro_id: string
+  retiro_id: number
   capataz_id: string
-  validado_por: string
+  validado_por: string | null
   tipo: MovimentacaoTipo
   origem?: RetiroNome | null
   destino?: RetiroNome | null

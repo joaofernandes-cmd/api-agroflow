@@ -1,5 +1,4 @@
 import sql from '../database/connection' 
-import { randomUUID } from 'crypto'
 import { Usuario, UsuarioInput } from '../models/usuario.model'
 
 // Retorna todos os usuários cadastrados
@@ -41,9 +40,8 @@ export const UsuarioRepository = {
   // Cria um novo usuário no banco de dados
   async create(input: UsuarioInput): Promise<Usuario> {
     const [created] = await sql<Usuario[]>`
-      INSERT INTO usuario (id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo)
+      INSERT INTO usuario (retiro_id, nome, login, senha_hash, status, data_criacao, cargo)
       VALUES (
-        ${randomUUID()},
         ${input.retiro_id},
         ${input.nome},
         ${input.login},

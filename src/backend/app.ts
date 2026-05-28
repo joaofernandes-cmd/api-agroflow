@@ -6,6 +6,7 @@ import sincronizacaoRoutes from './routes/sincronizacao.route'
 import tarefaRoutes from './routes/tarefa.route'
 import ticketRoutes from './routes/ticket.routes'
 import usuarioRoutes from './routes/usuario.route'
+import validacaoRoutes from './routes/validacao.route'
 
 const app = express()
 
@@ -22,5 +23,6 @@ app.use('/sincronizacao', sincronizacaoRoutes)
 app.use('/tarefas', tarefaRoutes)
 app.use('/tickets', ticketRoutes)
 app.use('/usuarios', usuarioRoutes)
+app.use('/validacoes', validacaoRoutes)
 
 export default app

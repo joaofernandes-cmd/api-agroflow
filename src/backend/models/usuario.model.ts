@@ -4,7 +4,7 @@ export type UsuarioCargo = 'capataz' | 'supervisor' | 'gerente'
 
 export interface Usuario {
   id: string
-  retiro_id: string
+  retiro_id: number
   nome: string
   login: string
   senha_hash: string
@@ -14,7 +14,7 @@ export interface Usuario {
 }
 
 export interface UsuarioInput {
-  retiro_id: string
+  retiro_id: number
   nome: string
   login: string
   senha_hash: string
