@@ -148,6 +148,7 @@ export const ValidacaoService = {
     }
 
     // Aprova a tarefa (altera status para concluida)
+    // Nota: RN06 define que aprovação por supervisor = conclusão imediata (pendente → concluida)
     const tarefaAtualizada = await TarefaRepository.update(tarefaId, {
       ...tarefa,
       status: 'concluida',

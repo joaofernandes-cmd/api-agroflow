@@ -1665,13 +1665,13 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ----
 
-#### 4. Sincronização Offline (`/sync`)
+#### 4. Sincronização Offline (`/sincronizacao`)
 
 **Fluxo Principal**
 
 • O processo inicia automaticamente quando a aplicação detecta que a conexão com a internet foi restabelecida no dispositivo utilizado em campo. Nesse momento, a interface identifica os registros armazenados localmente durante o período offline e prepara um lote de dados para sincronização.
 
-• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sync`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
+• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sincronizacao`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
 
 • O controlador encaminha o lote ao *ServicoSincronizacao*, responsável por processar individualmente cada registro armazenado localmente.
 
@@ -1884,6 +1884,165 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/"><img src="others/assets/diagrama-sequencial-rf008.png" alt="Diagrama Sequencial RF008" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+----
+ 
+#### 9. Filtrar Movimentações (`/movimentacoes/filtrar`)
+ 
+**Fluxo Principal**
+ 
+• O processo inicia quando o supervisor define os filtros desejados na interface da aplicação, podendo selecionar retiro, tipo de movimentação, período e status do registro.
+ 
+• Após a seleção dos filtros, a interface envia uma requisição `GET` para o endpoint `/movimentacoes/filtrar`, encaminhando os parâmetros ao *ControladorMovimentacao*.
+ 
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores possam acessar a funcionalidade de filtragem.
+ 
+• Caso o perfil seja válido, o controlador encaminha os parâmetros ao *ServicoMovimentacao*, responsável pelas regras de filtragem.
+ 
+• O serviço aplica os critérios informados e solicita ao *RepositorioMovimentacao* a busca das movimentações que atendem aos filtros selecionados.
+ 
+• O repositório realiza a consulta no banco de dados e retorna os registros encontrados ao serviço.
+ 
+• Por fim, o controlador responde à interface com status `200 – Sucesso`, exibindo ao supervisor a lista de movimentações filtradas.
+ 
+ 
+**Fluxo Alternativo - Usuário sem permissão**
+ 
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
+ 
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorMovimentacao* retorna uma resposta `403 – Proibido`.
+ 
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para filtrar movimentações.
+ 
+ 
+**Fluxo Alternativo - Sem filtros aplicados**
+ 
+• Quando o supervisor acessa a tela sem aplicar nenhum filtro, o *ServicoMovimentacao* aplica automaticamente o filtro padrão definido pela RN09.
+ 
+• Nesse caso, o serviço busca apenas as movimentações com status "pendente" dos retiros sob responsabilidade do supervisor autenticado.
+ 
+• A interface então exibe essa lista padrão, permitindo que o supervisor refine a busca posteriormente.
+ 
+ 
+**Fluxo Alternativo - Nenhum dado encontrado**
+ 
+• Após a consulta, o *RepositorioMovimentacao* pode retornar uma lista vazia caso nenhum registro corresponda aos filtros aplicados.
+ 
+• Nesse cenário, o controlador responde à interface com status `200 – Sucesso`, exibindo uma mensagem informando que não foram encontradas movimentações para os critérios selecionados.
+ 
+ 
+<div align="center">
+<p align="center">Figura 18 - Diagrama Sequencial (RF009)</p>
+<p align="center">
+<img src="others/assets/diagrama-sequencial-rf009.png" alt="Diagrama Sequencial RF009" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+----
+
+#### 10. Dashboard de Indicadores (`/dashboard/indicadores`)
+ 
+**Fluxo Principal**
+ 
+• O processo inicia quando o gerente acessa o painel de indicadores da fazenda na interface da aplicação.
+ 
+• A interface envia uma requisição `GET` para o endpoint `/dashboard/indicadores`, encaminhando o pedido ao *ControladorDashboard*.
+ 
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar o dashboard consolidado.
+ 
+• Caso o perfil seja válido, o controlador encaminha a requisição ao *ServicoDashboard*, responsável por consolidar os indicadores operacionais.
+ 
+• O serviço solicita ao *RepositorioMovimentacao* o total de movimentações aprovadas e sincronizadas, segmentadas por tipo (nascimentos, mortes, transferências) e por retiro.
+ 
+• Em seguida, o serviço solicita ao *RepositorioTarefa* o total de tarefas pendentes e ao *RepositorioTicket* o total de tickets abertos, ambos segmentados por retiro.
+ 
+• Após receber todos os dados, o *ServicoDashboard* consolida os indicadores calculando totais individuais por retiro e um totalizador geral, conforme determinado pela RN10.
+ 
+• Por fim, o controlador responde à interface com status `200 – Sucesso`, exibindo ao gerente o dashboard atualizado com os indicadores consolidados.
+ 
+ 
+**Fluxo Alternativo - Usuário sem permissão**
+ 
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
+ 
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorDashboard* retorna uma resposta `403 – Proibido`.
+ 
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para acessar o dashboard.
+ 
+ 
+**Fluxo Alternativo - Sem dados disponíveis**
+ 
+• Caso não existam registros aprovados e sincronizados no banco, o *ServicoDashboard* retorna indicadores zerados ao controlador.
+ 
+• Nesse cenário, o sistema responde à interface com status `200 – Sucesso`, exibindo o dashboard com valores zerados e uma mensagem informativa indicando ausência de dados consolidados no período.
+ 
+ 
+<div align="center">
+<p align="center">Figura 19 - Diagrama Sequencial (RF010)</p>
+<p align="center">
+<img src="others/assets/diagrama-sequencial-rf010.png" alt="Diagrama Sequencial RF010" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+----
+
+#### 11. Alterar Prioridade de Ticket (`/tickets/{id}/prioridade`)
+ 
+**Fluxo Principal**
+ 
+• O processo inicia quando o supervisor ou capataz seleciona um ticket e altera sua prioridade (crítica, alta, média ou baixa) na interface da aplicação.
+ 
+• A interface envia uma requisição `PATCH` para o endpoint `/tickets/{id}/prioridade`, encaminhando a nova prioridade ao *ControladorTicket*.
+ 
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores ou capatazes possam alterar a prioridade dos tickets.
+ 
+• Caso o perfil seja válido, o controlador encaminha os dados ao *ServicoTicket*, responsável pelas regras de alteração.
+ 
+• O serviço solicita ao *RepositorioTicket* a busca do ticket correspondente ao identificador informado.
+ 
+• Após localizar o registro, o serviço valida se a prioridade informada está dentro dos valores permitidos.
+ 
+• Caso a prioridade seja válida, o serviço atualiza o campo no banco de dados e registra a alteração no log de auditoria, indicando o usuário responsável e o horário da modificação, conforme determinado pela RN11.
+ 
+• Por fim, o controlador responde à interface com status `200 – Sucesso`, confirmando ao usuário que a prioridade do ticket foi atualizada.
+ 
+ 
+**Fluxo Alternativo - Usuário sem permissão**
+ 
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor ou capataz.
+ 
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorTicket* retorna uma resposta `403 – Proibido`.
+ 
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para alterar a prioridade do ticket.
+ 
+ 
+**Fluxo Alternativo - Ticket não encontrado**
+ 
+• Durante a busca do ticket, o *RepositorioTicket* verifica se existe um registro correspondente ao identificador informado.
+ 
+• Caso o ticket não seja encontrado, o serviço retorna um erro ao controlador.
+ 
+• O sistema então responde à interface com status `404 – Não Encontrado`, informando que o ticket solicitado não existe.
+ 
+ 
+**Fluxo Alternativo - Prioridade inválida**
+ 
+• Durante a validação dos dados, o *ServicoTicket* verifica se a prioridade informada corresponde a um dos valores aceitos (crítica, alta, média ou baixa).
+ 
+• Caso o valor seja inválido ou não tenha sido preenchido, o serviço retorna um erro de validação ao controlador.
+ 
+• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento correto do campo prioridade.
+ 
+ 
+<div align="center">
+<p align="center">Figura 20 - Diagrama Sequencial (RF011)</p>
+<p align="center">
+<img src="others/assets/diagrama-sequencial-rf011.png" alt="Diagrama Sequencial RF011" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>

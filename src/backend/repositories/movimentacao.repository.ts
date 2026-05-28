@@ -31,15 +31,27 @@ const movimentacaoSelect = sql`
 export const MovimentacaoRepository = {
   async findAll(): Promise<Movimentacao[]> {
     return sql<Movimentacao[]>`
+<<<<<<< HEAD
       ${movimentacaoSelect}
       ORDER BY m.data_criacao
+=======
+      SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
+      FROM movimentacao
+      ORDER BY data_criacao
+>>>>>>> 0f918717ce7c713bcd1542b8ebc8d455d00c9ab2
     `
   },
 
   async findById(id: number): Promise<Movimentacao | null> {
     const movimentacao = await sql<Movimentacao[]>`
+<<<<<<< HEAD
       ${movimentacaoSelect}
       WHERE m.id = ${id}
+=======
+      SELECT id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
+      FROM movimentacao
+      WHERE id = ${id}
+>>>>>>> 0f918717ce7c713bcd1542b8ebc8d455d00c9ab2
       LIMIT 1
     `
 
@@ -47,6 +59,7 @@ export const MovimentacaoRepository = {
   },
 
   async create(input: MovimentacaoInput): Promise<Movimentacao> {
+<<<<<<< HEAD
     const createdId = await sql.begin(async transaction => {
       const [created] = await transaction<{ id: number }[]>`
         INSERT INTO movimentacao (
@@ -73,6 +86,27 @@ export const MovimentacaoRepository = {
         )
         RETURNING id
       `
+=======
+    const [created] = await sql<Movimentacao[]>`
+      INSERT INTO movimentacao (retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao)
+      VALUES (
+        ${input.retiro_id},
+        ${input.capataz_id},
+        ${input.validado_por},
+        ${input.tipo},
+        ${input.origem ?? null},
+        ${input.destino ?? null},
+        ${input.quantidade},
+        ${input.status},
+        ${input.sincronizado ?? false},
+        ${input.data_criacao ?? new Date()},
+        ${input.causa_obito ?? null},
+        ${input.estagio_vida},
+        ${input.motivo_rejeicao ?? null}
+      )
+      RETURNING id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
+    `
+>>>>>>> 0f918717ce7c713bcd1542b8ebc8d455d00c9ab2
 
       await this.createDetalhes(transaction, created.id, input)
 
@@ -88,8 +122,30 @@ export const MovimentacaoRepository = {
   },
 
   async update(id: number, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
+<<<<<<< HEAD
     const deveAtualizarDetalhes = this.deveAtualizarDetalhes(input)
     const movimentacaoAtual = deveAtualizarDetalhes ? await this.findById(id) : null
+=======
+    const [updated] = await sql<Movimentacao[]>`
+      UPDATE movimentacao
+      SET
+        retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
+        capataz_id = COALESCE(${input.capataz_id ?? null}, capataz_id),
+        validado_por = COALESCE(${input.validado_por ?? null}, validado_por),
+        tipo = COALESCE(${input.tipo ?? null}, tipo),
+        origem = COALESCE(${input.origem ?? null}, origem),
+        destino = COALESCE(${input.destino ?? null}, destino),
+        quantidade = COALESCE(${input.quantidade ?? null}, quantidade),
+        status = COALESCE(${input.status ?? null}, status),
+        sincronizado = COALESCE(${input.sincronizado ?? null}, sincronizado),
+        data_criacao = COALESCE(${input.data_criacao ?? null}, data_criacao),
+        causa_obito = COALESCE(${input.causa_obito ?? null}, causa_obito),
+        estagio_vida = COALESCE(${input.estagio_vida ?? null}, estagio_vida),
+        motivo_rejeicao = COALESCE(${input.motivo_rejeicao ?? null}, motivo_rejeicao)
+      WHERE id = ${id}
+      RETURNING id, retiro_id, capataz_id, validado_por, tipo, origem, destino, quantidade, status, sincronizado, data_criacao, causa_obito, estagio_vida, motivo_rejeicao
+    `
+>>>>>>> 0f918717ce7c713bcd1542b8ebc8d455d00c9ab2
 
     if (deveAtualizarDetalhes && !movimentacaoAtual) {
       return null

@@ -21,6 +21,7 @@ export interface Movimentacao {
   data_validacao: Date | null
   causa_obito: string | null
   estagio_vida: EstagioVida
+  motivo_rejeicao: string | null
 }
 
 export interface MovimentacaoInput {
@@ -37,4 +38,5 @@ export interface MovimentacaoInput {
   data_validacao?: Date | null
   causa_obito?: string | null
   estagio_vida: EstagioVida
+  motivo_rejeicao?: string | null
 }
