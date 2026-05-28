@@ -1665,13 +1665,13 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ----
 
-#### 4. Sincronização Offline (`/sync`)
+#### 4. Sincronização Offline (`/sincronizacao`)
 
 **Fluxo Principal**
 
 • O processo inicia automaticamente quando a aplicação detecta que a conexão com a internet foi restabelecida no dispositivo utilizado em campo. Nesse momento, a interface identifica os registros armazenados localmente durante o período offline e prepara um lote de dados para sincronização.
 
-• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sync`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
+• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sincronizacao`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
 
 • O controlador encaminha o lote ao *ServicoSincronizacao*, responsável por processar individualmente cada registro armazenado localmente.
 
