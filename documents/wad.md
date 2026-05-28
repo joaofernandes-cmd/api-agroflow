@@ -1991,6 +1991,62 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 
 ----
 
+#### 11. Alterar Prioridade de Ticket (`/tickets/{id}/prioridade`)
+ 
+**Fluxo Principal**
+ 
+• O processo inicia quando o supervisor ou capataz seleciona um ticket e altera sua prioridade (crítica, alta, média ou baixa) na interface da aplicação.
+ 
+• A interface envia uma requisição `PATCH` para o endpoint `/tickets/{id}/prioridade`, encaminhando a nova prioridade ao *ControladorTicket*.
+ 
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores ou capatazes possam alterar a prioridade dos tickets.
+ 
+• Caso o perfil seja válido, o controlador encaminha os dados ao *ServicoTicket*, responsável pelas regras de alteração.
+ 
+• O serviço solicita ao *RepositorioTicket* a busca do ticket correspondente ao identificador informado.
+ 
+• Após localizar o registro, o serviço valida se a prioridade informada está dentro dos valores permitidos.
+ 
+• Caso a prioridade seja válida, o serviço atualiza o campo no banco de dados e registra a alteração no log de auditoria, indicando o usuário responsável e o horário da modificação, conforme determinado pela RN11.
+ 
+• Por fim, o controlador responde à interface com status `200 – Sucesso`, confirmando ao usuário que a prioridade do ticket foi atualizada.
+ 
+ 
+**Fluxo Alternativo - Usuário sem permissão**
+ 
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor ou capataz.
+ 
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorTicket* retorna uma resposta `403 – Proibido`.
+ 
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para alterar a prioridade do ticket.
+ 
+ 
+**Fluxo Alternativo - Ticket não encontrado**
+ 
+• Durante a busca do ticket, o *RepositorioTicket* verifica se existe um registro correspondente ao identificador informado.
+ 
+• Caso o ticket não seja encontrado, o serviço retorna um erro ao controlador.
+ 
+• O sistema então responde à interface com status `404 – Não Encontrado`, informando que o ticket solicitado não existe.
+ 
+ 
+**Fluxo Alternativo - Prioridade inválida**
+ 
+• Durante a validação dos dados, o *ServicoTicket* verifica se a prioridade informada corresponde a um dos valores aceitos (crítica, alta, média ou baixa).
+ 
+• Caso o valor seja inválido ou não tenha sido preenchido, o serviço retorna um erro de validação ao controlador.
+ 
+• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento correto do campo prioridade.
+ 
+ 
+<div align="center">
+<p align="center">Figura 20 - Diagrama Sequencial (RF011)</p>
+<p align="center">
+<img src="others/assets/diagrama-sequencial-rf011.png" alt="Diagrama Sequencial RF011" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BRPEC.
 
 
