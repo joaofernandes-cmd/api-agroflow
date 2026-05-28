@@ -5,27 +5,54 @@ import { UsuarioService } from './usuario.service'
 
 export const MovimentacaoService = {
   // RN01: Validar campos obrigatórios antes de criar
-  // Origem, destino, quantidade, estagio_vida sempre obrigatórios
-  // Causa_obito obrigatório apenas se tipo = 'morte'
   validarCamposObrigatorios(dados: MovimentacaoInput): void {
-    if (!dados.origem) {
-      throw new Error('Campo "origem" é obrigatório')
-    }
-
-    if (!dados.destino) {
-      throw new Error('Campo "destino" é obrigatório')
-    }
-
-    if (!dados.quantidade || dados.quantidade <= 0) {
-      throw new Error('Campo "quantidade" é obrigatório e deve ser maior que zero')
+    if (!dados.tipo) {
+      throw new Error('Campo "tipo" é obrigatório')
     }
 
     if (!dados.estagio_vida) {
       throw new Error('Campo "estagio_vida" é obrigatório')
     }
 
-    if (dados.tipo === 'morte' && !dados.causa_obito) {
-      throw new Error('Campo "causa_obito" é obrigatório para movimentações do tipo "morte"')
+    if (dados.tipo === 'compra' || dados.tipo === 'venda') {
+      this.validarQuantidade(dados.quantidade)
+    }
+
+    if (dados.tipo === 'transferencia') {
+      this.validarOrigem(dados.origem)
+      this.validarDestino(dados.destino)
+      this.validarQuantidade(dados.quantidade)
+    }
+
+    if (dados.tipo === 'nascimento') {
+      this.validarOrigem(dados.origem)
+      this.validarQuantidade(dados.quantidade)
+    }
+
+    if (dados.tipo === 'morte') {
+      this.validarOrigem(dados.origem)
+
+      if (!dados.causa_obito) {
+        throw new Error('Campo "causa_obito" é obrigatório para movimentações do tipo "morte"')
+      }
+    }
+  },
+
+  validarOrigem(origem: MovimentacaoInput['origem']): void {
+    if (!origem) {
+      throw new Error('Campo "origem" é obrigatório')
+    }
+  },
+
+  validarDestino(destino: MovimentacaoInput['destino']): void {
+    if (!destino) {
+      throw new Error('Campo "destino" é obrigatório')
+    }
+  },
+
+  validarQuantidade(quantidade: MovimentacaoInput['quantidade']): void {
+    if (!quantidade || quantidade <= 0) {
+      throw new Error('Campo "quantidade" é obrigatório e deve ser maior que zero')
     }
   },
 
@@ -61,6 +88,7 @@ export const MovimentacaoService = {
     return MovimentacaoRepository.update(id, {
       status: novoStatus,
       validado_por: usuario.id,
+      data_validacao: new Date(),
     })
   },
 
@@ -205,7 +233,14 @@ export const MovimentacaoService = {
   // Atualizar movimentação
   async atualizar(id: number, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     // Se atualizando campos críticos, revalidar
-    if (dados.tipo || dados.origem || dados.destino || dados.quantidade || dados.estagio_vida) {
+    if (
+      dados.tipo ||
+      dados.origem !== undefined ||
+      dados.destino !== undefined ||
+      dados.quantidade !== undefined ||
+      dados.causa_obito !== undefined ||
+      dados.estagio_vida
+    ) {
       const movimentacaoAtual = await MovimentacaoRepository.findById(id)
       if (!movimentacaoAtual) {
         return null
