@@ -2984,11 +2984,23 @@ No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: 
 
 ## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-*A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais.*
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada a seguir relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
 
-| Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência        |
-|---------|-------|------|-------------|----------|-------|------------------|
-| ...     | RF001 | RN01 | `/usuarios` | Cadastro | CT02  | print, log, relatório de cobertura |
+| Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
+|---------|----|----|----------|------|-------|-----------|
+| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes` | Registro de movimentação | CT-RF001 | Requisição HTTP com campos por tipo, resposta 201/400 e registro persistido em `movimentacao` e tabela especializada correspondente |
+| Supervisor Luiz | RF002 | RN02 | `POST /tarefas` | Criar tarefa | CT-RF002 | Requisição HTTP com usuário atribuído, descrição, categoria e prioridade; resposta 201/400 e registro persistido em `tarefa` |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem` | Sincronização offline/online | CT-RF003 | Simulação de conexão disponível/indisponível, resposta da sincronização e atualização da flag `sincronizado` |
+| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens`; `GET /evidencias/{id}` | Anexar evidência | CT-RF004 | Requisições de criação de foto, áudio e mensagem; validação de georreferenciamento, duração/conteúdo e persistência nas tabelas de evidência |
+| Capataz Daniel / Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 | Requisição de autenticação com login e senha, resposta 200/401 e retorno do usuário sem `senha_hash` |
+| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 | Verificação de permissão por perfil, movimentação atualizada para `validado` e tarefa/ticket atualizados para `aprovado` com usuário responsável |
+| Gerente Marcos | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal` | Relatórios | CT-RF007 | Relatório contendo apenas dados com `sincronizado=true` e status válido para consolidação |
+| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets/pendentes`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 | Criação de ticket com evidência descritiva obrigatória, listagem de pendentes, atribuição e aprovação por supervisor |
+| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes?retiroId={id}&tipos={tipos}&status={status}`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 | Consulta filtrada por retiro, tipo e status, retornando apenas movimentações compatíveis com os parâmetros informados |
+| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /sincronizacao/dashboard/tickets` | Dashboard gerencial | CT-RF010 | Indicadores gerados a partir de movimentações `validado`, tarefas/tickets `aprovado` e registros sincronizados |
+| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 | Criação e alteração de prioridade usando valores `alta`, `media` ou `baixa`, com listagem e contagem por prioridade |
+
+&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema possuem rastreabilidade entre requisitos, regras de negócio e endpoints reais do backend. Os registros de movimentação, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão conectados a testes e evidências esperadas, permitindo verificar a cobertura funcional durante a evolução do projeto. Assim, a matriz contribui para manter o WAD, a API e os critérios de validação sincronizados, servindo como referência para futuras revisões, testes automatizados e validações com os usuários da BrPec.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
