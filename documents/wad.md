@@ -1888,6 +1888,61 @@ Registros rejeitados não entram nos relatórios oficiais do Gerente Marcos (UC-
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+----
+ 
+#### 9. Filtrar Movimentações (`/movimentacoes/filtrar`)
+ 
+**Fluxo Principal**
+ 
+• O processo inicia quando o supervisor define os filtros desejados na interface da aplicação, podendo selecionar retiro, tipo de movimentação, período e status do registro.
+ 
+• Após a seleção dos filtros, a interface envia uma requisição `GET` para o endpoint `/movimentacoes/filtrar`, encaminhando os parâmetros ao *ControladorMovimentacao*.
+ 
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas supervisores possam acessar a funcionalidade de filtragem.
+ 
+• Caso o perfil seja válido, o controlador encaminha os parâmetros ao *ServicoMovimentacao*, responsável pelas regras de filtragem.
+ 
+• O serviço aplica os critérios informados e solicita ao *RepositorioMovimentacao* a busca das movimentações que atendem aos filtros selecionados.
+ 
+• O repositório realiza a consulta no banco de dados e retorna os registros encontrados ao serviço.
+ 
+• Por fim, o controlador responde à interface com status `200 – Sucesso`, exibindo ao supervisor a lista de movimentações filtradas.
+ 
+ 
+**Fluxo Alternativo - Usuário sem permissão**
+ 
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
+ 
+• Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorMovimentacao* retorna uma resposta `403 – Proibido`.
+ 
+• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para filtrar movimentações.
+ 
+ 
+**Fluxo Alternativo - Sem filtros aplicados**
+ 
+• Quando o supervisor acessa a tela sem aplicar nenhum filtro, o *ServicoMovimentacao* aplica automaticamente o filtro padrão definido pela RN09.
+ 
+• Nesse caso, o serviço busca apenas as movimentações com status "pendente" dos retiros sob responsabilidade do supervisor autenticado.
+ 
+• A interface então exibe essa lista padrão, permitindo que o supervisor refine a busca posteriormente.
+ 
+ 
+**Fluxo Alternativo - Nenhum dado encontrado**
+ 
+• Após a consulta, o *RepositorioMovimentacao* pode retornar uma lista vazia caso nenhum registro corresponda aos filtros aplicados.
+ 
+• Nesse cenário, o controlador responde à interface com status `200 – Sucesso`, exibindo uma mensagem informando que não foram encontradas movimentações para os critérios selecionados.
+ 
+ 
+<div align="center">
+<p align="center">Figura 18 - Diagrama Sequencial (RF009)</p>
+<p align="center">
+<img src="others/assets/diagrama-sequencial-rf009.png" alt="Diagrama Sequencial RF009" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+----
+
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BRPEC.
 
 
