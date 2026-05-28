@@ -146,17 +146,17 @@ export const TicketController = {
     }
   },
 
-  async listarAbertos(req: Request, res: Response) {
+  async listarPendentes(req: Request, res: Response) {
     try {
       const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
-      const tickets = await TicketService.listarAbertos(retiroId)
+      const tickets = await TicketService.listarPendentes(retiroId)
       return res.status(200).json(tickets)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar tickets abertos' })
+      return res.status(500).json({ error: 'Erro ao listar tickets pendentes' })
     }
   },
 
@@ -204,20 +204,19 @@ export const TicketController = {
   async alterarPrioridade(req: Request, res: Response) {
     try {
       const id = parseNumber(req.params.id)
-      const { novaPrioridade, usuarioResponsavel } = req.body
+      const { novaPrioridade } = req.body
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
-      if (!novaPrioridade || !usuarioResponsavel) {
-        return res.status(400).json({ error: 'Campos "novaPrioridade" e "usuarioResponsavel" são obrigatórios' })
+      if (!novaPrioridade) {
+        return res.status(400).json({ error: 'Campo "novaPrioridade" é obrigatório' })
       }
 
       const ticket = await TicketService.alterarPrioridade(
         id,
-        novaPrioridade as TicketPrioridade,
-        usuarioResponsavel as Usuario
+        novaPrioridade as TicketPrioridade
       )
 
       if (!ticket) {

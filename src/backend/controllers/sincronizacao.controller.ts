@@ -54,7 +54,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN07: Busca tarefas sincronizadas e concluídas para relatórios.
+  // RN07: Busca tarefas sincronizadas e aprovadas para relatórios.
   async buscarTarefasParaRelatrio(req: Request, res: Response) {
     try {
       const retiroId = parseQueryNumber(req.query.retiroId)
@@ -73,7 +73,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN10: Busca tickets sincronizados e abertos para o dashboard.
+  // RN10: Busca tickets sincronizados e aprovados para o dashboard.
   async buscarTicketsParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = parseQueryNumber(req.query.retiroId)

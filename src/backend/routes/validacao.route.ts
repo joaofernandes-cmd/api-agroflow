@@ -10,8 +10,8 @@ validacaoRoutes.post('/permissao', ValidacaoController.podeValidar)
 validacaoRoutes.patch('/movimentacoes/:id/aprovar', ValidacaoController.aprovarMovimentacao)
 validacaoRoutes.patch('/movimentacoes/:id/rejeitar', ValidacaoController.rejeitarMovimentacao)
 
-// Aprovação e rejeição de tarefas pendentes
+// Aprovação de tickets e tarefas pendentes (sem rejeição)
+validacaoRoutes.patch('/tickets/:id/aprovar', ValidacaoController.aprovarTicket)
 validacaoRoutes.patch('/tarefas/:id/aprovar', ValidacaoController.aprovarTarefa)
-validacaoRoutes.patch('/tarefas/:id/rejeitar', ValidacaoController.rejeitarTarefa)
 
 export default validacaoRoutes

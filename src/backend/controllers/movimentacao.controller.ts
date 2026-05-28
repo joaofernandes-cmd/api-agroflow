@@ -100,7 +100,7 @@ export const MovimentacaoController = {
   async validar(req: Request, res: Response) {
     try {
       const id = parseNumber(req.params.id)
-      const { usuario, aprovado, motivo_rejeicao } = req.body
+      const { usuario, aprovado } = req.body
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })
@@ -110,7 +110,7 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Usuário e aprovação são obrigatórios' })
       }
 
-      const movimentacao = await MovimentacaoService.validar(id, usuario as Usuario, aprovado, motivo_rejeicao)
+      const movimentacao = await MovimentacaoService.validar(id, usuario as Usuario, aprovado)
 
       if (!movimentacao) {
         return res.status(404).json({ error: 'Movimentação não encontrada' })

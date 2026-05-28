@@ -1,9 +1,11 @@
+import { UUID } from './uuid'
+
 export type UsuarioStatus = 'ativo' | 'inativo'
 
 export type UsuarioCargo = 'capataz' | 'supervisor' | 'gerente'
 
 export interface Usuario {
-  id: string
+  id: UUID
   retiro_id: number
   nome: string
   login: string

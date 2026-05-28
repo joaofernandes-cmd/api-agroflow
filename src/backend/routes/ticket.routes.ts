@@ -8,7 +8,7 @@ ticketRoutes.post('/', TicketController.criar)
 ticketRoutes.get('/', TicketController.listarTodos)
 
 // Consultas específicas usadas por filtros, dashboard e acompanhamento.
-ticketRoutes.get('/abertos', TicketController.listarAbertos)
+ticketRoutes.get('/pendentes', TicketController.listarPendentes)
 ticketRoutes.get('/status', TicketController.listarPorStatus)
 ticketRoutes.get('/prioridade', TicketController.listarPorPrioridade)
 ticketRoutes.get('/categoria', TicketController.listarPorCategoria)

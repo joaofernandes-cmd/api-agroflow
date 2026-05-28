@@ -1,3 +1,5 @@
+import { UUID } from './uuid'
+
 export type MovimentacaoTipo = 'nascimento' | 'morte' | 'transferencia' | 'compra' | 'venda' | 'outros'
 
 export type MovimentacaoStatus = 'pendente' | 'aprovado' | 'rejeitado'
@@ -9,8 +11,8 @@ export type EstagioVida = 'BEZERRO 0 A 7 MESES' | 'GARROTE 8 A 12 MESES' | 'NOVI
 export interface Movimentacao {
   id: number
   retiro_id: number
-  capataz_id: string
-  validado_por: string | null
+  capataz_id: UUID
+  validado_por: UUID | null
   tipo: MovimentacaoTipo
   origem: RetiroNome | null
   destino: RetiroNome | null
@@ -21,13 +23,12 @@ export interface Movimentacao {
   data_validacao: Date | null
   causa_obito: string | null
   estagio_vida: EstagioVida
-  motivo_rejeicao: string | null
 }
 
 export interface MovimentacaoInput {
   retiro_id: number
-  capataz_id: string
-  validado_por: string | null
+  capataz_id: UUID
+  validado_por: UUID | null
   tipo: MovimentacaoTipo
   origem?: RetiroNome | null
   destino?: RetiroNome | null
@@ -38,5 +39,4 @@ export interface MovimentacaoInput {
   data_validacao?: Date | null
   causa_obito?: string | null
   estagio_vida: EstagioVida
-  motivo_rejeicao?: string | null
 }

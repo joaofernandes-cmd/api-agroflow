@@ -1,4 +1,5 @@
 import { Evidencia, EvidenciaInput, TipoEvidencia } from '../models/evidencia.model'
+import { UUID } from '../models/uuid'
 import { EvidenciaFoto, EvidenciaFotoInput } from '../models/evidencia-foto.model'
 import { EvidenciaAudio, EvidenciaAudioInput } from '../models/evidencia-audio.model'
 import { EvidenciaMensagem, EvidenciaMensagemInput } from '../models/evidencia-mensagem.model'
@@ -45,7 +46,7 @@ export const EvidenciaService = {
   // Sistema automaticamente extrai latitude/longitude dos metadados da imagem (não é input do usuário)
   // Se georreferenciamento está ausente ou inválido, rejeita a foto
   async criarFoto(
-    usuarioId: string,
+    usuarioId: UUID,
     urlArquivo: string,
     latitude?: number,
     longitude?: number
@@ -78,7 +79,7 @@ export const EvidenciaService = {
 
   // Criar evidência de áudio
   // RN08: Áudio deve ter mínimo 3 segundos (validado no upload)
-  async criarAudio(usuarioId: string, urlArquivo: string): Promise<{ evidencia: Evidencia; audio: EvidenciaAudio }> {
+  async criarAudio(usuarioId: UUID, urlArquivo: string): Promise<{ evidencia: Evidencia; audio: EvidenciaAudio }> {
     // TODO: Validar duração de áudio (mínimo 3 segundos)
     // Esta validação será feita durante o upload do arquivo quando tivermos acesso aos metadados
 
@@ -99,7 +100,7 @@ export const EvidenciaService = {
   },
 
   // RN08: Criar evidência de mensagem + validar mínimo 10 caracteres
-  async criarMensagem(usuarioId: string, conteudo: string): Promise<{ evidencia: Evidencia; mensagem: EvidenciaMensagem }> {
+  async criarMensagem(usuarioId: UUID, conteudo: string): Promise<{ evidencia: Evidencia; mensagem: EvidenciaMensagem }> {
     // RN08: Valida que mensagem atende requisitos mínimos (10 caracteres)
     EvidenciaService.validarEvidenciaDescritiva('mensagem', { conteudo })
 
