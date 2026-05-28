@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS tarefa (
   retiro_id BIGINT NOT NULL,
   criada_por UUID NOT NULL,
   atribuida_a UUID NOT NULL,
+  aprovado_por UUID NULL,
   descricao TEXT NOT NULL,
   categoria VARCHAR(255) NOT NULL,
   prioridade tarefa_prioridade NOT NULL,
@@ -22,3 +23,7 @@ ALTER TABLE tarefa
 ALTER TABLE tarefa
   ADD CONSTRAINT tarefa_atribuida_a_foreign
   FOREIGN KEY (atribuida_a) REFERENCES usuario(id);
+
+ALTER TABLE tarefa
+  ADD CONSTRAINT tarefa_aprovado_por_foreign
+  FOREIGN KEY (aprovado_por) REFERENCES usuario(id);

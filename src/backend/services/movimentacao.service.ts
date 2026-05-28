@@ -1,25 +1,11 @@
 import { Movimentacao, MovimentacaoInput, MovimentacaoTipo, MovimentacaoStatus } from '../models/movimentacao.model'
 import { MovimentacaoRepository } from '../repositories/movimentacao.repository'
-import { Usuario } from '../models/usuario.model'
-import { UsuarioService } from './usuario.service'
 
 export const MovimentacaoService = {
   // RN01: Validar campos obrigatórios antes de criar
   validarCamposObrigatorios(dados: MovimentacaoInput): void {
     if (!dados.capataz_id) {
       throw new Error('Campo "capataz_id" é obrigatório')
-    }
-
-    if (!dados.origem) {
-      throw new Error('Campo "origem" é obrigatório')
-    }
-
-    if (!dados.destino) {
-      throw new Error('Campo "destino" é obrigatório')
-    }
-
-    if (!dados.quantidade || dados.quantidade <= 0) {
-      throw new Error('Campo "quantidade" é obrigatório e deve ser maior que zero')
     }
 
     if (!dados.estagio_vida) {
@@ -85,26 +71,6 @@ export const MovimentacaoService = {
     return movimentacao
   },
 
-  // RN06: Apenas Supervisor pode validar/aprovar movimentações
-  async validar(id: number, usuario: Usuario, aprovado: boolean): Promise<Movimentacao | null> {
-    if (!UsuarioService.podeValidar(usuario)) {
-      throw new Error('Apenas Supervisores podem validar movimentações')
-    }
-
-    const movimentacao = await MovimentacaoRepository.findById(id)
-    if (!movimentacao) {
-      return null
-    }
-
-    const novoStatus: MovimentacaoStatus = aprovado ? 'aprovado' : 'rejeitado'
-
-    return MovimentacaoRepository.update(id, {
-      status: novoStatus,
-      validado_por: usuario.id,
-      data_validacao: new Date(),
-    })
-  },
-
   // RN09: Filtrar movimentações por tipo e status
   // Permite filtro múltiplo para tipo e status, apenas um retiro por vez
   async filtrar(
@@ -144,8 +110,8 @@ export const MovimentacaoService = {
         return false
       }
 
-      // Apenas dados aprovados
-      if (m.status !== 'aprovado') {
+      // Apenas dados validados
+      if (m.status !== 'validado') {
         return false
       }
 
@@ -158,7 +124,7 @@ export const MovimentacaoService = {
     })
   },
 
-  // RN10: Buscar movimentações para dashboard (apenas aprovadas e sincronizadas)
+  // RN10: Buscar movimentações para dashboard (apenas validadas e sincronizadas)
   async buscarParaDashboard(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
@@ -168,8 +134,8 @@ export const MovimentacaoService = {
         return false
       }
 
-      // Apenas dados aprovados
-      if (m.status !== 'aprovado') {
+      // Apenas dados validados
+      if (m.status !== 'validado') {
         return false
       }
 

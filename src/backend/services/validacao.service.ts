@@ -14,8 +14,8 @@ export const ValidacaoService = {
     return usuario.cargo === 'supervisor'
   },
 
-  // RN06: Aprovar movimentação (pendente → aprovado)
-  async aprovarMovimentacao(
+  // RN06: Validar movimentação (pendente → validado)
+  async validarMovimentacao(
     movimentacaoId: number,
     supervisorId: UUID,
     supervisorCargo: string
@@ -42,52 +42,14 @@ export const ValidacaoService = {
 
     const movimentacaoAtualizada = await MovimentacaoRepository.update(movimentacaoId, {
       ...movimentacao,
-      status: 'aprovado',
+      status: 'validado',
       validado_por: supervisorId,
+      data_validacao: new Date(),
     })
 
     return {
       sucesso: true,
-      mensagem: 'Movimentação aprovada com sucesso.',
-      movimentacao: movimentacaoAtualizada || undefined,
-    }
-  },
-
-  // RN06: Rejeitar movimentação (pendente → rejeitado)
-  async rejeitarMovimentacao(
-    movimentacaoId: number,
-    supervisorId: UUID,
-    supervisorCargo: string
-  ): Promise<{ sucesso: boolean; mensagem: string; movimentacao?: Movimentacao }> {
-    if (supervisorCargo !== 'supervisor') {
-      return {
-        sucesso: false,
-        mensagem: 'Apenas Supervisores podem rejeitar movimentações. Acesso negado.',
-      }
-    }
-
-    const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
-
-    if (!movimentacao) {
-      return { sucesso: false, mensagem: 'Movimentação não encontrada.' }
-    }
-
-    if (movimentacao.status !== 'pendente') {
-      return {
-        sucesso: false,
-        mensagem: `Movimentação já foi ${movimentacao.status}. Não pode ser alterada.`,
-      }
-    }
-
-    const movimentacaoAtualizada = await MovimentacaoRepository.update(movimentacaoId, {
-      ...movimentacao,
-      status: 'rejeitado',
-      validado_por: supervisorId,
-    })
-
-    return {
-      sucesso: true,
-      mensagem: 'Movimentação rejeitada com sucesso.',
+      mensagem: 'Movimentação validada com sucesso.',
       movimentacao: movimentacaoAtualizada || undefined,
     }
   },

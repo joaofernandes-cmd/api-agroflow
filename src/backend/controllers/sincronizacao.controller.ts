@@ -35,7 +35,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN07: Busca movimentações sincronizadas e aprovadas para relatórios.
+  // RN07: Busca movimentações sincronizadas e validadas para relatórios.
   async buscarMovimentacoesParaRelatrio(req: Request, res: Response) {
     try {
       const retiroId = parseQueryNumber(req.query.retiroId)

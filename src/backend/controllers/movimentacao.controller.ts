@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { MovimentacaoService } from '../services/movimentacao.service'
 import { MovimentacaoStatus, MovimentacaoTipo } from '../models/movimentacao.model'
-import { Usuario } from '../models/usuario.model'
 
 function queryString(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
@@ -94,33 +93,6 @@ export const MovimentacaoController = {
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar movimentação' })
-    }
-  },
-
-  async validar(req: Request, res: Response) {
-    try {
-      const id = parseNumber(req.params.id)
-      const { usuario, aprovado } = req.body
-
-      if (id === null) {
-        return res.status(400).json({ error: 'ID inválido' })
-      }
-
-      if (!usuario || typeof aprovado !== 'boolean') {
-        return res.status(400).json({ error: 'Usuário e aprovação são obrigatórios' })
-      }
-
-      const movimentacao = await MovimentacaoService.validar(id, usuario as Usuario, aprovado)
-
-      if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentação não encontrada' })
-      }
-
-      return res.status(200).json(movimentacao)
-    } catch (error) {
-      return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao validar movimentação',
-      })
     }
   },
 
