@@ -1,7 +1,14 @@
 import { Router } from 'express'
 import { RelatorioController } from '../controllers/relatorio.controller'
+import { autenticarUsuario } from '../middlewares/auth.middleware'
+import { exigirCargo } from '../middlewares/role.middleware'
 
 const relatorioRoutes = Router()
+
+// Relatórios são área restrita.
+relatorioRoutes.use(autenticarUsuario)
+// Gerente e supervisor podem consultar esses dados.
+relatorioRoutes.use(exigirCargo('gerente', 'supervisor'))
 
 // Dados brutos usados na montagem de relatórios
 relatorioRoutes.get('/movimentacoes/dados', RelatorioController.buscarDadosMovimentacoes)
