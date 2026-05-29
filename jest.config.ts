@@ -1,11 +1,11 @@
-import type { Config } from 'jest';
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testMatch: ['**/*.spec.ts'],
-  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.spec.ts'],
-  clearMocks: true
-};
+  testMatch: ['<rootDir>/src/backend/tests/**/*.spec.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/backend/tests/jest.setup.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/backend/tests/**/*.spec.ts'],
+  clearMocks: true,
+}
 
-export default config;
+module.exports = config
