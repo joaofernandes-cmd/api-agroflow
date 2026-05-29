@@ -57,13 +57,13 @@ export const EvidenciaController = {
 
     async criarAudio(req: Request, res: Response) {
         try {
-            const { usuarioId, urlArquivo } = req.body
+            const { usuarioId, urlArquivo, duracao } = req.body
 
-            if (!usuarioId || !urlArquivo) {
-                return res.status(400).json({ error: 'Usuário e arquivo são obrigatórios' })
+            if (!usuarioId || !urlArquivo || duracao === undefined) {
+                return res.status(400).json({ error: 'Usuário, arquivo e duração são obrigatórios' })
             }
 
-            const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo)
+            const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo, Number(duracao))
 
             return res.status(201).json(resultado)
         } catch (error) {

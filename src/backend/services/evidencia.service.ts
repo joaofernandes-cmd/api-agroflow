@@ -78,10 +78,9 @@ export const EvidenciaService = {
   },
 
   // Criar evidência de áudio
-  // RN08: Áudio deve ter mínimo 3 segundos (validado no upload)
-  async criarAudio(usuarioId: UUID, urlArquivo: string): Promise<{ evidencia: Evidencia; audio: EvidenciaAudio }> {
-    // TODO: Validar duração de áudio (mínimo 3 segundos)
-    // Esta validação será feita durante o upload do arquivo quando tivermos acesso aos metadados
+  // RN08: Áudio deve ter mínimo 3 segundos
+  async criarAudio(usuarioId: UUID, urlArquivo: string, duracao: number): Promise<{ evidencia: Evidencia; audio: EvidenciaAudio }> {
+    EvidenciaService.validarEvidenciaDescritiva('audio', { duracao })
 
     // Cria registro base de evidência (tabela: evidencia)
     const evidencia = await EvidenciaRepository.criar({
