@@ -3,9 +3,9 @@ import { TicketService } from '../services/ticket.service'
 import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
 
-function converterNumero(value: unknown): number | null {
-  const parsed = Number(value)
-  return Number.isNaN(parsed) ? null : parsed
+function converterNumero(valor: unknown): number | null {
+  const numero = Number(valor)
+  return Number.isNaN(numero) ? null : numero
 }
 
 export const TicketController = {

@@ -4,10 +4,10 @@ import movimentacaoRoutes from './routes/movimentacao.route'
 import relatorioRoutes from './routes/relatorio.route'
 import sincronizacaoRoutes from './routes/sincronizacao.route'
 import tarefaRoutes from './routes/tarefa.route'
-import ticketRoutes from './routes/ticket.routes'
+import ticketRoutes from './routes/ticket.route'
 import usuarioRoutes from './routes/usuario.route'
 import validacaoRoutes from './routes/validacao.route'
-import { tratadorDeErros, AppError } from './middlewares/erros.middleware'
+import { tratadorDeErros, ErroDeAplicacao } from './middlewares/erros.middleware'
 import { middlewareDeLog } from './middlewares/log.middleware'
 
 const app = express()
@@ -34,7 +34,7 @@ app.use('/validacoes', validacaoRoutes)
 
 // Se nenhuma rota bateu, geramos um erro 404 padronizado.
 app.use((_req, _res, next) => {
-  next(new AppError('Rota nao encontrada', 404))
+  next(new ErroDeAplicacao('Rota nao encontrada', 404))
 })
 
 // Handler global de erro.

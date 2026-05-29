@@ -37,14 +37,14 @@ export function gerarToken(usuario: UsuarioAutenticado): string {
 // Middleware de autenticacao.
 // Verifica se existe token Bearer valido e, se existir, preenche req.usuario.
 export function autenticarUsuario(req: Request, res: Response, next: NextFunction) {
-  const authorization = req.headers.authorization
+  const autorizacao = req.headers.authorization
 
   // Sem token na cabeca Authorization nao ha autenticacao.
-  if (!authorization?.startsWith('Bearer ')) {
+  if (!autorizacao?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Token nao informado' })
   }
 
-  const token = authorization.slice('Bearer '.length).trim()
+  const token = autorizacao.slice('Bearer '.length).trim()
 
   try {
     // Valida e decodifica o JWT usando o segredo do servidor.

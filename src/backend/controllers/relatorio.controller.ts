@@ -4,27 +4,27 @@ import { RelatorioService } from '../services/relatorio.service'
 // Converte uma string de query em Date.
 // Se o valor vier vazio, retorna undefined.
 // Se a data for inválida, retorna null para permitir resposta 400.
-function converterDataQuery(value: unknown): Date | undefined | null {
-  if (value === undefined || value === null || value === '') {
+function converterDataQuery(valor: unknown): Date | undefined | null {
+  if (valor === undefined || valor === null || valor === '') {
     return undefined
   }
 
-  const date = new Date(String(value))
+  const data = new Date(String(valor))
 
-  if (Number.isNaN(date.getTime())) {
+  if (Number.isNaN(data.getTime())) {
     return null
   }
 
-  return date
+  return data
 }
 
-function converterNumeroQuery(value: unknown): number | undefined | null {
-  if (value === undefined || value === null || value === '') {
+function converterNumeroQuery(valor: unknown): number | undefined | null {
+  if (valor === undefined || valor === null || valor === '') {
     return undefined
   }
 
-  const parsed = Number(value)
-  return Number.isNaN(parsed) ? null : parsed
+  const numero = Number(valor)
+  return Number.isNaN(numero) ? null : numero
 }
 
 export const RelatorioController = {
