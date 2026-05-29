@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 import { SincronizacaoService } from '../services/sincronizacao.service'
 
-function converterNumeroQuery(value: unknown): number | undefined | null {
-  if (value === undefined || value === null || value === '') {
+function converterNumeroQuery(valor: unknown): number | undefined | null {
+  if (valor === undefined || valor === null || valor === '') {
     return undefined
   }
 
-  const parsed = Number(value)
-  return Number.isNaN(parsed) ? null : parsed
+  const numero = Number(valor)
+  return Number.isNaN(numero) ? null : numero
 }
 
 export const SincronizacaoController = {

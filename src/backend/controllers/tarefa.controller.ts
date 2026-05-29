@@ -3,13 +3,13 @@ import { TarefaService } from '../services/tarefa.service'
 import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 
-function extrairTexto(value: unknown): string | undefined {
-  return typeof value === 'string' ? value : undefined
+function extrairTexto(valor: unknown): string | undefined {
+  return typeof valor === 'string' ? valor : undefined
 }
 
-function converterNumero(value: unknown): number | null {
-  const parsed = Number(value)
-  return Number.isNaN(parsed) ? null : parsed
+function converterNumero(valor: unknown): number | null {
+  const numero = Number(valor)
+  return Number.isNaN(numero) ? null : numero
 }
 
 export const TarefaController = {
@@ -78,13 +78,13 @@ export const TarefaController = {
   async buscarParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
+      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
 
-      if (retiroIdNumber === null) {
+      if (retiroIdNumerico === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
-      const tarefas = await TarefaService.buscarParaDashboard(retiroIdNumber)
+      const tarefas = await TarefaService.buscarParaDashboard(retiroIdNumerico)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -96,13 +96,13 @@ export const TarefaController = {
     try {
       const status = String(req.params.status) as TarefaStatus
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
+      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
 
-      if (retiroIdNumber === null) {
+      if (retiroIdNumerico === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
-      const tarefas = await TarefaService.listarPorStatus(status, retiroIdNumber)
+      const tarefas = await TarefaService.listarPorStatus(status, retiroIdNumerico)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -125,13 +125,13 @@ export const TarefaController = {
     try {
       const prioridade = String(req.params.prioridade) as TarefaPrioridade
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
+      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
 
-      if (retiroIdNumber === null) {
+      if (retiroIdNumerico === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
-      const tarefas = await TarefaService.listarPorPrioridade(prioridade, retiroIdNumber)
+      const tarefas = await TarefaService.listarPorPrioridade(prioridade, retiroIdNumerico)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -143,13 +143,13 @@ export const TarefaController = {
     try {
       const categoria = String(req.params.categoria)
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
+      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
 
-      if (retiroIdNumber === null) {
+      if (retiroIdNumerico === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
-      const tarefas = await TarefaService.listarPorCategoria(categoria, retiroIdNumber)
+      const tarefas = await TarefaService.listarPorCategoria(categoria, retiroIdNumerico)
 
       return res.status(200).json(tarefas)
     } catch (error) {
@@ -207,13 +207,13 @@ export const TarefaController = {
   async contarPorStatus(req: Request, res: Response) {
     try {
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
+      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
 
-      if (retiroIdNumber === null) {
+      if (retiroIdNumerico === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
-      const contagem = await TarefaService.contarPorStatus(retiroIdNumber)
+      const contagem = await TarefaService.contarPorStatus(retiroIdNumerico)
 
       return res.status(200).json(contagem)
     } catch (error) {

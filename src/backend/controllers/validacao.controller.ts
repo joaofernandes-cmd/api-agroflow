@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import { ValidacaoService } from '../services/validacao.service'
 
-function converterNumero(value: unknown): number | null {
-  const parsed = Number(value)
-  return Number.isNaN(parsed) ? null : parsed
+function converterNumero(valor: unknown): number | null {
+  const numero = Number(valor)
+  return Number.isNaN(numero) ? null : numero
 }
 
 export const ValidacaoController = {

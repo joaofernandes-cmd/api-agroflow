@@ -1,33 +1,33 @@
 import { NextFunction, Request, Response } from 'express'
 
 // Estrutura padrao de um erro de validacao.
-export type ValidationError = {
-  field: string
-  message: string
+export type ErroDeValidacao = {
+  campo: string
+  mensagem: string
 }
 
 // Resultado esperado de qualquer validacao.
-export type ValidationResult = {
-  valid: boolean
-  errors: ValidationError[]
+export type ResultadoDeValidacao = {
+  valido: boolean
+  erros: ErroDeValidacao[]
 }
 
 // Assinatura da funcao que valida uma request.
-export type RequestValidator = (req: Request) => ValidationResult | Promise<ValidationResult>
+export type ValidadorDeRequisicao = (req: Request) => ResultadoDeValidacao | Promise<ResultadoDeValidacao>
 
 // Factory de middleware.
 // Recebe uma funcao de validacao e devolve um middleware Express pronto para uso.
-export function validarRequisicao(validator: RequestValidator) {
+export function validarRequisicao(validador: ValidadorDeRequisicao) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Executa a validacao especifica da rota.
-      const result = await validator(req)
+      const resultado = await validador(req)
 
       // Se a validacao falhar, interrompe aqui e responde 400.
-      if (!result.valid) {
+      if (!resultado.valido) {
         return res.status(400).json({
           error: 'Dados invalidos',
-          details: result.errors,
+          details: resultado.erros,
         })
       }
 
@@ -44,12 +44,12 @@ export function validarRequisicao(validator: RequestValidator) {
 
 // Helper para campos texto obrigatorios.
 export function textoObrigatorio(
-  value: unknown,
-  field: string,
-  message = `Campo "${field}" e obrigatorio`
-): ValidationError | null {
-  if (typeof value !== 'string' || value.trim().length === 0) {
-    return { field, message }
+  valor: unknown,
+  campo: string,
+  mensagem = `Campo "${campo}" e obrigatorio`
+): ErroDeValidacao | null {
+  if (typeof valor !== 'string' || valor.trim().length === 0) {
+    return { campo, mensagem }
   }
 
   return null
@@ -57,14 +57,14 @@ export function textoObrigatorio(
 
 // Helper para campos numericos obrigatorios.
 export function numeroObrigatorio(
-  value: unknown,
-  field: string,
-  message = `Campo "${field}" deve ser um numero valido`
-): ValidationError | null {
-  const parsed = Number(value)
+  valor: unknown,
+  campo: string,
+  mensagem = `Campo "${campo}" deve ser um numero valido`
+): ErroDeValidacao | null {
+  const numero = Number(valor)
 
-  if (value === undefined || value === null || value === '' || Number.isNaN(parsed)) {
-    return { field, message }
+  if (valor === undefined || valor === null || valor === '' || Number.isNaN(numero)) {
+    return { campo, mensagem }
   }
 
   return null
@@ -72,18 +72,18 @@ export function numeroObrigatorio(
 
 // Helper para campos de data.
 export function dataObrigatoria(
-  value: unknown,
-  field: string,
-  message = `Campo "${field}" deve ser uma data valida`
-): ValidationError | null {
-  if (value === undefined || value === null || value === '') {
-    return { field, message }
+  valor: unknown,
+  campo: string,
+  mensagem = `Campo "${campo}" deve ser uma data valida`
+): ErroDeValidacao | null {
+  if (valor === undefined || valor === null || valor === '') {
+    return { campo, mensagem }
   }
 
-  const date = new Date(String(value))
+  const data = new Date(String(valor))
 
-  if (Number.isNaN(date.getTime())) {
-    return { field, message }
+  if (Number.isNaN(data.getTime())) {
+    return { campo, mensagem }
   }
 
   return null
@@ -91,13 +91,13 @@ export function dataObrigatoria(
 
 // Helper para validar valores dentro de uma lista permitida.
 export function umaDasOpcoes<T extends string>(
-  value: unknown,
-  field: string,
-  allowedValues: readonly T[],
-  message = `Campo "${field}" deve ser um dos valores permitidos`
-): ValidationError | null {
-  if (typeof value !== 'string' || !allowedValues.includes(value as T)) {
-    return { field, message }
+  valor: unknown,
+  campo: string,
+  valoresPermitidos: readonly T[],
+  mensagem = `Campo "${campo}" deve ser um dos valores permitidos`
+): ErroDeValidacao | null {
+  if (typeof valor !== 'string' || !valoresPermitidos.includes(valor as T)) {
+    return { campo, mensagem }
   }
 
   return null

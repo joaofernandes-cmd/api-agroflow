@@ -2,23 +2,23 @@ import { NextFunction, Request, Response } from 'express'
 
 // Erro padronizado da aplicacao.
 // Ele permite definir status HTTP e detalhes extras.
-export class AppError extends Error {
+export class ErroDeAplicacao extends Error {
   // Status HTTP que sera devolvido ao cliente.
-  statusCode: number
+  codigoStatus: number
   // Dados extras opcionais para debug ou resposta mais rica.
-  details?: unknown
+  detalhes?: unknown
 
-  constructor(message: string, statusCode = 500, details?: unknown) {
-    super(message)
-    this.name = 'AppError'
-    this.statusCode = statusCode
-    this.details = details
+  constructor(mensagem: string, codigoStatus = 500, detalhes?: unknown) {
+    super(mensagem)
+    this.name = 'ErroDeAplicacao'
+    this.codigoStatus = codigoStatus
+    this.detalhes = detalhes
   }
 }
 
 // Identifica erros criados pela propria aplicacao.
-function ehErroDeAplicacao(error: unknown): error is AppError {
-  return error instanceof AppError
+function ehErroDeAplicacao(error: unknown): error is ErroDeAplicacao {
+  return error instanceof ErroDeAplicacao
 }
 
 // Middleware final da cadeia.
@@ -36,9 +36,9 @@ export function tratadorDeErros(
 
   // Erros da aplicacao respeitam o status definido na classe.
   if (ehErroDeAplicacao(error)) {
-    return res.status(error.statusCode).json({
+    return res.status(error.codigoStatus).json({
       error: error.message,
-      ...(error.details !== undefined ? { details: error.details } : {}),
+      ...(error.detalhes !== undefined ? { details: error.detalhes } : {}),
     })
   }
 
