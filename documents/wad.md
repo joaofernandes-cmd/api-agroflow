@@ -1014,25 +1014,25 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
-| RF001 | RN01    | `/movimentacoes` | POST   |
-| RF002 | RN02    | `/tarefas` | POST   |
-| RF003 | RN03    | `/sincronizacao` | POST   |
-| RF004 | RN04    | `/evidencias` | POST   |
-| RF005 | RN05    | `/usuarios/login` | POST   |
-| RF006 | RN06    | `/validacoes/movimentacoes/{id}/validar` | PATCH   |
-| RF007 | RN07    | `/relatorios` | GET   |
-| RF008 | RN08    | `/tickets` | POST   |
-| RF009 | RN09    | `/movimentacoes/filtrar` | GET   |
-| RF010 | RN10    | `/movimentacoes/dashboard`, `/tarefas/dashboard`, `/sincronizacao/dashboard/tickets` | GET   |
-| RF011 | RN11    | `/tickets/{id}/prioridade` | PATCH   |
+| RF001 | RN01 | `/movimentacoes`<br>`/movimentacoes/{id}` | POST<br>GET/PATCH/DELETE |
+| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>PATCH |
+| RF003 | RN03 | `/sincronizacao/conexao`<br>`/sincronizacao`<br>`/sincronizacao/status`<br>`/sincronizacao/mensagem`<br>`/movimentacoes/sincronizar`<br>`/movimentacoes/{id}/sincronizar` | GET<br>POST<br>GET<br>GET<br>POST<br>PATCH |
+| RF004 | RN04 | `/evidencias`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>POST<br>POST<br>POST |
+| RF005 | RN05 | `/usuarios/login` | POST |
+| RF006 | RN06 | `/validacoes/permissao`<br>`/validacoes/movimentacoes/{id}/validar`<br>`/validacoes/tarefas/{id}/aprovar`<br>`/validacoes/tickets/{id}/aprovar` | POST<br>PATCH<br>PATCH<br>PATCH |
+| RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
+| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/{id}`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>PATCH<br>PATCH |
+| RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
+| RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
+| RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04 e RN08, respectivamente. Essas validações ocorrem no backend antes da persistência, retornando erro 422 (Unprocessable Entity) sempre que um requisito não é atendido.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08 e RN11. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Três endpoints fogem desse padrão de criação simples. O `/sincronizacao` (RF003) recebe um lote de registros produzidos offline e os processa em ordem cronológica, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais, dada a intermitência da conectividade Starlink nos retiros. O `/validacoes/movimentacoes/{id}/validar` (RF006) usa PATCH por alterar apenas o campo `status` de um registro existente; a RN06 restringe essa ação ao perfil Supervisor, retornando erro 403 para tentativas indevidas. Já o `/relatorios` (RF007) usa GET por ser operação exclusivamente de leitura, e a RN07 filtra a resposta para conter apenas dados sincronizados e conferidos.
+&nbsp;&nbsp;&nbsp;&nbsp;Três grupos de endpoints fogem desse padrão de criação simples. O grupo `/sincronizacao` (RF003) consulta conexão, processa dados pendentes e informa o estado da sincronização, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais. O grupo `/validacoes` (RF006) usa middlewares de autenticação e autorização por cargo, restringindo as ações ao perfil Supervisor conforme RN06. Já o grupo `/relatorios` (RF007) é protegido pelos mesmos mecanismos de autenticação, permitindo acesso a Gerente e Supervisor, e filtra a resposta para conter apenas dados sincronizados e válidos para consolidação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/usuarios/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, valida a identificação do usuário, justificando o uso de POST.
+&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/usuarios/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, valida a identificação do usuário e emite o token utilizado pelos middlewares de autenticação das rotas protegidas.
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
@@ -3059,19 +3059,19 @@ VALUES (?, ?, ?, ?);
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 |---------|----|----|----------|------|-------|-----------|
-| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes` | Registro de movimentação | CT-RF001 | Requisição HTTP com campos por tipo, resposta 201/400 e registro persistido em `movimentacao` e tabela especializada correspondente |
-| Supervisor Luiz | RF002 | RN02 | `POST /tarefas` | Criar tarefa | CT-RF002 | Requisição HTTP com usuário atribuído, descrição, categoria e prioridade; resposta 201/400 e registro persistido em `tarefa` |
-| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem` | Sincronização offline/online | CT-RF003 | Simulação de conexão disponível/indisponível, resposta da sincronização e atualização da flag `sincronizado` |
-| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens`; `GET /evidencias/{id}` | Anexar evidência | CT-RF004 | Requisições de criação de foto, áudio e mensagem; validação de georreferenciamento, duração/conteúdo e persistência nas tabelas de evidência |
-| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 | Requisição de autenticação com login e senha, resposta 200/401 e retorno do usuário sem `senha_hash` |
-| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 | Verificação de permissão por perfil, movimentação atualizada para `validado` e tarefa/ticket atualizados para `aprovado` com usuário responsável |
-| Gerente Marcos | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal` | Relatórios | CT-RF007 | Relatório contendo apenas dados com `sincronizado=true` e status válido para consolidação |
-| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets/pendentes`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 | Criação de ticket com evidência descritiva obrigatória, listagem de pendentes, atribuição e aprovação por supervisor |
-| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes?retiroId={id}&tipos={tipos}&status={status}`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 | Consulta filtrada por retiro, tipo e status, retornando apenas movimentações compatíveis com os parâmetros informados |
-| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /sincronizacao/dashboard/tickets` | Dashboard gerencial | CT-RF010 | Indicadores gerados a partir de movimentações `validado`, tarefas/tickets `aprovado` e registros sincronizados |
-| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 | Criação e alteração de prioridade usando valores `alta`, `media` ou `baixa`, com listagem e contagem por prioridade |
+| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Criação com campos por tipo, busca por ID, atualização, remoção e persistência em `movimentacao` e tabela especializada correspondente |
+| Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Criação com usuário atribuído, descrição, categoria e prioridade; listagem, atualização, mudança de status e remoção testadas por endpoint |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Detecção de conexão, processamento de pendências, mensagem/status de sincronização e atualização da flag `sincronizado` |
+| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Criação de foto, áudio e mensagem; busca/listagem de evidências; validação de georreferenciamento para fotos no service |
+| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Autenticação por login e senha, bloqueio de Capataz no fluxo de login, retorno sem `senha_hash` e geração de token para rotas protegidas |
+| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Rotas protegidas por `autenticarUsuario` e `exigirCargo('supervisor')`; movimentação atualizada para `validado` e tarefa/ticket para `aprovado` |
+| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Rotas protegidas por autenticação e cargo Gerente/Supervisor; relatórios gerados apenas com dados sincronizados e válidos para consolidação |
+| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets/pendentes`; `GET /tickets/{id}`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Criação de ticket com evidência descritiva obrigatória no service, listagem de pendentes, atribuição e aprovação por Supervisor |
+| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Filtro por retiro, tipo, status e período; listagem de pendentes para validação; aliases aceitos pelo controller para compatibilidade |
+| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Indicadores baseados em movimentações `validado`, tarefas/tickets `aprovado` e registros sincronizados, segmentados por retiro quando informado |
+| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Criação exige prioridade no service; filtro, contagem e alteração aceitam os valores `alta`, `media` e `baixa` |
 
-&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema possuem rastreabilidade entre requisitos, regras de negócio e endpoints reais do backend. Os registros de movimentação, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão conectados a testes e evidências esperadas, permitindo verificar a cobertura funcional durante a evolução do projeto. Assim, a matriz contribui para manter o WAD, a API e os critérios de validação sincronizados, servindo como referência para futuras revisões, testes automatizados e validações com os usuários da BrPec.
+&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema possuem rastreabilidade entre requisitos, regras de negócio, endpoints reais do backend, middlewares e testes automatizados. Os registros de movimentação, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão conectados aos arquivos de teste de integração correspondentes, permitindo verificar a cobertura funcional durante a evolução do projeto. Assim, a matriz contribui para manter o WAD, a API e os critérios de validação sincronizados, servindo como referência para futuras revisões, testes automatizados e validações com os usuários da BrPec.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
