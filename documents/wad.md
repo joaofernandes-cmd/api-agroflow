@@ -810,7 +810,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Cada retiro possui usuários vinculados, garantindo isolamento de dados por perfil (RBAC). O sistema opera em modo offline, armazenando registros localmente e sincronizando automaticamente quando a conexão é restabelecida. Apenas dados sincronizados são visíveis ao Supervisor para validação e entram nos relatórios gerenciais.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados conferidos sobem para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados conferidos são disponibilizados para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
 
 **Entidades principais:**
 
@@ -852,11 +852,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso o estágio de vida esteja ausente ou caso os campos específicos do tipo não sejam informados: compra e venda exigem quantidade; transferência exige origem, destino e quantidade; nascimento exige origem e quantidade; morte exige origem e causa do óbito. | RF001 | Dado que um usuário tenta registrar uma movimentação, quando algum campo obrigatório para o tipo selecionado está vazio, então o sistema retorna erro HTTP 400 com mensagem específica do campo faltante. |
 | RN02 | A criação de uma nova tarefa no sistema deve falhar e retornar um erro de validação HTTP 400 caso não contenha o preenchimento simultâneo de: usuário atribuído, descrição, prioridade e categoria. | RF002 | Dado que um supervisor tenta criar uma tarefa, quando qualquer campo obrigatório (usuário, descrição, prioridade ou categoria) está ausente, então o sistema retorna HTTP 400 e lista os campos faltantes. |
 | RN03 | Durante a operação em modo offline, os dados devem ser salvos no armazenamento local do dispositivo com flag `sincronizado = false`. A sincronização só deve ser disparada automaticamente quando o sistema detectar um status HTTP 200 válido de conexão restabelecida. | RF003 | Dado que o dispositivo está offline, quando uma movimentação é registrada, então o sistema salva localmente com `sincronizado = false` e dispara sincronização automática assim que receber HTTP 200 do servidor. |
-| RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude entre −90 e +90, longitude entre −180 e +180). Caso não possua ou os valores sejam inválidos, a foto deve ser rejeitada com erro HTTP 422. | RF004 | Dado que um usuário anexa uma foto, quando latitude ou longitude estão ausentes ou fora dos intervalos válidos, então o sistema retorna HTTP 422 com mensagem "Foto rejeitada: georreferenciamento inválido ou ausente". |
+| RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude entre −90 e +90, longitude entre −180 e +180). Caso não possua ou os valores sejam inválidos, a foto deve ser rejeitada com erro HTTP 400. | RF004 | Dado que um usuário anexa uma foto, quando latitude ou longitude estão ausentes ou fora dos intervalos válidos, então o sistema retorna HTTP 400 com mensagem "Foto rejeitada: georreferenciamento inválido ou ausente". |
 | RN05 | A identificação do usuário deve ocorrer com no máximo 3 interações, utilizando linguagem clara (nível de escolaridade: ensino fundamental), instruções objetivas e elementos visuais (ícones, botões grandes) que facilitem o uso por pessoas com baixo letramento digital. | RF005 | Dado que um usuário acessa a tela de login, quando realiza a identificação, então o fluxo é concluído em até 3 interações (ex: selecionar perfil visual, inserir PIN, confirmar). |
 | RN06 | A ação de validar uma movimentação ou aprovar uma tarefa/ticket deve ser restrita e estar visível/habilitada apenas para usuários com perfil "Supervisor". Usuários com perfil "Capataz" ou "Gerente" não devem ter acesso a essa funcionalidade. | RF006 | Dado que um usuário com perfil "Capataz" tenta validar uma movimentação, quando a requisição é enviada, então o sistema retorna HTTP 403. Dado que um usuário com perfil "Supervisor" valida uma movimentação, então o sistema retorna HTTP 200 e atualiza o status para "validado". |
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha (.xlsx ou .csv) só poderá ser processada utilizando dados com `sincronizado = true` no banco de dados. Dados com `sincronizado = false` (apenas locais/offline) não devem entrar no relatório gerado. | RF007 | Dado que um gerente solicita relatório semanal, quando o sistema processa os dados, então apenas registros com `sincronizado = true` são incluídos no arquivo exportado. |
-| RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente ao menos uma evidência descritiva associada ao chamado (mensagem escrita com mínimo 10 caracteres ou áudio com mínimo 3 segundos de duração). Tickets sem evidência devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência válida foi anexada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
+| RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente a indicação de evidência descritiva no envio do chamado, podendo ser mensagem escrita válida ou áudio informado. Tickets sem evidência descritiva devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência descritiva foi informada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
 | RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, validado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="validado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
 | RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas) considerando exclusivamente movimentações com status="validado" e tarefas/tickets com status="aprovado", sempre com flag sincronizado=true. Registros pendentes ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros conferidos e sincronizados são incluídos no cálculo. Dado que existem registros pendentes, quando o dashboard carrega, então esses registros não aparecem nos totalizadores exibidos. |
 | RN11 | A prioridade do ticket (alta, média ou baixa) deve ser obrigatoriamente selecionada no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida para reorganização da demanda operacional. | RF011 | Dado que um Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
@@ -948,7 +948,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** 0 ocorrências de acesso indevido entre retiros em matriz de testes cobrindo 100% das combinações de perfil (Capataz, Supervisor, Gerente) versus recursos do sistema. 100% das tentativas de acesso (autorizadas ou não) registradas em trilha de auditoria imutável, contendo: perfil do usuário, recurso solicitado, timestamp, IP de origem e resultado (permitido/negado). **Protocolo de teste:** Testes de penetração automatizados (OWASP ZAP), testes manuais de escalada de privilégios, validação de isolamento de dados via queries SQL diretas no banco, auditoria de logs com verificação de completude e integridade. |
 | **Derivação do Contexto do Parceiro** | Derivado da estrutura organizacional da BrPec (14 retiros independentes, cada um com sua equipe de capatazes), da necessidade de isolamento de dados por retiro (confidencialidade operacional e concorrencial entre unidades) e da RN06, que exige validação de movimentações restrita ao perfil Supervisor. A análise SWOT identificou a complexidade de gestão em áreas geograficamente dispersas como fraqueza, tornando o controle de acesso crítico. |
 | **RF/RN Associados** | RF006, RN06, Restrição organizacional (isolamento por retiro) |
-| **Como será atendido** | RBAC implementado no backend (middleware de autorização por perfil e retiro), JWT com claims de perfil e `retiro_id`, isolamento de dados no nível do banco (queries com `WHERE retiro_id`), validação de permissões em cada endpoint, auditoria com trigger de banco registrando todas as operações, criptografia TLS 1.3 em trânsito, hash bcrypt para senhas. |
+| **Como será atendido** | RBAC implementado no backend por meio de middleware de autenticação JWT e autorização por cargo. O token inclui identificador do usuário, login, cargo e `retiro_id`, permitindo que as rotas protegidas validem a sessão e restrinjam ações sensíveis, como validações e relatórios. A senha é armazenada no campo `senha_hash`; no estado atual do backend, a comparação ainda é direta e a substituição por bcrypt permanece como melhoria técnica futura antes de produção. |
 
 ---
 
@@ -1014,25 +1014,25 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
-| RF001 | RN01    | `/movimentacoes` | POST   |
-| RF002 | RN02    | `/tarefas` | POST   |
-| RF003 | RN03    | `/sincronizacao` | POST   |
-| RF004 | RN04    | `/evidencias` | POST   |
-| RF005 | RN05    | `/usuarios/login` | POST   |
-| RF006 | RN06    | `/validacoes/movimentacoes/{id}/validar` | PATCH   |
-| RF007 | RN07    | `/relatorios` | GET   |
-| RF008 | RN08    | `/tickets` | POST   |
-| RF009 | RN09    | `/movimentacoes/filtrar` | GET   |
-| RF010 | RN10    | `/movimentacoes/dashboard`, `/tarefas/dashboard`, `/sincronizacao/dashboard/tickets` | GET   |
-| RF011 | RN11    | `/tickets/{id}/prioridade` | PATCH   |
+| RF001 | RN01 | `/movimentacoes`<br>`/movimentacoes/{id}` | POST<br>GET/PATCH/DELETE |
+| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>PATCH |
+| RF003 | RN03 | `/sincronizacao/conexao`<br>`/sincronizacao`<br>`/sincronizacao/status`<br>`/sincronizacao/mensagem`<br>`/movimentacoes/sincronizar`<br>`/movimentacoes/{id}/sincronizar` | GET<br>POST<br>GET<br>GET<br>POST<br>PATCH |
+| RF004 | RN04 | `/evidencias`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>POST<br>POST<br>POST |
+| RF005 | RN05 | `/usuarios/login` | POST |
+| RF006 | RN06 | `/validacoes/permissao`<br>`/validacoes/movimentacoes/{id}/validar`<br>`/validacoes/tarefas/{id}/aprovar`<br>`/validacoes/tickets/{id}/aprovar` | POST<br>PATCH<br>PATCH<br>PATCH |
+| RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
+| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/{id}`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>PATCH<br>PATCH |
+| RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
+| RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
+| RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04 e RN08, respectivamente. Essas validações ocorrem no backend antes da persistência, retornando erro 422 (Unprocessable Entity) sempre que um requisito não é atendido.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08 e RN11. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Três endpoints fogem desse padrão de criação simples. O `/sincronizacao` (RF003) recebe um lote de registros produzidos offline e os processa em ordem cronológica, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais, dada a intermitência da conectividade Starlink nos retiros. O `/validacoes/movimentacoes/{id}/validar` (RF006) usa PATCH por alterar apenas o campo `status` de um registro existente; a RN06 restringe essa ação ao perfil Supervisor, retornando erro 403 para tentativas indevidas. Já o `/relatorios` (RF007) usa GET por ser operação exclusivamente de leitura, e a RN07 filtra a resposta para conter apenas dados sincronizados e conferidos.
+&nbsp;&nbsp;&nbsp;&nbsp;Três grupos de endpoints fogem desse padrão de criação simples. O grupo `/sincronizacao` (RF003) consulta conexão, processa dados pendentes e informa o estado da sincronização, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais. O grupo `/validacoes` (RF006) usa middlewares de autenticação e autorização por cargo, restringindo as ações ao perfil Supervisor conforme RN06. Já o grupo `/relatorios` (RF007) é protegido pelos mesmos mecanismos de autenticação, permitindo acesso a Gerente e Supervisor, e filtra a resposta para conter apenas dados sincronizados e válidos para consolidação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/usuarios/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, valida a identificação do usuário, justificando o uso de POST.
+&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/usuarios/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, valida a identificação do usuário e emite o token utilizado pelos middlewares de autenticação das rotas protegidas.
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
@@ -1168,14 +1168,14 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um Capataz cadastrado e vinculado a um retiro sob sua coordenação. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
+**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um usuário cadastrado e vinculado ao retiro da tarefa. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
 
 **Fluxo Principal (cenário de sucesso):**
 
 1. O Supervisor acessa o módulo "Tarefas" e seleciona "Nova Tarefa".
-2. O sistema apresenta o formulário de criação com os campos: Capataz atribuído, data, horário, prioridade, categoria e descrição.
-3. O Supervisor seleciona o Capataz responsável a partir da lista de usuários do retiro.
-4. O Supervisor preenche data, horário, prioridade (alta, média, baixa) e categoria da tarefa.
+2. O sistema apresenta o formulário de criação com os campos: usuário atribuído, prioridade, categoria e descrição.
+3. O Supervisor seleciona o usuário responsável a partir da lista de usuários do retiro.
+4. O Supervisor preenche prioridade (alta, média, baixa) e categoria da tarefa.
 5. O Supervisor adiciona descrição textual da tarefa.
 6. O Supervisor confirma a criação.
 7. O sistema valida o preenchimento simultâneo de todos os campos obrigatórios.
@@ -1190,7 +1190,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 **Exceções:**
 
-- **E1** (no passo 7): se algum dos campos obrigatórios (Capataz atribuído, data, horário, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
+- **E1** (no passo 7): se algum dos campos obrigatórios (usuário atribuído, descrição, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
 - **E2** (no passo 8): se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
 - **E3** (no passo 9): se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
 
@@ -1240,7 +1240,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 **Exceções:**
 
-- **E1** (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
+- **E1** (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden), conforme a restrição aplicada pelo middleware de autorização (RN06, SEG).
 - **E2** (no passo 7): se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
 
 **Pós-condição:** A movimentação está validada, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados conferidos ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem validou. Apenas registros conferidos entram nos relatórios oficiais (UC-06).
@@ -1352,7 +1352,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |---|---|
 | **UC-ID + Nome** | UC-07 — Identificar-se no Sistema |
-| **Ator primário** | Capataz (Daniel), Supervisor (Luiz) ou Gerente (Marcos) |
+| **Ator primário** | Supervisor (Luiz) ou Gerente (Marcos) |
 | **Atores secundários** | Servidor de Autenticação |
 | **RFs relacionados** | RF005 |
 | **RNs relacionadas** | RN05 |
@@ -1372,7 +1372,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 2. O sistema apresenta a tela de identificação com elementos visuais grandes, poucos campos e instruções objetivas, adequada ao baixo letramento digital do Capataz Daniel (RN05).
 3. O usuário informa sua identificação e credencial.
 4. O sistema valida a credencial junto ao servidor de autenticação.
-5. O sistema identifica o perfil (Capataz, Supervisor ou Gerente) e o retiro vinculado.
+5. O sistema identifica o perfil (Supervisor ou Gerente) e o retiro vinculado.
 6. O sistema libera o menu principal contextualizado para o perfil identificado, exibindo apenas as ações disponíveis para aquele perfil.
 
 **Fluxos Alternativos:**
@@ -1385,7 +1385,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 - **E1** (no passo 4): se a credencial é inválida, o sistema exibe mensagem clara em linguagem objetiva e oferece nova tentativa.
 - **E2** (no passo 4): se não há conexão com o servidor, o sistema permite identificação offline com credencial armazenada localmente, mantendo a sessão limitada às funcionalidades offline.
 
-**Pós-condição:** O usuário está autenticado com perfil identificado e sessão ativa. O menu exibe apenas as ações do perfil: Daniel (Capataz) vê "Registrar movimentação" e "Abrir chamado"; Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". Todas as ações ficam vinculadas ao usuário para rastreabilidade e auditoria.
+**Pós-condição:** O usuário está autenticado com perfil identificado e token de acesso ativo. O menu exibe apenas as ações do perfil: Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". O fluxo de login do backend não emite token para Capataz; registros operacionais desse perfil seguem os fluxos específicos de campo e sincronização.
 
 --- 
 <p align="center">Quadro 36 - Use Case 08</p>
@@ -1508,7 +1508,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;Um diagrama de classes do domínio é um modelo visual da linguagem UML que representa as principais entidades de um sistema, seus atributos, operações e os relacionamentos entre elas. Diferente de um diagrama de implementação, seu foco está no domínio do negócio, ou seja, em como os conceitos do mundo real se traduzem em estruturas de software, estabelecendo uma linguagem comum entre as equipes técnica e de negócio.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. A FilaSincronizacao garante a operação offline, enfileirando dados localmente até que a conexão seja restabelecida, enquanto a classe Sessão sustenta o controle de autenticação e rastreabilidade das ações.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. No backend atual, a sincronização é representada pela flag `sincronizado` nas entidades operacionais, enquanto o controle de autenticação das rotas protegidas ocorre por JWT.
 
 <div align="center">
 <p align="center">Figura 9 - Diagrama de Classes de Domínio</p>
@@ -1545,7 +1545,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Com os dados recuperados, o *ServicoUsuario* compara a senha enviada pelo usuário com a senha armazenada no sistema.
 
-• Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra a sessão no banco de dados e gera um token de acesso associado ao perfil do usuário.
+• Caso as credenciais estejam corretas e o usuário possua perfil Supervisor ou Gerente, o sistema gera um token JWT associado ao perfil e ao retiro do usuário.
 
 • Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, permitindo o acesso ao sistema.
 
@@ -1559,6 +1559,10 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 • Nesse cenário, o sistema responde à interface com status `401 – Não Autorizado`.
 
 • Por fim, a interface exibe ao usuário uma mensagem informando que o login ou a senha estão inválidos.
+
+**Fluxo Alternativo - Capataz no login protegido**
+
+• Caso o usuário autenticado possua perfil de Capataz, o backend interrompe o fluxo de login protegido e retorna `403 – Proibido`, pois esse perfil não recebe JWT no endpoint `/usuarios/login`.
 
 
 <div align="center">
@@ -1603,7 +1607,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso a causa não seja informada, o serviço retorna um erro de validação ao controlador.
 
-• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da causa da morte antes do salvamento da movimentação.
+• O sistema então responde à interface com status `400 – Requisição Inválida`, solicitando o preenchimento obrigatório da causa da morte antes do salvamento da movimentação.
 
 
 
@@ -1621,30 +1625,19 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Fluxo Principal**
 
-• O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, responsável e prazo.
+• O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, categoria e responsável.
 
 • Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tarefas`, encaminhando os dados ao *ControladorTarefa*.
 
-• Inicialmente, o controlador realiza a validação do token e do perfil do usuário, garantindo que apenas supervisores possam criar tarefas no sistema.
+• Inicialmente, o controlador recebe os dados da requisição e encaminha as informações ao serviço responsável pela validação dos campos obrigatórios.
 
-• Caso o perfil seja válido, os dados são encaminhados ao *ServicoTarefa*, responsável por executar as regras de negócio e validar os campos obrigatórios.
+• Em seguida, os dados são encaminhados ao *ServicoTarefa*, responsável por executar as regras de negócio e validar os campos obrigatórios.
 
 • Quando todas as informações estão corretas, o serviço solicita ao *RepositorioTarefa* o salvamento da nova tarefa no banco de dados.
 
 • Após a persistência, o banco retorna o identificador da tarefa criada, confirmando o sucesso da operação.
 
-• Em seguida, o *ServicoTarefa* aciona o *ServicoNotificacao*, responsável por enviar o aviso ao capataz designado para execução da atividade.
-
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao supervisor a confirmação de que a tarefa foi atribuída corretamente.
-
-
-**Fluxo Alternativo - Usuário sem permissão**
-
-• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
-
-• Caso o perfil seja diferente do permitido, o fluxo é interrompido e o *ControladorTarefa* retorna uma resposta `403 – Proibido`.
-
-• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para criar tarefas.
 
 
 **Fluxo Alternativo - Campos obrigatórios inválidos**
@@ -1653,7 +1646,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso alguma informação esteja vazia ou inválida, o serviço retorna um erro de validação ao controlador.
 
-• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando ao usuário o preenchimento correto dos campos obrigatórios.
+• O sistema então responde à interface com status `400 – Requisição Inválida`, solicitando ao usuário o preenchimento correto dos campos obrigatórios.
 
 <div align="center">
 <p align="center">Figura 12 - Diagrama Sequencial (RF002)</p>
@@ -1728,7 +1721,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Durante o envio de evidências do tipo foto, o sistema valida se a imagem contém informações de geolocalização associadas ao arquivo. Essa validação é importante para garantir a rastreabilidade das atividades realizadas em campo.
 
-• Caso a foto enviada não possua dados de GPS, o serviço de evidências identifica a inconsistência e retorna um erro de validação ao controlador. O controlador então responde à interface com o código `422 – Entidade Não Processável`.
+• Caso a foto enviada não possua dados de GPS, o serviço de evidências identifica a inconsistência e retorna um erro de validação ao controlador. O controlador então responde à interface com o código `400 – Requisição Inválida`.
 
 • Ao receber a resposta, a interface exibe ao usuário uma mensagem informando que a foto não contém localização válida, solicitando o envio de uma nova imagem com GPS habilitado no dispositivo. Nesse cenário, a evidência não é armazenada nem registrada no banco de dados até que a inconsistência seja corrigida.
 
@@ -1761,7 +1754,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Quando a ação escolhida é “validar”, o serviço atualiza o status da movimentação para “validado” no banco de dados.
 
-• Em seguida, o *ServicoNotificacao* é acionado para enviar uma notificação ao capataz informando que a movimentação foi validada.
+• Em seguida, o sistema retorna a confirmação da validação, permitindo que a interface atualize o status exibido ao usuário.
 
 • Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, confirmando que o status foi atualizado corretamente.
 
@@ -1806,9 +1799,9 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação./
 
-• Em seguida, a interface envia uma requisição `GET` para o endpoint `/relatorios/filtros`, encaminhando os parâmetros ao *ControladorRelatorio*.
+• Em seguida, a interface envia uma requisição `GET` para os endpoints de relatórios implementados, como `/relatorios/movimentacoes`, `/relatorios/semanal` ou `/relatorios/mensal`, encaminhando os parâmetros ao *ControladorRelatorio*.
 
-• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar a funcionalidade de relatórios.
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes ou supervisores possam acessar a funcionalidade de relatórios.
 
 • Caso o perfil seja válido, o controlador encaminha a solicitação ao *ServicoRelatorio*, responsável pelas regras de geração do relatório.
 
@@ -1822,7 +1815,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Fluxo Alternativo - Usuário sem permissão**
 
-• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente ou supervisor.
 
 • Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorRelatorio* retorna uma resposta `403 – Proibido`.
 
@@ -1860,25 +1853,25 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Em seguida, os dados são encaminhados ao *ServicoTicket*, responsável pelas regras de negócio da operação.
 
-• O serviço verifica se o chamado possui alguma evidência anexada, como mensagem, áudio ou imagem.
+• O serviço verifica se o chamado possui a indicação obrigatória de evidência descritiva no envio da requisição.
 
 • Caso as informações estejam corretas, o *ServicoTicket* solicita ao *RepositorioTicket* o salvamento do chamado no banco de dados.
 
 • Após a persistência, o banco retorna o identificador do chamado criado, confirmando o sucesso da operação.
 
-• Em seguida, o *ServicoNotificacao* é acionado para enviar notificações ao supervisor e à equipe responsável.
+• Em seguida, o ticket permanece disponível para consulta, atribuição e aprovação nos endpoints correspondentes.
 
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação de que o chamado foi aberto corretamente.
 
 **Fluxo Alternativo - Chamado sem evidência**
 
-• Durante a validação do chamado, o *ServicoTicket* verifica se existe ao menos uma evidência anexada ao registro.
+• Durante a validação do chamado, o *ServicoTicket* verifica se a requisição indica a presença de evidência descritiva.
 
 • Caso nenhuma evidência seja enviada, o serviço retorna um erro de validação ao controlador.
 
-• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`.
+• Nesse cenário, o sistema responde à interface com status `400 – Requisição Inválida`.
 
-• Por fim, a interface exibe uma mensagem solicitando que o usuário inclua uma mensagem, áudio ou outra evidência antes de abrir o chamado.
+• Por fim, a interface exibe uma mensagem solicitando que o usuário informe uma evidência descritiva antes de abrir o chamado.
 
 <div align="center">
 <p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
@@ -2007,7 +2000,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
  
 • Após localizar o registro, o serviço valida se a prioridade informada está dentro dos valores permitidos.
  
-• Caso a prioridade seja válida, o serviço atualiza o campo no banco de dados e registra a alteração no log de auditoria, indicando o usuário responsável e o horário da modificação, conforme determinado pela RN11.
+• Caso a prioridade seja válida, o serviço atualiza o campo no banco de dados, conforme determinado pela RN11.
  
 • Por fim, o controlador responde à interface com status `200 – Sucesso`, confirmando ao usuário que a prioridade do ticket foi atualizada.
  
@@ -2036,7 +2029,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
  
 • Caso o valor seja inválido ou não tenha sido preenchido, o serviço retorna um erro de validação ao controlador.
  
-• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento correto do campo prioridade.
+• Nesse cenário, o sistema responde à interface com status `400 – Requisição Inválida`, solicitando o preenchimento correto do campo prioridade.
  
  
 <div align="center">
@@ -2432,8 +2425,8 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 | Entidade | Atributos |
 |----------|-----------|
-| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, criado_em, cargo|
-| RETIRO| id (PK), nome.|
+| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, data_criacao, cargo |
+| RETIRO | id (PK), nome |
 | MOVIMENTACAO | id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, status, sincronizado, data_criacao, data_validacao, estagio_vida |
 | MOVIMENTACAO_COMPRA | movimentacao_id (PK/FK), quantidade |
 | MOVIMENTACAO_VENDA | movimentacao_id (PK/FK), quantidade |
@@ -2442,7 +2435,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | MOVIMENTACAO_MORTE | movimentacao_id (PK/FK), origem, causa_obito |
 | TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data_criacao, status, aprovado_por (FK), sincronizado |
 | TICKET | id (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), aprovado_por (FK), categoria, localizacao, descricao, prioridade, status, data_criacao, data_realizado, sincronizado |
-| EVIDENCIA | id (PK), usuario_id (FK), tipo, criado_em |
+| EVIDENCIA | id (PK), usuario_id (FK), tipo, data_criacao |
 | EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
 | EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
 | EVIDENCIA_MENSAGEM | evidencia_id (PK/FK), conteudo |
@@ -2470,7 +2463,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | R6 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um capataz executa zero ou várias tarefas; toda tarefa é atribuída a exatamente um capataz. Origem: US03, RN02. |
 | R7 | VINCULADA_A | TAREFA ↔ RETIRO | (1,1) : (0,N) | Toda tarefa está vinculada a exatamente um retiro; um retiro pode ter zero ou várias tarefas. Origem: US03. |
 | R8 | ABRE | USUARIO ↔ TICKET | (0,N) : (1,1) | Um capataz abre zero ou vários tickets; todo ticket tem exatamente um capataz autor. Origem: US07, RN08. |
-| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (1,1) : (0,N) | Todo ticket é atribuído pelo supervisor a exatamente um capataz executor; um capataz pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
+| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (0,1) : (0,N) | Um ticket pode estar sem usuário atribuído ou pode ser atribuído pelo supervisor a um usuário executor; um usuário pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
 | R10 | LOCALIZADO_EM | TICKET ↔ RETIRO | (1,1) : (0,N) | Todo ticket está vinculado a exatamente um retiro; um retiro pode ter zero ou vários tickets. Origem: US06, US07. |
 | R11 | REGISTRADA_POR | EVIDENCIA ↔ USUARIO | (1,1) : (0,N) | Toda evidência é registrada por exatamente um usuário; um usuário pode registrar zero ou várias evidências. Origem: RF004. |
 | R12 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias movimentações. Origem: RF004, US01. |
@@ -2478,7 +2471,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | R14 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias tarefas. Origem: RF004, US03. |
 | R15 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ TAREFA | (0,N) : (1,1) | Cada associação referencia exatamente uma tarefa; uma tarefa pode ter zero ou várias evidências vinculadas. Origem: RF004, US03. |
 | R16 | ANEXA_TKT | EVIDENCIA_TICKET ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou vários tickets. Origem: RF004, US07. |
-| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (1,N) : (1,1) | Todo ticket possui ao menos uma evidência associada (RN08); cada associação referencia exatamente um ticket. Origem: US06, US07, RN08. |
+| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (0,N) : (1,1) | Um ticket pode possuir zero ou várias evidências associadas na tabela relacional; a obrigatoriedade de evidência descritiva na criação do chamado é validada pela camada de serviço conforme RN08. Origem: US06, US07, RN08. |
 | R18 | GERA | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um usuário gera zero ou vários relatórios; todo relatório tem exatamente um gerador. Origem: US08, US09, RN07. |
 | R19 | ABRANGE | RELATORIO ↔ RETIRO | (1,1) : (0,N) | Todo relatório está associado a exatamente um retiro; um retiro pode aparecer em zero ou vários relatórios. Origem: US08, US09, US11. |
 | R20 | ESPECIALIZA_FOTO | EVIDENCIA_FOTO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_FOTO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo, latitude e longitude, obrigatórios conforme RN04. Origem: RF004, RN04. |
@@ -2507,9 +2500,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 - **Elipses Verdes Claras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
 - **Elipses Cinzas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi pensada para que seja fácil acompanhar tudo o que acontece no sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias provas registradas, como fotos, áudios ou mensagens.
+&nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi definida para permitir o acompanhamento dos principais registros e operações do sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias comprovações registradas, como fotos, áudios ou mensagens.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em resumo, essa modelagem foi desenhada para garantir que o sistema seja robusto e que as informações não se percam ou fiquem duplicadas. Com essa estrutura bem planejada, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
+&nbsp;&nbsp;&nbsp;&nbsp;Em resumo, essa modelagem foi definida para garantir robustez, integridade e redução de duplicidade das informações. Com essa estrutura planejada de forma consistente, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -2718,94 +2711,151 @@ CREATE TABLE relatorio (
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
-***Conclusão***
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL/Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros.
-&nbsp;&nbsp;&nbsp;&nbsp;Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
+&nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL/Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros. Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
  
-Esta seção traz quatro consultas SQL do back-end do AgroFlow, uma de cada tipo principal de operação relacional (SELECT, UPDATE, DELETE e INSERT). Para cada consulta são apresentados o código SQL, a descrição em palavras, as proposições atômicas presentes na condição, a expressão lógica proposicional correspondente e a tabela verdade. No final, uma síntese discute os diferentes padrões lógicos usados ao longo do conjunto.
- 
-**Convenções adotadas:** V = Verdadeiro, F = Falso. Conectivos lógicos: ∧ (conjunção / AND), ∨ (disjunção / OR), ¬ (negação / NOT). A coluna **Resultado** das tabelas verdade indica se o registro passa pela cláusula `WHERE` (consultas 1, 2 e 3) ou se a inserção é aceita pelo `CHECK` constraint (consulta 4).
+
+&nbsp;&nbsp;&nbsp;&nbsp;As consultas SQL apresentadas nesta seção representam regras utilizadas nos fluxos centrais do AgroFlow e demonstram como a lógica proposicional aparece na seleção, atualização e inserção de dados. Para manter coerência com a implementação, foram escolhidos exemplos relacionados aos filtros de movimentação, aprovação de tickets e criação de registros do rebanho. Em alguns casos, a condição aparece no backend distribuída entre controller, service e repository, por isso, o SQL abaixo apresenta a forma relacional equivalente da regra aplicada pela camada de servidor.
+
+**Convenções adotadas:**
+
+* **V** = Verdadeiro
+* **F** = Falso
+* **∧** = Conjunção lógica (**AND**)
+* **∨** = Disjunção lógica (**OR**)
+* **¬** = Negação lógica (**NOT**)
+* A coluna **Resultado** indica se o registro satisfaz a condição analisada.
+
  
 ---
 
-#### Consulta 1: SELECT (filtro de movimentações pelo Supervisor)
+#### Consulta 1 - SELECT (Filtro de movimentações por retiro, tipo e status):
  
-**Descrição:** A tabela `movimentacao` armazena os registros de eventos do rebanho enviados pelos Capatazes em campo, que aguardam validação pelo Supervisor. Conforme o RF009, o Supervisor precisa de uma interface de filtro que permita localizar movimentações específicas combinando quatro critérios opcionais: o retiro onde o evento ocorreu, o tipo de movimentação, um período de tempo (definido por uma data inicial e uma data final) e o status atual do registro (pendente ou validado). A consulta abaixo recebe esses quatro filtros como parâmetros e retorna apenas as movimentações que satisfazem todos eles simultaneamente, considerando exclusivamente registros já sincronizados com o servidor, pois registros que ainda estão apenas no dispositivo do Capataz não fazem parte da base validável (essa restrição condiz com a RN07).
+&nbsp;&nbsp;&nbsp;&nbsp;O endpoint de filtro de movimentações exige o `retiroId` e permite informar listas de tipos e status. No service, esse comportamento é aplicado com comparações e `includes`, em SQL, a forma equivalente utiliza `IN` para representar listas de valores e `OR` para permitir que filtros opcionais sejam ignorados quando não forem enviados.
  
 **Código SQL:**
  
 ```sql
-SELECT * FROM movimentacao 
-WHERE retiro_id = ? 
-  AND tipo = ? 
-  AND status = ? 
-  AND data_criacao BETWEEN ? AND ? 
-  AND sincronizado = TRUE;
+SELECT *
+FROM movimentacao
+WHERE retiro_id = ?
+  AND (? IS NULL OR tipo IN (?))
+  AND (? IS NULL OR status IN (?));
 ```
  
 **Proposições lógicas:**
  
-- $P$: o retiro do registro corresponde ao filtro (`retiro_id = ?`)
-- $Q$: o tipo da movimentação corresponde ao filtro (`tipo = ?`)
-- $R$: o status do registro corresponde ao filtro (`status = ?`)
-- $S$: a data de criação está dentro do intervalo informado (`data_criacao BETWEEN ? AND ?`). Internamente, essa proposição é uma conjunção: $S = S_1 \land S_2$, onde $S_1$: `data_criacao ≥ data_inicial` e $S_2$: `data_criacao ≤ data_final`.
-- $T$: o registro já foi sincronizado (`sincronizado = TRUE`)
+- $P$: a movimentação pertence ao retiro informado (`retiro_id = ?`)
+- $Q$: nenhum filtro de tipo foi informado (`? IS NULL`)
+- $R$: o tipo da movimentação pertence à lista de tipos informada (`tipo IN (?)`)
+- $S$: nenhum filtro de status foi informado (`? IS NULL`)
+- $T$: o status da movimentação pertence à lista de status informada (`status IN (?)`)
 
-**Expressão lógica proposicional:** $P \land Q \land R \land S \land T$
+**Expressão lógica proposicional:** $P \land (Q \lor R) \land (S \lor T)$
  
-As cinco condições são ligadas por conjunção (∧). Como todos os conectivos são AND, o registro só aparece no resultado quando todas as cinco proposições são verdadeiras ao mesmo tempo. Se qualquer uma delas for falsa, o registro é descartado.
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta combina conjunção, disjunção e o operador SQL `IN`. A movimentação só passa pelo filtro se pertencer ao retiro informado e, ao mesmo tempo, satisfizer os filtros opcionais de tipo e status. Quando uma lista não é enviada, a proposição correspondente à ausência do filtro torna a disjunção verdadeira.
  
 **Tabela verdade:**
  
 <p align="center">Quadro 42 - Tabela verdade da Consulta 1 (SELECT).</p>
 
-| $P$ | $Q$ | $R$ | $S$ | $T$ | $P \land Q \land R \land S \land T$ |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| F | F | F | F | F | **F** |
-| F | F | F | F | V | **F** |
-| F | F | F | V | F | **F** |
-| F | F | F | V | V | **F** |
-| F | F | V | F | F | **F** |
-| F | F | V | F | V | **F** |
-| F | F | V | V | F | **F** |
-| F | F | V | V | V | **F** |
-| F | V | F | F | F | **F** |
-| F | V | F | F | V | **F** |
-| F | V | F | V | F | **F** |
-| F | V | F | V | V | **F** |
-| F | V | V | F | F | **F** |
-| F | V | V | F | V | **F** |
-| F | V | V | V | F | **F** |
-| F | V | V | V | V | **F** |
-| V | F | F | F | F | **F** |
-| V | F | F | F | V | **F** |
-| V | F | F | V | F | **F** |
-| V | F | F | V | V | **F** |
-| V | F | V | F | F | **F** |
-| V | F | V | F | V | **F** |
-| V | F | V | V | F | **F** |
-| V | F | V | V | V | **F** |
-| V | V | F | F | F | **F** |
-| V | V | F | F | V | **F** |
-| V | V | F | V | F | **F** |
-| V | V | F | V | V | **F** |
-| V | V | V | F | F | **F** |
-| V | V | V | F | V | **F** |
-| V | V | V | V | F | **F** |
-| V | V | V | V | V | **V** |
+<div align="center">
+
+| $P$ | $Q$ | $R$ | $S$ | $T$ | $Q \lor R$ | $S \lor T$ | $P \land (Q \lor R) \land (S \lor T)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | F | F | F | F | **F** |
+| F | F | F | F | V | F | V | **F** |
+| F | F | F | V | F | F | V | **F** |
+| F | F | F | V | V | F | V | **F** |
+| F | F | V | F | F | V | F | **F** |
+| F | F | V | F | V | V | V | **F** |
+| F | F | V | V | F | V | V | **F** |
+| F | F | V | V | V | V | V | **F** |
+| F | V | F | F | F | V | F | **F** |
+| F | V | F | F | V | V | V | **F** |
+| F | V | F | V | F | V | V | **F** |
+| F | V | F | V | V | V | V | **F** |
+| F | V | V | F | F | V | F | **F** |
+| F | V | V | F | V | V | V | **F** |
+| F | V | V | V | F | V | V | **F** |
+| F | V | V | V | V | V | V | **F** |
+| V | F | F | F | F | F | F | **F** |
+| V | F | F | F | V | F | V | **F** |
+| V | F | F | V | F | F | V | **F** |
+| V | F | F | V | V | F | V | **F** |
+| V | F | V | F | F | V | F | **F** |
+| V | F | V | F | V | V | V | **V** |
+| V | F | V | V | F | V | V | **V** |
+| V | F | V | V | V | V | V | **V** |
+| V | V | F | F | F | V | F | **F** |
+| V | V | F | F | V | V | V | **V** |
+| V | V | F | V | F | V | V | **V** |
+| V | V | F | V | V | V | V | **V** |
+| V | V | V | F | F | V | F | **F** |
+| V | V | V | F | V | V | V | **V** |
+| V | V | V | V | F | V | V | **V** |
+| V | V | V | V | V | V | V | **V** |
+
+</div>
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um filtro feito só com conjunções é bem restritivo: basta uma condição falhar para o registro ser eliminado.
+&nbsp;&nbsp;&nbsp;&nbsp;A tabela mostra que o retiro é sempre obrigatório. Os filtros de tipo e status podem ser satisfeitos de duas formas: ausência do filtro ou correspondência com a lista informada.
  
 ---
 
-#### Consulta 2: UPDATE (aprovação de ticket pelo Supervisor)
+#### Consulta 2 - SELECT (Busca de tickets pendentes por prioridade):
+
+&nbsp;&nbsp;&nbsp;&nbsp;A entidade `ticket` registra chamados de infraestrutura abertos em campo, com informações de retiro, categoria, localização, status, prioridade e descrição. A consulta abaixo representa uma busca operacional coerente com os filtros do sistema: retorna tickets pendentes de um retiro, restringindo o resultado a prioridades relevantes para acompanhamento pelo Supervisor.
+
+**Código SQL:**
+
+```sql
+SELECT id, retiro_id, categoria, localizacao, status, prioridade, descricao
+FROM ticket
+WHERE retiro_id = ?
+  AND status = 'pendente'
+  AND prioridade IN ('alta', 'media');
+```
+
+**Proposições lógicas:**
+
+- $P$: o ticket pertence ao retiro informado (`retiro_id = ?`)
+- $Q$: o ticket está pendente (`status = 'pendente'`)
+- $R$: a prioridade do ticket está na lista informada (`prioridade IN ('alta', 'media')`)
+
+**Expressão lógica proposicional:** $P \land Q \land R$
+
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta utiliza conjunções para exigir que todas as regras sejam atendidas. O operador `IN` representa a aceitação de mais de uma prioridade em uma mesma condição, mantendo a busca alinhada aos filtros de status, prioridade e retiro presentes no backend.
+
+**Tabela verdade:**
+
+<p align="center">Quadro 43 - Tabela verdade da Consulta 2 (SELECT).</p>
+
+<div align="center">
+
+| $P$ | $Q$ | $R$ | $P \land Q \land R$ |
+|:---:|:---:|:---:|:---:|
+| F | F | F | **F** |
+| F | F | V | **F** |
+| F | V | F | **F** |
+| F | V | V | **F** |
+| V | F | F | **F** |
+| V | F | V | **F** |
+| V | V | F | **F** |
+| V | V | V | **V** |
+
+</div>
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+---
+
+#### Consulta 3 - UPDATE (Aprovação de ticket pelo Supervisor):
  
-**Descrição:** A tabela `ticket` registra chamados de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. No modelo implementado, esses chamados entram inicialmente com status pendente e podem ser aprovados por um Supervisor. A consulta abaixo atualiza o status do ticket para aprovado e registra o usuário responsável pela aprovação no campo `aprovado_por`, desde que o ticket ainda esteja pendente.
+&nbsp;&nbsp;&nbsp;&nbsp;A tabela `ticket` registra chamados de infraestrutura abertos pelos Capatazes em campo, conforme o RF008. No modelo implementado, esses chamados entram inicialmente com status pendente e podem ser validados por um Supervisor. A consulta abaixo atualiza o status do ticket para aprovado e registra o usuário responsável pela aprovação no campo `aprovado_por`, desde que o ticket ainda esteja pendente e ainda não possua aprovador registrado.
  
 **Código SQL:**
  
@@ -2814,76 +2864,48 @@ UPDATE ticket
 SET status = 'aprovado',
     aprovado_por = ?
 WHERE id = ? 
-  AND status = 'pendente';
+  AND status = 'pendente'
+  AND NOT aprovado_por IS NOT NULL;
 ```
  
 **Proposições lógicas:**
  
 - $P$: o ticket é aquele identificado pelo parâmetro (`id = ?`)
 - $S$: o ticket está pendente (`status = 'pendente'`)
+- $A$: o ticket já possui aprovador registrado (`aprovado_por IS NOT NULL`)
  
-**Expressão lógica proposicional:** $P \land S$
+**Expressão lógica proposicional:** $P \land S \land \neg A$
  
-O conectivo utilizado é a conjunção (∧). A atualização só deve ocorrer quando as duas condições forem verdadeiras: o ticket precisa corresponder ao identificador informado e ainda precisa estar pendente.
- 
-**Tabela verdade:**
- 
-<p align="center">Quadro 43 - Tabela verdade da Consulta 2 (UPDATE).</p>
-
-| $P$ | $S$ | $P \land S$ |
-|:---:|:---:|:---:|
-| F | F | **F** |
-| F | V | **F** |
-| V | F | **F** |
-| V | V | **V** |
- 
-<p align="center">Fonte: Próprios autores (2026).</p>
-
-O UPDATE só é aplicado na linha 4, em que o ticket identificado existe ($P$ = V) e ainda está pendente ($S$ = V). Isso impede que tickets já aprovados sejam reaprovados indevidamente.
- 
----
-
-#### Consulta 3: DELETE (remoção de vínculo entre evidência e movimentação)
- 
-**Descrição:** A tabela `evidencia_movimentacao` é uma tabela associativa que resolve o relacionamento N:N entre `evidencia` e `movimentacao`, registrando quais evidências (fotos, áudios ou mensagens) estão anexadas a quais movimentações do rebanho. Esta consulta não corresponde diretamente a nenhum dos RFs explicitados no Quadro 18. Ela existe implicitamente como suporte ao RF004, que permite anexar evidências às movimentações, mas não menciona explicitamente a operação de desanexá-las. Por isso, esta consulta é uma inferência sobre o fluxo natural do sistema: se um Capataz anexou a foto errada a uma movimentação ainda pendente de validação, é razoável que ele possa remover o vínculo antes do Supervisor avaliar o registro. Vale observar que o domínio do AgroFlow é fortemente orientado a registro e validação, não a exclusão, e todos os fluxos centrais do sistema preservam o histórico para fins de auditoria e rastreabilidade. A operação DELETE foi incluída neste artefato para cumprir o requisito de diversidade de tipos de consulta exigido na entrega da seção 3.6.4. A consulta abaixo remove o vínculo entre uma evidência e uma movimentação a partir dos respectivos identificadores.
- 
-**Código SQL:**
- 
-```sql
-DELETE FROM evidencia_movimentacao 
-WHERE movimentacao_id = ? 
-  AND evidencia_id = ?;
-```
- 
-**Proposições lógicas:**
- 
-- $P$: o registro pertence à movimentação informada (`movimentacao_id = ?`)
-- $Q$: o registro corresponde à evidência informada (`evidencia_id = ?`)
-
-**Expressão lógica proposicional:** $P \land Q$
- 
-A expressão utiliza apenas o conectivo de conjunção (∧). Como `evidencia_movimentacao` é uma tabela associativa, os dois identificadores juntos formam a chave que individualiza o vínculo a ser removido, o que justifica a exigência de que ambas as proposições sejam verdadeiras.
+&nbsp;&nbsp;&nbsp;&nbsp;A consulta utiliza conjunção e negação. A atualização só deve ocorrer quando o ticket corresponde ao identificador informado, ainda está pendente e não possui aprovador registrado. A condição `NOT aprovado_por IS NOT NULL` reforça que um ticket já aprovado não deve ser aprovado novamente.
  
 **Tabela verdade:**
  
-<p align="center">Quadro 44 - Tabela verdade da Consulta 3 (DELETE).</p>
+<p align="center">Quadro 44 - Tabela verdade da Consulta 3 (UPDATE).</p>
 
-| $P$ | $Q$ | $P \land Q$ |
-|:---:|:---:|:---:|
-| F | F | **F** |
-| F | V | **F** |
-| V | F | **F** |
-| V | V | **V** |
+<div align="center">
+
+| $P$ | $S$ | $A$ | $\neg A$ | $P \land S \land \neg A$ |
+|:---:|:---:|:---:|:---:|:---:|
+| F | F | F | V | **F** |
+| F | F | V | F | **F** |
+| F | V | F | V | **F** |
+| F | V | V | F | **F** |
+| V | F | F | V | **F** |
+| V | F | V | F | **F** |
+| V | V | F | V | **V** |
+| V | V | V | F | **F** |
+
+</div>
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-Apenas o par exato (linha 4) é removido. Quando algum dos identificadores não corresponde, nada é apagado, o que torna a consulta segura por construção.
+&nbsp;&nbsp;&nbsp;&nbsp;O UPDATE só é aplicado quando o ticket identificado existe ($P$ = V), ainda está pendente ($S$ = V) e não possui aprovador registrado ($A$ = F). Isso impede que tickets já aprovados sejam reaprovados indevidamente.
  
 ---
 
-#### Consulta 4: INSERT (registro de movimentação do rebanho)
+#### Consulta 4 - INSERT (Registro de movimentação do rebanho):
  
-**Descrição:** A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
+&nbsp;&nbsp;&nbsp;&nbsp;A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
  
 **Código SQL:**
  
@@ -2898,9 +2920,9 @@ INSERT INTO movimentacao_transferencia
 VALUES (?, ?, ?, ?);
 ```
  
-O INSERT não possui cláusula `WHERE`, mas é precedido por validações de negócio na camada de serviço. Cada validação corresponde a uma expressão lógica que precisa ser verdadeira para que o backend envie a inserção ao banco. Duas dessas validações são analisadas separadamente a seguir.
+&nbsp;&nbsp;&nbsp;&nbsp;O INSERT não possui cláusula `WHERE`, mas é precedido por validações de negócio na camada de serviço. Cada validação corresponde a uma expressão lógica que precisa ser verdadeira para que o backend envie a inserção ao banco. As validações 4.1 e 4.2 abaixo são sub-validações da mesma operação de INSERT de movimentação, analisadas separadamente para explicitar as regras específicas de morte e transferência.
  
-##### Validação 1: `causa_obito` obrigatória para morte
+**Validação 1: `causa_obito` obrigatória para morte**
  
 **Regra:** `tipo != 'morte' OR causa_obito IS NOT NULL`
  
@@ -2911,11 +2933,13 @@ O INSERT não possui cláusula `WHERE`, mas é precedido por validações de neg
 
 **Expressão lógica proposicional:** $\neg M \lor C$
  
-Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, essa regra é aplicada antes da inserção dos dados específicos na tabela `movimentacao_morte`.
+&nbsp;&nbsp;&nbsp;&nbsp;Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, essa regra é aplicada antes da inserção dos dados específicos na tabela `movimentacao_morte`.
  
 **Tabela verdade:**
  
-<p align="center">Quadro 45 - Tabela verdade da Constraint 4.1.</p>
+<p align="center">Quadro 45 - Tabela verdade da validação de morte.</p>
+
+<div align="center">
 
 | $M$ | $C$ | $\neg M$ | $\neg M \lor C$ |
 |:---:|:---:|:---:|:---:|
@@ -2923,11 +2947,14 @@ Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressã
 | F | V | V | **V** |
 | V | F | F | **F** |
 | V | V | F | **V** |
+
+</div>
  
 <p align="center">Fonte: Próprios autores (2026).</p>
-O backend bloqueia a inserção apenas na linha 3, quando o tipo é "morte" mas a causa do óbito não foi informada. Nas demais combinações, a inserção pode prosseguir.
 
-##### Validação 2: campos obrigatórios para transferência
+&nbsp;&nbsp;&nbsp;&nbsp;O backend bloqueia a inserção apenas na linha 3, quando o tipo é "morte" mas a causa do óbito não foi informada. Nas demais combinações, a inserção pode prosseguir.
+
+**Validação 2: campos obrigatórios para transferência**
  
 **Regra:** `tipo != 'transferencia' OR (origem IS NOT NULL AND destino IS NOT NULL AND quantidade > 0)`
  
@@ -2940,11 +2967,13 @@ O backend bloqueia a inserção apenas na linha 3, quando o tipo é "morte" mas 
 
 **Expressão lógica proposicional:** $\neg T \lor (O \land D \land Q)$
  
-Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D \land Q)$, lida como "se o tipo for transferência, então origem, destino e quantidade devem estar preenchidos".
+&nbsp;&nbsp;&nbsp;&nbsp;Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D \land Q)$, lida como "se o tipo for transferência, então origem, destino e quantidade devem estar preenchidos".
  
 **Tabela verdade:**
  
-<p align="center">Quadro 46 - Tabela verdade da Constraint 4.2.</p>
+<p align="center">Quadro 46 - Tabela verdade da validação de transferência.</p>
+
+<div align="center">
 
 | $T$ | $O$ | $D$ | $Q$ | $\neg T$ | $O \land D \land Q$ | $\neg T \lor (O \land D \land Q)$ |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -2964,35 +2993,34 @@ Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (�
 | V | V | F | V | F | F | **F** |
 | V | V | V | F | F | F | **F** |
 | V | V | V | V | F | V | **V** |
+
+</div>
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-O backend rejeita a inserção nas linhas em que o tipo é "transferência" mas pelo menos um dos campos obrigatórios (origem, destino ou quantidade) está ausente ou inválido. Quando o tipo é transferência, o único cenário aceito é a última linha, que exige todos os campos preenchidos corretamente. Quando o tipo não é transferência, essa validação específica não bloqueia o registro.
+&nbsp;&nbsp;&nbsp;&nbsp;O backend rejeita a inserção nas linhas em que o tipo é "transferência" mas pelo menos um dos campos obrigatórios (origem, destino ou quantidade) está ausente ou inválido. Quando o tipo é transferência, o único cenário aceito é a última linha, que exige todos os campos preenchidos corretamente. Quando o tipo não é transferência, essa validação específica não bloqueia o registro.
  
 ---
-#### Conclusão:
  
-As quatro consultas escolhidas variam em vários aspectos: o tipo de operação SQL, os conectivos lógicos usados na condição e o contexto operacional do AgroFlow em que cada uma se aplica. O Quadro 47 resume essa variedade.
+&nbsp;&nbsp;&nbsp;&nbsp;As consultas escolhidas variam em vários aspectos: o tipo de operação SQL, os conectivos lógicos usados na condição e o contexto operacional do AgroFlow em que cada uma se aplica. O Quadro 47 resume essa variedade.
  
 <p align="center">Quadro 47 - Síntese da diversidade das consultas.</p>
 
-| Consulta | Operação | Conectivos | Padrão estrutural | Contexto operacional |
-|:---:|:---:|:---:|---|---|
-| 1 | SELECT | ∧ | Conjunção encadeada (5 condições) | Filtro de movimentações pelo Supervisor (RF009) |
-| 2 | UPDATE | ∧ | Conjunção simples | Aprovação de ticket pelo Supervisor (RF008/RF006) |
-| 3 | DELETE | ∧ | Conjunção simples (2 condições) | Remoção de vínculo evidência-movimentação (suporte ao RF004) |
-| 4 (validação 1) | INSERT | ¬, ∨ | Implicação na forma disjuntiva ($M \rightarrow C$) | Obrigatoriedade de causa em movimentação de morte (RN01) |
-| 4 (validação 2) | INSERT | ¬, ∨, ∧ | Implicação com consequente conjuntivo ($T \rightarrow O \land D \land Q$) | Obrigatoriedade de origem, destino e quantidade em transferência (RN01) |
+| Consulta | Operação | Conectivos e operadores | Padrão lógico | Contexto operacional |
+|:---:|:---:|---|---|---|
+| 1 | SELECT | AND, OR, IN | $P \land (Q \lor R) \land (S \lor T)$ | Filtro de movimentações por retiro, tipo e status |
+| 2 | SELECT | AND, IN | $P \land Q \land R$ | Busca de tickets pendentes por prioridade |
+| 3 | UPDATE | AND, NOT | $P \land S \land \neg A$ | Aprovação de ticket pendente e ainda sem aprovador |
+| 4.1 | INSERT | NOT, OR | $\neg M \lor C$ | Sub-validação de causa do óbito antes de inserir movimentação de morte |
+| 4.2 | INSERT | NOT, OR, AND | $\neg T \lor (O \land D \land Q)$ | Sub-validação dos campos obrigatórios antes de inserir transferência |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-Em relação aos **tipos de operação**, o conjunto cobre as quatro operações relacionais fundamentais (SELECT, UPDATE, DELETE e INSERT), evitando que o artefato fique limitado a um único padrão de manipulação de dados. Cada operação se encaixa em um momento diferente do ciclo de vida dos registros no sistema.
- 
-Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 utiliza uma conjunção simples para garantir que apenas tickets pendentes sejam aprovados; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
- 
-Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, aprovação de ticket pelo Supervisor, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não fica só no plano formal, ela está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
- 
-No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: filtros restritivos usam conjunções encadeadas, aprovações usam conjunções simples sobre identidade e status, e regras de domínio usam implicações aplicadas antes da persistência. Ou seja, a lógica proposicional aparece naturalmente na hora de escrever e validar as regras de negócio do backend.
+&nbsp;&nbsp;&nbsp;&nbsp;As consultas apresentadas demonstram que a lógica proposicional não é um recurso isolado, mas está incorporada de forma estrutural nas regras de negócio do AgroFlow. Cada operação SQL analisada (SELECT, UPDATE e INSERT) corresponde a um momento distinto do ciclo de vida dos dados no sistema, e em cada uma delas as condições de execução podem ser formalizadas por meio de expressões proposicionais precisas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A diversidade de padrões lógicos observada reflete a natureza heterogênea dos problemas tratados: filtros opcionais exigem disjunções para absorver a ausência de parâmetros, listas de valores aceitáveis são modeladas com IN, aprovações utilizam negação para impedir duplicidade de aprovador, e regras de domínio específicas por tipo de movimentação são expressas como implicações materiais na forma disjuntiva ¬p ∨ q, aplicadas antes da persistência.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Esse alinhamento entre a formalização lógica e a implementação real evidencia que a modelagem proposicional tem valor prático direto no desenvolvimento de sistemas, tornando explícitas as condições que governam cada operação, facilitando a identificação de casos de borda e fundamentando as decisões de projeto que de outra forma permaneceriam implícitas no código. No contexto do AgroFlow, isso se traduz em maior confiabilidade das regras aplicadas aos registros de movimentação do rebanho e aos chamados de infraestrutura gerenciados em campo. 
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
@@ -3004,11 +3032,11 @@ No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: 
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
-*Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas.*
+O fluxo de autenticação implementado recebe `login` e `senha` pelo endpoint `POST /usuarios/login`, valida a existência do usuário e compara a senha informada com o valor armazenado em `senha_hash`. Quando as credenciais são válidas, o usuário está ativo e possui perfil Supervisor ou Gerente, o backend retorna os dados do usuário sem `senha_hash` e gera um token JWT para acesso às rotas protegidas. No estado atual do backend, a comparação de senha ainda é direta; a troca para bcrypt permanece registrada como melhoria necessária antes de produção.
 
 ### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
-*Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
+O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A escolha reduz a necessidade de consulta ao banco a cada requisição protegida, pois o token carrega `sub`, `login`, `cargo` e `retiro_id`. Como trade-off, o token é stateless e não possui revogação centralizada imediata; por isso, não deve carregar informações sensíveis além dos dados mínimos de autorização.
 
 ### <a name="c3.8.3"></a>3.8.3. Autorização
 
@@ -3020,11 +3048,23 @@ No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: 
 
 ## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-*A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais.*
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada a seguir relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
 
-| Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência        |
-|---------|-------|------|-------------|----------|-------|------------------|
-| ...     | RF001 | RN01 | `/usuarios` | Cadastro | CT02  | print, log, relatório de cobertura |
+| Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
+|---------|----|----|----------|------|-------|-----------|
+| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Criação com campos por tipo, busca por ID, atualização, remoção e persistência em `movimentacao` e tabela especializada correspondente |
+| Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Criação com usuário atribuído, descrição, categoria e prioridade; listagem, atualização, mudança de status e remoção testadas por endpoint |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Detecção de conexão, processamento de pendências, mensagem/status de sincronização e atualização da flag `sincronizado` |
+| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Criação de foto, áudio e mensagem; busca/listagem de evidências; validação de georreferenciamento para fotos no service |
+| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Autenticação por login e senha, bloqueio de Capataz no fluxo de login, retorno sem `senha_hash` e geração de token para rotas protegidas |
+| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Rotas protegidas por `autenticarUsuario` e `exigirCargo('supervisor')`; movimentação atualizada para `validado` e tarefa/ticket para `aprovado` |
+| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Rotas protegidas por autenticação e cargo Gerente/Supervisor; relatórios gerados apenas com dados sincronizados e válidos para consolidação |
+| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets/pendentes`; `GET /tickets/{id}`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Criação de ticket com evidência descritiva obrigatória no service, listagem de pendentes, atribuição e aprovação por Supervisor |
+| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Filtro por retiro, tipo, status e período; listagem de pendentes para validação; aliases aceitos pelo controller para compatibilidade |
+| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Indicadores baseados em movimentações `validado`, tarefas/tickets `aprovado` e registros sincronizados, segmentados por retiro quando informado |
+| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Criação exige prioridade no service; filtro, contagem e alteração aceitam os valores `alta`, `media` e `baixa` |
+
+&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema possuem rastreabilidade entre requisitos, regras de negócio, endpoints reais do backend, middlewares e testes automatizados. Os registros de movimentação, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão conectados aos arquivos de teste de integração correspondentes, permitindo verificar a cobertura funcional durante a evolução do projeto. Assim, a matriz contribui para manter o WAD, a API e os critérios de validação sincronizados, servindo como referência para futuras revisões, testes automatizados e validações com os usuários da BrPec.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
