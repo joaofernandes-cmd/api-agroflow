@@ -810,7 +810,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Cada retiro possui usuários vinculados, garantindo isolamento de dados por perfil (RBAC). O sistema opera em modo offline, armazenando registros localmente e sincronizando automaticamente quando a conexão é restabelecida. Apenas dados sincronizados são visíveis ao Supervisor para validação e entram nos relatórios gerenciais.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados conferidos sobem para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo operacional completo segue a cadeia: Capataz registra → sistema sincroniza → Supervisor valida → dados conferidos são disponibilizados para o Gerente consolidar e gerar relatórios. Esse ciclo elimina boletas de papel, reduz erros de transcrição e centraliza digitalmente as informações operacionais da fazenda.
 
 **Entidades principais:**
 
@@ -2471,9 +2471,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 - **Elipses Verdes Claras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
 - **Elipses Cinzas:** Representam os **Atributos Comuns**, que armazenam as informações detalhadas (nome, data, status, etc.).
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi pensada para que seja fácil acompanhar tudo o que acontece no sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias provas registradas, como fotos, áudios ou mensagens.
+&nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi definida para permitir o acompanhamento dos principais registros e operações do sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias comprovações registradas, como fotos, áudios ou mensagens.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em resumo, essa modelagem foi desenhada para garantir que o sistema seja robusto e que as informações não se percam ou fiquem duplicadas. Com essa estrutura bem planejada, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
+&nbsp;&nbsp;&nbsp;&nbsp;Em resumo, essa modelagem foi definida para garantir robustez, integridade e redução de duplicidade das informações. Com essa estrutura planejada de forma consistente, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -2763,7 +2763,7 @@ As cinco condições são ligadas por conjunção (∧). Como todos os conectivo
  
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-Das 32 combinações possíveis, apenas uma (a última linha) dá verdadeiro. Um filtro feito só com conjunções é bem restritivo: basta uma condição falhar para o registro ser eliminado.
+Das 32 combinações possíveis, apenas uma, correspondente à última linha, resulta em verdadeiro. Um filtro composto exclusivamente por conjunções é altamente restritivo: basta uma condição falhar para que o registro seja eliminado.
  
 ---
 
@@ -2954,9 +2954,9 @@ Em relação aos **tipos de operação**, o conjunto cobre as quatro operações
  
 Quanto aos **conectivos lógicos**, são usados os três básicos da lógica proposicional: conjunção (∧), disjunção (∨) e negação (¬). Os padrões estruturais também variam: a Consulta 1 traz uma conjunção pura encadeando cinco condições; a Consulta 2 utiliza uma conjunção simples para garantir que apenas tickets pendentes sejam aprovados; a Consulta 3 tem uma conjunção mínima de duas condições, em contraste com a Consulta 1; e a Consulta 4 traz duas implicações na forma disjuntiva equivalente $(\neg p \lor q)$, uma com consequente simples (4.1) e outra com consequente conjuntivo (4.2).
  
-Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, aprovação de ticket pelo Supervisor, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não fica só no plano formal, ela está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
+Já em relação aos **contextos operacionais**, cada consulta resolve um problema próprio do AgroFlow: filtro de registros pendentes pelo Supervisor, aprovação de ticket pelo Supervisor, remoção de vínculo entre entidades associativas e validação de integridade na inserção de movimentações. Assim, a diversidade não se limita ao plano formal, pois está conectada aos requisitos funcionais e regras de negócio levantados junto ao parceiro BrPec Agropecuária.
  
-No geral, o sistema usa padrões lógicos diferentes para problemas diferentes: filtros restritivos usam conjunções encadeadas, aprovações usam conjunções simples sobre identidade e status, e regras de domínio usam implicações aplicadas antes da persistência. Ou seja, a lógica proposicional aparece naturalmente na hora de escrever e validar as regras de negócio do backend.
+Em síntese, o sistema utiliza padrões lógicos diferentes conforme a natureza de cada problema: filtros restritivos usam conjunções encadeadas, aprovações usam conjunções simples sobre identidade e status, e regras de domínio usam implicações aplicadas antes da persistência. Dessa forma, a lógica proposicional aparece naturalmente na definição e validação das regras de negócio da camada de servidor.
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
