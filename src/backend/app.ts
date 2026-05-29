@@ -7,11 +7,14 @@ import tarefaRoutes from './routes/tarefa.route'
 import ticketRoutes from './routes/ticket.routes'
 import usuarioRoutes from './routes/usuario.route'
 import validacaoRoutes from './routes/validacao.route'
+import { errorHandler, AppError } from './middlewares/errorHandler.middleware'
 
 const app = express()
 
+// Habilita leitura de JSON em todas as requests.
 app.use(express.json())
 
+// Endpoint simples de saude da aplicacao.
 app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' })
 })
@@ -24,5 +27,13 @@ app.use('/tarefas', tarefaRoutes)
 app.use('/tickets', ticketRoutes)
 app.use('/usuarios', usuarioRoutes)
 app.use('/validacoes', validacaoRoutes)
+
+// Se nenhuma rota bateu, geramos um erro 404 padronizado.
+app.use((_req, _res, next) => {
+  next(new AppError('Rota nao encontrada', 404))
+})
+
+// Handler global de erro.
+app.use(errorHandler)
 
 export default app
