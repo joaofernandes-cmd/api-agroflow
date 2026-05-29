@@ -3871,7 +3871,152 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c4.1"></a>4.1. Primeira versão da aplicação web (sprint 3)
 
-*Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
+### Visão Geral do Desenvolvimento
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na sprint 3, foi desenvolvida a primeira versão funcional da API REST do sistema de gestão pecuária da BrPec. A aplicação foi construída utilizando **Node.js** com **TypeScript** e **Express.js** como framework principal, seguindo uma arquitetura em camadas (Controllers → Middlewares → Services → Repositories → Models). O banco de dados relacional **PostgreSQL** foi adotado como sistema de persistência, com toda a estrutura criada por meio de scripts de migração versionados.
+
+### Funcionalidades Implementadas
+
+**1. Estrutura do Projeto e Configuração do Ambiente**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, pg, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (figura X).
+
+<div align="center">
+  <p align="center">Figura X - package.json com dependências do projeto</p>
+  <p>
+    <img src="others/assets/print-json.png" alt="package.json com dependências" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+**2. Banco de Dados e Migrations**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (figura X).
+
+<div align="center">
+  <p align="center">Figura X - Tabelas criadas no banco de dados PostgreSQL</p>
+  <p>
+    <img src="others/assets/print-supabase.png" alt="Tabelas no banco de dados" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (figura X).
+
+<div align="center">
+  <p align="center">Figura X - Script de migração com ENUMs e estrutura de tabelas</p>
+  <p>
+    <img src="others/assets/print-migrations.png" alt="Script SQL de migração" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+**3. Sistema de Autenticação e Autorização**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (figura X).
+
+<div align="center">
+  <p align="center">Figura X - Requisição de login e token JWT retornado</p>
+  <p>
+    <img src="others/assets/print-token.png" alt="Login e JWT" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Criação do middleware de autenticação (`autenticacao.middleware.ts`), que intercepta todas as rotas protegidas, valida o token Bearer no header `Authorization` e injeta os dados do usuário autenticado em `req.usuario`. Complementarmente, foi desenvolvido o middleware de autorização por cargo (`cargo.middleware.ts`), que restringe o acesso a rotas específicas conforme o cargo do usuário (capataz, supervisor ou gerente).
+
+**4. Arquitetura em Camadas**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (figura X):
+
+- **Controllers** (`/src/backend/controllers/`): recebem as requisições HTTP, validam presença dos campos obrigatórios e delegam a lógica ao Service.
+- **Services** (`/src/backend/services/`): aplicam as regras de negócio do domínio.
+- **Repositories** (`/src/backend/repositories/`): encapsulam todas as queries SQL ao banco de dados.
+- **Models** (`/src/backend/models/`): definem as interfaces TypeScript dos dados.
+- **Middlewares** (`/src/backend/middlewares/`): autenticação, autorização, log de requisições, tratamento centralizado de erros e validação de payload.
+
+<div align="center">
+  <p align="center">Figura X - Estrutura de diretórios do projeto</p>
+  <p>
+    <img src="others/assets/print-estruturas-paginas.png" alt="Estrutura de diretórios do backend" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+**5. Rotas da API**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (figura X).
+
+<div align="center">
+  <p align="center">Figura X - Servidor rodando no terminal</p>
+  <p>
+    <img src="others/assets/print-terminal.png" alt="Servidor rodando no terminal" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+### Tecnologias Utilizadas
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Runtime | Node.js 22 |
+| Framework | Express.js 5 |
+| Linguagem | TypeScript 6 |
+| Banco de dados | PostgreSQL |
+| Autenticação | JWT (jsonwebtoken) |
+| Conexão com banco | postgres (driver nativo) |
+| Variáveis de ambiente | dotenv |
+| Identificadores únicos | uuid / pgcrypto (UUID v4) |
+
+### Principais Entregas da Sprint 3
+
+- Estrutura base do projeto com TypeScript e Express configurados
+- Sistema de migrations SQL versionado com 18 scripts de criação de tabelas e tipos
+- Endpoint de autenticação com geração de token JWT
+- Middleware de autenticação e autorização por cargo
+- Arquitetura em camadas (Controllers, Services, Repositories, Models) definida e implementada
+- Rotas modulares para todos os recursos da API
+- Middleware centralizado de tratamento de erros e log de requisições
+
+### Protótipos de Alta Fidelidade
+
+&nbsp;&nbsp;&nbsp;&nbsp;Paralelamente ao desenvolvimento do backend, a equipe elaborou os protótipos de alta fidelidade das telas principais da aplicação. Os protótipos foram produzidos no Figma e serviram como referência visual para guiar a implementação das interfaces, garantindo alinhamento entre design e desenvolvimento desde o início do projeto.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (figuras X e X).
+
+<div align="center">
+  <p align="center">Figura X - Protótipo de alta fidelidade (tela 1)</p>
+  <p>
+    <img src="others/assets/print-prototipo1.jpeg" alt="Protótipo de alta fidelidade - tela 1" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+<div align="center">
+  <p align="center">Figura X - Protótipo de alta fidelidade (tela 2)</p>
+  <p>
+    <img src="others/assets/print-prototipo2.jpeg" alt="Protótipo de alta fidelidade - tela 2" border="0">
+  </p>
+  <p align="center">Fonte: material produzido pelos autores (2026).</p>
+</div>
+
+### Dificuldades Encontradas
+
+- **Modelagem do banco de dados**: A definição dos tipos `ENUM` e das tabelas de especialização de evidências (foto, áudio, mensagem) exigiu diversas iterações para alinhar o esquema com as regras de negócio mapeadas.
+- **Configuração do TypeScript com Express**: A tipagem estrita do TypeScript exigiu a criação de declarações de tipo customizadas para estender a interface `Request` do Express com o campo `req.usuario`.
+- **Coordenação da equipe**: Desafios na sincronização de branches e na divisão de tarefas entre os membros, especialmente na integração dos diferentes módulos do backend.
+- **Autenticação sem bcrypt**: Na versão inicial, a senha foi armazenada sem hash por limitações de tempo, ficando pendente a implementação do bcrypt para a sprint seguinte.
+
+### Próximos Passos
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para a sprint 4, os esforços serão concentrados na expansão das funcionalidades do sistema e na consolidação da integração entre os módulos já implementados:
+
+- **Hash de senhas com bcrypt**: Substituir o armazenamento de senha em texto puro pela criptografia com bcrypt, atendendo à segurança exigida em produção.
+- **Implementação dos endpoints de validação**: Desenvolver os fluxos de aprovação de movimentações, tarefas e tickets pelo perfil Supervisor, conforme RF006 e RF008.
+- **Módulo de sincronização offline**: Implementar o endpoint `/sincronizacao` para processar registros pendentes e permitir o uso do sistema em campo sem conexão contínua à internet (RF003).
+- **Filtros de movimentação**: Criar o endpoint `/movimentacoes/filtrar` com suporte a filtros por retiro, tipo, período e status, conforme RF009 e RN09.
+- **Dashboard do Gerente**: Desenvolver os endpoints de relatório consolidado (`/relatorios`) que calculam indicadores por retiro considerando apenas registros validados e sincronizados (RF010, RN10).
+- **Testes automatizados**: Iniciar a cobertura de testes de integração dos endpoints com Jest e Supertest.
 
 ## <a name="c4.2"></a>4.2. Segunda versão da aplicação web (sprint 4)
 
