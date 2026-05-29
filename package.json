@@ -18,7 +18,10 @@
     "build": "tsc",
     "start": "node dist/backend/server.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:unit": "jest --runInBand tests/unit",
+    "test:integration": "jest --runInBand tests/integration",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
