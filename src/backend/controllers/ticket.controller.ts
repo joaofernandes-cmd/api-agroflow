@@ -3,7 +3,7 @@ import { TicketService } from '../services/ticket.service'
 import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
 
-function parseNumber(value: unknown): number | null {
+function converterNumero(value: unknown): number | null {
   const parsed = Number(value)
   return Number.isNaN(parsed) ? null : parsed
 }
@@ -20,7 +20,7 @@ export const TicketController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })
@@ -54,7 +54,7 @@ export const TicketController = {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
-      const retiroId = parseNumber(retiro_id)
+      const retiroId = converterNumero(retiro_id)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -83,7 +83,7 @@ export const TicketController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.query.status ?? '')
-      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -105,7 +105,7 @@ export const TicketController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.query.prioridade ?? '')
-      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -127,7 +127,7 @@ export const TicketController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.query.categoria ?? '')
-      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -148,7 +148,7 @@ export const TicketController = {
 
   async listarPendentes(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -162,7 +162,7 @@ export const TicketController = {
 
   async contarPorPrioridade(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? parseNumber(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -176,7 +176,7 @@ export const TicketController = {
 
   async atualizarStatus(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
       const { novoStatus } = req.body
 
       if (id === null) {
@@ -203,7 +203,7 @@ export const TicketController = {
 
   async alterarPrioridade(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
       const { novaPrioridade } = req.body
 
       if (id === null) {
@@ -233,7 +233,7 @@ export const TicketController = {
 
   async atribuirA(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
       const { usuarioId } = req.body
 
       if (id === null) {

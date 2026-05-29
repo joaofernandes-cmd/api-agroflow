@@ -3,7 +3,7 @@ import { Tarefa, TarefaInput } from '../models/tarefa.model'
 
 export const TarefaRepository = {
 
-    async findAll(): Promise<Tarefa[]> {
+    async buscarTodos(): Promise<Tarefa[]> {
         return sql<Tarefa[]>`
             SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, status, aprovado_por, data_criacao, sincronizado
             FROM tarefa
@@ -11,7 +11,7 @@ export const TarefaRepository = {
         `
     },
 
-    async findById(id: number): Promise<Tarefa | null> {
+    async buscarPorId(id: number): Promise<Tarefa | null> {
         const tarefa = await sql<Tarefa[]>`
             SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
             FROM tarefa
@@ -22,7 +22,7 @@ export const TarefaRepository = {
         return tarefa[0] ?? null
     },
 
-    async create(input: TarefaInput): Promise<Tarefa> {
+    async criar(input: TarefaInput): Promise<Tarefa> {
         const [created] = await sql<Tarefa[]>`
             INSERT INTO tarefa (retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado)
             VALUES (
@@ -43,7 +43,7 @@ export const TarefaRepository = {
         return created
     },
 
-    async update(id: number, input: Partial<TarefaInput>): Promise<Tarefa | null> {
+    async atualizar(id: number, input: Partial<TarefaInput>): Promise<Tarefa | null> {
         const [updated] = await sql<Tarefa[]>`
             UPDATE tarefa
             SET
@@ -64,7 +64,7 @@ export const TarefaRepository = {
         return updated ?? null
     },
 
-    async delete(id: number): Promise<void> {
+    async remover(id: number): Promise<void> {
         await sql`
             DELETE FROM tarefa
             WHERE id = ${id}

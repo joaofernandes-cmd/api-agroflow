@@ -3,11 +3,11 @@ import { TarefaService } from '../services/tarefa.service'
 import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 
-function queryString(value: unknown): string | undefined {
+function extrairTexto(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
 }
 
-function parseNumber(value: unknown): number | null {
+function converterNumero(value: unknown): number | null {
   const parsed = Number(value)
   return Number.isNaN(parsed) ? null : parsed
 }
@@ -21,7 +21,7 @@ export const TarefaController = {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
       }
 
-      const retiroId = parseNumber(retiro_id)
+      const retiroId = converterNumero(retiro_id)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -57,7 +57,7 @@ export const TarefaController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })
@@ -77,8 +77,8 @@ export const TarefaController = {
 
   async buscarParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = queryString(req.query.retiroId)
-      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
 
       if (retiroIdNumber === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -95,8 +95,8 @@ export const TarefaController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.params.status) as TarefaStatus
-      const retiroId = queryString(req.query.retiroId)
-      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
 
       if (retiroIdNumber === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -124,8 +124,8 @@ export const TarefaController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.params.prioridade) as TarefaPrioridade
-      const retiroId = queryString(req.query.retiroId)
-      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
 
       if (retiroIdNumber === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -142,8 +142,8 @@ export const TarefaController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.params.categoria)
-      const retiroId = queryString(req.query.retiroId)
-      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
 
       if (retiroIdNumber === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -159,7 +159,7 @@ export const TarefaController = {
 
   async atualizarStatus(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
       const { status } = req.body
 
       if (id === null) {
@@ -184,7 +184,7 @@ export const TarefaController = {
 
   async atualizar(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })
@@ -206,8 +206,8 @@ export const TarefaController = {
 
   async contarPorStatus(req: Request, res: Response) {
     try {
-      const retiroId = queryString(req.query.retiroId)
-      const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
+      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroIdNumber = retiroId ? converterNumero(retiroId) : undefined
 
       if (retiroIdNumber === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -223,7 +223,7 @@ export const TarefaController = {
 
   async remover(req: Request, res: Response) {
     try {
-      const id = parseNumber(req.params.id)
+      const id = converterNumero(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })

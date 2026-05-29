@@ -5,7 +5,7 @@ import { EvidenciaFoto, EvidenciaFotoInput } from '../models/evidencia-foto.mode
 export const EvidenciaFotoRepository = {
 
     // Ordena evidências de foto por evidência
-    async findAll(): Promise<EvidenciaFoto[]> {
+    async buscarTodos(): Promise<EvidenciaFoto[]> {
         return sql<EvidenciaFoto[]>`
             SELECT evidencia_id, url_arquivo, latitude, longitude
             FROM evidencia_foto
@@ -14,7 +14,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Busca uma evidência de foto pelo id da evidência e retorna null se não encontrar
-    async findById(evidencia_id: number): Promise<EvidenciaFoto | null> {
+    async buscarPorId(evidencia_id: number): Promise<EvidenciaFoto | null> {
         const evidenciaFoto = await sql<EvidenciaFoto[]>`
             SELECT evidencia_id, url_arquivo, latitude, longitude
             FROM evidencia_foto
@@ -26,7 +26,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Cria uma nova evidência de foto no banco de dados
-    async create(input: EvidenciaFotoInput): Promise<EvidenciaFoto> {
+    async criar(input: EvidenciaFotoInput): Promise<EvidenciaFoto> {
         const [created] = await sql<EvidenciaFoto[]>`
             INSERT INTO evidencia_foto (evidencia_id, url_arquivo, latitude, longitude)
             VALUES (${input.evidencia_id}, ${input.url_arquivo}, ${input.latitude}, ${input.longitude})
@@ -37,7 +37,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Atualiza uma evidência de foto existente
-    async update(evidencia_id: number, input: Partial<EvidenciaFotoInput>): Promise<EvidenciaFoto | null> {
+    async atualizar(evidencia_id: number, input: Partial<EvidenciaFotoInput>): Promise<EvidenciaFoto | null> {
         const [updated] = await sql<EvidenciaFoto[]>`
             UPDATE evidencia_foto
             SET
@@ -52,7 +52,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Remove uma evidência de foto pelo id da evidência
-    async delete(evidencia_id: number): Promise<void> {
+    async remover(evidencia_id: number): Promise<void> {
         await sql`
             DELETE FROM evidencia_foto
             WHERE evidencia_id = ${evidencia_id}

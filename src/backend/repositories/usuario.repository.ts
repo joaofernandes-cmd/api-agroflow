@@ -5,7 +5,7 @@ import { Usuario, UsuarioInput } from '../models/usuario.model'
 export const UsuarioRepository = {
 
   // Ordena usuários por nome
-  async findAll(): Promise<Usuario[]> {  
+  async buscarTodos(): Promise<Usuario[]> {
     return sql<Usuario[]>`
       SELECT id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
       FROM usuario
@@ -14,7 +14,7 @@ export const UsuarioRepository = {
   },
 
   // Busca um usuário pelo seu id e retorna null se não encontrar 
-  async findById(id: string): Promise<Usuario | null> {
+  async buscarPorId(id: string): Promise<Usuario | null> {
     const usuario = await sql<Usuario[]>`
       SELECT id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
       FROM usuario
@@ -26,7 +26,7 @@ export const UsuarioRepository = {
   },
 
   // Busca um usuário pelo login (nome de usuário)
-  async findByLogin(login: string): Promise<Usuario | null> {
+  async buscarPorLogin(login: string): Promise<Usuario | null> {
     const usuario = await sql<Usuario[]>`
       SELECT id, retiro_id, nome, login, senha_hash, status, data_criacao, cargo
       FROM usuario
@@ -38,7 +38,7 @@ export const UsuarioRepository = {
   },
 
   // Cria um novo usuário no banco de dados
-  async create(input: UsuarioInput): Promise<Usuario> {
+  async criar(input: UsuarioInput): Promise<Usuario> {
     const [created] = await sql<Usuario[]>`
       INSERT INTO usuario (retiro_id, nome, login, senha_hash, status, data_criacao, cargo)
       VALUES (
@@ -58,7 +58,7 @@ export const UsuarioRepository = {
 
   // Atualiza os dados de um usuário existente
   // Campos não enviados permanecem com os valores atuais
-  async update(id: string, input: Partial<UsuarioInput>): Promise<Usuario | null> {
+  async atualizar(id: string, input: Partial<UsuarioInput>): Promise<Usuario | null> {
     const updated = await sql<Usuario[]>`
       UPDATE usuario
       SET
@@ -76,7 +76,7 @@ export const UsuarioRepository = {
   },
 
   // Remove um usuário pelo id
-  async delete(id: string): Promise<void> {
+  async remover(id: string): Promise<void> {
     await sql`
       DELETE FROM usuario
       WHERE id = ${id}

@@ -31,7 +31,7 @@ export const ValidacaoService = {
       }
     }
 
-    const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
+    const movimentacao = await MovimentacaoRepository.buscarPorId(movimentacaoId)
 
     if (!movimentacao) {
       return { sucesso: false, mensagem: 'Movimentação não encontrada.' }
@@ -44,7 +44,7 @@ export const ValidacaoService = {
       }
     }
 
-    const movimentacaoAtualizada = await MovimentacaoRepository.update(movimentacaoId, {
+    const movimentacaoAtualizada = await MovimentacaoRepository.atualizar(movimentacaoId, {
       ...movimentacao,
       status: 'validado',
       validado_por: supervisorId,
@@ -71,7 +71,7 @@ export const ValidacaoService = {
       }
     }
 
-    const ticket = await TicketRepository.findById(ticketId)
+    const ticket = await TicketRepository.buscarPorId(ticketId)
 
     if (!ticket) {
       return { sucesso: false, mensagem: 'Ticket não encontrado.' }
@@ -84,7 +84,7 @@ export const ValidacaoService = {
       }
     }
 
-    const ticketAtualizado = await TicketRepository.update(ticketId, {
+    const ticketAtualizado = await TicketRepository.atualizar(ticketId, {
       ...ticket,
       status: 'aprovado',
       aprovado_por: supervisorId,
@@ -110,7 +110,7 @@ export const ValidacaoService = {
       }
     }
 
-    const tarefa = await TarefaRepository.findById(tarefaId)
+    const tarefa = await TarefaRepository.buscarPorId(tarefaId)
 
     if (!tarefa) {
       return { sucesso: false, mensagem: 'Tarefa não encontrada.' }
@@ -123,7 +123,7 @@ export const ValidacaoService = {
       }
     }
 
-    const tarefaAtualizada = await TarefaRepository.update(tarefaId, {
+    const tarefaAtualizada = await TarefaRepository.atualizar(tarefaId, {
       ...tarefa,
       status: 'aprovado',
       aprovado_por: supervisorId,

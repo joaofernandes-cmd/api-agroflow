@@ -39,7 +39,7 @@ export const TarefaService = {
     this.validarCamposObrigatorios(dados as TarefaInput)
 
     // Cria tarefa no banco com campos fornecidos + campos gerados automaticamente
-    const tarefa = await TarefaRepository.create({
+    const tarefa = await TarefaRepository.criar({
       ...dados,                         // Spread dos dados do usuário: retiro_id, atribuida_a, prioridade, categoria, descricao
       criada_por: usuarioCriador.id,    // Preenchido automaticamente com o ID do usuário logado
       status: 'pendente',               // Preenchido automaticamente como pendente
@@ -54,7 +54,7 @@ export const TarefaService = {
   // RN10: Buscar tarefas para dashboard (apenas concluídas)
   async buscarParaDashboard(retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
 
     // Filtra apenas tarefas aprovadas (e opcionalmente por retiro)
     return tarefas.filter(t => {
@@ -76,7 +76,7 @@ export const TarefaService = {
   // Listar tarefas filtradas por status e opcionalmente por retiro
   async listarPorStatus(status: TarefaStatus, retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
 
     // Filtra tarefas por status (e opcionalmente por retiro)
     return tarefas.filter(t => {
@@ -98,7 +98,7 @@ export const TarefaService = {
 
   // Listar tarefas atribuídas a um usuário
   async listarPorUsuario(usuarioId: UUID): Promise<Tarefa[]> {
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
     return tarefas.filter(t => t.atribuida_a === usuarioId)
   },
 
@@ -106,7 +106,7 @@ export const TarefaService = {
   // Listar tarefas filtradas por prioridade e opcionalmente por retiro
   async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
 
     // Filtra tarefas por prioridade (alta, media, baixa)
     return tarefas.filter(t => {
@@ -127,7 +127,7 @@ export const TarefaService = {
   // Listar tarefas filtradas por categoria e opcionalmente por retiro
   async listarPorCategoria(categoria: string, retiroId?: number): Promise<Tarefa[]> {
     // Busca todas as tarefas do banco
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
 
     // Filtra tarefas por categoria
     return tarefas.filter(t => {
@@ -150,21 +150,21 @@ export const TarefaService = {
   // Buscar uma tarefa específica pelo ID
   async buscarPorId(id: number): Promise<Tarefa | null> {
     // Retorna a tarefa ou null se não encontrar
-    return TarefaRepository.findById(id)
+    return TarefaRepository.buscarPorId(id)
   },
 
 
   // Listar todas as tarefas sem filtros
   async listarTodas(): Promise<Tarefa[]> {
     // Retorna todas as tarefas do banco
-    return TarefaRepository.findAll()
+    return TarefaRepository.buscarTodos()
   },
 
 
   // Atualizar apenas o status de uma tarefa
   async atualizarStatus(id: number, novoStatus: TarefaStatus): Promise<Tarefa | null> {
     // Busca a tarefa atual no banco
-    const tarefa = await TarefaRepository.findById(id)
+    const tarefa = await TarefaRepository.buscarPorId(id)
 
     // Se tarefa não existe, retorna null
     if (!tarefa) {
@@ -172,7 +172,7 @@ export const TarefaService = {
     }
 
     // Atualiza apenas o campo status mantendo outros campos intactos
-    return TarefaRepository.update(id, {
+    return TarefaRepository.atualizar(id, {
       ...tarefa,            // Mantém todos os campos atuais
       status: novoStatus,   // Sobrescreve apenas o status
     })
@@ -184,7 +184,7 @@ export const TarefaService = {
   // Campos que NÃO podem ser alterados: data_criacao, criada_por, retiro_id, status
   async atualizar(id: number, dados: Partial<Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'retiro_id' | 'status'>>): Promise<Tarefa | null> {
     // Busca a tarefa atual no banco
-    const tarefaAtual = await TarefaRepository.findById(id)
+    const tarefaAtual = await TarefaRepository.buscarPorId(id)
     // Se tarefa não existe, retorna null
     if (!tarefaAtual) {
       return null
@@ -203,7 +203,7 @@ export const TarefaService = {
     }
 
     // Atualiza a tarefa no banco com os novos dados
-    return TarefaRepository.update(id, dados)
+    return TarefaRepository.atualizar(id, dados)
   },
 
 
@@ -211,7 +211,7 @@ export const TarefaService = {
   // Contar quantas tarefas existem em cada status
   async contarPorStatus(retiroId?: number): Promise<Record<TarefaStatus, number>> {
     // Busca todas as tarefas do banco
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
 
     // Inicializa contador para cada status possível
     const contagem: Record<TarefaStatus, number> = {
@@ -235,6 +235,6 @@ export const TarefaService = {
   // Remover uma tarefa do banco de dados
   async remover(id: number): Promise<void> {
     // Deleta a tarefa do banco de dados permanentemente
-    await TarefaRepository.delete(id)
+    await TarefaRepository.remover(id)
   },
 }

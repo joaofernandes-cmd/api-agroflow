@@ -17,7 +17,7 @@ export type RequestValidator = (req: Request) => ValidationResult | Promise<Vali
 
 // Factory de middleware.
 // Recebe uma funcao de validacao e devolve um middleware Express pronto para uso.
-export function validateRequest(validator: RequestValidator) {
+export function validarRequisicao(validator: RequestValidator) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Executa a validacao especifica da rota.
@@ -43,7 +43,7 @@ export function validateRequest(validator: RequestValidator) {
 }
 
 // Helper para campos texto obrigatorios.
-export function requiredString(
+export function textoObrigatorio(
   value: unknown,
   field: string,
   message = `Campo "${field}" e obrigatorio`
@@ -56,7 +56,7 @@ export function requiredString(
 }
 
 // Helper para campos numericos obrigatorios.
-export function requiredNumber(
+export function numeroObrigatorio(
   value: unknown,
   field: string,
   message = `Campo "${field}" deve ser um numero valido`
@@ -71,7 +71,7 @@ export function requiredNumber(
 }
 
 // Helper para campos de data.
-export function requiredDate(
+export function dataObrigatoria(
   value: unknown,
   field: string,
   message = `Campo "${field}" deve ser uma data valida`
@@ -90,7 +90,7 @@ export function requiredDate(
 }
 
 // Helper para validar valores dentro de uma lista permitida.
-export function oneOf<T extends string>(
+export function umaDasOpcoes<T extends string>(
   value: unknown,
   field: string,
   allowedValues: readonly T[],

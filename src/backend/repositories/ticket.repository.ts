@@ -3,7 +3,7 @@ import { Ticket, TicketInput } from '../models/ticket.model'
 
 export const TicketRepository = {
 
-    async findAll(): Promise<Ticket[]> {
+    async buscarTodos(): Promise<Ticket[]> {
         return sql<Ticket[]>`
             SELECT id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
             FROM ticket
@@ -11,7 +11,7 @@ export const TicketRepository = {
         `
     },
 
-    async findById(id: number): Promise<Ticket | null> {
+    async buscarPorId(id: number): Promise<Ticket | null> {
         const ticket = await sql<Ticket[]>`
             SELECT id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
             FROM ticket
@@ -22,7 +22,7 @@ export const TicketRepository = {
         return ticket[0] ?? null
     },
 
-    async create(input: TicketInput): Promise<Ticket> {
+    async criar(input: TicketInput): Promise<Ticket> {
         const [created] = await sql<Ticket[]>`
             INSERT INTO ticket (retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado)
             VALUES (
@@ -44,7 +44,7 @@ export const TicketRepository = {
         return created
     },
 
-    async update(id: number, input: Partial<TicketInput>): Promise<Ticket | null> {
+    async atualizar(id: number, input: Partial<TicketInput>): Promise<Ticket | null> {
         const updated = await sql<Ticket[]>`
             UPDATE ticket
             SET

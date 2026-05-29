@@ -5,7 +5,7 @@ import { EvidenciaTarefa, EvidenciaTarefaInput } from '../models/evidencia-taref
 export const EvidenciaTarefaRepository = {
 
     // Ordena evidências de tarefas por evidência
-    async findAll(): Promise<EvidenciaTarefa[]> {
+    async buscarTodos(): Promise<EvidenciaTarefa[]> {
         return sql<EvidenciaTarefa[]>`
             SELECT evidencia_id, tarefa_id
             FROM evidencia_tarefa
@@ -14,7 +14,7 @@ export const EvidenciaTarefaRepository = {
     },
 
     // Busca uma evidência de tarefa pela chave composta e retorna null se não encontrar
-    async findById(evidencia_id: number, tarefa_id: number): Promise<EvidenciaTarefa | null> {
+    async buscarPorId(evidencia_id: number, tarefa_id: number): Promise<EvidenciaTarefa | null> {
         const evidenciaTarefa = await sql<EvidenciaTarefa[]>`
             SELECT evidencia_id, tarefa_id
             FROM evidencia_tarefa
@@ -26,7 +26,7 @@ export const EvidenciaTarefaRepository = {
     },
 
     // Cria uma nova evidência de tarefa no banco de dados
-    async create(input: EvidenciaTarefaInput): Promise<EvidenciaTarefa> {
+    async criar(input: EvidenciaTarefaInput): Promise<EvidenciaTarefa> {
         const [created] = await sql<EvidenciaTarefa[]>`
             INSERT INTO evidencia_tarefa (evidencia_id, tarefa_id)
             VALUES (${input.evidencia_id}, ${input.tarefa_id})

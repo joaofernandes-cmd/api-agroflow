@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { SincronizacaoService } from '../services/sincronizacao.service'
 
-function parseQueryNumber(value: unknown): number | undefined | null {
+function converterNumeroQuery(value: unknown): number | undefined | null {
   if (value === undefined || value === null || value === '') {
     return undefined
   }
@@ -38,7 +38,7 @@ export const SincronizacaoController = {
   // RN07: Busca movimentações sincronizadas e validadas para relatórios.
   async buscarMovimentacoesParaRelatrio(req: Request, res: Response) {
     try {
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -57,7 +57,7 @@ export const SincronizacaoController = {
   // RN07: Busca tarefas sincronizadas e aprovadas para relatórios.
   async buscarTarefasParaRelatrio(req: Request, res: Response) {
     try {
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -76,7 +76,7 @@ export const SincronizacaoController = {
   // RN10: Busca tickets sincronizados e aprovados para o dashboard.
   async buscarTicketsParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

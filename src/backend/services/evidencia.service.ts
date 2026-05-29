@@ -60,14 +60,14 @@ export const EvidenciaService = {
     EvidenciaService.validarGeorreferenciamento(latitude, longitude)
 
     // Cria registro base de evidência (tabela: evidencia)
-    const evidencia = await EvidenciaRepository.create({
+    const evidencia = await EvidenciaRepository.criar({
       usuario_id: usuarioId,
       tipo: 'foto',
       data_criacao: new Date(),
     })
 
     // Cria registro específico de foto com georreferenciamento extraído dos metadados
-    const foto = await EvidenciaFotoRepository.create({
+    const foto = await EvidenciaFotoRepository.criar({
       evidencia_id: evidencia.id,
       url_arquivo: urlArquivo,
       latitude,
@@ -84,14 +84,14 @@ export const EvidenciaService = {
     // Esta validação será feita durante o upload do arquivo quando tivermos acesso aos metadados
 
     // Cria registro base de evidência (tabela: evidencia)
-    const evidencia = await EvidenciaRepository.create({
+    const evidencia = await EvidenciaRepository.criar({
       usuario_id: usuarioId,
       tipo: 'audio',
       data_criacao: new Date(),
     })
 
     // Cria registro específico de áudio (tabela: evidencia_audio)
-    const audio = await EvidenciaAudioRepository.create({
+    const audio = await EvidenciaAudioRepository.criar({
       evidencia_id: evidencia.id,
       url_arquivo: urlArquivo,
     })
@@ -105,14 +105,14 @@ export const EvidenciaService = {
     EvidenciaService.validarEvidenciaDescritiva('mensagem', { conteudo })
 
     // Cria registro base de evidência (tabela: evidencia)
-    const evidencia = await EvidenciaRepository.create({
+    const evidencia = await EvidenciaRepository.criar({
       usuario_id: usuarioId,
       tipo: 'mensagem',
       data_criacao: new Date(),
     })
 
     // Cria registro específico de mensagem (tabela: evidencia_mensagem)
-    const mensagem = await EvidenciaMensagemRepository.create({
+    const mensagem = await EvidenciaMensagemRepository.criar({
       evidencia_id: evidencia.id,
       conteudo: conteudo.trim(),
     })
@@ -123,12 +123,12 @@ export const EvidenciaService = {
   // Buscar evidência base por ID
   async buscarPorId(id: number): Promise<Evidencia | null> {
     // Retorna a evidência ou null se não encontrar
-    return EvidenciaRepository.findById(id)
+    return EvidenciaRepository.buscarPorId(id)
   },
 
   // Listar todas as evidências (base)
   async listarTodas(): Promise<Evidencia[]> {
     // Retorna todas as evidências registradas
-    return EvidenciaRepository.findAll()
+    return EvidenciaRepository.buscarTodos()
   },
 }
