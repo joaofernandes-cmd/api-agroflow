@@ -60,18 +60,3 @@ export function autenticarUsuario(req: Request, res: Response, next: NextFunctio
     return res.status(401).json({ error: 'Token inválido ou expirado' })
   }
 }
-
-export function exigirCargo(...cargosPermitidos: UsuarioCargo[]) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    // Depois do login, ainda conferimos se o cargo pode entrar nessa sala.
-    if (!req.usuario) {
-      return res.status(401).json({ error: 'Usuário não autenticado' })
-    }
-
-    if (!cargosPermitidos.includes(req.usuario.cargo)) {
-      return res.status(403).json({ error: 'Sem permissão para acessar este recurso' })
-    }
-
-    return next()
-  }
-}
