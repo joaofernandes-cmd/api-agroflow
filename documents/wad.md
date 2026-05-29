@@ -849,7 +849,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | ID   | Descrição | RF Associado | Critério de Teste |
 |:----:|-----------|:------------:|-------------------|
-| RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso o estágio de vida esteja ausente ou caso os campos específicos do tipo não sejam informados: compra e venda exigem quantidade; transferência exige origem, destino e quantidade; nascimento exige origem e quantidade; morte exige origem e causa do óbito. | RF001 | Dado que um usuário tenta registrar uma movimentação, quando algum campo obrigatório para o tipo selecionado está vazio, então o sistema retorna erro HTTP 400 com mensagem específica do campo faltante. |
+| RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso o estágio de vida esteja ausente ou caso os campos específicos do tipo não sejam informados: compra exige destino e quantidade; venda exige origem e quantidade; transferência exige origem, destino e quantidade; nascimento exige origem e quantidade; morte exige origem e causa do óbito. | RF001 | Dado que um usuário tenta registrar uma movimentação, quando algum campo obrigatório para o tipo selecionado está vazio, então o sistema retorna erro HTTP 400 com mensagem específica do campo faltante. |
 | RN02 | A criação de uma nova tarefa no sistema deve falhar e retornar um erro de validação HTTP 400 caso não contenha o preenchimento simultâneo de: usuário atribuído, descrição, prioridade e categoria. | RF002 | Dado que um supervisor tenta criar uma tarefa, quando qualquer campo obrigatório (usuário, descrição, prioridade ou categoria) está ausente, então o sistema retorna HTTP 400 e lista os campos faltantes. |
 | RN03 | Durante a operação em modo offline, os dados devem ser salvos no armazenamento local do dispositivo com flag `sincronizado = false`. A sincronização só deve ser disparada automaticamente quando o sistema detectar um status HTTP 200 válido de conexão restabelecida. | RF003 | Dado que o dispositivo está offline, quando uma movimentação é registrada, então o sistema salva localmente com `sincronizado = false` e dispara sincronização automática assim que receber HTTP 200 do servidor. |
 | RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude entre −90 e +90, longitude entre −180 e +180). Caso não possua ou os valores sejam inválidos, a foto deve ser rejeitada com erro HTTP 400. | RF004 | Dado que um usuário anexa uma foto, quando latitude ou longitude estão ausentes ou fora dos intervalos válidos, então o sistema retorna HTTP 400 com mensagem "Foto rejeitada: georreferenciamento inválido ou ausente". |
@@ -1003,12 +1003,12 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na Seção 3.1.1, a Regra de Negócio (RN) que o restringe (Seção 3.1.2) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
+&nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na [Seção 3.1.1](#c3.1.1), a Regra de Negócio (RN) que o restringe ([Seção 3.1.2](#c3.1.2)) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na Seção 3.6.3, utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da Seção 3.1, partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da [Seção 3.1](#c3.1), partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
 
 <p align="center">Quadro 28 - Matriz RF → RN → Endpoint</p>
 
@@ -1038,44 +1038,44 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 # 3.2.1 Arquitetura em Camadas
 
-A arquitetura do sistema BRPEC foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository** (FOWLER, 2002; MARTIN, 2017), fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
+&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do sistema BRPEC foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository** (FOWLER, 2002; MARTIN, 2017), fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
 
-O sistema foi organizado em sete camadas no servidor — **Views**, **Routes**, **Middlewares**, **Controllers**, **Services**, **Repositories** e **Models** —, dispostas em fluxo unidirecional, no qual cada camada comunica-se exclusivamente com a subsequente.
+&nbsp;&nbsp;&nbsp;&nbsp;O sistema foi organizado em sete camadas no servidor (Views, Routes, Middlewares, Controllers, Services, Repositories e Models), dispostas em fluxo unidirecional, no qual cada camada comunica-se exclusivamente com a subsequente.
 
-A **Camada de Views** materializa a interface gráfica, com telas para Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização, sendo responsável pela apresentação e captura de dados, sem implementar regras de negócio.
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Views** materializa a interface gráfica, com telas para Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização, sendo responsável pela apresentação e captura de dados, sem implementar regras de negócio.
 
-A **Camada de Routes** define os oito arquivos de rotas REST (`usuario.route`, `validacao.route`, `movimentacao.route`, `evidencia.route`, `tarefa.route`, `ticket.routes`, `relatorio.route` e `sincronizacao.route`), declarando os endpoints HTTP em conformidade com a Matriz RF → RN → Endpoint (Seção 3.1.4).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Routes** define os oito arquivos de rotas REST (`usuario.route`, `validacao.route`, `movimentacao.route`, `evidencia.route`, `tarefa.route`, `ticket.route`, `relatorio.route` e `sincronizacao.route`), declarando os endpoints HTTP em conformidade com a Matriz RF → RN → Endpoint ([Seção 3.1.4](#c3.1.4)).
 
-A **Camada de Middlewares** intercepta as requisições por meio de cinco arquivos: `auth.middleware` (autenticação JWT), `role.middleware` (controle de acesso por cargo — RN06), `validateRequest.middleware` (validação de campos obrigatórios — RN01, RN02, RN11), `logger.middleware` (auditoria) e `errorHandler.middleware` (tratamento global de erros).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Middlewares** intercepta as requisições por meio de cinco arquivos: `autenticacao.middleware` (autenticação JWT), `cargo.middleware` (controle de acesso por cargo — RN06), `validacaoRequisicao.middleware` (validação de campos obrigatórios — RN01, RN02, RN11), `log.middleware` (auditoria) e `erros.middleware` (tratamento global de erros).
 
-A **Camada de Controllers** é composta por oito controladores *finos* (`usuario`, `validacao`, `movimentacao`, `evidencia`, `tarefa`, `ticket`, `relatorio` e `sincronizacao`) que recebem as requisições HTTP e delegam o processamento aos services correspondentes.
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Controllers** é composta por oito controladores (`usuario`, `validacao`, `movimentacao`, `evidencia`, `tarefa`, `ticket`, `relatorio` e `sincronizacao`) que recebem as requisições HTTP e delegam o processamento aos services correspondentes.
 
-A **Camada de Services** concentra as regras de negócio em oito serviços, aplicando as Regras de Negócio documentadas na Seção 3.1.2, como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização *offline* (RN03).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Services** concentra as regras de negócio, aplicando as Regras de Negócio documentadas na [Seção 3.1.2](#c3.1.2), como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização offline(RN03).
 
-A **Camada de Repositories** abstrai o acesso ao banco por meio de treze repositórios. A entidade Evidência é segmentada em sete repositórios distintos — um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket) —, refletindo a estratégia de **herança polimórfica** adotada.
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Repositories** abstrai o acesso ao banco por meio dos repositories. A entidade Evidência é segmentada em sete repositórios distintos — um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket) —, refletindo a estratégia de **herança polimórfica** adotada.
 
-A **Camada de Models** contém treze entidades de domínio e o utilitário `uuid.ts`, persistidas em **PostgreSQL** conforme o modelo relacional da Seção 3.6.3. As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da Seção 3.1.3.
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Models** contém entidades de domínio, persistidas em **PostgreSQL** conforme o modelo relacional da [Seção 3.6.3](#c3.6.3). As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da [Seção 3.1.3](#c3.1.3).
 
 ### <a name="c3.2.1.1"></a>3.2.1.1 Diagrama de Arquitetura 
 
 
-# Diagrama Arquitetural — Sistema BRPEC
+**Diagrama Arquitetural - Sistema BRPEC**
 
-O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão Arquitetura em Camadas (Layered Architecture), no estilo Controller-Service-Repository, com a adoção de camadas dedicadas de Routes e Middlewares. Essa estrutura promove a clara separação de responsabilidades entre apresentação, roteamento, validações transversais, lógica de negócio, acesso a dados e persistência.
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão Arquitetura em Camadas (Layered Architecture), no estilo Controller-Service-Repository, com a adoção de camadas dedicadas de Routes e Middlewares. Essa estrutura promove a clara separação de responsabilidades entre apresentação, roteamento, validações transversais, lógica de negócio, acesso a dados e persistência.
 
-  &nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views compõem a interface do usuário com telas de Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização; as Routes (8 arquivos) declaram os endpoints REST em conformidade com a Matriz RF → RN → Endpoint; os Middlewares (5 arquivos: auth, role, validateRequest, logger e errorHandler) interceptam as requisições aplicando autenticação JWT, controle de acesso por cargo e validações transversais; os Controllers (8 controladores) orquestram as requisições HTTP; os Services (8 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (13 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (13 entidades de domínio + o utilitário uuid.ts) representam os objetos do sistema, persistidos em banco PostgreSQL com herança polimórfica, destacando-se a entidade Evidência, segmentada em sete repositórios e sete models especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket).
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views compõem a interface do usuário com telas de Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização; as Routes (8 arquivos) declaram os endpoints REST em conformidade com a Matriz RF → RN → Endpoint; os Middlewares (5 arquivos: autenticacao, cargo, validacaoRequisicao, log e erros) interceptam as requisições aplicando autenticação JWT, controle de acesso por cargo e validações transversais; os Controllers (8 controladores) orquestram as requisições HTTP; os Services (8 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (13 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (13 entidades de domínio + o utilitário uuid.ts) representam os objetos do sistema antes da persistência em banco PostgreSQL; destaca-se a entidade Evidência, segmentada em sete repositórios e sete models especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket).
 
-[Protótipo no Figma](https://www.figma.com/design/RGkg3OaXZglm57yWaLhb6u/Diagrama-Arquitetural?node-id=0-1)
+[Diagrama Arquitetural no Figma](https://www.figma.com/design/RGkg3OaXZglm57yWaLhb6u/Diagrama-Arquitetural?node-id=0-1)
 
 <div align="center">
 <p align="center">Figura 7 - Diagrama Arquitetural </p>
 <p align="center">
-<img src="outros/assets/diagrama-arquitetural.png" alt="Diagrama Arquitetural" border="0"></a>
+<img src="others/assets/diagrama-arquitetural.png" alt="Diagrama Arquitetural" border="0">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional — Cliente → Views → Routes → Middlewares → Controllers → Services → Repositories → Models → Banco de Dados —, garantindo baixo acoplamento, alta coesão, maior testabilidade entre as camadas do sistema e rastreabilidade completa entre os Requisitos Funcionais (Seção 3.1.1), as Regras de Negócio (Seção 3.1.2) e a implementação técnica.
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional (Cliente → Views → Routes → Middlewares → Controllers → Services → Repositories → Models → Banco de Dados), garantindo baixo acoplamento, alta coesão, maior testabilidade entre as camadas do sistema e rastreabilidade completa entre os requisitos funcionais ([Seção 3.1.1](#c3.1.1)), as regras de negócio ([Seção 3.1.2](#c3.1.2)) e a implementação técnica.
 
 ### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -2122,7 +2122,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ***Routes***
 
-&nbsp;&nbsp;&nbsp;&nbsp;A camada de Routes, localizada em /src/backend/routes/, é responsável por definir os endpoints da API, mapeando cada método HTTP e caminho para o respectivo método do Controller. As rotas são organizadas por entidade (usuario.route.ts, movimentacao.route.ts, tarefa.route.ts, ticket.routes.ts, entre outras), de modo que cada arquivo agrupa os endpoints relacionados a um único recurso, seguindo as convenções do padrão REST. No usuario.route.ts, por exemplo, a rota POST /login direciona para a autenticação, enquanto POST / cria um usuário, GET / lista todos, GET /:id busca um registro específico, PATCH /:id atualiza e DELETE /:id remove. As rotas também são ordenadas de forma cuidadosa, posicionando caminhos específicos (como /retiro/:retiroId) antes dos caminhos genéricos por identificador, evitando que uma rota capture indevidamente requisições destinadas a outra. 
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Routes, localizada em /src/backend/routes/, é responsável por definir os endpoints da API, mapeando cada método HTTP e caminho para o respectivo método do Controller. As rotas são organizadas por entidade (usuario.route.ts, movimentacao.route.ts, tarefa.route.ts, ticket.route.ts, entre outras), de modo que cada arquivo agrupa os endpoints relacionados a um único recurso, seguindo as convenções do padrão REST. No usuario.route.ts, por exemplo, a rota POST /login direciona para a autenticação, enquanto POST / cria um usuário, GET / lista todos, GET /:id busca um registro específico, PATCH /:id atualiza e DELETE /:id remove. As rotas também são ordenadas de forma cuidadosa, posicionando caminhos específicos (como /retiro/:retiroId) antes dos caminhos genéricos por identificador, evitando que uma rota capture indevidamente requisições destinadas a outra. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, a camada de Routes reflete o princípio Open/Closed, pois novos endpoints podem ser incluídos por meio de novos arquivos de rota ou novas declarações sem necessidade de modificar o roteamento já estabelecido, mantendo a expansão da API de maneira controlada e desacoplada.
 
@@ -2136,7 +2136,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. 
-&nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#23-user-stories-sprints-1-a-5) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
+&nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#c2.3) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
 
 ### Capataz
 
@@ -2430,7 +2430,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da Seção 2.3, considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### Entidades e Atributos
 &nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas dezoito entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. Além disso, os dados específicos de movimentação foram separados nas entidades MOVIMENTACAO_COMPRA, MOVIMENTACAO_VENDA, MOVIMENTACAO_TRANSFERENCIA, MOVIMENTACAO_NASCIMENTO e MOVIMENTACAO_MORTE. O controle de sincronização offline é representado pelo atributo sincronizado nas entidades operacionais que passam por sincronização, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status, validado_por e data_validacao dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
@@ -2446,8 +2446,8 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US08. |
 | RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US06, US07, US11.|
 | MOVIMENTACAO | Registro base de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém status, validado_por e data_validacao para o fluxo de validação pelo supervisor (US04, RN06), sincronizado para controle de operação offline (US01, RN03), e estagio_vida como atributo comum do rebanho. Origem: US01, US02, US04.|
-| MOVIMENTACAO_COMPRA | Especialização de MOVIMENTACAO para registros de compra, contendo a quantidade comprada. Origem: US01, RN01. |
-| MOVIMENTACAO_VENDA | Especialização de MOVIMENTACAO para registros de venda, contendo a quantidade vendida. Origem: US01, RN01. |
+| MOVIMENTACAO_COMPRA | Especialização de MOVIMENTACAO para registros de compra, contendo destino e quantidade comprada. Origem: US01, RN01. |
+| MOVIMENTACAO_VENDA | Especialização de MOVIMENTACAO para registros de venda, contendo origem e quantidade vendida. Origem: US01, RN01. |
 | MOVIMENTACAO_TRANSFERENCIA | Especialização de MOVIMENTACAO para registros de transferência, contendo origem, destino e quantidade. Origem: US01, RN01. |
 | MOVIMENTACAO_NASCIMENTO | Especialização de MOVIMENTACAO para registros de nascimento, contendo origem e quantidade. Origem: US01, RN01. |
 | MOVIMENTACAO_MORTE | Especialização de MOVIMENTACAO para registros de morte, contendo origem e causa do óbito. Origem: US01, RN01. |
@@ -2470,8 +2470,8 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, data_criacao, cargo |
 | RETIRO | id (PK), nome |
 | MOVIMENTACAO | id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, status, sincronizado, data_criacao, data_validacao, estagio_vida |
-| MOVIMENTACAO_COMPRA | movimentacao_id (PK/FK), quantidade |
-| MOVIMENTACAO_VENDA | movimentacao_id (PK/FK), quantidade |
+| MOVIMENTACAO_COMPRA | movimentacao_id (PK/FK), destino, quantidade |
+| MOVIMENTACAO_VENDA | movimentacao_id (PK/FK), origem, quantidade |
 | MOVIMENTACAO_TRANSFERENCIA | movimentacao_id (PK/FK), origem, destino, quantidade |
 | MOVIMENTACAO_NASCIMENTO | movimentacao_id (PK/FK), origem, quantidade |
 | MOVIMENTACAO_MORTE | movimentacao_id (PK/FK), origem, causa_obito |
@@ -2529,7 +2529,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <div align="center">
 <p align="center">Figura 34 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
-<img src="/documentos/others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
+<img src="others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2550,7 +2550,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 **Modelo Relacional**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 <div align="center">
 <p align="center">Figura 35 – Modelo Relacional</p>
@@ -2558,7 +2558,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL, utilizado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL, utilizado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na [Seção 3.1](#c3.1), adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
 
@@ -2645,12 +2645,14 @@ CREATE TABLE movimentacao (
 
 CREATE TABLE movimentacao_compra (
     movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    destino VARCHAR(255) NOT NULL,
     quantidade INT NOT NULL,
     CHECK (quantidade > 0)
 );
 
 CREATE TABLE movimentacao_venda (
     movimentacao_id BIGINT PRIMARY KEY REFERENCES movimentacao(id),
+    origem VARCHAR(255) NOT NULL,
     quantidade INT NOT NULL,
     CHECK (quantidade > 0)
 );
@@ -4108,7 +4110,7 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-*Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
+*Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na [Seção 2](#c2) deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
 
 *Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras*
 
