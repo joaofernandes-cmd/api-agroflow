@@ -6,27 +6,35 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "node": "^22.22.3",
     "pg": "^8.21.0",
-    "postgres": "^3.4.9"
+    "postgres": "^3.4.9",
+    "uuid": "^14.0.0"
   },
   "scripts": {
     "dev": "tsx watch src/backend/server.ts",
     "build": "tsc",
     "start": "node dist/backend/server.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:unit": "jest --runInBand tests/unit",
+    "test:integration": "jest --runInBand tests/integration",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "ts-node": {
-    "compilerOptions": 
-    {"module": "commonjs"}},
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.9.0",
     "@types/pg": "^8.20.0",
     "@types/supertest": "^7.2.0",
