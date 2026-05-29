@@ -26,6 +26,37 @@ function queryArray<T extends string>(value: unknown): T[] | undefined {
     .filter(Boolean) as T[]
 }
 
+function parseDate(value: unknown, endOfDay = false): Date | null | undefined {
+  const raw = queryString(value)
+
+  if (!raw) {
+    return undefined
+  }
+
+  const date = new Date(raw)
+
+  if (Number.isNaN(date.getTime())) {
+    return null
+  }
+
+  // Quando o filtro traz dataFim, o ajuste para o fim do dia evita excluir
+  // registros criados em horario posterior dentro da mesma data.
+  if (endOfDay) {
+    date.setHours(23, 59, 59, 999)
+  }
+
+  return date
+}
+
+function toArrayOrUndefined<T extends string>(value: unknown, fallback?: T[]): T[] | undefined {
+  const parsed = queryArray<T>(value)
+  if (parsed && parsed.length > 0) {
+    return parsed
+  }
+
+  return fallback
+}
+
 export const MovimentacaoController = {
   async criar(req: Request, res: Response) {
     try {
@@ -33,18 +64,18 @@ export const MovimentacaoController = {
         req.body
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
-        return res.status(400).json({ error: 'Campos obrigatórios não informados' })
+        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
       }
 
       const retiroId = parseNumber(retiro_id)
       const quantidadeNumber = quantidade === undefined || quantidade === null ? null : parseNumber(quantidade)
 
       if (retiroId === null) {
-        return res.status(400).json({ error: 'Retiro inválido' })
+        return res.status(400).json({ error: 'Retiro invalido' })
       }
 
       if (quantidadeNumber === null && quantidade !== undefined && quantidade !== null) {
-        return res.status(400).json({ error: 'Quantidade inválida' })
+        return res.status(400).json({ error: 'Quantidade invalida' })
       }
 
       const movimentacao = await MovimentacaoService.criar({
@@ -62,7 +93,47 @@ export const MovimentacaoController = {
       return res.status(201).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar movimentação',
+        error: error instanceof Error ? error.message : 'Erro ao criar movimentacao',
+      })
+    }
+  },
+
+  // Endpoint usado pelo cliente offline quando o backend recebe a sincronizacao.
+  // O registro chega completo e ja deve ser gravado como sincronizado no servidor.
+  async sincronizarRecebida(req: Request, res: Response) {
+    try {
+      const { retiro_id, capataz_id, tipo, origem, destino, quantidade, causa_obito, estagio_vida } = req.body
+
+      if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
+        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+      }
+
+      const retiroId = parseNumber(retiro_id)
+      const quantidadeNumber = quantidade === undefined || quantidade === null ? null : parseNumber(quantidade)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro invalido' })
+      }
+
+      if (quantidadeNumber === null && quantidade !== undefined && quantidade !== null) {
+        return res.status(400).json({ error: 'Quantidade invalida' })
+      }
+
+      const movimentacao = await MovimentacaoService.sincronizarRecebida({
+        retiro_id: retiroId,
+        capataz_id,
+        tipo,
+        origem,
+        destino,
+        quantidade: quantidadeNumber,
+        causa_obito,
+        estagio_vida,
+      })
+
+      return res.status(201).json(movimentacao)
+    } catch (error) {
+      return res.status(400).json({
+        error: error instanceof Error ? error.message : 'Erro ao sincronizar movimentacao',
       })
     }
   },
@@ -72,7 +143,7 @@ export const MovimentacaoController = {
       const movimentacoes = await MovimentacaoService.listarTodas()
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar movimentações' })
+      return res.status(500).json({ error: 'Erro ao listar movimentacoes' })
     }
   },
 
@@ -81,41 +152,61 @@ export const MovimentacaoController = {
       const id = parseNumber(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID inválido' })
+        return res.status(400).json({ error: 'ID invalido' })
       }
 
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentação não encontrada' })
+        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentação' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentacao' })
     }
   },
 
   async filtrar(req: Request, res: Response) {
     try {
-      const retiroId = queryString(req.query.retiroId)
-      const tipos = queryArray<MovimentacaoTipo>(req.query.tipos)
-      const status = queryArray<MovimentacaoStatus>(req.query.status)
+      // O WAD documenta os filtros como retiro, tipo, status, dataInicio e dataFim.
+      // Mantemos aliases antigos para nao quebrar chamadas ja existentes.
+      const retiro = queryString(req.query.retiro) ?? queryString(req.query.retiroId)
+      const tipos = toArrayOrUndefined<MovimentacaoTipo>(req.query.tipo ?? req.query.tipos)
+      const statusQuery = req.query.status
+      const status = toArrayOrUndefined<MovimentacaoStatus>(statusQuery, undefined) ?? ['pendente']
+      const dataInicio = parseDate(req.query.dataInicio)
+      const dataFim = parseDate(req.query.dataFim, true)
 
-      if (!retiroId) {
-        return res.status(400).json({ error: 'Retiro é obrigatório' })
+      if (!retiro) {
+        return res.status(400).json({ error: 'Retiro e obrigatorio' })
       }
 
-      const retiroIdNumber = parseNumber(retiroId)
+      const retiroIdNumber = parseNumber(retiro)
 
       if (retiroIdNumber === null) {
-        return res.status(400).json({ error: 'Retiro inválido' })
+        return res.status(400).json({ error: 'Retiro invalido' })
       }
 
-      const movimentacoes = await MovimentacaoService.filtrar(retiroIdNumber, tipos, status)
+      if (dataInicio === null) {
+        return res.status(400).json({ error: 'dataInicio invalida' })
+      }
+
+      if (dataFim === null) {
+        return res.status(400).json({ error: 'dataFim invalida' })
+      }
+
+      const movimentacoes = await MovimentacaoService.filtrar(
+        retiroIdNumber,
+        tipos,
+        status,
+        dataInicio,
+        dataFim
+      )
+
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao filtrar movimentações' })
+      return res.status(500).json({ error: 'Erro ao filtrar movimentacoes' })
     }
   },
 
@@ -125,13 +216,13 @@ export const MovimentacaoController = {
       const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
 
       if (retiroIdNumber === null) {
-        return res.status(400).json({ error: 'Retiro inválido' })
+        return res.status(400).json({ error: 'Retiro invalido' })
       }
       const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentações para relatório' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentacoes para relatorio' })
     }
   },
 
@@ -141,14 +232,14 @@ export const MovimentacaoController = {
       const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
 
       if (retiroIdNumber === null) {
-        return res.status(400).json({ error: 'Retiro inválido' })
+        return res.status(400).json({ error: 'Retiro invalido' })
       }
 
       const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentações para dashboard' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentacoes para dashboard' })
     }
   },
 
@@ -157,18 +248,18 @@ export const MovimentacaoController = {
       const id = parseNumber(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID inválido' })
+        return res.status(400).json({ error: 'ID invalido' })
       }
 
       const movimentacao = await MovimentacaoService.sincronizar(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentação não encontrada' })
+        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao sincronizar movimentação' })
+      return res.status(500).json({ error: 'Erro ao sincronizar movimentacao' })
     }
   },
 
@@ -178,14 +269,14 @@ export const MovimentacaoController = {
       const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
 
       if (retiroIdNumber === null) {
-        return res.status(400).json({ error: 'Retiro inválido' })
+        return res.status(400).json({ error: 'Retiro invalido' })
       }
 
       const movimentacoes = await MovimentacaoService.listarPendentes(retiroIdNumber)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar movimentações pendentes' })
+      return res.status(500).json({ error: 'Erro ao listar movimentacoes pendentes' })
     }
   },
 
@@ -195,14 +286,14 @@ export const MovimentacaoController = {
       const retiroIdNumber = retiroId ? parseNumber(retiroId) : undefined
 
       if (retiroIdNumber === null) {
-        return res.status(400).json({ error: 'Retiro inválido' })
+        return res.status(400).json({ error: 'Retiro invalido' })
       }
 
       const contagem = await MovimentacaoService.contarPorTipo(retiroIdNumber)
 
       return res.status(200).json(contagem)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao contar movimentações por tipo' })
+      return res.status(500).json({ error: 'Erro ao contar movimentacoes por tipo' })
     }
   },
 
@@ -211,19 +302,19 @@ export const MovimentacaoController = {
       const id = parseNumber(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID inválido' })
+        return res.status(400).json({ error: 'ID invalido' })
       }
 
       const movimentacao = await MovimentacaoService.atualizar(id, req.body)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentação não encontrada' })
+        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentação',
+        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentacao',
       })
     }
   },
@@ -233,20 +324,20 @@ export const MovimentacaoController = {
       const id = parseNumber(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID inválido' })
+        return res.status(400).json({ error: 'ID invalido' })
       }
 
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentação não encontrada' })
+        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
       }
 
       await MovimentacaoService.remover(id)
 
       return res.status(204).send()
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao remover movimentação' })
+      return res.status(500).json({ error: 'Erro ao remover movimentacao' })
     }
   },
 }

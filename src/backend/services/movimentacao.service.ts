@@ -2,14 +2,14 @@ import { Movimentacao, MovimentacaoInput, MovimentacaoTipo, MovimentacaoStatus }
 import { MovimentacaoRepository } from '../repositories/movimentacao.repository'
 
 export const MovimentacaoService = {
-  // RN01: Validar campos obrigatórios antes de criar
+  // RN01: valida os campos obrigatorios antes de persistir.
   validarCamposObrigatorios(dados: MovimentacaoInput): void {
     if (!dados.capataz_id) {
-      throw new Error('Campo "capataz_id" é obrigatório')
+      throw new Error('Campo "capataz_id" e obrigatorio')
     }
 
     if (!dados.estagio_vida) {
-      throw new Error('Campo "estagio_vida" é obrigatório')
+      throw new Error('Campo "estagio_vida" e obrigatorio')
     }
 
     if (dados.tipo === 'compra' || dados.tipo === 'venda') {
@@ -31,33 +31,31 @@ export const MovimentacaoService = {
       this.validarOrigem(dados.origem)
 
       if (!dados.causa_obito) {
-        throw new Error('Campo "causa_obito" é obrigatório para movimentações do tipo "morte"')
+        throw new Error('Campo "causa_obito" e obrigatorio para movimentacoes do tipo "morte"')
       }
     }
   },
 
   validarOrigem(origem: MovimentacaoInput['origem']): void {
     if (!origem) {
-      throw new Error('Campo "origem" é obrigatório')
+      throw new Error('Campo "origem" e obrigatorio')
     }
   },
 
   validarDestino(destino: MovimentacaoInput['destino']): void {
     if (!destino) {
-      throw new Error('Campo "destino" é obrigatório')
+      throw new Error('Campo "destino" e obrigatorio')
     }
   },
 
   validarQuantidade(quantidade: MovimentacaoInput['quantidade']): void {
     if (!quantidade || quantidade <= 0) {
-      throw new Error('Campo "quantidade" é obrigatório e deve ser maior que zero')
+      throw new Error('Campo "quantidade" e obrigatorio e deve ser maior que zero')
     }
   },
 
-  // RN03: Criar movimentação com flag sincronizado = false no modo offline
-  // data_criacao é gerada automaticamente pelo sistema (timestamp)
-  // Sincronização será disparada automaticamente quando houver conexão
-  // Nota: capataz_id é esperado nos dados (deve vir do usuário autenticado para segurança)
+  // RN03: cria movimentacao no modo offline ou online.
+  // O valor de sincronizado segue o dado recebido, mas padrao continua false.
   async criar(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por'>): Promise<Movimentacao> {
     this.validarCamposObrigatorios(dados as MovimentacaoInput)
 
@@ -71,51 +69,75 @@ export const MovimentacaoService = {
     return movimentacao
   },
 
-  // RN09: Filtrar movimentações por tipo e status
-  // Permite filtro múltiplo para tipo e status, apenas um retiro por vez
+  // Recebe uma movimentacao que veio do fluxo de sincronizacao.
+  // Nesse caso o registro ja chega pronto e deve ser gravado como sincronizado.
+  async sincronizarRecebida(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por' | 'sincronizado'>): Promise<Movimentacao> {
+    this.validarCamposObrigatorios({
+      ...dados,
+      status: 'pendente',
+      sincronizado: true,
+      validado_por: null,
+    } as MovimentacaoInput)
+
+    return MovimentacaoRepository.create({
+      ...dados,
+      status: 'pendente',
+      sincronizado: true,
+      validado_por: null,
+    } as MovimentacaoInput)
+  },
+
+  // RN09: filtra por retiro, tipo, status e periodo.
+  // O periodo eh aplicado sobre data_criacao para refletir a janela do registro.
   async filtrar(
     retiroId: number,
     tipos?: MovimentacaoTipo[],
-    status?: MovimentacaoStatus[]
+    status?: MovimentacaoStatus[],
+    dataInicio?: Date,
+    dataFim?: Date
   ): Promise<Movimentacao[]> {
     const todasMovimentacoes = await MovimentacaoRepository.findAll()
 
     return todasMovimentacoes.filter(m => {
-      // Filtro por retiro (obrigatório)
       if (m.retiro_id !== retiroId) {
         return false
       }
 
-      // Filtro por tipos (opcional)
       if (tipos && tipos.length > 0 && !tipos.includes(m.tipo)) {
         return false
       }
 
-      // Filtro por status (opcional)
       if (status && status.length > 0 && !status.includes(m.status)) {
         return false
       }
 
+      const dataCriacao = new Date(m.data_criacao)
+
+      if (dataInicio && dataCriacao < dataInicio) {
+        return false
+      }
+
+      if (dataFim && dataCriacao > dataFim) {
+        return false
+      }
+
       return true
     })
   },
 
-  // RN07: Relatório usa apenas dados sincronizados (sincronizado = true)
+  // RN07: relatorio usa apenas dados sincronizados e validados.
   async buscarParaRelatorio(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
-      // Apenas dados sincronizados entram no relatório
       if (!m.sincronizado) {
         return false
       }
 
-      // Apenas dados validados
       if (m.status !== 'validado') {
         return false
       }
 
-      // Filtro opcional por retiro
       if (retiroId && m.retiro_id !== retiroId) {
         return false
       }
@@ -124,22 +146,19 @@ export const MovimentacaoService = {
     })
   },
 
-  // RN10: Buscar movimentações para dashboard (apenas validadas e sincronizadas)
+  // RN10: dashboard tambem opera apenas com registros validados e sincronizados.
   async buscarParaDashboard(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
     return movimentacoes.filter(m => {
-      // Apenas dados sincronizados
       if (!m.sincronizado) {
         return false
       }
 
-      // Apenas dados validados
       if (m.status !== 'validado') {
         return false
       }
 
-      // Filtro opcional por retiro
       if (retiroId && m.retiro_id !== retiroId) {
         return false
       }
@@ -148,7 +167,7 @@ export const MovimentacaoService = {
     })
   },
 
-  // RN03: Sincronizar movimentações offline (flag sincronizado = false)
+  // RN03: sincroniza um registro pendente marcando-o como enviado.
   async sincronizar(movimentacaoId: number): Promise<Movimentacao | null> {
     const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
 
@@ -156,23 +175,19 @@ export const MovimentacaoService = {
       return null
     }
 
-    // Marcar como sincronizado
     return MovimentacaoRepository.update(movimentacaoId, {
       sincronizado: true,
     })
   },
 
-  // Buscar movimentação por ID
   async buscarPorId(id: number): Promise<Movimentacao | null> {
     return MovimentacaoRepository.findById(id)
   },
 
-  // Listar todas as movimentações
   async listarTodas(): Promise<Movimentacao[]> {
     return MovimentacaoRepository.findAll()
   },
 
-  // Listar movimentações pendentes de validação
   async listarPendentes(retiroId?: number): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.findAll()
 
@@ -189,7 +204,6 @@ export const MovimentacaoService = {
     })
   },
 
-  // Contar movimentações por tipo (para dashboard)
   async contarPorTipo(retiroId?: number): Promise<Record<MovimentacaoTipo, number>> {
     const movimentacoes = await this.buscarParaDashboard(retiroId)
 
@@ -209,9 +223,8 @@ export const MovimentacaoService = {
     return contagem
   },
 
-  // Atualizar movimentação
   async atualizar(id: number, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
-    // Se atualizando campos críticos, revalidar
+    // Quando algum campo estrutural muda, os detalhes da movimentacao tambem precisam ser refeitos.
     if (
       dados.tipo ||
       dados.origem !== undefined ||
@@ -236,7 +249,6 @@ export const MovimentacaoService = {
     return MovimentacaoRepository.update(id, dados)
   },
 
-  // Remover movimentação
   async remover(id: number): Promise<void> {
     await MovimentacaoRepository.delete(id)
   },
