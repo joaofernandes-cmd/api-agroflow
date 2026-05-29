@@ -852,11 +852,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RN01 | O sistema deve bloquear o envio de qualquer movimentação de rebanho caso o estágio de vida esteja ausente ou caso os campos específicos do tipo não sejam informados: compra e venda exigem quantidade; transferência exige origem, destino e quantidade; nascimento exige origem e quantidade; morte exige origem e causa do óbito. | RF001 | Dado que um usuário tenta registrar uma movimentação, quando algum campo obrigatório para o tipo selecionado está vazio, então o sistema retorna erro HTTP 400 com mensagem específica do campo faltante. |
 | RN02 | A criação de uma nova tarefa no sistema deve falhar e retornar um erro de validação HTTP 400 caso não contenha o preenchimento simultâneo de: usuário atribuído, descrição, prioridade e categoria. | RF002 | Dado que um supervisor tenta criar uma tarefa, quando qualquer campo obrigatório (usuário, descrição, prioridade ou categoria) está ausente, então o sistema retorna HTTP 400 e lista os campos faltantes. |
 | RN03 | Durante a operação em modo offline, os dados devem ser salvos no armazenamento local do dispositivo com flag `sincronizado = false`. A sincronização só deve ser disparada automaticamente quando o sistema detectar um status HTTP 200 válido de conexão restabelecida. | RF003 | Dado que o dispositivo está offline, quando uma movimentação é registrada, então o sistema salva localmente com `sincronizado = false` e dispara sincronização automática assim que receber HTTP 200 do servidor. |
-| RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude entre −90 e +90, longitude entre −180 e +180). Caso não possua ou os valores sejam inválidos, a foto deve ser rejeitada com erro HTTP 422. | RF004 | Dado que um usuário anexa uma foto, quando latitude ou longitude estão ausentes ou fora dos intervalos válidos, então o sistema retorna HTTP 422 com mensagem "Foto rejeitada: georreferenciamento inválido ou ausente". |
+| RN04 | Para a anexação de fotos como evidência, o sistema deve validar se o arquivo de imagem possui metadados de georreferenciamento (latitude entre −90 e +90, longitude entre −180 e +180). Caso não possua ou os valores sejam inválidos, a foto deve ser rejeitada com erro HTTP 400. | RF004 | Dado que um usuário anexa uma foto, quando latitude ou longitude estão ausentes ou fora dos intervalos válidos, então o sistema retorna HTTP 400 com mensagem "Foto rejeitada: georreferenciamento inválido ou ausente". |
 | RN05 | A identificação do usuário deve ocorrer com no máximo 3 interações, utilizando linguagem clara (nível de escolaridade: ensino fundamental), instruções objetivas e elementos visuais (ícones, botões grandes) que facilitem o uso por pessoas com baixo letramento digital. | RF005 | Dado que um usuário acessa a tela de login, quando realiza a identificação, então o fluxo é concluído em até 3 interações (ex: selecionar perfil visual, inserir PIN, confirmar). |
 | RN06 | A ação de validar uma movimentação ou aprovar uma tarefa/ticket deve ser restrita e estar visível/habilitada apenas para usuários com perfil "Supervisor". Usuários com perfil "Capataz" ou "Gerente" não devem ter acesso a essa funcionalidade. | RF006 | Dado que um usuário com perfil "Capataz" tenta validar uma movimentação, quando a requisição é enviada, então o sistema retorna HTTP 403. Dado que um usuário com perfil "Supervisor" valida uma movimentação, então o sistema retorna HTTP 200 e atualiza o status para "validado". |
 | RN07 | A geração e exportação de relatórios semanais e mensais em formato de planilha (.xlsx ou .csv) só poderá ser processada utilizando dados com `sincronizado = true` no banco de dados. Dados com `sincronizado = false` (apenas locais/offline) não devem entrar no relatório gerado. | RF007 | Dado que um gerente solicita relatório semanal, quando o sistema processa os dados, então apenas registros com `sincronizado = true` são incluídos no arquivo exportado. |
-| RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente ao menos uma evidência descritiva associada ao chamado (mensagem escrita com mínimo 10 caracteres ou áudio com mínimo 3 segundos de duração). Tickets sem evidência devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência válida foi anexada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
+| RN08 | Para a abertura de um ticket de infraestrutura por um Capataz, o sistema deve exigir obrigatoriamente a indicação de evidência descritiva no envio do chamado, podendo ser mensagem escrita válida ou áudio informado. Tickets sem evidência descritiva devem ser rejeitados com erro HTTP 400. | RF008 | Dado que um capataz tenta abrir um ticket, quando nenhuma evidência descritiva foi informada, então o sistema retorna HTTP 400 com mensagem "Ticket rejeitado: ao menos uma evidência descritiva é obrigatória". |
 | RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, validado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="validado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
 | RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas) considerando exclusivamente movimentações com status="validado" e tarefas/tickets com status="aprovado", sempre com flag sincronizado=true. Registros pendentes ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros conferidos e sincronizados são incluídos no cálculo. Dado que existem registros pendentes, quando o dashboard carrega, então esses registros não aparecem nos totalizadores exibidos. |
 | RN11 | A prioridade do ticket (alta, média ou baixa) deve ser obrigatoriamente selecionada no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida para reorganização da demanda operacional. | RF011 | Dado que um Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
@@ -948,7 +948,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** 0 ocorrências de acesso indevido entre retiros em matriz de testes cobrindo 100% das combinações de perfil (Capataz, Supervisor, Gerente) versus recursos do sistema. 100% das tentativas de acesso (autorizadas ou não) registradas em trilha de auditoria imutável, contendo: perfil do usuário, recurso solicitado, timestamp, IP de origem e resultado (permitido/negado). **Protocolo de teste:** Testes de penetração automatizados (OWASP ZAP), testes manuais de escalada de privilégios, validação de isolamento de dados via queries SQL diretas no banco, auditoria de logs com verificação de completude e integridade. |
 | **Derivação do Contexto do Parceiro** | Derivado da estrutura organizacional da BrPec (14 retiros independentes, cada um com sua equipe de capatazes), da necessidade de isolamento de dados por retiro (confidencialidade operacional e concorrencial entre unidades) e da RN06, que exige validação de movimentações restrita ao perfil Supervisor. A análise SWOT identificou a complexidade de gestão em áreas geograficamente dispersas como fraqueza, tornando o controle de acesso crítico. |
 | **RF/RN Associados** | RF006, RN06, Restrição organizacional (isolamento por retiro) |
-| **Como será atendido** | RBAC implementado no backend (middleware de autorização por perfil e retiro), JWT com claims de perfil e `retiro_id`, isolamento de dados no nível do banco (queries com `WHERE retiro_id`), validação de permissões em cada endpoint, auditoria com trigger de banco registrando todas as operações, criptografia TLS 1.3 em trânsito, hash bcrypt para senhas. |
+| **Como será atendido** | RBAC implementado no backend por meio de middleware de autenticação JWT e autorização por cargo. O token inclui identificador do usuário, login, cargo e `retiro_id`, permitindo que as rotas protegidas validem a sessão e restrinjam ações sensíveis, como validações e relatórios. A senha é armazenada no campo `senha_hash`; no estado atual do backend, a comparação ainda é direta e a substituição por bcrypt permanece como melhoria técnica futura antes de produção. |
 
 ---
 
@@ -1168,14 +1168,14 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um Capataz cadastrado e vinculado a um retiro sob sua coordenação. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
+**Pré-condição:** O Supervisor está identificado no sistema (UC-07) com perfil "Supervisor". Existe pelo menos um usuário cadastrado e vinculado ao retiro da tarefa. O Supervisor escolheu a ação "Criar tarefa" após identificar-se.
 
 **Fluxo Principal (cenário de sucesso):**
 
 1. O Supervisor acessa o módulo "Tarefas" e seleciona "Nova Tarefa".
-2. O sistema apresenta o formulário de criação com os campos: Capataz atribuído, data, horário, prioridade, categoria e descrição.
-3. O Supervisor seleciona o Capataz responsável a partir da lista de usuários do retiro.
-4. O Supervisor preenche data, horário, prioridade (alta, média, baixa) e categoria da tarefa.
+2. O sistema apresenta o formulário de criação com os campos: usuário atribuído, prioridade, categoria e descrição.
+3. O Supervisor seleciona o usuário responsável a partir da lista de usuários do retiro.
+4. O Supervisor preenche prioridade (alta, média, baixa) e categoria da tarefa.
 5. O Supervisor adiciona descrição textual da tarefa.
 6. O Supervisor confirma a criação.
 7. O sistema valida o preenchimento simultâneo de todos os campos obrigatórios.
@@ -1190,7 +1190,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 **Exceções:**
 
-- **E1** (no passo 7): se algum dos campos obrigatórios (Capataz atribuído, data, horário, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
+- **E1** (no passo 7): se algum dos campos obrigatórios (usuário atribuído, descrição, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
 - **E2** (no passo 8): se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
 - **E3** (no passo 9): se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
 
@@ -1240,7 +1240,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 **Exceções:**
 
-- **E1** (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden) e registra a tentativa em log de auditoria (RN06, SEG).
+- **E1** (no passo 1): se um usuário sem perfil "Supervisor" tentar acessar o painel de validações por manipulação direta de URL ou token, o sistema retorna erro 403 (Forbidden), conforme a restrição aplicada pelo middleware de autorização (RN06, SEG).
 - **E2** (no passo 7): se houver falha de gravação no servidor, o sistema mantém o registro como "pendente de validação", exibe erro ao Supervisor e solicita nova tentativa.
 
 **Pós-condição:** A movimentação está validada, com identificação do Supervisor Luiz e timestamp persistidos para auditoria. Os dados conferidos ficam visíveis ao Gerente Marcos, que pode consultar quem registrou e quem validou. Apenas registros conferidos entram nos relatórios oficiais (UC-06).
@@ -1352,7 +1352,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |---|---|
 | **UC-ID + Nome** | UC-07 — Identificar-se no Sistema |
-| **Ator primário** | Capataz (Daniel), Supervisor (Luiz) ou Gerente (Marcos) |
+| **Ator primário** | Supervisor (Luiz) ou Gerente (Marcos) |
 | **Atores secundários** | Servidor de Autenticação |
 | **RFs relacionados** | RF005 |
 | **RNs relacionadas** | RN05 |
@@ -1372,7 +1372,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 2. O sistema apresenta a tela de identificação com elementos visuais grandes, poucos campos e instruções objetivas, adequada ao baixo letramento digital do Capataz Daniel (RN05).
 3. O usuário informa sua identificação e credencial.
 4. O sistema valida a credencial junto ao servidor de autenticação.
-5. O sistema identifica o perfil (Capataz, Supervisor ou Gerente) e o retiro vinculado.
+5. O sistema identifica o perfil (Supervisor ou Gerente) e o retiro vinculado.
 6. O sistema libera o menu principal contextualizado para o perfil identificado, exibindo apenas as ações disponíveis para aquele perfil.
 
 **Fluxos Alternativos:**
@@ -1385,7 +1385,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 - **E1** (no passo 4): se a credencial é inválida, o sistema exibe mensagem clara em linguagem objetiva e oferece nova tentativa.
 - **E2** (no passo 4): se não há conexão com o servidor, o sistema permite identificação offline com credencial armazenada localmente, mantendo a sessão limitada às funcionalidades offline.
 
-**Pós-condição:** O usuário está autenticado com perfil identificado e sessão ativa. O menu exibe apenas as ações do perfil: Daniel (Capataz) vê "Registrar movimentação" e "Abrir chamado"; Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". Todas as ações ficam vinculadas ao usuário para rastreabilidade e auditoria.
+**Pós-condição:** O usuário está autenticado com perfil identificado e token de acesso ativo. O menu exibe apenas as ações do perfil: Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". O fluxo de login do backend não emite token para Capataz; registros operacionais desse perfil seguem os fluxos específicos de campo e sincronização.
 
 --- 
 <p align="center">Quadro 36 - Use Case 08</p>
@@ -1508,7 +1508,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;Um diagrama de classes do domínio é um modelo visual da linguagem UML que representa as principais entidades de um sistema, seus atributos, operações e os relacionamentos entre elas. Diferente de um diagrama de implementação, seu foco está no domínio do negócio, ou seja, em como os conceitos do mundo real se traduzem em estruturas de software, estabelecendo uma linguagem comum entre as equipes técnica e de negócio.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. A FilaSincronizacao garante a operação offline, enfileirando dados localmente até que a conexão seja restabelecida, enquanto a classe Sessão sustenta o controle de autenticação e rastreabilidade das ações.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do projeto, o diagrama modela o ciclo operacional completo da BrPec Agropecuária, desde o registro de movimentações do rebanho em campo pelo Capataz, passando pela validação do Supervisor, até a geração de relatórios gerenciais pelo Gerente. As três classes derivam de uma superclasse abstrata Usuário, cada uma vinculada a um Retiro e com responsabilidades distintas. Registros de qualquer natureza, Movimentações, Tarefas e Tickets, podem receber Evidências (fotos, áudios ou mensagens), e movimentações do tipo morte estendem-se obrigatoriamente à classe CausaObito. No backend atual, a sincronização é representada pela flag `sincronizado` nas entidades operacionais, enquanto o controle de autenticação das rotas protegidas ocorre por JWT.
 
 <div align="center">
 <p align="center">Figura 9 - Diagrama de Classes de Domínio</p>
@@ -1545,7 +1545,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Com os dados recuperados, o *ServicoUsuario* compara a senha enviada pelo usuário com a senha armazenada no sistema.
 
-• Caso as credenciais estejam corretas, o sistema cria uma nova sessão de autenticação, registra a sessão no banco de dados e gera um token de acesso associado ao perfil do usuário.
+• Caso as credenciais estejam corretas e o usuário possua perfil Supervisor ou Gerente, o sistema gera um token JWT associado ao perfil e ao retiro do usuário.
 
 • Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, permitindo o acesso ao sistema.
 
@@ -1559,6 +1559,10 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 • Nesse cenário, o sistema responde à interface com status `401 – Não Autorizado`.
 
 • Por fim, a interface exibe ao usuário uma mensagem informando que o login ou a senha estão inválidos.
+
+**Fluxo Alternativo - Capataz no login protegido**
+
+• Caso o usuário autenticado possua perfil de Capataz, o backend interrompe o fluxo de login protegido e retorna `403 – Proibido`, pois esse perfil não recebe JWT no endpoint `/usuarios/login`.
 
 
 <div align="center">
@@ -1603,7 +1607,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso a causa não seja informada, o serviço retorna um erro de validação ao controlador.
 
-• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento obrigatório da causa da morte antes do salvamento da movimentação.
+• O sistema então responde à interface com status `400 – Requisição Inválida`, solicitando o preenchimento obrigatório da causa da morte antes do salvamento da movimentação.
 
 
 
@@ -1621,30 +1625,19 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Fluxo Principal**
 
-• O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, responsável e prazo.
+• O processo inicia quando o supervisor preenche, na interface da aplicação, as informações necessárias para o cadastro de uma nova atividade operacional, como descrição, prioridade, categoria e responsável.
 
 • Após o preenchimento, a interface envia uma requisição `POST` para o endpoint `/tarefas`, encaminhando os dados ao *ControladorTarefa*.
 
-• Inicialmente, o controlador realiza a validação do token e do perfil do usuário, garantindo que apenas supervisores possam criar tarefas no sistema.
+• Inicialmente, o controlador recebe os dados da requisição e encaminha as informações ao serviço responsável pela validação dos campos obrigatórios.
 
-• Caso o perfil seja válido, os dados são encaminhados ao *ServicoTarefa*, responsável por executar as regras de negócio e validar os campos obrigatórios.
+• Em seguida, os dados são encaminhados ao *ServicoTarefa*, responsável por executar as regras de negócio e validar os campos obrigatórios.
 
 • Quando todas as informações estão corretas, o serviço solicita ao *RepositorioTarefa* o salvamento da nova tarefa no banco de dados.
 
 • Após a persistência, o banco retorna o identificador da tarefa criada, confirmando o sucesso da operação.
 
-• Em seguida, o *ServicoTarefa* aciona o *ServicoNotificacao*, responsável por enviar o aviso ao capataz designado para execução da atividade.
-
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao supervisor a confirmação de que a tarefa foi atribuída corretamente.
-
-
-**Fluxo Alternativo - Usuário sem permissão**
-
-• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de supervisor.
-
-• Caso o perfil seja diferente do permitido, o fluxo é interrompido e o *ControladorTarefa* retorna uma resposta `403 – Proibido`.
-
-• Nesse cenário, a interface exibe uma mensagem informando que o usuário não possui permissão para criar tarefas.
 
 
 **Fluxo Alternativo - Campos obrigatórios inválidos**
@@ -1653,7 +1646,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso alguma informação esteja vazia ou inválida, o serviço retorna um erro de validação ao controlador.
 
-• O sistema então responde à interface com status `422 – Entidade Não Processável`, solicitando ao usuário o preenchimento correto dos campos obrigatórios.
+• O sistema então responde à interface com status `400 – Requisição Inválida`, solicitando ao usuário o preenchimento correto dos campos obrigatórios.
 
 <div align="center">
 <p align="center">Figura 12 - Diagrama Sequencial (RF002)</p>
@@ -1728,7 +1721,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Durante o envio de evidências do tipo foto, o sistema valida se a imagem contém informações de geolocalização associadas ao arquivo. Essa validação é importante para garantir a rastreabilidade das atividades realizadas em campo.
 
-• Caso a foto enviada não possua dados de GPS, o serviço de evidências identifica a inconsistência e retorna um erro de validação ao controlador. O controlador então responde à interface com o código `422 – Entidade Não Processável`.
+• Caso a foto enviada não possua dados de GPS, o serviço de evidências identifica a inconsistência e retorna um erro de validação ao controlador. O controlador então responde à interface com o código `400 – Requisição Inválida`.
 
 • Ao receber a resposta, a interface exibe ao usuário uma mensagem informando que a foto não contém localização válida, solicitando o envio de uma nova imagem com GPS habilitado no dispositivo. Nesse cenário, a evidência não é armazenada nem registrada no banco de dados até que a inconsistência seja corrigida.
 
@@ -1761,7 +1754,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Quando a ação escolhida é “validar”, o serviço atualiza o status da movimentação para “validado” no banco de dados.
 
-• Em seguida, o *ServicoNotificacao* é acionado para enviar uma notificação ao capataz informando que a movimentação foi validada.
+• Em seguida, o sistema retorna a confirmação da validação, permitindo que a interface atualize o status exibido ao usuário.
 
 • Por fim, o controlador retorna uma resposta `200 – Sucesso` para a interface, confirmando que o status foi atualizado corretamente.
 
@@ -1806,9 +1799,9 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação./
 
-• Em seguida, a interface envia uma requisição `GET` para o endpoint `/relatorios/filtros`, encaminhando os parâmetros ao *ControladorRelatorio*.
+• Em seguida, a interface envia uma requisição `GET` para os endpoints de relatórios implementados, como `/relatorios/movimentacoes`, `/relatorios/semanal` ou `/relatorios/mensal`, encaminhando os parâmetros ao *ControladorRelatorio*.
 
-• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes possam acessar a funcionalidade de relatórios.
+• Inicialmente, o controlador valida o token e o perfil do usuário, garantindo que apenas gerentes ou supervisores possam acessar a funcionalidade de relatórios.
 
 • Caso o perfil seja válido, o controlador encaminha a solicitação ao *ServicoRelatorio*, responsável pelas regras de geração do relatório.
 
@@ -1822,7 +1815,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Fluxo Alternativo - Usuário sem permissão**
 
-• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente.
+• Durante a validação inicial, o sistema verifica se o usuário autenticado possui perfil de gerente ou supervisor.
 
 • Caso o perfil seja inválido, o fluxo é interrompido e o *ControladorRelatorio* retorna uma resposta `403 – Proibido`.
 
@@ -1860,25 +1853,25 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Em seguida, os dados são encaminhados ao *ServicoTicket*, responsável pelas regras de negócio da operação.
 
-• O serviço verifica se o chamado possui alguma evidência anexada, como mensagem, áudio ou imagem.
+• O serviço verifica se o chamado possui a indicação obrigatória de evidência descritiva no envio da requisição.
 
 • Caso as informações estejam corretas, o *ServicoTicket* solicita ao *RepositorioTicket* o salvamento do chamado no banco de dados.
 
 • Após a persistência, o banco retorna o identificador do chamado criado, confirmando o sucesso da operação.
 
-• Em seguida, o *ServicoNotificacao* é acionado para enviar notificações ao supervisor e à equipe responsável.
+• Em seguida, o ticket permanece disponível para consulta, atribuição e aprovação nos endpoints correspondentes.
 
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação de que o chamado foi aberto corretamente.
 
 **Fluxo Alternativo - Chamado sem evidência**
 
-• Durante a validação do chamado, o *ServicoTicket* verifica se existe ao menos uma evidência anexada ao registro.
+• Durante a validação do chamado, o *ServicoTicket* verifica se a requisição indica a presença de evidência descritiva.
 
 • Caso nenhuma evidência seja enviada, o serviço retorna um erro de validação ao controlador.
 
-• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`.
+• Nesse cenário, o sistema responde à interface com status `400 – Requisição Inválida`.
 
-• Por fim, a interface exibe uma mensagem solicitando que o usuário inclua uma mensagem, áudio ou outra evidência antes de abrir o chamado.
+• Por fim, a interface exibe uma mensagem solicitando que o usuário informe uma evidência descritiva antes de abrir o chamado.
 
 <div align="center">
 <p align="center">Figura 17 - Diagrama Sequencial (RF008)</p>
@@ -2007,7 +2000,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
  
 • Após localizar o registro, o serviço valida se a prioridade informada está dentro dos valores permitidos.
  
-• Caso a prioridade seja válida, o serviço atualiza o campo no banco de dados e registra a alteração no log de auditoria, indicando o usuário responsável e o horário da modificação, conforme determinado pela RN11.
+• Caso a prioridade seja válida, o serviço atualiza o campo no banco de dados, conforme determinado pela RN11.
  
 • Por fim, o controlador responde à interface com status `200 – Sucesso`, confirmando ao usuário que a prioridade do ticket foi atualizada.
  
@@ -2036,7 +2029,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
  
 • Caso o valor seja inválido ou não tenha sido preenchido, o serviço retorna um erro de validação ao controlador.
  
-• Nesse cenário, o sistema responde à interface com status `422 – Entidade Não Processável`, solicitando o preenchimento correto do campo prioridade.
+• Nesse cenário, o sistema responde à interface com status `400 – Requisição Inválida`, solicitando o preenchimento correto do campo prioridade.
  
  
 <div align="center">
@@ -2432,8 +2425,8 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 | Entidade | Atributos |
 |----------|-----------|
-| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, criado_em, cargo|
-| RETIRO| id (PK), nome.|
+| USUARIO | id (PK), retiro_id (FK), nome, login, senha_hash, status, data_criacao, cargo |
+| RETIRO | id (PK), nome |
 | MOVIMENTACAO | id (PK), retiro_id (FK), capataz_id (FK), validado_por (FK), tipo, status, sincronizado, data_criacao, data_validacao, estagio_vida |
 | MOVIMENTACAO_COMPRA | movimentacao_id (PK/FK), quantidade |
 | MOVIMENTACAO_VENDA | movimentacao_id (PK/FK), quantidade |
@@ -2442,7 +2435,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | MOVIMENTACAO_MORTE | movimentacao_id (PK/FK), origem, causa_obito |
 | TAREFA | id (PK), retiro_id (FK), criada_por (FK), atribuida_a (FK), descricao, categoria, prioridade, data_criacao, status, aprovado_por (FK), sincronizado |
 | TICKET | id (PK), retiro_id (FK), aberto_por (FK), atribuido_a (FK), aprovado_por (FK), categoria, localizacao, descricao, prioridade, status, data_criacao, data_realizado, sincronizado |
-| EVIDENCIA | id (PK), usuario_id (FK), tipo, criado_em |
+| EVIDENCIA | id (PK), usuario_id (FK), tipo, data_criacao |
 | EVIDENCIA_FOTO | evidencia_id (PK/FK), url_arquivo, latitude, longitude |
 | EVIDENCIA_AUDIO | evidencia_id (PK/FK), url_arquivo |
 | EVIDENCIA_MENSAGEM | evidencia_id (PK/FK), conteudo |
@@ -2470,7 +2463,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | R6 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um capataz executa zero ou várias tarefas; toda tarefa é atribuída a exatamente um capataz. Origem: US03, RN02. |
 | R7 | VINCULADA_A | TAREFA ↔ RETIRO | (1,1) : (0,N) | Toda tarefa está vinculada a exatamente um retiro; um retiro pode ter zero ou várias tarefas. Origem: US03. |
 | R8 | ABRE | USUARIO ↔ TICKET | (0,N) : (1,1) | Um capataz abre zero ou vários tickets; todo ticket tem exatamente um capataz autor. Origem: US07, RN08. |
-| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (1,1) : (0,N) | Todo ticket é atribuído pelo supervisor a exatamente um capataz executor; um capataz pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
+| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (0,1) : (0,N) | Um ticket pode estar sem usuário atribuído ou pode ser atribuído pelo supervisor a um usuário executor; um usuário pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
 | R10 | LOCALIZADO_EM | TICKET ↔ RETIRO | (1,1) : (0,N) | Todo ticket está vinculado a exatamente um retiro; um retiro pode ter zero ou vários tickets. Origem: US06, US07. |
 | R11 | REGISTRADA_POR | EVIDENCIA ↔ USUARIO | (1,1) : (0,N) | Toda evidência é registrada por exatamente um usuário; um usuário pode registrar zero ou várias evidências. Origem: RF004. |
 | R12 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias movimentações. Origem: RF004, US01. |
@@ -2478,7 +2471,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | R14 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias tarefas. Origem: RF004, US03. |
 | R15 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ TAREFA | (0,N) : (1,1) | Cada associação referencia exatamente uma tarefa; uma tarefa pode ter zero ou várias evidências vinculadas. Origem: RF004, US03. |
 | R16 | ANEXA_TKT | EVIDENCIA_TICKET ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou vários tickets. Origem: RF004, US07. |
-| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (1,N) : (1,1) | Todo ticket possui ao menos uma evidência associada (RN08); cada associação referencia exatamente um ticket. Origem: US06, US07, RN08. |
+| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (0,N) : (1,1) | Um ticket pode possuir zero ou várias evidências associadas na tabela relacional; a obrigatoriedade de evidência descritiva na criação do chamado é validada pela camada de serviço conforme RN08. Origem: US06, US07, RN08. |
 | R18 | GERA | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um usuário gera zero ou vários relatórios; todo relatório tem exatamente um gerador. Origem: US08, US09, RN07. |
 | R19 | ABRANGE | RELATORIO ↔ RETIRO | (1,1) : (0,N) | Todo relatório está associado a exatamente um retiro; um retiro pode aparecer em zero ou vários relatórios. Origem: US08, US09, US11. |
 | R20 | ESPECIALIZA_FOTO | EVIDENCIA_FOTO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_FOTO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo, latitude e longitude, obrigatórios conforme RN04. Origem: RF004, RN04. |
@@ -3039,11 +3032,11 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
-*Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas.*
+O fluxo de autenticação implementado recebe `login` e `senha` pelo endpoint `POST /usuarios/login`, valida a existência do usuário e compara a senha informada com o valor armazenado em `senha_hash`. Quando as credenciais são válidas, o usuário está ativo e possui perfil Supervisor ou Gerente, o backend retorna os dados do usuário sem `senha_hash` e gera um token JWT para acesso às rotas protegidas. No estado atual do backend, a comparação de senha ainda é direta; a troca para bcrypt permanece registrada como melhoria necessária antes de produção.
 
 ### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
-*Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
+O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A escolha reduz a necessidade de consulta ao banco a cada requisição protegida, pois o token carrega `sub`, `login`, `cargo` e `retiro_id`. Como trade-off, o token é stateless e não possui revogação centralizada imediata; por isso, não deve carregar informações sensíveis além dos dados mínimos de autorização.
 
 ### <a name="c3.8.3"></a>3.8.3. Autorização
 
