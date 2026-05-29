@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { UsuarioController } from '../controllers/usuario.controller'
+import { autenticarUsuario } from '../middlewares/auth.middleware'
+import { exigirCargo } from '../middlewares/role.middleware'
 
 const usuarioRoutes = Router()
 
@@ -7,6 +9,10 @@ const usuarioRoutes = Router()
 usuarioRoutes.post('/login', UsuarioController.autenticar)
 
 // CRUD básico de usuários
+// Aqui o acesso já exige login válido.
+usuarioRoutes.use(autenticarUsuario)
+// E, além disso, só gerente pode mexer nesses cadastros.
+usuarioRoutes.use(exigirCargo('gerente'))
 usuarioRoutes.post('/', UsuarioController.criar)
 usuarioRoutes.get('/', UsuarioController.listarTodos)
 

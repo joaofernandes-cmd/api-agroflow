@@ -1,7 +1,10 @@
-import {  Request, Response } from 'express';
+import { Request, Response } from 'express'
+import { gerarToken } from '../middlewares/auth.middleware'
+import { Usuario } from '../models/usuario.model'
 import { UsuarioService } from '../services/usuario.service';
 
-function  removerSenha(usuario: any) {
+function removerSenha(usuario: Usuario) {
+    // Nunca devolvemos a senha_hash na resposta.
     const { senha_hash, ...usuarioSemSenha } = usuario;
     return usuarioSemSenha;
 }
@@ -26,7 +29,20 @@ export const UsuarioController = {
                 return res.status(401).json({ error: 'Login ou senha incorretos' });
             }
 
-            return res.status(200).json(removerSenha(usuario));
+            // Capataz não entra no fluxo de login: ele usa a aplicação sem sessão.
+            if (!UsuarioService.estaAtivo(usuario)) {
+                return res.status(403).json({ error: 'Usuário inativo' });
+            }
+
+            // Só gerente e supervisor recebem JWT.
+            if (usuario.cargo === 'capataz') {
+                return res.status(403).json({ error: 'Capataz não possui acesso por login' });
+            }
+
+            return res.status(200).json({
+                usuario: removerSenha(usuario),
+                token: gerarToken(usuario),
+            });
         } catch (error) {
             return res.status(500).json({ erro: 'Erro ao autenticar usuário' });
         }

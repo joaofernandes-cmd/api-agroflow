@@ -4,8 +4,10 @@
   "description": "<p align=\"center\">\r <a href= \"https://www.inteli.edu.br/\"><img src=\"/assets/inteli.png\" alt=\"Inteli - Instituto de Tecnologia e Liderança\" border=\"0\"></a>\r </p>",
   "main": "index.js",
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "node": "^22.22.3",
     "pg": "^8.21.0",
     "postgres": "^3.4.9",
