@@ -9,10 +9,10 @@ function parseNumber(value: unknown): number | null {
 export const ValidacaoController = {
   async podeValidar(req: Request, res: Response) {
     try {
-      const { usuario } = req.body
+      const usuario = req.usuario
 
       if (!usuario) {
-        return res.status(400).json({ error: 'Campo "usuario" é obrigatório' })
+        return res.status(401).json({ error: 'Usuário não autenticado' })
       }
 
       const podeValidar = ValidacaoService.podeValidar(usuario)
@@ -29,22 +29,20 @@ export const ValidacaoController = {
   async validarMovimentacao(req: Request, res: Response) {
     try {
       const movimentacaoId = parseNumber(req.params.id)
-      const { supervisorId, supervisorCargo } = req.body
+      const usuario = req.usuario
 
       if (movimentacaoId === null) {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
-      if (!supervisorId || !supervisorCargo) {
-        return res.status(400).json({
-          error: 'Campos "supervisorId" e "supervisorCargo" são obrigatórios',
-        })
+      if (!usuario) {
+        return res.status(401).json({ error: 'Usuário não autenticado' })
       }
 
       const resultado = await ValidacaoService.validarMovimentacao(
         movimentacaoId,
-        String(supervisorId),
-        String(supervisorCargo)
+        usuario.id,
+        usuario.cargo
       )
 
       return res.status(resultado.sucesso ? 200 : 400).json(resultado)
@@ -59,20 +57,20 @@ export const ValidacaoController = {
   async aprovarTicket(req: Request, res: Response) {
     try {
       const ticketId = parseNumber(req.params.id)
-      const { supervisorId, supervisorCargo } = req.body
+      const usuario = req.usuario
 
       if (ticketId === null) {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
-      if (!supervisorId || !supervisorCargo) {
-        return res.status(400).json({ error: 'Campos "supervisorId" e "supervisorCargo" são obrigatórios' })
+      if (!usuario) {
+        return res.status(401).json({ error: 'Usuário não autenticado' })
       }
 
       const resultado = await ValidacaoService.aprovarTicket(
         ticketId,
-        String(supervisorId),
-        String(supervisorCargo)
+        usuario.id,
+        usuario.cargo
       )
 
       return res.status(resultado.sucesso ? 200 : 400).json(resultado)
@@ -87,20 +85,20 @@ export const ValidacaoController = {
   async aprovarTarefa(req: Request, res: Response) {
     try {
       const tarefaId = parseNumber(req.params.id)
-      const { supervisorId, supervisorCargo } = req.body
+      const usuario = req.usuario
 
       if (tarefaId === null) {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
-      if (!supervisorId || !supervisorCargo) {
-        return res.status(400).json({ error: 'Campos "supervisorId" e "supervisorCargo" são obrigatórios' })
+      if (!usuario) {
+        return res.status(401).json({ error: 'Usuário não autenticado' })
       }
 
       const resultado = await ValidacaoService.aprovarTarefa(
         tarefaId,
-        String(supervisorId),
-        String(supervisorCargo)
+        usuario.id,
+        usuario.cargo
       )
 
       return res.status(resultado.sucesso ? 200 : 400).json(resultado)

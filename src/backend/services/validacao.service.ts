@@ -4,13 +4,17 @@ import { TicketRepository } from '../repositories/ticket.repository'
 import { Movimentacao } from '../models/movimentacao.model'
 import { Tarefa } from '../models/tarefa.model'
 import { Ticket } from '../models/ticket.model'
-import { Usuario } from '../models/usuario.model'
+import { UsuarioCargo } from '../models/usuario.model'
 import { UUID } from '../models/uuid'
+
+type UsuarioAutenticado = {
+  cargo: UsuarioCargo
+}
 
 // RN06: Validação e aprovação de registros - apenas Supervisor pode validar
 export const ValidacaoService = {
   // RN06: Validar se usuário tem permissão para aprovar registros
-  podeValidar(usuario: Usuario): boolean {
+  podeValidar(usuario: UsuarioAutenticado): boolean {
     return usuario.cargo === 'supervisor'
   },
 

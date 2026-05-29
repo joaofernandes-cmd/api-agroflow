@@ -1,7 +1,13 @@
 import { Router } from 'express'
 import { ValidacaoController } from '../controllers/validacao.controller'
+import { autenticarUsuario, exigirCargo } from '../middlewares/auth.middleware'
 
 const validacaoRoutes = Router()
+
+// Tela de validação: só entra quem estiver autenticado.
+validacaoRoutes.use(autenticarUsuario)
+// E, dentro dela, apenas supervisor pode aprovar/validar.
+validacaoRoutes.use(exigirCargo('supervisor'))
 
 // Verifica se um usuário tem permissão para validar registros
 validacaoRoutes.post('/permissao', ValidacaoController.podeValidar)
