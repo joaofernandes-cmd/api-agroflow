@@ -1036,7 +1036,46 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
-### <a name="c3.2.1"></a>3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+# 3.2.1 Arquitetura em Camadas
+
+A arquitetura do sistema BRPEC foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository** (FOWLER, 2002; MARTIN, 2017), fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
+
+O sistema foi organizado em sete camadas no servidor — **Views**, **Routes**, **Middlewares**, **Controllers**, **Services**, **Repositories** e **Models** —, dispostas em fluxo unidirecional, no qual cada camada comunica-se exclusivamente com a subsequente.
+
+A **Camada de Views** materializa a interface gráfica, com telas para Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização, sendo responsável pela apresentação e captura de dados, sem implementar regras de negócio.
+
+A **Camada de Routes** define os oito arquivos de rotas REST (`usuario.route`, `validacao.route`, `movimentacao.route`, `evidencia.route`, `tarefa.route`, `ticket.routes`, `relatorio.route` e `sincronizacao.route`), declarando os endpoints HTTP em conformidade com a Matriz RF → RN → Endpoint (Seção 3.1.4).
+
+A **Camada de Middlewares** intercepta as requisições por meio de cinco arquivos: `auth.middleware` (autenticação JWT), `role.middleware` (controle de acesso por cargo — RN06), `validateRequest.middleware` (validação de campos obrigatórios — RN01, RN02, RN11), `logger.middleware` (auditoria) e `errorHandler.middleware` (tratamento global de erros).
+
+A **Camada de Controllers** é composta por oito controladores *finos* (`usuario`, `validacao`, `movimentacao`, `evidencia`, `tarefa`, `ticket`, `relatorio` e `sincronizacao`) que recebem as requisições HTTP e delegam o processamento aos services correspondentes.
+
+A **Camada de Services** concentra as regras de negócio em oito serviços, aplicando as Regras de Negócio documentadas na Seção 3.1.2, como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização *offline* (RN03).
+
+A **Camada de Repositories** abstrai o acesso ao banco por meio de treze repositórios. A entidade Evidência é segmentada em sete repositórios distintos — um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket) —, refletindo a estratégia de **herança polimórfica** adotada.
+
+A **Camada de Models** contém treze entidades de domínio e o utilitário `uuid.ts`, persistidas em **PostgreSQL** conforme o modelo relacional da Seção 3.6.3. As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da Seção 3.1.3.
+
+### <a name="c3.2.1.1"></a>3.2.1.1 Diagrama de Arquitetura 
+
+
+# Diagrama Arquitetural — Sistema BRPEC
+
+O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão Arquitetura em Camadas (Layered Architecture), no estilo Controller-Service-Repository, com a adoção de camadas dedicadas de Routes e Middlewares. Essa estrutura promove a clara separação de responsabilidades entre apresentação, roteamento, validações transversais, lógica de negócio, acesso a dados e persistência.
+
+  &nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views compõem a interface do usuário com telas de Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização; as Routes (8 arquivos) declaram os endpoints REST em conformidade com a Matriz RF → RN → Endpoint; os Middlewares (5 arquivos: auth, role, validateRequest, logger e errorHandler) interceptam as requisições aplicando autenticação JWT, controle de acesso por cargo e validações transversais; os Controllers (8 controladores) orquestram as requisições HTTP; os Services (8 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (13 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (13 entidades de domínio + o utilitário uuid.ts) representam os objetos do sistema, persistidos em banco PostgreSQL com herança polimórfica, destacando-se a entidade Evidência, segmentada em sete repositórios e sete models especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket).
+
+[Protótipo no Figma](https://www.figma.com/design/RGkg3OaXZglm57yWaLhb6u/Diagrama-Arquitetural?node-id=0-1)
+
+<div align="center">
+<p align="center">Figura 7 - Diagrama Arquitetural </p>
+<p align="center">
+<img src="outros/assets/diagrama-arquitetural.png" alt="Diagrama Arquitetural" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional — Cliente → Views → Routes → Middlewares → Controllers → Services → Repositories → Models → Banco de Dados —, garantindo baixo acoplamento, alta coesão, maior testabilidade entre as camadas do sistema e rastreabilidade completa entre os Requisitos Funcionais (Seção 3.1.1), as Regras de Negócio (Seção 3.1.2) e a implementação técnica.
 
 ### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -1519,6 +1558,8 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Mais do que um artefato técnico, o diagrama de classes do AgroFlow é o reflexo digital de uma operação que historicamente dependia de papel, memória e repasse verbal. Ao estruturar com precisão as responsabilidades de cada perfil, as regras que governam cada registro e os vínculos entre campo e gestão, o modelo estabelece a base sobre a qual toda a aplicação será construída, garantindo que nenhuma decisão de implementação precise ser tomada no escuro.
+
+
 
 ### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
 
