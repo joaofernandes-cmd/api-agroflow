@@ -8,11 +8,15 @@ import ticketRoutes from './routes/ticket.routes'
 import usuarioRoutes from './routes/usuario.route'
 import validacaoRoutes from './routes/validacao.route'
 import { errorHandler, AppError } from './middlewares/errorHandler.middleware'
+import { loggerMiddleware } from './middlewares/logger.middleware'
 
 const app = express()
 
 // Habilita leitura de JSON em todas as requests.
 app.use(express.json())
+
+// Registra logs de cada request depois que a resposta termina.
+app.use(loggerMiddleware)
 
 // Endpoint simples de saude da aplicacao.
 app.get('/health', (_req, res) => {
