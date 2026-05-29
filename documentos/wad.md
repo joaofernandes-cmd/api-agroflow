@@ -1056,26 +1056,26 @@ A **Camada de Repositories** abstrai o acesso ao banco por meio de treze reposit
 
 A **Camada de Models** contém treze entidades de domínio e o utilitário `uuid.ts`, persistidas em **PostgreSQL** conforme o modelo relacional da Seção 3.6.3. As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da Seção 3.1.3.
 
-### <a name="c3.2.1"></a>3.2.1. Diagrama de Arquitetura 
+### <a name="c3.2.1.1"></a>3.2.1.1 Diagrama de Arquitetura 
 
 
 # Diagrama Arquitetural — Sistema BRPEC
 
-O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão MVC (Model-View-Controller) com a adoção de uma camada de Service e do Repository Pattern, promovendo a clara separação de responsabilidades entre apresentação, lógica de negócio, acesso a dados e persistência.
+O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão Arquitetura em Camadas (Layered Architecture), no estilo Controller-Service-Repository, com a adoção de camadas dedicadas de Routes e Middlewares. Essa estrutura promove a clara separação de responsabilidades entre apresentação, roteamento, validações transversais, lógica de negócio, acesso a dados e persistência.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views (19 telas) compõem a interface do usuário; os Controllers (14 controladores) orquestram as requisições HTTP; os Services (14 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (14 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (15 entidades de domínio) representam os objetos do sistema, persistidos em um banco PostgreSQL com 12 entidades, herança e 18 relacionamentos.
+  &nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views compõem a interface do usuário com telas de Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização; as Routes (8 arquivos) declaram os endpoints REST em conformidade com a Matriz RF → RN → Endpoint; os Middlewares (5 arquivos: auth, role, validateRequest, logger e errorHandler) interceptam as requisições aplicando autenticação JWT, controle de acesso por cargo e validações transversais; os Controllers (8 controladores) orquestram as requisições HTTP; os Services (8 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (13 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (13 entidades de domínio + o utilitário uuid.ts) representam os objetos do sistema, persistidos em banco PostgreSQL com herança polimórfica — destacando-se a entidade Evidência, segmentada em sete repositórios e sete models especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket).
 
 [Protótipo no Figma](https://www.figma.com/design/RGkg3OaXZglm57yWaLhb6u/Diagrama-Arquitetural?node-id=0-1)
 
 <div align="center">
-<p align="center">Figura 10 - Diagrama Arquitetural </p>
+<p align="center">Figura 7 - Diagrama Arquitetural </p>
 <p align="center">
 <img src="outros/assets/diagrama-arquitetural.png" alt="Diagrama Arquitetural" border="0"></a>
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional — Cliente → Views → Controllers → Services → Repositories → Models → Banco de Dados —, garantindo baixo acoplamento, alta coesão e maior testabilidade entre as camadas do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional — Cliente → Views → Routes → Middlewares → Controllers → Services → Repositories → Models → Banco de Dados —, garantindo baixo acoplamento, alta coesão, maior testabilidade entre as camadas do sistema e rastreabilidade completa entre os Requisitos Funcionais (Seção 3.1.1), as Regras de Negócio (Seção 3.1.2) e a implementação técnica.
 
 ### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
 
