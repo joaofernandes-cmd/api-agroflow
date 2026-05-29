@@ -29,14 +29,14 @@ const movimentacaoSelect = sql`
 `
 
 export const MovimentacaoRepository = {
-  async findAll(): Promise<Movimentacao[]> {
+  async buscarTodos(): Promise<Movimentacao[]> {
     return sql<Movimentacao[]>`
       ${movimentacaoSelect}
       ORDER BY m.data_criacao
     `
   },
 
-  async findById(id: number): Promise<Movimentacao | null> {
+  async buscarPorId(id: number): Promise<Movimentacao | null> {
     const movimentacao = await sql<Movimentacao[]>`
       ${movimentacaoSelect}
       WHERE m.id = ${id}
@@ -46,7 +46,7 @@ export const MovimentacaoRepository = {
     return movimentacao[0] ?? null
   },
 
-  async create(input: MovimentacaoInput): Promise<Movimentacao> {
+  async criar(input: MovimentacaoInput): Promise<Movimentacao> {
     const createdId = await sql.begin(async transaction => {
       const [created] = await transaction<{ id: number }[]>`
         INSERT INTO movimentacao (
@@ -74,12 +74,12 @@ export const MovimentacaoRepository = {
         RETURNING id
       `
 
-      await this.createDetalhes(transaction, created.id, input)
+      await this.criarDetalhes(transaction, created.id, input)
 
       return created.id
     })
 
-    const movimentacao = await this.findById(createdId)
+    const movimentacao = await this.buscarPorId(createdId)
     if (!movimentacao) {
       throw new Error('Movimentacao criada, mas nao encontrada')
     }
@@ -87,9 +87,9 @@ export const MovimentacaoRepository = {
     return movimentacao
   },
 
-  async update(id: number, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
+  async atualizar(id: number, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     const deveAtualizarDetalhes = this.deveAtualizarDetalhes(input)
-    const movimentacaoAtual = deveAtualizarDetalhes ? await this.findById(id) : null
+    const movimentacaoAtual = deveAtualizarDetalhes ? await this.buscarPorId(id) : null
 
     if (deveAtualizarDetalhes && !movimentacaoAtual) {
       return null
@@ -117,7 +117,7 @@ export const MovimentacaoRepository = {
       }
 
       if (deveAtualizarDetalhes && movimentacaoAtual) {
-        await this.replaceDetalhes(transaction, id, {
+        await this.substituirDetalhes(transaction, id, {
           ...movimentacaoAtual,
           ...input,
         } as MovimentacaoInput)
@@ -130,12 +130,12 @@ export const MovimentacaoRepository = {
       return null
     }
 
-    return this.findById(updatedId)
+    return this.buscarPorId(updatedId)
   },
 
-  async delete(id: number): Promise<void> {
+  async remover(id: number): Promise<void> {
     await sql.begin(async transaction => {
-      await this.deleteDetalhes(transaction, id)
+      await this.removerDetalhes(transaction, id)
 
       await transaction`
         DELETE FROM movimentacao
@@ -154,7 +154,7 @@ export const MovimentacaoRepository = {
     )
   },
 
-  async createDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
+  async criarDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
     if (input.tipo === 'compra') {
       await transaction`
         INSERT INTO movimentacao_compra (movimentacao_id, quantidade)
@@ -195,12 +195,12 @@ export const MovimentacaoRepository = {
     }
   },
 
-  async replaceDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
-    await this.deleteDetalhes(transaction, movimentacaoId)
-    await this.createDetalhes(transaction, movimentacaoId, input)
+  async substituirDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
+    await this.removerDetalhes(transaction, movimentacaoId)
+    await this.criarDetalhes(transaction, movimentacaoId, input)
   },
 
-  async deleteDetalhes(transaction: Transaction, movimentacaoId: number): Promise<void> {
+  async removerDetalhes(transaction: Transaction, movimentacaoId: number): Promise<void> {
     await transaction`DELETE FROM movimentacao_compra WHERE movimentacao_id = ${movimentacaoId}`
     await transaction`DELETE FROM movimentacao_venda WHERE movimentacao_id = ${movimentacaoId}`
     await transaction`DELETE FROM movimentacao_transferencia WHERE movimentacao_id = ${movimentacaoId}`

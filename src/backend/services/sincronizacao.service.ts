@@ -39,7 +39,7 @@ export const SincronizacaoService = {
 
       // RN03: Busca movimentações ainda não sincronizadas (sincronizado=false)
       // Essas são as que foram salvas offline e aguardam envio
-      const todasMovimentacoes = await MovimentacaoRepository.findAll()
+      const todasMovimentacoes = await MovimentacaoRepository.buscarTodos()
       const movimentacoesPendentes = todasMovimentacoes.filter(m => !m.sincronizado)
 
       for (const mov of movimentacoesPendentes) {
@@ -47,7 +47,7 @@ export const SincronizacaoService = {
           // Envia para o servidor (que valida integridade e armazena)
           await SincronizacaoService.enviarMovimentacao(mov)
           // Após receber confirmação do servidor, marca como sincronizado
-          await MovimentacaoRepository.update(mov.id, {
+          await MovimentacaoRepository.atualizar(mov.id, {
             ...mov,
             sincronizado: true,
           } as any)
@@ -58,7 +58,7 @@ export const SincronizacaoService = {
       }
 
       // RN03: Busca tarefas ainda não sincronizadas
-      const todasTarefas = await TarefaRepository.findAll()
+      const todasTarefas = await TarefaRepository.buscarTodos()
       const tarefasPendentes = todasTarefas.filter(t => !t.sincronizado)
 
       for (const tarefa of tarefasPendentes) {
@@ -66,7 +66,7 @@ export const SincronizacaoService = {
           // Envia para o servidor
           await SincronizacaoService.enviarTarefa(tarefa)
           // Marca como sincronizado após confirmação
-          await TarefaRepository.update(tarefa.id, {
+          await TarefaRepository.atualizar(tarefa.id, {
             ...tarefa,
             sincronizado: true,
           } as any)
@@ -77,7 +77,7 @@ export const SincronizacaoService = {
       }
 
       // RN03: Busca tickets ainda não sincronizados
-      const todosTickets = await TicketRepository.findAll()
+      const todosTickets = await TicketRepository.buscarTodos()
       const ticketsPendentes = todosTickets.filter(t => !t.sincronizado)
 
       for (const ticket of ticketsPendentes) {
@@ -85,7 +85,7 @@ export const SincronizacaoService = {
           // Envia para o servidor
           await SincronizacaoService.enviarTicket(ticket)
           // Marca como sincronizado após confirmação
-          await TicketRepository.update(ticket.id, {
+          await TicketRepository.atualizar(ticket.id, {
             ...ticket,
             sincronizado: true,
           } as any)
@@ -106,7 +106,7 @@ export const SincronizacaoService = {
   // RN07: Buscar movimentações sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=validado
   async buscarMovimentacoesParaRelatrio(retiroId?: number): Promise<Movimentacao[]> {
-    const movimentacoes = await MovimentacaoRepository.findAll()
+    const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
       const sincronizado = m.sincronizado === true
@@ -123,7 +123,7 @@ export const SincronizacaoService = {
   // RN07: Buscar tarefas sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=aprovado
   async buscarTarefasParaRelatrio(retiroId?: number): Promise<Tarefa[]> {
-    const tarefas = await TarefaRepository.findAll()
+    const tarefas = await TarefaRepository.buscarTodos()
 
     return tarefas.filter(t => {
       const sincronizado = t.sincronizado === true
@@ -140,7 +140,7 @@ export const SincronizacaoService = {
   // RN10: Buscar tickets sincronizados para dashboard
   // Retorna apenas tickets com sincronizado=true e status=aprovado
   async buscarTicketsParaDashboard(retiroId?: number): Promise<Ticket[]> {
-    const tickets = await TicketRepository.findAll()
+    const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {
       const sincronizado = t.sincronizado === true
@@ -202,9 +202,9 @@ export const SincronizacaoService = {
     temConexao: boolean
   }> {
     const [todasMovimentacoes, todasTarefas, todosTickets, temConexao] = await Promise.all([
-      MovimentacaoRepository.findAll(),
-      TarefaRepository.findAll(),
-      TicketRepository.findAll(),
+      MovimentacaoRepository.buscarTodos(),
+      TarefaRepository.buscarTodos(),
+      TicketRepository.buscarTodos(),
       SincronizacaoService.detectarConexao(),
     ])
 

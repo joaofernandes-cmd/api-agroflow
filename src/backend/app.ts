@@ -7,8 +7,8 @@ import tarefaRoutes from './routes/tarefa.route'
 import ticketRoutes from './routes/ticket.routes'
 import usuarioRoutes from './routes/usuario.route'
 import validacaoRoutes from './routes/validacao.route'
-import { errorHandler, AppError } from './middlewares/errorHandler.middleware'
-import { loggerMiddleware } from './middlewares/logger.middleware'
+import { tratadorDeErros, AppError } from './middlewares/erros.middleware'
+import { middlewareDeLog } from './middlewares/log.middleware'
 
 const app = express()
 
@@ -16,7 +16,7 @@ const app = express()
 app.use(express.json())
 
 // Registra logs de cada request depois que a resposta termina.
-app.use(loggerMiddleware)
+app.use(middlewareDeLog)
 
 // Endpoint simples de saude da aplicacao.
 app.get('/health', (_req, res) => {
@@ -38,6 +38,6 @@ app.use((_req, _res, next) => {
 })
 
 // Handler global de erro.
-app.use(errorHandler)
+app.use(tratadorDeErros)
 
 export default app

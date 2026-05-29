@@ -4,12 +4,12 @@ import { mockGerente, mockSupervisor } from '../helpers/fixtures'
 
 jest.mock('../../repositories/usuario.repository', () => ({
   UsuarioRepository: {
-    findByLogin: jest.fn(),
-    findById: jest.fn(),
-    findAll: jest.fn(),
-    create: jest.fn(),
-    update: jest.fn(),
-    delete: jest.fn(),
+    buscarPorLogin: jest.fn(),
+    buscarPorId: jest.fn(),
+    buscarTodos: jest.fn(),
+    criar: jest.fn(),
+    atualizar: jest.fn(),
+    remover: jest.fn(),
   },
 }))
 
@@ -17,12 +17,12 @@ const mockedRepository = UsuarioRepository as jest.Mocked<typeof UsuarioReposito
 
 describe('UsuarioService', () => {
   beforeEach(() => {
-    mockedRepository.findByLogin.mockResolvedValue(mockSupervisor as any)
-    mockedRepository.findById.mockResolvedValue(mockGerente as any)
-    mockedRepository.findAll.mockResolvedValue([mockSupervisor as any, mockGerente as any])
-    mockedRepository.create.mockResolvedValue(mockGerente as any)
-    mockedRepository.update.mockResolvedValue(mockGerente as any)
-    mockedRepository.delete.mockResolvedValue(undefined)
+    mockedRepository.buscarPorLogin.mockResolvedValue(mockSupervisor as any)
+    mockedRepository.buscarPorId.mockResolvedValue(mockGerente as any)
+    mockedRepository.buscarTodos.mockResolvedValue([mockSupervisor as any, mockGerente as any])
+    mockedRepository.criar.mockResolvedValue(mockGerente as any)
+    mockedRepository.atualizar.mockResolvedValue(mockGerente as any)
+    mockedRepository.remover.mockResolvedValue(undefined)
   })
 
   it('autenticar deve retornar usuario quando senha bate', async () => {
@@ -32,7 +32,7 @@ describe('UsuarioService', () => {
   })
 
   it('autenticar deve retornar null quando login nao existe', async () => {
-    mockedRepository.findByLogin.mockResolvedValueOnce(null)
+    mockedRepository.buscarPorLogin.mockResolvedValueOnce(null)
 
     const usuario = await UsuarioService.autenticar('inexistente@agroflow.com', 'senha')
 

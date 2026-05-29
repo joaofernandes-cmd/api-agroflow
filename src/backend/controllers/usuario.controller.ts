@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { gerarToken } from '../middlewares/auth.middleware'
+import { gerarToken } from '../middlewares/autenticacao.middleware'
 import { Usuario } from '../models/usuario.model'
 import { UsuarioService } from '../services/usuario.service';
 
@@ -9,7 +9,7 @@ function removerSenha(usuario: Usuario) {
     return usuarioSemSenha;
 }
 
-function parseNumber(value: unknown): number | null {
+function converterNumero(value: unknown): number | null {
     const parsed = Number(value)
     return Number.isNaN(parsed) ? null : parsed
 }
@@ -74,7 +74,7 @@ export const UsuarioController = {
 
     async listarPorRetiro(req: Request, res: Response) {
         try {
-            const retiroId = parseNumber(req.params.retiroId);
+            const retiroId = converterNumero(req.params.retiroId);
 
             if (retiroId === null) {
                 return res.status(400).json({ error: 'Retiro inválido' });

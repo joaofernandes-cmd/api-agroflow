@@ -4,7 +4,7 @@ import { RelatorioService } from '../services/relatorio.service'
 // Converte uma string de query em Date.
 // Se o valor vier vazio, retorna undefined.
 // Se a data for inválida, retorna null para permitir resposta 400.
-function parseQueryDate(value: unknown): Date | undefined | null {
+function converterDataQuery(value: unknown): Date | undefined | null {
   if (value === undefined || value === null || value === '') {
     return undefined
   }
@@ -18,7 +18,7 @@ function parseQueryDate(value: unknown): Date | undefined | null {
   return date
 }
 
-function parseQueryNumber(value: unknown): number | undefined | null {
+function converterNumeroQuery(value: unknown): number | undefined | null {
   if (value === undefined || value === null || value === '') {
     return undefined
   }
@@ -32,9 +32,9 @@ export const RelatorioController = {
   // com filtro opcional por período e retiro.
   async buscarDadosMovimentacoes(req: Request, res: Response) {
     try {
-      const dataInicio = parseQueryDate(req.query.dataInicio)
-      const dataFim = parseQueryDate(req.query.dataFim)
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const dataInicio = converterDataQuery(req.query.dataInicio)
+      const dataFim = converterDataQuery(req.query.dataFim)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -58,9 +58,9 @@ export const RelatorioController = {
   // com filtro opcional por período e retiro.
   async buscarDadosTarefas(req: Request, res: Response) {
     try {
-      const dataInicio = parseQueryDate(req.query.dataInicio)
-      const dataFim = parseQueryDate(req.query.dataFim)
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const dataInicio = converterDataQuery(req.query.dataInicio)
+      const dataFim = converterDataQuery(req.query.dataFim)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -83,9 +83,9 @@ export const RelatorioController = {
   // RN07: Formata o relatório de movimentações em um formato pronto para planilha.
   async formatarRelatorioMovimentacoes(req: Request, res: Response) {
     try {
-      const dataInicio = parseQueryDate(req.query.dataInicio)
-      const dataFim = parseQueryDate(req.query.dataFim)
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const dataInicio = converterDataQuery(req.query.dataInicio)
+      const dataFim = converterDataQuery(req.query.dataFim)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -108,7 +108,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório semanal usando os últimos 7 dias.
   async gerarRelatorioSemanal(req: Request, res: Response) {
     try {
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -127,7 +127,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório mensal usando os últimos 30 dias.
   async gerarRelatorioMensal(req: Request, res: Response) {
     try {
-      const retiroId = parseQueryNumber(req.query.retiroId)
+      const retiroId = converterNumeroQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

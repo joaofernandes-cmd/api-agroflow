@@ -5,7 +5,7 @@ import { EvidenciaMensagem, EvidenciaMensagemInput } from '../models/evidencia-m
 export const EvidenciaMensagemRepository = {
 
     // Ordena evidências de mensagem por evidência
-    async findAll(): Promise<EvidenciaMensagem[]> {
+    async buscarTodos(): Promise<EvidenciaMensagem[]> {
         return sql<EvidenciaMensagem[]>`
             SELECT evidencia_id, conteudo
             FROM evidencia_mensagem
@@ -14,7 +14,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Busca uma evidência de mensagem pelo id da evidência e retorna null se não encontrar
-    async findById(evidencia_id: number): Promise<EvidenciaMensagem | null> {
+    async buscarPorId(evidencia_id: number): Promise<EvidenciaMensagem | null> {
         const evidenciaMensagem = await sql<EvidenciaMensagem[]>`
             SELECT evidencia_id, conteudo
             FROM evidencia_mensagem
@@ -26,7 +26,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Cria uma nova evidência de mensagem no banco de dados
-    async create(input: EvidenciaMensagemInput): Promise<EvidenciaMensagem> {
+    async criar(input: EvidenciaMensagemInput): Promise<EvidenciaMensagem> {
         const [created] = await sql<EvidenciaMensagem[]>`
             INSERT INTO evidencia_mensagem (evidencia_id, conteudo)
             VALUES (${input.evidencia_id}, ${input.conteudo})
@@ -37,7 +37,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Atualiza uma evidência de mensagem existente
-    async update(evidencia_id: number, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
+    async atualizar(evidencia_id: number, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
         const [updated] = await sql<EvidenciaMensagem[]>`
             UPDATE evidencia_mensagem
             SET
@@ -50,7 +50,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Remove uma evidência de mensagem pelo id da evidência
-    async delete(evidencia_id: number): Promise<void> {
+    async remover(evidencia_id: number): Promise<void> {
         await sql`
             DELETE FROM evidencia_mensagem
             WHERE evidencia_id = ${evidencia_id}

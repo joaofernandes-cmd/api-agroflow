@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { EvidenciaService } from '../services/evidencia.service'
 
-function parseNumber(value: unknown): number | null {
+function converterNumero(value: unknown): number | null {
     const parsed = Number(value)
     return Number.isNaN(parsed) ? null : parsed
 }
@@ -19,7 +19,7 @@ export const EvidenciaController = {
 
     async buscarPorId(req: Request, res: Response) {
         try {
-            const id = parseNumber(req.params.id)
+            const id = converterNumero(req.params.id)
 
             if (id === null) {
                 return res.status(400).json({ error: 'ID inválido' })
@@ -57,13 +57,13 @@ export const EvidenciaController = {
 
     async criarAudio(req: Request, res: Response) {
         try {
-            const { usuarioId, urlArquivo } = req.body
+            const { usuarioId, urlArquivo, duracao } = req.body
 
-            if (!usuarioId || !urlArquivo) {
-                return res.status(400).json({ error: 'Usuário e arquivo são obrigatórios' })
+            if (!usuarioId || !urlArquivo || duracao === undefined) {
+                return res.status(400).json({ error: 'Usuário, arquivo e duração são obrigatórios' })
             }
 
-            const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo)
+            const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo, Number(duracao))
 
             return res.status(201).json(resultado)
         } catch (error) {

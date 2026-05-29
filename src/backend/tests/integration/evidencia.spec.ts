@@ -64,6 +64,7 @@ describe('Evidencias', () => {
     const response = await request(app).post('/evidencias/audios').send({
       usuarioId: 'user-003',
       urlArquivo: 'audio.mp3',
+      duracao: 5,
     })
 
     expect(response.status).toBe(201)

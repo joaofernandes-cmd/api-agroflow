@@ -5,7 +5,7 @@ import { EvidenciaAudio, EvidenciaAudioInput } from '../models/evidencia-audio.m
 export const EvidenciaAudioRepository = {
 
     // Ordena evidencias de audio por evidencia
-    async findAll(): Promise<EvidenciaAudio[]> {
+    async buscarTodos(): Promise<EvidenciaAudio[]> {
         return sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo
             FROM evidencia_audio
@@ -14,7 +14,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Busca uma evidência de áudio pelo id da evidência e retorna null se não encontrar
-    async findById(evidencia_id: number): Promise<EvidenciaAudio | null> {
+    async buscarPorId(evidencia_id: number): Promise<EvidenciaAudio | null> {
         const evidenciaAudio = await sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo
             FROM evidencia_audio
@@ -26,7 +26,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Cria uma nova evidência de áudio no banco de dados
-    async create(input: EvidenciaAudioInput): Promise<EvidenciaAudio> {
+    async criar(input: EvidenciaAudioInput): Promise<EvidenciaAudio> {
         const [created] = await sql<EvidenciaAudio[]>`
             INSERT INTO evidencia_audio (evidencia_id, url_arquivo)
             VALUES (${input.evidencia_id}, ${input.url_arquivo})
@@ -37,7 +37,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Atualiza uma evidência de áudio existente
-    async update(evidencia_id: number, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
+    async atualizar(evidencia_id: number, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
         const [updated] = await sql<EvidenciaAudio[]>`
             UPDATE evidencia_audio
             SET
@@ -50,7 +50,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Remove uma evidência de áudio pelo id da evidência 
-    async delete(evidencia_id: number): Promise<void> {
+    async remover(evidencia_id: number): Promise<void> {
         await sql`
             DELETE FROM evidencia_audio
             WHERE evidencia_id = ${evidencia_id}

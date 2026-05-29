@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { ValidacaoService } from '../services/validacao.service'
 
-function parseNumber(value: unknown): number | null {
+function converterNumero(value: unknown): number | null {
   const parsed = Number(value)
   return Number.isNaN(parsed) ? null : parsed
 }
@@ -28,7 +28,7 @@ export const ValidacaoController = {
   // RN06: Valida uma movimentação pendente — apenas supervisor
   async validarMovimentacao(req: Request, res: Response) {
     try {
-      const movimentacaoId = parseNumber(req.params.id)
+      const movimentacaoId = converterNumero(req.params.id)
       const usuario = req.usuario
 
       if (movimentacaoId === null) {
@@ -56,7 +56,7 @@ export const ValidacaoController = {
   // RN06: Aprova um ticket pendente — apenas supervisor
   async aprovarTicket(req: Request, res: Response) {
     try {
-      const ticketId = parseNumber(req.params.id)
+      const ticketId = converterNumero(req.params.id)
       const usuario = req.usuario
 
       if (ticketId === null) {
@@ -84,7 +84,7 @@ export const ValidacaoController = {
   // RN06: Aprova uma tarefa pendente — apenas supervisor
   async aprovarTarefa(req: Request, res: Response) {
     try {
-      const tarefaId = parseNumber(req.params.id)
+      const tarefaId = converterNumero(req.params.id)
       const usuario = req.usuario
 
       if (tarefaId === null) {

@@ -1,4 +1,4 @@
-jest.mock('../middlewares/auth.middleware', () => ({
+jest.mock('../middlewares/autenticacao.middleware', () => ({
   __esModule: true,
   gerarToken: jest.fn(() => 'mock-jwt-token'),
   autenticarUsuario: (req: any, _res: any, next: any) => {
@@ -15,7 +15,7 @@ jest.mock('../middlewares/auth.middleware', () => ({
   },
 }))
 
-jest.mock('../middlewares/role.middleware', () => ({
+jest.mock('../middlewares/cargo.middleware', () => ({
   __esModule: true,
   exigirCargo: () => (_req: any, _res: any, next: any) => next(),
 }))

@@ -5,7 +5,7 @@ import { Retiro, RetiroInput } from '../models/retiro.model'
 export const RetiroRepository = {
 
     // Ordena retiros por data de criação
-    async findAll(): Promise<Retiro[]> {
+    async buscarTodos(): Promise<Retiro[]> {
         return sql<Retiro[]>`
             SELECT id, nome
             FROM retiro
@@ -14,7 +14,7 @@ export const RetiroRepository = {
     },
 
     // Busca um retiro pelo seu id e retorna null se não encontrar
-    async findById(id: number): Promise<Retiro | null> {
+    async buscarPorId(id: number): Promise<Retiro | null> {
         const retiro = await sql<Retiro[]>`
             SELECT id, nome
             FROM retiro
@@ -25,7 +25,7 @@ export const RetiroRepository = {
     },
 
     // Cria um novo retiro no banco de dados
-    async create(input: RetiroInput): Promise<Retiro> {
+    async criar(input: RetiroInput): Promise<Retiro> {
         const [created] = await sql<Retiro[]>`
             INSERT INTO retiro (nome)
             VALUES (${input.nome})
@@ -35,7 +35,7 @@ export const RetiroRepository = {
     },
 
     // Atualiza os dados de um retiro existente
-    async update(id: number, input: Partial<RetiroInput>): Promise<Retiro | null> {
+    async atualizar(id: number, input: Partial<RetiroInput>): Promise<Retiro | null> {
         const updated = await sql<Retiro[]>`
             UPDATE retiro
             SET

@@ -17,13 +17,13 @@ export class AppError extends Error {
 }
 
 // Identifica erros criados pela propria aplicacao.
-function isAppError(error: unknown): error is AppError {
+function ehErroDeAplicacao(error: unknown): error is AppError {
   return error instanceof AppError
 }
 
 // Middleware final da cadeia.
 // Transforma qualquer erro em uma resposta HTTP consistente.
-export function errorHandler(
+export function tratadorDeErros(
   error: unknown,
   _req: Request,
   res: Response,
@@ -35,7 +35,7 @@ export function errorHandler(
   }
 
   // Erros da aplicacao respeitam o status definido na classe.
-  if (isAppError(error)) {
+  if (ehErroDeAplicacao(error)) {
     return res.status(error.statusCode).json({
       error: error.message,
       ...(error.details !== undefined ? { details: error.details } : {}),

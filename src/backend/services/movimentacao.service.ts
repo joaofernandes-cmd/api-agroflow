@@ -59,7 +59,7 @@ export const MovimentacaoService = {
   async criar(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por'>): Promise<Movimentacao> {
     this.validarCamposObrigatorios(dados as MovimentacaoInput)
 
-    const movimentacao = await MovimentacaoRepository.create({
+    const movimentacao = await MovimentacaoRepository.criar({
       ...dados,
       status: 'pendente',
       sincronizado: dados.sincronizado ?? false,
@@ -79,7 +79,7 @@ export const MovimentacaoService = {
       validado_por: null,
     } as MovimentacaoInput)
 
-    return MovimentacaoRepository.create({
+    return MovimentacaoRepository.criar({
       ...dados,
       status: 'pendente',
       sincronizado: true,
@@ -96,7 +96,7 @@ export const MovimentacaoService = {
     dataInicio?: Date,
     dataFim?: Date
   ): Promise<Movimentacao[]> {
-    const todasMovimentacoes = await MovimentacaoRepository.findAll()
+    const todasMovimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return todasMovimentacoes.filter(m => {
       if (m.retiro_id !== retiroId) {
@@ -127,7 +127,7 @@ export const MovimentacaoService = {
 
   // RN07: relatorio usa apenas dados sincronizados e validados.
   async buscarParaRelatorio(retiroId?: number): Promise<Movimentacao[]> {
-    const movimentacoes = await MovimentacaoRepository.findAll()
+    const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
       if (!m.sincronizado) {
@@ -148,7 +148,7 @@ export const MovimentacaoService = {
 
   // RN10: dashboard tambem opera apenas com registros validados e sincronizados.
   async buscarParaDashboard(retiroId?: number): Promise<Movimentacao[]> {
-    const movimentacoes = await MovimentacaoRepository.findAll()
+    const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
       if (!m.sincronizado) {
@@ -169,27 +169,27 @@ export const MovimentacaoService = {
 
   // RN03: sincroniza um registro pendente marcando-o como enviado.
   async sincronizar(movimentacaoId: number): Promise<Movimentacao | null> {
-    const movimentacao = await MovimentacaoRepository.findById(movimentacaoId)
+    const movimentacao = await MovimentacaoRepository.buscarPorId(movimentacaoId)
 
     if (!movimentacao) {
       return null
     }
 
-    return MovimentacaoRepository.update(movimentacaoId, {
+    return MovimentacaoRepository.atualizar(movimentacaoId, {
       sincronizado: true,
     })
   },
 
   async buscarPorId(id: number): Promise<Movimentacao | null> {
-    return MovimentacaoRepository.findById(id)
+    return MovimentacaoRepository.buscarPorId(id)
   },
 
   async listarTodas(): Promise<Movimentacao[]> {
-    return MovimentacaoRepository.findAll()
+    return MovimentacaoRepository.buscarTodos()
   },
 
   async listarPendentes(retiroId?: number): Promise<Movimentacao[]> {
-    const movimentacoes = await MovimentacaoRepository.findAll()
+    const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
       if (m.status !== 'pendente') {
@@ -233,7 +233,7 @@ export const MovimentacaoService = {
       dados.causa_obito !== undefined ||
       dados.estagio_vida
     ) {
-      const movimentacaoAtual = await MovimentacaoRepository.findById(id)
+      const movimentacaoAtual = await MovimentacaoRepository.buscarPorId(id)
       if (!movimentacaoAtual) {
         return null
       }
@@ -246,10 +246,10 @@ export const MovimentacaoService = {
       this.validarCamposObrigatorios(dadosCompletos)
     }
 
-    return MovimentacaoRepository.update(id, dados)
+    return MovimentacaoRepository.atualizar(id, dados)
   },
 
   async remover(id: number): Promise<void> {
-    await MovimentacaoRepository.delete(id)
+    await MovimentacaoRepository.remover(id)
   },
 }

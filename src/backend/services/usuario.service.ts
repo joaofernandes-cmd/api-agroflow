@@ -5,7 +5,7 @@ export const UsuarioService = {
   // RN05: Autenticação simples com no máximo 3 interações
   // Usuários com baixo letramento digital (ensino fundamental)
   async autenticar(login: string, senha: string): Promise<Usuario | null> {
-    const usuario = await UsuarioRepository.findByLogin(login)
+    const usuario = await UsuarioRepository.buscarPorLogin(login)
 
     if (!usuario) {
       return null
@@ -33,12 +33,12 @@ export const UsuarioService = {
 
   // Buscar usuário por ID
   async buscarPorId(id: string): Promise<Usuario | null> {
-    return UsuarioRepository.findById(id)
+    return UsuarioRepository.buscarPorId(id)
   },
 
   // Listar usuários por retiro
   async listarPorRetiro(retiroId: number): Promise<Usuario[]> {
-    const usuarios = await UsuarioRepository.findAll()
+    const usuarios = await UsuarioRepository.buscarTodos()
     return usuarios.filter(u => u.retiro_id === retiroId)
   },
 
@@ -69,13 +69,13 @@ export const UsuarioService = {
 
     // TODO: Implementar hash da senha usando bcrypt
     // Por enquanto, armazenar como está (remover em produção)
-    return UsuarioRepository.create(dados)
+    return UsuarioRepository.criar(dados)
   },
 
   // Atualizar usuário
   async atualizar(id: string, dados: Partial<UsuarioInput>): Promise<Usuario | null> {
     // TODO: Validar que usuário existe antes de atualizar
-    return UsuarioRepository.update(id, dados)
+    return UsuarioRepository.atualizar(id, dados)
   },
 
   // Validar se usuário está ativo
@@ -85,11 +85,11 @@ export const UsuarioService = {
 
   // Listar todos os usuários
   async listarTodos(): Promise<Usuario[]> {
-    return UsuarioRepository.findAll()
+    return UsuarioRepository.buscarTodos()
   },
 
   // Remover usuário
   async remover(id: string): Promise<void> {
-    await UsuarioRepository.delete(id)
+    await UsuarioRepository.remover(id)
   },
 }

@@ -4,7 +4,7 @@ import { EvidenciaTicket, EvidenciaTicketInput } from '../models/evidencia-ticke
 // Retorna todas as evidências de tickets cadastradas
 export const EvidenciaTicketRepository = {
     // Ordena evidências de tickets por data de criacao
-    async findAll(): Promise<EvidenciaTicket[]> {           
+    async buscarTodos(): Promise<EvidenciaTicket[]> {
         return sql<EvidenciaTicket[]>`
             SELECT evidencia_id, ticket_id
             FROM evidencia_ticket
@@ -13,7 +13,7 @@ export const EvidenciaTicketRepository = {
     },
 
     // Busca uma evidência de ticket pelo seu id e retorna null se não encontrar
-    async findById(evidencia_id: number, ticket_id: number): Promise<EvidenciaTicket | null> {
+    async buscarPorId(evidencia_id: number, ticket_id: number): Promise<EvidenciaTicket | null> {
         const evidenciaTicket = await sql<EvidenciaTicket[]>`
             SELECT evidencia_id, ticket_id
             FROM evidencia_ticket
@@ -24,7 +24,7 @@ export const EvidenciaTicketRepository = {
     },
 
     // Cria uma nova evidência de ticket no banco de dados
-    async create(input: EvidenciaTicketInput): Promise<EvidenciaTicket> {
+    async criar(input: EvidenciaTicketInput): Promise<EvidenciaTicket> {
         const [created] = await sql<EvidenciaTicket[]>`
             INSERT INTO evidencia_ticket (evidencia_id, ticket_id)
             VALUES (${input.evidencia_id}, ${input.ticket_id})

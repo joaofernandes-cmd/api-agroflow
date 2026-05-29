@@ -5,7 +5,7 @@ import { EvidenciaMovimentacao, EvidenciaMovimentacaoInput } from '../models/evi
 export const EvidenciaMovimentacaoRepository = {
 
     // Ordena evidências de movimentações por evidência
-    async findAll(): Promise<EvidenciaMovimentacao[]> {
+    async buscarTodos(): Promise<EvidenciaMovimentacao[]> {
         return sql<EvidenciaMovimentacao[]>`
             SELECT evidencia_id, movimentacao_id
             FROM evidencia_movimentacao
@@ -14,7 +14,7 @@ export const EvidenciaMovimentacaoRepository = {
     },
 
     // Busca uma evidência de movimentação pela chave composta e retorna null se não encontrar
-    async findById(evidencia_id: number, movimentacao_id: number): Promise<EvidenciaMovimentacao | null> {
+    async buscarPorId(evidencia_id: number, movimentacao_id: number): Promise<EvidenciaMovimentacao | null> {
         const evidenciaMovimentacao = await sql<EvidenciaMovimentacao[]>`
             SELECT evidencia_id, movimentacao_id
             FROM evidencia_movimentacao
@@ -26,7 +26,7 @@ export const EvidenciaMovimentacaoRepository = {
     },
 
     // Cria uma nova evidência de movimentação no banco de dados
-    async create(input: EvidenciaMovimentacaoInput): Promise<EvidenciaMovimentacao> {
+    async criar(input: EvidenciaMovimentacaoInput): Promise<EvidenciaMovimentacao> {
         const [created] = await sql<EvidenciaMovimentacao[]>`
             INSERT INTO evidencia_movimentacao (evidencia_id, movimentacao_id)
             VALUES (${input.evidencia_id}, ${input.movimentacao_id})
