@@ -2060,7 +2060,43 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-*Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto.*
+&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do projeto BRPEC segue o padrão Model-View-Controller (MVC) adaptado para uma aplicação backend em API REST. Nesta implementação, o Model encapsula estrutura de dados e persistência através de Repositories, o Controller gerencia fluxo de requisições HTTP e orquestração com Services, e a View é abstraída pela própria API REST, consumida pelos clientes frontend (web e mobile). Esta separação permite que cada camada tenha responsabilidades bem definidas e desacopladas, facilitando testes unitários, manutenção independente e a possibilidade de múltiplos clientes consumirem a mesma lógica de negócio sem duplicação. Nas seções seguintes, detalha-se a implementação específica de cada componente e os padrões complementares utilizados.
+
+***Model***
+
+&nbsp;&nbsp;&nbsp;&nbsp;O componente Model define a estrutura de dados do projeto, implementado em /src/backend/models/ através de interfaces e tipos que representam as entidades do sistema (Usuário, Movimentação, Tarefa, Ticket, Evidência, Relatório, Sincronização, Retiro). Cada modelo declara a forma esperada dos dados: quais campos existem, seus tipos, quais são obrigatórios e quais são opcionais. Por exemplo, o modelo Movimentacao define que uma movimentação possui campos como tipo, origem, destino, quantidade, status, estagio_vida, cada um com seu tipo e restrições específicas. A necessidade de definir modelos formais justifica-se pela complexidade do domínio agrícola, onde diferentes tipos de operação requerem diferentes estruturas: uma movimentação do tipo "morte" exige causa_obito, enquanto "transferência" exige origem e destino. Modelos bem definidos garantem que toda camada da aplicação trabalhe com dados em formato consistente, reduzindo erros e facilitando documentação. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os modelos implementam Single Responsibility (cada modelo descreve uma entidade específica), Interface Segregation (interfaces específicas, não genéricas que obrigam campos desnecessários), e Dependency Inversion (todas as camadas dependem dessa definição abstrata de dados).
+
+***Repositories***
+
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Repositories, localizada em /src/backend/repositories/, é responsável por abstrair todo o acesso ao banco de dados, isolando a lógica de persistência do restante da aplicação. Cada entidade do sistema possui um repositório dedicado (UsuarioRepository, MovimentacaoRepository, TarefaRepository, entre outros) que implementa as operações de leitura e escrita por meio de queries SQL parametrizadas, sem conter qualquer regra de negócio. Por exemplo, o UsuarioRepository expõe métodos como findByLogin, que busca um usuário a partir de seu login, e findById, que recupera um registro específico pelo identificador. A adoção do padrão Repository justifica-se pela necessidade de centralizar a lógica de banco de dados em um único local, evitando que comandos SQL fiquem espalhados e duplicados pela aplicação, o que dificultaria a manutenção e aumentaria o risco de inconsistências.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, o padrão Repository implementa o princípio Single Responsibility, pois cada repositório é responsável exclusivamente pela persistência de uma única entidade, e o princípio Dependency Inversion, já que os Services dependem da abstração oferecida pelo repositório, e não diretamente da implementação SQL.
+
+***Services***
+
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Services, localizada em /src/backend/services/, concentra toda a lógica de negócio do sistema, atuando como intermediária entre os Controllers e os Repositories. É nesta camada que residem as validações, as regras de negócio e a orquestração de operações que podem envolver múltiplas entidades. No projeto BRPEC, os Services implementam as regras de negócio levantadas durante o desenvolvimento, como a validação de campos obrigatórios específicos para cada tipo de movimentação, a verificação de permissões de acordo com o cargo do usuário (apenas supervisores podem validar registros), o controle de sincronização de dados produzidos em modo offline e a filtragem de informações que alimentam relatórios e dashboards. Por exemplo, o MovimentacaoService valida que uma movimentação do tipo "morte" possua a causa do óbito e que uma "transferência" contenha origem e destino antes de persistir o registro, enquanto o UsuarioService é responsável pela autenticação e pela verificação de permissões. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Services exemplificam o princípio Open/Closed, pois novas regras de negócio podem ser incorporadas a um serviço ou novos serviços podem ser criados sem alterar Controllers e Repositories existentes, e o princípio Single Responsibility, ao manter a lógica de negócio isolada das responsabilidades de transporte HTTP e de persistência, garantindo que mudanças nas regras do domínio não afetem as demais camadas.
+
+***Middlewares***
+
+
+
+***Routes***
+
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Routes, localizada em /src/backend/routes/, é responsável por definir os endpoints da API, mapeando cada método HTTP e caminho para o respectivo método do Controller. As rotas são organizadas por entidade (usuario.route.ts, movimentacao.route.ts, tarefa.route.ts, ticket.routes.ts, entre outras), de modo que cada arquivo agrupa os endpoints relacionados a um único recurso, seguindo as convenções do padrão REST. No usuario.route.ts, por exemplo, a rota POST /login direciona para a autenticação, enquanto POST / cria um usuário, GET / lista todos, GET /:id busca um registro específico, PATCH /:id atualiza e DELETE /:id remove. As rotas também são ordenadas de forma cuidadosa, posicionando caminhos específicos (como /retiro/:retiroId) antes dos caminhos genéricos por identificador, evitando que uma rota capture indevidamente requisições destinadas a outra. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, a camada de Routes reflete o princípio Open/Closed, pois novos endpoints podem ser incluídos por meio de novos arquivos de rota ou novas declarações sem necessidade de modificar o roteamento já estabelecido, mantendo a expansão da API de maneira controlada e desacoplada.
+
+***Controllers***
+
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Controllers, localizada em /src/backend/controllers/, é responsável por receber as requisições HTTP, coordenar o fluxo de processamento e devolver as respostas ao cliente. Cada Controller corresponde a um recurso da API (UsuarioController, MovimentacaoController, TarefaController, entre outros) e expõe métodos que extraem os dados da requisição (parâmetros de URL, corpo e query), realizam validações iniciais de presença de campos, invocam o Service apropriado e formatam a resposta de acordo com o protocolo HTTP, definindo os códigos de status adequados a cada situação. No UsuarioController, por exemplo, o método autenticar verifica a presença de login e senha antes de delegar a autenticação ao serviço, retornando status 400 quando faltam dados, 401 quando as credenciais são inválidas e 200 em caso de sucesso; além disso, o Controller remove o campo senha_hash antes de enviar os dados do usuário, garantindo que informações sensíveis não sejam expostas na resposta.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Controllers exemplificam o princípio Single Responsibility, ao se ocuparem exclusivamente do tratamento das requisições e respostas HTTP, como códigos de status, serialização e remoção de dados sensíveis, delegando toda a lógica de negócio aos Services e mantendo, assim, uma clara separação de responsabilidades entre as camadas.
+
+
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
