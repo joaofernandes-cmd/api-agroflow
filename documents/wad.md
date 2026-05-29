@@ -3211,7 +3211,7 @@ VALUES (?, ?, ?, ?);
     - **Método:** PATCH
     - **Descrição:** Atualiza exclusivamente o status de uma tarefa.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "status": "pendente" | "em_andamento" | "concluida" | "aprovada" }`
+    - **Body:** `{ "status": "pendente" | "aprovado" }`
     - **Respostas:**
       - `200 OK`: Status atualizado.
       - `400 Bad Request`: Status ausente ou ID inválido.
@@ -3703,7 +3703,7 @@ VALUES (?, ?, ?, ?);
     - **Método:** PATCH
     - **Descrição:** Atualiza o status de um ticket existente.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "status": "pendente" | "aprovado" | "em_andamento" | "concluido" }`
+    - **Body:** `{ "status": "pendente" | "aprovado" }`
     - **Respostas:**
       - `200 OK`: Status atualizado.
       - `404 Not Found`: Ticket não encontrado.
@@ -4015,7 +4015,6 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 - **Hash de senhas com bcrypt**: Substituir o armazenamento de senha em texto puro pela criptografia com bcrypt, atendendo à segurança exigida em produção.
 - **Implementação dos endpoints de validação**: Desenvolver os fluxos de aprovação de movimentações, tarefas e tickets pelo perfil Supervisor, conforme RF006 e RF008.
-- **Módulo de sincronização offline**: Implementar o endpoint `/sincronizacao` para processar registros pendentes e permitir o uso do sistema em campo sem conexão contínua à internet (RF003).
 - **Filtros de movimentação**: Criar o endpoint `/movimentacoes/filtrar` com suporte a filtros por retiro, tipo, período e status, conforme RF009 e RN09.
 - **Dashboard do Gerente**: Desenvolver os endpoints de relatório consolidado (`/relatorios`) que calculam indicadores por retiro considerando apenas registros validados e sincronizados (RF010, RN10).
 - **Testes automatizados**: Iniciar a cobertura de testes de integração dos endpoints com Jest e Supertest.
