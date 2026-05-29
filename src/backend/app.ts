@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import evidenciaRoutes from './routes/evidencia.route'
 import movimentacaoRoutes from './routes/movimentacao.route'
 import relatorioRoutes from './routes/relatorio.route'
@@ -14,6 +15,9 @@ const app = express()
 
 // Habilita leitura de JSON em todas as requests.
 app.use(express.json())
+
+// Documentação navegável da WebAPI disponível em /docs
+app.use('/docs', express.static(path.join(__dirname, 'public/docs')))
 
 // Registra logs de cada request depois que a resposta termina.
 app.use(middlewareDeLog)

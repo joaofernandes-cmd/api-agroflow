@@ -3025,9 +3025,768 @@ VALUES (?, ?, ?, ?);
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
+&nbsp;&nbsp;&nbsp;&nbsp;Endpoints são pontos de entrada ou endereços por meio dos quais um sistema se comunica com o outro, estando relacionados a um verbo HTTP (GET, POST, PATCH, DELETE...), que são métodos usados para suprir as requisições feitas em um sistema web.
 
-*Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500).*
+&nbsp;&nbsp;&nbsp;&nbsp;Com base nessa definição, a vigente equipe precisou refletir sobre quais métodos seriam necessários incluir para cobrir todas as funcionalidades que se almeja entregar no sistema AgroFlow. Isso envolveu mapear cada funcionalidade da aplicação, como por exemplo registrar uma movimentação do rebanho, criar e acompanhar tarefas, sincronizar dados coletados em modo offline, além de gerar relatórios gerenciais e controlar tickets de infraestrutura. Dessa forma, a equipe garante que cada interação do usuário com o sistema tenha o suporte necessário por meio da API.
+
+
+**Base URL**
+
+&nbsp;&nbsp;&nbsp;&nbsp;É válido mencionar que todos os endpoints são relativos à URL base: `http://localhost:3000`
+
+&nbsp;&nbsp;&nbsp;&nbsp;A documentação navegável completa da WebAPI encontra-se no arquivo `documents/index.html`, disponível no repositório do projeto.
+
+**Endpoints**
+
+**Sistema**
+
+1. Verificar Saúde da Aplicação
+
+   - **Endereço:** `/health`
+   - **Método:** GET
+   - **Descrição:** Verifica a disponibilidade do servidor. Não exige autenticação nem corpo de requisição.
+   - **Headers:** Nenhum header específico necessário.
+   - **Body:** Nenhum.
+   - **Resposta:** `200 OK` — `{ "status": "ok" }` enquanto o processo estiver em execução; `500 Internal Server Error` em caso de falha interna.
+
+**RF001 — Registro de Movimentação do Rebanho (Prioridade: Alta)**
+
+2. Registrar Movimentação
+
+   - **Endereço:** `/movimentacoes`
+   - **Método:** POST
+   - **Descrição:** Registra uma nova movimentação do rebanho (nascimento, morte, transferência, compra ou venda). Valida campos obrigatórios conforme o tipo da movimentação, conforme RN01.
+   - **Headers:** `Content-Type: application/json`
+   - **Body:** Campos: `retiro_id` (number, obrigatório), `capataz_id` (string, obrigatório), `tipo` (string, obrigatório — `nascimento`, `morte`, `transferencia`, `compra` ou `venda`), `estagio_vida` (string, obrigatório), `origem` (string, condicional), `destino` (string, condicional), `quantidade` (number, condicional), `causa_obito` (string, condicional para tipo morte), `sincronizado` (boolean).
+   - **Respostas:**
+     - `201 Created`: Movimentação criada. Retorna o objeto criado.
+     - `400 Bad Request`: Campo obrigatório ausente ou inválido para o tipo informado.
+     - `500 Internal Server Error`: Falha interna no servidor.
+
+3. Listar Movimentações
+
+   - **Endereço:** `/movimentacoes`
+   - **Método:** GET
+   - **Descrição:** Retorna todas as movimentações cadastradas. Quando parâmetros de filtro são informados (retiro, tipo, status, dataInicio, dataFim), executa o filtro automaticamente.
+   - **Headers:** Nenhum header específico necessário.
+   - **Body:** Nenhum.
+   - **Resposta:**
+     - `200 OK`: Array de movimentações.
+     - `500 Internal Server Error`: Falha interna.
+
+4. Buscar Movimentação por ID
+
+   - **Endereço:** `/movimentacoes/:id`
+   - **Método:** GET
+   - **Descrição:** Retorna uma movimentação específica pelo seu identificador numérico.
+   - **Headers:** Nenhum header específico necessário.
+   - **Body:** Nenhum.
+   - **Respostas:**
+     - `200 OK`: Objeto da movimentação.
+     - `400 Bad Request`: ID inválido.
+     - `404 Not Found`: Movimentação não encontrada.
+     - `500 Internal Server Error`: Falha interna.
+
+5. Atualizar Movimentação
+
+   - **Endereço:** `/movimentacoes/:id`
+   - **Método:** PATCH
+   - **Descrição:** Atualiza campos de uma movimentação existente. Apenas os campos informados no corpo são atualizados.
+   - **Headers:** `Content-Type: application/json`
+   - **Body:** Campos parciais da movimentação a serem atualizados.
+   - **Respostas:**
+     - `200 OK`: Objeto atualizado.
+     - `400 Bad Request`: Violação de regra de negócio.
+     - `404 Not Found`: Movimentação não encontrada.
+     - `500 Internal Server Error`: Falha interna.
+
+6. Remover Movimentação
+
+   - **Endereço:** `/movimentacoes/:id`
+   - **Método:** DELETE
+   - **Descrição:** Remove uma movimentação e seus dados associados.
+   - **Headers:** Nenhum header específico necessário.
+   - **Body:** Nenhum.
+   - **Respostas:**
+     - `204 No Content`: Removida com sucesso.
+     - `400 Bad Request`: ID inválido.
+     - `404 Not Found`: Movimentação não encontrada.
+     - `500 Internal Server Error`: Falha interna.
+
+**RF002 — Criar e Acompanhar Tarefas (Prioridade: Alta)**
+
+7. Criar Tarefa
+
+   - **Endereço:** `/tarefas`
+   - **Método:** POST
+   - **Descrição:** Cria uma nova tarefa e a atribui a um usuário. Todos os campos obrigatórios devem estar presentes simultaneamente, conforme RN02.
+   - **Headers:** `Content-Type: application/json`
+   - **Body:** Campos: `usuario_id` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `categoria` (string, obrigatório), `status` (string).
+   - **Respostas:**
+     - `201 Created`: Tarefa criada. Retorna o objeto criado.
+     - `400 Bad Request`: Campo obrigatório ausente.
+     - `500 Internal Server Error`: Falha interna.
+
+8. Listar Todas as Tarefas
+
+   - **Endereço:** `/tarefas`
+   - **Método:** GET
+   - **Descrição:** Retorna todas as tarefas cadastradas.
+   - **Headers:** Nenhum header específico necessário.
+   - **Body:** Nenhum.
+   - **Respostas:**
+     - `200 OK`: Array de tarefas.
+     - `500 Internal Server Error`: Falha interna.
+
+9. Buscar Tarefa por ID
+
+   - **Endereço:** `/tarefas/:id`
+   - **Método:** GET
+   - **Descrição:** Retorna uma tarefa específica pelo seu identificador numérico.
+   - **Headers:** Nenhum header específico necessário.
+   - **Body:** Nenhum.
+   - **Respostas:**
+     - `200 OK`: Objeto da tarefa.
+     - `404 Not Found`: Tarefa não encontrada.
+     - `500 Internal Server Error`: Falha interna.
+
+10. Atualizar Tarefa
+
+    - **Endereço:** `/tarefas/:id`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza campos gerais de uma tarefa existente.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos parciais a atualizar.
+    - **Respostas:**
+      - `200 OK`: Tarefa atualizada.
+      - `404 Not Found`: Tarefa não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+11. Atualizar Status da Tarefa
+
+    - **Endereço:** `/tarefas/:id/status`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza exclusivamente o status de uma tarefa.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** `{ "status": "pendente" | "em_andamento" | "concluida" | "aprovada" }`
+    - **Respostas:**
+      - `200 OK`: Status atualizado.
+      - `400 Bad Request`: Status ausente ou ID inválido.
+      - `404 Not Found`: Tarefa não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+12. Remover Tarefa
+
+    - **Endereço:** `/tarefas/:id`
+    - **Método:** DELETE
+    - **Descrição:** Remove uma tarefa pelo identificador numérico.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `204 No Content`: Removida com sucesso.
+      - `404 Not Found`: Tarefa não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+13. Listar Tarefas por Status
+
+    - **Endereço:** `/tarefas/status/:status`
+    - **Método:** GET
+    - **Descrição:** Filtra tarefas pelo status informado no parâmetro de rota.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tarefas filtradas; `500 Internal Server Error` — Falha interna.
+
+14. Listar Tarefas por Usuário
+
+    - **Endereço:** `/tarefas/usuario/:usuarioId`
+    - **Método:** GET
+    - **Descrição:** Retorna todas as tarefas atribuídas a um usuário específico.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tarefas do usuário; `500 Internal Server Error` — Falha interna.
+
+15. Listar Tarefas por Prioridade
+
+    - **Endereço:** `/tarefas/prioridade/:prioridade`
+    - **Método:** GET
+    - **Descrição:** Filtra tarefas pela prioridade informada no parâmetro de rota (`alta`, `media` ou `baixa`).
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tarefas filtradas; `500 Internal Server Error` — Falha interna.
+
+16. Listar Tarefas por Categoria
+
+    - **Endereço:** `/tarefas/categoria/:categoria`
+    - **Método:** GET
+    - **Descrição:** Filtra tarefas pela categoria informada no parâmetro de rota.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tarefas da categoria; `500 Internal Server Error` — Falha interna.
+
+17. Contar Tarefas por Status
+
+    - **Endereço:** `/tarefas/contagem/status`
+    - **Método:** GET
+    - **Descrição:** Retorna a contagem de tarefas agrupadas por status.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Objeto com totais por status (ex.: `{ "pendente": 4, "aprovado": 2 }`); `500 Internal Server Error` — Falha interna.
+
+**RF003 — Sincronização Offline/Online (Prioridade: Alta)**
+
+18. Detectar Disponibilidade de Conexão
+
+    - **Endereço:** `/sincronizacao/conexao`
+    - **Método:** GET
+    - **Descrição:** Verifica se existe conexão disponível com o servidor. O cliente usa esta rota para disparar sincronização automática conforme RN03.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Conexão disponível; `500 Internal Server Error` — Falha interna.
+
+19. Executar Sincronização de Dados Pendentes
+
+    - **Endereço:** `/sincronizacao`
+    - **Método:** POST
+    - **Descrição:** Processa e persiste no servidor os dados armazenados localmente com `sincronizado = false`.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Sincronização concluída.
+      - `400 Bad Request`: Falha parcial ou erro de validação.
+      - `500 Internal Server Error`: Erro durante sincronização.
+
+20. Obter Status da Sincronização
+
+    - **Endereço:** `/sincronizacao/status`
+    - **Método:** GET
+    - **Descrição:** Retorna o status agregado da sincronização, com contagens de registros pendentes e já sincronizados por entidade.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Objeto com status atual; `500 Internal Server Error` — Falha interna.
+
+21. Obter Mensagem de Sincronização
+
+    - **Endereço:** `/sincronizacao/mensagem`
+    - **Método:** GET
+    - **Descrição:** Retorna uma mensagem legível pelo usuário com base no estado atual da sincronização.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — `{ "mensagem": "string" }`; `500 Internal Server Error` — Falha interna.
+
+22. Receber Movimentação Sincronizada do Cliente Offline
+
+    - **Endereço:** `/movimentacoes/sincronizar`
+    - **Método:** POST
+    - **Descrição:** Recebe um registro criado offline e o persiste no servidor marcado como `sincronizado = true`.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos: `retiro_id` (number, obrigatório), `capataz_id` (string, obrigatório), `tipo` (string, obrigatório), `estagio_vida` (string, obrigatório), `origem`, `destino`, `quantidade`, `causa_obito`.
+    - **Respostas:**
+      - `201 Created`: Registro sincronizado e criado.
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `500 Internal Server Error`: Falha interna.
+
+23. Marcar Movimentação como Sincronizada
+
+    - **Endereço:** `/movimentacoes/:id/sincronizar`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza a flag `sincronizado` de um registro existente para `true`.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Movimentação marcada como sincronizada.
+      - `404 Not Found`: Movimentação não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF004 — Evidências (Prioridade: Alta)**
+
+24. Listar Evidências
+
+    - **Endereço:** `/evidencias`
+    - **Método:** GET
+    - **Descrição:** Retorna todas as evidências registradas no sistema.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de evidências; `500 Internal Server Error` — Falha interna.
+
+25. Buscar Evidência por ID
+
+    - **Endereço:** `/evidencias/:id`
+    - **Método:** GET
+    - **Descrição:** Retorna uma evidência específica pelo seu identificador numérico.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Objeto da evidência.
+      - `404 Not Found`: Evidência não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+26. Criar Evidência de Mensagem Escrita
+
+    - **Endereço:** `/evidencias/mensagens`
+    - **Método:** POST
+    - **Descrição:** Anexa uma mensagem escrita como evidência descritiva. Obrigatória para abertura de tickets conforme RN08.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos: `usuarioId` (string, obrigatório), `conteudo` (string, obrigatório).
+    - **Respostas:**
+      - `201 Created`: Evidência criada.
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `500 Internal Server Error`: Falha interna.
+
+27. Criar Evidência de Áudio
+
+    - **Endereço:** `/evidencias/audios`
+    - **Método:** POST
+    - **Descrição:** Registra um áudio como evidência descritiva.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos: `usuarioId` (string, obrigatório), `urlArquivo` (string, obrigatório), `duracao` (number, obrigatório).
+    - **Respostas:**
+      - `201 Created`: Evidência criada.
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `500 Internal Server Error`: Falha interna.
+
+28. Criar Evidência de Foto Georreferenciada
+
+    - **Endereço:** `/evidencias/fotos`
+    - **Método:** POST
+    - **Descrição:** Registra uma foto como evidência, com validação obrigatória de georreferenciamento (latitude −90 a +90, longitude −180 a +180). Rejeita com 400 caso os metadados sejam inválidos ou ausentes, conforme RN04.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos: `usuarioId` (string, obrigatório), `urlArquivo` (string, obrigatório), `latitude` (number, obrigatório), `longitude` (number, obrigatório).
+    - **Respostas:**
+      - `201 Created`: Foto salva com georreferenciamento válido.
+      - `400 Bad Request`: `"Foto rejeitada: georreferenciamento inválido ou ausente"`
+      - `500 Internal Server Error`: Falha interna.
+
+**RF005 — Autenticação e Gerenciamento de Usuários (Prioridade: Alta)**
+
+29. Autenticar Usuário e Obter Token JWT
+
+    - **Endereço:** `/usuarios/login`
+    - **Método:** POST
+    - **Descrição:** Valida o par `login` e `senha`. Retorna o token JWT utilizado por todas as rotas protegidas. Usuários com cargo `capataz` não recebem token por este fluxo, conforme RN05 e RN06.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos: `login` (string, obrigatório), `senha` (string, obrigatório).
+    - **Respostas:**
+      - `200 OK`: `{ "usuario": { ...dados sem senha_hash }, "token": "JWT..." }`
+      - `400 Bad Request`: Login ou senha ausentes.
+      - `401 Unauthorized`: Credenciais inválidas.
+      - `403 Forbidden`: Usuário inativo ou cargo `capataz`.
+      - `500 Internal Server Error`: Falha interna.
+
+30. Criar Usuário
+
+    - **Endereço:** `/usuarios`
+    - **Método:** POST
+    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
+    - **Respostas:**
+      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `401 Unauthorized`: Token ausente ou inválido.
+      - `403 Forbidden`: Cargo insuficiente.
+      - `500 Internal Server Error`: Falha interna.
+
+31. Listar Todos os Usuários
+
+    - **Endereço:** `/usuarios`
+    - **Método:** GET
+    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+32. Buscar Usuário por ID
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** GET
+    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Objeto do usuário (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+33. Listar Usuários por Retiro
+
+    - **Endereço:** `/usuarios/retiro/:retiroId`
+    - **Método:** GET
+    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários do retiro.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+34. Atualizar Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos parciais a atualizar.
+    - **Respostas:**
+      - `200 OK`: Usuário atualizado (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+35. Remover Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** DELETE
+    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `204 No Content`: Removido com sucesso.
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF006 — Validações (Prioridade: Média)**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem autenticação JWT com cargo `supervisor`.
+
+36. Verificar Permissão de Validação
+
+    - **Endereço:** `/validacoes/permissao`
+    - **Método:** POST
+    - **Descrição:** Verifica se o usuário autenticado possui permissão para validar registros, com base no token informado.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: `{ "podeValidar": true }`
+      - `401 Unauthorized` / `403 Forbidden`: Sem permissão.
+      - `500 Internal Server Error`: Falha interna.
+
+37. Validar Movimentação Pendente
+
+    - **Endereço:** `/validacoes/movimentacoes/:id/validar`
+    - **Método:** PATCH
+    - **Descrição:** Altera o status da movimentação para `validado`, registrando o supervisor responsável e a data de validação. Restrito a cargo `supervisor` conforme RN06.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Movimentação validada.
+      - `400 Bad Request`: Movimentação já validada ou violação de regra.
+      - `403 Forbidden`: Cargo não autorizado.
+      - `404 Not Found`: Movimentação não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+38. Aprovar Tarefa
+
+    - **Endereço:** `/validacoes/tarefas/:id/aprovar`
+    - **Método:** PATCH
+    - **Descrição:** Aprova uma tarefa pendente, registrando o supervisor e atualizando o status para `aprovado`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Tarefa aprovada.
+      - `403 Forbidden`: Cargo não autorizado.
+      - `404 Not Found`: Tarefa não encontrada.
+      - `500 Internal Server Error`: Falha interna.
+
+39. Aprovar Ticket de Infraestrutura
+
+    - **Endereço:** `/validacoes/tickets/:id/aprovar`
+    - **Método:** PATCH
+    - **Descrição:** Aprova um ticket pendente, registrando o supervisor aprovador e atualizando o status para `aprovado`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Ticket aprovado.
+      - `403 Forbidden`: Cargo não autorizado.
+      - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF007 — Relatórios (Prioridade: Média)**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem autenticação JWT com cargo `gerente` ou `supervisor`. Apenas registros com `sincronizado = true` são incluídos nos resultados, conforme RN07.
+
+40. Dados Brutos de Movimentações para Relatório
+
+    - **Endereço:** `/relatorios/movimentacoes/dados`
+    - **Método:** GET
+    - **Descrição:** Retorna movimentações sincronizadas e validadas para composição de relatórios. Aceita os query params opcionais `dataInicio`, `dataFim` (ISO 8601) e `retiroId`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de movimentações sincronizadas.
+      - `400 Bad Request`: Datas ou retiro inválidos.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+41. Dados Brutos de Tarefas para Relatório
+
+    - **Endereço:** `/relatorios/tarefas/dados`
+    - **Método:** GET
+    - **Descrição:** Retorna tarefas sincronizadas e concluídas para composição de relatórios. Aceita os mesmos query params opcionais de datas e `retiroId`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de tarefas sincronizadas.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+42. Relatório de Movimentações Formatado para Exportação
+
+    - **Endereço:** `/relatorios/movimentacoes`
+    - **Método:** GET
+    - **Descrição:** Retorna o relatório de movimentações estruturado para exportação em planilha (.xlsx / .csv). Aceita `dataInicio`, `dataFim` e `retiroId` como query params opcionais.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Dados formatados para exportação.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+43. Relatório Semanal
+
+    - **Endereço:** `/relatorios/semanal`
+    - **Método:** GET
+    - **Descrição:** Gera o relatório consolidado dos últimos 7 dias, sem necessidade de informar datas manualmente. Aceita `retiroId` opcional.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Relatório semanal.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+44. Relatório Mensal
+
+    - **Endereço:** `/relatorios/mensal`
+    - **Método:** GET
+    - **Descrição:** Gera o relatório consolidado dos últimos 30 dias. Aceita `retiroId` opcional.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Relatório mensal.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+45. Movimentações Sincronizadas para Relatório
+
+    - **Endereço:** `/sincronizacao/relatorios/movimentacoes`
+    - **Método:** GET
+    - **Descrição:** Retorna movimentações com `sincronizado = true` via módulo de sincronização. Aceita `retiroId` opcional.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de movimentações; `500 Internal Server Error` — Falha interna.
+
+46. Tarefas Sincronizadas para Relatório
+
+    - **Endereço:** `/sincronizacao/relatorios/tarefas`
+    - **Método:** GET
+    - **Descrição:** Retorna tarefas com `sincronizado = true` via módulo de sincronização. Aceita `retiroId` opcional.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tarefas; `500 Internal Server Error` — Falha interna.
+
+**RF008 — Tickets de Infraestrutura (Prioridade: Média)**
+
+47. Abrir Ticket de Infraestrutura
+
+    - **Endereço:** `/tickets`
+    - **Método:** POST
+    - **Descrição:** Cria um chamado de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo `prioridade` obrigatoriamente informado, conforme RN08 e RN11.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos: `retiro_id` (number, obrigatório), `categoria` (string, obrigatório), `localizacao` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `temEvidenciaDescritiva` (boolean, obrigatório).
+    - **Respostas:**
+      - `201 Created`: Ticket aberto.
+      - `400 Bad Request`: Evidência descritiva ausente ou prioridade não informada.
+      - `500 Internal Server Error`: Falha interna.
+
+48. Listar Todos os Tickets
+
+    - **Endereço:** `/tickets`
+    - **Método:** GET
+    - **Descrição:** Retorna todos os tickets cadastrados.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tickets; `500 Internal Server Error` — Falha interna.
+
+49. Listar Tickets Pendentes
+
+    - **Endereço:** `/tickets/pendentes`
+    - **Método:** GET
+    - **Descrição:** Retorna tickets com status `pendente`. Aceita `retiroId` opcional como query param.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de tickets pendentes.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `500 Internal Server Error`: Falha interna.
+
+50. Listar Tickets por Status
+
+    - **Endereço:** `/tickets/status`
+    - **Método:** GET
+    - **Descrição:** Filtra tickets por status via query string. O parâmetro `status` é obrigatório.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tickets filtrados; `500 Internal Server Error` — Falha interna.
+
+51. Listar Tickets por Categoria
+
+    - **Endereço:** `/tickets/categoria`
+    - **Método:** GET
+    - **Descrição:** Filtra tickets por categoria via query string. O parâmetro `categoria` é obrigatório.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Array de tickets da categoria; `500 Internal Server Error` — Falha interna.
+
+52. Buscar Ticket por ID
+
+    - **Endereço:** `/tickets/:id`
+    - **Método:** GET
+    - **Descrição:** Retorna um ticket específico pelo seu identificador numérico.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Objeto do ticket.
+      - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+53. Atualizar Status do Ticket
+
+    - **Endereço:** `/tickets/:id/status`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza o status de um ticket existente.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** `{ "status": "pendente" | "aprovado" | "em_andamento" | "concluido" }`
+    - **Respostas:**
+      - `200 OK`: Status atualizado.
+      - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+54. Atribuir Ticket a um Usuário
+
+    - **Endereço:** `/tickets/:id/atribuicao`
+    - **Método:** PATCH
+    - **Descrição:** Atribui um ticket a um usuário responsável para organização da demanda de manutenção.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** `{ "usuarioId": "string (UUID)" }`
+    - **Respostas:**
+      - `200 OK`: Ticket atribuído.
+      - `400 Bad Request`: Campo `usuarioId` ausente.
+      - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF009 — Filtros de Movimentações (Prioridade: Média)**
+
+55. Filtrar Movimentações com Critérios Específicos
+
+    - **Endereço:** `/movimentacoes/filtrar`
+    - **Método:** GET
+    - **Descrição:** Rota dedicada ao filtro de validação do Supervisor, conforme RN09. Permite seleção múltipla de tipos e status (separados por vírgula), mas apenas um retiro por vez. Quando nenhum status é informado, retorna registros com status `pendente` por padrão.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Parâmetros de Query:** `retiro` (number, obrigatório), `tipo` (string(s) por vírgula, opcional), `status` (string(s) por vírgula, opcional — padrão: `pendente`), `dataInicio` (string ISO 8601, opcional), `dataFim` (string ISO 8601, opcional).
+    - **Respostas:**
+      - `200 OK`: Array de movimentações filtradas.
+      - `400 Bad Request`: Retiro ausente ou data inválida.
+      - `500 Internal Server Error`: Falha interna.
+
+56. Listar Movimentações Pendentes de Validação
+
+    - **Endereço:** `/movimentacoes/pendentes`
+    - **Método:** GET
+    - **Descrição:** Retorna movimentações com status `pendente`, aguardando validação pelo Supervisor. Aceita `retiroId` opcional como query param.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de movimentações pendentes.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `500 Internal Server Error`: Falha interna.
+
+
+**RF010 — Dashboard Gerencial (Prioridade: Média)**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de dashboard consideram exclusivamente registros com `sincronizado = true` e status `validado` ou `aprovado`, conforme RN10.
+
+57. Dados de Movimentações para o Dashboard
+
+    - **Endereço:** `/movimentacoes/dashboard`
+    - **Método:** GET
+    - **Descrição:** Retorna movimentações validadas e sincronizadas para alimentar o painel gerencial. Aceita `retiroId` opcional para segmentar por retiro.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Indicadores consolidados de movimentações.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `500 Internal Server Error`: Falha interna.
+
+58. Contar Movimentações por Tipo
+
+    - **Endereço:** `/movimentacoes/contagem/tipo`
+    - **Método:** GET
+    - **Descrição:** Retorna a contagem de movimentações agrupadas por tipo. Aceita `retiroId` opcional.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — `{ "nascimento": 3, "morte": 1, ... }`; `500 Internal Server Error` — Falha interna.
+
+59. Dados de Tarefas para o Dashboard
+
+    - **Endereço:** `/tarefas/dashboard`
+    - **Método:** GET
+    - **Descrição:** Retorna tarefas aprovadas e sincronizadas para o painel gerencial. Aceita `retiroId` opcional.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Indicadores consolidados de tarefas; `500 Internal Server Error` — Falha interna.
+
+60. Tickets Sincronizados para o Dashboard
+
+    - **Endereço:** `/sincronizacao/dashboard/tickets`
+    - **Método:** GET
+    - **Descrição:** Retorna tickets aprovados e sincronizados para o painel gerencial. Aceita `retiroId` opcional.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — Dados de tickets aprovados; `500 Internal Server Error` — Falha interna.
+
+61. Contar Tickets por Prioridade
+
+    - **Endereço:** `/tickets/contagem/prioridade`
+    - **Método:** GET
+    - **Descrição:** Retorna a contagem de tickets agrupados por prioridade. Aceita `retiroId` opcional.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Resposta:** `200 OK` — `{ "alta": 2, "media": 5, "baixa": 1 }`; `500 Internal Server Error` — Falha interna.
+
+**RF011 — Prioridade de Tickets (Prioridade: Alta)**
+
+62. Listar Tickets por Prioridade
+
+    - **Endereço:** `/tickets/prioridade`
+    - **Método:** GET
+    - **Descrição:** Filtra tickets por prioridade via query string. O parâmetro `prioridade` aceita `alta`, `media` ou `baixa`.
+    - **Headers:** Nenhum header específico necessário.
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de tickets filtrados.
+      - `400 Bad Request`: Prioridade ausente ou inválida.
+      - `500 Internal Server Error`: Falha interna.
+
+63. Alterar Prioridade de Ticket Existente
+
+    - **Endereço:** `/tickets/:id/prioridade`
+    - **Método:** PATCH
+    - **Descrição:** Permite reorganização da demanda operacional alterando a prioridade após a criação do ticket, conforme RN11.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** `{ "novaPrioridade": "alta" | "media" | "baixa" }`
+    - **Respostas:**
+      - `200 OK`: Prioridade atualizada.
+      - `400 Bad Request`: Campo ausente ou ID inválido.
+      - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+&nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
 
 ## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
