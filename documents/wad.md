@@ -2426,9 +2426,7 @@ div align="center">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-*(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
-
-*posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a padronização da iconografia contribui diretamente para a consistência visual e a usabilidade da aplicação, reforçando a identidade do sistema e facilitando o reconhecimento imediato das funcionalidades pelos diferentes perfis de usuários. A utilização de um conjunto coeso e semanticamente claro de ícones garante que tanto o capataz em campo quanto o gerente no escritório possam interagir com a interface de maneira eficiente, reduzindo erros de interpretação e tornando a experiência de uso mais acessível e intuitiva em todas as telas da aplicação.
 
 ## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade (sprint 3)
 
