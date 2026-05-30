@@ -2430,7 +2430,131 @@ div align="center">
 
 ## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade (sprint 3)
 
-*posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
+### Introdução
+
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade representa a evolução das estruturas definidas nos wireframes da Seção 3.3, incorporando os elementos visuais estabelecidos no guia de estilos da Seção 3.4, como paleta de cores, tipografia e iconografia, e transformando-os em interfaces interativas e próximas do produto final. Diferentemente dos wireframes, que focam na organização e no fluxo das telas, o protótipo de alta fidelidade permite avaliar a experiência real de uso, validando tanto a coerência visual quanto a usabilidade da aplicação antes do desenvolvimento.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces foram desenvolvidas considerando os três perfis de usuários do sistema: Capataz, Supervisor e Gerente, cada um com suas necessidades, contextos de uso e níveis de letramento digital, conforme detalhado nas personas da Seção 2.2. Dado que o Capataz opera exclusivamente em campo e por dispositivos móveis, foi desenvolvido apenas o protótipo mobile para esse perfil. Já para o Supervisor e o Gerente, que podem acessar o sistema tanto no campo quanto em ambientes administrativos, foram desenvolvidas versões mobile e desktop, totalizando cinco protótipos.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Um princípio central ao longo do desenvolvimento foi a responsividade: as interfaces mobile e desktop de cada perfil foram projetadas para oferecer a mesma completude funcional, adaptando o layout, a navegação e a disposição dos elementos conforme o tamanho do dispositivo, sem perda de funcionalidades ou de clareza visual. O protótipo completo pode ser acessado neste [projeto do Figma](https://www.figma.com/design/vrq7u1pMmPSpTdAUUYwxrV/Prot%C3%B3tipo-de-Alta-Fidelidade---BrPec?node-id=169-2&t=CAAp7jVTqMpLjLoy-1).
+
+### Capataz - Mobile
+
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Capataz foi desenvolvido exclusivamente na versão mobile, refletindo a realidade operacional da persona Daniel Carvalho: um profissional que atua diretamente em campo, com baixo letramento digital e que utiliza o sistema apenas pelo dispositivo móvel durante as atividades no retiro. Nesse contexto, as decisões de design priorizaram simplicidade, fluxos curtos de navegação e elementos visuais de fácil interpretação, garantindo que o sistema possa ser utilizado de forma intuitiva mesmo em condições adversas de campo.
+
+<div align="center">
+<p align="center">Figura 35 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz" border="0">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;A tela de login foi projetada com apenas um botão de entrar, visto que os capatazes acessarão seus perfis através de um QR code, reduzindo ao máximo as etapas necessárias para que o capataz acesse o sistema. Após a autenticação, o usuário é direcionado à tela inicial, que apresenta de forma centralizada os principais atalhos da aplicação: registrar movimentações, abrir ticket e minhas tarefas. Essa organização minimiza a necessidade de navegação entre menus, permitindo que o capataz alcance qualquer funcionalidade em poucos toques.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de registro de movimentações foi desenvolvida para atender à US02, substituindo o uso de boletas em papel pelo preenchimento de um formulário digital simplificado. Os campos foram organizados de forma sequencial e objetiva, com uso de dropdowns para tipo de movimentação, origem, destino, quantidade e estágio de vida do animal, minimizando a necessidade de digitação. Alinhado à US01, todos os registros realizados sem conexão com a internet são armazenados localmente no dispositivo e sincronizados de forma automática com o servidor assim que a conexão é restabelecida, sem qualquer ação adicional do usuário.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de abertura de tickets atende à US07 e permite que o capataz reporte problemas de infraestrutura identificados no retiro diretamente pelo celular, como cercas danificadas, falta de água ou equipamentos avariados. O formulário exige o anexo de ao menos uma evidência descritiva, conforme a RN08. Complementando essa funcionalidade, o sistema permite o envio de fotos georreferenciadas como evidência adicional, cumprindo à US12, aumentando a rastreabilidade e a confiabilidade das informações registradas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a seção "Minhas Tarefas" atende à US03 e centraliza as atividades atribuídas pelo supervisor ao capataz, exibindo descrição e prioridade de forma clara e hierarquizada. O uso de cores de feedbacks e estados do sistema, definidas no guia de estilos, têm como objetivo sinalizar os níveis de prioridade, contribuindo para que o capataz identifique rapidamente as demandas mais urgentes sem depender de leitura extensiva.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Capataz traduz em interface visual os requisitos levantados para a persona Daniel, entregando um sistema funcional, direto e acessível para uso em campo, com suporte completo ao modo offline e fluxos otimizados para o contexto operacional da BrPec.
+
+### Supervisor - Mobile
+
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Supervisor na versão mobile foi desenvolvido para atender à persona Luiz Felipe, um profissional de 37 anos com letramento digital intermediário que atua na coordenação dos capatazes e no acompanhamento das operações de manejo nos retiros. Diferentemente do Capataz, o Supervisor precisa de uma interface que equilibre simplicidade de uso em campo com acesso a um conjunto mais amplo de funcionalidades operacionais e de gestão, refletindo seu papel que gera a conexão entre a execução e o controle das atividades da fazenda.
+
+<div align="center">
+<p align="center">Figura 36 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
+<p align="center">
+<img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor" border="0">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;A tela de login segue o mesmo padrão de objetividade adotado para os demais perfis, com campos reduzidos e acesso direto ao sistema. Após a autenticação, o Supervisor é direcionado ao dashboard principal, que centraliza os principais atalhos da aplicação, sendo eles relatórios, registros pendentes, alertas e delegação de tarefas. Isso permite o acesso rápido às operações mais frequentes sem a necessidade de navegação por menus profundos. A navegação entre seções é realizada por meio de uma barra inferior fixa, padrão consolidado em aplicações mobile que reduz o esforço de navegação e mantém o contexto do usuário durante o uso.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de validação de registros, desenvolvida para atender à US04, permite que o Supervisor visualize de forma centralizada as movimentações submetidas pelos capatazes que aguardam análise. Para cada registro, o Supervisor tem a possibilidade de aprovar a entrada, conforme a RN06. Esse fluxo garante maior confiabilidade dos dados operacionais que alimentam os relatórios e dashboards do Gerente, assegurando rastreabilidade sobre quem registrou e quem validou cada informação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de alertas foi desenvolvida em atendimento à US05 e exibe notificações relacionadas a problemas identificados nos retiros, permitindo que o Supervisor tome ciência de ocorrências relevantes e seja redirecionado diretamente ao detalhe correspondente ao interagir com o alerta. Essa funcionalidade contribui para respostas mais rápidas a situações que demandam ação imediata no campo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas atende à US03 e permite que o Supervisor crie e atribua atividades operacionais aos capatazes de forma estruturada, definindo capataz responsável, categoria da tarefa, prioridade, data e descrição. O uso de cores de feedback e estado do sistema para os níveis de prioridade, que foram definidas no guia de estilos facilitam a identificação visual das demandas mais urgentes tanto para o Supervisor ao criar quanto para o Capataz ao receber as tarefas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a visualização de relatórios operacionais pelo Supervisor está relacionada à US09 e foi implementada com filtros por período, retiro e tipo de relatório, além de uma prévia visual das informações antes da exportação final. Essa funcionalidade permite ao Supervisor analisar os dados das operações de forma organizada diretamente pelo dispositivo móvel, mesmo quando não está no ambiente administrativo, integrando o fluxo cujos dados finais consolidados dão suporte ao Gerente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Supervisor entrega uma interface operacional completa, adaptada às condições de uso em campo e alinhada ao perfil analítico da persona Luiz Felipe, garantindo controle, rastreabilidade e agilidade na gestão das operações realizadas nos retiros da BrPec.
+
+### Supervisor - Desktop
+
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Supervisor na versão desktop foi desenvolvido para o cenário em que a persona Luiz Felipe acessa o sistema a partir de um computador no ambiente administrativo da fazenda, situação comum para atividades de planejamento, análise de dados operacionais e gestão centralizada das equipes. Nesse contexto, o maior espaço de tela disponível permitiu reorganizar o layout de forma a exibir mais informações simultaneamente, sem abrir mão da consistência visual e funcional já estabelecida na versão mobile.
+
+[INSERIR IMAGEM(NS) DO PROTÓTIPO AQUI]
+
+<div align="center">
+<p align="center">Figura 37 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
+<p align="center">
+<img src="others/assets/hi-fi-desktop-supervisor.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor" border="0">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;A principal diferença estrutural em relação à versão mobile está na navegação: enquanto no mobile a navegação é feita por uma barra inferior fixa, na versão desktop ela é substituída por um menu lateral persistente, que exibe as seções do sistema de forma sempre visível e acessível. Essa mudança é consistente com padrões consolidados de interfaces desktop e permite que o Supervisor alterne entre módulos sem perder o contexto da tela em uso, além de liberar a área central da interface para exibição de mais conteúdo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal foi reorganizado para aproveitar a largura da tela, exibindo cards de resumo operacional lado a lado, como registros pendentes, alertas ativos, tarefas delegadas e indicadores de retiro. Isso proporciona uma visão consolidada do estado das operações sem a necessidade de rolagem. Essa organização atende diretamente ao perfil analítico da persona Luiz Felipe, que busca maior visibilidade das operações e controle das múltiplas frentes sob sua responsabilidade.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de validação de registros, atendendo à US04, ganha densidade na versão desktop por meio de listagens tabelares que permitem visualizar, filtrar e ordenar múltiplos registros simultaneamente. Cada linha da tabela apresenta as informações essenciais da movimentação, dentre elas capataz, data, tipo, quantidade e status. Ao clicar em um registro o Supervisor acessa o detalhe completo em um painel lateral, sem sair da listagem. Esse padrão reduz o número de navegações necessárias para processar um lote de validações, aumentando a eficiência do fluxo operacional.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A delegação de tarefas, relacionada à US03, o gerenciamento de alertas operacionais, atendendo à US05, e a monitoração de chamados de infraestrutura, conforme a US06, seguem a mesma lógica de aproveitamento do espaço disponível: formulários com campos expandidos, pré-visualizações inline e listagens com mais colunas visíveis. Da mesma forma, a geração de relatórios operacionais, referente à US09, apresenta os filtros de período, retiro e tipo de relatório dispostos horizontalmente, com a prévia dos dados ocupando a maior parte da tela antes da exportação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Supervisor garante paridade funcional completa com a versão mobile, cobrindo as US03, US04, US05, US06 e US09, ao mesmo tempo em que adapta a organização visual e os padrões de interação ao contexto de uso em tela ampla, entregando uma experiência mais eficiente para as atividades administrativas e de planejamento realizadas fora do campo.
+
+### Gerente - Mobile
+
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Gerente na versão mobile foi desenvolvido para atender à persona Marcos Ferreira, um profissional de 49 anos, formado em Administração, com letramento digital intermediário e perfil estratégico voltado à tomada de decisão baseada em dados. Seu principal desafio é a baixa integração e confiabilidade das informações operacionais provenientes do campo, o que compromete o acompanhamento do realizado versus planejado e aumenta a dependência de ações reativas. A versão mobile do Gerente foi projetada para oferecer acesso rápido a indicadores e relatórios consolidados em qualquer lugar, sem exigir que Marcos esteja necessariamente em um ambiente de trabalho fixo.
+
+<div align="center">
+<p align="center">Figura 38 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
+<p align="center">
+<img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente" border="0">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Após o login, o Gerente é direcionado ao dashboard principal, desenvolvido para atender à US08. A tela centraliza os indicadores-chave da operação, total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com um totalizador geral. Conforme a RN10, apenas dados com status aprovado e flag sincronizado igual a verdadeiro são contabilizados nesses indicadores, garantindo que Marcos tenha uma visão consolidada e confiável da operação, sem ruídos gerados por registros ainda pendentes de validação. O dashboard também exibe a data e hora da última atualização, permitindo ao Gerente avaliar a recência das informações apresentadas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de ocorrências recentes complementa o dashboard com uma lista das últimas atividades registradas na fazenda, oferecendo ao Gerente uma visão cronológica do que aconteceu nos retiros sem a necessidade de navegar por múltiplas telas. Esse acesso rápido atende à necessidade da persona de acompanhar o realizado de forma ágil, especialmente em momentos fora do ambiente administrativo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de relatórios, desenvolvida em atendimento à US11, permite que o Gerente filtre dados por período, retiro e tipo de relatório, refinando a análise conforme a unidade da fazenda de interesse. Antes de exportar, o sistema apresenta uma prévia visual dos dados filtrados, possibilitando a conferência das informações antes da geração do arquivo em formato de planilha. Conforme a RN07, apenas registros sincronizados e aprovados compõem os relatórios gerados, assegurando consistência e confiabilidade das informações exportadas para uso em análises gerenciais e comunicação com a sede.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A navegação entre as seções do protótipo mobile do Gerente é realizada por uma barra inferior fixa, mantendo coerência com o padrão adotado na versão mobile do Supervisor e garantindo consistência na experiência de uso entre os perfis da aplicação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Gerente traduz em interface as necessidades estratégicas da persona Marcos Ferreira, entregando indicadores confiáveis, relatórios filtráveis e navegação eficiente, alinhados às US08 e US11 e ao conjunto de regras de negócio que asseguram a integridade dos dados apresentados.
+
+### Gerente - Desktop
+
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Gerente na versão desktop foi desenvolvido para o cenário em que Marcos Ferreira acessa o sistema a partir de um computador no ambiente administrativo, situação mais comum para atividades de análise aprofundada, geração de relatórios e acompanhamento consolidado da operação. O maior espaço de tela disponível permitiu organizar as informações de forma mais densa e comparativa, tornando a versão desktop o ambiente ideal para o perfil estratégico da persona, que necessita de visão simultânea de múltiplos indicadores para apoiar a tomada de decisão.
+
+<div align="center">
+<p align="center">Figura 39 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
+<p align="center">
+<img src="others/assets/hi-fi-desktop-gerente.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente" border="0">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Assim como na versão desktop do Supervisor, a navegação é estruturada por um menu lateral persistente, substituindo a barra inferior da versão mobile. Esse padrão mantém consistência entre os dois perfis na experiência de uso em tela ampla e permite que o Gerente alterne entre o dashboard e os módulos de relatórios sem perder o contexto da tela em uso.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal, desenvolvido para atender à US08, foi reorganizado na versão desktop para exibir os indicadores-chave em cards dispostos lado a lado, nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com totalizador geral. O espaço adicional permite ainda incorporar gráficos de tendência, como a evolução das movimentações ao longo do período selecionado, oferecendo ao Gerente uma camada visual de análise que vai além da simples contagem de registros. Conforme a RN10, todos os indicadores consideram exclusivamente dados com status aprovado e flag sincronizado igual a verdadeiro, garantindo que nenhum registro pendente ou rejeitado distorça a visão consolidada da operação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo de relatórios, atendendo à US11, ganha expressiva densidade na versão desktop. Os filtros de período, retiro e tipo de relatório são exibidos horizontalmente em uma barra superior dedicada, e a prévia dos dados ocupa a área central da tela em formato tabular expandido, permitindo ao Gerente inspecionar as informações com mais detalhe antes da exportação. A possibilidade de visualizar múltiplas colunas simultaneamente, algo limitado na versão mobile, facilita a conferência de consistência entre os dados antes da geração do arquivo em formato de planilha, em conformidade com a RN07.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de ocorrências recentes, que na versão mobile é exibida como lista rolável, é apresentada no desktop como um painel lateral fixo ao lado do dashboard, permitindo que Marcos acompanhe as últimas atividades registradas nos retiros enquanto navega pelos indicadores, sem a necessidade de alternar entre telas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Gerente garante paridade funcional completa com a versão mobile, cobrindo as US08 e US11, e aprofunda a experiência de uso no ambiente administrativo, entregando indicadores visuais mais ricos, relatórios com pré-visualização densa e navegação eficiente para o perfil estratégico da persona Marcos Ferreira.
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos, assegurada pela aplicação do guia de estilos definido na Seção 3.4.
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
