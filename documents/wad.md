@@ -2415,6 +2415,17 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
+&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e tablets utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
+
+div align="center">
+<p align="center">Figura 35 - Iconografia</p>
+<p align="center">
+<img src="others/assets/icones.png" alt="Iconografia" border="0">
+</a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 *(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
 
 *posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
