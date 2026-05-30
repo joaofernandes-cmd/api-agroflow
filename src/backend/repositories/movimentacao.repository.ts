@@ -11,8 +11,8 @@ const movimentacaoSelect = sql`
     m.capataz_id,
     m.validado_por,
     m.tipo,
-    COALESCE(mt.origem, mn.origem, mm.origem) AS origem,
-    mt.destino,
+    COALESCE(mv.origem, mt.origem, mn.origem, mm.origem) AS origem,
+    COALESCE(mc.destino, mt.destino) AS destino,
     COALESCE(mc.quantidade, mv.quantidade, mt.quantidade, mn.quantidade) AS quantidade,
     m.status,
     m.sincronizado,
@@ -157,16 +157,16 @@ export const MovimentacaoRepository = {
   async criarDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
     if (input.tipo === 'compra') {
       await transaction`
-        INSERT INTO movimentacao_compra (movimentacao_id, quantidade)
-        VALUES (${movimentacaoId}, ${input.quantidade ?? null})
+        INSERT INTO movimentacao_compra (movimentacao_id, destino, quantidade)
+        VALUES (${movimentacaoId}, ${input.destino ?? null}, ${input.quantidade ?? null})
       `
       return
     }
 
     if (input.tipo === 'venda') {
       await transaction`
-        INSERT INTO movimentacao_venda (movimentacao_id, quantidade)
-        VALUES (${movimentacaoId}, ${input.quantidade ?? null})
+        INSERT INTO movimentacao_venda (movimentacao_id, origem, quantidade)
+        VALUES (${movimentacaoId}, ${input.origem ?? null}, ${input.quantidade ?? null})
       `
       return
     }

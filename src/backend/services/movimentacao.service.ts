@@ -12,7 +12,13 @@ export const MovimentacaoService = {
       throw new Error('Campo "estagio_vida" e obrigatorio')
     }
 
-    if (dados.tipo === 'compra' || dados.tipo === 'venda') {
+    if (dados.tipo === 'compra') {
+      this.validarDestino(dados.destino)
+      this.validarQuantidade(dados.quantidade)
+    }
+
+    if (dados.tipo === 'venda') {
+      this.validarOrigem(dados.origem)
       this.validarQuantidade(dados.quantidade)
     }
 
