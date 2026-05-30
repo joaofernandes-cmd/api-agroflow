@@ -2333,9 +2333,9 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O guia de estilos da aplicação tem como objetivo garantir consistência visual, organização e padronização em toda a interface do sistema desenvolvido para a BRPEC. Ele funciona como uma referência central para o desenvolvimento das telas, definindo diretrizes relacionadas ao uso de cores, tipografia, hierarquia visual e elementos gráficos da aplicação. Dessa forma, o guia auxilia na construção de interfaces mais intuitivas, acessíveis e visualmente coerentes entre os diferentes perfis de usuários do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;O guia de estilos da aplicação tem como objetivo garantir consistência visual, organização e padronização em toda a interface do sistema desenvolvido para a BrPec. Ele funciona como uma referência central para o desenvolvimento das telas, definindo diretrizes relacionadas ao uso de cores, tipografia, hierarquia visual e elementos gráficos da aplicação. Dessa forma, o guia auxilia na construção de interfaces mais intuitivas, acessíveis e visualmente coerentes entre os diferentes perfis de usuários do sistema.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Além de fortalecer a identidade visual da aplicação, o guia de estilos contribui para a manutenção da clareza visual e da experiência de uso em ambientes operacionais de campo, nos quais fatores como legibilidade, simplicidade e rápida interpretação das informações são essenciais. A padronização dos componentes também reduz inconsistências durante o desenvolvimento da interface, promovendo maior escalabilidade, facilidade de manutenção e alinhamento visual entre todas as telas do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;Além de fortalecer a identidade visual da aplicação, o guia de estilos contribui para a manutenção da clareza visual e da experiência de uso em ambientes operacionais de campo, nos quais fatores como legibilidade, simplicidade e rápida interpretação das informações são essenciais. A padronização dos componentes também reduz inconsistências durante o desenvolvimento da interface, promovendo maior escalabilidade, facilidade de manutenção e alinhamento visual entre todas as telas do sistema. Para acessar o guia de estilos [clique aqui](https://www.figma.com/design/vrq7u1pMmPSpTdAUUYwxrV/Prot%C3%B3tipo-de-Alta-Fidelidade---BrPec?node-id=151-2).
 
 ### <a name="c3.4.1"></a>3.4.1 Cores
 
@@ -2361,7 +2361,9 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 As cores desta categoria representam os elementos principais da interface, sendo utilizadas com maior frequência durante a navegação e interação com o sistema.
 
-- Botões principais (HEX #2F6B3D): representa as ações centrais da aplicação, como salvar, confirmar e acessar funcionalidades importantes. O verde foi escolhido por remeter ao agronegócio e transmitir estabilidade e confiabilidade.
+- Primária (HEX #2F6C3D): representa as ações centrais da aplicação, como salvar, confirmar e acessar funcionalidades importantes. O verde foi escolhido por remeter ao agronegócio e transmitir estabilidade e confiabilidade.
+
+- Interação (HEX #0F5F36): representa os momentos em que o usuário passa o mouse ou ativa um elemento, como em efeitos de hover, estados ativos e na barra de status. O verde escuro foi escolhido para criar um contraste sutil com a cor primária, indicando claramente que o componente está pronto para ser acionado.
 
 - Texto principal (HEX #1F1F1F): utilizado em títulos e informações prioritárias, garantindo alto contraste e boa legibilidade em diferentes condições de luminosidade.
 
@@ -2378,13 +2380,7 @@ As cores secundárias atuam como elementos de apoio visual, auxiliando na organi
 
 - Bordas (HEX #D9DED8): utilizado em divisórias, tabelas e separação de componentes, contribuindo para uma interface mais limpa e organizada.
 
-
-**Estados de interação:**
-
-As cores desta categoria representam interações e estados visuais dos elementos da interface.
-
-- Destaques e interação (HEX #0F5F36): utilizado em estados de hover, seleção e destaque visual, auxiliando o usuário na percepção de interação com os componentes da aplicação.
-
+- Superfície (HEX #FFFFFF): representa as áreas elevadas e estruturais da interface, sendo utilizada em componentes como cards, modais e blocos de conteúdo. O branco puro foi escolhido para criar superfícies limpas e organizadas, garantindo o contraste ideal e uma leitura leve dos elementos que ficam em primeiro plano.
 
 **Feedbacks e estados do sistema:**
 
@@ -2394,8 +2390,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 - Prioridade média (HEX #D99A00): representa estados intermediários de atenção e pendências operacionais, auxiliando na identificação de tarefas que exigem acompanhamento.
 
-- Sucesso e sincronização (HEX #3D7EA6): utilizado em confirmações, sincronizações e feedbacks positivos do sistema, transmitindo sensação de estabilidade e segurança durante a navegação.
+- Informação e sincronização (HEX #3D7EA6): utilizado em confirmações, sincronizações e feedbacks positivos do sistema, transmitindo sensação de estabilidade e segurança durante a navegação.
 
+- Sucesso (HEX #22A855): representa a conclusão positiva de ações e o estado correto do sistema, sendo utilizada em tarefas concluídas e indicadores de "OK". O verde vivo foi escolhido para transmitir de forma imediata uma sensação de validação, acerto e progresso finalizado dentro da aplicação.
 
 
 ### <a name="c3.4.2"></a>3.4.2 Tipografia
