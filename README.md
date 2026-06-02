@@ -1,31 +1,51 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
 <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
+<a href= "https://www.inteli.edu.br/"><img src="assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
 </p>
 
-# Nome do projeto
-
-## Nome do grupo
+# AgroFlow
 
 ## :student: Integrantes: 
-- <a href="https://www.linkedin.com/">Nome do integrante 1</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 2</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 3</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 4</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 5</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 6</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 7</a>
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-ana.png" width="100px" height="100px" alt="" /><br><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-andre.png" width="100px" height="100px" alt=""/><br><sub><b>André Fischer de Carvalho</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-enzo.png" width="100px" height="100px" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-fabiana.png" width="100px" height="100px" alt=""/><br><sub><b>Fabiana Dias de Souza</b></sub></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-joao.png" width="100px" height="100px" alt=""/><br><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-levi.png" width="100px" height="100px" alt=""/><br><sub><b>Levi Correia Silveira</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-matheus.png" width="100px" height="100px" alt=""/><br><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-theo.png" width="100px" height="100px" alt=""/><br><sub><b>Théo Pires Morêda</b></sub></a></td>
+    </tr>
+  </table>
+</div>
+
 
 ## :teacher: Professores:
-### Orientador(a) 
-- <a href="https://www.linkedin.com/">Nome do professor 1</a>
+### Orientador(a)
+
+- <a href="https://www.linkedin.com/in/marcelo-gon%C3%A7alves-phd/">Marcelo Luiz do Amaral Gonçalves</a>
 ### Instrutores
-- <a href="https://www.linkedin.com/">Nome do professor 2</a>
-- <a href="https://www.linkedin.com/">Nome do professor 3</a> 
-- <a href="https://www.linkedin.com/">Nome do professor 4</a> 
-- <a href="https://www.linkedin.com/">Nome do professor 5</a>
-- <a href="https://www.linkedin.com/">Nome do professor 6</a>
+
+- <a href="https://www.linkedin.com/in/diogo-martins-gon%C3%A7alves-de-morais-96404732/">Diogo Martins Gonçalves de Morais</a>
+
+- <a href="https://www.linkedin.com/in/filipe-gon%C3%A7alves-08a55015b/">Filipe Gonçalves</a>
+
+- <a href="https://www.linkedin.com/in/gui-cestari/">Guilherme Cestari</a>
+
+- <a href="https://www.linkedin.com/in/natalia-k-37a62052/">Natália Kloeckner</a>
+
+- <a href="https://www.linkedin.com/in/ovidio-netto/">Ovidio Netto Lopes</a>
+
+
+
+
+
+
+
 
 ## 📝 Descrição
 
