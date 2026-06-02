@@ -2092,6 +2092,8 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
 
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
+
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
