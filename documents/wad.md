@@ -4188,7 +4188,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c6.1"></a>6.1 Resumo Executivo
 
-*Preencher com até 300 palavras, sem necessidade de fonte*
+&nbsp;&nbsp;&nbsp;&nbsp;O agronegócio brasileiro representa um dos pilares da economia nacional, respondendo por parcela significativa do PIB e das exportações do país. No entanto, no segmento da pecuária bovina, a digitalização dos processos operacionais ainda é incipiente, especialmente em fazendas de grande porte localizadas em regiões remotas, como o Pantanal e o Cerrado sul mato-grossenses. A dependência de registros manuais em papel gera retrabalho, inconsistências de dados e atrasos na consolidação de informações críticas para a tomada de decisão gerencial.
 
 *Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
 
