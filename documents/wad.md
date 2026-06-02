@@ -4224,7 +4224,16 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 ## <a name="c6.5"></a>6.5 Posicionamento
 
 *a) Proposta de Valor Única (até 250 palavras)*
-*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+
+&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O primeiro é a **operação offline contínua**: capatazes que atuam em retiros com conectividade instável — realidade do Pantanal e Cerrado sul mato-grossense — registram nascimentos, mortes, compras, vendas, transferências e chamados de manutenção diretamente no dispositivo móvel. Os dados são armazenados localmente e sincronizados de forma automática ao restabelecer a conexão com o servidor, garantindo continuidade operacional sem perda de informação e sem necessidade de intervenção manual.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O segundo é a **rastreabilidade com responsabilização**: cada registro é vinculado ao usuário que o criou, e movimentações do rebanho passam por um fluxo de validação obrigatória pelo supervisor antes de serem consideradas válidas para fins operacionais e gerenciais. Evidências — fotos georreferenciadas com coordenadas GPS, áudios e mensagens de texto — podem ser anexadas a registros, tarefas e chamados, aumentando a confiabilidade e a auditabilidade das informações.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O terceiro é a **consolidação gerencial baseada em dados confiáveis**: gerentes acessam um dashboard centralizado com indicadores operacionais por retiro — total de nascimentos, mortes, transferências, tarefas aprovadas e tickets resolvidos — calculados exclusivamente a partir de registros validados e sincronizados, oferecendo uma visão estratégica precisa da operação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Combinados em uma única aplicação web com interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente), esses três pilares transformam o fluxo de informação da fazenda: do papel e do repasse verbal para um ciclo digital controlado, rastreável e acessível em tempo real.
 
 *b) Estratégia de Diferenciação (até 250 palavras)*
 *Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
