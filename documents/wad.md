@@ -4003,6 +4003,8 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 já foram contempladas pelas implementações realizadas na Sprint 3, quando os principais fluxos funcionais foram estruturados no backend por meio de rotas REST, controllers, services e repositories. Com isso, a matriz passou a refletir não apenas o planejamento do sistema, mas também os elementos efetivamente implementados, mantendo o WAD, a API e os critérios de validação sincronizados para futuras revisões e validações com os usuários da BrPec.
 
+&nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de existirem requisitos sem implementação correspondente ou endpoints sem justificativa funcional. Como a Sprint 3 consolidou a estrutura principal da aplicação web, incluindo movimentações, tarefas, tickets, evidências, autenticação, validação, sincronização, relatórios e dashboard, a seção já incorpora os vínculos necessários para acompanhar a evolução do projeto nas próximas entregas.
+
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ## <a name="c4.1"></a>4.1. Primeira versão da aplicação web (sprint 3)
