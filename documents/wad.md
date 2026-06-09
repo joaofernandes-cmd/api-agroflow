@@ -4167,10 +4167,24 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-*Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:*
+### *White Box*
+Os testes white-box foram aplicados na camada de services do AgroFlow, com foco na validação das regras internas de negócio, exceções e fluxos condicionais da aplicação. Essa abordagem permitiu isolar a lógica central do sistema e verificar diretamente o comportamento de serviços críticos, como autenticação de usuários e registro de movimentações.
 
-- ***White-box*** *— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação).*
-- ***Black-box*** *— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna.*
+No `UsuarioService`, foram testados cenários de autenticação válida, login inexistente, checagem de permissões por cargo, verificação de status ativo e validação de login em formato incorreto. No `MovimentacaoService`, os testes cobriram regras específicas por tipo de movimentação, como a exigência de destino para compras e origem para vendas. Dessa forma, a camada de serviço atua como primeira barreira contra dados inconsistentes, garantindo que apenas informações compatíveis com as regras de negócio avancem para persistência.
+
+### Tabela Complementar de Testes White-Box
+
+| Serviço | Arquivo de teste | Cenário validado | Regra de negócio verificada | Resultado esperado |
+|---|---|---|---|---|
+| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Autenticação com login e senha válidos | O usuário deve ser autenticado quando as credenciais estão corretas | Retorno do usuário autenticado |
+| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Login inexistente | O sistema deve rejeitar autenticação quando o login não existe | Retorno null |
+| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Permissão por cargo | Apenas o perfil Supervisor pode validar registros | Retorno true para supervisor e false para gerente |
+| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Verificação de status do usuário | Apenas usuários ativos devem ser considerados válidos | Retorno coerente com o status informado |
+| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Criação com login inválido | O login deve seguir formato de e-mail válido | Lançamento de erro de validação |
+| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Compra sem destino | Movimentação do tipo compra exige destino obrigatório | Lançamento de erro |
+| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Venda sem origem | Movimentação do tipo venda exige origem obrigatória | Lançamento de erro |
+| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Compra válida | Campos obrigatórios da compra devem estar preenchidos | Movimentação aceita |
+| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Venda válida | Campos obrigatórios da venda devem estar preenchidos | Movimentação aceita |
 
 *Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
 
