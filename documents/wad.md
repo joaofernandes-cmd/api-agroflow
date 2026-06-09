@@ -827,17 +827,17 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
-| RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Implementado    |
-| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Implementado |
-| RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Implementado |
-| RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Implementado |
-| RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Implementado |
-| RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Implementado |
-| RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Implementado |
-| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Implementado |
-| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Implementado |
-| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Implementado |
+| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Planejado |
+| RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Planejado    |
+| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Planejado |
+| RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Planejado |
+| RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Planejado |
+| RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Planejado |
+| RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
+| RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Planejado |
+| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Planejado |
+| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Planejado |
+| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -3983,23 +3983,19 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 |---------|----|----|----------|------|-------|-----------|
-| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Testes automatizados executados: `POST /movimentacoes` retornando HTTP 201 e objeto da movimentação; `GET` e `PATCH /movimentacoes/{id}` retornando HTTP 200; `DELETE /movimentacoes/{id}` retornando HTTP 204 |
-| Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `GET /tarefas/{id}`; `GET /tarefas/status/{status}`; `GET /tarefas/usuario/{usuarioId}`; `GET /tarefas/prioridade/{prioridade}`; `GET /tarefas/categoria/{categoria}`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204 |
-| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada |
-| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias` e `GET /evidencias/{id}` retornando HTTP 200 |
-| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 50 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
-| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
-| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal` e `GET /relatorios/mensal` retornando HTTP 200 com dados de movimentações; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
-| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets`; `GET /tickets/pendentes`; `GET /tickets/status`; `GET /tickets/categoria`; `GET /tickets/{id}`; `PATCH /tickets/{id}/status`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
-| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Testes automatizados executados: `GET /movimentacoes/filtrar` com parâmetros de retiro, tipo, status e período retornando HTTP 200 com a lista filtrada; `GET /movimentacoes` e `GET /movimentacoes/pendentes` retornando HTTP 200 |
-| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /tarefas/contagem/status`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: endpoints de dashboard de movimentações, tarefas e tickets retornando HTTP 200; endpoints de contagem por tipo, status e prioridade retornando HTTP 200 com os agrupamentos correspondentes |
-| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Testes automatizados executados: `GET /tickets/prioridade` retornando HTTP 200 com a lista filtrada; `GET /tickets/contagem/prioridade` retornando HTTP 200 com a contagem agrupada; `PATCH /tickets/{id}/prioridade` retornando HTTP 200 com o ticket atualizado |
+| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Criação com campos por tipo, busca por ID, atualização, remoção e persistência em `movimentacao` e tabela especializada correspondente |
+| Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Criação com usuário atribuído, descrição, categoria e prioridade; listagem, atualização, mudança de status e remoção testadas por endpoint |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Detecção de conexão, processamento de pendências, mensagem/status de sincronização e atualização da flag `sincronizado` |
+| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Criação de foto, áudio e mensagem; busca/listagem de evidências; validação de georreferenciamento para fotos no service |
+| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Autenticação por login e senha, bloqueio de Capataz no fluxo de login, retorno sem `senha_hash` e geração de token para rotas protegidas |
+| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Rotas protegidas por `autenticarUsuario` e `exigirCargo('supervisor')`; movimentação atualizada para `validado` e tarefa/ticket para `aprovado` |
+| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Rotas protegidas por autenticação e cargo Gerente/Supervisor; relatórios gerados apenas com dados sincronizados e válidos para consolidação |
+| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets/pendentes`; `GET /tickets/{id}`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Criação de ticket com evidência descritiva obrigatória no service, listagem de pendentes, atribuição e aprovação por Supervisor |
+| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Filtro por retiro, tipo, status e período; listagem de pendentes para validação; aliases aceitos pelo controller para compatibilidade |
+| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Indicadores baseados em movimentações `validado`, tarefas/tickets `aprovado` e registros sincronizados, segmentados por retiro quando informado |
+| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Criação exige prioridade no service; filtro, contagem e alteração aceitam os valores `alta`, `media` e `baixa` |
 
-&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
-
-&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 50 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
-
-&nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
+&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema possuem rastreabilidade entre requisitos, regras de negócio, endpoints reais do backend, middlewares e testes automatizados. Os registros de movimentação, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão conectados aos arquivos de teste de integração correspondentes, permitindo verificar a cobertura funcional durante a evolução do projeto. Assim, a matriz contribui para manter o WAD, a API e os critérios de validação sincronizados, servindo como referência para futuras revisões, testes automatizados e validações com os usuários da BrPec.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
@@ -4204,8 +4200,13 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c6.2"></a>6.2 Análise de Mercado
 
-*a) Visão Geral do Setor (até 250 palavras)*
-*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+**a) Visão Geral do Setor**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto econômico, o AgroFlow atua no segmento da pecuária bovina, parte do agronegócio que respondeu por 25,13% do PIB nacional em 2025, o maior patamar em 22 anos (CNA, 2026). O Brasil possui o maior rebanho comercial do mundo, com 238,2 milhões de cabeças, e lidera as exportações globais de carne bovina, o que evidencia a escala e a relevância econômica do setor para o qual a solução foi desenvolvida (IBGE, 2025).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto tecnológico, o agronegócio brasileiro vive uma expansão significativa do segmento de AgroTech: em 2025, mais de 2.075 startups atuavam no setor, sendo que 83% delas já incorporavam inteligência artificial em seus produtos (RADAR AGTECH, 2025). Apesar desse avanço, a adoção dessas soluções permanece concentrada em operações com conectividade estável e usuários com letramento digital intermediário, requisitos ausentes nas fazendas remotas onde o AgroFlow atua.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto regulatório, a Portaria SDA/Mapa nº 1.331/2025 instituiu o Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB), que torna obrigatória a rastreabilidade individual de todo o rebanho nacional de forma escalonada até 2032 (MAPA, 2025). Essa exigência impõe a digitalização dos registros a toda a cadeia produtiva, inclusive às operações que hoje não dispõem de soluções tecnológicas compatíveis com seu contexto operacional.
 
 *b) Tamanho e Crescimento do Mercado (até 250 palavras)*
 *Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
@@ -4270,6 +4271,8 @@ BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da veg
 
 BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
 
+CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
+
 DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
 . Acesso em: 30 abr. 2026.
 
@@ -4284,11 +4287,15 @@ G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disp
 HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
 . Acesso em: 30 abr. 2026.
 
+IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Abate de bovinos atinge recorde em 2024. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
+
 ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model. Genebra: ISO, 2023.
 
 JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succeeding with use cases. [S.l.]: Ivar Jacobson International, 2024.
 
 LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
+
+MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
 
 OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
 
@@ -4301,6 +4308,8 @@ COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addiso
 PATTON, Jeff. User Story Mapping: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
 
 PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
+
+RADAR AGTECH BRASIL. Mapeamento das startups do agronegócio brasileiro: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
