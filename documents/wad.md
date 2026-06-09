@@ -1021,7 +1021,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF005 | RN05 | `/usuarios/login` | POST |
 | RF006 | RN06 | `/validacoes/permissao`<br>`/validacoes/movimentacoes/{id}/validar`<br>`/validacoes/tarefas/{id}/aprovar`<br>`/validacoes/tickets/{id}/aprovar` | POST<br>PATCH<br>PATCH<br>PATCH |
 | RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
-| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/{id}`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>PATCH<br>PATCH |
+| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/status`<br>`/tickets/categoria`<br>`/tickets/{id}`<br>`/tickets/{id}/status`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>GET<br>GET<br>PATCH<br>PATCH<br>PATCH |
 | RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
 | RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
 | RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
