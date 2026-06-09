@@ -1015,7 +1015,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
 | RF001 | RN01 | `/movimentacoes`<br>`/movimentacoes/{id}` | POST<br>GET/PATCH/DELETE |
-| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>PATCH |
+| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/status/{status}`<br>`/tarefas/usuario/{usuarioId}`<br>`/tarefas/prioridade/{prioridade}`<br>`/tarefas/categoria/{categoria}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>GET<br>GET<br>GET<br>GET<br>PATCH |
 | RF003 | RN03 | `/sincronizacao/conexao`<br>`/sincronizacao`<br>`/sincronizacao/status`<br>`/sincronizacao/mensagem`<br>`/movimentacoes/sincronizar`<br>`/movimentacoes/{id}/sincronizar` | GET<br>POST<br>GET<br>GET<br>POST<br>PATCH |
 | RF004 | RN04 | `/evidencias`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>POST<br>POST<br>POST |
 | RF005 | RN05 | `/usuarios/login` | POST |
