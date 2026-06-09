@@ -4208,8 +4208,11 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto regulatório, a Portaria SDA/Mapa nº 1.331/2025 instituiu o Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB), que torna obrigatória a rastreabilidade individual de todo o rebanho nacional de forma escalonada até 2032 (MAPA, 2025). Essa exigência impõe a digitalização dos registros a toda a cadeia produtiva, inclusive às operações que hoje não dispõem de soluções tecnológicas compatíveis com seu contexto operacional.
 
-*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
-*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+**b) Tamanho e Crescimento do Mercado**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O mercado de software de gestão e automação para o agronegócio está em expansão acelerada no Brasil. O segmento de agricultura de precisão, que engloba plataformas de monitoramento, gestão operacional e automação de processos no campo deve alcançar US$ 601 milhões no Brasil até 2030, com crescimento anual composto (CAGR) de 14,4% entre 2025 e 2030 (GRAND VIEW RESEARCH, 2025). Na América Latina como um todo, o mercado foi avaliado em US$ 1,86 bilhão em 2024 e deve atingir US$ 6,75 bilhões até 2033 (MARKET DATA FORECAST, 2025), com o Brasil respondendo pela maior fatia regional.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar desse crescimento, a penetração dessas soluções ainda é desigual: 40% dos produtores rurais utilizam algum software de gestão, mas a oferta existente é majoritariamente voltada a operações com infraestrutura digital adequada (PANORAMA DA GESTÃO RURAL, 2024). Fazendas corporativas em regiões remotas, onde conectividade é intermitente e os operadores têm baixo letramento digital, permanecem fora do alcance dessas plataformas, configurando um segmento específico com demanda reprimida e sem solução consolidada no mercado.
 
 *c) Tendências de Mercado (até 300 palavras)*
 *Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
@@ -4287,6 +4290,8 @@ G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disp
 HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
 . Acesso em: 30 abr. 2026.
 
+GRAND VIEW RESEARCH. Brazil Precision Farming Market Size & Outlook, 2025-2030. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
+
 IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Abate de bovinos atinge recorde em 2024. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
 
 ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model. Genebra: ISO, 2023.
@@ -4295,11 +4300,15 @@ JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succ
 
 LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
 
+MARKET DATA FORECAST. Latin America Precision Agriculture Market Size Report 2033. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
+
 MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
 
 OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
 
 PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+
+PANORAMA DA GESTÃO RURAL. Pesquisa Panorama da Gestão Rural 2024. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
 
 PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
 
