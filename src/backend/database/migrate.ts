@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import fs from 'fs';
 import path from 'path';
 import sql from './connection';
@@ -8,7 +9,7 @@ if (!process.env.DATABASE_URL) {
 }
 
 async function migrate() {
-  const dir = __dirname;
+  const dir = path.join(__dirname, 'migrations');
   const files = fs.readdirSync(dir).filter(file => file.endsWith('.sql')).sort();
 
   for (const file of files) {
