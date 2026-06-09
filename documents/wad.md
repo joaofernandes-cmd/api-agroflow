@@ -4214,8 +4214,9 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;Apesar desse crescimento, a penetração dessas soluções ainda é desigual: 40% dos produtores rurais utilizam algum software de gestão, mas a oferta existente é majoritariamente voltada a operações com infraestrutura digital adequada (PANORAMA DA GESTÃO RURAL, 2024). Fazendas corporativas em regiões remotas, onde conectividade é intermitente e os operadores têm baixo letramento digital, permanecem fora do alcance dessas plataformas, configurando um segmento específico com demanda reprimida e sem solução consolidada no mercado.
 
-*c) Tendências de Mercado (até 300 palavras)*
-*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
+**c) Tendências de Mercado**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O mercado de software para gestão agropecuária é impulsionado por três tendências convergentes. A primeira é a pressão regulatória e comercial pela rastreabilidade digital: com o PNIB tornando obrigatório o registro individual do rebanho até 2032 e o EUDR condicionando o acesso ao mercado europeu à comprovação de origem, produtores que ainda operam com papel precisarão migrar para sistemas digitais nos próximos anos (MAPA, 2025; BANCO DO NORDESTE, 2025). A segunda é a consolidação da agenda ESG como requisito operacional: compradores institucionais e exportadores passam a exigir histórico digital auditável das operações, tornando a automação de registros um critério de permanência na cadeia produtiva (BANCO DO NORDESTE, 2025). A terceira é a adoção de arquiteturas offline-first: à medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, soluções que operam localmente e sincronizam dados ao restabelecer conexão tornam-se o padrão esperado para operações em áreas remotas (TOTVS, 2025). Em conjunto, essas tendências ampliam o mercado endereçável para soluções como o AgroFlow e definem os requisitos funcionais que a diferenciam das plataformas convencionais.
 
 ## <a name="c6.3"></a>6.3 Análise da Concorrência
 
@@ -4224,7 +4225,6 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 *b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
 *Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
-
 
 ## <a name="c6.4"></a>6.4 Público-Alvo
 
@@ -4274,6 +4274,8 @@ BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da veg
 
 BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
 
+BANCO DO NORDESTE. 6 tendências do agronegócio para 2025: IA, Sustentabilidade e Inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
+
 CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
 
 DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
@@ -4319,6 +4321,8 @@ PATTON, Jeff. User Story Mapping: discover the whole story, build the right prod
 PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
 
 RADAR AGTECH BRASIL. Mapeamento das startups do agronegócio brasileiro: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
+
+TOTVS. Tendências Agronegócio 2026: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
