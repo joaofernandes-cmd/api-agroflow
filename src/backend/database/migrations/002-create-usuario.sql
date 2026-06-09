@@ -9,6 +9,10 @@ CREATE TABLE IF NOT EXISTS usuario (
   cargo usuario_cargo NOT NULL
 );
 
-ALTER TABLE usuario
-  ADD CONSTRAINT usuario_retiro_id_foreign
-  FOREIGN KEY (retiro_id) REFERENCES retiro(id);
+DO $$
+BEGIN
+  ALTER TABLE usuario
+    ADD CONSTRAINT usuario_retiro_id_foreign
+    FOREIGN KEY (retiro_id) REFERENCES retiro(id);
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
