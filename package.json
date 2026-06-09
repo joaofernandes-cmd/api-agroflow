@@ -14,6 +14,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/backend/server.ts",
+    "migrate": "tsx src/backend/database/migrate.ts",
     "build": "tsc",
     "start": "node dist/backend/server.js",
     "test": "jest",
