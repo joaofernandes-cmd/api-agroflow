@@ -3530,7 +3530,7 @@ VALUES (?, ?, ?, ?);
       - `400 Bad Request`: `"Foto rejeitada: georreferenciamento inválido ou ausente"`
       - `500 Internal Server Error`: Falha interna.
 
-**RF005 — Autenticação e Gerenciamento de Usuários (Prioridade: Alta)**
+**RF005 — Autenticação de Usuários (Prioridade: Alta)**
 
 29. Autenticar Usuário e Obter Token JWT
 
@@ -3545,6 +3545,8 @@ VALUES (?, ?, ?, ?);
       - `401 Unauthorized`: Credenciais inválidas.
       - `403 Forbidden`: Usuário inativo ou cargo `capataz`.
       - `500 Internal Server Error`: Falha interna.
+
+**RF012 — Gestão de Usuários (Prioridade: Média)**
 
 30. Criar Usuário
 
