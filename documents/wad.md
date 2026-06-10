@@ -4167,6 +4167,59 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
+### Estratégia de Documentação dos Testes
+
+Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma análise da relação entre os requisitos funcionais, a implementação do backend e os testes já existentes no repositório. A documentação foi organizada em duas frentes complementares:
+
+- **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
+- **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
+
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, estrutura adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+
+| Fase | Responsável | Descrição |
+|---|---|---|
+| **Arrange** | Fixtures e helpers | Preparação do estado inicial — dados de entrada, mocks de repositório e instâncias de serviço são configurados antes da execução, utilizando os arquivos da pasta `src/backend/tests/helpers/` e os fixtures de simulação. |
+| **Act** | Chamada ao service ou requisição HTTP | Execução da ação sob teste — invocação direta do método do service (white-box) ou envio de requisição HTTP via Supertest ao endpoint correspondente (black-box). |
+| **Assert** | Verificação do resultado esperado | Confirmação do comportamento — validação do retorno, status HTTP, estrutura do corpo da resposta ou lançamento de exceção, conforme o cenário documentado em cada tabela de cobertura. |
+
+#### Endpoints Mapeados
+
+Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação:
+
+| Domínio | Endpoint |
+|---|---|
+| Usuários e autenticação | `/usuarios` |
+| Movimentações | `/movimentacoes` |
+| Tarefas | `/tarefas` |
+| Tickets | `/tickets` |
+| Evidências | `/evidencias` |
+| Sincronização | `/sincronizacao` |
+| Validações | `/validacoes` |
+| Relatórios | `/relatorios` |
+| Saúde da API | `/health` |
+
+Também foram considerados subendpoints específicos:
+
+- `login`
+- `filtros`
+- `dashboard`
+- `contagens`
+- `aprovação`
+- `atribuição`
+- `sincronização`
+- `geração de relatórios`
+
+#### Estrutura Analisada
+
+Para sustentar essa documentação, foram analisados:
+
+- A configuração do Jest em `jest.config.ts`
+- A pasta `src/backend/tests/unit/`
+- A pasta `src/backend/tests/integration/`
+- A pasta `src/backend/tests/helpers/`
+- Os fixtures utilizados para simulação de dados
+- Os arquivos de teste existentes para cada módulo
+
 ### *White Box*
 Os testes white-box foram aplicados na camada de services do AgroFlow, com foco na validação das regras internas de negócio, exceções e fluxos condicionais da aplicação. Essa abordagem permitiu isolar a lógica central do sistema e verificar diretamente o comportamento de serviços críticos, como autenticação de usuários e registro de movimentações.
 
