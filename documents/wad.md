@@ -4167,7 +4167,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-### Estratégia de Documentação dos Testes
+### 5.1.1 Estratégia de Documentação dos Testes
 
 Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma análise da relação entre os requisitos funcionais, a implementação do backend e os testes já existentes no repositório. A documentação foi organizada em duas frentes complementares:
 
@@ -4220,31 +4220,72 @@ Para sustentar essa documentação, foram analisados:
 - Os fixtures utilizados para simulação de dados
 - Os arquivos de teste existentes para cada módulo
 
-### *White Box*
-Os testes white-box foram aplicados na camada de services do AgroFlow, com foco na validação das regras internas de negócio, exceções e fluxos condicionais da aplicação. Essa abordagem permitiu isolar a lógica central do sistema e verificar diretamente o comportamento de serviços críticos, como autenticação de usuários e registro de movimentações.
+### *5.1.2 White Box*
+Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema.
 
-No `UsuarioService`, foram testados cenários de autenticação válida, login inexistente, checagem de permissões por cargo, verificação de status ativo e validação de login em formato incorreto. No `MovimentacaoService`, os testes cobriram regras específicas por tipo de movimentação, como a exigência de destino para compras e origem para vendas. Dessa forma, a camada de serviço atua como primeira barreira contra dados inconsistentes, garantindo que apenas informações compatíveis com as regras de negócio avancem para persistência.
+A execução de `npm test -- --coverage` demonstrou que a camada `backend/services` atingiu **92.18% de statements**, **85.32% de branches**, **98.11% de functions** e **92.02% de lines**, superando o mínimo de 80% exigido para a seção. Os testes cobrem os principais serviços do sistema, incluindo autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+
+Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da seção 3.9, preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
+
+**CT01 - RN01 / RF001 | MovimentacaoService**
+- **Arrange:** preparar fixtures de movimentação com campos ausentes ou válidos, simulando compra, venda, nascimento e morte.
+- **Act:** chamar `validarCamposObrigatorios`, `criar` e `sincronizarRecebida` diretamente no service.
+- **Assert:** verificar o lançamento do erro esperado para cada campo obrigatório ausente e a aceitação do payload válido.
+- **Determinismo:** o teste usa mocks de `MovimentacaoRepository` e dados fixos de `mockMovimentacao`, sem dependência externa.
+- **Caminho de falha:** cobertura de ausência de `capataz_id`, `estagio_vida`, `origem`, `destino`, `quantidade` e `causa_obito`.
+
+**CT02 - RN02 / RF002 | TarefaService**
+- **Arrange:** montar tarefas com campos obrigatórios incompletos e usuário criador com cargo diferente de supervisor.
+- **Act:** chamar `validarCamposObrigatorios`, `criar`, `atualizar`, `atualizarStatus` e consultas de filtro.
+- **Assert:** confirmar rejeição quando faltam `atribuida_a`, `descricao`, `prioridade` ou `categoria`, e aceitação quando a tarefa é válida.
+- **Determinismo:** os testes usam `TarefaRepository` mockado e fixtures fixas como `mockTarefa` e `mockSupervisor`.
+- **Caminho de falha:** bloqueio da criação por cargo inválido e por campos obrigatórios ausentes.
+
+**CT03 - RN03 / RF003 | SincronizacaoService**
+- **Arrange:** simular `fetch` com sucesso, falha e status de conexão indisponível, além de listas de registros pendentes.
+- **Act:** executar `detectarConexao`, `sincronizar`, `enviarMovimentacao`, `enviarTarefa`, `enviarTicket`, `obterStatusSincronizacao` e `obterMensagemSincronizacao`.
+- **Assert:** validar retorno `true/false` da conexão, contagem de pendências, atualização de `sincronizado` e mensagens amigáveis.
+- **Determinismo:** o fluxo depende apenas de mocks de `fetch` e dos repositórios `MovimentacaoRepository`, `TarefaRepository` e `TicketRepository`.
+- **Caminho de falha:** sem conexão com o servidor e falhas individuais de envio com HTTP não-OK.
+
+**CT04 - RN04 / RF004 | EvidenciaService**
+- **Arrange:** preparar coordenadas válidas, coordenadas inválidas, mensagens curtas e áudios com duração insuficiente.
+- **Act:** chamar `validarGeorreferenciamento`, `validarEvidenciaDescritiva`, `criarFoto`, `criarAudio`, `criarMensagem`, `buscarPorId` e `listarTodas`.
+- **Assert:** confirmar a rejeição de fotos sem georreferenciamento e de evidências descritivas abaixo do mínimo, além da criação correta dos registros válidos.
+- **Determinismo:** os testes usam `EvidenciaRepository` e repositórios específicos de foto, áudio e mensagem totalmente mockados.
+- **Caminho de falha:** latitude/longitude fora do intervalo, mensagem com menos de 10 caracteres e áudio com menos de 3 segundos.
+
+**CT05 - RN05 / RF005 | UsuarioService**
+- **Arrange:** montar usuários ativos, inativos, com login inexistente e com senha incorreta.
+- **Act:** chamar `autenticar`, `podeValidar`, `temPermissao`, `estaAtivo`, `criar`, `buscarPorId`, `listarPorRetiro`, `listarTodos`, `atualizar` e `remover`.
+- **Assert:** verificar autenticação correta, negação de login inválido, restrição por cargo e validação de status ativo.
+- **Determinismo:** os cenários usam `UsuarioRepository` mockado e fixtures fixas (`mockSupervisor` e `mockGerente`).
+- **Caminho de falha:** login inexistente, senha incorreta, campos obrigatórios ausentes e login fora do formato de e-mail.
 
 ### Tabela Complementar de Testes White-Box
 
-| Serviço | Arquivo de teste | Cenário validado | Regra de negócio verificada | Resultado esperado |
-|---|---|---|---|---|
-| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Autenticação com login e senha válidos | O usuário deve ser autenticado quando as credenciais estão corretas | Retorno do usuário autenticado |
-| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Login inexistente | O sistema deve rejeitar autenticação quando o login não existe | Retorno null |
-| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Permissão por cargo | Apenas o perfil Supervisor pode validar registros | Retorno true para supervisor e false para gerente |
-| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Verificação de status do usuário | Apenas usuários ativos devem ser considerados válidos | Retorno coerente com o status informado |
-| UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Criação com login inválido | O login deve seguir formato de e-mail válido | Lançamento de erro de validação |
-| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Compra sem destino | Movimentação do tipo compra exige destino obrigatório | Lançamento de erro |
-| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Venda sem origem | Movimentação do tipo venda exige origem obrigatória | Lançamento de erro |
-| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Compra válida | Campos obrigatórios da compra devem estar preenchidos | Movimentação aceita |
-| MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Venda válida | Campos obrigatórios da venda devem estar preenchidos | Movimentação aceita |
+| CT | RN | RF | Service(s) | Arquivo(s) | Cenário validado | Resultado esperado |
+|---|---|---|---|---|---|---|
+| CT01 | RN01 | RF001 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Regras obrigatórias por tipo de movimentação, criação e sincronização recebida | Erro de validação para campos ausentes e aceite do payload válido |
+| CT02 | RN02 | RF002 | TarefaService | `src/backend/tests/unit/tarefa.service.spec.ts` | Campos obrigatórios, criação por supervisor, filtros e atualizações | Tarefa aceita quando válida e rejeitada quando incompleta ou sem permissão |
+| CT03 | RN03 | RF003 | SincronizacaoService | `src/backend/tests/unit/sincronizacao.service.spec.ts` | Detecção de conexão, sincronização de pendências e status geral | Retorno coerente de conexão, sincronização e mensagens de status |
+| CT04 | RN04 | RF004 | EvidenciaService | `src/backend/tests/unit/evidencia.service.spec.ts` | Georreferenciamento e validação de evidências de foto, áudio e mensagem | Rejeição de dados inválidos e criação dos registros válidos |
+| CT05 | RN05 | RF005 | UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Autenticação, permissões, status ativo e CRUD básico | Login correto aceito, credenciais inválidas rejeitadas e regras de cargo aplicadas |
+| CT06 | RN06 | RF006 | ValidacaoService | `src/backend/tests/unit/validacao.service.spec.ts` | Validação e aprovação restritas ao Supervisor | Acesso negado para cargos inválidos e status alterado apenas em cenário válido |
+| CT07 | RN07 | RF007 | RelatorioService | `src/backend/tests/unit/relatorio.service.spec.ts` | Filtragem por período, formatação e geração de relatórios | Apenas dados sincronizados e dentro do período são retornados |
+| CT08 | RN08 | RF008 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Criação de ticket com evidência descritiva obrigatória | Ticket rejeitado sem evidência e aceito com dados válidos |
+| CT09 | RN09 | RF009 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Filtro por retiro, tipo, status e período | Lista filtrada corretamente conforme os parâmetros informados |
+| CT10 | RN10 | RF010 | MovimentacaoService, TarefaService, TicketService, SincronizacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts`; `src/backend/tests/unit/tarefa.service.spec.ts`; `src/backend/tests/unit/ticket.service.spec.ts`; `src/backend/tests/unit/sincronizacao.service.spec.ts` | Consolidação de indicadores por retiro | Contagens do dashboard retornam apenas registros sincronizados e validados/aprovados |
+| CT11 | RN11 | RF011 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Prioridade obrigatória e alteração posterior | Prioridade inválida rejeitada e prioridade válida atualizada com sucesso |
 
-### *Black Box*
-Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considerou a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
+Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Os casos prioritários `CT01` a `CT05` são os mais críticos para o sistema, pois cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
 
-Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar status codes, estrutura do corpo da resposta, listagem de dados, criação de recursos, filtros, atualização de registros, aprovações e sincronizações.
+### *5.1.3 Black Box*
+Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
 
-A cobertura black-box contemplou os principais módulos do sistema, incluindo usuários, movimentações, tarefas, tickets, evidências, sincronização, validações, relatórios e health check. Dessa forma, foi possível garantir que os endpoints da API estejam aderentes ao contrato esperado e aos fluxos funcionais definidos para o sistema.
+Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar os fluxos de sucesso mais relevantes da aplicação, como criação, listagem, atualização, exclusão, filtros, sincronização e aprovação. No estado atual da suíte, a cobertura black-box está concentrada principalmente nos cenários `200/201/204` e em alguns bloqueios de acesso, como o `403` no fluxo de login do usuário capataz.
+
+Em relação ao critério desejado para esta seção, a cobertura ainda é **parcial**: os testes atuais não demonstram, para cada endpoint principal, os quatro cenários obrigatórios de forma explícita e completa (`200/201`, `400/422`, `409 ou equivalente` e `404`). Dessa forma, esta seção documenta a cobertura existente e também evidencia as lacunas que devem ser complementadas para atingir integralmente o padrão solicitado.
 
 ### Tabela Complementar de Testes Black-Box
 
@@ -4275,6 +4316,20 @@ A cobertura black-box contemplou os principais módulos do sistema, incluindo us
 | Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retorno dos dados e formatação esperada |
 | Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
 | Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
+
+### Matriz de conformidade por cenário
+
+| Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
+|---|---|---|---|---|---|
+| Usuários | Coberto | Não coberto explicitamente | Parcial, com bloqueio `403` no login do capataz | Não coberto explicitamente | Parcial |
+| Movimentações | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Tarefas | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Tickets | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Evidências | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Sincronização | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Validações | Coberto | Não coberto explicitamente | Parcial, com bloqueio de autorização por perfil | Não coberto explicitamente | Parcial |
+| Relatórios | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Health Check | Coberto | Não aplicável | Não aplicável | Não aplicável | Adequado ao propósito |
 
 *Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
 
