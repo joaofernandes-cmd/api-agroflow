@@ -2102,7 +2102,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
  
 • O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
  
-• O dispositivo do *Gerente* é predominantemente desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
+• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
 
 **Nó do Servidor de Aplicação**
  
