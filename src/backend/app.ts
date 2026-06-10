@@ -21,6 +21,7 @@ app.use(express.json())
 
 // Arquivos estáticos (CSS, imagens, etc.)
 app.use('/css', express.static(path.join(__dirname, '../views/css')))
+app.use('/assets', express.static(path.join(__dirname, '../../assets')))
 
 // Documentação navegável da WebAPI disponível em /docs
 app.use('/docs', express.static(path.join(__dirname, 'public/docs')))
