@@ -1,12 +1,18 @@
+/* =============================================================
+   global.css — Tokens de design, reset e utilitários globais
+   Carregado em TODOS os head.ejs
+   ============================================================= */
+
+/* ── Tokens (extraídos do Figma) ─────────────────────────── */
 :root {
   /* Cores */
-  --color-primary:  #2f6c3d;   /* verde principal */
-  --color-accent:   #7fbf3f;   /* verde claro (links, focus) */
-  --color-bg:       #f7f8f5;   /* fundo geral */
+  --color-primary:  #2f6c3d;
+  --color-accent:   #7fbf3f;
+  --color-bg:       #f7f8f5;
   --color-white:    #ffffff;
   --color-text:     #1f1f1f;
-  --color-muted:    #7c847c;   /* texto secundário */
-  --color-border:   #d9ded8;   /* borda de inputs */
+  --color-muted:    #7c847c;
+  --color-border:   #d9ded8;
 
   /* Sombras */
   --shadow-card:    0 12px 32px rgba(0, 0, 0, 0.10);
@@ -19,58 +25,69 @@
   --radius-card:     24px;
   --radius-btn:      14px;
   --radius-input:    12px;
-  --radius-back-btn: 12px;
 
   /* Tipografia */
   --font: 'Poppins', sans-serif;
 }
 
-/* Reset mínimo */
-*,
-*::before,
-*::after {
+/* ── Reset mínimo ─────────────────────────────────────────── */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
-  -webkit-text-size-adjust: 100%;
-}
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: var(--font);
-  background: #e8ebe4;
+  background: var(--color-bg);
   color: var(--color-text);
   min-height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   -webkit-font-smoothing: antialiased;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
+img { display: block; max-width: 100%; }
+a   { color: inherit; text-decoration: none; }
+button { font-family: var(--font); }
 
-a {
-  color: inherit;
-}
-
-button {
-  font-family: var(--font);
-}
-
-/* Acessibilidade */
+/* ── Acessibilidade ───────────────────────────────────────── */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
+
+/* ── Botões compartilhados (usados em auth e outras telas) ── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  border-radius: var(--radius-btn);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+  text-align: center;
+}
+
+.btn:active       { transform: scale(0.98); opacity: 0.9; }
+.btn:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-btn);
+}
+.btn--primary:hover { opacity: 0.92; }
+
+.btn--outline {
+  background: var(--color-white);
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary) !important;
+}
+.btn--outline:hover { background: rgba(47, 108, 61, 0.04); }
