@@ -1007,7 +1007,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na [Seção 3.1.1](#c3.1.1), a Regra de Negócio (RN) que o restringe ([Seção 3.1.2](#c3.1.2)) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias`, `relatorios` e `usuarios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da [Seção 3.1](#c3.1), partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
@@ -1031,7 +1031,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08 e RN11. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens`, `/tickets` e `/usuarios`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08, RN11 e RN12. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Três grupos de endpoints fogem desse padrão de criação simples. O grupo `/sincronizacao` (RF003) consulta conexão, processa dados pendentes e informa o estado da sincronização, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais. O grupo `/validacoes` (RF006) usa middlewares de autenticação e autorização por cargo, restringindo as ações ao perfil Supervisor conforme RN06. Já o grupo `/relatorios` (RF007) é protegido pelos mesmos mecanismos de autenticação, permitindo acesso a Gerente e Supervisor, e filtra a resposta para conter apenas dados sincronizados e válidos para consolidação.
 
@@ -3546,87 +3546,6 @@ VALUES (?, ?, ?, ?);
       - `403 Forbidden`: Usuário inativo ou cargo `capataz`.
       - `500 Internal Server Error`: Falha interna.
 
-**RF012 — Gestão de Usuários (Prioridade: Média)**
-
-30. Criar Usuário
-
-    - **Endereço:** `/usuarios`
-    - **Método:** POST
-    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
-    - **Respostas:**
-      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `400 Bad Request`: Login fora do formato de e-mail — `{ "error": "Login deve ser um email válido" }`.
-      - `401 Unauthorized`: Token ausente ou inválido.
-      - `403 Forbidden`: Cargo insuficiente.
-      - `500 Internal Server Error`: Falha interna.
-
-31. Listar Todos os Usuários
-
-    - **Endereço:** `/usuarios`
-    - **Método:** GET
-    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-32. Buscar Usuário por ID
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** GET
-    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Objeto do usuário (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-33. Listar Usuários por Retiro
-
-    - **Endereço:** `/usuarios/retiro/:retiroId`
-    - **Método:** GET
-    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários do retiro.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-34. Atualizar Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos parciais a atualizar.
-    - **Respostas:**
-      - `200 OK`: Usuário atualizado (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-35. Remover Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** DELETE
-    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `204 No Content`: Removido com sucesso.
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
 **RF006 — Validações (Prioridade: Média)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem autenticação JWT com cargo `supervisor`.
@@ -3961,6 +3880,87 @@ VALUES (?, ?, ?, ?);
       - `200 OK`: Prioridade atualizada.
       - `400 Bad Request`: Campo ausente ou ID inválido.
       - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF012 — Gestão de Usuários (Prioridade: Média)**
+
+30. Criar Usuário
+
+    - **Endereço:** `/usuarios`
+    - **Método:** POST
+    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
+    - **Respostas:**
+      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `400 Bad Request`: Login fora do formato de e-mail — `{ "error": "Login deve ser um email válido" }`.
+      - `401 Unauthorized`: Token ausente ou inválido.
+      - `403 Forbidden`: Cargo insuficiente.
+      - `500 Internal Server Error`: Falha interna.
+
+31. Listar Todos os Usuários
+
+    - **Endereço:** `/usuarios`
+    - **Método:** GET
+    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+32. Buscar Usuário por ID
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** GET
+    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Objeto do usuário (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+33. Listar Usuários por Retiro
+
+    - **Endereço:** `/usuarios/retiro/:retiroId`
+    - **Método:** GET
+    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários do retiro.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+34. Atualizar Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos parciais a atualizar.
+    - **Respostas:**
+      - `200 OK`: Usuário atualizado (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+35. Remover Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** DELETE
+    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `204 No Content`: Removido com sucesso.
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
       - `500 Internal Server Error`: Falha interna.
 
 &nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
