@@ -3836,7 +3836,7 @@ VALUES (?, ?, ?, ?);
     - **Método:** PATCH
     - **Descrição:** Atualiza o status de um ticket existente.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "status": "pendente" | "aprovado" }`
+    - **Body:** `{ "novoStatus": "pendente" | "aprovado" }`
     - **Respostas:**
       - `200 OK`: Status atualizado.
       - `404 Not Found`: Ticket não encontrado.
