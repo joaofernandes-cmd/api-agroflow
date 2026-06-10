@@ -49,7 +49,12 @@
 
 ## 📝 Descrição
 
-_Descreva seu projeto (até 600 palavras)_
+&emsp;&emsp;A AgroFlow é uma aplicação web desenvolvida pelo grupo 02 da turma 26 em parceria com a empresa BrPec Agropecuária S.A. com o propósito de digitalizar o registro das operações que ocorrem nos retiros da fazenda BrPec. Atualmente, o fluxo de informação entre o campo e o escritório depende de um processo que utiliza de boletas de papel para registro seguidas de digitação manual dessas informações em planilhas. A adoção desse registro manual atrasa a consolidação dos dados, é passível de manipulações ou omissões de dados e está sujeita a erros durante a reescrita. A solução desenvolvida substitui esse processo manual por um registro centralizado e rastreável das operações que ocorrem na fazenda.
+&emsp;&emsp;O sistema possibilita o registro de movimentações do rebanho (dentre eles nascimento, morte, transferência, compra e venda), a gestão de tarefas operacionais, a abertura de tickets de manutenção (dentre eles cerca, hidráulica, elétrica, edificação e abastecimento de água) e anexo de evidências (dentre eles foto, áudio e mensagem escrita).
+&emsp;&emsp;A Solução atende a três níveis hierárquicos de cada retiro: capatazes, supervisores e gerentes. Os escopos de atuação de cada nível na aplicação são os seguintes: os capatazes fazem o registro das operações e abrem tickets de infraestrutura; os supervisores validam os registros dos capatazes e criam novas tarefas para eles; e gerentes consultam relatórios operacionais organizados por período. O controle de acesso é feito por cargo: capatazes acessam por qrcode único, supervisores e gerentes acessam por login e senha, garantindo que cada perfil tenha acesso somente às funcionalidades compatíveis com seu escopo de atuação.
+&emsp;&emsp;Por fim, a característica-chave da aplicação desenvolvida é a operação offline (uma demanda que foi trazida pela empresa parceira e que é necessária para a aplicabilidade da solução): quando o capataz faz os registros em campo eles são salvos localmente em seu aparelho, assim que a conexão é reestabelecida, os registros são sincronizados, permitindo que o escritório tenha acesso aos eventos do campo.
+
+
 
 ## 📝 Link de demonstração
 
