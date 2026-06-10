@@ -38,6 +38,15 @@ app.get('/auth/perfil', (_req, res) => {
   res.render('auth/perfil')
 })
 
+app.get('/auth/login', (req, res) => {
+  const role = req.query.role === 'gerente' ? 'Gerente' : 'Supervisor';
+  res.render('auth/login', {
+    title: `${role} — Login`,
+    css: 'auth',
+    persona: role
+  });
+});
+
 app.use('/evidencias', evidenciaRoutes)
 app.use('/movimentacoes', movimentacaoRoutes)
 app.use('/relatorios', relatorioRoutes)
