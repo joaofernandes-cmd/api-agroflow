@@ -838,6 +838,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Implementado |
 | RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Implementado |
 | RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Implementado |
+| RF012 | O sistema deve permitir o cadastro, a consulta, a atualização e a remoção de usuários, incluindo a consulta de usuários vinculados a um retiro específico. | Média | Implementado |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
