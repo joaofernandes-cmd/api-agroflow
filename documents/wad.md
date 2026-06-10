@@ -913,7 +913,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |:--|:--|
 | **Requisito Não Funcional** | As telas principais (registro de movimentação, listagem de tarefas, painel de tickets) devem carregar de forma responsiva, mesmo em conexões de baixa qualidade, sem latência perceptível para operações realizadas em modo offline. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (tablets Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (celulares Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
 | **Como será atendido** | Assets leves otimizados (imagens WebP, minificação de JS/CSS), lazy loading de componentes, dados carregados do IndexedDB local no modo offline (sem requisições de rede), cache de recursos estáticos via Service Worker, compressão gzip/brotli no servidor. |
@@ -975,11 +975,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | Campo | Conteúdo |
 |:--|:--|
-| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para tablets Android. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e tablets Android (viewport 768px–1024px). |
-| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica tablets Android como dispositivos de campo dos capatazes. |
+| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para celulares Android. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e celulares Android (viewport 768px–1024px). |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
-| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para tablets (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
+| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para celulares (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
 
 ---
 
@@ -1015,15 +1015,15 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
 | RF001 | RN01 | `/movimentacoes`<br>`/movimentacoes/{id}` | POST<br>GET/PATCH/DELETE |
-| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>PATCH |
+| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/status/{status}`<br>`/tarefas/usuario/{usuarioId}`<br>`/tarefas/prioridade/{prioridade}`<br>`/tarefas/categoria/{categoria}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>GET<br>GET<br>GET<br>GET<br>PATCH |
 | RF003 | RN03 | `/sincronizacao/conexao`<br>`/sincronizacao`<br>`/sincronizacao/status`<br>`/sincronizacao/mensagem`<br>`/movimentacoes/sincronizar`<br>`/movimentacoes/{id}/sincronizar` | GET<br>POST<br>GET<br>GET<br>POST<br>PATCH |
 | RF004 | RN04 | `/evidencias`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>POST<br>POST<br>POST |
 | RF005 | RN05 | `/usuarios/login` | POST |
 | RF006 | RN06 | `/validacoes/permissao`<br>`/validacoes/movimentacoes/{id}/validar`<br>`/validacoes/tarefas/{id}/aprovar`<br>`/validacoes/tickets/{id}/aprovar` | POST<br>PATCH<br>PATCH<br>PATCH |
 | RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
-| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/{id}`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>PATCH<br>PATCH |
+| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/status`<br>`/tickets/categoria`<br>`/tickets/{id}`<br>`/tickets/{id}/status`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>GET<br>GET<br>PATCH<br>PATCH<br>PATCH |
 | RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
-| RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
+| RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/tarefas/contagem/status`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
 | RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -2090,6 +2090,47 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
+
+
+### Explicação do diagrama:
+**Nós Clientes**
+ 
+• O dispositivo do *Capataz* é um celular Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
+ 
+• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+ 
+• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
+
+**Nó do Servidor de Aplicação**
+ 
+• O *Application Server* é hospedado em nuvem (AWS ou equivalente) e executa o backend desenvolvido em *Node.js + Express + TypeScript*, responsável pela camada REST do sistema.
+ 
+• Esse nó concentra todos os controladores e serviços do AgroFlow, processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+ 
+ 
+**Nó do Servidor de Banco de Dados**
+ 
+• O *Database Server* é hospedado no *Supabase* e executa o *PostgreSQL* como sistema de gerenciamento de banco de dados relacional.
+ 
+• Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
+
+**Canais de Comunicação**
+ 
+• A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* com autenticação baseada em *JWT*, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
+ 
+• A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
+
+<div align="center">
+<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
@@ -2415,7 +2456,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
-&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e tablets utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e celulares utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
 
 <div align="center">
 <p align="center">Figura 39 - Iconografia</p>
@@ -4204,14 +4245,23 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c6.2"></a>6.2 Análise de Mercado
 
-*a) Visão Geral do Setor (até 250 palavras)*
-*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+**a) Visão Geral do Setor**
 
-*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
-*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto econômico, o AgroFlow atua no segmento da pecuária bovina, parte do agronegócio que respondeu por 25,13% do PIB nacional em 2025, o maior patamar em 22 anos (CNA, 2026). O Brasil possui o maior rebanho comercial do mundo, com 238,2 milhões de cabeças, e lidera as exportações globais de carne bovina, o que evidencia a escala e a relevância econômica do setor para o qual a solução foi desenvolvida (IBGE, 2025).
 
-*c) Tendências de Mercado (até 300 palavras)*
-*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto tecnológico, o agronegócio brasileiro vive uma expansão significativa do segmento de AgroTech: em 2025, mais de 2.075 startups atuavam no setor, sendo que 83% delas já incorporavam inteligência artificial em seus produtos (RADAR AGTECH, 2025). Apesar desse avanço, a adoção dessas soluções permanece concentrada em operações com conectividade estável e usuários com letramento digital intermediário, requisitos ausentes nas fazendas remotas onde o AgroFlow atua.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto regulatório, a Portaria SDA/Mapa nº 1.331/2025 instituiu o Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB), que torna obrigatória a rastreabilidade individual de todo o rebanho nacional de forma escalonada até 2032 (MAPA, 2025). Essa exigência impõe a digitalização dos registros a toda a cadeia produtiva, inclusive às operações que hoje não dispõem de soluções tecnológicas compatíveis com seu contexto operacional.
+
+**b) Tamanho e Crescimento do Mercado**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O mercado de software de gestão e automação para o agronegócio está em expansão acelerada no Brasil. O segmento de agricultura de precisão, que engloba plataformas de monitoramento, gestão operacional e automação de processos no campo deve alcançar US$ 601 milhões no Brasil até 2030, com crescimento anual composto (CAGR) de 14,4% entre 2025 e 2030 (GRAND VIEW RESEARCH, 2025). Na América Latina como um todo, o mercado foi avaliado em US$ 1,86 bilhão em 2024 e deve atingir US$ 6,75 bilhões até 2033 (MARKET DATA FORECAST, 2025), com o Brasil respondendo pela maior fatia regional.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar desse crescimento, a penetração dessas soluções ainda é desigual: 40% dos produtores rurais utilizam algum software de gestão, mas a oferta existente é majoritariamente voltada a operações com infraestrutura digital adequada (PANORAMA DA GESTÃO RURAL, 2024). Fazendas corporativas em regiões remotas, onde conectividade é intermitente e os operadores têm baixo letramento digital, permanecem fora do alcance dessas plataformas, configurando um segmento específico com demanda reprimida e sem solução consolidada no mercado.
+
+**c) Tendências de Mercado**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O mercado de software para gestão agropecuária é impulsionado por três tendências convergentes. A primeira é a pressão regulatória e comercial pela rastreabilidade digital: com o PNIB tornando obrigatório o registro individual do rebanho até 2032 e o EUDR condicionando o acesso ao mercado europeu à comprovação de origem, produtores que ainda operam com papel precisarão migrar para sistemas digitais nos próximos anos (MAPA, 2025; BANCO DO NORDESTE, 2025). A segunda é a consolidação da agenda ESG como requisito operacional: compradores institucionais e exportadores passam a exigir histórico digital auditável das operações, tornando a automação de registros um critério de permanência na cadeia produtiva (BANCO DO NORDESTE, 2025). A terceira é a adoção de arquiteturas offline-first: à medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, soluções que operam localmente e sincronizam dados ao restabelecer conexão tornam-se o padrão esperado para operações em áreas remotas (TOTVS, 2025). Em conjunto, essas tendências ampliam o mercado endereçável para soluções como o AgroFlow e definem os requisitos funcionais que a diferenciam das plataformas convencionais.
 
 ## <a name="c6.3"></a>6.3 Análise da Concorrência
 
@@ -4220,7 +4270,6 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 *b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
 *Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
-
 
 ## <a name="c6.4"></a>6.4 Público-Alvo
 
@@ -4279,6 +4328,10 @@ BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da veg
 
 BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
 
+BANCO DO NORDESTE. 6 tendências do agronegócio para 2025: IA, Sustentabilidade e Inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
+
+CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
+
 DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
 . Acesso em: 30 abr. 2026.
 
@@ -4293,15 +4346,25 @@ G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disp
 HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
 . Acesso em: 30 abr. 2026.
 
+GRAND VIEW RESEARCH. Brazil Precision Farming Market Size & Outlook, 2025-2030. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
+
+IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Abate de bovinos atinge recorde em 2024. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
+
 ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model. Genebra: ISO, 2023.
 
 JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succeeding with use cases. [S.l.]: Ivar Jacobson International, 2024.
 
 LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
 
+MARKET DATA FORECAST. Latin America Precision Agriculture Market Size Report 2033. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
+
+MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
+
 OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
 
 PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+
+PANORAMA DA GESTÃO RURAL. Pesquisa Panorama da Gestão Rural 2024. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
 
 PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
 
@@ -4310,6 +4373,10 @@ COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addiso
 PATTON, Jeff. User Story Mapping: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
 
 PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
+
+RADAR AGTECH BRASIL. Mapeamento das startups do agronegócio brasileiro: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
+
+TOTVS. Tendências Agronegócio 2026: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
 
 # <a name="c9"></a>Anexos
 

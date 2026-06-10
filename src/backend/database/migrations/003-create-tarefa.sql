@@ -12,18 +12,34 @@ CREATE TABLE IF NOT EXISTS tarefa (
   sincronizado BOOLEAN NOT NULL DEFAULT false
 );
 
-ALTER TABLE tarefa
-  ADD CONSTRAINT tarefa_retiro_id_foreign
-  FOREIGN KEY (retiro_id) REFERENCES retiro(id);
+DO $$
+BEGIN
+  ALTER TABLE tarefa
+    ADD CONSTRAINT tarefa_retiro_id_foreign
+    FOREIGN KEY (retiro_id) REFERENCES retiro(id);
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-ALTER TABLE tarefa
-  ADD CONSTRAINT tarefa_criada_por_foreign
-  FOREIGN KEY (criada_por) REFERENCES usuario(id);
+DO $$
+BEGIN
+  ALTER TABLE tarefa
+    ADD CONSTRAINT tarefa_criada_por_foreign
+    FOREIGN KEY (criada_por) REFERENCES usuario(id);
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-ALTER TABLE tarefa
-  ADD CONSTRAINT tarefa_atribuida_a_foreign
-  FOREIGN KEY (atribuida_a) REFERENCES usuario(id);
+DO $$
+BEGIN
+  ALTER TABLE tarefa
+    ADD CONSTRAINT tarefa_atribuida_a_foreign
+    FOREIGN KEY (atribuida_a) REFERENCES usuario(id);
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-ALTER TABLE tarefa
-  ADD CONSTRAINT tarefa_aprovado_por_foreign
-  FOREIGN KEY (aprovado_por) REFERENCES usuario(id);
+DO $$
+BEGIN
+  ALTER TABLE tarefa
+    ADD CONSTRAINT tarefa_aprovado_por_foreign
+    FOREIGN KEY (aprovado_por) REFERENCES usuario(id);
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
