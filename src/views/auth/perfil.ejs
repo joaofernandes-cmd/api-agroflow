@@ -1,39 +1,47 @@
 <%- include('../partials/head', { title: 'Selecione seu perfil', css: 'auth' }) %>
 
-<main class="perfil-screen" role="main" aria-label="Seleção de perfil">
+<!-- ============================================================
+     TELA: Selecione seu perfil
+     Mobile  → card centralizado estilo "telefone"
+     Desktop → logo + card centralizados na tela cheia
+     ============================================================ -->
+
+<main class="perfil" role="main" aria-label="Seleção de perfil">
 
   <!-- Logo AgroFlow -->
-  <div class="perfil-logo" aria-hidden="true">
+  <div class="perfil__logo" aria-hidden="true">
+    <!-- Mobile: asset menor -->
     <img
-      src="https://www.figma.com/api/mcp/asset/30f29d30-bb31-4cd7-922a-066f394a8f6f"
+      class="perfil__logo-img perfil__logo-img--mobile"
+      src="https://www.figma.com/api/mcp/asset/c3db1e0b-f870-43b7-9f74-23381bf8cadd"
       alt="AgroFlow"
-      width="357"
-      height="292"
+    />
+    <!-- Desktop: asset maior -->
+    <img
+      class="perfil__logo-img perfil__logo-img--desktop"
+      src="https://www.figma.com/api/mcp/asset/c067f96d-2f48-4c64-8f3f-0fe31f186079"
+      alt="AgroFlow"
     />
   </div>
 
-  <!-- Título -->
-  <h1 class="perfil-title">
-    Selecione<br>seu perfil
-  </h1>
-  <p class="perfil-subtitle">Escolha como deseja acessar o sistema</p>
+  <!-- Título (apenas mobile) -->
+  <h1 class="perfil__title">Selecione<br>seu perfil</h1>
+  <p class="perfil__subtitle">Escolha como deseja acessar o sistema</p>
 
   <!-- Card de seleção -->
-  <div class="perfil-card" role="group" aria-labelledby="perfil-label">
-    <p class="perfil-label" id="perfil-label">Acessar como:</p>
+  <div class="perfil__card" role="group" aria-labelledby="perfil-label">
+    <p class="perfil__label" id="perfil-label">Acessar como:</p>
 
-    <!-- Supervisor: botão sólido (destaque) -->
     <a href="/auth/login?role=supervisor" class="btn btn--primary" aria-label="Acessar como Supervisor">
       Supervisor
     </a>
 
-    <!-- Gerente: botão outlined -->
     <a href="/auth/login?role=gerente" class="btn btn--outline" aria-label="Acessar como Gerente">
       Gerente
     </a>
   </div>
 
-  <p class="perfil-version" aria-hidden="true">v1.0.0</p>
+  <p class="perfil__version" aria-hidden="true">v1.0.0</p>
 
 </main>
 
