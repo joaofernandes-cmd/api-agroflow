@@ -3571,9 +3571,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Movimentação validada.
-      - `400 Bad Request`: Movimentação já validada ou violação de regra.
+      - `400 Bad Request`: Movimentação não encontrada, já validada ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Movimentação não encontrada.
       - `500 Internal Server Error`: Falha interna.
 
 38. Aprovar Tarefa
@@ -3585,8 +3584,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Tarefa aprovada.
+      - `400 Bad Request`: Tarefa não encontrada, já aprovada ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Tarefa não encontrada.
       - `500 Internal Server Error`: Falha interna.
 
 39. Aprovar Ticket de Infraestrutura
@@ -3598,8 +3597,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Ticket aprovado.
+      - `400 Bad Request`: Ticket não encontrado, já aprovado ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Ticket não encontrado.
       - `500 Internal Server Error`: Falha interna.
 
 **RF007 — Relatórios (Prioridade: Média)**
