@@ -2094,14 +2094,6 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
 
- 
-<div align="center">
-<p align="center">Figura 21 - Diagrama de implantação</p>
-<p align="center">
-<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
-</p>
-<p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
 ### Explicação do diagrama:
 **Nós Clientes**
@@ -2124,6 +2116,20 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 • O *Database Server* é hospedado no *Supabase* e executa o *PostgreSQL* como sistema de gerenciamento de banco de dados relacional.
  
 • Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
+
+**Canais de Comunicação**
+ 
+• A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* com autenticação baseada em *JWT*, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
+ 
+• A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
+
+<div align="center">
+<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
