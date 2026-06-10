@@ -2103,6 +2103,15 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+### Explicação do diagrama:
+**Nós Clientes**
+ 
+• O dispositivo do *Capataz* é um tablet Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
+ 
+• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+ 
+• O dispositivo do *Gerente* é predominantemente desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
+
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
