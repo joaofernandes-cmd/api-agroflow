@@ -4186,6 +4186,43 @@ No `UsuarioService`, foram testados cenários de autenticação válida, login i
 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Compra válida | Campos obrigatórios da compra devem estar preenchidos | Movimentação aceita |
 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Venda válida | Campos obrigatórios da venda devem estar preenchidos | Movimentação aceita |
 
+### *Black Box*
+Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considerou a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
+
+Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar status codes, estrutura do corpo da resposta, listagem de dados, criação de recursos, filtros, atualização de registros, aprovações e sincronizações.
+
+A cobertura black-box contemplou os principais módulos do sistema, incluindo usuários, movimentações, tarefas, tickets, evidências, sincronização, validações, relatórios e health check. Dessa forma, foi possível garantir que os endpoints da API estejam aderentes ao contrato esperado e aos fluxos funcionais definidos para o sistema.
+
+### Tabela Complementar de Testes Black-Box
+
+| Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
+|---|---|---|---|---|
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Autenticação de usuário | `POST /usuarios/login` | Retorno do usuário autenticado e token JWT |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Bloqueio de capataz no login | `POST /usuarios/login` | Retorno 403 |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Listagem de usuários | `GET /usuarios` | Retorno da lista sem dados sensíveis |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Busca por usuário, criação, atualização e remoção | `GET /usuarios/:id`, `POST /usuarios`, `PATCH /usuarios/:id`, `DELETE /usuarios/:id` | Status coerentes e corpo esperado |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Criação de movimentação | `POST /movimentacoes` | Retorno 201 com o registro criado |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Listagem e filtros | `GET /movimentacoes`, `GET /movimentacoes/filtrar` | Retorno da lista filtrada corretamente |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Sincronização de movimentação | `POST /movimentacoes/sincronizar`, `PATCH /movimentacoes/:id/sincronizar` | Retorno com movimentação sincronizada |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Pendências, dashboard e contagem por tipo | `GET /movimentacoes/pendentes`, `GET /movimentacoes/dashboard`, `GET /movimentacoes/contagem/tipo` | Dados consolidados e contagens corretas |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Busca, atualização e remoção | `GET /movimentacoes/:id`, `PATCH /movimentacoes/:id`, `DELETE /movimentacoes/:id` | Status coerentes com o CRUD |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Criação e listagem de tarefas | `POST /tarefas`, `GET /tarefas` | Retorno 201 e listagem correta |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Dashboard e filtros | `GET /tarefas/dashboard`, `GET /tarefas/status/:status`, `GET /tarefas/usuario/:usuarioId`, `GET /tarefas/prioridade/:prioridade`, `GET /tarefas/categoria/:categoria` | Listas filtradas e agregações corretas |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Contagem, atualização e remoção | `GET /tarefas/contagem/status`, `GET /tarefas/:id`, `PATCH /tarefas/:id`, `PATCH /tarefas/:id/status`, `DELETE /tarefas/:id` | Status esperados e operações válidas |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Criação e listagem | `POST /tickets`, `GET /tickets` | Retorno 201 e lista correta |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Pendentes e filtros | `GET /tickets/pendentes`, `GET /tickets/status`, `GET /tickets/prioridade`, `GET /tickets/categoria` | Filtros aplicados corretamente |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Contagem por prioridade | `GET /tickets/contagem/prioridade` | Retorno das quantidades corretas |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Busca, status, prioridade e atribuição | `GET /tickets/:id`, `PATCH /tickets/:id/status`, `PATCH /tickets/:id/prioridade`, `PATCH /tickets/:id/atribuicao` | Atualizações e retornos coerentes |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Listagem e busca | `GET /evidencias`, `GET /evidencias/:id` | Retorno correto dos registros |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Criação de mensagens, áudios e fotos | `POST /evidencias/mensagens`, `POST /evidencias/audios`, `POST /evidencias/fotos` | Criação bem-sucedida dos tipos de evidência |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Conexão e status geral | `GET /sincronizacao/conexao`, `GET /sincronizacao/status`, `GET /sincronizacao/mensagem` | Retorno do estado de conexão e mensagens amigáveis |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Sincronização de dados e relatórios | `POST /sincronizacao`, `GET /sincronizacao/relatorios/movimentacoes`, `GET /sincronizacao/relatorios/tarefas`, `GET /sincronizacao/dashboard/tickets` | Dados sincronizados e consolidados |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Permissão do usuário | `POST /validacoes/permissao` | Retorno indicando acesso autorizado |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Validação e aprovação | `PATCH /validacoes/movimentacoes/:id/validar`, `PATCH /validacoes/tickets/:id/aprovar`, `PATCH /validacoes/tarefas/:id/aprovar` | Atualização correta do status |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retorno dos dados e formatação esperada |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
+| Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
+
 *Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
 
 ## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
