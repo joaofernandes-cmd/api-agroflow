@@ -1027,6 +1027,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
 | RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/tarefas/contagem/status`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
 | RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
+| RF012 | RN12 | `/usuarios`<br>`/usuarios/{id}`<br>`/usuarios/retiro/{retiroId}` | POST/GET<br>GET/PATCH/DELETE<br>GET |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
