@@ -93,6 +93,11 @@ export const UsuarioController = {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios' })
       }
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(login)) {
+        return res.status(400).json({ error: 'Login deve ser um email válido' })
+      }
+
       const usuario = await UsuarioService.criar({
         retiro_id,
         nome,

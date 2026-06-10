@@ -115,6 +115,21 @@ describe('Usuarios', () => {
     })
   })
 
+  it('POST /usuarios deve rejeitar login que nao seja email', async () => {
+    const response = await request(app).post('/usuarios').send({
+      retiro_id: 1,
+      nome: 'Gerente Novo',
+      login: 'login-invalido',
+      senha_hash: 'hashed-password',
+      status: 'ativo',
+      cargo: 'gerente',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Login deve ser um email válido' })
+    expect(mockedService.criar).not.toHaveBeenCalled()
+  })
+
   it('PATCH /usuarios/:id deve atualizar usuario', async () => {
     const response = await request(app).patch('/usuarios/user-002').send({
       nome: 'Gerente Atualizado',
