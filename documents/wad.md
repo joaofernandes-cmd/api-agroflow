@@ -3558,6 +3558,7 @@ VALUES (?, ?, ?, ?);
     - **Respostas:**
       - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
       - `400 Bad Request`: Campo obrigatório ausente.
+      - `400 Bad Request`: Login fora do formato de e-mail — `{ "error": "Login deve ser um email válido" }`.
       - `401 Unauthorized`: Token ausente ou inválido.
       - `403 Forbidden`: Cargo insuficiente.
       - `500 Internal Server Error`: Falha interna.
