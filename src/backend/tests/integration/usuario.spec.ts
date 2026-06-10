@@ -62,6 +62,21 @@ describe('Usuarios', () => {
     expect(response.status).toBe(403)
   })
 
+  it('RN12 deve bloquear rota administrativa para usuario que nao seja gerente', () => {
+    const { exigirCargo } = jest.requireActual('../../middlewares/cargo.middleware')
+    const req = { usuario: mockSupervisor } as any
+    const json = jest.fn()
+    const status = jest.fn().mockReturnValue({ json })
+    const res = { status } as any
+    const next = jest.fn()
+
+    exigirCargo('gerente')(req, res, next)
+
+    expect(status).toHaveBeenCalledWith(403)
+    expect(json).toHaveBeenCalledWith({ error: 'Acesso negado: cargo insuficiente' })
+    expect(next).not.toHaveBeenCalled()
+  })
+
   it('GET /usuarios deve listar usuarios', async () => {
     const response = await request(app).get('/usuarios')
 
