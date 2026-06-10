@@ -837,7 +837,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Implementado |
 | RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Implementado |
 | RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Implementado |
-| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Implementado |
+| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Média | Implementado |
 | RF012 | O sistema deve permitir o cadastro, a consulta, a atualização e a remoção de usuários, incluindo a consulta de usuários vinculados a um retiro específico. | Média | Implementado |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -861,7 +861,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, validado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="validado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
 | RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas) considerando exclusivamente movimentações com status="validado" e tarefas/tickets com status="aprovado", sempre com flag sincronizado=true. Registros pendentes ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros conferidos e sincronizados são incluídos no cálculo. Dado que existem registros pendentes, quando o dashboard carrega, então esses registros não aparecem nos totalizadores exibidos. |
 | RN11 | A prioridade do ticket (alta, média ou baixa) deve ser obrigatoriamente selecionada no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida para reorganização da demanda operacional. | RF011 | Dado que um Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
-| RN12 | O cadastro, a consulta, a atualização e a remoção de usuários devem ser permitidos somente para usuários autenticados com perfil "Gerente". Na criação, os campos nome, login, senha, cargo e status são obrigatórios, o login deve possuir formato de e-mail válido e o campo `senha_hash` não deve ser exposto nas respostas da API. | RF012 | Dado que um usuário sem perfil "Gerente" tenta acessar uma rota administrativa de usuários, então o sistema retorna HTTP 403. Dado que um Gerente cria um usuário com os campos obrigatórios e login válido, então o sistema retorna HTTP 201 sem expor o campo `senha_hash`. |
+| RN12 | O cadastro, a consulta, a atualização e a remoção de usuários devem ser permitidos somente para usuários autenticados com perfil "Gerente". Na criação, os campos `retiro_id`, nome, login, `senha_hash`, cargo e status são obrigatórios, o login deve possuir formato de e-mail válido e o campo `senha_hash` não deve ser exposto nas respostas da API. | RF012 | Dado que um usuário sem perfil "Gerente" tenta acessar uma rota administrativa de usuários, então o sistema retorna HTTP 403. Dado que um Gerente cria um usuário com os campos obrigatórios e login válido, então o sistema retorna HTTP 201 sem expor o campo `senha_hash`. |
 
 
 
@@ -3933,7 +3933,7 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Resposta:** `200 OK` — `{ "alta": 2, "media": 5, "baixa": 1 }`; `500 Internal Server Error` — Falha interna.
 
-**RF011 — Prioridade de Tickets (Prioridade: Alta)**
+**RF011 — Prioridade de Tickets (Prioridade: Média)**
 
 62. Listar Tickets por Prioridade
 
