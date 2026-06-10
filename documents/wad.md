@@ -913,7 +913,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |:--|:--|
 | **Requisito Não Funcional** | As telas principais (registro de movimentação, listagem de tarefas, painel de tickets) devem carregar de forma responsiva, mesmo em conexões de baixa qualidade, sem latência perceptível para operações realizadas em modo offline. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (tablets Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (celulares Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
 | **Como será atendido** | Assets leves otimizados (imagens WebP, minificação de JS/CSS), lazy loading de componentes, dados carregados do IndexedDB local no modo offline (sem requisições de rede), cache de recursos estáticos via Service Worker, compressão gzip/brotli no servidor. |
@@ -975,11 +975,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | Campo | Conteúdo |
 |:--|:--|
-| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para tablets Android. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e tablets Android (viewport 768px–1024px). |
-| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica tablets Android como dispositivos de campo dos capatazes. |
+| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para celulares Android. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e celulares Android (viewport 768px–1024px). |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
-| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para tablets (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
+| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para celulares (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
 
 ---
 
@@ -2090,6 +2090,47 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
+
+
+### Explicação do diagrama:
+**Nós Clientes**
+ 
+• O dispositivo do *Capataz* é um celular Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
+ 
+• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+ 
+• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
+
+**Nó do Servidor de Aplicação**
+ 
+• O *Application Server* é hospedado em nuvem (AWS ou equivalente) e executa o backend desenvolvido em *Node.js + Express + TypeScript*, responsável pela camada REST do sistema.
+ 
+• Esse nó concentra todos os controladores e serviços do AgroFlow, processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+ 
+ 
+**Nó do Servidor de Banco de Dados**
+ 
+• O *Database Server* é hospedado no *Supabase* e executa o *PostgreSQL* como sistema de gerenciamento de banco de dados relacional.
+ 
+• Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
+
+**Canais de Comunicação**
+ 
+• A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* com autenticação baseada em *JWT*, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
+ 
+• A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
+
+<div align="center">
+<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
@@ -2415,7 +2456,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
-&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e tablets utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e celulares utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
 
 <div align="center">
 <p align="center">Figura 39 - Iconografia</p>
