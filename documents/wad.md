@@ -2094,6 +2094,15 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
 
+ 
+<div align="center">
+<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
