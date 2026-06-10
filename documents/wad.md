@@ -913,7 +913,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |:--|:--|
 | **Requisito Não Funcional** | As telas principais (registro de movimentação, listagem de tarefas, painel de tickets) devem carregar de forma responsiva, mesmo em conexões de baixa qualidade, sem latência perceptível para operações realizadas em modo offline. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (tablets Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (celulares Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
 | **Como será atendido** | Assets leves otimizados (imagens WebP, minificação de JS/CSS), lazy loading de componentes, dados carregados do IndexedDB local no modo offline (sem requisições de rede), cache de recursos estáticos via Service Worker, compressão gzip/brotli no servidor. |
@@ -975,11 +975,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | Campo | Conteúdo |
 |:--|:--|
-| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para tablets Android. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e tablets Android (viewport 768px–1024px). |
-| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica tablets Android como dispositivos de campo dos capatazes. |
+| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para celulares Android. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e celulares Android (viewport 768px–1024px). |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
-| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para tablets (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
+| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para celulares (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
 
 ---
 
@@ -2098,7 +2098,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 ### Explicação do diagrama:
 **Nós Clientes**
  
-• O dispositivo do *Capataz* é um tablet Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
+• O dispositivo do *Capataz* é um celular Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
  
 • O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
  
@@ -2456,7 +2456,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
-&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e tablets utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e celulares utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
 
 <div align="center">
 <p align="center">Figura 39 - Iconografia</p>
