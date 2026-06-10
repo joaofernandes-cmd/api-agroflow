@@ -13,8 +13,14 @@ import { middlewareDeLog } from './middlewares/log.middleware'
 
 const app = express()
 
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '../views'))
+
 // Habilita leitura de JSON em todas as requests.
 app.use(express.json())
+
+// Arquivos estáticos (CSS, imagens, etc.)
+app.use('/css', express.static(path.join(__dirname, '../views/css')))
 
 // Documentação navegável da WebAPI disponível em /docs
 app.use('/docs', express.static(path.join(__dirname, 'public/docs')))
@@ -25,6 +31,10 @@ app.use(middlewareDeLog)
 // Endpoint simples de saude da aplicacao.
 app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' })
+})
+
+app.get('/auth/perfil', (_req, res) => {
+  res.render('auth/perfil')
 })
 
 app.use('/evidencias', evidenciaRoutes)
