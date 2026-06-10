@@ -41,6 +41,29 @@ describe('Validacoes', () => {
     expect(response.body).toEqual({ podeValidar: true })
   })
 
+  it.each(['capataz', 'gerente'])(
+    'RN06 deve bloquear validacao para usuario com cargo %s',
+    cargo => {
+      const { exigirCargo } = jest.requireActual('../../middlewares/cargo.middleware')
+      const req = {
+        usuario: {
+          ...mockSupervisor,
+          cargo,
+        },
+      } as any
+      const json = jest.fn()
+      const status = jest.fn().mockReturnValue({ json })
+      const res = { status } as any
+      const next = jest.fn()
+
+      exigirCargo('supervisor')(req, res, next)
+
+      expect(status).toHaveBeenCalledWith(403)
+      expect(json).toHaveBeenCalledWith({ error: 'Acesso negado: cargo insuficiente' })
+      expect(next).not.toHaveBeenCalled()
+    }
+  )
+
   it('PATCH /validacoes/movimentacoes/:id/validar deve validar movimentacao', async () => {
     const response = await request(app).patch('/validacoes/movimentacoes/1/validar')
 
