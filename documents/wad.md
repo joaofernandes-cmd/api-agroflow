@@ -4304,6 +4304,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow se posiciona como a solução de gestão operacional de campo projetada especificamente para fazendas de pecuária de larga escala com operações distribuídas em múltiplos retiros e conectividade de rede limitada ou instável. Enquanto ferramentas concorrentes tratam a conexão à internet como pré-requisito indispensável, o AgroFlow trata a ausência de conexão como o cenário operacional padrão, adaptando toda a sua arquitetura em torno dessa realidade.
 
+&nbsp;&nbsp;&nbsp;&nbsp;**Concorrentes diretos** — como Bovcontrol, Ideagri e Tecnopec — oferecem funcionalidades de gestão pecuária e monitoramento do rebanho, mas são concebidos para ambientes com conectividade estável e não possuem nativamente fluxos de validação hierárquica integrados com coleta de evidências digitais. **Concorrentes indiretos** — planilhas Excel, formulários físicos e boletas de papel — representam o modelo atual da BrPec e ainda predominam em grandes propriedades rurais que carecem de ferramentas digitais especializadas para operações de campo.
+
 ## <a name="c6.6"></a>6.6. Estratégia de Marketing
 
 *a) Produto/Serviço (até 200 palavras)*
