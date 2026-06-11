@@ -44,10 +44,14 @@
 .kpi-card__label {
   font-size: 12px;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-muted);
   margin-top: 4px;
   line-height: 1.3;
 }
+
+.kpi-card--green .kpi-card__value  { color: #2f6b37; }
+.kpi-card--red   .kpi-card__value  { color: #ff3b30; }
+.kpi-card--yellow .kpi-card__value { color: #d99a00; }
 
 /* ════════════════════════════════════════════════════════════
    HOME GERENTE — Card de Relatórios Mobile
@@ -222,4 +226,35 @@
 .qcard__accent--red        { background: #ff3b30; }
 .qcard__accent--yellow     { background: #d99a00; }
 
-/* Resumo do período reutiliza classes do relatorios.css */
+/* Resumo do período */
+.resumo-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px 16px 20px;
+}
+
+.resumo-card__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.resumo-card__divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-bottom: 12px;
+}
+
+.resumo-list { display: flex; flex-direction: column; }
+
+.resumo-list__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 12px;
+}
+
+.resumo-list__row dt { color: var(--color-muted); }
+.resumo-list__row dd { font-weight: 600; color: var(--color-text); }
