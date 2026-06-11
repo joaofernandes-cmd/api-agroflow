@@ -4273,7 +4273,7 @@ Para sustentar essa documentação, foram analisados:
 - Os fixtures utilizados para simulação de dados
 - Os arquivos de teste existentes para cada módulo
 
-### *5.1.2 White Box*
+### 5.1.2 White Box
 Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema.
 
 A execução de `npm test -- --coverage` demonstrou que a camada `backend/services` atingiu **92.18% de statements**, **85.32% de branches**, **98.11% de functions** e **92.02% de lines**, superando o mínimo de 80% exigido para a seção. Os testes cobrem os principais serviços do sistema, incluindo autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
@@ -4333,7 +4333,7 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 
 Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Os casos prioritários `CT01` a `CT05` são os mais críticos para o sistema, pois cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
 
-### *5.1.3 Black Box*
+### 5.1.3 Black Box
 Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
 
 Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar os fluxos de sucesso mais relevantes da aplicação, como criação, listagem, atualização, exclusão, filtros, sincronização e aprovação. No estado atual da suíte, a cobertura black-box está concentrada principalmente nos cenários `200/201/204` e em alguns bloqueios de acesso, como o `403` no fluxo de login do usuário capataz.
@@ -4384,7 +4384,51 @@ Em relação ao critério desejado para esta seção, a cobertura ainda é **par
 | Relatórios | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
 | Health Check | Coberto | Não aplicável | Não aplicável | Não aplicável | Adequado ao propósito |
 
-*Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
+### 5.1.4 Relatório de cobertura Jest
+Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
+ 
+Complementarmente, foi executado o comando `npm test -- --coverage`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80%, atendendo ao critério estabelecido para a seção 5.1.2, enquanto as demais camadas foram registradas como evidência complementar da maturidade da suíte.
+ 
+Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
+ 
+---
+ 
+#### Relatório de Cobertura Jest
+ 
+**Comando executado:** 
+`npm test -- --coverage`
+ 
+<p align="center">
+  <img src="documents/others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
+</p>
+ 
+---
+ 
+#### Evidência de Execução
+ 
+- `npm test` executado com sucesso.
+- `npm test -- --coverage` executado com sucesso.
+- Suíte atual: **17 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **185**.
+---
+ 
+#### Mapeamento de Rastreabilidade
+ 
+A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto:
+ 
+| Caso de Teste | Regra de Negócio | Requisito Funcional |
+|---|---|---|
+| CT01 | RN01 | RF001 |
+| CT02 | RN02 | RF002 |
+| CT03 | RN03 | RF003 |
+| CT04 | RN04 | RF004 |
+| CT05 | RN05 | RF005 |
+| CT06 | RN06 | RF006 |
+| CT07 | RN07 | RF007 |
+| CT08 | RN08 | RF008 |
+| CT09 | RN09 | RF009 |
+| CT10 | RN10 | RF010 |
+| CT11 | RN11 | RF011 |
 
 ## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
 
