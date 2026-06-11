@@ -1,0 +1,14 @@
+/* =============================================================
+   gerente.css — Estilos exclusivos do Gerente
+   Depende de: global.css + supervisor.css
+   ============================================================= */
+
+/* Conteúdo scrollável da home */
+.home-content {
+  flex: 1;
+  padding: 16px 16px 0;
+  overflow-y: auto;
+}
+
+/* BottomNav do gerente tem apenas 2 abas */
+.bottomnav--gerente { justify-content: space-evenly; }

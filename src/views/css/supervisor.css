@@ -9,7 +9,7 @@
    Desktop (≥768px) → .layout-desktop visível
    ════════════════════════════════════════════════════════════ */
 .layout-desktop { display: none; }
-.layout-mobile  { display: flex; flex-direction: column; min-height: 100dvh; }
+.layout-mobile  { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
 
 @media (min-width: 768px) {
   .layout-mobile  { display: none; }
