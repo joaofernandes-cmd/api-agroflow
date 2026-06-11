@@ -13,7 +13,7 @@
 
 @media (min-width: 768px) {
   .layout-mobile  { display: none; }
-  .layout-desktop { display: flex; min-height: 100dvh; }
+  .layout-desktop { display: flex; height: 100dvh; overflow: hidden; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -203,12 +203,12 @@
    ════════════════════════════════════════════════════════════ */
 .sidebar {
   width: 240px;
-  min-height: 100dvh;
+  height: 100%;
   background: #0f5f36;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  position: relative;
+  overflow: hidden;
 }
 
 .sidebar__top {
