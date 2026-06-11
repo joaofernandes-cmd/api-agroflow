@@ -47,6 +47,14 @@ app.get('/auth/login', (req, res) => {
   });
 });
 
+app.get('/supervisor/home', (req, res) => {
+  res.render('supervisor/home', {
+    title: 'Início',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' } // substituir pelo usuário da sessão
+  });
+});
+
 app.use('/evidencias', evidenciaRoutes)
 app.use('/movimentacoes', movimentacaoRoutes)
 app.use('/relatorios', relatorioRoutes)
