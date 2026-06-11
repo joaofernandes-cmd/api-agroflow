@@ -1,0 +1,277 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - persona: 'supervisor' | 'gerente'
+  - usuario: { nome: string }
+  - paginaAtiva: 'relatorios' (fixo para essa view)
+%>
+
+<!-- ============================================================
+     TELA: Relatórios (compartilhada entre Supervisor e Gerente)
+     A sidebar muda conforme a persona passada pelo controller.
+     Mobile  → TopNav + filtros + prévia skeleton + botão exportar + BottomNav
+     Desktop → Sidebar (via partial) + TopBar com filtros inline + tabela + resumo
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/<%= persona %>/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Relatórios</h1>
+  </header>
+
+  <!-- Formulário de filtros -->
+  <main class="relatorio-content" role="main">
+    <form class="relatorio-form" id="form-relatorio">
+
+      <!-- Período -->
+      <div class="rfield">
+        <label class="rfield__label" for="periodo-mobile">Período</label>
+        <div class="rfield__input-wrap rfield__input-wrap--icon">
+          <input
+            class="rfield__input"
+            type="text"
+            id="periodo-mobile"
+            name="periodo"
+            value="01/06/2026  até  01/07/2026"
+            readonly
+            aria-label="Selecionar período"
+          />
+          <img src="https://www.figma.com/api/mcp/asset/943907d5-191f-4d10-ac1b-0f41e4025458" alt="" aria-hidden="true" width="24" height="24" class="rfield__icon" />
+        </div>
+      </div>
+
+      <!-- Retiro -->
+      <div class="rfield">
+        <label class="rfield__label" for="retiro-mobile">Retiro</label>
+        <div class="rfield__select-wrap">
+          <select class="rfield__select" id="retiro-mobile" name="retiro">
+            <option value="">Todos</option>
+            <option value="aroeira">Aroeira</option>
+            <option value="puga">Puga</option>
+            <option value="cmb">CMB</option>
+            <option value="cristo">Cristo</option>
+            <option value="caieira">Caieira</option>
+            <option value="bodoquena">Bodoquena</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Tipo de relatório -->
+      <div class="rfield">
+        <label class="rfield__label" for="tipo-mobile">Tipo de relatório</label>
+        <div class="rfield__select-wrap">
+          <select class="rfield__select" id="tipo-mobile" name="tipo">
+            <option value="movimentacoes">Movimentações do rebanho</option>
+            <option value="tarefas">Tarefas</option>
+            <option value="tickets">Tickets de infraestrutura</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Prévia skeleton -->
+      <div class="rfield">
+        <p class="rfield__label">Prévia do relatório</p>
+        <div class="preview-card" aria-label="Prévia do relatório" aria-busy="true">
+          <div class="preview-line preview-line--200"></div>
+          <div class="preview-line preview-line--160"></div>
+          <div class="preview-line preview-line--220"></div>
+          <div class="preview-line preview-line--140"></div>
+          <div class="preview-line preview-line--180"></div>
+          <div class="preview-line preview-line--200"></div>
+          <div class="preview-line preview-line--100"></div>
+        </div>
+      </div>
+
+      <!-- Botão exportar -->
+      <button type="submit" class="btn btn--primary btn--exportar">
+        Exportar planilha
+      </button>
+
+    </form>
+  </main>
+
+  <!-- BottomNav — só aparece no mobile do supervisor -->
+  <% if (persona === 'supervisor') { %>
+    <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'relatorios' }) %>
+  <% } %>
+
+  <% if (persona === 'gerente') { %>
+    <%- include('../partials/bottomnav-gerente', { paginaAtiva: 'relatorios' }) %>
+  <% } %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar via partial — muda conforme persona -->
+  <% if (persona === 'gerente') { %>
+    <%- include('../partials/sidebar-gerente', { usuario, paginaAtiva: 'relatorios' }) %>
+  <% } else { %>
+    <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'relatorios' }) %>
+  <% } %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar com filtros inline -->
+    <header class="topbar topbar--filters" role="banner">
+      <div class="topbar__top-row">
+        <h1 class="topbar__title">Relatórios</h1>
+        <p class="topbar__date" id="data-hoje-desktop"></p>
+      </div>
+      <div class="topbar__filters" role="search" aria-label="Filtros de relatório">
+
+        <div class="tfilter">
+          <label class="tfilter__label" for="periodo-desktop">Período</label>
+          <div class="tfilter__select-wrap">
+            <input class="tfilter__input" type="text" id="periodo-desktop" value="01/06/2026  –  01/07/2026" readonly />
+          </div>
+        </div>
+
+        <div class="tfilter">
+          <label class="tfilter__label" for="retiro-desktop">Retiro</label>
+          <div class="tfilter__select-wrap">
+            <select class="tfilter__select" id="retiro-desktop" name="retiro">
+              <option value="">Todos</option>
+              <option value="aroeira">Aroeira</option>
+              <option value="puga">Puga</option>
+              <option value="cmb">CMB</option>
+              <option value="cristo">Cristo</option>
+              <option value="caieira">Caieira</option>
+              <option value="bodoquena">Bodoquena</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tfilter">
+          <label class="tfilter__label" for="tipo-desktop">Tipo de relatório</label>
+          <div class="tfilter__select-wrap">
+            <select class="tfilter__select" id="tipo-desktop" name="tipo">
+              <option value="movimentacoes">Movimentações do rebanho</option>
+              <option value="tarefas">Tarefas</option>
+              <option value="tickets">Tickets de infraestrutura</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Conteúdo desktop: tabela + resumo lado a lado -->
+    <main class="desktop-content desktop-content--relatorio" role="main">
+
+      <!-- Coluna esquerda: Prévia tabela -->
+      <section class="relatorio-preview" aria-labelledby="previa-title">
+        <h2 class="section__title" id="previa-title">Prévia do relatório</h2>
+        <div class="report-table-wrap">
+          <table class="report-table" aria-label="Prévia do relatório">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Retiro</th>
+                <th>Tipo</th>
+                <th>Qtd.</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td--bold">15/06/2026</td><td>Aroeira</td><td>Nascimento</td><td>12</td>
+                <td><span class="badge badge--green">Validado</span></td>
+              </tr>
+              <tr class="tr--alt">
+                <td class="td--bold">16/06/2026</td><td>Puga</td><td>Transferência</td><td>8</td>
+                <td><span class="badge badge--green">Validado</span></td>
+              </tr>
+              <tr>
+                <td class="td--bold">17/06/2026</td><td>CMB</td><td>Vacinação</td><td>45</td>
+                <td><span class="badge badge--yellow">Pendente</span></td>
+              </tr>
+              <tr class="tr--alt">
+                <td class="td--bold">18/06/2026</td><td>Cristo</td><td>Morte</td><td>2</td>
+                <td><span class="badge badge--green">Validado</span></td>
+              </tr>
+              <tr>
+                <td class="td--bold">19/06/2026</td><td>Bodoquena 1</td><td>Compra</td><td>30</td>
+                <td><span class="badge badge--yellow">Pendente</span></td>
+              </tr>
+              <tr class="tr--alt">
+                <td class="td--bold">20/06/2026</td><td>Aroeira</td><td>Transferência</td><td>15</td>
+                <td><span class="badge badge--green">Validado</span></td>
+              </tr>
+              <tr>
+                <td class="td--bold">21/06/2026</td><td>Puga</td><td>Nascimento</td><td>7</td>
+                <td><span class="badge badge--green">Validado</span></td>
+              </tr>
+              <tr class="tr--alt">
+                <td class="td--bold">22/06/2026</td><td>CMB</td><td>Morte</td><td>1</td>
+                <td><span class="badge badge--yellow">Pendente</span></td>
+              </tr>
+              <tr>
+                <td class="td--bold">23/06/2026</td><td>Caieira</td><td>Vacinação</td><td>20</td>
+                <td><span class="badge badge--green">Validado</span></td>
+              </tr>
+              <tr class="tr--alt">
+                <td class="td--bold">24/06/2026</td><td>Cristo</td><td>Transferência</td><td>9</td>
+                <td><span class="badge badge--yellow">Pendente</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Coluna direita: Resumo + Exportar -->
+      <aside class="relatorio-resumo" aria-labelledby="resumo-title">
+        <h2 class="section__title" id="resumo-title">Resumo &amp; Exportar</h2>
+
+        <div class="resumo-card">
+          <p class="resumo-card__title">Resumo do período</p>
+          <hr class="resumo-card__divider" />
+          <dl class="resumo-list">
+            <div class="resumo-list__row"><dt>Total de registros</dt><dd>73</dd></div>
+            <div class="resumo-list__row"><dt>Registros validados</dt><dd>58</dd></div>
+            <div class="resumo-list__row"><dt>Pendentes</dt><dd>15</dd></div>
+            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd>6</dd></div>
+            <div class="resumo-list__row"><dt>Período</dt><dd>30 dias</dd></div>
+          </dl>
+        </div>
+
+        <button class="btn btn--primary btn--exportar-desktop" type="button">
+          Exportar planilha (.xlsx)
+        </button>
+
+        <div class="formato-card">
+          <p class="formato-card__title">Formato .xlsx</p>
+          <p class="formato-card__desc">Compatível com Excel e Google Sheets</p>
+          <p class="formato-card__desc">Apenas registros validados e sincronizados.</p>
+        </div>
+      </aside>
+
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script>
+  const el = document.getElementById('data-hoje-desktop');
+  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+  }).replace(/^\w/, c => c.toUpperCase());
+</script>
+
+</body>
+</html>

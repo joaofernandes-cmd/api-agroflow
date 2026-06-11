@@ -28,6 +28,30 @@ function converterNumeroQuery(valor: unknown): number | undefined | null {
 }
 
 export const RelatorioController = {
+  // - Views -
+
+  // Renderiza a tela de relatórios para o Supervisor
+  renderRelatoriosSupervisor(req: Request, res: Response) {
+    res.render('partials/relatorios', {
+      title: 'Relatórios',
+      css: ['supervisor', 'relatorios'],
+      persona: 'supervisor',
+      usuario: (req as any).usuario ?? { nome: 'Luiz Felipe' },
+    })
+  },
+
+  // Renderiza a tela de relatórios para o Gerente
+  renderRelatoriosGerente(req: Request, res: Response) {
+    res.render('partials/relatorios', {
+      title: 'Relatórios',
+      css: ['gerente', 'relatorios'],
+      persona: 'gerente',
+      usuario: (req as any).usuario ?? { nome: 'Marcos Ferreira' },
+    })
+  },
+
+  // - API -
+
   // RN07: Busca dados de movimentações já sincronizadas e validadas,
   // com filtro opcional por período e retiro.
   async buscarDadosMovimentacoes(req: Request, res: Response) {

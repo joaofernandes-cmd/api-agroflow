@@ -1,0 +1,231 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['supervisor']
+%>
+
+<!-- ============================================================
+     TELA: Delegar tarefa
+     Mobile  → TopNav com voltar + formulário + BottomNav
+     Desktop → Sidebar + TopBar + formulário (esq) + tarefas ativas (dir)
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Delegar tarefa</h1>
+  </header>
+
+  <!-- Formulário -->
+  <main class="form-content" role="main">
+    <form class="delegate-form" id="form-delegar" novalidate>
+
+      <div class="dfield">
+        <label class="dfield__label" for="capataz-mobile">Capataz | Retiro</label>
+        <div class="dfield__select-wrap">
+          <select class="dfield__select" id="capataz-mobile" name="capatazRetiro" required aria-required="true">
+            <option value="" disabled selected>Nome do capataz e do retiro</option>
+            <option value="lucas-aroeira">Lucas • Aroeira</option>
+            <option value="alberto-cmb">Alberto • CMB</option>
+            <option value="jose-cristo">José Carlos • Cristo</option>
+            <option value="manoel-puga">Manoel • Puga</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label" for="atividade-mobile">Atividade solicitada</label>
+        <div class="dfield__select-wrap">
+          <select class="dfield__select" id="atividade-mobile" name="atividade" required aria-required="true">
+            <option value="" disabled selected>Tarefa a delegar</option>
+            <option value="conferencia">Conferência do rebanho</option>
+            <option value="vacinacao">Vacinação</option>
+            <option value="contagem">Contagem geral</option>
+            <option value="inspecao">Inspeção sanitária</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label" for="prioridade-mobile">Prioridade</label>
+        <div class="dfield__select-wrap">
+          <select class="dfield__select" id="prioridade-mobile" name="prioridade" required aria-required="true">
+            <option value="" disabled selected>Nível de prioridade</option>
+            <option value="alta">Alta</option>
+            <option value="media">Média</option>
+            <option value="baixa">Baixa</option>
+            <option value="critica">Crítica</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label" for="descricao-mobile">Descrição (obrigatório)</label>
+        <textarea
+          class="dfield__textarea"
+          id="descricao-mobile"
+          name="descricao"
+          placeholder="Adicione detalhes da tarefa..."
+          required
+          aria-required="true"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--enviar">Enviar</button>
+
+    </form>
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'delegar' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar -->
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'delegar' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Delegar tarefa</h1>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Conteúdo: formulário + tarefas ativas -->
+    <main class="desktop-content delegar-grid" role="main">
+
+      <!-- Coluna esquerda: formulário -->
+      <section class="delegar-form-col" aria-label="Formulário de delegação">
+        <form id="form-delegar-desktop" novalidate>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="capataz-desktop">Capataz | Retiro</label>
+            <div class="dfield__select-wrap">
+              <select class="dfield__select dfield__select--desktop" id="capataz-desktop" name="capatazRetiro" required>
+                <option value="" disabled selected>Nome do capataz e do retiro</option>
+                <option value="lucas-aroeira">Lucas • Aroeira</option>
+                <option value="alberto-cmb">Alberto • CMB</option>
+                <option value="jose-cristo">José Carlos • Cristo</option>
+                <option value="manoel-puga">Manoel • Puga</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="atividade-desktop">Atividade solicitada</label>
+            <div class="dfield__select-wrap">
+              <select class="dfield__select dfield__select--desktop" id="atividade-desktop" name="atividade" required>
+                <option value="" disabled selected>Tarefa a delegar</option>
+                <option value="conferencia">Conferência do rebanho</option>
+                <option value="vacinacao">Vacinação</option>
+                <option value="contagem">Contagem geral</option>
+                <option value="inspecao">Inspeção sanitária</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="prioridade-desktop">Prioridade</label>
+            <div class="dfield__select-wrap">
+              <select class="dfield__select dfield__select--desktop" id="prioridade-desktop" name="prioridade" required>
+                <option value="" disabled selected>Nível de prioridade</option>
+                <option value="alta">Alta</option>
+                <option value="media">Média</option>
+                <option value="baixa">Baixa</option>
+                <option value="critica">Crítica</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="descricao-desktop">Descrição (obrigatório)</label>
+            <textarea
+              class="dfield__textarea dfield__textarea--desktop"
+              id="descricao-desktop"
+              name="descricao"
+              placeholder="Adicione detalhes da tarefa..."
+              required
+              rows="5"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--enviar-desktop">Enviar tarefa</button>
+
+        </form>
+      </section>
+
+      <!-- Coluna direita: tarefas ativas -->
+      <aside class="delegar-tarefas-col" aria-labelledby="tarefas-ativas-title">
+        <h2 class="section__title" id="tarefas-ativas-title">Tarefas ativas</h2>
+
+        <article class="tarefa-card">
+          <div class="tarefa-card__accent tarefa-card__accent--red"></div>
+          <div class="tarefa-card__body">
+            <p class="tarefa-card__name">Vacinação lote B</p>
+            <p class="tarefa-card__meta">Alberto • CMB</p>
+          </div>
+          <span class="prioridade-badge prioridade-badge--alta">Alta</span>
+        </article>
+
+        <article class="tarefa-card">
+          <div class="tarefa-card__accent tarefa-card__accent--yellow"></div>
+          <div class="tarefa-card__body">
+            <p class="tarefa-card__name">Contagem geral</p>
+            <p class="tarefa-card__meta">José Carlos • Cristo</p>
+          </div>
+          <span class="prioridade-badge prioridade-badge--media">Média</span>
+        </article>
+
+        <article class="tarefa-card">
+          <div class="tarefa-card__accent tarefa-card__accent--blue"></div>
+          <div class="tarefa-card__body">
+            <p class="tarefa-card__name">Inspeção sanitária</p>
+            <p class="tarefa-card__meta">Lucas • Aroeira</p>
+          </div>
+          <span class="prioridade-badge prioridade-badge--baixa">Baixa</span>
+        </article>
+
+      </aside>
+
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script>
+  const el = document.getElementById('data-hoje-desktop');
+  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+  }).replace(/^\w/, c => c.toUpperCase());
+
+  document.querySelectorAll('.dfield__select').forEach(sel => {
+    const update = () => sel.classList.toggle('dfield__select--has-value', sel.value !== '');
+    update();
+    sel.addEventListener('change', update);
+  });
+</script>
+
+</body>
+</html>

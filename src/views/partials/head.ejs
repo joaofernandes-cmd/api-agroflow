@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %> — AgroFlow</title>
+
+  <!-- Poppins via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS global (tokens, reset) -->
+  <link rel="stylesheet" href="/css/global.css" />
+
+  <!-- CSS base (layout compartilhado) — sempre carregado -->
+  <link rel="stylesheet" href="/css/base.css" />
+
+  <!-- CSS específico da tela — aceita string simples ou array de arquivos -->
+  <% if (typeof css !== 'undefined') { %>
+    <% (Array.isArray(css) ? css : [css]).forEach(function(file) { %>
+      <link rel="stylesheet" href="/css/<%= file %>.css" />
+    <% }) %>
+  <% } %>
+</head>
