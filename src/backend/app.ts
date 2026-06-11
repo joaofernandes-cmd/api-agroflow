@@ -34,6 +34,10 @@ app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' })
 })
 
+app.get('/', (_req, res) => {
+  res.redirect('/auth/perfil')
+})
+
 app.get('/auth/perfil', (_req, res) => {
   res.render('auth/perfil')
 })
