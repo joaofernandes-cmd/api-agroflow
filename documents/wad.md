@@ -4397,10 +4397,11 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
  
 **Comando executado:** 
 `npm test -- --coverage`
- 
-<p align="center">
-  <img src="documents/others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
-</p>
+
+<div align="center">
+  <p>Resultados de testes coverages em services.</p>
+  <img src="others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
+</div>
  
 ---
  
@@ -4410,6 +4411,56 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 - `npm test -- --coverage` executado com sucesso.
 - Suíte atual: **17 test suites aprovadas**.
 - Casos de teste aprovados na execução de cobertura: **185**.
+
+<div align="center">
+  <p>Resultados de testes em tickets</p>
+  <img src="others/assets/teste1.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em usuário</p>
+  <img src="others/assets/teste2.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em evidências.</p>
+  <img src="others/assets/teste4.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em validações.</p>
+  <img src="others/assets/teste6.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em relatórios.</p>
+  <img src="others/assets/teste7.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em movimentações.</p>
+  <img src="others/assets/teste8.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em sincronizações.</p>
+  <img src="others/assets/teste9.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em health.</p>
+  <img src="others/assets/teste10.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em tarefas.</p>
+  <img src="others/assets/teste11.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de todas as suites de teste passando.</p>
+  <img src="others/assets/teste12.png" alt="Resultados de testes coverages em services." />
+</div>
 ---
  
 #### Mapeamento de Rastreabilidade
