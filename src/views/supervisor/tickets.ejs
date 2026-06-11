@@ -1,0 +1,238 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['supervisor']
+%>
+
+<!-- ============================================================
+     TELA: Tickets de infraestrutura
+     Mobile  → TopNav com voltar + filtro com badge + lista de cards + BottomNav
+     Desktop → Sidebar + TopBar + barra de busca + tabela com botão Atender/Ver
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Tickets de infraestrutura</h1>
+  </header>
+
+  <!-- Filtro + badge -->
+  <div class="tickets-filter-bar">
+    <span class="tickets-filter-label">Todos os tickets</span>
+    <span class="tickets-badge-ativos">3 ativos</span>
+  </div>
+
+  <!-- Lista de tickets -->
+  <main class="tickets-list" role="main">
+
+    <article class="ticket-card ticket-card--red">
+      <div class="ticket-card__accent ticket-card__accent--red"></div>
+      <div class="ticket-card__body">
+        <p class="ticket-card__name">Cerca danificada no pasto</p>
+        <p class="ticket-card__meta">Puga • Hoje, 08:24</p>
+      </div>
+      <span class="sev-badge sev-badge--alta">Alta</span>
+      <button class="ticket-card__check" aria-label="Marcar como resolvido">
+        <img src="https://www.figma.com/api/mcp/asset/14cb9276-a11c-4319-ac72-a804ca406a77" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="ticket-card ticket-card--yellow">
+      <div class="ticket-card__accent ticket-card__accent--yellow"></div>
+      <div class="ticket-card__body">
+        <p class="ticket-card__name">Estoque de ração abaixo do mínimo</p>
+        <p class="ticket-card__meta">Bodoquena 1 • Hoje, 10:45</p>
+      </div>
+      <span class="sev-badge sev-badge--media">Média</span>
+      <button class="ticket-card__check" aria-label="Marcar como resolvido">
+        <img src="https://www.figma.com/api/mcp/asset/4a9950c7-2741-4372-a4ab-bff9dab23649" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="ticket-card ticket-card--red">
+      <div class="ticket-card__accent ticket-card__accent--red"></div>
+      <div class="ticket-card__body">
+        <p class="ticket-card__name">Bomba d'água com falha</p>
+        <p class="ticket-card__meta">Cristo • Amanhã</p>
+      </div>
+      <span class="sev-badge sev-badge--alta">Alta</span>
+      <button class="ticket-card__check" aria-label="Marcar como resolvido">
+        <img src="https://www.figma.com/api/mcp/asset/4a9950c7-2741-4372-a4ab-bff9dab23649" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="ticket-card ticket-card--red">
+      <div class="ticket-card__accent ticket-card__accent--red"></div>
+      <div class="ticket-card__body">
+        <p class="ticket-card__name">Bebedouro com defeito</p>
+        <p class="ticket-card__meta">CMB • em 3 dias</p>
+      </div>
+      <span class="sev-badge sev-badge--alta">Alta</span>
+      <button class="ticket-card__check" aria-label="Marcar como resolvido">
+        <img src="https://www.figma.com/api/mcp/asset/4a9950c7-2741-4372-a4ab-bff9dab23649" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="ticket-card ticket-card--blue">
+      <div class="ticket-card__accent ticket-card__accent--blue"></div>
+      <div class="ticket-card__body">
+        <p class="ticket-card__name">Veículo do retiro sem manutenção</p>
+        <p class="ticket-card__meta">Bodoquena 2 • há 5 dias</p>
+      </div>
+      <span class="sev-badge sev-badge--baixa">Baixa</span>
+      <button class="ticket-card__check" aria-label="Resolvido">
+        <img src="https://www.figma.com/api/mcp/asset/14cb9276-a11c-4319-ac72-a804ca406a77" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="ticket-card ticket-card--yellow">
+      <div class="ticket-card__accent ticket-card__accent--yellow"></div>
+      <div class="ticket-card__body">
+        <p class="ticket-card__name">Gerador sem combustível</p>
+        <p class="ticket-card__meta">Bodoquena 1 • em 4 dias</p>
+      </div>
+      <span class="sev-badge sev-badge--media">Média</span>
+      <button class="ticket-card__check" aria-label="Marcar como resolvido">
+        <img src="https://www.figma.com/api/mcp/asset/14cb9276-a11c-4319-ac72-a804ca406a77" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'tickets' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar -->
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'tickets' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Tickets de Infraestrutura</h1>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Barra de busca + badge desktop -->
+    <div class="tickets-filter-bar-desktop" role="search">
+      <div class="revisao-search-wrap-desktop">
+        <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          class="revisao-search-desktop"
+          type="search"
+          placeholder="Buscar chamados..."
+          aria-label="Buscar chamados"
+        />
+      </div>
+      <span class="tickets-badge-ativos tickets-badge-ativos--desktop">3 Ativos</span>
+    </div>
+
+    <!-- Tabela de tickets -->
+    <main class="desktop-content revisao-desktop-content" role="main">
+      <div class="revisao-table-wrap">
+        <table class="revisao-table" aria-label="Lista de tickets de infraestrutura">
+          <thead>
+            <tr>
+              <th></th><!-- accent -->
+              <th>Chamado</th>
+              <th>Retiro</th>
+              <th>Data/Hora</th>
+              <th>Severidade</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td--accent td--accent-red"></td>
+              <td class="td--bold">Cerca danificada no pasto</td>
+              <td>Puga</td>
+              <td>Hoje, 08:24</td>
+              <td><span class="badge badge--red-soft">Alta</span></td>
+              <td><span class="badge badge--red-soft">Ativo</span></td>
+              <td><button class="btn-atender">Atender</button></td>
+            </tr>
+            <tr class="tr--alt">
+              <td class="td--accent td--accent-yellow"></td>
+              <td class="td--bold">Estoque de ração abaixo do mínimo</td>
+              <td>Bodoquena 1</td>
+              <td>Hoje, 10:45</td>
+              <td><span class="badge badge--yellow">Média</span></td>
+              <td><span class="badge badge--red-soft">Ativo</span></td>
+              <td><button class="btn-atender">Atender</button></td>
+            </tr>
+            <tr>
+              <td class="td--accent td--accent-red"></td>
+              <td class="td--bold">Bomba d'água com falha</td>
+              <td>Cristo</td>
+              <td>Amanhã</td>
+              <td><span class="badge badge--red-soft">Alta</span></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><button class="btn-atender">Atender</button></td>
+            </tr>
+            <tr class="tr--alt">
+              <td class="td--accent td--accent-red"></td>
+              <td class="td--bold">Bebedouro com defeito</td>
+              <td>CMB</td>
+              <td>em 3 dias</td>
+              <td><span class="badge badge--red-soft">Alta</span></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><button class="btn-atender">Atender</button></td>
+            </tr>
+            <tr>
+              <td class="td--accent td--accent-blue"></td>
+              <td class="td--bold">Veículo do retiro sem manutenção</td>
+              <td>Bodoquena 2</td>
+              <td>há 5 dias</td>
+              <td><span class="badge badge--blue">Baixa</span></td>
+              <td><span class="badge badge--green">Resolvido</span></td>
+              <td><button class="btn-ver">Ver</button></td>
+            </tr>
+            <tr class="tr--alt">
+              <td class="td--accent td--accent-yellow"></td>
+              <td class="td--bold">Gerador sem combustível</td>
+              <td>Bodoquena 1</td>
+              <td>em 4 dias</td>
+              <td><span class="badge badge--yellow">Média</span></td>
+              <td><span class="badge badge--red-soft">Ativo</span></td>
+              <td><button class="btn-atender">Atender</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script>
+  const el = document.getElementById('data-hoje-desktop');
+  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+  }).replace(/^\w/, c => c.toUpperCase());
+</script>
+
+</body>
+</html>
