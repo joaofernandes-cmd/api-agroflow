@@ -2176,6 +2176,8 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Controllers exemplificam o princípio Single Responsibility, ao se ocuparem exclusivamente do tratamento das requisições e respostas HTTP, como códigos de status, serialização e remoção de dados sensíveis, delegando toda a lógica de negócio aos Services e mantendo, assim, uma clara separação de responsabilidades entre as camadas.
 
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação combinada do padrão Model-View-Controller adaptado para API REST e da arquitetura Controller-Service-Repository estrutura o backend do AgroFlow em camadas com responsabilidades bem delimitadas, mantendo decisões de transporte HTTP, regras de negócio e acesso a dados isoladas entre si. A separação entre `Controllers`, `Services` e `Repositories` permite que regras específicas do domínio agropecuário, como a validação condicional de campos por tipo de movimentação e o controle de permissões por cargo, sejam alteradas sem impacto direto sobre o roteamento ou a persistência. Os `Middlewares` complementam essa estrutura ao concentrar preocupações transversais como autenticação JWT, autorização por cargo, validação de payload e tratamento centralizado de erros, evitando duplicação de lógica entre endpoints. O alinhamento dessas decisões com os princípios SOLID, em especial Single Responsibility, Open/Closed e Dependency Inversion, torna o sistema mais testável, manutenível e preparado para evoluir conforme novas regras de negócio sejam incorporadas em sprints futuras, sem comprometer a base já validada.
+
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
