@@ -58,10 +58,12 @@ app.get('/supervisor/home', (req, res) => {
 // Supervisor acessa relatórios
 app.get('/supervisor/relatorios', (req, res) => {
   res.render('partials/relatorios', {
-    title: 'Relatórios', css: 'relatorios',
-    persona: 'supervisor', usuario: { nome: 'Luiz Felipe' }
-  });
-});
+    title: 'Relatórios',
+    css: ['supervisor', 'relatorios'],   // ← passa os dois!
+    persona: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  })
+})
 
 // Gerente acessa os mesmos relatórios - mesma view
 app.get('/gerente/relatorios', (req, res) => {
