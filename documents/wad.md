@@ -837,7 +837,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Implementado |
 | RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Implementado |
 | RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Implementado |
-| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Implementado |
+| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Média | Implementado |
+| RF012 | O sistema deve permitir o cadastro, a consulta, a atualização e a remoção de usuários, incluindo a consulta de usuários vinculados a um retiro específico. | Média | Implementado |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -860,6 +861,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, validado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="validado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
 | RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas) considerando exclusivamente movimentações com status="validado" e tarefas/tickets com status="aprovado", sempre com flag sincronizado=true. Registros pendentes ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros conferidos e sincronizados são incluídos no cálculo. Dado que existem registros pendentes, quando o dashboard carrega, então esses registros não aparecem nos totalizadores exibidos. |
 | RN11 | A prioridade do ticket (alta, média ou baixa) deve ser obrigatoriamente selecionada no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida para reorganização da demanda operacional. | RF011 | Dado que um Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
+| RN12 | O cadastro, a consulta, a atualização e a remoção de usuários devem ser permitidos somente para usuários autenticados com perfil "Gerente". Na criação, os campos `retiro_id`, nome, login, `senha_hash`, cargo e status são obrigatórios, o login deve possuir formato de e-mail válido e o campo `senha_hash` não deve ser exposto nas respostas da API. | RF012 | Dado que um usuário sem perfil "Gerente" tenta acessar uma rota administrativa de usuários, então o sistema retorna HTTP 403. Dado que um Gerente cria um usuário com os campos obrigatórios e login válido, então o sistema retorna HTTP 201 sem expor o campo `senha_hash`. |
 
 
 
@@ -1005,7 +1007,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na [Seção 3.1.1](#c3.1.1), a Regra de Negócio (RN) que o restringe ([Seção 3.1.2](#c3.1.2)) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias`, `relatorios` e `usuarios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da [Seção 3.1](#c3.1), partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
@@ -1025,10 +1027,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
 | RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/tarefas/contagem/status`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
 | RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
+| RF012 | RN12 | `/usuarios`<br>`/usuarios/{id}`<br>`/usuarios/retiro/{retiroId}` | POST/GET<br>GET/PATCH/DELETE<br>GET |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08 e RN11. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens`, `/tickets` e `/usuarios`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08, RN11 e RN12. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Três grupos de endpoints fogem desse padrão de criação simples. O grupo `/sincronizacao` (RF003) consulta conexão, processa dados pendentes e informa o estado da sincronização, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais. O grupo `/validacoes` (RF006) usa middlewares de autenticação e autorização por cargo, restringindo as ações ao perfil Supervisor conforme RN06. Já o grupo `/relatorios` (RF007) é protegido pelos mesmos mecanismos de autenticação, permitindo acesso a Gerente e Supervisor, e filtra a resposta para conter apenas dados sincronizados e válidos para consolidação.
 
@@ -3568,7 +3571,7 @@ VALUES (?, ?, ?, ?);
       - `400 Bad Request`: `"Foto rejeitada: georreferenciamento inválido ou ausente"`
       - `500 Internal Server Error`: Falha interna.
 
-**RF005 — Autenticação e Gerenciamento de Usuários (Prioridade: Alta)**
+**RF005 — Autenticação de Usuários (Prioridade: Alta)**
 
 29. Autenticar Usuário e Obter Token JWT
 
@@ -3582,84 +3585,6 @@ VALUES (?, ?, ?, ?);
       - `400 Bad Request`: Login ou senha ausentes.
       - `401 Unauthorized`: Credenciais inválidas.
       - `403 Forbidden`: Usuário inativo ou cargo `capataz`.
-      - `500 Internal Server Error`: Falha interna.
-
-30. Criar Usuário
-
-    - **Endereço:** `/usuarios`
-    - **Método:** POST
-    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
-    - **Respostas:**
-      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `401 Unauthorized`: Token ausente ou inválido.
-      - `403 Forbidden`: Cargo insuficiente.
-      - `500 Internal Server Error`: Falha interna.
-
-31. Listar Todos os Usuários
-
-    - **Endereço:** `/usuarios`
-    - **Método:** GET
-    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-32. Buscar Usuário por ID
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** GET
-    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Objeto do usuário (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-33. Listar Usuários por Retiro
-
-    - **Endereço:** `/usuarios/retiro/:retiroId`
-    - **Método:** GET
-    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários do retiro.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-34. Atualizar Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos parciais a atualizar.
-    - **Respostas:**
-      - `200 OK`: Usuário atualizado (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-35. Remover Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** DELETE
-    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `204 No Content`: Removido com sucesso.
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
       - `500 Internal Server Error`: Falha interna.
 
 **RF006 — Validações (Prioridade: Média)**
@@ -3687,9 +3612,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Movimentação validada.
-      - `400 Bad Request`: Movimentação já validada ou violação de regra.
+      - `400 Bad Request`: Movimentação não encontrada, já validada ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Movimentação não encontrada.
       - `500 Internal Server Error`: Falha interna.
 
 38. Aprovar Tarefa
@@ -3701,8 +3625,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Tarefa aprovada.
+      - `400 Bad Request`: Tarefa não encontrada, já aprovada ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Tarefa não encontrada.
       - `500 Internal Server Error`: Falha interna.
 
 39. Aprovar Ticket de Infraestrutura
@@ -3714,8 +3638,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Ticket aprovado.
+      - `400 Bad Request`: Ticket não encontrado, já aprovado ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Ticket não encontrado.
       - `500 Internal Server Error`: Falha interna.
 
 **RF007 — Relatórios (Prioridade: Média)**
@@ -3872,7 +3796,7 @@ VALUES (?, ?, ?, ?);
     - **Método:** PATCH
     - **Descrição:** Atualiza o status de um ticket existente.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "status": "pendente" | "aprovado" }`
+    - **Body:** `{ "novoStatus": "pendente" | "aprovado" }`
     - **Respostas:**
       - `200 OK`: Status atualizado.
       - `404 Not Found`: Ticket não encontrado.
@@ -3971,7 +3895,7 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Resposta:** `200 OK` — `{ "alta": 2, "media": 5, "baixa": 1 }`; `500 Internal Server Error` — Falha interna.
 
-**RF011 — Prioridade de Tickets (Prioridade: Alta)**
+**RF011 — Prioridade de Tickets (Prioridade: Média)**
 
 62. Listar Tickets por Prioridade
 
@@ -3996,6 +3920,87 @@ VALUES (?, ?, ?, ?);
       - `200 OK`: Prioridade atualizada.
       - `400 Bad Request`: Campo ausente ou ID inválido.
       - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF012 — Gestão de Usuários (Prioridade: Média)**
+
+30. Criar Usuário
+
+    - **Endereço:** `/usuarios`
+    - **Método:** POST
+    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
+    - **Respostas:**
+      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `400 Bad Request`: Login fora do formato de e-mail — `{ "error": "Login deve ser um email válido" }`.
+      - `401 Unauthorized`: Token ausente ou inválido.
+      - `403 Forbidden`: Cargo insuficiente.
+      - `500 Internal Server Error`: Falha interna.
+
+31. Listar Todos os Usuários
+
+    - **Endereço:** `/usuarios`
+    - **Método:** GET
+    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+32. Buscar Usuário por ID
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** GET
+    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Objeto do usuário (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+33. Listar Usuários por Retiro
+
+    - **Endereço:** `/usuarios/retiro/:retiroId`
+    - **Método:** GET
+    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários do retiro.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+34. Atualizar Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos parciais a atualizar.
+    - **Respostas:**
+      - `200 OK`: Usuário atualizado (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+35. Remover Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** DELETE
+    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `204 No Content`: Removido com sucesso.
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
       - `500 Internal Server Error`: Falha interna.
 
 &nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
@@ -4035,8 +4040,9 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 | Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Testes automatizados executados: `GET /movimentacoes/filtrar` com parâmetros de retiro, tipo, status e período retornando HTTP 200 com a lista filtrada; `GET /movimentacoes` e `GET /movimentacoes/pendentes` retornando HTTP 200 |
 | Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /tarefas/contagem/status`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: endpoints de dashboard de movimentações, tarefas e tickets retornando HTTP 200; endpoints de contagem por tipo, status e prioridade retornando HTTP 200 com os agrupamentos correspondentes |
 | Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Testes automatizados executados: `GET /tickets/prioridade` retornando HTTP 200 com a lista filtrada; `GET /tickets/contagem/prioridade` retornando HTTP 200 com a contagem agrupada; `PATCH /tickets/{id}/prioridade` retornando HTTP 200 com o ticket atualizado |
+| Gerente Marcos | RF012 | RN12 | `POST /usuarios`; `GET /usuarios`; `GET /usuarios/{id}`; `GET /usuarios/retiro/{retiroId}`; `PATCH /usuarios/{id}`; `DELETE /usuarios/{id}` | Gestão de usuários | CT-RF012 (`usuario.spec.ts`) | Saída da execução de `npm test -- --runInBand src/backend/tests/integration/usuario.spec.ts`: 1 suíte e 10 testes aprovados; `POST /usuarios` retornando HTTP 201; `GET /usuarios` retornando HTTP 200 sem exposição do campo `senha_hash`; consultas por ID e retiro e atualização retornando HTTP 200; `DELETE /usuarios/{id}` retornando HTTP 204; cenário da RN12 verificando que usuário sem perfil Gerente recebe HTTP 403 com a mensagem `Acesso negado: cargo insuficiente` |
 
-&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
+&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
 
 &nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 50 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
 
