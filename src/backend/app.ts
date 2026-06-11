@@ -65,6 +65,14 @@ app.get('/supervisor/relatorios', (req, res) => {
   })
 })
 
+app.get('/gerente/home', (req, res) => {
+  res.render('gerente/home', {
+    title: 'Início',
+    css: 'gerente',
+    usuario: { nome: 'Marcos Ferreira' }
+  });
+});
+
 // Gerente acessa os mesmos relatórios - mesma view
 app.get('/gerente/relatorios', (req, res) => {
   res.render('partials/relatorios', {
