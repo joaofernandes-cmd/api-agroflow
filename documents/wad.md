@@ -827,17 +827,18 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Planejado |
-| RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Planejado    |
-| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Planejado |
-| RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Planejado |
-| RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Planejado |
-| RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Planejado |
-| RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Planejado |
-| RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Planejado |
-| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Planejado |
-| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Planejado |
-| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Alta | Planejado |
+| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
+| RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Implementado    |
+| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Implementado |
+| RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Implementado |
+| RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Implementado |
+| RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Implementado |
+| RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Implementado |
+| RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Implementado |
+| RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Implementado |
+| RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Implementado |
+| RF011 | O sistema deve permitir a definição de prioridade dos tickets de infraestrutura (alta, média ou baixa) para organização da demanda de manutenção. | Média | Implementado |
+| RF012 | O sistema deve permitir o cadastro, a consulta, a atualização e a remoção de usuários, incluindo a consulta de usuários vinculados a um retiro específico. | Média | Implementado |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -860,6 +861,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RN09 | Os filtros de movimentação devem permitir seleção múltipla para os campos tipo (nascimento, morte, transferência, compra, venda, outros) e status (pendente, validado), mas apenas um retiro por vez. Quando nenhum filtro é aplicado, o sistema deve exibir todas as movimentações com status="pendente" dos retiros sob responsabilidade do Supervisor. | RF009 | Dado que um Supervisor acessa a interface de validação sem aplicar filtros, quando a página carrega, então o sistema exibe todas as movimentações com status="pendente" dos retiros vinculados ao perfil do Supervisor. Dado que o Supervisor aplica filtro tipo="morte" e status="validado", quando confirma, então apenas movimentações que atendem ambos os critérios são exibidas na listagem. |
 | RN10 | O dashboard do Gerente deve calcular e exibir os indicadores consolidados (total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas) considerando exclusivamente movimentações com status="validado" e tarefas/tickets com status="aprovado", sempre com flag sincronizado=true. Registros pendentes ou não sincronizados não devem ser contabilizados nos indicadores. Os dados devem ser segmentados por retiro, exibindo totais individuais e um totalizador geral. | RF010 | Dado que o Gerente acessa o dashboard, quando o sistema processa os indicadores, então apenas registros conferidos e sincronizados são incluídos no cálculo. Dado que existem registros pendentes, quando o dashboard carrega, então esses registros não aparecem nos totalizadores exibidos. |
 | RN11 | A prioridade do ticket (alta, média ou baixa) deve ser obrigatoriamente selecionada no momento da criação do ticket. O sistema deve bloquear o envio caso o campo prioridade não seja preenchido, retornando erro de validação HTTP 400. A alteração de prioridade posterior via edição deve ser permitida para reorganização da demanda operacional. | RF011 | Dado que um Capataz tenta criar um ticket sem selecionar o campo prioridade, quando tenta enviar, então o sistema retorna HTTP 400 com mensagem "Campo prioridade é obrigatório". |
+| RN12 | O cadastro, a consulta, a atualização e a remoção de usuários devem ser permitidos somente para usuários autenticados com perfil "Gerente". Na criação, os campos `retiro_id`, nome, login, `senha_hash`, cargo e status são obrigatórios, o login deve possuir formato de e-mail válido e o campo `senha_hash` não deve ser exposto nas respostas da API. | RF012 | Dado que um usuário sem perfil "Gerente" tenta acessar uma rota administrativa de usuários, então o sistema retorna HTTP 403. Dado que um Gerente cria um usuário com os campos obrigatórios e login válido, então o sistema retorna HTTP 201 sem expor o campo `senha_hash`. |
 
 
 
@@ -913,7 +915,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |:--|:--|
 | **Requisito Não Funcional** | As telas principais (registro de movimentação, listagem de tarefas, painel de tickets) devem carregar de forma responsiva, mesmo em conexões de baixa qualidade, sem latência perceptível para operações realizadas em modo offline. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (tablets Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (celulares Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
 | **Como será atendido** | Assets leves otimizados (imagens WebP, minificação de JS/CSS), lazy loading de componentes, dados carregados do IndexedDB local no modo offline (sem requisições de rede), cache de recursos estáticos via Service Worker, compressão gzip/brotli no servidor. |
@@ -975,11 +977,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | Campo | Conteúdo |
 |:--|:--|
-| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para tablets Android. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e tablets Android (viewport 768px–1024px). |
-| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica tablets Android como dispositivos de campo dos capatazes. |
+| **Requisito Não Funcional** | A identidade visual do sistema deve seguir estritamente a logo, paleta de cores e tipografia oficial da BrPec Agropecuária. A aplicação deve ser exclusivamente web (não nativa), compatível com navegadores modernos (Chrome, Edge, Safari) e responsiva para celulares Android. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e celulares Android (viewport 768px–1024px). |
+| **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
-| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para tablets (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
+| **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para celulares (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
 
 ---
 
@@ -1005,7 +1007,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na [Seção 3.1.1](#c3.1.1), a Regra de Negócio (RN) que o restringe ([Seção 3.1.2](#c3.1.2)) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias` e `relatorios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias`, `relatorios` e `usuarios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da [Seção 3.1](#c3.1), partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
@@ -1015,20 +1017,21 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
 | RF001 | RN01 | `/movimentacoes`<br>`/movimentacoes/{id}` | POST<br>GET/PATCH/DELETE |
-| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>PATCH |
+| RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/status/{status}`<br>`/tarefas/usuario/{usuarioId}`<br>`/tarefas/prioridade/{prioridade}`<br>`/tarefas/categoria/{categoria}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>GET<br>GET<br>GET<br>GET<br>PATCH |
 | RF003 | RN03 | `/sincronizacao/conexao`<br>`/sincronizacao`<br>`/sincronizacao/status`<br>`/sincronizacao/mensagem`<br>`/movimentacoes/sincronizar`<br>`/movimentacoes/{id}/sincronizar` | GET<br>POST<br>GET<br>GET<br>POST<br>PATCH |
 | RF004 | RN04 | `/evidencias`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>POST<br>POST<br>POST |
 | RF005 | RN05 | `/usuarios/login` | POST |
 | RF006 | RN06 | `/validacoes/permissao`<br>`/validacoes/movimentacoes/{id}/validar`<br>`/validacoes/tarefas/{id}/aprovar`<br>`/validacoes/tickets/{id}/aprovar` | POST<br>PATCH<br>PATCH<br>PATCH |
 | RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
-| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/{id}`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>PATCH<br>PATCH |
+| RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/status`<br>`/tickets/categoria`<br>`/tickets/{id}`<br>`/tickets/{id}/status`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>GET<br>GET<br>PATCH<br>PATCH<br>PATCH |
 | RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
-| RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
+| RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/tarefas/contagem/status`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
 | RF011 | RN11 | `/tickets/prioridade`<br>`/tickets/contagem/prioridade`<br>`/tickets/{id}/prioridade` | GET<br>GET<br>PATCH |
+| RF012 | RN12 | `/usuarios`<br>`/usuarios/{id}`<br>`/usuarios/retiro/{retiroId}` | POST/GET<br>GET/PATCH/DELETE<br>GET |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens` e `/tickets`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08 e RN11. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de criação (`/movimentacoes`, `/tarefas`, `/evidencias/fotos`, `/evidencias/audios`, `/evidencias/mensagens`, `/tickets` e `/usuarios`) estão associados às regras de negócio que definem seus campos obrigatórios — RN01, RN02, RN04, RN08, RN11 e RN12. Essas validações ocorrem no backend antes da persistência, retornando erro HTTP apropriado quando um requisito não é atendido.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Três grupos de endpoints fogem desse padrão de criação simples. O grupo `/sincronizacao` (RF003) consulta conexão, processa dados pendentes e informa o estado da sincronização, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais. O grupo `/validacoes` (RF006) usa middlewares de autenticação e autorização por cargo, restringindo as ações ao perfil Supervisor conforme RN06. Já o grupo `/relatorios` (RF007) é protegido pelos mesmos mecanismos de autenticação, permitindo acesso a Gerente e Supervisor, e filtra a resposta para conter apenas dados sincronizados e válidos para consolidação.
 
@@ -2090,6 +2093,47 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
+
+
+### Explicação do diagrama:
+**Nós Clientes**
+ 
+• O dispositivo do *Capataz* é um celular Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
+ 
+• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+ 
+• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
+
+**Nó do Servidor de Aplicação**
+ 
+• O *Application Server* é hospedado em nuvem (AWS ou equivalente) e executa o backend desenvolvido em *Node.js + Express + TypeScript*, responsável pela camada REST do sistema.
+ 
+• Esse nó concentra todos os controladores e serviços do AgroFlow, processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+ 
+ 
+**Nó do Servidor de Banco de Dados**
+ 
+• O *Database Server* é hospedado no *Supabase* e executa o *PostgreSQL* como sistema de gerenciamento de banco de dados relacional.
+ 
+• Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
+
+**Canais de Comunicação**
+ 
+• A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* com autenticação baseada em *JWT*, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
+ 
+• A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
+
+<div align="center">
+<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 *Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
@@ -2415,7 +2459,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
-&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e tablets utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e celulares utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
 
 <div align="center">
 <p align="center">Figura 39 - Iconografia</p>
@@ -3527,7 +3571,7 @@ VALUES (?, ?, ?, ?);
       - `400 Bad Request`: `"Foto rejeitada: georreferenciamento inválido ou ausente"`
       - `500 Internal Server Error`: Falha interna.
 
-**RF005 — Autenticação e Gerenciamento de Usuários (Prioridade: Alta)**
+**RF005 — Autenticação de Usuários (Prioridade: Alta)**
 
 29. Autenticar Usuário e Obter Token JWT
 
@@ -3541,84 +3585,6 @@ VALUES (?, ?, ?, ?);
       - `400 Bad Request`: Login ou senha ausentes.
       - `401 Unauthorized`: Credenciais inválidas.
       - `403 Forbidden`: Usuário inativo ou cargo `capataz`.
-      - `500 Internal Server Error`: Falha interna.
-
-30. Criar Usuário
-
-    - **Endereço:** `/usuarios`
-    - **Método:** POST
-    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
-    - **Respostas:**
-      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `401 Unauthorized`: Token ausente ou inválido.
-      - `403 Forbidden`: Cargo insuficiente.
-      - `500 Internal Server Error`: Falha interna.
-
-31. Listar Todos os Usuários
-
-    - **Endereço:** `/usuarios`
-    - **Método:** GET
-    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-32. Buscar Usuário por ID
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** GET
-    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Objeto do usuário (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-33. Listar Usuários por Retiro
-
-    - **Endereço:** `/usuarios/retiro/:retiroId`
-    - **Método:** GET
-    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários do retiro.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-34. Atualizar Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos parciais a atualizar.
-    - **Respostas:**
-      - `200 OK`: Usuário atualizado (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-35. Remover Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** DELETE
-    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `204 No Content`: Removido com sucesso.
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
       - `500 Internal Server Error`: Falha interna.
 
 **RF006 — Validações (Prioridade: Média)**
@@ -3646,9 +3612,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Movimentação validada.
-      - `400 Bad Request`: Movimentação já validada ou violação de regra.
+      - `400 Bad Request`: Movimentação não encontrada, já validada ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Movimentação não encontrada.
       - `500 Internal Server Error`: Falha interna.
 
 38. Aprovar Tarefa
@@ -3660,8 +3625,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Tarefa aprovada.
+      - `400 Bad Request`: Tarefa não encontrada, já aprovada ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Tarefa não encontrada.
       - `500 Internal Server Error`: Falha interna.
 
 39. Aprovar Ticket de Infraestrutura
@@ -3673,8 +3638,8 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Ticket aprovado.
+      - `400 Bad Request`: Ticket não encontrado, já aprovado ou violação de regra.
       - `403 Forbidden`: Cargo não autorizado.
-      - `404 Not Found`: Ticket não encontrado.
       - `500 Internal Server Error`: Falha interna.
 
 **RF007 — Relatórios (Prioridade: Média)**
@@ -3831,7 +3796,7 @@ VALUES (?, ?, ?, ?);
     - **Método:** PATCH
     - **Descrição:** Atualiza o status de um ticket existente.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "status": "pendente" | "aprovado" }`
+    - **Body:** `{ "novoStatus": "pendente" | "aprovado" }`
     - **Respostas:**
       - `200 OK`: Status atualizado.
       - `404 Not Found`: Ticket não encontrado.
@@ -3930,7 +3895,7 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Resposta:** `200 OK` — `{ "alta": 2, "media": 5, "baixa": 1 }`; `500 Internal Server Error` — Falha interna.
 
-**RF011 — Prioridade de Tickets (Prioridade: Alta)**
+**RF011 — Prioridade de Tickets (Prioridade: Média)**
 
 62. Listar Tickets por Prioridade
 
@@ -3955,6 +3920,87 @@ VALUES (?, ?, ?, ?);
       - `200 OK`: Prioridade atualizada.
       - `400 Bad Request`: Campo ausente ou ID inválido.
       - `404 Not Found`: Ticket não encontrado.
+      - `500 Internal Server Error`: Falha interna.
+
+**RF012 — Gestão de Usuários (Prioridade: Média)**
+
+30. Criar Usuário
+
+    - **Endereço:** `/usuarios`
+    - **Método:** POST
+    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos: `retiro_id` (number, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
+    - **Respostas:**
+      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
+      - `400 Bad Request`: Campo obrigatório ausente.
+      - `400 Bad Request`: Login fora do formato de e-mail — `{ "error": "Login deve ser um email válido" }`.
+      - `401 Unauthorized`: Token ausente ou inválido.
+      - `403 Forbidden`: Cargo insuficiente.
+      - `500 Internal Server Error`: Falha interna.
+
+31. Listar Todos os Usuários
+
+    - **Endereço:** `/usuarios`
+    - **Método:** GET
+    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+32. Buscar Usuário por ID
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** GET
+    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Objeto do usuário (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+33. Listar Usuários por Retiro
+
+    - **Endereço:** `/usuarios/retiro/:retiroId`
+    - **Método:** GET
+    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de usuários do retiro.
+      - `400 Bad Request`: `retiroId` inválido.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+34. Atualizar Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** PATCH
+    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
+    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
+    - **Body:** Campos parciais a atualizar.
+    - **Respostas:**
+      - `200 OK`: Usuário atualizado (sem `senha_hash`).
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+35. Remover Usuário
+
+    - **Endereço:** `/usuarios/:id`
+    - **Método:** DELETE
+    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `204 No Content`: Removido com sucesso.
+      - `404 Not Found`: Usuário não encontrado.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
       - `500 Internal Server Error`: Falha interna.
 
 &nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
@@ -3983,19 +4029,24 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 |---------|----|----|----------|------|-------|-----------|
-| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Criação com campos por tipo, busca por ID, atualização, remoção e persistência em `movimentacao` e tabela especializada correspondente |
-| Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Criação com usuário atribuído, descrição, categoria e prioridade; listagem, atualização, mudança de status e remoção testadas por endpoint |
-| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Detecção de conexão, processamento de pendências, mensagem/status de sincronização e atualização da flag `sincronizado` |
-| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Criação de foto, áudio e mensagem; busca/listagem de evidências; validação de georreferenciamento para fotos no service |
-| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Autenticação por login e senha, bloqueio de Capataz no fluxo de login, retorno sem `senha_hash` e geração de token para rotas protegidas |
-| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Rotas protegidas por `autenticarUsuario` e `exigirCargo('supervisor')`; movimentação atualizada para `validado` e tarefa/ticket para `aprovado` |
-| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Rotas protegidas por autenticação e cargo Gerente/Supervisor; relatórios gerados apenas com dados sincronizados e válidos para consolidação |
-| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets/pendentes`; `GET /tickets/{id}`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Criação de ticket com evidência descritiva obrigatória no service, listagem de pendentes, atribuição e aprovação por Supervisor |
-| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Filtro por retiro, tipo, status e período; listagem de pendentes para validação; aliases aceitos pelo controller para compatibilidade |
-| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Indicadores baseados em movimentações `validado`, tarefas/tickets `aprovado` e registros sincronizados, segmentados por retiro quando informado |
-| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Criação exige prioridade no service; filtro, contagem e alteração aceitam os valores `alta`, `media` e `baixa` |
+| Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Testes automatizados executados: `POST /movimentacoes` retornando HTTP 201 e objeto da movimentação; `GET` e `PATCH /movimentacoes/{id}` retornando HTTP 200; `DELETE /movimentacoes/{id}` retornando HTTP 204 |
+| Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `GET /tarefas/{id}`; `GET /tarefas/status/{status}`; `GET /tarefas/usuario/{usuarioId}`; `GET /tarefas/prioridade/{prioridade}`; `GET /tarefas/categoria/{categoria}`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204 |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada |
+| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias` e `GET /evidencias/{id}` retornando HTTP 200 |
+| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 50 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
+| Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
+| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal` e `GET /relatorios/mensal` retornando HTTP 200 com dados de movimentações; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
+| Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets`; `GET /tickets/pendentes`; `GET /tickets/status`; `GET /tickets/categoria`; `GET /tickets/{id}`; `PATCH /tickets/{id}/status`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
+| Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`; `GET /movimentacoes`; `GET /movimentacoes/pendentes` | Filtro de movimentações | CT-RF009 (`movimentacao.spec.ts`) | Testes automatizados executados: `GET /movimentacoes/filtrar` com parâmetros de retiro, tipo, status e período retornando HTTP 200 com a lista filtrada; `GET /movimentacoes` e `GET /movimentacoes/pendentes` retornando HTTP 200 |
+| Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /tarefas/contagem/status`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: endpoints de dashboard de movimentações, tarefas e tickets retornando HTTP 200; endpoints de contagem por tipo, status e prioridade retornando HTTP 200 com os agrupamentos correspondentes |
+| Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Testes automatizados executados: `GET /tickets/prioridade` retornando HTTP 200 com a lista filtrada; `GET /tickets/contagem/prioridade` retornando HTTP 200 com a contagem agrupada; `PATCH /tickets/{id}/prioridade` retornando HTTP 200 com o ticket atualizado |
+| Gerente Marcos | RF012 | RN12 | `POST /usuarios`; `GET /usuarios`; `GET /usuarios/{id}`; `GET /usuarios/retiro/{retiroId}`; `PATCH /usuarios/{id}`; `DELETE /usuarios/{id}` | Gestão de usuários | CT-RF012 (`usuario.spec.ts`) | Saída da execução de `npm test -- --runInBand src/backend/tests/integration/usuario.spec.ts`: 1 suíte e 10 testes aprovados; `POST /usuarios` retornando HTTP 201; `GET /usuarios` retornando HTTP 200 sem exposição do campo `senha_hash`; consultas por ID e retiro e atualização retornando HTTP 200; `DELETE /usuarios/{id}` retornando HTTP 204; cenário da RN12 verificando que usuário sem perfil Gerente recebe HTTP 403 com a mensagem `Acesso negado: cargo insuficiente` |
 
-&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema possuem rastreabilidade entre requisitos, regras de negócio, endpoints reais do backend, middlewares e testes automatizados. Os registros de movimentação, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios e dashboard estão conectados aos arquivos de teste de integração correspondentes, permitindo verificar a cobertura funcional durante a evolução do projeto. Assim, a matriz contribui para manter o WAD, a API e os critérios de validação sincronizados, servindo como referência para futuras revisões, testes automatizados e validações com os usuários da BrPec.
+&nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 50 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
@@ -4229,21 +4280,33 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c6.4"></a>6.4 Público-Alvo
 
-**Segmentação de Mercado**
+**b) **Segmentação de Mercado**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, especialmente no Pantanal e Cerrado sul mato-grossenses, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel — boletas — para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. Conforme Pressman & Maxim (2020), a ausência de soluções offline-first torna esses produtores reféns de processos manuais por falta de alternativa tecnológica viável.
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel — boletas — para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. Conforme Pressman & Maxim (2020), a ausência de soluções offline-first torna esses produtores reféns de processos manuais por falta de alternativa tecnológica viável.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O segundo segmento compreende produtores com conectividade disponível, mas sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade que demandam digitalização confiável dos registros. Esse segmento inclui operações integradas agricultura-pecuária (como BrPec) e fazendas corporativas que precisam cumprir o PNIB (MAPA, 2025), o Código Florestal (BRASIL, 2012) e agendas ESG (BANCO DO NORDESTE, 2025). Embora tenham infraestrutura, enfrentam gargalos similares: processos descentralizados, falta de rastreabilidade por responsável, e dificuldade na consolidação de dados entre campo e escritório. Ambos os segmentos convergem para a necessidade de digitalização confiável com fluxos simples e rastreabilidade completa.
 
 
-*b) Perfil do Público-Alvo (até 250 palavras)*
-*Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
+**b) **Perfil do Público-Alvo**
 
+&nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto demográfico, o público-alvo compreende empresas agropecuárias de médio e grande porte dedicadas à pecuária bovina comercial, incluindo tanto operações especializadas quanto modelos integrados agricultura-pecuária. São organizações com capacidade de investimento em tecnologia e volume operacional que torna inviável a gestão manual de dados. No aspecto comportamental, caracterizam-se pela dependência de registros em papel e pela baixa adoção de ferramentas digitais adequadas à sua realidade: embora 40% dos produtores rurais já utilizem algum software de gestão, a oferta existente é majoritariamente voltada a operações com infraestrutura digital robusta, deixando descoberta justamente a parcela que opera com conectividade intermitente (PANORAMA DA GESTÃO RURAL, 2024).
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;Quanto às necessidades específicas, essas empresas demandam consolidação confiável das informações entre campo e escritório, rastreabilidade das movimentações do rebanho e adequação às exigências regulatórias crescentes, como o PNIB (MAPA, 2025) e o Código Florestal (BRASIL, 2012). As dores centrais relacionam-se ao retrabalho na transcrição manual, aos erros e inconsistências entre registros operacionais e administrativos e à lentidão na consolidação de dados críticos para a gestão. Como expectativas, buscam uma solução que opere mesmo sem conexão estável, sincronize automaticamente ao restabelecer a internet, gere relatórios auditáveis e se adapte ao contexto operacional real — sem exigir infraestrutura digital avançada ou reformulação completa de seus processos.
 
 ## <a name="c6.5"></a>6.5 Posicionamento
 
 *a) Proposta de Valor Única (até 250 palavras)*
-*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+
+&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O primeiro é a **operação offline contínua**: capatazes que atuam em retiros com conectividade instável — realidade do Pantanal e Cerrado sul mato-grossense — registram nascimentos, mortes, compras, vendas, transferências e chamados de manutenção diretamente no dispositivo móvel. Os dados são armazenados localmente e sincronizados de forma automática ao restabelecer a conexão com o servidor, garantindo continuidade operacional sem perda de informação e sem necessidade de intervenção manual.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O segundo é a **rastreabilidade com responsabilização**: cada registro é vinculado ao usuário que o criou, e movimentações do rebanho passam por um fluxo de validação obrigatória pelo supervisor antes de serem consideradas válidas para fins operacionais e gerenciais. Evidências — fotos georreferenciadas com coordenadas GPS, áudios e mensagens de texto — podem ser anexadas a registros, tarefas e chamados, aumentando a confiabilidade e a auditabilidade das informações.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O terceiro é a **consolidação gerencial baseada em dados confiáveis**: gerentes acessam um dashboard centralizado com indicadores operacionais por retiro — total de nascimentos, mortes, transferências, tarefas aprovadas e tickets resolvidos — calculados exclusivamente a partir de registros validados e sincronizados, oferecendo uma visão estratégica precisa da operação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Combinados em uma única aplicação web com interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente), esses três pilares transformam o fluxo de informação da fazenda: do papel e do repasse verbal para um ciclo digital controlado, rastreável e acessível em tempo real.
 
 *b) Estratégia de Diferenciação (até 250 palavras)*
 *Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*

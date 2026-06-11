@@ -5,6 +5,10 @@ CREATE TABLE IF NOT EXISTS evidencia (
   data_criacao TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-ALTER TABLE evidencia
-  ADD CONSTRAINT evidencia_usuario_id_foreign
-  FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+DO $$
+BEGIN
+  ALTER TABLE evidencia
+    ADD CONSTRAINT evidencia_usuario_id_foreign
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
