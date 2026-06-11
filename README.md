@@ -93,6 +93,19 @@ g02/
 ├── package.json
 └── README.md
 ```
+
+## 🎮 Funcionalidades
+- Autenticação de usuários via login e senha com emissão de token JWT.
+- Controle de acesso por cargo (capataz, supervisor e gerente) verificado no backend.
+- Registro e gestão de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida do animal.
+- Validação e aprovação de movimentações, tickets e tarefas pendentes pelo supervisor.
+- Gestão de tarefas operacionais por status, prioridade, categoria, usuário e retiro.
+- Abertura e acompanhamento de tickets de manutenção por categoria, prioridade e status.
+- Anexo de evidências em foto, áudio e mensagem.
+- Operação offline com endpoints de sincronização e detecção de conexão.
+- Dados consolidados para dashboard (contagens por tipo, status e prioridade).
+- Relatórios por período (semanal e mensal) e exportação de dados de movimentações.
+
 ## 🧠 Tecnologias Utilizadas
 
 | Categoria | Tecnologia | Versão |
