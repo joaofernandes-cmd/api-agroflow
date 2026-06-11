@@ -1,0 +1,365 @@
+/* ============================================================================
+   Alow / BrPec — Estilos do Capataz
+   CSS puro com variáveis (tokens do Guia de Estilos BrPec)
+   ========================================================================== */
+
+:root {
+  /* Cores — Guia de Estilos BrPec */
+  --primaria: #2f6c3d;      /* Verde Principal */
+  --interacao: #0f5f36;     /* Verde Escuro (status bar, hover) */
+  --texto: #1f1f1f;         /* Texto principal */
+  --fundo: #f7f8f5;         /* Fundo da aplicação */
+  --positivo: #7fbf3f;      /* Verde Claro */
+  --texto-sec: #7c847c;     /* Texto secundário */
+  --borda: #d9ded8;         /* Bordas e divisores */
+  --superficie: #ffffff;    /* Branco — cards */
+  --alerta: #ff3b30;        /* Vermelho — prioridade alta */
+  --atencao: #d99a00;       /* Amarelo — pendências */
+  --info: #3d7ea6;          /* Azul — informação */
+  --sucesso: #22a855;       /* Verde — sucesso */
+  --campo: #f4f4f0;         /* Fundo de inputs */
+
+  /* Espaçamento */
+  --gap-sm: 12px;
+  --gap-md: 16px;
+  --radius: 12px;
+  --radius-lg: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  background: #d7d7d2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* Moldura do celular ---------------------------------------------------- */
+.celular {
+  width: 390px;
+  height: 820px;
+  background: var(--fundo);
+  border-radius: 44px;
+  border: 10px solid #15151a;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho ------------------------------------------------------------- */
+.cabecalho {
+  background: var(--interacao);
+  padding-top: 18px;
+  flex-shrink: 0;
+}
+.cabecalho__barra {
+  background: var(--primaria);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.cabecalho__titulo { color: #fff; font-size: 18px; font-weight: 700; }
+.cabecalho__voltar {
+  position: absolute;
+  left: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: var(--radius);
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Área de conteúdo rolável --------------------------------------------- */
+.conteudo { flex: 1; overflow-y: auto; padding: 20px 18px 8px; }
+
+/* Botões ---------------------------------------------------------------- */
+.btn-primario {
+  width: 100%;
+  padding: 17px;
+  background: var(--primaria);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-secundario {
+  width: 100%;
+  padding: 16px;
+  background: var(--superficie);
+  color: var(--primaria);
+  border: 2px solid var(--primaria);
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Tela de perfil -------------------------------------------------------- */
+.perfil {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 70px 28px 24px;
+  text-align: center;
+}
+.perfil__logo { width: 150px; height: auto; }
+.perfil__legenda { color: var(--texto-sec); font-size: 14px; margin: 30px 0 6px; }
+.perfil__nome { font-size: 32px; font-weight: 700; color: var(--texto); line-height: 1.15; }
+.perfil__card {
+  background: var(--superficie);
+  border-radius: 22px;
+  padding: 24px;
+  width: 100%;
+  margin-top: 30px;
+  box-shadow: 0 16px 40px -22px rgba(0, 0, 0, 0.25);
+}
+.perfil__confirme { color: var(--texto-sec); font-size: 13px; margin-bottom: 16px; }
+.avatar {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: #bcd6c1;
+  display: grid; place-items: center;
+  color: var(--interacao);
+  font-weight: 700; font-size: 15px;
+  margin: 0 auto 8px;
+}
+.perfil__usuario { font-weight: 700; color: var(--texto); font-size: 15px; display: block; margin-bottom: 18px; }
+.perfil__versao { margin-top: auto; color: var(--texto-sec); font-size: 12px; }
+
+/* Home ------------------------------------------------------------------ */
+.saudacao { background: #eceae4; padding: 18px 18px 20px; flex-shrink: 0; }
+.saudacao__titulo { font-size: 23px; font-weight: 700; color: var(--texto); }
+.saudacao__data { color: var(--texto-sec); font-size: 14px; margin: 4px 0 10px; }
+.tag-sincronizado {
+  display: inline-block;
+  background: #dff3e6;
+  color: var(--sucesso);
+  font-size: 11px; font-weight: 600;
+  padding: 5px 12px; border-radius: 20px;
+}
+.secao-titulo { font-size: 18px; font-weight: 600; color: var(--texto); margin: 6px 0 14px; }
+.secao-titulo--espaco { margin-top: 20px; }
+
+/* Cards de tarefa / atalho --------------------------------------------- */
+.card {
+  width: 100%;
+  text-align: left;
+  background: var(--superficie);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 16px 14px 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: var(--gap-sm);
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  font-family: inherit;
+}
+.card__barra { position: absolute; left: 0; top: 10px; bottom: 10px; width: 5px; border-radius: 4px; }
+.card__corpo { flex: 1; }
+.card__titulo { font-size: 16px; font-weight: 600; color: var(--texto); }
+.card__sub { font-size: 13px; color: var(--texto-sec); margin-top: 3px; }
+.card__seta { color: var(--texto-sec); flex-shrink: 0; }
+
+/* Etiquetas de prioridade / status ------------------------------------- */
+.etiqueta {
+  font-size: 11px; font-weight: 600;
+  padding: 5px 14px; border-radius: 20px;
+  color: #fff; white-space: nowrap;
+}
+.etiqueta--alta { background: var(--alerta); }
+.etiqueta--media { background: var(--info); }
+.etiqueta--baixa { background: var(--texto-sec); }
+.etiqueta--critica { background: #8a1c1c; }
+.etiqueta--concluida { background: var(--primaria); }
+.etiqueta--pendente { background: #faf0d6; color: var(--atencao); }
+
+/* Formulários ----------------------------------------------------------- */
+.campo { margin-bottom: var(--gap-md); }
+.campo__rotulo { font-size: 13px; font-weight: 600; color: var(--texto); display: block; margin-bottom: 8px; }
+.campo__rotulo .obrigatorio { color: var(--alerta); }
+
+.input, .select-falso, textarea.input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--campo);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--texto);
+  outline: none;
+}
+textarea.input { resize: none; }
+.input::placeholder, textarea.input::placeholder { color: var(--texto-sec); }
+
+/* Select nativo estilizado como o protótipo */
+.select {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--campo);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--texto);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%237c847c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.select:focus { border: 2px solid var(--primaria); }
+.select.erro { border: 1px solid var(--alerta); }
+.select:invalid { color: var(--texto-sec); }  /* placeholder cinza */
+
+/* Caixa de evidência ---------------------------------------------------- */
+.evidencia {
+  border: 1.5px dashed var(--borda);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  gap: 10px;
+}
+.evidencia__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.evidencia__btn--foto { background: var(--primaria); }
+.evidencia__btn--audio { background: var(--info); }
+.evidencia__btn--texto { background: var(--atencao); }
+
+/* Aviso de localização -------------------------------------------------- */
+.aviso-local {
+  background: #eef7f0;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--interacao);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Busca de tarefas ------------------------------------------------------ */
+.busca-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--gap-md);
+}
+.busca-barra__texto { color: var(--texto-sec); font-size: 14px; }
+
+/* Detalhe da tarefa ----------------------------------------------------- */
+.detalhe-card {
+  background: var(--superficie);
+  border-radius: var(--radius-lg);
+  padding: 16px 16px 16px 18px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.3);
+}
+.detalhe-card__barra { position: absolute; left: 0; top: 10px; bottom: 10px; width: 5px; border-radius: 4px; background: var(--alerta); }
+.detalhe-card__conteudo { padding-left: 6px; }
+.detalhe-card__titulo { font-size: 17px; font-weight: 700; color: var(--texto); }
+.detalhe-card__autor { font-size: 13px; color: var(--texto-sec); margin: 4px 0 10px; }
+.detalhe-card__meta { display: flex; align-items: center; gap: 12px; }
+.detalhe-card__meta span { font-size: 13px; color: var(--texto-sec); }
+.detalhe-card__cat { font-size: 13px; color: var(--texto-sec); margin-top: 10px; }
+
+.detalhe-linha {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borda);
+}
+.detalhe-linha:last-of-type { border-bottom: none; }
+.detalhe-linha__rotulo { width: 110px; color: var(--texto-sec); font-size: 14px; font-weight: 500; }
+.detalhe-linha__valor { flex: 1; color: var(--texto); font-size: 14px; font-weight: 500; }
+
+.detalhe-descricao-rotulo { font-size: 13px; font-weight: 600; color: var(--texto); display: block; margin: 14px 0 8px; }
+.detalhe-descricao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: 14px;
+  color: var(--texto-sec);
+  margin-bottom: 18px;
+}
+
+/* Barra inferior de navegação ------------------------------------------ */
+.bottomnav {
+  border-top: 1px solid var(--borda);
+  background: var(--superficie);
+  display: flex;
+  padding: 10px 6px 14px;
+  flex-shrink: 0;
+}
+.bottomnav__item {
+  flex: 1;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 4px;
+  position: relative;
+  text-decoration: none;
+  color: var(--texto-sec);
+}
+.bottomnav__item .icone { stroke: var(--texto-sec); }
+.bottomnav__rotulo { font-size: 10px; font-weight: 400; }
+.bottomnav__item.ativo { color: var(--primaria); }
+.bottomnav__item.ativo .icone { stroke: var(--primaria); stroke-width: 2.4; }
+.bottomnav__item.ativo .bottomnav__rotulo { font-weight: 600; }
+.bottomnav__marcador {
+  position: absolute;
+  top: -10px;
+  width: 26px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--primaria);
+}

@@ -1,0 +1,25 @@
+<%
+  /* Sidebar do Capataz — usada em layout desktop/gerente.
+     Mantida para espelhar a estrutura de partials do projeto.
+     A variável "ativa" destaca o item atual. */
+  var itemAtivo = typeof ativa !== 'undefined' ? ativa : '';
+  var itens = [
+    { id: 'inicio',       rotulo: 'Início',       href: '/capataz/home' },
+    { id: 'movimentacao', rotulo: 'Movimentação', href: '/capataz/movimentacao' },
+    { id: 'tickets',      rotulo: 'Tickets',      href: '/capataz/chamado' },
+    { id: 'tarefas',      rotulo: 'Tarefas',      href: '/capataz/tarefas' }
+  ];
+%>
+<aside class="sidebar">
+  <div class="sidebar__marca">
+    <strong>BrPec</strong>
+    <span>Agropecuária</span>
+  </div>
+  <nav class="sidebar__nav">
+    <% itens.forEach(function (item) { %>
+      <a href="<%= item.href %>" class="sidebar__item <%= itemAtivo === item.id ? 'ativo' : '' %>">
+        <%= item.rotulo %>
+      </a>
+    <% }) %>
+  </nav>
+</aside>
