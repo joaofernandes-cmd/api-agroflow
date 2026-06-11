@@ -4251,7 +4251,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c6.2"></a>6.2 Análise de Mercado
 
-**a) Visão Geral do Setor**
+**6.2.1) Visão Geral do Setor**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto econômico, o AgroFlow atua no segmento da pecuária bovina, parte do agronegócio que respondeu por 25,13% do PIB nacional em 2025, o maior patamar em 22 anos (CNA, 2026). O Brasil possui o maior rebanho comercial do mundo, com 238,2 milhões de cabeças, e lidera as exportações globais de carne bovina, o que evidencia a escala e a relevância econômica do setor para o qual a solução foi desenvolvida (IBGE, 2025).
 
@@ -4259,44 +4259,35 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto regulatório, a Portaria SDA/Mapa nº 1.331/2025 instituiu o Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB), que torna obrigatória a rastreabilidade individual de todo o rebanho nacional de forma escalonada até 2032 (MAPA, 2025). Essa exigência impõe a digitalização dos registros a toda a cadeia produtiva, inclusive às operações que hoje não dispõem de soluções tecnológicas compatíveis com seu contexto operacional.
 
-**b) Tamanho e Crescimento do Mercado**
+**6.2.2) Tamanho e Crescimento do Mercado**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O mercado de software de gestão e automação para o agronegócio está em expansão acelerada no Brasil. O segmento de agricultura de precisão, que engloba plataformas de monitoramento, gestão operacional e automação de processos no campo deve alcançar US$ 601 milhões no Brasil até 2030, com crescimento anual composto (CAGR) de 14,4% entre 2025 e 2030 (GRAND VIEW RESEARCH, 2025). Na América Latina como um todo, o mercado foi avaliado em US$ 1,86 bilhão em 2024 e deve atingir US$ 6,75 bilhões até 2033 (MARKET DATA FORECAST, 2025), com o Brasil respondendo pela maior fatia regional.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Apesar desse crescimento, a penetração dessas soluções ainda é desigual: 40% dos produtores rurais utilizam algum software de gestão, mas a oferta existente é majoritariamente voltada a operações com infraestrutura digital adequada (PANORAMA DA GESTÃO RURAL, 2024). Fazendas corporativas em regiões remotas, onde conectividade é intermitente e os operadores têm baixo letramento digital, permanecem fora do alcance dessas plataformas, configurando um segmento específico com demanda reprimida e sem solução consolidada no mercado.
 
-**c) Tendências de Mercado**
+**6.2.3) Tendências de Mercado**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O mercado de software para gestão agropecuária é impulsionado por três tendências convergentes. A primeira é a pressão regulatória e comercial pela rastreabilidade digital: com o PNIB tornando obrigatório o registro individual do rebanho até 2032 e o EUDR condicionando o acesso ao mercado europeu à comprovação de origem, produtores que ainda operam com papel precisarão migrar para sistemas digitais nos próximos anos (MAPA, 2025; BANCO DO NORDESTE, 2025). A segunda é a consolidação da agenda ESG como requisito operacional: compradores institucionais e exportadores passam a exigir histórico digital auditável das operações, tornando a automação de registros um critério de permanência na cadeia produtiva (BANCO DO NORDESTE, 2025). A terceira é a adoção de arquiteturas offline-first: à medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, soluções que operam localmente e sincronizam dados ao restabelecer conexão tornam-se o padrão esperado para operações em áreas remotas (TOTVS, 2025). Em conjunto, essas tendências ampliam o mercado endereçável para soluções como o AgroFlow e definem os requisitos funcionais que a diferenciam das plataformas convencionais.
 
-## <a name="c6.3"></a>6.3 Análise da Concorrência
+## <a name="c6.4"></a>6.3 Público-Alvo
 
-*a) Principais Concorrentes (até 250 palavras)*
-*Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
+**6.3.1) **Segmentação de Mercado**
 
-*b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
-*Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
-\
-
-## <a name="c6.4"></a>6.4 Público-Alvo
-
-**b) **Segmentação de Mercado**
-
-&nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel — boletas — para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. Conforme Pressman & Maxim (2020), a ausência de soluções offline-first torna esses produtores reféns de processos manuais por falta de alternativa tecnológica viável.
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel — boletas — para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. À medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, a ausência de soluções offline-first mantém esses produtores presos a processos manuais (TOTVS, 2025).
 
 &nbsp;&nbsp;&nbsp;&nbsp;O segundo segmento compreende produtores com conectividade disponível, mas sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade que demandam digitalização confiável dos registros. Esse segmento inclui operações integradas agricultura-pecuária (como BrPec) e fazendas corporativas que precisam cumprir o PNIB (MAPA, 2025), o Código Florestal (BRASIL, 2012) e agendas ESG (BANCO DO NORDESTE, 2025). Embora tenham infraestrutura, enfrentam gargalos similares: processos descentralizados, falta de rastreabilidade por responsável, e dificuldade na consolidação de dados entre campo e escritório. Ambos os segmentos convergem para a necessidade de digitalização confiável com fluxos simples e rastreabilidade completa.
 
 
-**b) **Perfil do Público-Alvo**
+**6.3.2) **Perfil do Público-Alvo**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto demográfico, o público-alvo compreende empresas agropecuárias de médio e grande porte dedicadas à pecuária bovina comercial, incluindo tanto operações especializadas quanto modelos integrados agricultura-pecuária. São organizações com capacidade de investimento em tecnologia e volume operacional que torna inviável a gestão manual de dados. No aspecto comportamental, caracterizam-se pela dependência de registros em papel e pela baixa adoção de ferramentas digitais adequadas à sua realidade: embora 40% dos produtores rurais já utilizem algum software de gestão, a oferta existente é majoritariamente voltada a operações com infraestrutura digital robusta, deixando descoberta justamente a parcela que opera com conectividade intermitente (PANORAMA DA GESTÃO RURAL, 2024).
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Quanto às necessidades específicas, essas empresas demandam consolidação confiável das informações entre campo e escritório, rastreabilidade das movimentações do rebanho e adequação às exigências regulatórias crescentes, como o PNIB (MAPA, 2025) e o Código Florestal (BRASIL, 2012). As dores centrais relacionam-se ao retrabalho na transcrição manual, aos erros e inconsistências entre registros operacionais e administrativos e à lentidão na consolidação de dados críticos para a gestão. Como expectativas, buscam uma solução que opere mesmo sem conexão estável, sincronize automaticamente ao restabelecer a internet, gere relatórios auditáveis e se adapte ao contexto operacional real — sem exigir infraestrutura digital avançada ou reformulação completa de seus processos.
 
-## <a name="c6.5"></a>6.5 Posicionamento
+## <a name="c6.5"></a>6.4 Posicionamento
 
-*a) Proposta de Valor Única (até 250 palavras)*
+**6.4.1) **Proposta de Valor Única**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
 
@@ -4308,21 +4299,21 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;Combinados em uma única aplicação web com interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente), esses três pilares transformam o fluxo de informação da fazenda: do papel e do repasse verbal para um ciclo digital controlado, rastreável e acessível em tempo real.
 
-*b) Estratégia de Diferenciação (até 250 palavras)*
+**6.4.2) **Estratégia de Diferenciação**
 *Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
 
-## <a name="c6.6"></a>6.6. Estratégia de Marketing
+## <a name="c6.6"></a>6.5 Estratégia de Marketing
 
-*a) Produto/Serviço (até 200 palavras)*
+**6.5.1) **Produto/Serviço**
 *Descreva as funcionalidades, benefícios e diferenciais da aplicação*
 
-*b) Preço (até 200 palavras)*
+**6.5.2) **Preço**
 *Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
 
-*c) Praça (Distribuição) (até 200 palavras)*
+**6.5.3) **Praça (Distribuição) (até 200 palavras)**
 *Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
 
-*d) Promoção (até 200 palavras)*
+**6.5.4) **Promoção (até 200 palavras)**
 *Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
