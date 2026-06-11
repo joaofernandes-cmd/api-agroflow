@@ -134,25 +134,25 @@
 .topbar--filters {
   height: auto;
   min-height: 64px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   gap: 8px;
   padding: 12px 32px;
-  align-items: flex-end;
 }
 
-.topbar--filters .topbar__title {
-  width: 100%;
-  margin-bottom: 4px;
+.topbar__top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .topbar__filters {
   display: flex;
   gap: 16px;
-  flex: 1;
   align-items: flex-end;
 }
 
-.tfilter { display: flex; flex-direction: column; min-width: 200px; }
+.tfilter { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 
 .tfilter__label {
   font-size: 11px;
