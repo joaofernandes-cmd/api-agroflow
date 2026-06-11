@@ -47,6 +47,30 @@ app.get('/auth/login', (req, res) => {
   });
 });
 
+app.get('/capataz', (_req, res) => {
+  res.render('capataz/index')
+})
+
+app.get('/capataz/home', (_req, res) => {
+  res.render('capataz/home')
+})
+
+app.get('/capataz/tarefas', (_req, res) => {
+  res.render('capataz/tarefas')
+})
+
+app.get('/capataz/detalhe-tarefa', (_req, res) => {
+  res.render('capataz/detalhe-tarefa')
+})
+
+app.get('/capataz/movimentacao', (_req, res) => {
+  res.render('capataz/movimentacao')
+})
+
+app.get('/capataz/chamado', (_req, res) => {
+  res.render('capataz/chamado')
+})
+
 app.get('/supervisor/home', (req, res) => {
   res.render('supervisor/home', {
     title: 'Início',
