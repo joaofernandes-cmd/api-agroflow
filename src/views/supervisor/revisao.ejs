@@ -242,6 +242,60 @@
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
+
+  // ── Toggle check mobile ──
+  const IMG_MOBILE_VAZIO   = 'https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937';
+  const IMG_MOBILE_FEITO   = 'https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894';
+
+  document.querySelectorAll('.rev-card__check').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card  = btn.closest('.rev-card');
+      const badge = card.querySelector('.rev-badge');
+      const img   = btn.querySelector('img');
+      const feito = btn.classList.contains('rev-card__check--done');
+
+      if (feito) {
+        btn.classList.replace('rev-card__check--done', 'rev-card__check--empty');
+        btn.setAttribute('aria-label', 'Marcar como concluída');
+        img.src = IMG_MOBILE_VAZIO;
+        badge.classList.replace('rev-badge--concluido', 'rev-badge--pendente');
+        badge.textContent = 'Pendente';
+        card.classList.replace('rev-card--concluido', 'rev-card--pendente');
+      } else {
+        btn.classList.replace('rev-card__check--empty', 'rev-card__check--done');
+        btn.setAttribute('aria-label', 'Concluída');
+        img.src = IMG_MOBILE_FEITO;
+        badge.classList.replace('rev-badge--pendente', 'rev-badge--concluido');
+        badge.textContent = 'Concluído';
+        card.classList.replace('rev-card--pendente', 'rev-card--concluido');
+      }
+    });
+  });
+
+  // ── Toggle check desktop ──
+  const IMG_DESK_PENDENTE  = 'https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2';
+  const IMG_DESK_CONCLUIDO = 'https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0';
+
+  document.querySelectorAll('.revisao-table td img').forEach(img => {
+    img.classList.add('check-img');
+    img.addEventListener('click', () => {
+      const row   = img.closest('tr');
+      const badge = row.querySelector('.badge');
+      const pendente = img.alt === 'pendente';
+
+      if (pendente) {
+        img.src = IMG_DESK_CONCLUIDO;
+        img.alt = 'concluído';
+        badge.classList.replace('badge--yellow', 'badge--green');
+        badge.textContent = 'Concluído';
+      } else {
+        img.src = IMG_DESK_PENDENTE;
+        img.alt = 'pendente';
+        badge.classList.replace('badge--green', 'badge--yellow');
+        badge.textContent = 'Pendente';
+      }
+    });
+  });
 </script>
 
 </body>

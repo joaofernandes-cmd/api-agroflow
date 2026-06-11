@@ -302,6 +302,16 @@
 .rev-badge--pendente  { background: rgba(217,154,0,0.15); color: #d99a00; }
 .rev-badge--concluido { background: #d1fae5; color: #059669; }
 
+.rev-card--concluido .rev-card__accent { background: #059669; }
+
+/* Badges da tabela desktop */
+.badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 11px; white-space: nowrap; }
+.badge--yellow { background: #faf0d9; color: #d99a00; }
+.badge--green  { background: #d1fae5; color: #059669; }
+
+/* Check da tabela desktop clicável */
+.revisao-table td .check-img { cursor: pointer; }
+
 /* Botão de check */
 .rev-card__check {
   background: none;
