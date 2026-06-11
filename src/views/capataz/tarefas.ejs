@@ -1,0 +1,47 @@
+<%- include('partials/head', { titulo: 'Alow · Minhas Tarefas' }) %>
+
+<%
+  /* Lista hardcoded de tarefas. classe controla a cor da etiqueta e da barra. */
+  var tarefas = [
+    { cor: 'var(--alerta)',    titulo: 'Vacinação lote B - Aroeira',      sub: 'Supervisor Luiz • Amanhã 08:00',  nivel: 'Alta',      classe: 'alta'      },
+    { cor: 'var(--info)',      titulo: 'Conferência do rebanho - CMB',     sub: 'Supervisor Luiz • Hoje 14:00',    nivel: 'Média',     classe: 'media'     },
+    { cor: 'var(--texto-sec)', titulo: 'Inspeção sanitária - Puga',        sub: 'Supervisor Luiz • Sex 10:00',     nivel: 'Baixa',     classe: 'baixa'     },
+    { cor: 'var(--primaria)',  titulo: 'Alimentação suplementar - Cristo', sub: 'Supervisor Alberto • há 2 dias',  nivel: 'Concluída', classe: 'concluida' },
+    { cor: 'var(--primaria)',  titulo: 'Movimentação - Bodoquena',         sub: 'Supervisor José • há 3 dias',     nivel: 'Concluída', classe: 'concluida' }
+  ];
+%>
+
+<main class="celular">
+  <header class="cabecalho">
+    <div class="cabecalho__barra">
+      <span class="cabecalho__titulo">Minhas Tarefas</span>
+    </div>
+  </header>
+
+  <div class="conteudo">
+    <div class="busca-barra">
+      <span class="busca-barra__texto">🔍 Pesquisar tarefas</span>
+      <span class="etiqueta etiqueta--pendente">Pendente</span>
+    </div>
+
+    <% tarefas.forEach(function (t) { %>
+      <a href="/capataz/detalhe-tarefa" class="card">
+        <span class="card__barra" style="background: <%= t.cor %>;"></span>
+        <div class="card__corpo">
+          <div class="card__titulo"><%= t.titulo %></div>
+          <div class="card__sub"><%= t.sub %></div>
+        </div>
+        <span class="etiqueta etiqueta--<%= t.classe %>"><%= t.nivel %></span>
+        <svg class="card__seta" width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 6 6 6-6 6"/>
+        </svg>
+      </a>
+    <% }) %>
+  </div>
+
+  <%- include('partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
+</main>
+
+</body>
+</html>
