@@ -13,6 +13,9 @@
   <!-- CSS global (tokens, reset) -->
   <link rel="stylesheet" href="/css/global.css" />
 
+  <!-- CSS base (layout compartilhado) — sempre carregado -->
+  <link rel="stylesheet" href="/css/base.css" />
+
   <!-- CSS específico da tela — aceita string simples ou array de arquivos -->
   <% if (typeof css !== 'undefined') { %>
     <% (Array.isArray(css) ? css : [css]).forEach(function(file) { %>

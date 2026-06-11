@@ -59,7 +59,7 @@ app.get('/supervisor/home', (req, res) => {
 app.get('/supervisor/relatorios', (req, res) => {
   res.render('partials/relatorios', {
     title: 'Relatórios',
-    css: ['supervisor', 'relatorios'],   // ← passa os dois!
+    css: ['supervisor', 'relatorios'],
     persona: 'supervisor',
     usuario: { nome: 'Luiz Felipe' }
   })
@@ -68,8 +68,10 @@ app.get('/supervisor/relatorios', (req, res) => {
 // Gerente acessa os mesmos relatórios - mesma view
 app.get('/gerente/relatorios', (req, res) => {
   res.render('partials/relatorios', {
-    title: 'Relatórios', css: 'relatorios',
-    persona: 'gerente', usuario: { nome: 'Marcos Ferreira' }
+    title: 'Relatórios',
+    css: ['gerente', 'relatorios'],
+    persona: 'gerente',
+    usuario: { nome: 'Marcos Ferreira' }
   });
 });
 
