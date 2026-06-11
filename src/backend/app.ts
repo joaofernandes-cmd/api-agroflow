@@ -55,6 +55,14 @@ app.get('/supervisor/home', (req, res) => {
   });
 });
 
+app.get('/supervisor/delegar', (req, res) => {
+  res.render('supervisor/delegar', {
+    title: 'Delegar tarefa',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
 // Supervisor acessa relatórios
 app.get('/supervisor/relatorios', (req, res) => {
   res.render('partials/relatorios', {
