@@ -1,0 +1,31 @@
+<%
+  /* A variável "ativa" define qual aba aparece destacada.
+     Valores esperados: 'inicio', 'movimentacao', 'tickets', 'tarefas'. */
+  var abaAtiva = typeof ativa !== 'undefined' ? ativa : '';
+  var abas = [
+    { id: 'inicio',       rotulo: 'Início',        href: '/capataz/home' },
+    { id: 'movimentacao', rotulo: 'Movimentação',  href: '/capataz/movimentacao' },
+    { id: 'tickets',      rotulo: 'Tickets',       href: '/capataz/chamado' },
+    { id: 'tarefas',      rotulo: 'Tarefas',       href: '/capataz/tarefas' }
+  ];
+
+  /* Ícones (SVG inline, mesmo traço da lucide usada no protótipo) */
+  var icones = {
+    inicio:       '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
+    movimentacao: '<path d="M7 8h13l-3-3"/><path d="M17 16H4l3 3"/>',
+    tickets:      '<path d="M3 11l16-7v14L3 13z"/><path d="M5 12v4a2 2 0 0 0 2 2h1"/>',
+    tarefas:      '<path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="m4 6 1 1 2-2"/><path d="m4 12 1 1 2-2"/><path d="m4 18 1 1 2-2"/>'
+  };
+%>
+<nav class="bottomnav">
+  <% abas.forEach(function (aba) { %>
+    <a href="<%= aba.href %>" class="bottomnav__item <%= abaAtiva === aba.id ? 'ativo' : '' %>">
+      <% if (abaAtiva === aba.id) { %><span class="bottomnav__marcador"></span><% } %>
+      <svg class="icone" width="21" height="21" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <%- icones[aba.id] %>
+      </svg>
+      <span class="bottomnav__rotulo"><%= aba.rotulo %></span>
+    </a>
+  <% }) %>
+</nav>

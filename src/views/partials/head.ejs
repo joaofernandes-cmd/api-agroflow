@@ -13,9 +13,13 @@
   <!-- CSS global (tokens, reset) -->
   <link rel="stylesheet" href="/css/global.css" />
 
-  <!-- CSS específico da tela (passado pelo controller via variável EJS) -->
+  <!-- CSS base (layout compartilhado) — sempre carregado -->
+  <link rel="stylesheet" href="/css/base.css" />
+
+  <!-- CSS específico da tela — aceita string simples ou array de arquivos -->
   <% if (typeof css !== 'undefined') { %>
-    <link rel="stylesheet" href="/css/<%= css %>.css" />
+    <% (Array.isArray(css) ? css : [css]).forEach(function(file) { %>
+      <link rel="stylesheet" href="/css/<%= file %>.css" />
+    <% }) %>
   <% } %>
 </head>
-<body>

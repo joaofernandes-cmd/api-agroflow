@@ -1,0 +1,302 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['supervisor']
+%>
+
+<!-- ============================================================
+     TELA: Revisão de Tarefas
+     Mobile  → TopNav com voltar + barra de busca com badge + lista de cards + BottomNav
+     Desktop → Sidebar + TopBar + barra de busca + tabela com botão Revisar
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Revisão de Tarefas</h1>
+  </header>
+
+  <!-- Barra de busca + badge -->
+  <div class="revisao-filter-bar" role="search">
+    <div class="revisao-search-wrap">
+      <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        class="revisao-search"
+        type="search"
+        placeholder="Pesquisar tarefas"
+        aria-label="Pesquisar tarefas"
+      />
+    </div>
+    <span class="revisao-badge-pendentes">Pendentes</span>
+  </div>
+
+  <!-- Lista de tarefas -->
+  <main class="revisao-list" role="main">
+
+    <article class="rev-card rev-card--pendente">
+      <div class="rev-card__accent"></div>
+      <div class="rev-card__body">
+        <p class="rev-card__name">Conferência do rebanho — Aroeira</p>
+        <p class="rev-card__meta">Capataz Lucas • há 1h</p>
+      </div>
+      <span class="rev-badge rev-badge--pendente">Pendente</span>
+      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída">
+        <img src="https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="rev-card rev-card--concluido">
+      <div class="rev-card__accent"></div>
+      <div class="rev-card__body">
+        <p class="rev-card__name">Vacinação lote B — CMB</p>
+        <p class="rev-card__meta">Capataz Alberto • há 1h</p>
+      </div>
+      <span class="rev-badge rev-badge--concluido">Concluído</span>
+      <button class="rev-card__check rev-card__check--done" aria-label="Concluída">
+        <img src="https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="rev-card rev-card--concluido">
+      <div class="rev-card__accent"></div>
+      <div class="rev-card__body">
+        <p class="rev-card__name">Movimentação de animais — Puga</p>
+        <p class="rev-card__meta">Capataz Manoel • há 1 dia</p>
+      </div>
+      <span class="rev-badge rev-badge--concluido">Concluído</span>
+      <button class="rev-card__check rev-card__check--done" aria-label="Concluída">
+        <img src="https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="rev-card rev-card--concluido">
+      <div class="rev-card__accent"></div>
+      <div class="rev-card__body">
+        <p class="rev-card__name">Alimentação suplementar — Caieira</p>
+        <p class="rev-card__meta">Capataz João Paulo • há 1 dia</p>
+      </div>
+      <span class="rev-badge rev-badge--concluido">Concluído</span>
+      <button class="rev-card__check rev-card__check--done" aria-label="Concluída">
+        <img src="https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="rev-card rev-card--pendente">
+      <div class="rev-card__accent"></div>
+      <div class="rev-card__body">
+        <p class="rev-card__name">Inspeção sanitária — Aroeira</p>
+        <p class="rev-card__meta">Capataz Lucas • há 2 dias</p>
+      </div>
+      <span class="rev-badge rev-badge--pendente">Pendente</span>
+      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída">
+        <img src="https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+    <article class="rev-card rev-card--pendente">
+      <div class="rev-card__accent"></div>
+      <div class="rev-card__body">
+        <p class="rev-card__name">Contagem geral — Cristo</p>
+        <p class="rev-card__meta">Capataz José Carlos • há 3 dias</p>
+      </div>
+      <span class="rev-badge rev-badge--pendente">Pendente</span>
+      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída">
+        <img src="https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937" alt="" width="24" height="24" />
+      </button>
+    </article>
+
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'revisao' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar -->
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'revisao' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Revisão de Tarefas</h1>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Barra de busca + badge desktop -->
+    <div class="revisao-filter-bar-desktop" role="search">
+      <div class="revisao-search-wrap-desktop">
+        <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          class="revisao-search-desktop"
+          type="search"
+          placeholder="Pesquisar tarefas"
+          aria-label="Pesquisar tarefas"
+        />
+      </div>
+      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop">6 Pendentes</span>
+    </div>
+
+    <!-- Tabela de tarefas -->
+    <main class="desktop-content revisao-desktop-content" role="main">
+      <div class="revisao-table-wrap">
+        <table class="revisao-table" aria-label="Lista de tarefas para revisão">
+          <thead>
+            <tr>
+              <th>Tarefa</th>
+              <th>Retiro</th>
+              <th>Capataz</th>
+              <th>Há quanto tempo</th>
+              <th>Status</th>
+              <th></th><!-- check -->
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td--bold">Conferência do rebanho</td>
+              <td>Aroeira</td>
+              <td>Capataz Lucas</td>
+              <td>há 1h</td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><img src="https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2" alt="pendente" width="24" height="24" /></td>
+              <td><button class="btn-revisar">Revisar</button></td>
+            </tr>
+            <tr class="tr--alt">
+              <td class="td--bold">Vacinação lote B</td>
+              <td>CMB</td>
+              <td>Capataz Alberto</td>
+              <td>há 1h</td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><img src="https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0" alt="concluído" width="24" height="24" /></td>
+              <td><button class="btn-revisar">Revisar</button></td>
+            </tr>
+            <tr>
+              <td class="td--bold">Movimentação de animais</td>
+              <td>Puga</td>
+              <td>Capataz Manoel</td>
+              <td>há 1 dia</td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><img src="https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0" alt="concluído" width="24" height="24" /></td>
+              <td><button class="btn-revisar">Revisar</button></td>
+            </tr>
+            <tr class="tr--alt">
+              <td class="td--bold">Alimentação suplementar</td>
+              <td>Caieira</td>
+              <td>Capataz João Paulo</td>
+              <td>há 1 dia</td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><img src="https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0" alt="concluído" width="24" height="24" /></td>
+              <td><button class="btn-revisar">Revisar</button></td>
+            </tr>
+            <tr>
+              <td class="td--bold">Inspeção sanitária</td>
+              <td>Aroeira</td>
+              <td>Capataz Lucas</td>
+              <td>há 2 dias</td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><img src="https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2" alt="pendente" width="24" height="24" /></td>
+              <td><button class="btn-revisar">Revisar</button></td>
+            </tr>
+            <tr class="tr--alt">
+              <td class="td--bold">Contagem geral</td>
+              <td>Cristo</td>
+              <td>Capataz José Carlos</td>
+              <td>há 3 dias</td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><img src="https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2" alt="pendente" width="24" height="24" /></td>
+              <td><button class="btn-revisar">Revisar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script>
+  const el = document.getElementById('data-hoje-desktop');
+  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+  }).replace(/^\w/, c => c.toUpperCase());
+
+  // ── Toggle check mobile ──
+  const IMG_MOBILE_VAZIO   = 'https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937';
+  const IMG_MOBILE_FEITO   = 'https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894';
+
+  document.querySelectorAll('.rev-card__check').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card  = btn.closest('.rev-card');
+      const badge = card.querySelector('.rev-badge');
+      const img   = btn.querySelector('img');
+      const feito = btn.classList.contains('rev-card__check--done');
+
+      if (feito) {
+        btn.classList.replace('rev-card__check--done', 'rev-card__check--empty');
+        btn.setAttribute('aria-label', 'Marcar como concluída');
+        img.src = IMG_MOBILE_VAZIO;
+        badge.classList.replace('rev-badge--concluido', 'rev-badge--pendente');
+        badge.textContent = 'Pendente';
+        card.classList.replace('rev-card--concluido', 'rev-card--pendente');
+      } else {
+        btn.classList.replace('rev-card__check--empty', 'rev-card__check--done');
+        btn.setAttribute('aria-label', 'Concluída');
+        img.src = IMG_MOBILE_FEITO;
+        badge.classList.replace('rev-badge--pendente', 'rev-badge--concluido');
+        badge.textContent = 'Concluído';
+        card.classList.replace('rev-card--pendente', 'rev-card--concluido');
+      }
+    });
+  });
+
+  // ── Toggle check desktop ──
+  const IMG_DESK_PENDENTE  = 'https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2';
+  const IMG_DESK_CONCLUIDO = 'https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0';
+
+  document.querySelectorAll('.revisao-table td img').forEach(img => {
+    img.classList.add('check-img');
+    img.addEventListener('click', () => {
+      const row   = img.closest('tr');
+      const badge = row.querySelector('.badge');
+      const pendente = img.alt === 'pendente';
+
+      if (pendente) {
+        img.src = IMG_DESK_CONCLUIDO;
+        img.alt = 'concluído';
+        badge.classList.replace('badge--yellow', 'badge--green');
+        badge.textContent = 'Concluído';
+      } else {
+        img.src = IMG_DESK_PENDENTE;
+        img.alt = 'pendente';
+        badge.classList.replace('badge--green', 'badge--yellow');
+        badge.textContent = 'Pendente';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

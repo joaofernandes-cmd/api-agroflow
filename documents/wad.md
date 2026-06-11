@@ -1041,7 +1041,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 # 3.2.1 Arquitetura em Camadas
 
-&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do sistema BRPEC foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository** (FOWLER, 2002; MARTIN, 2017), fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
+&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do sistema BRPEC foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository**, fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O sistema foi organizado em sete camadas no servidor (Views, Routes, Middlewares, Controllers, Services, Repositories e Models), dispostas em fluxo unidirecional, no qual cada camada comunica-se exclusivamente com a subsequente.
 
@@ -1055,7 +1055,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Services** concentra as regras de negócio, aplicando as Regras de Negócio documentadas na [Seção 3.1.2](#c3.1.2), como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização offline(RN03).
 
-&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Repositories** abstrai o acesso ao banco por meio dos repositories. A entidade Evidência é segmentada em sete repositórios distintos — um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket) —, refletindo a estratégia de **herança polimórfica** adotada.
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Repositories** abstrai o acesso ao banco por meio dos repositories. A entidade Evidência é segmentada em sete repositórios distintos sendo um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket), refletindo a estratégia de **herança polimórfica** adotada.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Models** contém entidades de domínio, persistidas em **PostgreSQL** conforme o modelo relacional da [Seção 3.6.3](#c3.6.3). As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da [Seção 3.1.3](#c3.1.3).
 
@@ -1064,7 +1064,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 **Diagrama Arquitetural - Sistema BRPEC**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada segundo o padrão Arquitetura em Camadas (Layered Architecture), no estilo Controller-Service-Repository, com a adoção de camadas dedicadas de Routes e Middlewares. Essa estrutura promove a clara separação de responsabilidades entre apresentação, roteamento, validações transversais, lógica de negócio, acesso a dados e persistência.
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada com base no padrão de Arquitetura em Camadas (Layered Architecture), seguindo o modelo Controller-Service-Repository e adotando camadas específicas para Routes e Middlewares. Essa organização favorece a separação clara de responsabilidades entre roteamento, validações transversais, lógica de negócio, acesso a dados e persistência, contribuindo para maior modularidade, manutenção e escalabilidade do sistema.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views compõem a interface do usuário com telas de Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização; as Routes (8 arquivos) declaram os endpoints REST em conformidade com a Matriz RF → RN → Endpoint; os Middlewares (5 arquivos: autenticacao, cargo, validacaoRequisicao, log e erros) interceptam as requisições aplicando autenticação JWT, controle de acesso por cargo e validações transversais; os Controllers (8 controladores) orquestram as requisições HTTP; os Services (8 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (13 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (13 entidades de domínio + o utilitário uuid.ts) representam os objetos do sistema antes da persistência em banco PostgreSQL; destaca-se a entidade Evidência, segmentada em sete repositórios e sete models especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket).
 
@@ -2127,7 +2127,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 • A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
 
 <div align="center">
-<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">Figura 22 - Diagrama de implantação</p>
 <p align="center">
 <img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
 </p>
@@ -2176,6 +2176,8 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Controllers exemplificam o princípio Single Responsibility, ao se ocuparem exclusivamente do tratamento das requisições e respostas HTTP, como códigos de status, serialização e remoção de dados sensíveis, delegando toda a lógica de negócio aos Services e mantendo, assim, uma clara separação de responsabilidades entre as camadas.
 
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação combinada do padrão Model-View-Controller adaptado para API REST e da arquitetura Controller-Service-Repository estrutura o backend do AgroFlow em camadas com responsabilidades bem delimitadas, mantendo decisões de transporte HTTP, regras de negócio e acesso a dados isoladas entre si. A separação entre `Controllers`, `Services` e `Repositories` permite que regras específicas do domínio agropecuário, como a validação condicional de campos por tipo de movimentação e o controle de permissões por cargo, sejam alteradas sem impacto direto sobre o roteamento ou a persistência. Os `Middlewares` complementam essa estrutura ao concentrar preocupações transversais como autenticação JWT, autorização por cargo, validação de payload e tratamento centralizado de erros, evitando duplicação de lógica entre endpoints. O alinhamento dessas decisões com os princípios SOLID, em especial Single Responsibility, Open/Closed e Dependency Inversion, torna o sistema mais testável, manutenível e preparado para evoluir conforme novas regras de negócio sejam incorporadas em sprints futuras, sem comprometer a base já validada.
+
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
@@ -2197,7 +2199,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do capataz são Home, Operações, Abrir Chamado e Minhas Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p align="center">Figura 22 - Wireframe da aba "Entrar e home" do capataz</p>
+<p align="center">Figura 23 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
   <a href="https://www.inteli.edu.br/">
     <img src="others/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2207,7 +2209,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 23 - Wireframe da aba "Registrar operação" do capataz</p>
+<p align="center">Figura 24 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
   <a href="https://www.inteli.edu.br/">
     <img src="others/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2217,7 +2219,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 24 - Wireframe da aba "Abrir chamado" do capataz</p>
+<p align="center">Figura 25 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="others/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2227,7 +2229,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 25 - Wireframe da aba "Minhas tarefas" do capataz</p>
+<p align="center">Figura 26 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="others/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2255,7 +2257,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do supervisor são Dashboard, Relatórios, Registros Pendentes, Alertas e Delegação de Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p align="center">Figura 26 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 27 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
@@ -2264,7 +2266,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 27 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 28 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
@@ -2273,7 +2275,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 28 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 29 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
@@ -2286,7 +2288,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05, US06 e US09, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
 
 <div align="center">
-<p align="center">Figura 29 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 30 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2295,7 +2297,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 30 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 31 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2304,7 +2306,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 31 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 32 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2313,7 +2315,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 32 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 33 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2335,7 +2337,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios foram desenvolvidas para atender à US11, permitindo a aplicação de filtros por período, retiro e tipo de relatório. Dessa forma, o gerente consegue analisar informações específicas de cada unidade da fazenda de maneira mais organizada e detalhada. Além disso, a interface disponibiliza uma prévia visual das informações antes da exportação em planilha, auxiliando no acompanhamento consolidado das operações pecuárias e apoiando a tomada de decisão de forma centralizada.
 
 <div align="center">
-<p align="center">Figura 33 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">Figura 34 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
@@ -2345,7 +2347,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 
 <div align="center">
-<p align="center">Figura 34 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">Figura 35 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
@@ -2356,7 +2358,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, indicadores estratégicos e informações consolidadas da fazenda. Nessa versão, foram mantidas as funcionalidades relacionadas às US08 e US11, possibilitando ao gerente visualizar dashboards gerenciais, acompanhar ocorrências recentes e analisar dados operacionais utilizando filtros por período e retiro de forma centralizada e mais detalhada.
 
 <div align="center">
-<p align="center">Figura 35 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
+<p align="center">Figura 36 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
@@ -2365,7 +2367,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 36 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
+<p align="center">Figura 37 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
@@ -2388,7 +2390,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a paleta cromática da aplicação foi desenvolvida considerando o contexto do agronegócio e as necessidades operacionais da fazenda. Os tons de verde foram definidos como cores principais por remeterem visualmente ao campo, à natureza e à identidade do setor agropecuário, além de transmitirem sensação de estabilidade, confiabilidade e equilíbrio.
 
 <div align="center">
-<p align="center">Figura 37 - Cores</p>
+<p align="center">Figura 38 - Cores</p>
 <p align="center">
 <img src="others/assets/cores.png" alt="Cores" border="0">
 </a>
@@ -2447,7 +2449,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 
 <div align="center">
-<p align="center">Figura 38 - Tipografia</p>
+<p align="center">Figura 39 - Tipografia</p>
 <p align="center">
 <img src="others/assets/tipografia.png" alt="Tipografia" border="0">
 </a>
@@ -2462,7 +2464,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e celulares utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
 
 <div align="center">
-<p align="center">Figura 39 - Iconografia</p>
+<p align="center">Figura 40 - Iconografia</p>
 <p align="center">
 <img src="others/assets/icones.png" alt="Iconografia" border="0">
 </a>
@@ -2487,7 +2489,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Capataz foi desenvolvido exclusivamente na versão mobile, refletindo a realidade operacional da persona Daniel Carvalho: um profissional que atua diretamente em campo, com baixo letramento digital e que utiliza o sistema apenas pelo dispositivo móvel durante as atividades no retiro. Nesse contexto, as decisões de design priorizaram simplicidade, fluxos curtos de navegação e elementos visuais de fácil interpretação, garantindo que o sistema possa ser utilizado de forma intuitiva mesmo em condições adversas de campo.
 
 <div align="center">
-<p align="center">Figura 40 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
+<p align="center">Figura 41 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
 <p align="center">
 <img src="others/assets/hi-fi-capataz.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz" border="0">
 </p>
@@ -2509,7 +2511,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Supervisor na versão mobile foi desenvolvido para atender à persona Luiz Felipe, um profissional de 37 anos com letramento digital intermediário que atua na coordenação dos capatazes e no acompanhamento das operações de manejo nos retiros. Diferentemente do Capataz, o Supervisor precisa de uma interface que equilibre simplicidade de uso em campo com acesso a um conjunto mais amplo de funcionalidades operacionais e de gestão, refletindo seu papel que gera a conexão entre a execução e o controle das atividades da fazenda.
 
 <div align="center">
-<p align="center">Figura 41 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
+<p align="center">Figura 42 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
 <p align="center">
 <img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor" border="0">
 </p>
@@ -2533,7 +2535,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Supervisor na versão desktop foi desenvolvido para o cenário em que a persona Luiz Felipe acessa o sistema a partir de um computador no ambiente administrativo da fazenda, situação comum para atividades de planejamento, análise de dados operacionais e gestão centralizada das equipes. Nesse contexto, o maior espaço de tela disponível permitiu reorganizar o layout de forma a exibir mais informações simultaneamente, sem abrir mão da consistência visual e funcional já estabelecida na versão mobile.
 
 <div align="center">
-<p align="center">Figura 42 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
+<p align="center">Figura 43 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
 <p align="center">
 <img src="others/assets/hi-fi-desktop-supervisor.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor" border="0">
 </p>
@@ -2555,7 +2557,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Gerente na versão mobile foi desenvolvido para atender à persona Marcos Ferreira, um profissional de 49 anos, formado em Administração, com letramento digital intermediário e perfil estratégico voltado à tomada de decisão baseada em dados. Seu principal desafio é a baixa integração e confiabilidade das informações operacionais provenientes do campo, o que compromete o acompanhamento do realizado versus planejado e aumenta a dependência de ações reativas. A versão mobile do Gerente foi projetada para oferecer acesso rápido a indicadores e relatórios consolidados em qualquer lugar, sem exigir que Marcos esteja necessariamente em um ambiente de trabalho fixo.
 
 <div align="center">
-<p align="center">Figura 43 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
+<p align="center">Figura 44 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
 <p align="center">
 <img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente" border="0">
 </p>
@@ -2577,7 +2579,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Gerente na versão desktop foi desenvolvido para o cenário em que Marcos Ferreira acessa o sistema a partir de um computador no ambiente administrativo, situação mais comum para atividades de análise aprofundada, geração de relatórios e acompanhamento consolidado da operação. O maior espaço de tela disponível permitiu organizar as informações de forma mais densa e comparativa, tornando a versão desktop o ambiente ideal para o perfil estratégico da persona, que necessita de visão simultânea de múltiplos indicadores para apoiar a tomada de decisão.
 
 <div align="center">
-<p align="center">Figura 44 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
+<p align="center">Figura 45 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
 <p align="center">
 <img src="others/assets/hi-fi-desktop-gerente.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente" border="0">
 </p>
@@ -2699,7 +2701,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
 <div align="center">
-<p align="center">Figura 45 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">Figura 46 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
 <img src="others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
@@ -2716,7 +2718,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi definida para permitir o acompanhamento dos principais registros e operações do sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias comprovações registradas, como fotos, áudios ou mensagens.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em resumo, essa modelagem foi definida para garantir robustez, integridade e redução de duplicidade das informações. Com essa estrutura planejada de forma consistente, é possível assegurar que o banco de dados suporte todas as regras de negócio da aplicação, permitindo consultas rápidas e mantendo a organização necessária para as próximas etapas do desenvolvimento.
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama entidade-relacionamento materializa graficamente o modelo conceitual da Seção 3.6.1, traduzindo as decisões de modelagem em uma representação visual padronizada com convenções claras de cores e formas para entidades, relacionamentos, chaves primárias, chaves estrangeiras e atributos comuns. A centralidade da entidade `Retiro` no diagrama evidencia o papel estruturante dos retiros na operação da BrPec, refletindo a realidade de que praticamente todos os fluxos do sistema (registros de movimentação, tarefas, tickets e relatórios) ocorrem necessariamente vinculados a uma unidade física da fazenda. O desdobramento das relações entre `Usuário` e as entidades operacionais e a separação entre `Tarefa` e `Evidência` em relacionamentos N:N permitem visualizar com clareza tanto a responsabilização individual quanto a flexibilidade na anexação de múltiplas comprovações a uma mesma atividade. Aliado ao modelo relacional e ao modelo físico apresentados na [Seção 3.6.3](#c3.6.3), o DER assegura que a estrutura do banco de dados sustente as regras de negócio definidas na [Seção 3.1.2](#c3.1.2) com integridade referencial, baixa redundância e organização adequada para as consultas exigidas pelos fluxos operacionais e gerenciais do AgroFlow.
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -2725,7 +2727,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 <div align="center">
-<p align="center">Figura 46 – Modelo Relacional</p>
+<p align="center">Figura 47 – Modelo Relacional</p>
 <img src="others/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4033,7 +4035,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 | Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `GET /tarefas/{id}`; `GET /tarefas/status/{status}`; `GET /tarefas/usuario/{usuarioId}`; `GET /tarefas/prioridade/{prioridade}`; `GET /tarefas/categoria/{categoria}`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204 |
 | Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada |
 | Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias` e `GET /evidencias/{id}` retornando HTTP 200 |
-| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 50 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
+| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
 | Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
 | Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal` e `GET /relatorios/mensal` retornando HTTP 200 com dados de movimentações; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
 | Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets`; `GET /tickets/pendentes`; `GET /tickets/status`; `GET /tickets/categoria`; `GET /tickets/{id}`; `PATCH /tickets/{id}/status`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
@@ -4044,7 +4046,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 50 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
+&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 51 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
@@ -4060,10 +4062,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **1. Estrutura do Projeto e Configuração do Ambiente**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, pg, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 47).
+&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, pg, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 48).
 
 <div align="center">
-  <p align="center">Figura 47 - package.json com dependências do projeto</p>
+  <p align="center">Figura 48 - package.json com dependências do projeto</p>
   <p>
     <img src="others/assets/print-json.png" alt="package.json com dependências" border="0">
   </p>
@@ -4072,20 +4074,20 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **2. Banco de Dados e Migrations**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 48).
+&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 49).
 
 <div align="center">
-  <p align="center">Figura 48 - Tabelas criadas no banco de dados PostgreSQL</p>
+  <p align="center">Figura 49 - Tabelas criadas no banco de dados PostgreSQL</p>
   <p>
     <img src="others/assets/print-supabase.png" alt="Tabelas no banco de dados" border="0">
   </p>
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 49).
+&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 50).
 
 <div align="center">
-  <p align="center">Figura 49 - Script de migração com ENUMs e estrutura de tabelas</p>
+  <p align="center">Figura 50 - Script de migração com ENUMs e estrutura de tabelas</p>
   <p>
     <img src="others/assets/print-migrations.png" alt="Script SQL de migração" border="0">
   </p>
@@ -4094,10 +4096,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **3. Sistema de Autenticação e Autorização**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 50).
+&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 51).
 
 <div align="center">
-  <p align="center">Figura 50 - Requisição de login e token JWT retornado</p>
+  <p align="center">Figura 51 - Requisição de login e token JWT retornado</p>
   <p>
     <img src="others/assets/print-token.png" alt="Login e JWT" border="0">
   </p>
@@ -4108,7 +4110,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **4. Arquitetura em Camadas**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 51):
+&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 52):
 
 - **Controllers** (`/src/backend/controllers/`): recebem as requisições HTTP, validam presença dos campos obrigatórios e delegam a lógica ao Service.
 - **Services** (`/src/backend/services/`): aplicam as regras de negócio do domínio.
@@ -4117,7 +4119,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 - **Middlewares** (`/src/backend/middlewares/`): autenticação, autorização, log de requisições, tratamento centralizado de erros e validação de payload.
 
 <div align="center">
-  <p align="center">Figura 51 - Estrutura de diretórios do projeto</p>
+  <p align="center">Figura 52 - Estrutura de diretórios do projeto</p>
   <p>
     <img src="others/assets/print-estruturas-paginas.png" alt="Estrutura de diretórios do backend" border="0">
   </p>
@@ -4126,10 +4128,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **5. Rotas da API**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 52).
+&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 53).
 
 <div align="center">
-  <p align="center">Figura 52 - Servidor rodando no terminal</p>
+  <p align="center">Figura 53 - Servidor rodando no terminal</p>
   <p>
     <img src="others/assets/print-terminal.png" alt="Servidor rodando no terminal" border="0">
   </p>
@@ -4166,7 +4168,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 &nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (Figuras 53, 54 e 55).
 
 <div align="center">
-  <p align="center">Figura 53 - Protótipo de Alta Fidelidade (Capataz)</p>
+  <p align="center">Figura 54 - Protótipo de Alta Fidelidade (Capataz)</p>
   <p>
     <img src="others/assets/hi-fi-capataz.png" alt="Protótipo de alta fidelidade - tela 1" border="0">
   </p>
@@ -4174,7 +4176,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 </div>
 
 <div align="center">
-  <p align="center">Figura 54 - Protótipo de Alta Fidelidade (Supervisor)</p>
+  <p align="center">Figura 55 - Protótipo de Alta Fidelidade (Supervisor)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4182,7 +4184,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 </div>
 
 <div align="center">
-  <p align="center">Figura 55 - Protótipo de Alta Fidelidade (Gerente)</p>
+  <p align="center">Figura 56 - Protótipo de Alta Fidelidade (Gerente)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4218,12 +4220,277 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-*Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:*
+### 5.1.1 Estratégia de Documentação dos Testes
 
-- ***White-box*** *— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação).*
-- ***Black-box*** *— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna.*
+Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma análise da relação entre os requisitos funcionais, a implementação do backend e os testes já existentes no repositório. A documentação foi organizada em duas frentes complementares:
 
-*Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
+- **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
+- **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
+
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, estrutura adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+
+| Fase | Responsável | Descrição |
+|---|---|---|
+| **Arrange** | Fixtures e helpers | Preparação do estado inicial — dados de entrada, mocks de repositório e instâncias de serviço são configurados antes da execução, utilizando os arquivos da pasta `src/backend/tests/helpers/` e os fixtures de simulação. |
+| **Act** | Chamada ao service ou requisição HTTP | Execução da ação sob teste — invocação direta do método do service (white-box) ou envio de requisição HTTP via Supertest ao endpoint correspondente (black-box). |
+| **Assert** | Verificação do resultado esperado | Confirmação do comportamento — validação do retorno, status HTTP, estrutura do corpo da resposta ou lançamento de exceção, conforme o cenário documentado em cada tabela de cobertura. |
+
+#### Endpoints Mapeados
+
+Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação:
+
+| Domínio | Endpoint |
+|---|---|
+| Usuários e autenticação | `/usuarios` |
+| Movimentações | `/movimentacoes` |
+| Tarefas | `/tarefas` |
+| Tickets | `/tickets` |
+| Evidências | `/evidencias` |
+| Sincronização | `/sincronizacao` |
+| Validações | `/validacoes` |
+| Relatórios | `/relatorios` |
+| Saúde da API | `/health` |
+
+Também foram considerados subendpoints específicos:
+
+- `login`
+- `filtros`
+- `dashboard`
+- `contagens`
+- `aprovação`
+- `atribuição`
+- `sincronização`
+- `geração de relatórios`
+
+#### Estrutura Analisada
+
+Para sustentar essa documentação, foram analisados:
+
+- A configuração do Jest em `jest.config.ts`
+- A pasta `src/backend/tests/unit/`
+- A pasta `src/backend/tests/integration/`
+- A pasta `src/backend/tests/helpers/`
+- Os fixtures utilizados para simulação de dados
+- Os arquivos de teste existentes para cada módulo
+
+### 5.1.2 White Box
+Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema.
+
+A execução de `npm test -- --coverage` demonstrou que a camada `backend/services` atingiu **92.18% de statements**, **85.32% de branches**, **98.11% de functions** e **92.02% de lines**, superando o mínimo de 80% exigido para a seção. Os testes cobrem os principais serviços do sistema, incluindo autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+
+Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da seção 3.9, preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
+
+**CT01 - RN01 / RF001 | MovimentacaoService**
+- **Arrange:** preparar fixtures de movimentação com campos ausentes ou válidos, simulando compra, venda, nascimento e morte.
+- **Act:** chamar `validarCamposObrigatorios`, `criar` e `sincronizarRecebida` diretamente no service.
+- **Assert:** verificar o lançamento do erro esperado para cada campo obrigatório ausente e a aceitação do payload válido.
+- **Determinismo:** o teste usa mocks de `MovimentacaoRepository` e dados fixos de `mockMovimentacao`, sem dependência externa.
+- **Caminho de falha:** cobertura de ausência de `capataz_id`, `estagio_vida`, `origem`, `destino`, `quantidade` e `causa_obito`.
+
+**CT02 - RN02 / RF002 | TarefaService**
+- **Arrange:** montar tarefas com campos obrigatórios incompletos e usuário criador com cargo diferente de supervisor.
+- **Act:** chamar `validarCamposObrigatorios`, `criar`, `atualizar`, `atualizarStatus` e consultas de filtro.
+- **Assert:** confirmar rejeição quando faltam `atribuida_a`, `descricao`, `prioridade` ou `categoria`, e aceitação quando a tarefa é válida.
+- **Determinismo:** os testes usam `TarefaRepository` mockado e fixtures fixas como `mockTarefa` e `mockSupervisor`.
+- **Caminho de falha:** bloqueio da criação por cargo inválido e por campos obrigatórios ausentes.
+
+**CT03 - RN03 / RF003 | SincronizacaoService**
+- **Arrange:** simular `fetch` com sucesso, falha e status de conexão indisponível, além de listas de registros pendentes.
+- **Act:** executar `detectarConexao`, `sincronizar`, `enviarMovimentacao`, `enviarTarefa`, `enviarTicket`, `obterStatusSincronizacao` e `obterMensagemSincronizacao`.
+- **Assert:** validar retorno `true/false` da conexão, contagem de pendências, atualização de `sincronizado` e mensagens amigáveis.
+- **Determinismo:** o fluxo depende apenas de mocks de `fetch` e dos repositórios `MovimentacaoRepository`, `TarefaRepository` e `TicketRepository`.
+- **Caminho de falha:** sem conexão com o servidor e falhas individuais de envio com HTTP não-OK.
+
+**CT04 - RN04 / RF004 | EvidenciaService**
+- **Arrange:** preparar coordenadas válidas, coordenadas inválidas, mensagens curtas e áudios com duração insuficiente.
+- **Act:** chamar `validarGeorreferenciamento`, `validarEvidenciaDescritiva`, `criarFoto`, `criarAudio`, `criarMensagem`, `buscarPorId` e `listarTodas`.
+- **Assert:** confirmar a rejeição de fotos sem georreferenciamento e de evidências descritivas abaixo do mínimo, além da criação correta dos registros válidos.
+- **Determinismo:** os testes usam `EvidenciaRepository` e repositórios específicos de foto, áudio e mensagem totalmente mockados.
+- **Caminho de falha:** latitude/longitude fora do intervalo, mensagem com menos de 10 caracteres e áudio com menos de 3 segundos.
+
+**CT05 - RN05 / RF005 | UsuarioService**
+- **Arrange:** montar usuários ativos, inativos, com login inexistente e com senha incorreta.
+- **Act:** chamar `autenticar`, `podeValidar`, `temPermissao`, `estaAtivo`, `criar`, `buscarPorId`, `listarPorRetiro`, `listarTodos`, `atualizar` e `remover`.
+- **Assert:** verificar autenticação correta, negação de login inválido, restrição por cargo e validação de status ativo.
+- **Determinismo:** os cenários usam `UsuarioRepository` mockado e fixtures fixas (`mockSupervisor` e `mockGerente`).
+- **Caminho de falha:** login inexistente, senha incorreta, campos obrigatórios ausentes e login fora do formato de e-mail.
+
+### Tabela Complementar de Testes White-Box
+
+| CT | RN | RF | Service(s) | Arquivo(s) | Cenário validado | Resultado esperado |
+|---|---|---|---|---|---|---|
+| CT01 | RN01 | RF001 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Regras obrigatórias por tipo de movimentação, criação e sincronização recebida | Erro de validação para campos ausentes e aceite do payload válido |
+| CT02 | RN02 | RF002 | TarefaService | `src/backend/tests/unit/tarefa.service.spec.ts` | Campos obrigatórios, criação por supervisor, filtros e atualizações | Tarefa aceita quando válida e rejeitada quando incompleta ou sem permissão |
+| CT03 | RN03 | RF003 | SincronizacaoService | `src/backend/tests/unit/sincronizacao.service.spec.ts` | Detecção de conexão, sincronização de pendências e status geral | Retorno coerente de conexão, sincronização e mensagens de status |
+| CT04 | RN04 | RF004 | EvidenciaService | `src/backend/tests/unit/evidencia.service.spec.ts` | Georreferenciamento e validação de evidências de foto, áudio e mensagem | Rejeição de dados inválidos e criação dos registros válidos |
+| CT05 | RN05 | RF005 | UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Autenticação, permissões, status ativo e CRUD básico | Login correto aceito, credenciais inválidas rejeitadas e regras de cargo aplicadas |
+| CT06 | RN06 | RF006 | ValidacaoService | `src/backend/tests/unit/validacao.service.spec.ts` | Validação e aprovação restritas ao Supervisor | Acesso negado para cargos inválidos e status alterado apenas em cenário válido |
+| CT07 | RN07 | RF007 | RelatorioService | `src/backend/tests/unit/relatorio.service.spec.ts` | Filtragem por período, formatação e geração de relatórios | Apenas dados sincronizados e dentro do período são retornados |
+| CT08 | RN08 | RF008 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Criação de ticket com evidência descritiva obrigatória | Ticket rejeitado sem evidência e aceito com dados válidos |
+| CT09 | RN09 | RF009 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Filtro por retiro, tipo, status e período | Lista filtrada corretamente conforme os parâmetros informados |
+| CT10 | RN10 | RF010 | MovimentacaoService, TarefaService, TicketService, SincronizacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts`; `src/backend/tests/unit/tarefa.service.spec.ts`; `src/backend/tests/unit/ticket.service.spec.ts`; `src/backend/tests/unit/sincronizacao.service.spec.ts` | Consolidação de indicadores por retiro | Contagens do dashboard retornam apenas registros sincronizados e validados/aprovados |
+| CT11 | RN11 | RF011 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Prioridade obrigatória e alteração posterior | Prioridade inválida rejeitada e prioridade válida atualizada com sucesso |
+
+Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Os casos prioritários `CT01` a `CT05` são os mais críticos para o sistema, pois cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
+
+### 5.1.3 Black Box
+Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
+
+Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar os fluxos de sucesso mais relevantes da aplicação, como criação, listagem, atualização, exclusão, filtros, sincronização e aprovação. No estado atual da suíte, a cobertura black-box está concentrada principalmente nos cenários `200/201/204` e em alguns bloqueios de acesso, como o `403` no fluxo de login do usuário capataz.
+
+Em relação ao critério desejado para esta seção, a cobertura ainda é **parcial**: os testes atuais não demonstram, para cada endpoint principal, os quatro cenários obrigatórios de forma explícita e completa (`200/201`, `400/422`, `409 ou equivalente` e `404`). Dessa forma, esta seção documenta a cobertura existente e também evidencia as lacunas que devem ser complementadas para atingir integralmente o padrão solicitado.
+
+### Tabela Complementar de Testes Black-Box
+
+| Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
+|---|---|---|---|---|
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Autenticação de usuário | `POST /usuarios/login` | Retorno do usuário autenticado e token JWT |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Bloqueio de capataz no login | `POST /usuarios/login` | Retorno 403 |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Listagem de usuários | `GET /usuarios` | Retorno da lista sem dados sensíveis |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Busca por usuário, criação, atualização e remoção | `GET /usuarios/:id`, `POST /usuarios`, `PATCH /usuarios/:id`, `DELETE /usuarios/:id` | Status coerentes e corpo esperado |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Criação de movimentação | `POST /movimentacoes` | Retorno 201 com o registro criado |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Listagem e filtros | `GET /movimentacoes`, `GET /movimentacoes/filtrar` | Retorno da lista filtrada corretamente |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Sincronização de movimentação | `POST /movimentacoes/sincronizar`, `PATCH /movimentacoes/:id/sincronizar` | Retorno com movimentação sincronizada |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Pendências, dashboard e contagem por tipo | `GET /movimentacoes/pendentes`, `GET /movimentacoes/dashboard`, `GET /movimentacoes/contagem/tipo` | Dados consolidados e contagens corretas |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Busca, atualização e remoção | `GET /movimentacoes/:id`, `PATCH /movimentacoes/:id`, `DELETE /movimentacoes/:id` | Status coerentes com o CRUD |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Criação e listagem de tarefas | `POST /tarefas`, `GET /tarefas` | Retorno 201 e listagem correta |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Dashboard e filtros | `GET /tarefas/dashboard`, `GET /tarefas/status/:status`, `GET /tarefas/usuario/:usuarioId`, `GET /tarefas/prioridade/:prioridade`, `GET /tarefas/categoria/:categoria` | Listas filtradas e agregações corretas |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Contagem, atualização e remoção | `GET /tarefas/contagem/status`, `GET /tarefas/:id`, `PATCH /tarefas/:id`, `PATCH /tarefas/:id/status`, `DELETE /tarefas/:id` | Status esperados e operações válidas |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Criação e listagem | `POST /tickets`, `GET /tickets` | Retorno 201 e lista correta |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Pendentes e filtros | `GET /tickets/pendentes`, `GET /tickets/status`, `GET /tickets/prioridade`, `GET /tickets/categoria` | Filtros aplicados corretamente |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Contagem por prioridade | `GET /tickets/contagem/prioridade` | Retorno das quantidades corretas |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Busca, status, prioridade e atribuição | `GET /tickets/:id`, `PATCH /tickets/:id/status`, `PATCH /tickets/:id/prioridade`, `PATCH /tickets/:id/atribuicao` | Atualizações e retornos coerentes |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Listagem e busca | `GET /evidencias`, `GET /evidencias/:id` | Retorno correto dos registros |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Criação de mensagens, áudios e fotos | `POST /evidencias/mensagens`, `POST /evidencias/audios`, `POST /evidencias/fotos` | Criação bem-sucedida dos tipos de evidência |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Conexão e status geral | `GET /sincronizacao/conexao`, `GET /sincronizacao/status`, `GET /sincronizacao/mensagem` | Retorno do estado de conexão e mensagens amigáveis |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Sincronização de dados e relatórios | `POST /sincronizacao`, `GET /sincronizacao/relatorios/movimentacoes`, `GET /sincronizacao/relatorios/tarefas`, `GET /sincronizacao/dashboard/tickets` | Dados sincronizados e consolidados |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Permissão do usuário | `POST /validacoes/permissao` | Retorno indicando acesso autorizado |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Validação e aprovação | `PATCH /validacoes/movimentacoes/:id/validar`, `PATCH /validacoes/tickets/:id/aprovar`, `PATCH /validacoes/tarefas/:id/aprovar` | Atualização correta do status |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retorno dos dados e formatação esperada |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
+| Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
+
+### Matriz de conformidade por cenário
+
+| Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
+|---|---|---|---|---|---|
+| Usuários | Coberto | Não coberto explicitamente | Parcial, com bloqueio `403` no login do capataz | Não coberto explicitamente | Parcial |
+| Movimentações | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Tarefas | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Tickets | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Evidências | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Sincronização | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Validações | Coberto | Não coberto explicitamente | Parcial, com bloqueio de autorização por perfil | Não coberto explicitamente | Parcial |
+| Relatórios | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Health Check | Coberto | Não aplicável | Não aplicável | Não aplicável | Adequado ao propósito |
+
+### 5.1.4 Relatório de cobertura Jest
+Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
+ 
+Complementarmente, foi executado o comando `npm test -- --coverage`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80%, atendendo ao critério estabelecido para a seção 5.1.2, enquanto as demais camadas foram registradas como evidência complementar da maturidade da suíte.
+ 
+Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
+ 
+---
+ 
+#### Relatório de Cobertura Jest
+ 
+**Comando executado:** 
+`npm test -- --coverage`
+
+<div align="center">
+  <p align="center">Figura 57 - Cobertura de testes da camada de services</p>
+  <img src="others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+ 
+---
+ 
+#### Evidência de Execução
+ 
+- `npm test` executado com sucesso.
+- `npm test -- --coverage` executado com sucesso.
+- Suíte atual: **17 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **185**.
+
+<div align="center">
+  <p align="center">Figura 58 - Execução dos testes de tickets</p>
+  <img src="others/assets/teste1.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 59 - Execução dos testes de usuários</p>
+  <img src="others/assets/teste2.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 60 - Execução dos testes de evidências</p>
+  <img src="others/assets/teste4.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 61 - Execução dos testes de validações</p>
+  <img src="others/assets/teste6.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 62 - Execução dos testes de relatórios</p>
+  <img src="others/assets/teste7.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 63 - Execução dos testes de movimentações</p>
+  <img src="others/assets/teste8.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 64 - Execução dos testes de sincronização</p>
+  <img src="others/assets/teste9.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 65 - Execução do teste do endpoint de health</p>
+  <img src="others/assets/teste10.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 66 - Execução dos testes de tarefas</p>
+  <img src="others/assets/teste11.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+<div align="center">
+  <p align="center">Figura 67 - Execução completa das suítes de teste</p>
+  <img src="others/assets/teste12.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+---
+ 
+#### Mapeamento de Rastreabilidade
+ 
+A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto:
+ 
+| Caso de Teste | Regra de Negócio | Requisito Funcional |
+|---|---|---|
+| CT01 | RN01 | RF001 |
+| CT02 | RN02 | RF002 |
+| CT03 | RN03 | RF003 |
+| CT04 | RN04 | RF004 |
+| CT05 | RN05 | RF005 |
+| CT06 | RN06 | RF006 |
+| CT07 | RN07 | RF007 |
+| CT08 | RN08 | RF008 |
+| CT09 | RN09 | RF009 |
+| CT10 | RN10 | RF010 |
+| CT11 | RN11 | RF011 |
 
 ## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
 
@@ -4285,9 +4552,9 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;Quanto às necessidades específicas, essas empresas demandam consolidação confiável das informações entre campo e escritório, rastreabilidade das movimentações do rebanho e adequação às exigências regulatórias crescentes, como o PNIB (MAPA, 2025) e o Código Florestal (BRASIL, 2012). As dores centrais relacionam-se ao retrabalho na transcrição manual, aos erros e inconsistências entre registros operacionais e administrativos e à lentidão na consolidação de dados críticos para a gestão. Como expectativas, buscam uma solução que opere mesmo sem conexão estável, sincronize automaticamente ao restabelecer a internet, gere relatórios auditáveis e se adapte ao contexto operacional real — sem exigir infraestrutura digital avançada ou reformulação completa de seus processos.
 
-## <a name="c6.5"></a>6.4 Posicionamento
+## <a name="c6.5"></a>6.4 Posicionamento e Branding
 
-**6.4.1) **Proposta de Valor Única**
+**6.4.1) **Proposta de Valor**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
 
@@ -4299,8 +4566,18 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;Combinados em uma única aplicação web com interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente), esses três pilares transformam o fluxo de informação da fazenda: do papel e do repasse verbal para um ciclo digital controlado, rastreável e acessível em tempo real.
 
-**6.4.2) **Estratégia de Diferenciação**
-*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
+**6.4.2) **Posicionamento e Diferenciação**
+
+&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow se posiciona como a solução de gestão operacional de campo projetada especificamente para fazendas de pecuária de larga escala com operações distribuídas em múltiplos retiros e conectividade de rede limitada ou instável. Enquanto ferramentas concorrentes tratam a conexão à internet como pré-requisito indispensável, o AgroFlow trata a ausência de conexão como o cenário operacional padrão, adaptando toda a sua arquitetura em torno dessa realidade.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Concorrentes diretos** — como Bovcontrol, Ideagri e Tecnopec — oferecem funcionalidades de gestão pecuária e monitoramento do rebanho, mas são concebidos para ambientes com conectividade estável e não possuem nativamente fluxos de validação hierárquica integrados com coleta de evidências digitais. **Concorrentes indiretos** — planilhas Excel, formulários físicos e boletas de papel — representam o modelo atual da BrPec e ainda predominam em grandes propriedades rurais que carecem de ferramentas digitais especializadas para operações de campo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os **atributos da marca** do AgroFlow são: confiabilidade (dados validados antes de compor relatórios), resiliência (operação garantida sem conexão) e acessibilidade (interface projetada para usuários com baixa familiaridade digital, como capatazes com ensino fundamental).
+
+&nbsp;&nbsp;&nbsp;&nbsp;A **identidade pretendida** é a de uma ferramenta robusta e precisa: sem disputar por volume de funcionalidades genéricas, mas por aderência total à realidade operacional de fazendas como a BrPec, com 14 retiros no Pantanal e Cerrado.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A **percepção de valor desejada** é que o AgroFlow seja reconhecido como o sistema que funciona onde outros falham — em campo, sem internet, com rastreabilidade completa — tornando-se referência em gestão pecuária para grandes operações descentralizadas.
+
 
 ## <a name="c6.6"></a>6.5 Estratégia de Marketing
 

@@ -47,6 +47,66 @@ app.get('/auth/login', (req, res) => {
   });
 });
 
+app.get('/supervisor/home', (req, res) => {
+  res.render('supervisor/home', {
+    title: 'Início',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' } // substituir pelo usuário da sessão
+  });
+});
+
+app.get('/supervisor/delegar', (req, res) => {
+  res.render('supervisor/delegar', {
+    title: 'Delegar tarefa',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
+app.get('/supervisor/revisao', (req, res) => {
+  res.render('supervisor/revisao', {
+    title: 'Revisão de Tarefas',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
+app.get('/supervisor/tickets', (req, res) => {
+  res.render('supervisor/tickets', {
+    title: 'Tickets de infraestrutura',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
+// Supervisor acessa relatórios
+app.get('/supervisor/relatorios', (req, res) => {
+  res.render('partials/relatorios', {
+    title: 'Relatórios',
+    css: ['supervisor', 'relatorios'],
+    persona: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  })
+})
+
+app.get('/gerente/home', (req, res) => {
+  res.render('gerente/home', {
+    title: 'Início',
+    css: 'gerente',
+    usuario: { nome: 'Marcos Ferreira' }
+  });
+});
+
+// Gerente acessa os mesmos relatórios - mesma view
+app.get('/gerente/relatorios', (req, res) => {
+  res.render('partials/relatorios', {
+    title: 'Relatórios',
+    css: ['gerente', 'relatorios'],
+    persona: 'gerente',
+    usuario: { nome: 'Marcos Ferreira' }
+  });
+});
+
 app.use('/evidencias', evidenciaRoutes)
 app.use('/movimentacoes', movimentacaoRoutes)
 app.use('/relatorios', relatorioRoutes)
