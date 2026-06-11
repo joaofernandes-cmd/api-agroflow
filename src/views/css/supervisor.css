@@ -433,3 +433,172 @@
   transition: opacity 0.15s;
 }
 .btn-revisar:hover { opacity: 0.88; }
+
+/* ════════════════════════════════════════════════════════════
+   TICKETS — Filtro mobile
+   ════════════════════════════════════════════════════════════ */
+.tickets-filter-bar {
+  background: var(--color-white);
+  border-bottom: 0.5px solid var(--color-border);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.tickets-filter-label {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.tickets-badge-ativos {
+  background: rgba(255, 59, 48, 0.12);
+  color: #ff3b30;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 11px;
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TICKETS — Lista mobile
+   ════════════════════════════════════════════════════════════ */
+.tickets-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px 0;
+}
+
+.ticket-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+  border-radius: 4px 16px 16px 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 8px;
+  min-height: 76px;
+  overflow: hidden;
+}
+
+.ticket-card__accent {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 16px 0 0 16px;
+  flex-shrink: 0;
+}
+.ticket-card__accent--red    { background: #ff3b30; }
+.ticket-card__accent--yellow { background: #d99a00; }
+.ticket-card__accent--blue   { background: #3d7da6; }
+
+.ticket-card__body {
+  flex: 1;
+  padding: 12px 12px;
+}
+
+.ticket-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ticket-card__meta {
+  font-size: 11px;
+  color: var(--color-muted);
+  margin-top: 4px;
+}
+
+/* Badges de severidade */
+.sev-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.sev-badge--alta   { background: rgba(255,59,48,0.15);  color: #ff3b30; }
+.sev-badge--media  { background: rgba(217,154,0,0.15);  color: #d99a00; }
+.sev-badge--baixa  { background: rgba(61,125,166,0.15); color: #3d7da6; }
+
+.ticket-card__check {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TICKETS — Desktop (herda estilos da revisão + extras)
+   ════════════════════════════════════════════════════════════ */
+.tickets-filter-bar-desktop {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.tickets-badge-ativos--desktop {
+  font-size: 11px;
+  height: 28px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+}
+
+/* Accent na tabela (coluna estreita colorida) */
+.td--accent {
+  width: 3px;
+  padding: 0 !important;
+}
+.td--accent-red    { background: #ff3b30; }
+.td--accent-yellow { background: #d99a00; }
+.td--accent-blue   { background: #3d7da6; }
+
+/* Badges extras para tickets */
+.badge--red-soft { background: #ffe6e5; color: #ff3b30; }
+.badge--blue     { background: #e0eef5; color: #3d7da6; }
+.badge--green    { background: #e0f5e5; color: #1f803e; }
+
+/* Botão Atender */
+.btn-atender {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-atender:hover { opacity: 0.88; }
+
+/* Botão Ver (resolvido — cinza) */
+.btn-ver {
+  background: var(--color-border);
+  color: var(--color-muted);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-ver:hover { opacity: 0.85; }

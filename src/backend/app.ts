@@ -71,6 +71,14 @@ app.get('/supervisor/revisao', (req, res) => {
   });
 });
 
+app.get('/supervisor/tickets', (req, res) => {
+  res.render('supervisor/tickets', {
+    title: 'Tickets de infraestrutura',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
 // Supervisor acessa relatórios
 app.get('/supervisor/relatorios', (req, res) => {
   res.render('partials/relatorios', {
