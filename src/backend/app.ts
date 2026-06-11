@@ -63,6 +63,14 @@ app.get('/supervisor/delegar', (req, res) => {
   });
 });
 
+app.get('/supervisor/revisao', (req, res) => {
+  res.render('supervisor/revisao', {
+    title: 'Revisão de Tarefas',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
 // Supervisor acessa relatórios
 app.get('/supervisor/relatorios', (req, res) => {
   res.render('partials/relatorios', {
