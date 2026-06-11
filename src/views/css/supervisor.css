@@ -65,12 +65,17 @@
   cursor: pointer;
 }
 .dfield__select:focus { border-color: var(--color-primary); }
+.dfield__select--has-value { color: var(--color-text); }
+
+.dfield__select option { color: var(--color-text); }
+.dfield__select option[disabled] { color: var(--color-muted); }
 
 .dfield__select--desktop {
   height: 48px;
   border-radius: 10px;
   color: #b3b3b3;
 }
+.dfield__select--desktop.dfield__select--has-value { color: var(--color-text); }
 
 /* Textarea */
 .dfield__textarea {
