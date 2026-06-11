@@ -2127,7 +2127,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 • A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
 
 <div align="center">
-<p align="center">Figura 21 - Diagrama de implantação</p>
+<p align="center">Figura 22 - Diagrama de implantação</p>
 <p align="center">
 <img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
 </p>
@@ -2199,7 +2199,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do capataz são Home, Operações, Abrir Chamado e Minhas Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p align="center">Figura 22 - Wireframe da aba "Entrar e home" do capataz</p>
+<p align="center">Figura 23 - Wireframe da aba "Entrar e home" do capataz</p>
 <p align="center">
   <a href="https://www.inteli.edu.br/">
     <img src="others/assets/wireframe-entrar-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2209,7 +2209,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 23 - Wireframe da aba "Registrar operação" do capataz</p>
+<p align="center">Figura 24 - Wireframe da aba "Registrar operação" do capataz</p>
 <p align="center">
   <a href="https://www.inteli.edu.br/">
     <img src="others/assets/registrar-movimentacao-wireframe-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2219,7 +2219,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 24 - Wireframe da aba "Abrir chamado" do capataz</p>
+<p align="center">Figura 25 - Wireframe da aba "Abrir chamado" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="others/assets/wireframe-abrir-chamado-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2229,7 +2229,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 25 - Wireframe da aba "Minhas tarefas" do capataz</p>
+<p align="center">Figura 26 - Wireframe da aba "Minhas tarefas" do capataz</p>
 <p align="center">
 <a href="https://www.inteli.edu.br/">
 <img src="others/assets/wireframe-minhas-tarefas-capataz.png" alt="Wireframe | Mobile | Capataz" border="0">
@@ -2257,7 +2257,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do supervisor são Dashboard, Relatórios, Registros Pendentes, Alertas e Delegação de Tarefas, cujos wireframes são apresentados a seguir:
 
 <div align="center">
-<p align="center">Figura 26 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 27 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-login-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
@@ -2266,7 +2266,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 27 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 28 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-home-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
@@ -2275,7 +2275,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 28 - Wireframe Versão Mobile do Supervisor</p>
+<p align="center">Figura 29 - Wireframe Versão Mobile do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-abas-supervisor.png" alt="Wireframe | Mobile | Supervisor" border="0">
 </a>
@@ -2288,7 +2288,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05, US06 e US09, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
 
 <div align="center">
-<p align="center">Figura 29 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 30 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-login-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2297,7 +2297,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 30 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 31 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-relatorios-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2306,7 +2306,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 31 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 32 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-home-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2315,7 +2315,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 32 - Wireframe Versão Desktop do Supervisor</p>
+<p align="center">Figura 33 - Wireframe Versão Desktop do Supervisor</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-alerta-supervisor.png" alt="Wireframe | Desktop | Supervisor" border="0">
 </a>
@@ -2337,7 +2337,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios foram desenvolvidas para atender à US11, permitindo a aplicação de filtros por período, retiro e tipo de relatório. Dessa forma, o gerente consegue analisar informações específicas de cada unidade da fazenda de maneira mais organizada e detalhada. Além disso, a interface disponibiliza uma prévia visual das informações antes da exportação em planilha, auxiliando no acompanhamento consolidado das operações pecuárias e apoiando a tomada de decisão de forma centralizada.
 
 <div align="center">
-<p align="center">Figura 33 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">Figura 34 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-login-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
@@ -2347,7 +2347,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 
 <div align="center">
-<p align="center">Figura 34 - Wireframe Versão Mobile do Gerente</p>
+<p align="center">Figura 35 - Wireframe Versão Mobile do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-mobile-home-gerente.png" alt="Wireframe | Mobile | Gerente" border="0">
 </a>
@@ -2358,7 +2358,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, indicadores estratégicos e informações consolidadas da fazenda. Nessa versão, foram mantidas as funcionalidades relacionadas às US08 e US11, possibilitando ao gerente visualizar dashboards gerenciais, acompanhar ocorrências recentes e analisar dados operacionais utilizando filtros por período e retiro de forma centralizada e mais detalhada.
 
 <div align="center">
-<p align="center">Figura 35 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
+<p align="center">Figura 36 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-login-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
@@ -2367,7 +2367,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 </div>
 
 <div align="center">
-<p align="center">Figura 36 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
+<p align="center">Figura 37 - Wireframe da aba "Home e Relatórios" Versão Desktop do Gerente</p>
 <p align="center">
 <img src="others/assets/wireframe-pc-home-e-relatorios-gerente.png" alt="Wireframe | Desktop | Gerente" border="0">
 </a>
@@ -2390,7 +2390,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a paleta cromática da aplicação foi desenvolvida considerando o contexto do agronegócio e as necessidades operacionais da fazenda. Os tons de verde foram definidos como cores principais por remeterem visualmente ao campo, à natureza e à identidade do setor agropecuário, além de transmitirem sensação de estabilidade, confiabilidade e equilíbrio.
 
 <div align="center">
-<p align="center">Figura 37 - Cores</p>
+<p align="center">Figura 38 - Cores</p>
 <p align="center">
 <img src="others/assets/cores.png" alt="Cores" border="0">
 </a>
@@ -2449,7 +2449,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 
 <div align="center">
-<p align="center">Figura 38 - Tipografia</p>
+<p align="center">Figura 39 - Tipografia</p>
 <p align="center">
 <img src="others/assets/tipografia.png" alt="Tipografia" border="0">
 </a>
@@ -2464,7 +2464,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;A iconografia constitui um elemento fundamental na construção de interfaces digitais intuitivas e eficientes, atuando como um sistema visual de comunicação que complementa os textos e orienta a navegação dos usuários de forma rápida e clara. No contexto operacional da BrPec, em que os usuários interagem com o sistema em ambientes de campo, muitas vezes sob condições adversas de luminosidade e com necessidade de tomadas de decisão ágeis, a padronização dos ícones torna-se ainda mais relevante. Ícones bem definidos aceleram a interpretação das funcionalidades disponíveis e contribuem para uma experiência de uso mais fluida, especialmente em dispositivos móveis e celulares utilizados pelos capatazes e supervisores durante as operações diárias da fazenda.
 
 <div align="center">
-<p align="center">Figura 39 - Iconografia</p>
+<p align="center">Figura 40 - Iconografia</p>
 <p align="center">
 <img src="others/assets/icones.png" alt="Iconografia" border="0">
 </a>
@@ -2489,7 +2489,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Capataz foi desenvolvido exclusivamente na versão mobile, refletindo a realidade operacional da persona Daniel Carvalho: um profissional que atua diretamente em campo, com baixo letramento digital e que utiliza o sistema apenas pelo dispositivo móvel durante as atividades no retiro. Nesse contexto, as decisões de design priorizaram simplicidade, fluxos curtos de navegação e elementos visuais de fácil interpretação, garantindo que o sistema possa ser utilizado de forma intuitiva mesmo em condições adversas de campo.
 
 <div align="center">
-<p align="center">Figura 40 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
+<p align="center">Figura 41 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
 <p align="center">
 <img src="others/assets/hi-fi-capataz.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz" border="0">
 </p>
@@ -2511,7 +2511,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Supervisor na versão mobile foi desenvolvido para atender à persona Luiz Felipe, um profissional de 37 anos com letramento digital intermediário que atua na coordenação dos capatazes e no acompanhamento das operações de manejo nos retiros. Diferentemente do Capataz, o Supervisor precisa de uma interface que equilibre simplicidade de uso em campo com acesso a um conjunto mais amplo de funcionalidades operacionais e de gestão, refletindo seu papel que gera a conexão entre a execução e o controle das atividades da fazenda.
 
 <div align="center">
-<p align="center">Figura 41 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
+<p align="center">Figura 42 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
 <p align="center">
 <img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor" border="0">
 </p>
@@ -2535,7 +2535,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Supervisor na versão desktop foi desenvolvido para o cenário em que a persona Luiz Felipe acessa o sistema a partir de um computador no ambiente administrativo da fazenda, situação comum para atividades de planejamento, análise de dados operacionais e gestão centralizada das equipes. Nesse contexto, o maior espaço de tela disponível permitiu reorganizar o layout de forma a exibir mais informações simultaneamente, sem abrir mão da consistência visual e funcional já estabelecida na versão mobile.
 
 <div align="center">
-<p align="center">Figura 42 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
+<p align="center">Figura 43 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
 <p align="center">
 <img src="others/assets/hi-fi-desktop-supervisor.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor" border="0">
 </p>
@@ -2557,7 +2557,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Gerente na versão mobile foi desenvolvido para atender à persona Marcos Ferreira, um profissional de 49 anos, formado em Administração, com letramento digital intermediário e perfil estratégico voltado à tomada de decisão baseada em dados. Seu principal desafio é a baixa integração e confiabilidade das informações operacionais provenientes do campo, o que compromete o acompanhamento do realizado versus planejado e aumenta a dependência de ações reativas. A versão mobile do Gerente foi projetada para oferecer acesso rápido a indicadores e relatórios consolidados em qualquer lugar, sem exigir que Marcos esteja necessariamente em um ambiente de trabalho fixo.
 
 <div align="center">
-<p align="center">Figura 43 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
+<p align="center">Figura 44 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
 <p align="center">
 <img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente" border="0">
 </p>
@@ -2579,7 +2579,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade do Gerente na versão desktop foi desenvolvido para o cenário em que Marcos Ferreira acessa o sistema a partir de um computador no ambiente administrativo, situação mais comum para atividades de análise aprofundada, geração de relatórios e acompanhamento consolidado da operação. O maior espaço de tela disponível permitiu organizar as informações de forma mais densa e comparativa, tornando a versão desktop o ambiente ideal para o perfil estratégico da persona, que necessita de visão simultânea de múltiplos indicadores para apoiar a tomada de decisão.
 
 <div align="center">
-<p align="center">Figura 44 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
+<p align="center">Figura 45 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
 <p align="center">
 <img src="others/assets/hi-fi-desktop-gerente.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente" border="0">
 </p>
@@ -2701,7 +2701,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
 <div align="center">
-<p align="center">Figura 45 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">Figura 46 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
 <img src="others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
@@ -2727,7 +2727,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 <div align="center">
-<p align="center">Figura 46 – Modelo Relacional</p>
+<p align="center">Figura 47 – Modelo Relacional</p>
 <img src="others/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4035,7 +4035,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 | Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `GET /tarefas/{id}`; `GET /tarefas/status/{status}`; `GET /tarefas/usuario/{usuarioId}`; `GET /tarefas/prioridade/{prioridade}`; `GET /tarefas/categoria/{categoria}`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204 |
 | Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada |
 | Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias` e `GET /evidencias/{id}` retornando HTTP 200 |
-| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 50 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
+| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
 | Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
 | Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`; `GET /relatorios/tarefas/dados`; `GET /relatorios/movimentacoes`; `GET /relatorios/semanal`; `GET /relatorios/mensal`; `GET /sincronizacao/relatorios/movimentacoes`; `GET /sincronizacao/relatorios/tarefas` | Relatórios | CT-RF007 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal` e `GET /relatorios/mensal` retornando HTTP 200 com dados de movimentações; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
 | Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`; `GET /tickets`; `GET /tickets/pendentes`; `GET /tickets/status`; `GET /tickets/categoria`; `GET /tickets/{id}`; `PATCH /tickets/{id}/status`; `PATCH /tickets/{id}/atribuicao`; `PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT-RF008 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
@@ -4046,7 +4046,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 50 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
+&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 51 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
@@ -4062,10 +4062,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **1. Estrutura do Projeto e Configuração do Ambiente**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, pg, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 47).
+&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, pg, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 48).
 
 <div align="center">
-  <p align="center">Figura 47 - package.json com dependências do projeto</p>
+  <p align="center">Figura 48 - package.json com dependências do projeto</p>
   <p>
     <img src="others/assets/print-json.png" alt="package.json com dependências" border="0">
   </p>
@@ -4074,20 +4074,20 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **2. Banco de Dados e Migrations**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 48).
+&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 49).
 
 <div align="center">
-  <p align="center">Figura 48 - Tabelas criadas no banco de dados PostgreSQL</p>
+  <p align="center">Figura 49 - Tabelas criadas no banco de dados PostgreSQL</p>
   <p>
     <img src="others/assets/print-supabase.png" alt="Tabelas no banco de dados" border="0">
   </p>
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 49).
+&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 50).
 
 <div align="center">
-  <p align="center">Figura 49 - Script de migração com ENUMs e estrutura de tabelas</p>
+  <p align="center">Figura 50 - Script de migração com ENUMs e estrutura de tabelas</p>
   <p>
     <img src="others/assets/print-migrations.png" alt="Script SQL de migração" border="0">
   </p>
@@ -4096,10 +4096,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **3. Sistema de Autenticação e Autorização**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 50).
+&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 51).
 
 <div align="center">
-  <p align="center">Figura 50 - Requisição de login e token JWT retornado</p>
+  <p align="center">Figura 51 - Requisição de login e token JWT retornado</p>
   <p>
     <img src="others/assets/print-token.png" alt="Login e JWT" border="0">
   </p>
@@ -4110,7 +4110,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **4. Arquitetura em Camadas**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 51):
+&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 52):
 
 - **Controllers** (`/src/backend/controllers/`): recebem as requisições HTTP, validam presença dos campos obrigatórios e delegam a lógica ao Service.
 - **Services** (`/src/backend/services/`): aplicam as regras de negócio do domínio.
@@ -4119,7 +4119,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 - **Middlewares** (`/src/backend/middlewares/`): autenticação, autorização, log de requisições, tratamento centralizado de erros e validação de payload.
 
 <div align="center">
-  <p align="center">Figura 51 - Estrutura de diretórios do projeto</p>
+  <p align="center">Figura 52 - Estrutura de diretórios do projeto</p>
   <p>
     <img src="others/assets/print-estruturas-paginas.png" alt="Estrutura de diretórios do backend" border="0">
   </p>
@@ -4128,10 +4128,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **5. Rotas da API**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 52).
+&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 53).
 
 <div align="center">
-  <p align="center">Figura 52 - Servidor rodando no terminal</p>
+  <p align="center">Figura 53 - Servidor rodando no terminal</p>
   <p>
     <img src="others/assets/print-terminal.png" alt="Servidor rodando no terminal" border="0">
   </p>
@@ -4168,7 +4168,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 &nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (Figuras 53, 54 e 55).
 
 <div align="center">
-  <p align="center">Figura 53 - Protótipo de Alta Fidelidade (Capataz)</p>
+  <p align="center">Figura 54 - Protótipo de Alta Fidelidade (Capataz)</p>
   <p>
     <img src="others/assets/hi-fi-capataz.png" alt="Protótipo de alta fidelidade - tela 1" border="0">
   </p>
@@ -4176,7 +4176,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 </div>
 
 <div align="center">
-  <p align="center">Figura 54 - Protótipo de Alta Fidelidade (Supervisor)</p>
+  <p align="center">Figura 55 - Protótipo de Alta Fidelidade (Supervisor)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4184,7 +4184,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 </div>
 
 <div align="center">
-  <p align="center">Figura 55 - Protótipo de Alta Fidelidade (Gerente)</p>
+  <p align="center">Figura 56 - Protótipo de Alta Fidelidade (Gerente)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4399,8 +4399,9 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 `npm test -- --coverage`
 
 <div align="center">
-  <p>Resultados de testes coverages em services.</p>
+  <p align="center">Figura 57 - Cobertura de testes da camada de services</p>
   <img src="others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
  
 ---
@@ -4413,53 +4414,63 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 - Casos de teste aprovados na execução de cobertura: **185**.
 
 <div align="center">
-  <p>Resultados de testes em tickets</p>
+  <p align="center">Figura 58 - Execução dos testes de tickets</p>
   <img src="others/assets/teste1.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em usuário</p>
+  <p align="center">Figura 59 - Execução dos testes de usuários</p>
   <img src="others/assets/teste2.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em evidências.</p>
+  <p align="center">Figura 60 - Execução dos testes de evidências</p>
   <img src="others/assets/teste4.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em validações.</p>
+  <p align="center">Figura 61 - Execução dos testes de validações</p>
   <img src="others/assets/teste6.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em relatórios.</p>
+  <p align="center">Figura 62 - Execução dos testes de relatórios</p>
   <img src="others/assets/teste7.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em movimentações.</p>
+  <p align="center">Figura 63 - Execução dos testes de movimentações</p>
   <img src="others/assets/teste8.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em sincronizações.</p>
+  <p align="center">Figura 64 - Execução dos testes de sincronização</p>
   <img src="others/assets/teste9.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em health.</p>
+  <p align="center">Figura 65 - Execução do teste do endpoint de health</p>
   <img src="others/assets/teste10.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de testes em tarefas.</p>
+  <p align="center">Figura 66 - Execução dos testes de tarefas</p>
   <img src="others/assets/teste11.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
 <div align="center">
-  <p>Resultados de todas as suites de teste passando.</p>
+  <p align="center">Figura 67 - Execução completa das suítes de teste</p>
   <img src="others/assets/teste12.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
  
