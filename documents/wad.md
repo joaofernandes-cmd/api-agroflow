@@ -165,11 +165,11 @@
 
   - [6.2. Análise de Mercado](#c6.2)
 
-  - [6.3. Análise da Concorrência](#c6.3)
+  - [6.3. Público-Alvo](#c6.3)
 
-  - [6.4. Público-Alvo](#c6.4)
+  - [6.4. Posicionamento e Branding](#c6.4)
 
-  - [6.5. Posicionamento](#c6.5)
+  - [6.5. Business Model Canvas](#c6.5)
 
   - [6.6. Estratégia de Marketing](#c6.6)
 
@@ -4536,7 +4536,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O mercado de software para gestão agropecuária é impulsionado por três tendências convergentes. A primeira é a pressão regulatória e comercial pela rastreabilidade digital: com o PNIB tornando obrigatório o registro individual do rebanho até 2032 e o EUDR condicionando o acesso ao mercado europeu à comprovação de origem, produtores que ainda operam com papel precisarão migrar para sistemas digitais nos próximos anos (MAPA, 2025; BANCO DO NORDESTE, 2025). A segunda é a consolidação da agenda ESG como requisito operacional: compradores institucionais e exportadores passam a exigir histórico digital auditável das operações, tornando a automação de registros um critério de permanência na cadeia produtiva (BANCO DO NORDESTE, 2025). A terceira é a adoção de arquiteturas offline-first: à medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, soluções que operam localmente e sincronizam dados ao restabelecer conexão tornam-se o padrão esperado para operações em áreas remotas (TOTVS, 2025). Em conjunto, essas tendências ampliam o mercado endereçável para soluções como o AgroFlow e definem os requisitos funcionais que a diferenciam das plataformas convencionais.
 
-## <a name="c6.4"></a>6.3 Público-Alvo
+## <a name="c6.3"></a>6.3 Público-Alvo
 
 **6.3.1) **Segmentação de Mercado**
 
@@ -4552,7 +4552,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;Quanto às necessidades específicas, essas empresas demandam consolidação confiável das informações entre campo e escritório, rastreabilidade das movimentações do rebanho e adequação às exigências regulatórias crescentes, como o PNIB (MAPA, 2025) e o Código Florestal (BRASIL, 2012). As dores centrais relacionam-se ao retrabalho na transcrição manual, aos erros e inconsistências entre registros operacionais e administrativos e à lentidão na consolidação de dados críticos para a gestão. Como expectativas, buscam uma solução que opere mesmo sem conexão estável, sincronize automaticamente ao restabelecer a internet, gere relatórios auditáveis e se adapte ao contexto operacional real — sem exigir infraestrutura digital avançada ou reformulação completa de seus processos.
 
-## <a name="c6.5"></a>6.4 Posicionamento e Branding
+## <a name="c6.4"></a>6.4 Posicionamento e Branding
 
 **6.4.1) **Proposta de Valor**
 
@@ -4578,19 +4578,21 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **percepção de valor desejada** é que o AgroFlow seja reconhecido como o sistema que funciona onde outros falham — em campo, sem internet, com rastreabilidade completa — tornando-se referência em gestão pecuária para grandes operações descentralizadas.
 
+## <a name="c6.5"></a>6.5 Business Model Canvas
+Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e estrutura de custos (somente se couber nesse momento da análise com o parceiro).
 
-## <a name="c6.6"></a>6.5 Estratégia de Marketing
+## <a name="c6.6"></a>6.6 Estratégia de Marketing
 
-**6.5.1) **Produto/Serviço**
+**6.6.1) **Produto/Serviço**
 *Descreva as funcionalidades, benefícios e diferenciais da aplicação*
 
-**6.5.2) **Preço**
+**6.6.2) **Preço**
 *Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
 
-**6.5.3) **Praça (Distribuição) (até 200 palavras)**
+**6.6.3) **Praça (Distribuição) (até 200 palavras)**
 *Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
 
-**6.5.4) **Promoção (até 200 palavras)**
+**6.6.4) **Promoção (até 200 palavras)**
 *Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
