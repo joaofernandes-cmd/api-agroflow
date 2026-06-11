@@ -4308,6 +4308,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os **atributos da marca** do AgroFlow são: confiabilidade (dados validados antes de compor relatórios), resiliência (operação garantida sem conexão) e acessibilidade (interface projetada para usuários com baixa familiaridade digital, como capatazes com ensino fundamental).
 
+&nbsp;&nbsp;&nbsp;&nbsp;A **identidade pretendida** é a de uma ferramenta robusta e precisa: sem disputar por volume de funcionalidades genéricas, mas por aderência total à realidade operacional de fazendas como a BrPec, com 14 retiros no Pantanal e Cerrado.
+
 ## <a name="c6.6"></a>6.6. Estratégia de Marketing
 
 *a) Produto/Serviço (até 200 palavras)*
