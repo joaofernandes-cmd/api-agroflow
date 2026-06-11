@@ -4310,6 +4310,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **identidade pretendida** é a de uma ferramenta robusta e precisa: sem disputar por volume de funcionalidades genéricas, mas por aderência total à realidade operacional de fazendas como a BrPec, com 14 retiros no Pantanal e Cerrado.
 
+&nbsp;&nbsp;&nbsp;&nbsp;A **percepção de valor desejada** é que o AgroFlow seja reconhecido como o sistema que funciona onde outros falham — em campo, sem internet, com rastreabilidade completa — tornando-se referência em gestão pecuária para grandes operações descentralizadas.
+
 ## <a name="c6.6"></a>6.6. Estratégia de Marketing
 
 *a) Produto/Serviço (até 200 palavras)*
