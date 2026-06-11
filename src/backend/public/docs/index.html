@@ -1132,8 +1132,9 @@
           <h4>Respostas</h4>
           <table><tr><th>Status</th><th>Descrição</th></tr>
           <tr><td><span class="status-chip s-2">200</span> OK</td><td>Movimentação validada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Movimentação não encontrada, já validada ou violação de regra.</td></tr>
           <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr>
-          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Movimentação não encontrada.</td></tr></table>
+          </table>
         </div>
       </div>
     </div>
@@ -1150,6 +1151,7 @@
           <h4>Respostas</h4>
           <table><tr><th>Status</th><th>Descrição</th></tr>
           <tr><td><span class="status-chip s-2">200</span> OK</td><td>Tarefa aprovada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Tarefa não encontrada, já aprovada ou violação de regra.</td></tr>
           <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr></table>
         </div>
       </div>
@@ -1167,6 +1169,7 @@
           <h4>Respostas</h4>
           <table><tr><th>Status</th><th>Descrição</th></tr>
           <tr><td><span class="status-chip s-2">200</span> OK</td><td>Ticket aprovado.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Ticket não encontrado, já aprovado ou violação de regra.</td></tr>
           <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr></table>
         </div>
       </div>
@@ -1420,7 +1423,7 @@
       <div class="endpoint-body">
         <div class="detail-section">
           <h4>Body (application/json)</h4>
-          <pre>{ "status": "pendente" | "aprovado" }</pre>
+          <pre>{ "novoStatus": "pendente" | "aprovado" }</pre>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1441,7 +1444,7 @@
       <div class="endpoint-body">
         <div class="detail-section">
           <h4>Body (application/json)</h4>
-          <pre>{ "usuario_id": string }</pre>
+          <pre>{ "usuarioId": string }</pre>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>

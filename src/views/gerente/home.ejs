@@ -1,0 +1,257 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['gerente']
+%>
+
+<!-- ============================================================
+     TELA: Home Gerente
+     Mobile  → TopNav + saudação + indicadores 2x2 + card relatórios
+               + atividades recentes + BottomNav (2 abas)
+     Desktop → Sidebar + TopBar + saudação + KPIs em linha
+               + atividades recentes (esq) + acesso rápido + resumo (dir)
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav -->
+  <header class="topnav" role="banner">
+    <h1 class="topnav__title">Início</h1>
+  </header>
+
+  <!-- Saudação -->
+  <section class="greeting" aria-label="Saudação">
+    <p class="greeting__name">Bom dia, <%= usuario?.nome || 'Marcos Ferreira' %>!</p>
+    <p class="greeting__date" id="data-hoje-mobile"></p>
+  </section>
+
+  <!-- Conteúdo principal -->
+  <main class="home-content" role="main">
+
+    <!-- Indicadores gerais — grid 2×2 -->
+    <section class="section" aria-labelledby="indicadores-title">
+      <h2 class="section__title" id="indicadores-title">Indicadores gerais da fazenda</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-card--green">
+          <p class="kpi-card__value">1900 UA</p>
+          <p class="kpi-card__label">Total de animais</p>
+        </div>
+        <div class="kpi-card kpi-card--red">
+          <p class="kpi-card__value">14</p>
+          <p class="kpi-card__label">Chamados<br>Abertos</p>
+        </div>
+        <div class="kpi-card kpi-card--yellow">
+          <p class="kpi-card__value">14</p>
+          <p class="kpi-card__label">Tarefas<br>pendentes</p>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <p class="kpi-card__value">12</p>
+          <p class="kpi-card__label">Movimentações<br>no mês</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card de Relatórios -->
+    <section class="section" aria-labelledby="relatorios-title">
+      <a href="/gerente/relatorios" class="rel-card" aria-label="Ir para Relatórios">
+        <div class="rel-card__body">
+          <p class="rel-card__name" id="relatorios-title">Relatórios</p>
+          <p class="rel-card__desc">Exporte-os para vizualizar a atividade operacional do mês</p>
+        </div>
+        <span class="rel-card__arrow" aria-hidden="true">›</span>
+      </a>
+    </section>
+
+    <!-- Atividades recentes -->
+    <section class="section" aria-labelledby="atividades-title">
+      <h2 class="section__title" id="atividades-title">Atividades recentes</h2>
+
+      <article class="act-card">
+        <p class="act-card__name">Conferência do rebanho — Aroeira</p>
+        <span class="act-tag act-tag--chamado">Chamado</span>
+      </article>
+
+      <article class="act-card">
+        <p class="act-card__name">Substituir Capataz João - Cristo</p>
+        <span class="act-tag act-tag--tarefa">Tarefa</span>
+      </article>
+
+      <article class="act-card">
+        <p class="act-card__name">Registrar morte - Puga</p>
+        <span class="act-tag act-tag--operacao">Operação em campo</span>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- BottomNav Gerente -->
+  <%- include('../partials/bottomnav-gerente', { paginaAtiva: 'home' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar Gerente -->
+  <%- include('../partials/sidebar-gerente', { usuario, paginaAtiva: 'home' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Início</h1>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Saudação desktop -->
+    <section class="greeting-desktop" aria-label="Saudação">
+      <p class="greeting-desktop__name">Bom dia, <%= usuario?.nome || 'Marcos Ferreira' %>!</p>
+      <p class="greeting-desktop__date" id="data-hoje-desktop2"></p>
+    </section>
+
+    <!-- Conteúdo desktop: dois painéis lado a lado -->
+    <main class="desktop-content gerente-home-grid" role="main">
+
+      <!-- Coluna esquerda: KPIs + Atividades recentes -->
+      <div class="gerente-col-left">
+
+        <!-- KPIs em linha -->
+        <section class="section" aria-labelledby="kpis-desktop">
+          <h2 class="section__title" id="kpis-desktop">Indicadores gerais da fazenda</h2>
+          <div class="kpi-row">
+            <div class="kpi-item kpi-item--green">
+              <p class="kpi-item__value">1.900 UA</p>
+              <p class="kpi-item__label">Total de animais</p>
+            </div>
+            <div class="kpi-item kpi-item--red">
+              <p class="kpi-item__value">14</p>
+              <p class="kpi-item__label">Chamados abertos</p>
+            </div>
+            <div class="kpi-item kpi-item--yellow">
+              <p class="kpi-item__value">14</p>
+              <p class="kpi-item__label">Tarefas pendentes</p>
+            </div>
+            <div class="kpi-item kpi-item--green">
+              <p class="kpi-item__value">12</p>
+              <p class="kpi-item__label">Movimentações no mês</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividades recentes -->
+        <section class="section" aria-labelledby="atividades-desktop">
+          <h2 class="section__title" id="atividades-desktop">Atividades recentes</h2>
+
+          <article class="act-card-desktop">
+            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
+            <div class="act-card-desktop__body">
+              <p class="act-card-desktop__name">Conferência do rebanho — Aroeira</p>
+              <p class="act-card-desktop__meta">Capataz Lucas • há 1h</p>
+            </div>
+            <span class="act-tag act-tag--chamado">Chamado</span>
+            <span class="act-card-desktop__arrow" aria-hidden="true">›</span>
+          </article>
+
+          <article class="act-card-desktop">
+            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
+            <div class="act-card-desktop__body">
+              <p class="act-card-desktop__name">Substituir Capataz João — Cristo</p>
+              <p class="act-card-desktop__meta">Supervisor Pedro • há 2h</p>
+            </div>
+            <span class="act-tag act-tag--tarefa">Tarefa</span>
+            <span class="act-card-desktop__arrow" aria-hidden="true">›</span>
+          </article>
+
+          <article class="act-card-desktop">
+            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
+            <div class="act-card-desktop__body">
+              <p class="act-card-desktop__name">Registrar morte — Puga</p>
+              <p class="act-card-desktop__meta">Capataz Alberto • há 3h</p>
+            </div>
+            <span class="act-tag act-tag--operacao">Operação em campo</span>
+            <span class="act-card-desktop__arrow" aria-hidden="true">›</span>
+          </article>
+
+          <article class="act-card-desktop">
+            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
+            <div class="act-card-desktop__body">
+              <p class="act-card-desktop__name">Vacinação lote B — CMB</p>
+              <p class="act-card-desktop__meta">Capataz Robson • há 4h</p>
+            </div>
+            <span class="act-tag act-tag--chamado">Chamado</span>
+            <span class="act-card-desktop__arrow" aria-hidden="true">›</span>
+          </article>
+
+          <article class="act-card-desktop">
+            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
+            <div class="act-card-desktop__body">
+              <p class="act-card-desktop__name">Nascimento registrado — Aroeira</p>
+              <p class="act-card-desktop__meta">Capataz Lucas • há 5h</p>
+            </div>
+            <span class="act-tag act-tag--operacao">Operação em campo</span>
+            <span class="act-card-desktop__arrow" aria-hidden="true">›</span>
+          </article>
+
+        </section>
+      </div><!-- /col-left -->
+
+      <!-- Coluna direita: Acesso rápido + Resumo do período -->
+      <aside class="gerente-col-right">
+
+        <section class="section" aria-labelledby="acesso-desktop">
+          <h2 class="section__title" id="acesso-desktop">Acesso rápido</h2>
+
+          <a href="/gerente/relatorios" class="qcard qcard--green-accent">
+            <div class="qcard__accent qcard__accent--green-soft" aria-hidden="true"></div>
+            <div class="qcard__body">
+              <p class="qcard__name">Relatórios</p>
+              <p class="qcard__desc">Exporte para visualizar a atividade operacional do mês</p>
+            </div>
+            <span class="qcard__arrow" aria-hidden="true">›</span>
+          </a>
+        </section>
+
+        <!-- Resumo do período -->
+        <div class="resumo-card">
+          <p class="resumo-card__title">Resumo do período</p>
+          <hr class="resumo-card__divider" />
+          <dl class="resumo-list">
+            <div class="resumo-list__row"><dt>Total de animais (UA)</dt><dd>1.900</dd></div>
+            <div class="resumo-list__row"><dt>Registros validados</dt><dd>58</dd></div>
+            <div class="resumo-list__row"><dt>Pendentes</dt><dd>15</dd></div>
+            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd>6</dd></div>
+          </dl>
+        </div>
+
+      </aside><!-- /col-right -->
+
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script>
+  function formatarData() {
+    return new Date().toLocaleDateString('pt-BR', {
+      weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+    }).replace(/^\w/, c => c.toUpperCase());
+  }
+  const data = formatarData();
+  ['data-hoje-mobile', 'data-hoje-desktop', 'data-hoje-desktop2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = data;
+  });
+</script>
+
+</body>
+</html>
