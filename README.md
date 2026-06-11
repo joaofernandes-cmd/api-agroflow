@@ -96,27 +96,58 @@ g02/
 
 ## 💻 Configuração para desenvolvimento e execução do código
 
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, bibliotecas, serviços etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o código e executar a aplicação a partir de sua máquina local.*
+ 
+Pré-requisitos:
+ 
+- [Node.js](https://nodejs.org/) (versão 22 LTS ou superior — definida em `package.json`).
+- Uma instância de **PostgreSQL** acessível (local ou em nuvem).
+- Git instalado.
 
-*exemplo de instruções*
-
-Aqui encontram-se todas as instruções necessárias para a instalação de todos os programas, bibliotecas e ferramentas imprescindíveis para a configuração do ambiente de desenvolvimento.
-
-1. Baixar e instalar o node.js: [https://nodejs.org/pt-br/](https://nodejs.org/pt-br/) (versão 16.15.1 LTS)
-2. Clone o repositório em questão.
-3. No modo administrador, abra o "prompt de comando" ou o "terminal" e, após, abra a pasta "src/backend" no diretório raiz do repositório clonado e digite o segundo comando:
-
+Passo a passo:
+ 
+1. Clone o repositório e acesse a pasta raiz do projeto:
+```sh
+git clone <url-do-repositorio>
+cd g02
+```
+ 
+2. Instale as dependências (executar na raiz, onde está o `package.json`):
 ```sh
 npm install
 ```
-
-Isso instalará todas as dependências definidas no arquivo <b>package.json</b> que são necessárias para rodar o projeto. Agora o projeto já está pronto para ser modificado. Caso ainda deseje iniciar a aplicação, digite o comando abaixo no terminal:
-
-```sh
-npm start
+ 
+3. Crie um arquivo `.env` na raiz do projeto com as variáveis necessárias:
+```env
+DATABASE_URL=postgres://usuario:senha@host:5432/nome_do_banco
+JWT_SECRET=defina-uma-senha-forte
+PORT=3000
 ```
-5. Agora você pode acessar a aplicação através do link http://localhost:1234/
-6. O servidor está online.
+ 
+> A aplicação não inicia sem a variável `DATABASE_URL`. O `JWT_SECRET` deve ser definido para o ambiente de produção (o código possui um valor padrão apenas para desenvolvimento).
+ 
+4. Execute as migrations para criar o esquema do banco:
+```sh
+npm run migrate
+```
+ 
+5. Inicie a aplicação em modo de desenvolvimento:
+```sh
+npm run dev
+```
+
+Scripts disponíveis:
+ 
+| Script | Descrição |
+|---|---|
+| `npm run dev` | Inicia o servidor em modo watch (desenvolvimento). |
+| `npm run migrate` | Executa as migrations SQL no banco. |
+| `npm run build` | Compila o TypeScript para `dist/`. |
+| `npm start` | Inicia a versão compilada. |
+| `npm test` | Executa todos os testes. |
+| `npm run test:unit` | Executa apenas os testes unitários. |
+| `npm run test:integration` | Executa apenas os testes de integração. |
+| `npm run test:coverage` | Executa os testes com relatório de cobertura. |
+ 
 
 ## 🗃 Histórico de lançamentos
 
