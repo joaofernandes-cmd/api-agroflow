@@ -4220,12 +4220,266 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-*Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:*
+### 5.1.1 Estratégia de Documentação dos Testes
 
-- ***White-box*** *— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação).*
-- ***Black-box*** *— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna.*
+Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma análise da relação entre os requisitos funcionais, a implementação do backend e os testes já existentes no repositório. A documentação foi organizada em duas frentes complementares:
 
-*Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
+- **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
+- **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
+
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, estrutura adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+
+| Fase | Responsável | Descrição |
+|---|---|---|
+| **Arrange** | Fixtures e helpers | Preparação do estado inicial — dados de entrada, mocks de repositório e instâncias de serviço são configurados antes da execução, utilizando os arquivos da pasta `src/backend/tests/helpers/` e os fixtures de simulação. |
+| **Act** | Chamada ao service ou requisição HTTP | Execução da ação sob teste — invocação direta do método do service (white-box) ou envio de requisição HTTP via Supertest ao endpoint correspondente (black-box). |
+| **Assert** | Verificação do resultado esperado | Confirmação do comportamento — validação do retorno, status HTTP, estrutura do corpo da resposta ou lançamento de exceção, conforme o cenário documentado em cada tabela de cobertura. |
+
+#### Endpoints Mapeados
+
+Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação:
+
+| Domínio | Endpoint |
+|---|---|
+| Usuários e autenticação | `/usuarios` |
+| Movimentações | `/movimentacoes` |
+| Tarefas | `/tarefas` |
+| Tickets | `/tickets` |
+| Evidências | `/evidencias` |
+| Sincronização | `/sincronizacao` |
+| Validações | `/validacoes` |
+| Relatórios | `/relatorios` |
+| Saúde da API | `/health` |
+
+Também foram considerados subendpoints específicos:
+
+- `login`
+- `filtros`
+- `dashboard`
+- `contagens`
+- `aprovação`
+- `atribuição`
+- `sincronização`
+- `geração de relatórios`
+
+#### Estrutura Analisada
+
+Para sustentar essa documentação, foram analisados:
+
+- A configuração do Jest em `jest.config.ts`
+- A pasta `src/backend/tests/unit/`
+- A pasta `src/backend/tests/integration/`
+- A pasta `src/backend/tests/helpers/`
+- Os fixtures utilizados para simulação de dados
+- Os arquivos de teste existentes para cada módulo
+
+### 5.1.2 White Box
+Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema.
+
+A execução de `npm test -- --coverage` demonstrou que a camada `backend/services` atingiu **92.18% de statements**, **85.32% de branches**, **98.11% de functions** e **92.02% de lines**, superando o mínimo de 80% exigido para a seção. Os testes cobrem os principais serviços do sistema, incluindo autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+
+Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da seção 3.9, preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
+
+**CT01 - RN01 / RF001 | MovimentacaoService**
+- **Arrange:** preparar fixtures de movimentação com campos ausentes ou válidos, simulando compra, venda, nascimento e morte.
+- **Act:** chamar `validarCamposObrigatorios`, `criar` e `sincronizarRecebida` diretamente no service.
+- **Assert:** verificar o lançamento do erro esperado para cada campo obrigatório ausente e a aceitação do payload válido.
+- **Determinismo:** o teste usa mocks de `MovimentacaoRepository` e dados fixos de `mockMovimentacao`, sem dependência externa.
+- **Caminho de falha:** cobertura de ausência de `capataz_id`, `estagio_vida`, `origem`, `destino`, `quantidade` e `causa_obito`.
+
+**CT02 - RN02 / RF002 | TarefaService**
+- **Arrange:** montar tarefas com campos obrigatórios incompletos e usuário criador com cargo diferente de supervisor.
+- **Act:** chamar `validarCamposObrigatorios`, `criar`, `atualizar`, `atualizarStatus` e consultas de filtro.
+- **Assert:** confirmar rejeição quando faltam `atribuida_a`, `descricao`, `prioridade` ou `categoria`, e aceitação quando a tarefa é válida.
+- **Determinismo:** os testes usam `TarefaRepository` mockado e fixtures fixas como `mockTarefa` e `mockSupervisor`.
+- **Caminho de falha:** bloqueio da criação por cargo inválido e por campos obrigatórios ausentes.
+
+**CT03 - RN03 / RF003 | SincronizacaoService**
+- **Arrange:** simular `fetch` com sucesso, falha e status de conexão indisponível, além de listas de registros pendentes.
+- **Act:** executar `detectarConexao`, `sincronizar`, `enviarMovimentacao`, `enviarTarefa`, `enviarTicket`, `obterStatusSincronizacao` e `obterMensagemSincronizacao`.
+- **Assert:** validar retorno `true/false` da conexão, contagem de pendências, atualização de `sincronizado` e mensagens amigáveis.
+- **Determinismo:** o fluxo depende apenas de mocks de `fetch` e dos repositórios `MovimentacaoRepository`, `TarefaRepository` e `TicketRepository`.
+- **Caminho de falha:** sem conexão com o servidor e falhas individuais de envio com HTTP não-OK.
+
+**CT04 - RN04 / RF004 | EvidenciaService**
+- **Arrange:** preparar coordenadas válidas, coordenadas inválidas, mensagens curtas e áudios com duração insuficiente.
+- **Act:** chamar `validarGeorreferenciamento`, `validarEvidenciaDescritiva`, `criarFoto`, `criarAudio`, `criarMensagem`, `buscarPorId` e `listarTodas`.
+- **Assert:** confirmar a rejeição de fotos sem georreferenciamento e de evidências descritivas abaixo do mínimo, além da criação correta dos registros válidos.
+- **Determinismo:** os testes usam `EvidenciaRepository` e repositórios específicos de foto, áudio e mensagem totalmente mockados.
+- **Caminho de falha:** latitude/longitude fora do intervalo, mensagem com menos de 10 caracteres e áudio com menos de 3 segundos.
+
+**CT05 - RN05 / RF005 | UsuarioService**
+- **Arrange:** montar usuários ativos, inativos, com login inexistente e com senha incorreta.
+- **Act:** chamar `autenticar`, `podeValidar`, `temPermissao`, `estaAtivo`, `criar`, `buscarPorId`, `listarPorRetiro`, `listarTodos`, `atualizar` e `remover`.
+- **Assert:** verificar autenticação correta, negação de login inválido, restrição por cargo e validação de status ativo.
+- **Determinismo:** os cenários usam `UsuarioRepository` mockado e fixtures fixas (`mockSupervisor` e `mockGerente`).
+- **Caminho de falha:** login inexistente, senha incorreta, campos obrigatórios ausentes e login fora do formato de e-mail.
+
+### Tabela Complementar de Testes White-Box
+
+| CT | RN | RF | Service(s) | Arquivo(s) | Cenário validado | Resultado esperado |
+|---|---|---|---|---|---|---|
+| CT01 | RN01 | RF001 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Regras obrigatórias por tipo de movimentação, criação e sincronização recebida | Erro de validação para campos ausentes e aceite do payload válido |
+| CT02 | RN02 | RF002 | TarefaService | `src/backend/tests/unit/tarefa.service.spec.ts` | Campos obrigatórios, criação por supervisor, filtros e atualizações | Tarefa aceita quando válida e rejeitada quando incompleta ou sem permissão |
+| CT03 | RN03 | RF003 | SincronizacaoService | `src/backend/tests/unit/sincronizacao.service.spec.ts` | Detecção de conexão, sincronização de pendências e status geral | Retorno coerente de conexão, sincronização e mensagens de status |
+| CT04 | RN04 | RF004 | EvidenciaService | `src/backend/tests/unit/evidencia.service.spec.ts` | Georreferenciamento e validação de evidências de foto, áudio e mensagem | Rejeição de dados inválidos e criação dos registros válidos |
+| CT05 | RN05 | RF005 | UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Autenticação, permissões, status ativo e CRUD básico | Login correto aceito, credenciais inválidas rejeitadas e regras de cargo aplicadas |
+| CT06 | RN06 | RF006 | ValidacaoService | `src/backend/tests/unit/validacao.service.spec.ts` | Validação e aprovação restritas ao Supervisor | Acesso negado para cargos inválidos e status alterado apenas em cenário válido |
+| CT07 | RN07 | RF007 | RelatorioService | `src/backend/tests/unit/relatorio.service.spec.ts` | Filtragem por período, formatação e geração de relatórios | Apenas dados sincronizados e dentro do período são retornados |
+| CT08 | RN08 | RF008 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Criação de ticket com evidência descritiva obrigatória | Ticket rejeitado sem evidência e aceito com dados válidos |
+| CT09 | RN09 | RF009 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Filtro por retiro, tipo, status e período | Lista filtrada corretamente conforme os parâmetros informados |
+| CT10 | RN10 | RF010 | MovimentacaoService, TarefaService, TicketService, SincronizacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts`; `src/backend/tests/unit/tarefa.service.spec.ts`; `src/backend/tests/unit/ticket.service.spec.ts`; `src/backend/tests/unit/sincronizacao.service.spec.ts` | Consolidação de indicadores por retiro | Contagens do dashboard retornam apenas registros sincronizados e validados/aprovados |
+| CT11 | RN11 | RF011 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Prioridade obrigatória e alteração posterior | Prioridade inválida rejeitada e prioridade válida atualizada com sucesso |
+
+Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Os casos prioritários `CT01` a `CT05` são os mais críticos para o sistema, pois cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
+
+### 5.1.3 Black Box
+Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
+
+Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar os fluxos de sucesso mais relevantes da aplicação, como criação, listagem, atualização, exclusão, filtros, sincronização e aprovação. No estado atual da suíte, a cobertura black-box está concentrada principalmente nos cenários `200/201/204` e em alguns bloqueios de acesso, como o `403` no fluxo de login do usuário capataz.
+
+Em relação ao critério desejado para esta seção, a cobertura ainda é **parcial**: os testes atuais não demonstram, para cada endpoint principal, os quatro cenários obrigatórios de forma explícita e completa (`200/201`, `400/422`, `409 ou equivalente` e `404`). Dessa forma, esta seção documenta a cobertura existente e também evidencia as lacunas que devem ser complementadas para atingir integralmente o padrão solicitado.
+
+### Tabela Complementar de Testes Black-Box
+
+| Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
+|---|---|---|---|---|
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Autenticação de usuário | `POST /usuarios/login` | Retorno do usuário autenticado e token JWT |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Bloqueio de capataz no login | `POST /usuarios/login` | Retorno 403 |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Listagem de usuários | `GET /usuarios` | Retorno da lista sem dados sensíveis |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Busca por usuário, criação, atualização e remoção | `GET /usuarios/:id`, `POST /usuarios`, `PATCH /usuarios/:id`, `DELETE /usuarios/:id` | Status coerentes e corpo esperado |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Criação de movimentação | `POST /movimentacoes` | Retorno 201 com o registro criado |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Listagem e filtros | `GET /movimentacoes`, `GET /movimentacoes/filtrar` | Retorno da lista filtrada corretamente |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Sincronização de movimentação | `POST /movimentacoes/sincronizar`, `PATCH /movimentacoes/:id/sincronizar` | Retorno com movimentação sincronizada |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Pendências, dashboard e contagem por tipo | `GET /movimentacoes/pendentes`, `GET /movimentacoes/dashboard`, `GET /movimentacoes/contagem/tipo` | Dados consolidados e contagens corretas |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Busca, atualização e remoção | `GET /movimentacoes/:id`, `PATCH /movimentacoes/:id`, `DELETE /movimentacoes/:id` | Status coerentes com o CRUD |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Criação e listagem de tarefas | `POST /tarefas`, `GET /tarefas` | Retorno 201 e listagem correta |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Dashboard e filtros | `GET /tarefas/dashboard`, `GET /tarefas/status/:status`, `GET /tarefas/usuario/:usuarioId`, `GET /tarefas/prioridade/:prioridade`, `GET /tarefas/categoria/:categoria` | Listas filtradas e agregações corretas |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Contagem, atualização e remoção | `GET /tarefas/contagem/status`, `GET /tarefas/:id`, `PATCH /tarefas/:id`, `PATCH /tarefas/:id/status`, `DELETE /tarefas/:id` | Status esperados e operações válidas |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Criação e listagem | `POST /tickets`, `GET /tickets` | Retorno 201 e lista correta |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Pendentes e filtros | `GET /tickets/pendentes`, `GET /tickets/status`, `GET /tickets/prioridade`, `GET /tickets/categoria` | Filtros aplicados corretamente |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Contagem por prioridade | `GET /tickets/contagem/prioridade` | Retorno das quantidades corretas |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Busca, status, prioridade e atribuição | `GET /tickets/:id`, `PATCH /tickets/:id/status`, `PATCH /tickets/:id/prioridade`, `PATCH /tickets/:id/atribuicao` | Atualizações e retornos coerentes |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Listagem e busca | `GET /evidencias`, `GET /evidencias/:id` | Retorno correto dos registros |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Criação de mensagens, áudios e fotos | `POST /evidencias/mensagens`, `POST /evidencias/audios`, `POST /evidencias/fotos` | Criação bem-sucedida dos tipos de evidência |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Conexão e status geral | `GET /sincronizacao/conexao`, `GET /sincronizacao/status`, `GET /sincronizacao/mensagem` | Retorno do estado de conexão e mensagens amigáveis |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Sincronização de dados e relatórios | `POST /sincronizacao`, `GET /sincronizacao/relatorios/movimentacoes`, `GET /sincronizacao/relatorios/tarefas`, `GET /sincronizacao/dashboard/tickets` | Dados sincronizados e consolidados |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Permissão do usuário | `POST /validacoes/permissao` | Retorno indicando acesso autorizado |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Validação e aprovação | `PATCH /validacoes/movimentacoes/:id/validar`, `PATCH /validacoes/tickets/:id/aprovar`, `PATCH /validacoes/tarefas/:id/aprovar` | Atualização correta do status |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retorno dos dados e formatação esperada |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
+| Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
+
+### Matriz de conformidade por cenário
+
+| Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
+|---|---|---|---|---|---|
+| Usuários | Coberto | Não coberto explicitamente | Parcial, com bloqueio `403` no login do capataz | Não coberto explicitamente | Parcial |
+| Movimentações | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Tarefas | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Tickets | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Evidências | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Sincronização | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Validações | Coberto | Não coberto explicitamente | Parcial, com bloqueio de autorização por perfil | Não coberto explicitamente | Parcial |
+| Relatórios | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Health Check | Coberto | Não aplicável | Não aplicável | Não aplicável | Adequado ao propósito |
+
+### 5.1.4 Relatório de cobertura Jest
+Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
+ 
+Complementarmente, foi executado o comando `npm test -- --coverage`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80%, atendendo ao critério estabelecido para a seção 5.1.2, enquanto as demais camadas foram registradas como evidência complementar da maturidade da suíte.
+ 
+Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
+ 
+---
+ 
+#### Relatório de Cobertura Jest
+ 
+**Comando executado:** 
+`npm test -- --coverage`
+
+<div align="center">
+  <p>Resultados de testes coverages em services.</p>
+  <img src="others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
+</div>
+ 
+---
+ 
+#### Evidência de Execução
+ 
+- `npm test` executado com sucesso.
+- `npm test -- --coverage` executado com sucesso.
+- Suíte atual: **17 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **185**.
+
+<div align="center">
+  <p>Resultados de testes em tickets</p>
+  <img src="others/assets/teste1.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em usuário</p>
+  <img src="others/assets/teste2.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em evidências.</p>
+  <img src="others/assets/teste4.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em validações.</p>
+  <img src="others/assets/teste6.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em relatórios.</p>
+  <img src="others/assets/teste7.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em movimentações.</p>
+  <img src="others/assets/teste8.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em sincronizações.</p>
+  <img src="others/assets/teste9.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em health.</p>
+  <img src="others/assets/teste10.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de testes em tarefas.</p>
+  <img src="others/assets/teste11.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+<div align="center">
+  <p>Resultados de todas as suites de teste passando.</p>
+  <img src="others/assets/teste12.png" alt="Resultados de testes coverages em services." />
+</div>
+---
+ 
+#### Mapeamento de Rastreabilidade
+ 
+A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto:
+ 
+| Caso de Teste | Regra de Negócio | Requisito Funcional |
+|---|---|---|
+| CT01 | RN01 | RF001 |
+| CT02 | RN02 | RF002 |
+| CT03 | RN03 | RF003 |
+| CT04 | RN04 | RF004 |
+| CT05 | RN05 | RF005 |
+| CT06 | RN06 | RF006 |
+| CT07 | RN07 | RF007 |
+| CT08 | RN08 | RF008 |
+| CT09 | RN09 | RF009 |
+| CT10 | RN10 | RF010 |
+| CT11 | RN11 | RF011 |
 
 ## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
 

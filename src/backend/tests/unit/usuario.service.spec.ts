@@ -31,6 +31,12 @@ describe('UsuarioService', () => {
     expect(usuario).toEqual(mockSupervisor)
   })
 
+  it('autenticar deve retornar null quando senha nao bate', async () => {
+    const usuario = await UsuarioService.autenticar(mockSupervisor.login, 'senha-errada')
+
+    expect(usuario).toBeNull()
+  })
+
   it('autenticar deve retornar null quando login nao existe', async () => {
     mockedRepository.buscarPorLogin.mockResolvedValueOnce(null)
 
@@ -44,9 +50,33 @@ describe('UsuarioService', () => {
     expect(UsuarioService.podeValidar(mockGerente as any)).toBe(false)
   })
 
+  it('temPermissao deve comparar o cargo informado', () => {
+    expect(UsuarioService.temPermissao(mockSupervisor as any, 'supervisor')).toBe(true)
+    expect(UsuarioService.temPermissao(mockSupervisor as any, 'gerente')).toBe(false)
+  })
+
   it('estaAtivo deve validar status ativo', () => {
     expect(UsuarioService.estaAtivo(mockSupervisor as any)).toBe(true)
     expect(UsuarioService.estaAtivo({ ...mockSupervisor, status: 'inativo' } as any)).toBe(false)
+  })
+
+  it('buscarPorId deve delegar para o repository', async () => {
+    const usuario = await UsuarioService.buscarPorId(mockGerente.id)
+
+    expect(usuario).toEqual(mockGerente)
+    expect(mockedRepository.buscarPorId).toHaveBeenCalledWith(mockGerente.id)
+  })
+
+  it('listarPorRetiro deve filtrar por retiro', async () => {
+    const usuarios = await UsuarioService.listarPorRetiro(1)
+
+    expect(usuarios).toEqual([mockSupervisor, mockGerente])
+  })
+
+  it('listarTodos deve retornar todos os usuarios', async () => {
+    const usuarios = await UsuarioService.listarTodos()
+
+    expect(usuarios).toEqual([mockSupervisor, mockGerente])
   })
 
   it('criar deve rejeitar login invalido', async () => {
@@ -60,5 +90,63 @@ describe('UsuarioService', () => {
         cargo: 'gerente',
       })
     ).rejects.toThrow('Login deve ser um email válido')
+  })
+
+  it('criar deve rejeitar nome ausente', async () => {
+    await expect(
+      UsuarioService.criar({
+        retiro_id: 1,
+        nome: '   ',
+        login: 'gerente.novo@agroflow.com',
+        senha_hash: 'senha',
+        status: 'ativo',
+        cargo: 'gerente',
+      })
+    ).rejects.toThrow('Campo "nome" é obrigatório')
+  })
+
+  it('criar deve rejeitar login ausente', async () => {
+    await expect(
+      UsuarioService.criar({
+        retiro_id: 1,
+        nome: 'Gerente Novo',
+        login: '',
+        senha_hash: 'senha',
+        status: 'ativo',
+        cargo: 'gerente',
+      })
+    ).rejects.toThrow('Campo "login" é obrigatório')
+  })
+
+  it('criar deve aceitar usuario valido', async () => {
+    const usuario = await UsuarioService.criar({
+      retiro_id: 1,
+      nome: 'Gerente Novo',
+      login: 'gerente.novo@agroflow.com',
+      senha_hash: 'senha',
+      status: 'ativo',
+      cargo: 'gerente',
+    })
+
+    expect(usuario).toEqual(mockGerente)
+    expect(mockedRepository.criar).toHaveBeenCalledWith(
+      expect.objectContaining({
+        login: 'gerente.novo@agroflow.com',
+        cargo: 'gerente',
+      })
+    )
+  })
+
+  it('atualizar deve delegar para o repository', async () => {
+    const usuario = await UsuarioService.atualizar(mockGerente.id, { nome: 'Gerente Atualizado' })
+
+    expect(usuario).toEqual(mockGerente)
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith(mockGerente.id, { nome: 'Gerente Atualizado' })
+  })
+
+  it('remover deve delegar para o repository', async () => {
+    await UsuarioService.remover(mockGerente.id)
+
+    expect(mockedRepository.remover).toHaveBeenCalledWith(mockGerente.id)
   })
 })
