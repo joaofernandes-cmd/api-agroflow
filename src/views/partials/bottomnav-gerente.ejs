@@ -1,0 +1,23 @@
+<%#
+  Partial: bottomnav-gerente.ejs
+  Variáveis esperadas:
+  - paginaAtiva: 'home' | 'relatorios'
+%>
+
+<nav class="bottomnav bottomnav--gerente" role="navigation" aria-label="Navegação principal">
+
+  <a href="/gerente/home"
+     class="bottomnav__item <%= paginaAtiva === 'home' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'home' ? 'aria-current="page"' : '' %>>
+    <img src="https://www.figma.com/api/mcp/asset/ea4afa4a-c284-4bc0-8409-5f153719b306" alt="" aria-hidden="true" width="24" height="24" />
+    <span>Início</span>
+  </a>
+
+  <a href="/gerente/relatorios"
+     class="bottomnav__item <%= paginaAtiva === 'relatorios' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'relatorios' ? 'aria-current="page"' : '' %>>
+    <img src="https://www.figma.com/api/mcp/asset/63546a57-498c-456e-9fdb-a2ef43c34838" alt="" aria-hidden="true" width="24" height="24" />
+    <span>Relatórios</span>
+  </a>
+
+</nav>

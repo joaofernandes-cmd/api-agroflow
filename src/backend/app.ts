@@ -55,6 +55,26 @@ app.get('/supervisor/home', (req, res) => {
   });
 });
 
+// Supervisor acessa relatórios
+app.get('/supervisor/relatorios', (req, res) => {
+  res.render('partials/relatorios', {
+    title: 'Relatórios',
+    css: ['supervisor', 'relatorios'],
+    persona: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  })
+})
+
+// Gerente acessa os mesmos relatórios - mesma view
+app.get('/gerente/relatorios', (req, res) => {
+  res.render('partials/relatorios', {
+    title: 'Relatórios',
+    css: ['gerente', 'relatorios'],
+    persona: 'gerente',
+    usuario: { nome: 'Marcos Ferreira' }
+  });
+});
+
 app.use('/evidencias', evidenciaRoutes)
 app.use('/movimentacoes', movimentacaoRoutes)
 app.use('/relatorios', relatorioRoutes)
