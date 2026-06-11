@@ -1,8 +1,7 @@
-<%- include('partials/head', { titulo: 'Alow · Início' }) %>
+<%- include('../partials/capataz-head', { titulo: 'Alow · Início' }) %>
 
 <%
-  /* Dados hardcoded por enquanto — depois podem vir do back-end. */
-  var minhasTarefas = [
+  var tarefas = [
     { cor: 'var(--alerta)', titulo: 'Vacinação lote B',      sub: 'Supervisor Luiz • Alta • Amanhã 08h', nivel: 'Alta',  classe: 'alta'  },
     { cor: 'var(--info)',   titulo: 'Conferência do rebanho', sub: 'Supervisor Luiz • Média • Hoje 14h',  nivel: 'Média', classe: 'media' }
   ];
@@ -21,13 +20,13 @@
 
   <div class="saudacao">
     <h2 class="saudacao__titulo">Bom dia, Daniel Carvalho!</h2>
-    <p class="saudacao__data">Sexta-feira, 29 de maio de 2026</p>
+    <p class="saudacao__data" id="data-hoje"></p>
     <span class="tag-sincronizado">✓ Sincronizado</span>
   </div>
 
   <div class="conteudo">
     <h3 class="secao-titulo">Minhas tarefas</h3>
-    <% minhasTarefas.forEach(function (t) { %>
+    <% tarefas.forEach(function (t) { %>
       <a href="/capataz/detalhe-tarefa" class="card">
         <span class="card__barra" style="background: <%= t.cor %>;"></span>
         <div class="card__corpo">
@@ -58,8 +57,20 @@
     <% }) %>
   </div>
 
-  <%- include('partials/bottomnav-capataz', { ativa: 'inicio' }) %>
+  <%- include('../partials/bottomnav-capataz', { ativa: 'inicio' }) %>
 </main>
+
+<script>
+  document.getElementById('data-hoje').textContent =
+    new Date().toLocaleDateString('pt-BR', {
+      weekday: 'long',
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    }).replace(/^\w/, function (letra) {
+      return letra.toUpperCase();
+    });
+</script>
 
 </body>
 </html>

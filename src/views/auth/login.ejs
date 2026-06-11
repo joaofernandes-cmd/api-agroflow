@@ -169,13 +169,13 @@
     fetch('/usuarios/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.value, senha: senha.value })
+      body: JSON.stringify({ login: email.value, senha: senha.value })
     })
     .then(res => res.json())
     .then(data => {
       if (data.token) {
         localStorage.setItem('token', data.token);
-        window.location.href = data.role === 'gerente'
+        window.location.href = data.usuario.cargo === 'gerente'
           ? '/gerente/home'
           : '/supervisor/home';
       } else {

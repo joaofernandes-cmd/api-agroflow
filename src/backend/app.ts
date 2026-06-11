@@ -34,6 +34,10 @@ app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' })
 })
 
+app.get('/', (_req, res) => {
+  res.redirect('/auth/perfil')
+})
+
 app.get('/auth/perfil', (_req, res) => {
   res.render('auth/perfil')
 })
@@ -46,6 +50,30 @@ app.get('/auth/login', (req, res) => {
     persona: role
   });
 });
+
+app.get('/capataz', (_req, res) => {
+  res.render('capataz/index')
+})
+
+app.get('/capataz/home', (_req, res) => {
+  res.render('capataz/home')
+})
+
+app.get('/capataz/tarefas', (_req, res) => {
+  res.render('capataz/tarefas')
+})
+
+app.get('/capataz/detalhe-tarefa', (_req, res) => {
+  res.render('capataz/detalhe-tarefa')
+})
+
+app.get('/capataz/movimentacao', (_req, res) => {
+  res.render('capataz/movimentacao')
+})
+
+app.get('/capataz/chamado', (_req, res) => {
+  res.render('capataz/chamado')
+})
 
 app.get('/supervisor/home', (req, res) => {
   res.render('supervisor/home', {
