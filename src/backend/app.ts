@@ -13,8 +13,15 @@ import { middlewareDeLog } from './middlewares/log.middleware'
 
 const app = express()
 
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '../views'))
+
 // Habilita leitura de JSON em todas as requests.
 app.use(express.json())
+
+// Arquivos estáticos (CSS, imagens, etc.)
+app.use('/css', express.static(path.join(__dirname, '../views/css')))
+app.use('/assets', express.static(path.join(__dirname, '../../assets')))
 
 // Documentação navegável da WebAPI disponível em /docs
 app.use('/docs', express.static(path.join(__dirname, 'public/docs')))
@@ -26,6 +33,19 @@ app.use(middlewareDeLog)
 app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' })
 })
+
+app.get('/auth/perfil', (_req, res) => {
+  res.render('auth/perfil')
+})
+
+app.get('/auth/login', (req, res) => {
+  const role = req.query.role === 'gerente' ? 'Gerente' : 'Supervisor';
+  res.render('auth/login', {
+    title: `${role} — Login`,
+    css: 'auth',
+    persona: role
+  });
+});
 
 app.use('/evidencias', evidenciaRoutes)
 app.use('/movimentacoes', movimentacaoRoutes)
