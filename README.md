@@ -93,17 +93,37 @@ g02/
 ├── package.json
 └── README.md
 ```
+## 🧠 Tecnologias Utilizadas
+
+| Categoria | Tecnologia | Versão |
+|---|---|---|
+| Linguagem | TypeScript | 6.0.3 |
+| Runtime | Node.js | 22.x |
+| Framework HTTP | Express | 5.2.1 |
+| Banco de dados | PostgreSQL | 13+ |
+| Driver de banco | `postgres` | 3.4.9 |
+| Driver de banco | `pg` | 8.21.0 |
+| Autenticação | `jsonwebtoken` (JWT) | 9.0.3 |
+| Geração de UUID | `uuid` | 14.0.0 |
+| Variáveis de ambiente | `dotenv` | 17.4.2 |
+| Testes | Jest + ts-jest | 30.4.2 / 29.4.10 |
+| Testes de integração | Supertest | 7.2.2 |
+| Execução em dev | `tsx` | 4.22.3 |
+
 
 ## 💻 Configuração para desenvolvimento e execução do código
 
  
-Pré-requisitos:
+### Softwares necessários
  
-- [Node.js](https://nodejs.org/) (versão 22 LTS ou superior — definida em `package.json`).
-- Uma instância de **PostgreSQL** acessível (local ou em nuvem).
-- Git instalado.
+| Software | Versão recomendada | Observação |
+|---|---|---|
+| [Node.js](https://nodejs.org/) | **22.x LTS** ou superior | Definida em `package.json` (`^22.22.3`). Inclui o `npm`. |
+| [npm](https://www.npmjs.com/) | **10.x** ou superior | Acompanha o Node.js 22. |
+| [PostgreSQL](https://www.postgresql.org/) | **13** ou superior | Necessário pela extensão `pgcrypto` e por `gen_random_uuid()` usados nas migrations. |
+| [Git](https://git-scm.com/) | **2.30** ou superior | Para clonar e versionar o repositório. |
 
-Passo a passo:
+### Passo a passo
  
 1. Clone o repositório e acesse a pasta raiz do projeto:
 ```sh
@@ -135,7 +155,7 @@ npm run migrate
 npm run dev
 ```
 
-Scripts disponíveis:
+### Scripts disponíveis
  
 | Script | Descrição |
 |---|---|
