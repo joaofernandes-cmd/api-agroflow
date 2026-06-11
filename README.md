@@ -93,6 +93,15 @@ g02/
 ├── package.json
 └── README.md
 ```
+Descrição dos principais diretórios:
+ 
+- `assets/`: arquivos não estruturados do repositório, como os logos institucionais.
+- `documents/`: documentação do projeto, com destaque para o **WAD** (`wad.md`); a pasta `others/` reúne assets da documentação.
+- `src/backend/`: código-fonte da aplicação, organizado em camadas (routes → controllers → services → repositories) com middlewares, modelos e migrations.
+- `src/backend/database/migrations/`: scripts SQL que criam e versionam o esquema do banco.
+- `src/backend/tests/`: testes automatizados.
+- `README.md`: visão geral do projeto, instruções de execução e informações da equipe.
+
 
 ## 🎮 Funcionalidades
 - Autenticação de usuários via login e senha com emissão de token JWT.
@@ -184,16 +193,16 @@ npm run dev
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+* 0.5.0 — 26/06/2026 — Sprint 5
+    * Versão final da aplicação; consolidação de autenticação, controle de sessão e autorização; estratégias de resiliência.
+* 0.4.0 — 12/06/2026 — Sprint 4
+    * Segunda versão; WebAPI completa; testes de integração automatizados; atualização do modelo físico do banco.
+* 0.3.0 — 29/05/2026 — Sprint 3
+    * Primeira versão funcional; endpoints de leitura e escrita (WebAPI v1); guia de estilos e protótipo de alta fidelidade.
+* 0.2.0 — 15/05/2026 — Sprint 2
+    * Modelagem do banco de dados (ER, DER, modelo relacional e migrations DDL); wireframes; diagrama de classes.
+* 0.1.0 — 30/04/2026 — Sprint 1
+    * Fundação do projeto: escopo, personas, user stories iniciais, requisitos funcionais e regras de negócio.
 
 ## 📋 Licença/License
 
