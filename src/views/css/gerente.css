@@ -221,6 +221,8 @@
   flex-shrink: 0;
 }
 
+.act-card-desktop .act-tag { margin-right: 12px; }
+
 /* Cards acesso rápido na coluna direita */
 .qcard__accent--green-soft { background: #77bf3f; }
 .qcard__accent--red        { background: #ff3b30; }

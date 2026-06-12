@@ -231,6 +231,17 @@
 }
 .revisao-search::placeholder { color: var(--color-muted); }
 
+.tickets-search {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+}
+.tickets-search::placeholder { color: var(--color-muted); }
+
 /* Badge pendentes */
 .revisao-badge-pendentes {
   background: rgba(217, 154, 0, 0.15);
@@ -305,7 +316,7 @@
 .rev-card--concluido .rev-card__accent { background: #059669; }
 
 /* Badges da tabela desktop */
-.badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 11px; white-space: nowrap; }
+.badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 11px; white-space: nowrap; min-width: 80px; text-align: center; display: inline-block; box-sizing: border-box; }
 .badge--yellow { background: #faf0d9; color: #d99a00; }
 .badge--green  { background: #d1fae5; color: #059669; }
 
@@ -399,6 +410,14 @@
   white-space: nowrap;
 }
 
+.revisao-table thead th:nth-child(5),
+.revisao-table thead th:nth-child(6),
+.revisao-table thead th:nth-child(7) { text-align: center; }
+
+.revisao-table tbody td:nth-child(5),
+.revisao-table tbody td:nth-child(6),
+.revisao-table tbody td:nth-child(7) { text-align: center; padding: 0 8px; }
+
 .revisao-table tbody tr {
   border-bottom: 1px solid var(--color-border);
   height: 56px;
@@ -427,6 +446,7 @@
   font-size: 11px;
   font-weight: 600;
   height: 28px;
+  min-width: 80px;
   padding: 0 16px;
   cursor: pointer;
   white-space: nowrap;
@@ -585,6 +605,40 @@
   transition: opacity 0.15s;
 }
 .btn-atender:hover { opacity: 0.88; }
+
+.btn-validar {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  min-width: 96px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-validar:hover { opacity: 0.88; }
+
+.btn-confirmado {
+  background: var(--color-border);
+  color: var(--color-muted);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  min-width: 96px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-confirmado:hover { opacity: 0.85; }
 
 /* Botão Ver (resolvido — cinza) */
 .btn-ver {
