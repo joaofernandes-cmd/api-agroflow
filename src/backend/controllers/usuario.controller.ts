@@ -85,6 +85,23 @@ export const UsuarioController = {
     }
   },
 
+  async listarCapatazesPorRetiro(req: Request, res: Response) {
+    try {
+      const retiroId = converterNumero(req.params.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const usuarios = await UsuarioService.listarPorRetiro(retiroId)
+      const capatazes = usuarios.filter(usuario => usuario.cargo === 'capataz' && usuario.status === 'ativo')
+
+      return res.status(200).json(capatazes.map(removerSenha))
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao listar capatazes por retiro' })
+    }
+  },
+
   async criar(req: Request, res: Response) {
     try {
       const { retiro_id, nome, login, senha_hash, status, cargo } = req.body
