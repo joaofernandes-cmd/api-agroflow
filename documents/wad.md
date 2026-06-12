@@ -2712,6 +2712,10 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
+## Conclusão do Modelo Entidade-Relacionamento (Seção 3.6.1)
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo entidade-relacionamento construído para o AgroFlow traduz as User Stories levantadas junto à BrPec em uma estrutura conceitual composta por dezoito entidades, com atributos, relacionamentos e cardinalidades explicitamente definidos. A generalização da entidade `EVIDENCIA` em três subclasses, a resolução dos relacionamentos N:N por meio de entidades associativas e a especialização de `MOVIMENTACAO` em cinco subtipos isolam regras específicas de cada tipo de registro sem comprometer a coerência do todo. O desdobramento dos relacionamentos entre `USUARIO` e as entidades operacionais em papéis distintos (REGISTRA e VALIDA para movimentações, CRIA e EXECUTA para tarefas, ABRE e ATRIBUIDO_A para tickets) preserva no nível conceitual a hierarquia operacional da fazenda e evidencia a rastreabilidade de autoria exigida pelas regras de negócio. O MER funciona, portanto, como ponte formal entre as necessidades do parceiro e a estrutura física do banco de dados, fazendo com que cada decisão de implementação posterior tenha respaldo direto em uma regra documentada e discutida com a BrPec.
+
 ### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
