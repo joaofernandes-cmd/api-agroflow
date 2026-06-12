@@ -20,7 +20,7 @@ export const ValidacaoService = {
 
   // RN06: Validar movimentação (pendente → validado)
   async validarMovimentacao(
-    movimentacaoId: number,
+    movimentacaoId: UUID,
     supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; movimentacao?: Movimentacao }> {
@@ -60,7 +60,7 @@ export const ValidacaoService = {
 
   // RN06: Aprovar ticket (pendente → aprovado) — apenas Supervisor
   async aprovarTicket(
-    ticketId: number,
+    ticketId: UUID,
     supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; ticket?: Ticket }> {
@@ -99,7 +99,7 @@ export const ValidacaoService = {
 
   // RN06: Aprovar tarefa (pendente → aprovado) — apenas Supervisor
   async aprovarTarefa(
-    tarefaId: number,
+    tarefaId: UUID,
     supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; tarefa?: Tarefa }> {

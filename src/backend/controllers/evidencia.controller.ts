@@ -1,10 +1,6 @@
 import { Request, Response } from 'express'
 import { EvidenciaService } from '../services/evidencia.service'
-
-function converterNumero(valor: unknown): number | null {
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
-}
+import { converterUUID } from '../models/uuid'
 
 export const EvidenciaController = {
   async listar(req: Request, res: Response) {
@@ -19,7 +15,7 @@ export const EvidenciaController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })

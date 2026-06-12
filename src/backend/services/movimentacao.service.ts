@@ -8,6 +8,7 @@ import {
 import { MovimentacaoRepository } from '../repositories/movimentacao.repository'
 import { EvidenciaService } from './evidencia.service'
 import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movimentacao.repository'
+import { UUID } from '../models/uuid'
 
 export const MovimentacaoService = {
   // RN01: valida os campos obrigatorios antes de persistir.
@@ -100,7 +101,7 @@ export const MovimentacaoService = {
     }
   },
 
-  async criarEvidenciaAssociada(movimentacaoId: number, capatazId: string, evidencia?: MovimentacaoEvidenciaInput): Promise<void> {
+  async criarEvidenciaAssociada(movimentacaoId: UUID, capatazId: UUID, evidencia?: MovimentacaoEvidenciaInput): Promise<void> {
     if (!evidencia) {
       return
     }
@@ -185,7 +186,7 @@ export const MovimentacaoService = {
   // RN09: filtra por retiro, tipo, status e periodo.
   // O periodo eh aplicado sobre data_criacao para refletir a janela do registro.
   async filtrar(
-    retiroId: number,
+    retiroId: UUID,
     tipos?: MovimentacaoTipo[],
     status?: MovimentacaoStatus[],
     dataInicio?: Date,
@@ -221,7 +222,7 @@ export const MovimentacaoService = {
   },
 
   // RN07: relatorio usa apenas dados sincronizados e validados.
-  async buscarParaRelatorio(retiroId?: number): Promise<Movimentacao[]> {
+  async buscarParaRelatorio(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -242,7 +243,7 @@ export const MovimentacaoService = {
   },
 
   // RN10: dashboard tambem opera apenas com registros validados e sincronizados.
-  async buscarParaDashboard(retiroId?: number): Promise<Movimentacao[]> {
+  async buscarParaDashboard(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -263,7 +264,7 @@ export const MovimentacaoService = {
   },
 
   // RN03: sincroniza um registro pendente marcando-o como enviado.
-  async sincronizar(movimentacaoId: number): Promise<Movimentacao | null> {
+  async sincronizar(movimentacaoId: UUID): Promise<Movimentacao | null> {
     const movimentacao = await MovimentacaoRepository.buscarPorId(movimentacaoId)
 
     if (!movimentacao) {
@@ -275,7 +276,7 @@ export const MovimentacaoService = {
     })
   },
 
-  async buscarPorId(id: number): Promise<Movimentacao | null> {
+  async buscarPorId(id: UUID): Promise<Movimentacao | null> {
     return MovimentacaoRepository.buscarPorId(id)
   },
 
@@ -283,7 +284,7 @@ export const MovimentacaoService = {
     return MovimentacaoRepository.buscarTodos()
   },
 
-  async listarPendentes(retiroId?: number): Promise<Movimentacao[]> {
+  async listarPendentes(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -299,7 +300,7 @@ export const MovimentacaoService = {
     })
   },
 
-  async contarPorTipo(retiroId?: number): Promise<Record<MovimentacaoTipo, number>> {
+  async contarPorTipo(retiroId?: UUID): Promise<Record<MovimentacaoTipo, number>> {
     const movimentacoes = await this.buscarParaDashboard(retiroId)
 
     const contagem: Record<MovimentacaoTipo, number> = {
@@ -318,7 +319,7 @@ export const MovimentacaoService = {
     return contagem
   },
 
-  async atualizar(id: number, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
+  async atualizar(id: UUID, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     // Quando algum campo estrutural muda, os detalhes da movimentacao tambem precisam ser refeitos.
     if (
       dados.tipo ||
@@ -344,7 +345,7 @@ export const MovimentacaoService = {
     return MovimentacaoRepository.atualizar(id, dados)
   },
 
-  async remover(id: number): Promise<void> {
+  async remover(id: UUID): Promise<void> {
     await MovimentacaoRepository.remover(id)
   },
 }

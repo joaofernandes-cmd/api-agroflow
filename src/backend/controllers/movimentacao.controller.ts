@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { MovimentacaoService } from '../services/movimentacao.service'
 import { MovimentacaoStatus, MovimentacaoTipo } from '../models/movimentacao.model'
+import { converterUUID } from '../models/uuid'
 
 function extrairTexto(valor: unknown): string | undefined {
   return typeof valor === 'string' ? valor : undefined
@@ -61,6 +62,7 @@ export const MovimentacaoController = {
   async criar(req: Request, res: Response) {
     try {
       const {
+        id,
         retiro_id,
         capataz_id,
         tipo,
@@ -77,10 +79,11 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
       }
 
-      const retiroIdNumerico = converterNumero(retiro_id)
+      const retiroId = converterUUID(retiro_id)
+      const movimentacaoId = id === undefined ? undefined : converterUUID(id)
       const quantidadeNumerica = quantidade === undefined || quantidade === null ? null : converterNumero(quantidade)
 
-      if (retiroIdNumerico === null) {
+      if (retiroId === null || movimentacaoId === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
 
@@ -89,7 +92,8 @@ export const MovimentacaoController = {
       }
 
       const movimentacao = await MovimentacaoService.criar({
-        retiro_id: retiroIdNumerico,
+        id: movimentacaoId,
+        retiro_id: retiroId,
         capataz_id,
         tipo,
         origem,
@@ -119,10 +123,10 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
       }
 
-      const retiroIdNumerico = converterNumero(retiro_id)
+      const retiroId = converterUUID(retiro_id)
       const quantidadeNumerica = quantidade === undefined || quantidade === null ? null : converterNumero(quantidade)
 
-      if (retiroIdNumerico === null) {
+      if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
 
@@ -131,7 +135,7 @@ export const MovimentacaoController = {
       }
 
       const movimentacao = await MovimentacaoService.sincronizarRecebida({
-        retiro_id: retiroIdNumerico,
+        retiro_id: retiroId,
         capataz_id,
         tipo,
         origem,
@@ -161,7 +165,7 @@ export const MovimentacaoController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID invalido' })
@@ -194,9 +198,9 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Retiro e obrigatorio' })
       }
 
-      const retiroIdNumerico = converterNumero(retiro)
+      const retiroId = converterUUID(retiro)
 
-      if (retiroIdNumerico === null) {
+      if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
 
@@ -209,7 +213,7 @@ export const MovimentacaoController = {
       }
 
       const movimentacoes = await MovimentacaoService.filtrar(
-        retiroIdNumerico,
+        retiroId,
         tipos,
         status,
         dataInicio,
@@ -225,12 +229,12 @@ export const MovimentacaoController = {
   async buscarParaRelatorio(req: Request, res: Response) {
     try {
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
+      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
-      if (retiroIdNumerico === null) {
+      if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
-      const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroIdNumerico)
+      const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroUuid)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
@@ -241,13 +245,13 @@ export const MovimentacaoController = {
   async buscarParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
+      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
-      if (retiroIdNumerico === null) {
+      if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
 
-      const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroIdNumerico)
+      const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroUuid)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
@@ -257,7 +261,7 @@ export const MovimentacaoController = {
 
   async sincronizar(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID invalido' })
@@ -278,13 +282,13 @@ export const MovimentacaoController = {
   async listarPendentes(req: Request, res: Response) {
     try {
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
+      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
-      if (retiroIdNumerico === null) {
+      if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
 
-      const movimentacoes = await MovimentacaoService.listarPendentes(retiroIdNumerico)
+      const movimentacoes = await MovimentacaoService.listarPendentes(retiroUuid)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
@@ -295,13 +299,13 @@ export const MovimentacaoController = {
   async contarPorTipo(req: Request, res: Response) {
     try {
       const retiroId = extrairTexto(req.query.retiroId)
-      const retiroIdNumerico = retiroId ? converterNumero(retiroId) : undefined
+      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
-      if (retiroIdNumerico === null) {
+      if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro invalido' })
       }
 
-      const contagem = await MovimentacaoService.contarPorTipo(retiroIdNumerico)
+      const contagem = await MovimentacaoService.contarPorTipo(retiroUuid)
 
       return res.status(200).json(contagem)
     } catch (error) {
@@ -311,7 +315,7 @@ export const MovimentacaoController = {
 
   async atualizar(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID invalido' })
@@ -333,7 +337,7 @@ export const MovimentacaoController = {
 
   async remover(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID invalido' })

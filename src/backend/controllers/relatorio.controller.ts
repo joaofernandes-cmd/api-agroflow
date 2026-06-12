@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { converterUUID } from '../models/uuid'
 import { RelatorioService } from '../services/relatorio.service'
 
 // Converte uma string de query em Date.
@@ -18,13 +19,12 @@ function converterDataQuery(valor: unknown): Date | undefined | null {
   return data
 }
 
-function converterNumeroQuery(valor: unknown): number | undefined | null {
+function converterUuidQuery(valor: unknown): string | undefined | null {
   if (valor === undefined || valor === null || valor === '') {
     return undefined
   }
 
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
+  return converterUUID(valor)
 }
 
 export const RelatorioController = {
@@ -58,7 +58,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -84,7 +84,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -109,7 +109,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -132,7 +132,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório semanal usando os últimos 7 dias.
   async gerarRelatorioSemanal(req: Request, res: Response) {
     try {
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -151,7 +151,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório mensal usando os últimos 30 dias.
   async gerarRelatorioMensal(req: Request, res: Response) {
     try {
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

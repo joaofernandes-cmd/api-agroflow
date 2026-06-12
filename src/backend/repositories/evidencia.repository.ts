@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { Evidencia, EvidenciaInput } from '../models/evidencia.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências cadastradas
 export const EvidenciaRepository = {
@@ -14,7 +15,7 @@ export const EvidenciaRepository = {
   },
 
   // Busca uma evidência pelo seu id e retorna null se não encontrar
-  async buscarPorId(id: number): Promise<Evidencia | null> {
+  async buscarPorId(id: UUID): Promise<Evidencia | null> {
     const evidencia = await sql<Evidencia[]>`
       SELECT id, usuario_id, tipo, data_criacao
       FROM evidencia
@@ -28,8 +29,9 @@ export const EvidenciaRepository = {
   // Cria uma nova evidência no banco de dados
   async criar(input: EvidenciaInput): Promise<Evidencia> {
     const [created] = await sql<Evidencia[]>`
-      INSERT INTO evidencia (usuario_id, tipo, data_criacao)
+      INSERT INTO evidencia (id, usuario_id, tipo, data_criacao)
       VALUES (
+        COALESCE(${input.id ?? null}::uuid, gen_random_uuid()),
         ${input.usuario_id},
         ${input.tipo},
         ${input.data_criacao ?? new Date()}
@@ -41,7 +43,7 @@ export const EvidenciaRepository = {
   },
 
   // Atualiza uma evidência existente
-  async atualizar(id: number, input: Partial<EvidenciaInput>): Promise<Evidencia | null> {
+  async atualizar(id: UUID, input: Partial<EvidenciaInput>): Promise<Evidencia | null> {
     const [updated] = await sql<Evidencia[]>`
       UPDATE evidencia
       SET
@@ -56,7 +58,7 @@ export const EvidenciaRepository = {
   },
 
   // Remove uma evidência pelo id
-  async remover(id: number): Promise<void> {
+  async remover(id: UUID): Promise<void> {
     await sql`
       DELETE FROM evidencia
       WHERE id = ${id}

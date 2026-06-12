@@ -1,16 +1,12 @@
 import { Request, Response } from 'express'
 import { gerarToken } from '../middlewares/autenticacao.middleware'
 import { Usuario } from '../models/usuario.model'
+import { converterUUID } from '../models/uuid'
 import { UsuarioService } from '../services/usuario.service'
 
 function removerSenha(usuario: Usuario) {
   const { senha_hash, ...usuarioSemSenha } = usuario
   return usuarioSemSenha
-}
-
-function converterNumero(valor: unknown): number | null {
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
 }
 
 export const UsuarioController = {
@@ -71,7 +67,7 @@ export const UsuarioController = {
 
   async listarPorRetiro(req: Request, res: Response) {
     try {
-      const retiroId = converterNumero(req.params.retiroId)
+      const retiroId = converterUUID(req.params.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -87,7 +83,7 @@ export const UsuarioController = {
 
   async listarCapatazesPorRetiro(req: Request, res: Response) {
     try {
-      const retiroId = converterNumero(req.params.retiroId)
+      const retiroId = converterUUID(req.params.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

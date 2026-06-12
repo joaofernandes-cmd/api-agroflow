@@ -1,16 +1,17 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { UsuarioCargo } from '../models/usuario.model'
+import { UUID } from '../models/uuid'
 
 export interface UsuarioAutenticado {
   // Id do usuario autenticado no sistema.
-  id: string
+  id: UUID
   // Login usado na autenticacao.
   login: string
   // Cargo carregado do token para liberar ou bloquear rotas.
   cargo: UsuarioCargo
   // Retiro ao qual o usuario pertence.
-  retiro_id: number
+  retiro_id: UUID
 }
 
 type JwtPayloadUsuario = UsuarioAutenticado & jwt.JwtPayload

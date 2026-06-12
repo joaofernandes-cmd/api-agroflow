@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { EvidenciaMovimentacao, EvidenciaMovimentacaoInput } from '../models/evidencia-movimentacao.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências de movimentações cadastradas
 export const EvidenciaMovimentacaoRepository = {
@@ -14,7 +15,7 @@ export const EvidenciaMovimentacaoRepository = {
     },
 
     // Busca uma evidência de movimentação pela chave composta e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number, movimentacao_id: number): Promise<EvidenciaMovimentacao | null> {
+    async buscarPorId(evidencia_id: UUID, movimentacao_id: UUID): Promise<EvidenciaMovimentacao | null> {
         const evidenciaMovimentacao = await sql<EvidenciaMovimentacao[]>`
             SELECT evidencia_id, movimentacao_id
             FROM evidencia_movimentacao

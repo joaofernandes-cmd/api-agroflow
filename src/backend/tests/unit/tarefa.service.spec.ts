@@ -65,7 +65,7 @@ describe('TarefaService', () => {
     await expect(
       TarefaService.criar(
         {
-          retiro_id: 1,
+          retiro_id: '00000000-0000-4000-8000-000000000001',
           atribuida_a: mockSupervisor.id,
           descricao: mockTarefa.descricao,
           categoria: mockTarefa.categoria,
@@ -79,7 +79,7 @@ describe('TarefaService', () => {
   it('criar deve aceitar tarefa valida', async () => {
     const tarefa = await TarefaService.criar(
       {
-        retiro_id: 1,
+        retiro_id: '00000000-0000-4000-8000-000000000001',
         atribuida_a: mockSupervisor.id,
         descricao: mockTarefa.descricao,
         categoria: mockTarefa.categoria,
@@ -100,21 +100,21 @@ describe('TarefaService', () => {
   it('buscarParaDashboard deve retornar apenas tarefas aprovadas', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockTarefa as any,
-      { ...mockTarefa, id: 12, status: 'aprovado' } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', status: 'aprovado' } as any,
     ])
 
-    const tarefas = await TarefaService.buscarParaDashboard(1)
+    const tarefas = await TarefaService.buscarParaDashboard('00000000-0000-4000-8000-000000000001')
 
-    expect(tarefas).toEqual([{ ...mockTarefa, id: 12, status: 'aprovado' }])
+    expect(tarefas).toEqual([{ ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', status: 'aprovado' }])
   })
 
   it('listarPorStatus deve filtrar por status e retiro', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockTarefa as any,
-      { ...mockTarefa, id: 12, status: 'aprovado', retiro_id: 2 } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', status: 'aprovado', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const tarefas = await TarefaService.listarPorStatus('pendente', 1)
+    const tarefas = await TarefaService.listarPorStatus('pendente', '00000000-0000-4000-8000-000000000001')
 
     expect(tarefas).toEqual([mockTarefa])
   })
@@ -126,19 +126,19 @@ describe('TarefaService', () => {
   })
 
   it('listarPorPrioridade deve filtrar por prioridade', async () => {
-    const tarefas = await TarefaService.listarPorPrioridade('alta', 1)
+    const tarefas = await TarefaService.listarPorPrioridade('alta', '00000000-0000-4000-8000-000000000001')
 
     expect(tarefas).toEqual([mockTarefa])
   })
 
   it('listarPorCategoria deve filtrar por categoria', async () => {
-    const tarefas = await TarefaService.listarPorCategoria(mockTarefa.categoria, 1)
+    const tarefas = await TarefaService.listarPorCategoria(mockTarefa.categoria, '00000000-0000-4000-8000-000000000001')
 
     expect(tarefas).toEqual([mockTarefa])
   })
 
   it('buscarPorId deve delegar para o repository', async () => {
-    const tarefa = await TarefaService.buscarPorId(11)
+    const tarefa = await TarefaService.buscarPorId('00000000-0000-4000-8000-000000000301')
 
     expect(tarefa).toEqual(mockTarefa)
   })
@@ -152,28 +152,28 @@ describe('TarefaService', () => {
   it('atualizarStatus deve retornar null quando tarefa nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const tarefa = await TarefaService.atualizarStatus(999, 'aprovado')
+    const tarefa = await TarefaService.atualizarStatus('00000000-0000-4000-8000-000000000999', 'aprovado')
 
     expect(tarefa).toBeNull()
   })
 
   it('atualizarStatus deve atualizar tarefa existente', async () => {
-    const tarefa = await TarefaService.atualizarStatus(11, 'aprovado')
+    const tarefa = await TarefaService.atualizarStatus('00000000-0000-4000-8000-000000000301', 'aprovado')
 
     expect(tarefa).toEqual(mockTarefa)
-    expect(mockedRepository.atualizar).toHaveBeenCalledWith(11, expect.objectContaining({ status: 'aprovado' }))
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000301', expect.objectContaining({ status: 'aprovado' }))
   })
 
   it('atualizar deve retornar null quando tarefa nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const tarefa = await TarefaService.atualizar(999, { descricao: 'Nova descricao' })
+    const tarefa = await TarefaService.atualizar('00000000-0000-4000-8000-000000000999', { descricao: 'Nova descricao' })
 
     expect(tarefa).toBeNull()
   })
 
   it('atualizar deve revalidar quando houver alteracao estrutural', async () => {
-    const tarefa = await TarefaService.atualizar(11, {
+    const tarefa = await TarefaService.atualizar('00000000-0000-4000-8000-000000000301', {
       descricao: 'Descricao atualizada',
       prioridade: 'alta',
       categoria: 'manutencao',
@@ -186,18 +186,18 @@ describe('TarefaService', () => {
   it('contarPorStatus deve contar por status e retiro', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockTarefa as any,
-      { ...mockTarefa, id: 12, status: 'aprovado', retiro_id: 1 } as any,
-      { ...mockTarefa, id: 13, status: 'aprovado', retiro_id: 2 } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', status: 'aprovado', retiro_id: '00000000-0000-4000-8000-000000000001' } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000303', status: 'aprovado', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const contagem = await TarefaService.contarPorStatus(1)
+    const contagem = await TarefaService.contarPorStatus('00000000-0000-4000-8000-000000000001')
 
     expect(contagem).toEqual({ pendente: 1, aprovado: 1 })
   })
 
   it('remover deve delegar para o repository', async () => {
-    await TarefaService.remover(11)
+    await TarefaService.remover('00000000-0000-4000-8000-000000000301')
 
-    expect(mockedRepository.remover).toHaveBeenCalledWith(11)
+    expect(mockedRepository.remover).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000301')
   })
 })

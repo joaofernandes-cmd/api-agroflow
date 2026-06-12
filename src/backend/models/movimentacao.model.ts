@@ -46,8 +46,8 @@ export interface MovimentacaoEvidenciaInput {
 }
 
 export interface Movimentacao {
-  id: number
-  retiro_id: number
+  id: UUID
+  retiro_id: UUID
   capataz_id: UUID
   validado_por: UUID | null
   tipo: MovimentacaoTipo
@@ -63,7 +63,8 @@ export interface Movimentacao {
 }
 
 export interface MovimentacaoInput {
-  retiro_id: number
+  id?: UUID
+  retiro_id: UUID
   capataz_id: UUID
   validado_por: UUID | null
   tipo: MovimentacaoTipo

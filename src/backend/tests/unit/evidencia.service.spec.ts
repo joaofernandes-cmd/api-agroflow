@@ -147,7 +147,7 @@ describe('EvidenciaService', () => {
   })
 
   it('buscarPorId deve delegar para o repository', async () => {
-    const evidencia = await EvidenciaService.buscarPorId(31)
+    const evidencia = await EvidenciaService.buscarPorId('00000000-0000-4000-8000-000000000501')
 
     expect(evidencia).toEqual(mockEvidencia)
   })

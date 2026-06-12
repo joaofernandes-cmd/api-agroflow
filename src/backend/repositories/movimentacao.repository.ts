@@ -1,6 +1,7 @@
 import type { TransactionSql } from 'postgres'
 import sql from '../database/connection'
 import { Movimentacao, MovimentacaoInput } from '../models/movimentacao.model'
+import { UUID } from '../models/uuid'
 
 type Transaction = TransactionSql<{}>
 
@@ -36,7 +37,7 @@ export const MovimentacaoRepository = {
     `
   },
 
-  async buscarPorId(id: number): Promise<Movimentacao | null> {
+  async buscarPorId(id: UUID): Promise<Movimentacao | null> {
     const movimentacao = await sql<Movimentacao[]>`
       ${movimentacaoSelect}
       WHERE m.id = ${id}
@@ -48,8 +49,9 @@ export const MovimentacaoRepository = {
 
   async criar(input: MovimentacaoInput): Promise<Movimentacao> {
     const createdId = await sql.begin(async transaction => {
-      const [created] = await transaction<{ id: number }[]>`
+      const [created] = await transaction<{ id: UUID }[]>`
         INSERT INTO movimentacao (
+          id,
           retiro_id,
           capataz_id,
           validado_por,
@@ -61,6 +63,7 @@ export const MovimentacaoRepository = {
           data_validacao
         )
         VALUES (
+          COALESCE(${input.id ?? null}::uuid, gen_random_uuid()),
           ${input.retiro_id},
           ${input.capataz_id},
           ${input.validado_por},
@@ -87,7 +90,7 @@ export const MovimentacaoRepository = {
     return movimentacao
   },
 
-  async atualizar(id: number, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
+  async atualizar(id: UUID, input: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
     const deveAtualizarDetalhes = this.deveAtualizarDetalhes(input)
     const movimentacaoAtual = deveAtualizarDetalhes ? await this.buscarPorId(id) : null
 
@@ -96,7 +99,7 @@ export const MovimentacaoRepository = {
     }
 
     const updatedId = await sql.begin(async transaction => {
-      const [updated] = await transaction<{ id: number }[]>`
+      const [updated] = await transaction<{ id: UUID }[]>`
         UPDATE movimentacao
         SET
           retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
@@ -133,7 +136,7 @@ export const MovimentacaoRepository = {
     return this.buscarPorId(updatedId)
   },
 
-  async remover(id: number): Promise<void> {
+  async remover(id: UUID): Promise<void> {
     await sql.begin(async transaction => {
       await this.removerDetalhes(transaction, id)
 
@@ -154,7 +157,7 @@ export const MovimentacaoRepository = {
     )
   },
 
-  async criarDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
+  async criarDetalhes(transaction: Transaction, movimentacaoId: UUID, input: MovimentacaoInput): Promise<void> {
     if (input.tipo === 'compra') {
       await transaction`
         INSERT INTO movimentacao_compra (movimentacao_id, destino, quantidade)
@@ -195,12 +198,12 @@ export const MovimentacaoRepository = {
     }
   },
 
-  async substituirDetalhes(transaction: Transaction, movimentacaoId: number, input: MovimentacaoInput): Promise<void> {
+  async substituirDetalhes(transaction: Transaction, movimentacaoId: UUID, input: MovimentacaoInput): Promise<void> {
     await this.removerDetalhes(transaction, movimentacaoId)
     await this.criarDetalhes(transaction, movimentacaoId, input)
   },
 
-  async removerDetalhes(transaction: Transaction, movimentacaoId: number): Promise<void> {
+  async removerDetalhes(transaction: Transaction, movimentacaoId: UUID): Promise<void> {
     await transaction`DELETE FROM movimentacao_compra WHERE movimentacao_id = ${movimentacaoId}`
     await transaction`DELETE FROM movimentacao_venda WHERE movimentacao_id = ${movimentacaoId}`
     await transaction`DELETE FROM movimentacao_transferencia WHERE movimentacao_id = ${movimentacaoId}`

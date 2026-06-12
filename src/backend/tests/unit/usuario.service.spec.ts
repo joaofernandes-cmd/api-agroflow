@@ -83,7 +83,7 @@ describe('UsuarioService', () => {
   })
 
   it('listarPorRetiro deve filtrar por retiro', async () => {
-    const usuarios = await UsuarioService.listarPorRetiro(1)
+    const usuarios = await UsuarioService.listarPorRetiro('00000000-0000-4000-8000-000000000001')
 
     expect(usuarios).toEqual([mockSupervisor, mockGerente])
   })
@@ -97,7 +97,7 @@ describe('UsuarioService', () => {
   it('criar deve rejeitar login invalido', async () => {
     await expect(
       UsuarioService.criar({
-        retiro_id: 1,
+        retiro_id: '00000000-0000-4000-8000-000000000001',
         nome: 'Usuario Sem Email Valido',
         login: 'invalido',
         senha_hash: 'senha',
@@ -110,7 +110,7 @@ describe('UsuarioService', () => {
   it('criar deve rejeitar nome ausente', async () => {
     await expect(
       UsuarioService.criar({
-        retiro_id: 1,
+        retiro_id: '00000000-0000-4000-8000-000000000001',
         nome: '   ',
         login: 'gerente.novo@agroflow.com',
         senha_hash: 'senha',
@@ -123,7 +123,7 @@ describe('UsuarioService', () => {
   it('criar deve rejeitar login ausente', async () => {
     await expect(
       UsuarioService.criar({
-        retiro_id: 1,
+        retiro_id: '00000000-0000-4000-8000-000000000001',
         nome: 'Gerente Novo',
         login: '',
         senha_hash: 'senha',
@@ -135,7 +135,7 @@ describe('UsuarioService', () => {
 
   it('criar deve aceitar usuario valido', async () => {
     const usuario = await UsuarioService.criar({
-      retiro_id: 1,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       nome: 'Gerente Novo',
       login: 'gerente.novo@agroflow.com',
       senha_hash: 'senha',

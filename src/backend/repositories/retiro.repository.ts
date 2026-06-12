@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { Retiro, RetiroInput } from '../models/retiro.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas os retiros cadastrados
 export const RetiroRepository = {
@@ -14,7 +15,7 @@ export const RetiroRepository = {
     },
 
     // Busca um retiro pelo seu id e retorna null se não encontrar
-    async buscarPorId(id: number): Promise<Retiro | null> {
+    async buscarPorId(id: UUID): Promise<Retiro | null> {
         const retiro = await sql<Retiro[]>`
             SELECT id, nome
             FROM retiro
@@ -27,15 +28,15 @@ export const RetiroRepository = {
     // Cria um novo retiro no banco de dados
     async criar(input: RetiroInput): Promise<Retiro> {
         const [created] = await sql<Retiro[]>`
-            INSERT INTO retiro (nome)
-            VALUES (${input.nome})
+            INSERT INTO retiro (id, nome)
+            VALUES (COALESCE(${input.id ?? null}::uuid, gen_random_uuid()), ${input.nome})
             RETURNING id, nome
         `
         return created
     },
 
     // Atualiza os dados de um retiro existente
-    async atualizar(id: number, input: Partial<RetiroInput>): Promise<Retiro | null> {
+    async atualizar(id: UUID, input: Partial<RetiroInput>): Promise<Retiro | null> {
         const updated = await sql<Retiro[]>`
             UPDATE retiro
             SET

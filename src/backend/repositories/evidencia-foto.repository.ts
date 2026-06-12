@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { EvidenciaFoto, EvidenciaFotoInput } from '../models/evidencia-foto.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidencias de foto cadastradas
 export const EvidenciaFotoRepository = {
@@ -14,7 +15,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Busca uma evidência de foto pelo id da evidência e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number): Promise<EvidenciaFoto | null> {
+    async buscarPorId(evidencia_id: UUID): Promise<EvidenciaFoto | null> {
         const evidenciaFoto = await sql<EvidenciaFoto[]>`
             SELECT evidencia_id, url_arquivo, latitude, longitude
             FROM evidencia_foto
@@ -37,7 +38,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Atualiza uma evidência de foto existente
-    async atualizar(evidencia_id: number, input: Partial<EvidenciaFotoInput>): Promise<EvidenciaFoto | null> {
+    async atualizar(evidencia_id: UUID, input: Partial<EvidenciaFotoInput>): Promise<EvidenciaFoto | null> {
         const [updated] = await sql<EvidenciaFoto[]>`
             UPDATE evidencia_foto
             SET
@@ -52,7 +53,7 @@ export const EvidenciaFotoRepository = {
     },
 
     // Remove uma evidência de foto pelo id da evidência
-    async remover(evidencia_id: number): Promise<void> {
+    async remover(evidencia_id: UUID): Promise<void> {
         await sql`
             DELETE FROM evidencia_foto
             WHERE evidencia_id = ${evidencia_id}

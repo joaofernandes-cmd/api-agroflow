@@ -5,10 +5,10 @@ jest.mock('../middlewares/autenticacao.middleware', () => ({
     // Os testes mockados precisam de um usuario autenticado padrao para
     // percorrer rotas protegidas sem depender de JWT real.
     req.usuario = {
-      id: 'user-001',
+      id: '00000000-0000-4000-8000-000000000101',
       login: 'supervisor@agroflow.com',
       cargo: 'supervisor',
-      retiro_id: 1,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
     }
 
     return next()

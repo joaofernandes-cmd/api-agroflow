@@ -4,6 +4,7 @@ import { TicketRepository } from '../repositories/ticket.repository'
 import { Movimentacao } from '../models/movimentacao.model'
 import { Tarefa } from '../models/tarefa.model'
 import { Ticket } from '../models/ticket.model'
+import { UUID } from '../models/uuid'
 
 // RN03: Sincronização offline com detecção automática de conexão
 // RN07: Apenas dados com sincronizado=true entram em relatórios
@@ -105,7 +106,7 @@ export const SincronizacaoService = {
 
   // RN07: Buscar movimentações sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=validado
-  async buscarMovimentacoesParaRelatrio(retiroId?: number): Promise<Movimentacao[]> {
+  async buscarMovimentacoesParaRelatrio(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -122,7 +123,7 @@ export const SincronizacaoService = {
 
   // RN07: Buscar tarefas sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=aprovado
-  async buscarTarefasParaRelatrio(retiroId?: number): Promise<Tarefa[]> {
+  async buscarTarefasParaRelatrio(retiroId?: UUID): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.buscarTodos()
 
     return tarefas.filter(t => {
@@ -139,7 +140,7 @@ export const SincronizacaoService = {
 
   // RN10: Buscar tickets sincronizados para dashboard
   // Retorna apenas tickets com sincronizado=true e status=aprovado
-  async buscarTicketsParaDashboard(retiroId?: number): Promise<Ticket[]> {
+  async buscarTicketsParaDashboard(retiroId?: UUID): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {

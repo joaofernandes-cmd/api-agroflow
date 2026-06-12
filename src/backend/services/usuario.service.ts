@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import { Usuario, UsuarioInput, UsuarioCargo } from '../models/usuario.model'
 import { UsuarioRepository } from '../repositories/usuario.repository'
+import { UUID } from '../models/uuid'
 
 const BCRYPT_SALT_ROUNDS = 12
 
@@ -40,7 +41,7 @@ export const UsuarioService = {
   },
 
   // Listar usuários por retiro
-  async listarPorRetiro(retiroId: number): Promise<Usuario[]> {
+  async listarPorRetiro(retiroId: UUID): Promise<Usuario[]> {
     const usuarios = await UsuarioRepository.buscarTodos()
     return usuarios.filter(u => u.retiro_id === retiroId)
   },
