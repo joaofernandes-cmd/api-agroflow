@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { EvidenciaTarefa, EvidenciaTarefaInput } from '../models/evidencia-tarefa.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências de tarefas cadastradas
 export const EvidenciaTarefaRepository = {
@@ -14,7 +15,7 @@ export const EvidenciaTarefaRepository = {
     },
 
     // Busca uma evidência de tarefa pela chave composta e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number, tarefa_id: number): Promise<EvidenciaTarefa | null> {
+    async buscarPorId(evidencia_id: UUID, tarefa_id: UUID): Promise<EvidenciaTarefa | null> {
         const evidenciaTarefa = await sql<EvidenciaTarefa[]>`
             SELECT evidencia_id, tarefa_id
             FROM evidencia_tarefa

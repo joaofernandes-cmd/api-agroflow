@@ -45,7 +45,7 @@ describe('ValidacaoService', () => {
   })
 
   it('validarMovimentacao deve bloquear cargo diferente de supervisor', async () => {
-    const resultado = await ValidacaoService.validarMovimentacao(1, mockSupervisor.id, 'gerente')
+    const resultado = await ValidacaoService.validarMovimentacao('00000000-0000-4000-8000-000000000201', mockSupervisor.id, 'gerente')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -56,7 +56,7 @@ describe('ValidacaoService', () => {
   it('validarMovimentacao deve retornar nao encontrada', async () => {
     mockedMovRepo.buscarPorId.mockResolvedValueOnce(null)
 
-    const resultado = await ValidacaoService.validarMovimentacao(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.validarMovimentacao('00000000-0000-4000-8000-000000000201', mockSupervisor.id, 'supervisor')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -67,7 +67,7 @@ describe('ValidacaoService', () => {
   it('validarMovimentacao deve bloquear movimentacao ja validada', async () => {
     mockedMovRepo.buscarPorId.mockResolvedValueOnce(mockMovimentacaoValidada as any)
 
-    const resultado = await ValidacaoService.validarMovimentacao(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.validarMovimentacao('00000000-0000-4000-8000-000000000201', mockSupervisor.id, 'supervisor')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -76,14 +76,14 @@ describe('ValidacaoService', () => {
   })
 
   it('validarMovimentacao deve aprovar movimentacao pendente', async () => {
-    const resultado = await ValidacaoService.validarMovimentacao(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.validarMovimentacao('00000000-0000-4000-8000-000000000201', mockSupervisor.id, 'supervisor')
 
     expect(resultado.sucesso).toBe(true)
     expect(resultado.mensagem).toBe('Movimentação validada com sucesso.')
   })
 
   it('aprovarTicket deve bloquear cargo diferente de supervisor', async () => {
-    const resultado = await ValidacaoService.aprovarTicket(1, mockSupervisor.id, 'gerente')
+    const resultado = await ValidacaoService.aprovarTicket('00000000-0000-4000-8000-000000000401', mockSupervisor.id, 'gerente')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -94,7 +94,7 @@ describe('ValidacaoService', () => {
   it('aprovarTicket deve retornar ticket nao encontrado', async () => {
     mockedTicketRepo.buscarPorId.mockResolvedValueOnce(null)
 
-    const resultado = await ValidacaoService.aprovarTicket(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.aprovarTicket('00000000-0000-4000-8000-000000000401', mockSupervisor.id, 'supervisor')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -105,7 +105,7 @@ describe('ValidacaoService', () => {
   it('aprovarTicket deve bloquear ticket ja aprovado', async () => {
     mockedTicketRepo.buscarPorId.mockResolvedValueOnce({ ...mockTicket, status: 'aprovado' } as any)
 
-    const resultado = await ValidacaoService.aprovarTicket(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.aprovarTicket('00000000-0000-4000-8000-000000000401', mockSupervisor.id, 'supervisor')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -114,14 +114,14 @@ describe('ValidacaoService', () => {
   })
 
   it('aprovarTicket deve aprovar ticket pendente', async () => {
-    const resultado = await ValidacaoService.aprovarTicket(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.aprovarTicket('00000000-0000-4000-8000-000000000401', mockSupervisor.id, 'supervisor')
 
     expect(resultado.sucesso).toBe(true)
     expect(resultado.mensagem).toBe('Ticket aprovado com sucesso.')
   })
 
   it('aprovarTarefa deve bloquear cargo diferente de supervisor', async () => {
-    const resultado = await ValidacaoService.aprovarTarefa(1, mockSupervisor.id, 'gerente')
+    const resultado = await ValidacaoService.aprovarTarefa('00000000-0000-4000-8000-000000000301', mockSupervisor.id, 'gerente')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -132,7 +132,7 @@ describe('ValidacaoService', () => {
   it('aprovarTarefa deve retornar tarefa nao encontrada', async () => {
     mockedTarefaRepo.buscarPorId.mockResolvedValueOnce(null)
 
-    const resultado = await ValidacaoService.aprovarTarefa(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.aprovarTarefa('00000000-0000-4000-8000-000000000301', mockSupervisor.id, 'supervisor')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -143,7 +143,7 @@ describe('ValidacaoService', () => {
   it('aprovarTarefa deve bloquear tarefa ja aprovada', async () => {
     mockedTarefaRepo.buscarPorId.mockResolvedValueOnce({ ...mockTarefa, status: 'aprovado' } as any)
 
-    const resultado = await ValidacaoService.aprovarTarefa(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.aprovarTarefa('00000000-0000-4000-8000-000000000301', mockSupervisor.id, 'supervisor')
 
     expect(resultado).toEqual({
       sucesso: false,
@@ -152,7 +152,7 @@ describe('ValidacaoService', () => {
   })
 
   it('aprovarTarefa deve aprovar tarefa pendente', async () => {
-    const resultado = await ValidacaoService.aprovarTarefa(1, mockSupervisor.id, 'supervisor')
+    const resultado = await ValidacaoService.aprovarTarefa('00000000-0000-4000-8000-000000000301', mockSupervisor.id, 'supervisor')
 
     expect(resultado.sucesso).toBe(true)
     expect(resultado.mensagem).toBe('Tarefa aprovada com sucesso.')

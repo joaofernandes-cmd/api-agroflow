@@ -47,7 +47,8 @@ describe('Movimentacoes', () => {
 
   it('POST /movimentacoes deve criar uma movimentacao', async () => {
     const response = await request(app).post('/movimentacoes').send({
-      retiro_id: 1,
+      id: mockMovimentacao.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       capataz_id: 'user-003',
       tipo: 'nascimento',
       origem: 'Acurizal',
@@ -57,6 +58,9 @@ describe('Movimentacoes', () => {
 
     expect(response.status).toBe(201)
     expect(response.body).toEqual(mockMovimentacao)
+    expect(mockedService.criar).toHaveBeenCalledWith(
+      expect.objectContaining({ id: mockMovimentacao.id })
+    )
     expect(mockedService.criar).toHaveBeenCalledTimes(1)
   })
 
@@ -72,7 +76,7 @@ describe('Movimentacoes', () => {
     const response = await request(app)
       .get('/movimentacoes/filtrar')
       .query({
-        retiro: 1,
+        retiro: '00000000-0000-4000-8000-000000000001',
         tipo: 'nascimento',
         status: 'pendente',
         dataInicio: '2026-05-29',
@@ -86,7 +90,7 @@ describe('Movimentacoes', () => {
 
   it('POST /movimentacoes/sincronizar deve receber uma movimentacao sincronizada', async () => {
     const response = await request(app).post('/movimentacoes/sincronizar').send({
-      retiro_id: 1,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       capataz_id: 'user-003',
       tipo: 'nascimento',
       origem: 'Acurizal',
@@ -100,7 +104,7 @@ describe('Movimentacoes', () => {
   })
 
   it('GET /movimentacoes/pendentes deve listar pendentes', async () => {
-    const response = await request(app).get('/movimentacoes/pendentes').query({ retiroId: 1 })
+    const response = await request(app).get('/movimentacoes/pendentes').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacao])
@@ -108,7 +112,7 @@ describe('Movimentacoes', () => {
   })
 
   it('GET /movimentacoes/dashboard deve retornar dados do dashboard', async () => {
-    const response = await request(app).get('/movimentacoes/dashboard').query({ retiroId: 1 })
+    const response = await request(app).get('/movimentacoes/dashboard').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacaoValidada])
@@ -116,7 +120,7 @@ describe('Movimentacoes', () => {
   })
 
   it('GET /movimentacoes/contagem/tipo deve retornar a contagem por tipo', async () => {
-    const response = await request(app).get('/movimentacoes/contagem/tipo').query({ retiroId: 1 })
+    const response = await request(app).get('/movimentacoes/contagem/tipo').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
@@ -131,15 +135,15 @@ describe('Movimentacoes', () => {
   })
 
   it('GET /movimentacoes/:id deve buscar uma movimentacao', async () => {
-    const response = await request(app).get('/movimentacoes/1')
+    const response = await request(app).get('/movimentacoes/00000000-0000-4000-8000-000000000201')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockMovimentacao)
-    expect(mockedService.buscarPorId).toHaveBeenCalledWith(1)
+    expect(mockedService.buscarPorId).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
   })
 
   it('PATCH /movimentacoes/:id deve atualizar uma movimentacao', async () => {
-    const response = await request(app).patch('/movimentacoes/1').send({
+    const response = await request(app).patch('/movimentacoes/00000000-0000-4000-8000-000000000201').send({
       quantidade: 2,
     })
 
@@ -149,17 +153,17 @@ describe('Movimentacoes', () => {
   })
 
   it('PATCH /movimentacoes/:id/sincronizar deve marcar como sincronizada', async () => {
-    const response = await request(app).patch('/movimentacoes/1/sincronizar')
+    const response = await request(app).patch('/movimentacoes/00000000-0000-4000-8000-000000000201/sincronizar')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockMovimentacaoValidada)
-    expect(mockedService.sincronizar).toHaveBeenCalledWith(1)
+    expect(mockedService.sincronizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
   })
 
   it('DELETE /movimentacoes/:id deve remover uma movimentacao', async () => {
-    const response = await request(app).delete('/movimentacoes/1')
+    const response = await request(app).delete('/movimentacoes/00000000-0000-4000-8000-000000000201')
 
     expect(response.status).toBe(204)
-    expect(mockedService.remover).toHaveBeenCalledWith(1)
+    expect(mockedService.remover).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
   })
 })

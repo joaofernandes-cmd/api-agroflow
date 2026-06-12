@@ -40,7 +40,8 @@ describe('Tarefas', () => {
 
   it('POST /tarefas deve criar tarefa', async () => {
     const response = await request(app).post('/tarefas').send({
-      retiro_id: 1,
+      id: mockTarefa.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       atribuida_a: mockSupervisor.id,
       descricao: mockTarefa.descricao,
       categoria: mockTarefa.categoria,
@@ -50,6 +51,10 @@ describe('Tarefas', () => {
 
     expect(response.status).toBe(201)
     expect(response.body).toEqual(mockTarefa)
+    expect(mockedService.criar).toHaveBeenCalledWith(
+      expect.objectContaining({ id: mockTarefa.id }),
+      mockSupervisor
+    )
   })
 
   it('GET /tarefas deve listar todas as tarefas', async () => {
@@ -60,14 +65,14 @@ describe('Tarefas', () => {
   })
 
   it('GET /tarefas/dashboard deve retornar dados de dashboard', async () => {
-    const response = await request(app).get('/tarefas/dashboard').query({ retiroId: 1 })
+    const response = await request(app).get('/tarefas/dashboard').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTarefa])
   })
 
   it('GET /tarefas/status/:status deve filtrar por status', async () => {
-    const response = await request(app).get('/tarefas/status/pendente').query({ retiroId: 1 })
+    const response = await request(app).get('/tarefas/status/pendente').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTarefa])
@@ -81,35 +86,35 @@ describe('Tarefas', () => {
   })
 
   it('GET /tarefas/prioridade/:prioridade deve filtrar por prioridade', async () => {
-    const response = await request(app).get('/tarefas/prioridade/alta').query({ retiroId: 1 })
+    const response = await request(app).get('/tarefas/prioridade/alta').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTarefa])
   })
 
   it('GET /tarefas/categoria/:categoria deve filtrar por categoria', async () => {
-    const response = await request(app).get('/tarefas/categoria/manutencao').query({ retiroId: 1 })
+    const response = await request(app).get('/tarefas/categoria/manutencao').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTarefa])
   })
 
   it('GET /tarefas/contagem/status deve retornar contagem por status', async () => {
-    const response = await request(app).get('/tarefas/contagem/status').query({ retiroId: 1 })
+    const response = await request(app).get('/tarefas/contagem/status').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({ pendente: 1, aprovado: 0 })
   })
 
   it('GET /tarefas/:id deve buscar uma tarefa', async () => {
-    const response = await request(app).get('/tarefas/11')
+    const response = await request(app).get('/tarefas/00000000-0000-4000-8000-000000000301')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockTarefa)
   })
 
   it('PATCH /tarefas/:id deve atualizar tarefa', async () => {
-    const response = await request(app).patch('/tarefas/11').send({
+    const response = await request(app).patch('/tarefas/00000000-0000-4000-8000-000000000301').send({
       descricao: 'Descricao atualizada',
     })
 
@@ -118,7 +123,7 @@ describe('Tarefas', () => {
   })
 
   it('PATCH /tarefas/:id/status deve atualizar status', async () => {
-    const response = await request(app).patch('/tarefas/11/status').send({
+    const response = await request(app).patch('/tarefas/00000000-0000-4000-8000-000000000301/status').send({
       status: 'aprovado',
     })
 
@@ -127,9 +132,9 @@ describe('Tarefas', () => {
   })
 
   it('DELETE /tarefas/:id deve remover tarefa', async () => {
-    const response = await request(app).delete('/tarefas/11')
+    const response = await request(app).delete('/tarefas/00000000-0000-4000-8000-000000000301')
 
     expect(response.status).toBe(204)
-    expect(mockedService.remover).toHaveBeenCalledWith(11)
+    expect(mockedService.remover).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000301')
   })
 })

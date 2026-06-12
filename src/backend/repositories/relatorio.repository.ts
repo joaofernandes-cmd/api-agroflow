@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { Relatorio, RelatorioInput } from '../models/relatorio.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todos os relatorios
 export const RelatorioRepository = {
@@ -14,7 +15,7 @@ export const RelatorioRepository = {
 	},
 
 	// Busca relatório pelo seu id e retorna nulo se não encontrar
-	async buscarPorId(id: number): Promise<Relatorio | null> {
+	async buscarPorId(id: UUID): Promise<Relatorio | null> {
 		const relatorios = await sql<Relatorio[]>`
 			SELECT id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo
 			FROM relatorio
@@ -28,8 +29,9 @@ export const RelatorioRepository = {
 	// Cria um novo relatório no banco de dados
 	async criar(input: RelatorioInput): Promise<Relatorio> {
 		const [created] = await sql<Relatorio[]>`
-			INSERT INTO relatorio (gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo)
+			INSERT INTO relatorio (id, gerado_por, retiro_id, tipo, data_inicio, data_fim, data_gerado, url_arquivo)
 			VALUES (
+				COALESCE(${input.id ?? null}::uuid, gen_random_uuid()),
 				${input.gerado_por},
 				${input.retiro_id},
 				${input.tipo},
@@ -45,7 +47,7 @@ export const RelatorioRepository = {
 	},
 
 	// Atualiza um relatório existente no banco de dados
-	async atualizar(id: number, input: Partial<RelatorioInput>): Promise<Relatorio | null> {
+	async atualizar(id: UUID, input: Partial<RelatorioInput>): Promise<Relatorio | null> {
 		const [updated] = await sql<Relatorio[]>`
 			UPDATE relatorio
 			SET

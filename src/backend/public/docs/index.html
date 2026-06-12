@@ -447,7 +447,7 @@
         <div class="detail-section">
           <h4>Body (application/json)</h4>
           <pre>{
-  "retiro_id":   number  (obrigatório),
+  "retiro_id":   string UUID  (obrigatório),
   "capataz_id":  string  (obrigatório),
   "tipo":        "nascimento" | "morte" | "transferencia" | "compra" | "venda"  (obrigatório),
   "estagio_vida": string (obrigatório),
@@ -907,7 +907,7 @@
         <div class="detail-section">
           <h4>Body (application/json)</h4>
           <pre>{
-  "retiro_id":   number (obrigatório),
+  "retiro_id":   string UUID (obrigatório),
   "capataz_id":  string (obrigatório),
   "tipo":        string (obrigatório),
   "estagio_vida": string (obrigatório),
@@ -1507,7 +1507,7 @@
         <div class="detail-section">
           <h4>Query Parameters (opcional)</h4>
           <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
-          <tr><td><code>retiroId</code></td><td>number</td><td>Filtrar por retiro específico</td></tr></table>
+          <tr><td><code>retiroId</code></td><td>string UUID</td><td>Filtrar por retiro específico</td></tr></table>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1539,7 +1539,7 @@
         <div class="detail-section">
           <h4>Query Parameters (opcional)</h4>
           <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
-          <tr><td><code>retiroId</code></td><td>number</td><td>Segmentar por retiro específico</td></tr></table>
+          <tr><td><code>retiroId</code></td><td>string UUID</td><td>Segmentar por retiro específico</td></tr></table>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1688,7 +1688,7 @@
         <div class="detail-section">
           <h4>Body (application/json)</h4>
           <pre>{
-  "retiro_id": number  (obrigatório),
+  "retiro_id": string UUID  (obrigatório),
   "nome":      string  (obrigatório),
   "login":     string  (obrigatório),
   "senha_hash": string (obrigatório),

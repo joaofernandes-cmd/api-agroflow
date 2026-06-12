@@ -61,7 +61,7 @@ describe('TicketService', () => {
     await expect(
       TicketService.criar(
         {
-          retiro_id: 1,
+          retiro_id: '00000000-0000-4000-8000-000000000001',
           categoria: 'cerca',
           localizacao: mockTicket.localizacao,
           descricao: mockTicket.descricao,
@@ -77,7 +77,7 @@ describe('TicketService', () => {
     await expect(
       TicketService.criar(
         {
-          retiro_id: 1,
+          retiro_id: '00000000-0000-4000-8000-000000000001',
           categoria: 'cerca',
           localizacao: mockTicket.localizacao,
           descricao: mockTicket.descricao,
@@ -92,7 +92,7 @@ describe('TicketService', () => {
   it('criar deve aceitar ticket valido', async () => {
     const ticket = await TicketService.criar(
       {
-        retiro_id: 1,
+        retiro_id: '00000000-0000-4000-8000-000000000001',
         categoria: 'cerca',
         localizacao: mockTicket.localizacao,
         descricao: mockTicket.descricao,
@@ -114,19 +114,19 @@ describe('TicketService', () => {
   it('alterarPrioridade deve retornar null quando ticket nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const ticket = await TicketService.alterarPrioridade(999, 'alta')
+    const ticket = await TicketService.alterarPrioridade('00000000-0000-4000-8000-000000000999', 'alta')
 
     expect(ticket).toBeNull()
   })
 
   it('alterarPrioridade deve rejeitar prioridade invalida', async () => {
-    await expect(TicketService.alterarPrioridade(21, 'urgente' as any)).rejects.toThrow(
+    await expect(TicketService.alterarPrioridade('00000000-0000-4000-8000-000000000401', 'urgente' as any)).rejects.toThrow(
       'Prioridade inválida. Escolha entre: alta, média, baixa'
     )
   })
 
   it('alterarPrioridade deve atualizar prioridade', async () => {
-    const ticket = await TicketService.alterarPrioridade(21, 'alta')
+    const ticket = await TicketService.alterarPrioridade('00000000-0000-4000-8000-000000000401', 'alta')
 
     expect(ticket).toEqual(mockTicket)
   })
@@ -134,22 +134,22 @@ describe('TicketService', () => {
   it('listarPorStatus deve filtrar por status e retiro', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockTicket as any,
-      { ...mockTicket, id: 22, status: 'aprovado', retiro_id: 2 } as any,
+      { ...mockTicket, id: '00000000-0000-4000-8000-000000000402', status: 'aprovado', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const tickets = await TicketService.listarPorStatus('pendente', 1)
+    const tickets = await TicketService.listarPorStatus('pendente', '00000000-0000-4000-8000-000000000001')
 
     expect(tickets).toEqual([mockTicket])
   })
 
   it('listarPorPrioridade deve filtrar por prioridade', async () => {
-    const tickets = await TicketService.listarPorPrioridade('media', 1)
+    const tickets = await TicketService.listarPorPrioridade('media', '00000000-0000-4000-8000-000000000001')
 
     expect(tickets).toEqual([mockTicket])
   })
 
   it('listarPorCategoria deve filtrar por categoria', async () => {
-    const tickets = await TicketService.listarPorCategoria('cerca', 1)
+    const tickets = await TicketService.listarPorCategoria('cerca', '00000000-0000-4000-8000-000000000001')
 
     expect(tickets).toEqual([mockTicket])
   })
@@ -157,34 +157,34 @@ describe('TicketService', () => {
   it('atualizarStatus deve retornar null quando ticket nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const ticket = await TicketService.atualizarStatus(999, 'aprovado')
+    const ticket = await TicketService.atualizarStatus('00000000-0000-4000-8000-000000000999', 'aprovado')
 
     expect(ticket).toBeNull()
   })
 
   it('atualizarStatus deve atualizar status', async () => {
-    const ticket = await TicketService.atualizarStatus(21, 'aprovado')
+    const ticket = await TicketService.atualizarStatus('00000000-0000-4000-8000-000000000401', 'aprovado')
 
     expect(ticket).toEqual(mockTicket)
-    expect(mockedRepository.atualizar).toHaveBeenCalledWith(21, expect.objectContaining({ status: 'aprovado' }))
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000401', expect.objectContaining({ status: 'aprovado' }))
   })
 
   it('atribuirA deve retornar null quando ticket nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const ticket = await TicketService.atribuirA(999, mockCapataz.id)
+    const ticket = await TicketService.atribuirA('00000000-0000-4000-8000-000000000999', mockCapataz.id)
 
     expect(ticket).toBeNull()
   })
 
   it('atribuirA deve atribuir ticket ao usuario', async () => {
-    const ticket = await TicketService.atribuirA(21, mockCapataz.id)
+    const ticket = await TicketService.atribuirA('00000000-0000-4000-8000-000000000401', mockCapataz.id)
 
     expect(ticket).toEqual(mockTicket)
   })
 
   it('buscarPorId deve delegar para o repository', async () => {
-    const ticket = await TicketService.buscarPorId(21)
+    const ticket = await TicketService.buscarPorId('00000000-0000-4000-8000-000000000401')
 
     expect(ticket).toEqual(mockTicket)
   })
@@ -198,10 +198,10 @@ describe('TicketService', () => {
   it('listarPendentes deve filtrar tickets pendentes', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockTicket as any,
-      { ...mockTicket, id: 22, status: 'aprovado', retiro_id: 1 } as any,
+      { ...mockTicket, id: '00000000-0000-4000-8000-000000000402', status: 'aprovado', retiro_id: '00000000-0000-4000-8000-000000000001' } as any,
     ])
 
-    const tickets = await TicketService.listarPendentes(1)
+    const tickets = await TicketService.listarPendentes('00000000-0000-4000-8000-000000000001')
 
     expect(tickets).toEqual([mockTicket])
   })
@@ -209,11 +209,11 @@ describe('TicketService', () => {
   it('contarPorPrioridade deve contar por prioridade e retiro', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockTicket as any,
-      { ...mockTicket, id: 22, prioridade: 'alta', retiro_id: 1 } as any,
-      { ...mockTicket, id: 23, prioridade: 'baixa', retiro_id: 2 } as any,
+      { ...mockTicket, id: '00000000-0000-4000-8000-000000000402', prioridade: 'alta', retiro_id: '00000000-0000-4000-8000-000000000001' } as any,
+      { ...mockTicket, id: '00000000-0000-4000-8000-000000000403', prioridade: 'baixa', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const contagem = await TicketService.contarPorPrioridade(1)
+    const contagem = await TicketService.contarPorPrioridade('00000000-0000-4000-8000-000000000001')
 
     expect(contagem).toEqual({ alta: 1, media: 1, baixa: 0 })
   })

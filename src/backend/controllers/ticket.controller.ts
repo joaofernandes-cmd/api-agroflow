@@ -2,11 +2,7 @@ import { Request, Response } from 'express'
 import { TicketService } from '../services/ticket.service'
 import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
-
-function converterNumero(valor: unknown): number | null {
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
-}
+import { converterUUID } from '../models/uuid'
 
 export const TicketController = {
   async listarTodos(req: Request, res: Response) {
@@ -20,7 +16,7 @@ export const TicketController = {
 
   async buscarPorId(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
 
       if (id === null) {
         return res.status(400).json({ error: 'ID inválido' })
@@ -41,6 +37,7 @@ export const TicketController = {
   async criar(req: Request, res: Response) {
     try {
       const {
+        id,
         retiro_id,
         categoria,
         localizacao,
@@ -54,14 +51,16 @@ export const TicketController = {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
-      const retiroId = converterNumero(retiro_id)
+      const retiroId = converterUUID(retiro_id)
+      const ticketId = id === undefined ? undefined : converterUUID(id)
 
-      if (retiroId === null) {
+      if (retiroId === null || ticketId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const ticket = await TicketService.criar(
         {
+          id: ticketId,
           retiro_id: retiroId,
           categoria,
           localizacao,
@@ -83,7 +82,7 @@ export const TicketController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.query.status ?? '')
-      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -105,7 +104,7 @@ export const TicketController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.query.prioridade ?? '')
-      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -127,7 +126,7 @@ export const TicketController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.query.categoria ?? '')
-      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -148,7 +147,7 @@ export const TicketController = {
 
   async listarPendentes(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -162,7 +161,7 @@ export const TicketController = {
 
   async contarPorPrioridade(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? converterNumero(req.query.retiroId) : undefined
+      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -176,7 +175,7 @@ export const TicketController = {
 
   async atualizarStatus(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
       const { novoStatus } = req.body
 
       if (id === null) {
@@ -203,7 +202,7 @@ export const TicketController = {
 
   async alterarPrioridade(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
       const { novaPrioridade } = req.body
 
       if (id === null) {
@@ -233,7 +232,7 @@ export const TicketController = {
 
   async atribuirA(req: Request, res: Response) {
     try {
-      const id = converterNumero(req.params.id)
+      const id = converterUUID(req.params.id)
       const { usuarioId } = req.body
 
       if (id === null) {
