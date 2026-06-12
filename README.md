@@ -16,14 +16,24 @@
 <div align="center">
   <table>
     <tr>
-      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-ana.png" width="100px" height="100px" alt="" /><br><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-andre.png" width="100px" height="100px" alt=""/><br><sub><b>André Fischer de Carvalho</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-enzo.png" width="100px" height="100px" alt=""/><br><sub><b>Enzo Braga Heins</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-fabiana.png" width="100px" height="100px" alt=""/><br><sub><b>Fabiana Dias de Souza</b></sub></a></td>
-       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-joao.png" width="100px" height="100px" alt=""/><br><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-levi.png" width="100px" height="100px" alt=""/><br><sub><b>Levi Correia Silveira</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-matheus.png" width="100px" height="100px" alt=""/><br><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-theo.png" width="100px" height="100px" alt=""/><br><sub><b>Théo Pires Morêda</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-ana.png" width="100px" height="100px" alt="" /></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-andre.png" width="100px" height="100px" alt=""/></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-enzo.png" width="100px" height="100px" alt=""/></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-fabiana.png" width="100px" height="100px" alt=""/></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-joao.png" width="100px" height="100px" alt=""/></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-levi.png" width="100px" height="100px" alt=""/></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-matheus.png" width="100px" height="100px" alt=""/></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-theo.png" width="100px" height="100px" alt=""/></a></td>
+    </tr>
+    <tr>
+      <td align="center"><a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/"><sub><b>Ana Clara da Silva Silvestre</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><sub><b>André Fischer de Carvalho</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><sub><b>Enzo Braga Heins</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><sub><b>Fabiana Dias de Souza</b></sub></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><sub><b>Levi Correia Silveira</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><sub><b>Théo Pires Morêda</b></sub></a></td>
     </tr>
   </table>
 </div>
