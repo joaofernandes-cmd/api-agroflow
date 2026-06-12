@@ -4238,13 +4238,16 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 - **Dashboard do Gerente**: Desenvolver os endpoints de relatório consolidado (`/relatorios`) que calculam indicadores por retiro considerando apenas registros validados e sincronizados (RF010, RN10).
 - **Testes automatizados**: Iniciar a cobertura de testes de integração dos endpoints com Jest e Supertest.
 
-## <a name="c4.2"></a>4.2. Segunda versão da aplicação web (sprint 4)
+## <a name="c4.2"></a>4.2. Segunda versão da aplicação web
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;A segunda versão do AgroFlow consolidou a integração entre o frontend e o backend implementado na Sprint 3, expandindo as funcionalidades disponíveis para cada perfil de usuário e estabelecendo a camada de validação e autorização do sistema. O foco desta sprint foi tornar o sistema operacional de ponta a ponta, conectando os fluxos de campo (capataz), supervisão e gerência em uma aplicação web coesa e funcional.
 
 ### (a) O que foi implementado
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, conforme ilustrado nas Figuras 57 a 61.
+&nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 57). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`), além dos arquivos de entrada `index.ejs`.
 
 <div align="center">
 <p align="center">Figura 57 - Estrutura de views do Capataz</p>
@@ -4252,11 +4255,15 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+&nbsp;&nbsp;&nbsp;&nbsp;A estilização também foi segmentada por perfil, conforme a Figura 58. Além das folhas de estilo específicas de cada papel (`capataz.css`, `gerente.css` e `supervisor.css`), o projeto mantém arquivos de uso transversal — `base.css` e `global.css` para as definições compartilhadas, `auth.css` para as telas de autenticação e `relatorios.css` para os relatórios.
+
 <div align="center">
 <p align="center">Figura 58 - Arquivos CSS por perfil de usuário</p>
 <img src="others/assets/views-css.png" alt="CSS por perfil" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, encontra-se em estágio inicial nesta sprint, contando até o momento apenas com a página inicial do perfil (`home.ejs`), conforme a Figura 59. A expansão desse fluxo está prevista para as próximas iterações.
 
 <div align="center">
 <p align="center">Figura 59 - Estrutura de views do Gerente</p>
@@ -4264,11 +4271,15 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 60. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-capataz.ejs`, `sidebar-gerente.ejs` e `sidebar-supervisor.ejs`) e elementos comuns de cabeçalho (`head.ejs` e `capataz-head.ejs`) e de relatórios (`relatorios.ejs`).
+
 <div align="center">
 <p align="center">Figura 60 - Componentes parciais compartilhados</p>
 <img src="others/assets/views-partial.png" alt="Partials" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 61. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`), além do arquivo de entrada `index.ejs`.
 
 <div align="center">
 <p align="center">Figura 61 - Estrutura de views do Supervisor</p>
@@ -4278,11 +4289,12 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ### (b) O que não foi concluído
 
-&nbsp;&nbsp;&nbsp;&nbsp;O armazenamento seguro de senhas com `bcrypt` permaneceu pendente. A cobertura de testes automatizados não atingiu os quatro cenários obrigatórios por endpoint em sua totalidade.
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente permaneceu incompleto, restrito à página inicial, sem as telas de gestão e acompanhamento previstas para o perfil. O armazenamento seguro de senhas com `bcrypt` também ficou pendente, e a cobertura de testes automatizados não atingiu os quatro cenários obrigatórios por endpoint em sua totalidade.
 
 ### (c) Dificuldades técnicas enfrentadas e próximos passos
 
-&nbsp;&nbsp;&nbsp;&nbsp;A coordenação entre branches da equipe gerou conflitos pontuais na integração dos módulos de frontend e backend. Para a Sprint 5, os próximos passos incluem a implementação do `bcrypt`, expansão da cobertura de testes e correções finais de interface.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o protótipo de alta fidelidade responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a conclusão do fluxo de gerência, a implementação do `bcrypt`, a expansão da cobertura de testes e correções finais de interface.
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
