@@ -6,6 +6,11 @@
 
 # AgroFlow
 
+<p align="center">
+  <img src="documents/others/assets/readme-divider.gif" alt="Readme GIF">
+</p>
+
+
 ## :student: Integrantes: 
 
 <div align="center">
