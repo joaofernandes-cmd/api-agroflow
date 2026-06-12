@@ -136,12 +136,36 @@
   content: '';
   position: absolute;
   top: -8px;
-  left: 0;
-  width: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
   height: 4px;
   background: var(--color-primary);
   border-radius: 2px;
 }
+
+/* ── BottomNav icons (mask-image approach for SVG coloring) ── */
+.bnav-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: #7C847C;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+.bottomnav__item--active .bnav-icon { background-color: #2F6C3D; }
+
+.bnav-icon--home      { -webkit-mask-image: url('/assets/icons/home.svg');      mask-image: url('/assets/icons/home.svg'); }
+.bnav-icon--revisao   { -webkit-mask-image: url('/assets/icons/revisao.svg');   mask-image: url('/assets/icons/revisao.svg'); }
+.bnav-icon--tickets   { -webkit-mask-image: url('/assets/icons/tickets.svg'); mask-image: url('/assets/icons/tickets.svg'); }
+.bnav-icon--delegar   { -webkit-mask-image: url('/assets/icons/delegar.svg');   mask-image: url('/assets/icons/delegar.svg'); }
+.bnav-icon--relatorios{ -webkit-mask-image: url('/assets/icons/relatorios.svg');mask-image: url('/assets/icons/relatorios.svg'); }
 
 /* ════════════════════════════════════════════════════════════
    DESKTOP — Sidebar
@@ -248,6 +272,10 @@
   transition: background 0.15s, color 0.15s;
   height: 44px;
 }
+
+.sidebar__link img { opacity: 0.55; transition: opacity 0.15s; }
+.sidebar__link:hover img,
+.sidebar__link--active img { opacity: 1; }
 
 .sidebar__link:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
 

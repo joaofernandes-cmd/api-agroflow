@@ -108,6 +108,9 @@
       <!-- Esqueci minha senha -->
       <a href="/auth/recuperar-senha" class="login__forgot">Esqueci minha senha</a>
 
+      <!-- Erro geral de login (exibido via JS) -->
+      <p id="erro-login" role="alert" style="color:#b42318;font-size:0.875rem;margin-bottom:0.25rem;display:none;"></p>
+
       <!-- Botão Entrar -->
       <button
         class="btn btn--primary btn--entrar"
@@ -162,6 +165,9 @@
 
     /* Integrar com POST /usuarios/login */
     const btn = document.getElementById('btn-entrar');
+    const erroLogin = document.getElementById('erro-login');
+    erroLogin.style.display = 'none';
+    erroLogin.textContent = '';
     btn.setAttribute('aria-busy', 'true');
     btn.textContent = 'Entrando…';
 
@@ -187,9 +193,14 @@
         throw new Error('Resposta de login incompleta');
       }
     })
-    .catch(() => {
+    .catch((err) => {
       btn.removeAttribute('aria-busy');
       btn.textContent = 'Entrar';
+      const isNetworkError = err instanceof TypeError;
+      erroLogin.textContent = isNetworkError
+        ? 'Não foi possível conectar ao servidor.'
+        : (err.message || 'Falha ao fazer login. Tente novamente.');
+      erroLogin.style.display = 'block';
     });
   }
 

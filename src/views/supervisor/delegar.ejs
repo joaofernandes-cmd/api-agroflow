@@ -12,8 +12,6 @@
      Desktop → Sidebar + TopBar + formulário (esq) + tarefas ativas (dir)
      ============================================================ -->
 
-<p id="delegar-feedback" style="margin: 0 0 16px; font-size: 14px; line-height: 1.4;"></p>
-
 <!-- ════════════════════════════════════════════════════════
      LAYOUT MOBILE
      ════════════════════════════════════════════════════════ -->
@@ -86,6 +84,7 @@
         ></textarea>
       </div>
 
+      <p class="delegar-feedback" style="margin: 0 0 8px; font-size: 14px; line-height: 1.4; display: none;"></p>
       <button type="submit" class="btn btn--primary btn--enviar">Enviar</button>
 
     </form>
@@ -173,6 +172,7 @@
             ></textarea>
           </div>
 
+          <p class="delegar-feedback" style="margin: 0 0 8px; font-size: 14px; line-height: 1.4; display: none;"></p>
           <button type="submit" class="btn btn--primary btn--enviar-desktop">Enviar tarefa</button>
 
         </form>
@@ -222,13 +222,12 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
-  const feedback = document.getElementById('delegar-feedback');
-
   function mostrarFeedback(mensagem, tipo) {
-    if (!feedback) return;
-
-    feedback.textContent = mensagem;
-    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    document.querySelectorAll('.delegar-feedback').forEach(el => {
+      el.textContent = mensagem;
+      el.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+      el.style.display = mensagem ? 'block' : 'none';
+    });
   }
 
   function getSession() {
@@ -280,8 +279,6 @@
   async function carregarCapatazes() {
     const session = getSession();
     if (!session) {
-      mostrarFeedback('Sua sessão expirou. Faça login novamente.', 'error');
-      window.location.href = '/auth/perfil';
       return;
     }
 
@@ -322,8 +319,6 @@
     const session = getSession();
 
     if (!session) {
-      mostrarFeedback('Sua sessão expirou. Faça login novamente.', 'error');
-      window.location.href = '/auth/perfil';
       return;
     }
 
