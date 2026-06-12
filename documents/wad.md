@@ -4289,7 +4289,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ### (b) O que não foi concluído
 
-&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente permaneceu incompleto, restrito à página inicial, sem as telas de gestão e acompanhamento previstas para o perfil. O armazenamento seguro de senhas com `bcrypt` também ficou pendente, e a cobertura de testes automatizados não atingiu os quatro cenários obrigatórios por endpoint em sua totalidade.
+&nbsp;&nbsp;&nbsp;&nbsp;A configuração da aplicação como PWA (Progressive Web App) ficou pendente, sendo prevista para a próxima sprint.
 
 ### (c) Dificuldades técnicas enfrentadas e próximos passos
 
