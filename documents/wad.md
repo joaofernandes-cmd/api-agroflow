@@ -4242,6 +4242,40 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;A segunda versão do AgroFlow consolidou a integração entre o frontend e o backend implementado na Sprint 3, expandindo as funcionalidades disponíveis para cada perfil de usuário e estabelecendo a camada de validação e autorização do sistema. O foco desta sprint foi tornar o sistema operacional de ponta a ponta, conectando os fluxos de campo (capataz), supervisão e gerência em uma aplicação web coesa e funcional.
 
+### (a) O que foi implementado
+
+&nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, conforme ilustrado nas Figuras 57 a 61.
+
+<div align="center">
+<p align="center">Figura 57 - Estrutura de views do Capataz</p>
+<img src="others/assets/views-capataz.png" alt="Views do Capataz" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 58 - Arquivos CSS por perfil de usuário</p>
+<img src="others/assets/views-css.png" alt="CSS por perfil" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 59 - Estrutura de views do Gerente</p>
+<img src="others/assets/views-gerente.png" alt="Views do Gerente" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 60 - Componentes parciais compartilhados</p>
+<img src="others/assets/views-partial.png" alt="Partials" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 61 - Estrutura de views do Supervisor</p>
+<img src="others/assets/views-supervisor.png" alt="Views do Supervisor" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
