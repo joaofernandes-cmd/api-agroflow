@@ -7,7 +7,7 @@
 # AgroFlow
 
 <p align="center">
-  <img src="documents/others/assets/readme-divider.gif" alt="Readme GIF">
+  <img src="documents/others/assets/separador.gif" width="200%" alt="Readme GIF">
 </p>
 
 
@@ -38,6 +38,7 @@
   </table>
 </div>
 
+  <img src="documents/others/assets/separador.gif" width="200%" alt="Readme GIF">
 
 ## :teacher: Professores:
 ### Orientador(a)
