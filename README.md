@@ -30,9 +30,9 @@
       <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><sub><b>André Fischer de Carvalho</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><sub><b>Enzo Braga Heins</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><sub><b>Fabiana Dias de Souza</b></sub></a></td>
-       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><sub><b>João Glauco Fernandes Araújo de Freitas</b></sub></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><sub><b>João Glauco Fernandes <br> Araújo de Freitas</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><sub><b>Levi Correia Silveira</b></sub></a></td>
-      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><sub><b>Matheus Augusto Corrêa Santos</b></sub></a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><sub><b>Matheus Augusto <br> Corrêa Santos</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><sub><b>Théo Pires Morêda</b></sub></a></td>
     </tr>
   </table>
