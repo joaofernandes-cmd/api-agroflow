@@ -78,6 +78,16 @@
         </div>
       </div>
 
+      <div class="rfield">
+        <label class="rfield__label" for="formato-mobile">Formato</label>
+        <div class="rfield__select-wrap">
+          <select class="rfield__select" id="formato-mobile" name="formato">
+            <option value="xlsx">Excel (.xlsx)</option>
+            <option value="csv">CSV (.csv)</option>
+          </select>
+        </div>
+      </div>
+
       <!-- Prévia skeleton -->
       <div class="rfield">
         <p class="rfield__label">Prévia do relatório</p>
@@ -94,8 +104,9 @@
 
       <!-- Botão exportar -->
       <button type="submit" class="btn btn--primary btn--exportar">
-        Exportar planilha
+        Baixar arquivo
       </button>
+      <p id="relatorio-feedback-mobile" style="margin: 8px 0 0; font-size: 14px; line-height: 1.4;"></p>
 
     </form>
   </main>
@@ -164,6 +175,16 @@
               <option value="movimentacoes">Movimentações do rebanho</option>
               <option value="tarefas">Tarefas</option>
               <option value="tickets">Tickets de infraestrutura</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tfilter">
+          <label class="tfilter__label" for="formato-desktop">Formato</label>
+          <div class="tfilter__select-wrap">
+            <select class="tfilter__select" id="formato-desktop" name="formato">
+              <option value="xlsx">Excel (.xlsx)</option>
+              <option value="csv">CSV (.csv)</option>
             </select>
           </div>
         </div>
@@ -252,12 +273,12 @@
         </div>
 
         <button class="btn btn--primary btn--exportar-desktop" type="button">
-          Exportar planilha (.xlsx)
+          Baixar arquivo
         </button>
 
         <div class="formato-card">
-          <p class="formato-card__title">Formato .xlsx</p>
-          <p class="formato-card__desc">Compatível com Excel e Google Sheets</p>
+          <p class="formato-card__title">Formatos .xlsx e .csv</p>
+          <p class="formato-card__desc">Compatível com Excel, Google Sheets e outros editores</p>
           <p class="formato-card__desc">Apenas registros validados e sincronizados.</p>
         </div>
       </aside>
@@ -285,10 +306,23 @@
   }
 
   function mostrarFeedback(mensagem, tipo) {
-    const feedback = document.getElementById('relatorio-feedback');
-    if (!feedback) return;
-    feedback.textContent = mensagem;
-    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    ['relatorio-feedback', 'relatorio-feedback-mobile'].forEach(id => {
+      const feedback = document.getElementById(id);
+      if (!feedback) return;
+      feedback.textContent = mensagem;
+      feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    });
+  }
+
+  function configurarFiltroRetiro(session) {
+    ['retiro-mobile', 'retiro-desktop'].forEach(id => {
+      const select = document.getElementById(id);
+      if (!select || !session?.usuario?.retiro_id) return;
+      select.innerHTML = `
+        <option value="">Todos</option>
+        <option value="${session.usuario.retiro_id}">Meu retiro</option>
+      `;
+    });
   }
 
   function mapearTitulo(tipo) {
@@ -405,7 +439,9 @@
 
     const endpoint = tipo === 'tarefas'
       ? '/relatorios/tarefas/dados'
-      : '/relatorios/movimentacoes/dados';
+      : tipo === 'tickets'
+        ? '/relatorios/tickets/dados'
+        : '/relatorios/movimentacoes/dados';
 
     const url = new URL(endpoint, window.location.origin);
     if (retiroId) url.searchParams.set('retiroId', retiroId);
@@ -428,12 +464,66 @@
     }
   }
 
+  async function exportarRelatorio(contexto) {
+    const session = getSession();
+    if (!session) {
+      mostrarFeedback('Faça login para exportar os relatórios.', 'error');
+      return;
+    }
+
+    const sufixo = contexto === 'mobile' ? 'mobile' : 'desktop';
+    const tipo = document.getElementById(`tipo-${sufixo}`)?.value || 'movimentacoes';
+    const formato = document.getElementById(`formato-${sufixo}`)?.value || 'xlsx';
+    const retiroId = document.getElementById(`retiro-${sufixo}`)?.value || '';
+    const url = new URL('/relatorios/exportar', window.location.origin);
+
+    url.searchParams.set('tipo', tipo);
+    url.searchParams.set('formato', formato);
+    if (retiroId) url.searchParams.set('retiroId', retiroId);
+
+    mostrarFeedback('Gerando arquivo...', 'success');
+
+    try {
+      const response = await fetch(url.toString(), {
+        headers: { Authorization: `Bearer ${session.token}` },
+      });
+
+      if (!response.ok) {
+        const erro = await response.json().catch(() => ({}));
+        throw new Error(erro.error || 'Não foi possível exportar o relatório');
+      }
+
+      const blob = await response.blob();
+      const disposicao = response.headers.get('Content-Disposition') || '';
+      const nome = disposicao.match(/filename="([^"]+)"/)?.[1]
+        || `relatorio-${tipo}.${formato}`;
+      const link = document.createElement('a');
+      const objetoUrl = URL.createObjectURL(blob);
+
+      link.href = objetoUrl;
+      link.download = nome;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(objetoUrl);
+
+      mostrarFeedback(`Arquivo ${nome} gerado com sucesso.`, 'success');
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao exportar relatório', 'error');
+    }
+  }
+
   const formRelatorio = document.getElementById('form-relatorio');
   if (formRelatorio) {
     formRelatorio.addEventListener('submit', event => {
       event.preventDefault();
-      carregarRelatorio();
+      exportarRelatorio('mobile');
     });
+  }
+
+  const botaoExportarDesktop = document.querySelector('.btn--exportar-desktop');
+  if (botaoExportarDesktop) {
+    botaoExportarDesktop.addEventListener('click', () => exportarRelatorio('desktop'));
   }
 
   ['tipo-desktop', 'retiro-desktop'].forEach(id => {
@@ -443,6 +533,8 @@
     }
   });
 
+  const session = getSession();
+  configurarFiltroRetiro(session);
   carregarRelatorio();
 </script>
 
