@@ -1,8 +1,19 @@
 <%- include('../partials/capataz-head', { titulo: 'Alow · Abrir Chamado' }) %>
 
 <%
-  var CATEGORIAS = ['Cerca','Água','Equipamento','Veículo','Energia','Estoque','Outro'];
-  var PRIORIDADES = ['Crítica','Alta','Média','Baixa'];
+  var CATEGORIAS = [
+    { value: 'cerca', label: 'Cerca' },
+    { value: 'hidraulica', label: 'Água / Hidráulica' },
+    { value: 'eletrica', label: 'Elétrica' },
+    { value: 'edificacao', label: 'Edificação' },
+    { value: 'abastecimento_agua', label: 'Abastecimento de água' },
+    { value: 'outro', label: 'Outro' }
+  ];
+  var PRIORIDADES = [
+    { value: 'alta', label: 'Alta' },
+    { value: 'media', label: 'Média' },
+    { value: 'baixa', label: 'Baixa' }
+  ];
 %>
 
 <main class="celular">
@@ -18,56 +29,131 @@
     </div>
   </header>
 
+  <p id="ticket-feedback" style="margin: 12px 16px 0; font-size: 14px; line-height: 1.4;"></p>
+
   <div class="conteudo">
     <div class="campo">
-      <label class="campo__rotulo">Categoria do problema</label>
-      <select class="select" required>
-        <option value="" disabled selected>Cerca / Água / Equipamento...</option>
-        <% CATEGORIAS.forEach(function (c) { %><option><%= c %></option><% }) %>
+      <label class="campo__rotulo" for="categoriaTicket">Categoria do problema</label>
+      <select class="select" id="categoriaTicket" required>
+        <option value="" disabled selected>Selecione a categoria</option>
+        <% CATEGORIAS.forEach(function (c) { %><option value="<%= c.value %>"><%= c.label %></option><% }) %>
       </select>
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Prioridade</label>
-      <select class="select" required>
-        <option value="" disabled selected>Alta / Média / Baixa / Crítica</option>
-        <% PRIORIDADES.forEach(function (p) { %><option><%= p %></option><% }) %>
+      <label class="campo__rotulo" for="prioridadeTicket">Prioridade</label>
+      <select class="select" id="prioridadeTicket" required>
+        <option value="" disabled selected>Selecione a prioridade</option>
+        <% PRIORIDADES.forEach(function (p) { %><option value="<%= p.value %>"><%= p.label %></option><% }) %>
       </select>
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Descrição (mínimo 10 caracteres) <span class="obrigatorio">*</span></label>
-      <textarea class="input" rows="3" placeholder="Descreva o problema encontrado..."></textarea>
+      <label class="campo__rotulo" for="localizacaoTicket">Localização</label>
+      <input class="input" type="text" id="localizacaoTicket" placeholder="Ex: Curral principal" />
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Evidência (obrigatório)</label>
-      <div class="evidencia">
-        <button type="button" class="evidencia__btn evidencia__btn--foto">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-          Foto
-        </button>
-        <button type="button" class="evidencia__btn evidencia__btn--audio">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-          Áudio
-        </button>
-        <button type="button" class="evidencia__btn evidencia__btn--texto">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-          Texto
-        </button>
+      <label class="campo__rotulo" for="descricaoTicket">Descrição</label>
+      <textarea class="input" rows="3" id="descricaoTicket" placeholder="Descreva o problema encontrado..."></textarea>
+    </div>
+
+    <div class="campo">
+      <label class="campo__rotulo" for="evidenciaTicket">Evidência descritiva</label>
+      <textarea class="input" rows="3" id="evidenciaTicket" placeholder="Explique a evidência com pelo menos 10 caracteres"></textarea>
+    </div>
+
+    <div class="campo">
+      <label class="campo__rotulo">Observação</label>
+      <div class="aviso-local">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        O ticket será registrado como aberto pelo capataz de demonstração
       </div>
     </div>
 
-    <div class="aviso-local">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Localização será registrada automaticamente
-    </div>
-
-    <button type="button" class="btn-primario">Enviar chamado</button>
+    <button type="button" class="btn-primario" id="btnEnviarTicket">Enviar chamado</button>
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tickets' }) %>
 </main>
+
+<script>
+  const CAPATAZ_DEMO = {
+    id: '11111111-1111-1111-1111-111111111111',
+    nome: 'Capataz Daniel',
+    cargo: 'capataz',
+    retiro_id: 1,
+  };
+
+  const feedback = document.getElementById('ticket-feedback');
+  const botao = document.getElementById('btnEnviarTicket');
+
+  function mostrarFeedback(mensagem, tipo) {
+    if (!feedback) return;
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+  }
+
+  function montarPayload() {
+    const categoria = document.getElementById('categoriaTicket').value;
+    const prioridade = document.getElementById('prioridadeTicket').value;
+    const localizacao = document.getElementById('localizacaoTicket').value.trim();
+    const descricao = document.getElementById('descricaoTicket').value.trim();
+    const evidencia = document.getElementById('evidenciaTicket').value.trim();
+
+    if (!categoria || !prioridade || !localizacao || !descricao) {
+      throw new Error('Preencha categoria, prioridade, localização e descrição.');
+    }
+
+    return {
+      retiro_id: CAPATAZ_DEMO.retiro_id,
+      categoria,
+      localizacao,
+      descricao,
+      prioridade,
+      usuarioAbridorTicket: CAPATAZ_DEMO,
+      temEvidenciaDescritiva: evidencia.length >= 10 || descricao.length >= 10,
+    };
+  }
+
+  async function enviarTicket() {
+    try {
+      botao.disabled = true;
+      botao.textContent = 'Enviando...';
+
+      const payload = montarPayload();
+      const response = await fetch('/tickets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || 'Não foi possível criar o chamado');
+      }
+
+      mostrarFeedback('Chamado criado com sucesso.', 'success');
+      document.querySelectorAll('.select, .input').forEach(el => {
+        if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          el.value = '';
+        } else {
+          el.selectedIndex = 0;
+        }
+      });
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao criar chamado', 'error');
+    } finally {
+      botao.disabled = false;
+      botao.textContent = 'Enviar chamado';
+    }
+  }
+
+  botao.addEventListener('click', enviarTicket);
+</script>
 
 </body>
 </html>
