@@ -2748,7 +2748,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 <div align="center">
 <p align="center">Figura 47 – Modelo Relacional</p>
-<img src="others/assets/diagrama-relacional.jpg" alt="Modelo Relacional">
+<img src="others/assets/diagrama-relacional.png" alt="Modelo Relacional">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -2941,7 +2941,7 @@ CREATE TABLE relatorio (
     url_arquivo TEXT NOT NULL
 );
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Para todas as entidades, optou-se pelo tipo UUID nas chaves primárias e estrangeiras. Essa decisão permite que a PWA gere identificadores únicos localmente durante o uso offline e preserve os mesmos valores ao sincronizar com o servidor, sem depender de uma sequência central do banco de dados.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Optou-se pelo tipo UUID como chave primária em todas as entidades, gerado por meio da função `gen_random_uuid()`. Essa escolha atende diretamente ao caráter offline-first do sistema previsto na RN03: como os capatazes registram movimentações, tarefas e tickets em campo sem conexão e sincronizam posteriormente com o servidor, os identificadores precisam ser gerados de forma independente no próprio dispositivo, sem depender de uma sequência centralizada no banco. O UUID permite que a PWA gere identificadores únicos localmente e preserve-os ao sincronizar com o servidor, eliminando o risco de colisão de chaves durante a sincronização de registros criados offline por diferentes dispositivos — algo que identificadores numéricos sequenciais não garantiriam. Além disso, a adoção de UUIDs também contribui para a segurança, evitando a exposição de identificadores previsíveis dos usuários.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado foi definido como BOOLEAN com valor padrão false nas tabelas operacionais que passam pelo fluxo offline, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se true apenas após a sincronização com o servidor, em conformidade com a RN03. Os campos latitude e longitude foram concentrados na tabela evidencia_foto, pois o georreferenciamento é exigido apenas para evidências do tipo foto. Os campos de data utilizam DATE ou TIMESTAMP conforme a necessidade de registrar apenas o dia ou o momento completo da operação.
 
@@ -3315,7 +3315,7 @@ VALUES (?, ?, ?, ?);
 
    - **Endereço:** `/movimentacoes/:id`
    - **Método:** GET
-   - **Descrição:** Retorna uma movimentação específica pelo seu identificador numérico.
+   - **Descrição:** Retorna uma movimentação específica pelo seu identificador (UUID).
    - **Headers:** Nenhum header específico necessário.
    - **Body:** Nenhum.
    - **Respostas:**
@@ -3358,10 +3358,10 @@ VALUES (?, ?, ?, ?);
    - **Método:** POST
    - **Descrição:** Cria uma nova tarefa e a atribui a um usuário. Todos os campos obrigatórios devem estar presentes simultaneamente, conforme RN02.
    - **Headers:** `Content-Type: application/json`
-   - **Body:** Campos: `usuario_id` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `categoria` (string, obrigatório), `status` (string).
+   - **Body:** Campos enviados pelo cliente: `retiro_id` (string UUID, obrigatório), `atribuida_a` (string UUID do capataz responsável pela execução, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `categoria` (string, obrigatório) e `usuarioCriador` (objeto do usuário que cria a tarefa, obrigatório — deve ter `cargo` igual a `supervisor`, conforme RN02). Opcionalmente aceita `id` (string UUID) gerado localmente em modo offline. Os campos `criada_por`, `status` (iniciado como `pendente`) e `data_criacao` são preenchidos automaticamente pelo servidor e não devem ser enviados.
    - **Respostas:**
      - `201 Created`: Tarefa criada. Retorna o objeto criado.
-     - `400 Bad Request`: Campo obrigatório ausente.
+     - `400 Bad Request`: Campo obrigatório ausente, `retiro_id` inválido ou `usuarioCriador` sem perfil `supervisor`.
      - `500 Internal Server Error`: Falha interna.
 
 8. Listar Todas as Tarefas
@@ -3379,7 +3379,7 @@ VALUES (?, ?, ?, ?);
 
    - **Endereço:** `/tarefas/:id`
    - **Método:** GET
-   - **Descrição:** Retorna uma tarefa específica pelo seu identificador numérico.
+   - **Descrição:** Retorna uma tarefa específica pelo seu identificador (UUID).
    - **Headers:** Nenhum header específico necessário.
    - **Body:** Nenhum.
    - **Respostas:**
@@ -3416,7 +3416,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/tarefas/:id`
     - **Método:** DELETE
-    - **Descrição:** Remove uma tarefa pelo identificador numérico.
+    - **Descrição:** Remove uma tarefa pelo identificador (UUID).
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Respostas:**
@@ -3549,7 +3549,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/evidencias/:id`
     - **Método:** GET
-    - **Descrição:** Retorna uma evidência específica pelo seu identificador numérico.
+    - **Descrição:** Retorna uma evidência específica pelo seu identificador (UUID).
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Respostas:**
@@ -3755,10 +3755,10 @@ VALUES (?, ?, ?, ?);
     - **Método:** POST
     - **Descrição:** Cria um chamado de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo `prioridade` obrigatoriamente informado, conforme RN08 e RN11.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `retiro_id` (string UUID, obrigatório), `categoria` (string, obrigatório), `localizacao` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `temEvidenciaDescritiva` (boolean, obrigatório).
+    - **Body:** Campos enviados pelo cliente: `retiro_id` (string UUID, obrigatório), `categoria` (string, obrigatório), `localizacao` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `usuarioAbridorTicket` (objeto do usuário que abre o chamado, obrigatório — deve ter `cargo` igual a `capataz`, conforme RN08) e `temEvidenciaDescritiva` (boolean, obrigatório). Opcionalmente aceita `id` (string UUID) gerado localmente em modo offline. Os campos `status` (iniciado como `pendente`), `aberto_por`, `atribuido_a`, `data_criacao` e `data_realizado` são preenchidos automaticamente pelo servidor.
     - **Respostas:**
       - `201 Created`: Ticket aberto.
-      - `400 Bad Request`: Evidência descritiva ausente ou prioridade não informada.
+      - `400 Bad Request`: Campo obrigatório ausente, evidência descritiva ausente, prioridade não informada ou `usuarioAbridorTicket` sem perfil `capataz`.
       - `500 Internal Server Error`: Falha interna.
 
 48. Listar Todos os Tickets
@@ -3804,7 +3804,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/tickets/:id`
     - **Método:** GET
-    - **Descrição:** Retorna um ticket específico pelo seu identificador numérico.
+    - **Descrição:** Retorna um ticket específico pelo seu identificador (UUID).
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Respostas:**

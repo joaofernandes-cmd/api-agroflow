@@ -6,6 +6,7 @@ jest.mock('../../services/sincronizacao.service', () => ({
   SincronizacaoService: {
     buscarMovimentacoesParaRelatrio: jest.fn(),
     buscarTarefasParaRelatrio: jest.fn(),
+    buscarTicketsParaDashboard: jest.fn(),
   },
 }))
 
@@ -71,6 +72,24 @@ describe('RelatorioService', () => {
         'Causa do Óbito': '-',
       }),
     ])
+  })
+
+  it('gerarCsv deve criar arquivo com cabecalho e proteger formulas', () => {
+    const csv = RelatorioService.gerarCsv([
+      { Nome: '=SOMA(1;1)', Quantidade: 2 },
+    ]).toString('utf8')
+
+    expect(csv).toContain('"Nome";"Quantidade"')
+    expect(csv).toContain('"\'=SOMA(1;1)";"2"')
+  })
+
+  it('gerarXlsx deve criar uma planilha valida', async () => {
+    const arquivo = await RelatorioService.gerarXlsx([
+      { Data: '12/06/2026', Quantidade: 2 },
+    ], 'movimentacoes')
+
+    expect(arquivo.subarray(0, 2).toString()).toBe('PK')
+    expect(arquivo.length).toBeGreaterThan(1000)
   })
 
   it('gerarRelatorioSemanal deve usar janela de 7 dias', async () => {
