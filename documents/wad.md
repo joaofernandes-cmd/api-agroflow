@@ -430,7 +430,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, foram desenvolvidas três personas, como demonstra as figuras 5, 6 e 7, com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec (capataz, supervisor e gerente), possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, foram desenvolvidas três personas, como demonstram as figuras 5, 6 e 7, com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. As informações de Daniel, Luiz e Marcos são sintetizadas, respectivamente, nos Quadros 3, 4 e 5. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec (capataz, supervisor e gerente), possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
 
 ### Persona 1 - Daniel Carvalho
 
@@ -823,6 +823,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 18 apresenta os requisitos funcionais definidos para o sistema, com suas respectivas descrições, prioridades e situações de implementação.
+
 <p align="center">Quadro 18 - Requisitos Funcionais</p>
 
 | ID    | Descrição | Prioridade | Status       |
@@ -844,7 +846,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;As Regras de Negócio (RN) estabelecem as condições, restrições e validações que governam o comportamento do sistema, traduzindo políticas operacionais da BrPec Agropecuária em critérios implementáveis e testáveis. Cada regra está vinculada explicitamente a um ou mais Requisitos Funcionais (RF), garantindo rastreabilidade completa entre necessidades de negócio e especificações técnicas. A redação das RNs foi estruturada para permitir conversão direta em testes automatizados utilizando verbos de ação precisos e condições verificáveis.
+&nbsp;&nbsp;&nbsp;&nbsp;As Regras de Negócio (RN) estabelecem as condições, restrições e validações que governam o comportamento do sistema, traduzindo políticas operacionais da BrPec Agropecuária em critérios implementáveis e testáveis. Cada regra está vinculada explicitamente a um ou mais Requisitos Funcionais (RF), garantindo rastreabilidade completa entre necessidades de negócio e especificações técnicas. A redação das RNs foi estruturada para permitir conversão direta em testes automatizados utilizando verbos de ação precisos e condições verificáveis. O Quadro 19 consolida essas regras e seus respectivos vínculos e critérios de aceite.
 
 <p align="center">Quadro 19 - Regras de Negócios</p>
 
@@ -871,7 +873,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Não Funcionais (RNF) estabelecem os critérios de qualidade que o sistema deve atender, traduzindo características operacionais, técnicas e organizacionais da BrPec Agropecuária em especificações mensuráveis e testáveis. Cada RNF foi estruturado segundo a norma ISO/IEC 25010 (ISO/IEC 25010, 2023), abrangendo oito eixos de qualidade de software, e derivado diretamente do contexto operacional do parceiro: os 14 retiros distribuídos no Pantanal e Cerrado, a conectividade instável via Starlink, o perfil dos usuários (capatazes com ensino fundamental incompleto), a criticidade da rastreabilidade de dados do rebanho e as restrições de suporte técnico remoto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A derivação de cada RNF partiu da análise dos Requisitos Funcionais (RF), das Regras de Negócio (RN), das restrições organizacionais identificadas nas entrevistas com o parceiro e das limitações de infraestrutura dos retiros.Os critérios de aceite foram definidos com métricas objetivas, limites quantitativos e protocolos de teste específicos, permitindo validação em sessões controladas com usuários reais, testes de carga automatizados e auditorias de segurança. Essa estrutura garante rastreabilidade completa entre o contexto do parceiro, os requisitos funcionais e os atributos de qualidade esperados, estabelecendo uma base sólida para validação técnica e aceite do produto final.
+&nbsp;&nbsp;&nbsp;&nbsp;A derivação de cada RNF partiu da análise dos Requisitos Funcionais (RF), das Regras de Negócio (RN), das restrições organizacionais identificadas nas entrevistas com o parceiro e das limitações de infraestrutura dos retiros. Os critérios de aceite foram definidos com métricas objetivas, limites quantitativos e protocolos de teste específicos, permitindo validação em sessões controladas com usuários reais, testes de carga automatizados e auditorias de segurança. Essa estrutura garante rastreabilidade completa entre o contexto do parceiro, os requisitos funcionais e os atributos de qualidade esperados, estabelecendo uma base sólida para validação técnica e aceite do produto final. Os oito eixos de qualidade são detalhados nos Quadros 20 a 27.
 
 
 
@@ -889,6 +891,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **RF/RN Associados** | RF001, RF005, RN05 |
 | **Como será atendido** | Interface com ícones grandes, botões visuais autoexplicativos, textos curtos em linguagem simples (nível fundamental), fluxos de no máximo 3 etapas e feedback visual imediato. Design validado com usuários reais em sessões iterativas. |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 ---
 
 
@@ -905,6 +909,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **RF/RN Associados** | RF003, RF004, RN03, RN07 |
 | **Como será atendido** | Armazenamento local persistente com IndexedDB, fila de sincronização com retry automático exponencial, confirmação de envio com ACK do servidor, versionamento de registros com timestamp, logs locais de auditoria e tela de status de sincronização visível ao usuário. |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 ---
 
 <p align="center">Quadro 22 - Requisitos Não Funcionais — DES — Desempenho</p>
@@ -919,6 +925,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
 | **Como será atendido** | Assets leves otimizados (imagens WebP, minificação de JS/CSS), lazy loading de componentes, dados carregados do IndexedDB local no modo offline (sem requisições de rede), cache de recursos estáticos via Service Worker, compressão gzip/brotli no servidor. |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ---
 
@@ -936,6 +944,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **RF/RN Associados** | Restrição organizacional (ausência de suporte local), RF003 |
 | **Como será atendido** | Arquitetura web centralizada (frontend SPA + backend REST), deploy via CI/CD automatizado (GitHub Actions), atualizações via cache bust automático do Service Worker, logs centralizados com ELK Stack ou similar, monitoramento proativo com alertas (Sentry/New Relic), acesso SSH restrito via VPN para emergências. |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 ---
 
 
@@ -952,6 +962,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **RF/RN Associados** | RF006, RN06, Restrição organizacional (isolamento por retiro) |
 | **Como será atendido** | RBAC implementado no backend por meio de middleware de autenticação JWT e autorização por cargo. O token inclui identificador do usuário, login, cargo e `retiro_id`, permitindo que as rotas protegidas validem a sessão e restrinjam ações sensíveis, como validações e relatórios. A senha é armazenada no campo `senha_hash`; no estado atual do backend, a comparação ainda é direta e a substituição por bcrypt permanece como melhoria técnica futura antes de produção. |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 ---
 
 <p align="center">Quadro 25 - Requisitos Não Funcionais — CAP — Capacidade</p>
@@ -966,6 +978,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Derivação do Contexto do Parceiro** | Derivado do levantamento de usuários ativos da BrPec (20–25 usuários distribuídos nos 14 retiros) e da necessidade de suportar picos de acesso em horários de maior atividade no campo (início da manhã e final da tarde). O RF007 (geração de relatórios) exige processamento de volume significativo de dados sincronizados. A restrição de infraestrutura centralizada exige dimensionamento adequado do servidor. |
 | **RF/RN Associados** | RF001, RF002, RF007, Restrição organizacional (infraestrutura centralizada) |
 | **Como será atendido** | Infraestrutura escalável em nuvem (AWS EC2 ou equivalente com auto-scaling), banco de dados PostgreSQL/Supabase otimizado com índices nas colunas críticas (`retiro_id`, `data_criacao`, `sincronizado`), particionamento lógico de dados por retiro, cache de queries frequentes com Redis, rate limiting no backend (throttling por IP/usuário), balanceamento de carga se necessário. |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ---
 
@@ -982,6 +996,8 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
 | **Como será atendido** | Design system implementado com tokens CSS (CSS Custom Properties) para cores, tipografia e espaçamentos, baseados no manual de identidade visual da BrPec. SPA responsiva com media queries para celulares (breakpoints 768px, 1024px). Validação contínua de UI com stakeholder em sprint reviews. Documentação de componentes via Storybook. |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ---
 
@@ -1084,7 +1100,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, adotam-se os princípios do Use-Case 3.0, conforme proposto por Jacobson, Spence e De Mendonca (2024), caracterizado como uma abordagem escalável e ágil voltada à captura de requisitos e ao apoio ao desenvolvimento incremental. Os casos de uso documentados são apresentados nos Quadros 29 a 38.
 
 <div align="center"><p align="center">Figura 9 - Diagrama de Casos de Uso</p>
 <p align="center">
@@ -2975,7 +2991,7 @@ WHERE retiro_id = ?
  
 &nbsp;&nbsp;&nbsp;&nbsp;A consulta combina conjunção, disjunção e o operador SQL `IN`. A movimentação só passa pelo filtro se pertencer ao retiro informado e, ao mesmo tempo, satisfizer os filtros opcionais de tipo e status. Quando uma lista não é enviada, a proposição correspondente à ausência do filtro torna a disjunção verdadeira.
  
-**Tabela verdade:**
+**Tabela verdade:** O Quadro 42 apresenta as combinações lógicas da Consulta 1.
  
 <p align="center">Quadro 42 - Tabela verdade da Consulta 1 (SELECT).</p>
 
@@ -3048,7 +3064,7 @@ WHERE retiro_id = ?
 
 &nbsp;&nbsp;&nbsp;&nbsp;A consulta utiliza conjunções para exigir que todas as regras sejam atendidas. O operador `IN` representa a aceitação de mais de uma prioridade em uma mesma condição, mantendo a busca alinhada aos filtros de status, prioridade e retiro presentes no backend.
 
-**Tabela verdade:**
+**Tabela verdade:** O Quadro 43 apresenta as combinações lógicas da Consulta 2.
 
 <p align="center">Quadro 43 - Tabela verdade da Consulta 2 (SELECT).</p>
 
@@ -3096,7 +3112,7 @@ WHERE id = ?
  
 &nbsp;&nbsp;&nbsp;&nbsp;A consulta utiliza conjunção e negação. A atualização só deve ocorrer quando o ticket corresponde ao identificador informado, ainda está pendente e não possui aprovador registrado. A condição `NOT aprovado_por IS NOT NULL` reforça que um ticket já aprovado não deve ser aprovado novamente.
  
-**Tabela verdade:**
+**Tabela verdade:** O Quadro 44 apresenta as combinações lógicas da Consulta 3.
  
 <p align="center">Quadro 44 - Tabela verdade da Consulta 3 (UPDATE).</p>
 
@@ -3153,7 +3169,7 @@ VALUES (?, ?, ?, ?);
  
 &nbsp;&nbsp;&nbsp;&nbsp;Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, essa regra é aplicada antes da inserção dos dados específicos na tabela `movimentacao_morte`.
  
-**Tabela verdade:**
+**Tabela verdade:** O Quadro 45 apresenta as combinações lógicas da validação de morte.
  
 <p align="center">Quadro 45 - Tabela verdade da validação de morte.</p>
 
@@ -3187,7 +3203,7 @@ VALUES (?, ?, ?, ?);
  
 &nbsp;&nbsp;&nbsp;&nbsp;Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D \land Q)$, lida como "se o tipo for transferência, então origem, destino e quantidade devem estar preenchidos".
  
-**Tabela verdade:**
+**Tabela verdade:** O Quadro 46 apresenta as combinações lógicas da validação de transferência.
  
 <p align="center">Quadro 46 - Tabela verdade da validação de transferência.</p>
 
@@ -4027,7 +4043,9 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada a seguir relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada no Quadro 48 relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
+
+<p align="center">Quadro 48 - Matriz de Rastreabilidade (RTM)</p>
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 |---------|----|----|----------|------|-------|-----------|
@@ -4043,6 +4061,8 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 | Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`; `GET /movimentacoes/contagem/tipo`; `GET /tarefas/dashboard`; `GET /tarefas/contagem/status`; `GET /sincronizacao/dashboard/tickets`; `GET /tickets/contagem/prioridade` | Dashboard gerencial | CT-RF010 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: endpoints de dashboard de movimentações, tarefas e tickets retornando HTTP 200; endpoints de contagem por tipo, status e prioridade retornando HTTP 200 com os agrupamentos correspondentes |
 | Capataz Daniel / Supervisor Luiz | RF011 | RN11 | `GET /tickets/prioridade`; `GET /tickets/contagem/prioridade`; `PATCH /tickets/{id}/prioridade` | Prioridade de tickets | CT-RF011 (`ticket.spec.ts`) | Testes automatizados executados: `GET /tickets/prioridade` retornando HTTP 200 com a lista filtrada; `GET /tickets/contagem/prioridade` retornando HTTP 200 com a contagem agrupada; `PATCH /tickets/{id}/prioridade` retornando HTTP 200 com o ticket atualizado |
 | Gerente Marcos | RF012 | RN12 | `POST /usuarios`; `GET /usuarios`; `GET /usuarios/{id}`; `GET /usuarios/retiro/{retiroId}`; `PATCH /usuarios/{id}`; `DELETE /usuarios/{id}` | Gestão de usuários | CT-RF012 (`usuario.spec.ts`) | Saída da execução de `npm test -- --runInBand src/backend/tests/integration/usuario.spec.ts`: 1 suíte e 10 testes aprovados; `POST /usuarios` retornando HTTP 201; `GET /usuarios` retornando HTTP 200 sem exposição do campo `senha_hash`; consultas por ID e retiro e atualização retornando HTTP 200; `DELETE /usuarios/{id}` retornando HTTP 204; cenário da RN12 verificando que usuário sem perfil Gerente recebe HTTP 403 com a mensagem `Acesso negado: cargo insuficiente` |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
 
@@ -4140,6 +4160,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ### Tecnologias Utilizadas
 
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 49 resume as tecnologias utilizadas em cada camada da aplicação.
+
+<p align="center">Quadro 49 - Tecnologias utilizadas na aplicação</p>
+
 | Camada | Tecnologia |
 |--------|-----------|
 | Runtime | Node.js 22 |
@@ -4150,6 +4174,8 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 | Conexão com banco | postgres (driver nativo) |
 | Variáveis de ambiente | dotenv |
 | Identificadores únicos | uuid / pgcrypto (UUID v4) |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ### Principais Entregas da Sprint 3
 
@@ -4227,7 +4253,9 @@ Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma
 - **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
 - **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
 
-Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, estrutura adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 50 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+
+<p align="center">Quadro 50 - Estrutura AAA adotada nos testes</p>
 
 | Fase | Responsável | Descrição |
 |---|---|---|
@@ -4235,9 +4263,13 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, estrutura adota
 | **Act** | Chamada ao service ou requisição HTTP | Execução da ação sob teste — invocação direta do método do service (white-box) ou envio de requisição HTTP via Supertest ao endpoint correspondente (black-box). |
 | **Assert** | Verificação do resultado esperado | Confirmação do comportamento — validação do retorno, status HTTP, estrutura do corpo da resposta ou lançamento de exceção, conforme o cenário documentado em cada tabela de cobertura. |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 #### Endpoints Mapeados
 
-Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação:
+Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 51:
+
+<p align="center">Quadro 51 - Endpoints mapeados pelos testes</p>
 
 | Domínio | Endpoint |
 |---|---|
@@ -4250,6 +4282,8 @@ Os testes foram organizados por domínio funcional, considerando os principais e
 | Validações | `/validacoes` |
 | Relatórios | `/relatorios` |
 | Saúde da API | `/health` |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 Também foram considerados subendpoints específicos:
 
@@ -4317,6 +4351,10 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 
 ### Tabela Complementar de Testes White-Box
 
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 52 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e service exercitado.
+
+<p align="center">Quadro 52 - Testes complementares White-Box</p>
+
 | CT | RN | RF | Service(s) | Arquivo(s) | Cenário validado | Resultado esperado |
 |---|---|---|---|---|---|---|
 | CT01 | RN01 | RF001 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Regras obrigatórias por tipo de movimentação, criação e sincronização recebida | Erro de validação para campos ausentes e aceite do payload válido |
@@ -4331,6 +4369,8 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 | CT10 | RN10 | RF010 | MovimentacaoService, TarefaService, TicketService, SincronizacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts`; `src/backend/tests/unit/tarefa.service.spec.ts`; `src/backend/tests/unit/ticket.service.spec.ts`; `src/backend/tests/unit/sincronizacao.service.spec.ts` | Consolidação de indicadores por retiro | Contagens do dashboard retornam apenas registros sincronizados e validados/aprovados |
 | CT11 | RN11 | RF011 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Prioridade obrigatória e alteração posterior | Prioridade inválida rejeitada e prioridade válida atualizada com sucesso |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Os casos prioritários `CT01` a `CT05` são os mais críticos para o sistema, pois cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
 
 ### 5.1.3 Black Box
@@ -4341,6 +4381,10 @@ Os testes foram implementados com Jest e Supertest, permitindo simular requisiç
 Em relação ao critério desejado para esta seção, a cobertura ainda é **parcial**: os testes atuais não demonstram, para cada endpoint principal, os quatro cenários obrigatórios de forma explícita e completa (`200/201`, `400/422`, `409 ou equivalente` e `404`). Dessa forma, esta seção documenta a cobertura existente e também evidencia as lacunas que devem ser complementadas para atingir integralmente o padrão solicitado.
 
 ### Tabela Complementar de Testes Black-Box
+
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 53 apresenta os testes black-box organizados por módulo, arquivo, cenário, endpoints e resultado esperado.
+
+<p align="center">Quadro 53 - Testes complementares Black-Box</p>
 
 | Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
 |---|---|---|---|---|
@@ -4370,7 +4414,13 @@ Em relação ao critério desejado para esta seção, a cobertura ainda é **par
 | Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
 | Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
 ### Matriz de conformidade por cenário
+
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 sintetiza a cobertura atual dos cenários de sucesso, validação, regra de negócio e recurso não encontrado.
+
+<p align="center">Quadro 54 - Matriz de conformidade dos testes por cenário</p>
 
 | Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
 |---|---|---|---|---|---|
@@ -4383,6 +4433,8 @@ Em relação ao critério desejado para esta seção, a cobertura ainda é **par
 | Validações | Coberto | Não coberto explicitamente | Parcial, com bloqueio de autorização por perfil | Não coberto explicitamente | Parcial |
 | Relatórios | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
 | Health Check | Coberto | Não aplicável | Não aplicável | Não aplicável | Adequado ao propósito |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ### 5.1.4 Relatório de cobertura Jest
 Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
@@ -4476,8 +4528,10 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
  
 #### Mapeamento de Rastreabilidade
  
-A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto:
- 
+A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 55:
+
+<p align="center">Quadro 55 - Mapeamento de rastreabilidade dos testes</p>
+
 | Caso de Teste | Regra de Negócio | Requisito Funcional |
 |---|---|---|
 | CT01 | RN01 | RF001 |
@@ -4491,6 +4545,8 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 | CT09 | RN09 | RF009 |
 | CT10 | RN10 | RF010 |
 | CT11 | RN11 | RF011 |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
 
 ## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
 
