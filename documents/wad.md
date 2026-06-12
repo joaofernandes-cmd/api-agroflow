@@ -4640,16 +4640,33 @@ Preencha os nove blocos do Business Model Canvas de forma coerente com as análi
 ## <a name="c6.6"></a>6.6 Estratégia de Marketing
 
 **6.6.1) **Produto/Serviço**
-*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+
+&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow é uma aplicação web de gestão operacional de campo para pecuária bovina de larga escala, disponibilizada em interfaces adaptadas a três perfis de usuário: capataz, supervisor e gerente. Suas funcionalidades centrais cobrem o ciclo completo da informação operacional da fazenda: registro de movimentações do rebanho (nascimentos, mortes com causa de óbito, compras, vendas e transferências), gestão e atribuição de tarefas, abertura de chamados de infraestrutura, anexação de evidências (fotos georreferenciadas com coordenadas GPS, áudios e mensagens) e geração de relatórios exportáveis em formatos compatíveis com os processos já adotados pelo parceiro.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios entregues são diretos: eliminação das boletas de papel e do retrabalho de redigitação, rastreabilidade completa com responsabilização por autor e timestamp, continuidade operacional mesmo sem conexão e adequação às exigências regulatórias crescentes (PNIB, EUDR e agendas ESG). Para a gestão, o dashboard centralizado por retiro consolida indicadores calculados exclusivamente a partir de registros validados, sustentando decisões baseadas em dados confiáveis.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os diferenciais que sustentam o posicionamento são três, raramente integrados em uma única solução: arquitetura offline-first com sincronização automática; interface para baixo letramento digital, com fluxos de no máximo três etapas e linguagem em nível fundamental, que dispensa treinamento; e fluxo de validação hierárquico (capataz registra, supervisor valida, gerente consolida) integrado à coleta de evidências digitais — recurso ausente nos concorrentes diretos.
+
+
 
 **6.6.2) **Preço**
-*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
 
-**6.6.3) **Praça (Distribuição) (até 200 palavras)**
-*Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo de precificação adotado é o de assinatura recorrente B2B (SaaS), com licenciamento por operação e faixas escalonadas conforme o número de retiros e de usuários ativos. A esse valor recorrente soma-se uma taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação. Para reduzir a barreira de adoção, propõe-se um período de piloto assistido em um subconjunto de retiros, convertendo-se em contrato pleno após a comprovação de valor em campo.
 
-**6.6.4) **Promoção (até 200 palavras)**
-*Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
+&nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo (Seção 6.3) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado — métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue: redução de retrabalho, de perdas de informação e de risco regulatório; e não o volume de funcionalidades genéricas.
+
+**6.6.3) **Praça (Distribuição)**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Por ser uma aplicação web responsiva, o AgroFlow é distribuído de forma totalmente digital, sem necessidade de instalação física ou logística de hardware. O acesso ocorre via navegador em dispositivos móveis (capatazes em campo) e desktops (supervisores e gerentes no escritório), com a arquitetura offline-first garantindo a entrega da funcionalidade mesmo nos retiros do Pantanal e do Cerrado, onde a conectividade é intermitente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O canal de aquisição principal é a venda consultiva direta (B2B), adequada ao ciclo de decisão de fazendas corporativas, iniciada pela relação com o parceiro BrPec como caso de referência. Complementam a distribuição um site institucional com solicitação de demonstração, presença em marketplaces de soluções AgroTech e participação em feiras e eventos do agronegócio (como Agrishow e Expodireto) para geração de leads qualificados. A entrega e a atualização do produto são contínuas: por se tratar de SaaS, novas versões são publicadas centralmente e disponibilizadas a todos os clientes sem reinstalação, e o onboarding remoto reduz o custo de expansão para novas operações.
+
+**6.6.4) **Promoção**
+
+&nbsp;&nbsp;&nbsp;&nbsp;A estratégia de promoção é predominantemente digital e orientada à autoridade técnica no nicho. Em SEO e marketing de conteúdo, o foco recai sobre termos de alta intenção e baixa concorrência ligados às dores reais do público — "gestão de rebanho offline", "rastreabilidade PNIB", "registro de movimentação sem internet" —, sustentados por artigos, guias e estudos de caso que educam o mercado sobre a digitalização em regiões remotas. Em redes sociais, prioriza-se o LinkedIn (decisores e gestores corporativos) e o Instagram/YouTube (demonstrações em campo e provas de uso real), reforçando os atributos de marca: confiabilidade, resiliência e acessibilidade.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As campanhas pagas (Google Ads e LinkedIn Ads) são segmentadas por região e por cargo, direcionando o tráfego a uma página de solicitação de demonstração. A peça central da conversão é o caso de sucesso da BrPec — com 14 retiros — usado como prova social do princípio "funciona onde os outros falham". A comunicação ancora o gatilho regulatório (prazos do PNIB até 2032) como motivador de urgência, posicionando o AgroFlow como o caminho de menor atrito para a conformidade de operações que hoje ainda dependem do papel.
+
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
