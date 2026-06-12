@@ -3358,10 +3358,10 @@ VALUES (?, ?, ?, ?);
    - **Método:** POST
    - **Descrição:** Cria uma nova tarefa e a atribui a um usuário. Todos os campos obrigatórios devem estar presentes simultaneamente, conforme RN02.
    - **Headers:** `Content-Type: application/json`
-   - **Body:** Campos: `usuario_id` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `categoria` (string, obrigatório), `status` (string).
+   - **Body:** Campos enviados pelo cliente: `retiro_id` (string UUID, obrigatório), `atribuida_a` (string UUID do capataz responsável pela execução, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `categoria` (string, obrigatório) e `usuarioCriador` (objeto do usuário que cria a tarefa, obrigatório — deve ter `cargo` igual a `supervisor`, conforme RN02). Opcionalmente aceita `id` (string UUID) gerado localmente em modo offline. Os campos `criada_por`, `status` (iniciado como `pendente`) e `data_criacao` são preenchidos automaticamente pelo servidor e não devem ser enviados.
    - **Respostas:**
      - `201 Created`: Tarefa criada. Retorna o objeto criado.
-     - `400 Bad Request`: Campo obrigatório ausente.
+     - `400 Bad Request`: Campo obrigatório ausente, `retiro_id` inválido ou `usuarioCriador` sem perfil `supervisor`.
      - `500 Internal Server Error`: Falha interna.
 
 8. Listar Todas as Tarefas
@@ -3755,10 +3755,10 @@ VALUES (?, ?, ?, ?);
     - **Método:** POST
     - **Descrição:** Cria um chamado de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo `prioridade` obrigatoriamente informado, conforme RN08 e RN11.
     - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `retiro_id` (string UUID, obrigatório), `categoria` (string, obrigatório), `localizacao` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `temEvidenciaDescritiva` (boolean, obrigatório).
+    - **Body:** Campos enviados pelo cliente: `retiro_id` (string UUID, obrigatório), `categoria` (string, obrigatório), `localizacao` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `usuarioAbridorTicket` (objeto do usuário que abre o chamado, obrigatório — deve ter `cargo` igual a `capataz`, conforme RN08) e `temEvidenciaDescritiva` (boolean, obrigatório). Opcionalmente aceita `id` (string UUID) gerado localmente em modo offline. Os campos `status` (iniciado como `pendente`), `aberto_por`, `atribuido_a`, `data_criacao` e `data_realizado` são preenchidos automaticamente pelo servidor.
     - **Respostas:**
       - `201 Created`: Ticket aberto.
-      - `400 Bad Request`: Evidência descritiva ausente ou prioridade não informada.
+      - `400 Bad Request`: Campo obrigatório ausente, evidência descritiva ausente, prioridade não informada ou `usuarioAbridorTicket` sem perfil `capataz`.
       - `500 Internal Server Error`: Falha interna.
 
 48. Listar Todos os Tickets
