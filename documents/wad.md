@@ -4238,9 +4238,63 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 - **Dashboard do Gerente**: Desenvolver os endpoints de relatório consolidado (`/relatorios`) que calculam indicadores por retiro considerando apenas registros validados e sincronizados (RF010, RN10).
 - **Testes automatizados**: Iniciar a cobertura de testes de integração dos endpoints com Jest e Supertest.
 
-## <a name="c4.2"></a>4.2. Segunda versão da aplicação web (sprint 4)
+## <a name="c4.2"></a>4.2. Segunda versão da aplicação web
 
-*Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
+
+&nbsp;&nbsp;&nbsp;&nbsp;A segunda versão do AgroFlow consolidou a integração entre o frontend e o backend implementado na Sprint 3, expandindo as funcionalidades disponíveis para cada perfil de usuário e estabelecendo a camada de validação e autorização do sistema. O foco desta sprint foi tornar o sistema operacional de ponta a ponta, conectando os fluxos de campo (capataz), supervisão e gerência em uma aplicação web coesa e funcional.
+
+### (a) O que foi implementado
+
+&nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 57). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`).
+
+<div align="center">
+<p align="center">Figura 57 - Estrutura de views do Capataz</p>
+<img src="others/assets/views-capataz.png" alt="Views do Capataz" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;A estilização também foi segmentada por perfil, conforme a Figura 58. Além das folhas de estilo específicas de cada papel (`capataz.css`, `gerente.css` e `supervisor.css`), o projeto mantém arquivos de uso transversal — `base.css` e `global.css` para as definições compartilhadas, `auth.css` para as telas de autenticação e `relatorios.css` para os relatórios.
+
+<div align="center">
+<p align="center">Figura 58 - Arquivos CSS por perfil de usuário</p>
+<img src="others/assets/views-css.png" alt="CSS por perfil" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, conta com apenas duas telas: a página inicial do perfil e a de relatórios. Como a página de relatórios é compartilhada entre o gerente e o supervisor, ela reside no diretório de parciais (`relatorios.ejs`), de modo que a pasta `src/views/gerente` contém somente o arquivo `home.ejs`.
+
+<div align="center">
+<p align="center">Figura 59 - Estrutura de views do Gerente</p>
+<img src="others/assets/views-gerente.png" alt="Views do Gerente" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 60. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-gerente.ejs` e `sidebar-supervisor.ejs`), os arquivos referentes ao `<head>` do HTML (`head.ejs` e `capataz-head.ejs`), responsáveis pela importação de folhas de estilo, definição do título da janela e demais metadados, e a parcial de relatórios (`relatorios.ejs`).
+
+<div align="center">
+<p align="center">Figura 60 - Componentes parciais compartilhados</p>
+<img src="others/assets/views-partial.png" alt="Partials" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 61. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`).
+
+<div align="center">
+<p align="center">Figura 61 - Estrutura de views do Supervisor</p>
+<img src="others/assets/views-supervisor.png" alt="Views do Supervisor" border="0">
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### (b) O que não foi concluído
+
+&nbsp;&nbsp;&nbsp;&nbsp;A configuração da aplicação como PWA (Progressive Web App) ficou pendente, sendo prevista para a próxima sprint.
+
+### (c) Dificuldades técnicas enfrentadas e próximos passos
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o site responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a configuração da aplicação como PWA, a expansão da cobertura de testes e correções finais de interface.
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
