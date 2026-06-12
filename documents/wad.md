@@ -4263,7 +4263,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, encontra-se em estágio inicial nesta sprint, contando até o momento apenas com a página inicial do perfil (`home.ejs`), conforme a Figura 59. A expansão desse fluxo está prevista para as próximas iterações.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, conta com apenas duas telas: a página inicial do perfil e a de relatórios. Como a página de relatórios é compartilhada entre o gerente e o supervisor, ela reside no diretório de parciais (`relatorios.ejs`), de modo que a pasta `src/views/gerente` contém somente o arquivo `home.ejs`, conforme a Figura 59.
 
 <div align="center">
 <p align="center">Figura 59 - Estrutura de views do Gerente</p>
@@ -4294,7 +4294,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 ### (c) Dificuldades técnicas enfrentadas e próximos passos
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o protótipo de alta fidelidade responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a conclusão do fluxo de gerência, a implementação do `bcrypt`, a expansão da cobertura de testes e correções finais de interface.
+&nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o site responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a conclusão do fluxo de gerência, a implementação do `bcrypt`, a expansão da cobertura de testes e correções finais de interface.
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
