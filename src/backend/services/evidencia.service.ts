@@ -120,7 +120,7 @@ export const EvidenciaService = {
   },
 
   // Buscar evidência base por ID
-  async buscarPorId(id: number): Promise<Evidencia | null> {
+  async buscarPorId(id: UUID): Promise<Evidencia | null> {
     // Retorna a evidência ou null se não encontrar
     return EvidenciaRepository.buscarPorId(id)
   },

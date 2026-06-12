@@ -4,9 +4,10 @@
   "description": "<p align=\"center\">\r <a href= \"https://www.inteli.edu.br/\"><img src=\"/assets/inteli.png\" alt=\"Inteli - Instituto de Tecnologia e Liderança\" border=\"0\"></a>\r </p>",
   "main": "index.js",
   "dependencies": {
-    "bcryptjs": "^3.0.3",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
+    "exceljs": "^4.4.0",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "node": "^22.22.3",
@@ -36,6 +37,7 @@
     }
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
@@ -53,5 +55,10 @@
   "repository": {
     "type": "git",
     "url": "https://git.inteli.edu.br/graduacao/2026-1b/t26/g02.git"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "^11.1.1"
+    }
   }
 }

@@ -86,7 +86,7 @@ describe('Usuarios', () => {
   })
 
   it('GET /usuarios/retiro/:retiroId deve listar por retiro', async () => {
-    const response = await request(app).get('/usuarios/retiro/1')
+    const response = await request(app).get('/usuarios/retiro/00000000-0000-4000-8000-000000000001')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([
@@ -114,7 +114,7 @@ describe('Usuarios', () => {
 
   it('POST /usuarios deve criar usuario', async () => {
     const response = await request(app).post('/usuarios').send({
-      retiro_id: 1,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       nome: 'Gerente Novo',
       login: 'gerente.novo@agroflow.com',
       senha_hash: 'hashed-password',
@@ -132,7 +132,7 @@ describe('Usuarios', () => {
 
   it('POST /usuarios deve rejeitar login que nao seja email', async () => {
     const response = await request(app).post('/usuarios').send({
-      retiro_id: 1,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       nome: 'Gerente Novo',
       login: 'login-invalido',
       senha_hash: 'hashed-password',

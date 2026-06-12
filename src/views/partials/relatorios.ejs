@@ -54,7 +54,7 @@
       <div class="rfield">
         <label class="rfield__label" for="retiro-mobile">Retiro</label>
         <div class="rfield__select-wrap">
-          <select class="rfield__select" id="retiro-mobile" name="retiro">
+            <select class="rfield__select" id="retiro-mobile" name="retiro">
             <option value="">Todos</option>
             <option value="aroeira">Aroeira</option>
             <option value="puga">Puga</option>
@@ -70,10 +70,20 @@
       <div class="rfield">
         <label class="rfield__label" for="tipo-mobile">Tipo de relatório</label>
         <div class="rfield__select-wrap">
-          <select class="rfield__select" id="tipo-mobile" name="tipo">
+            <select class="rfield__select" id="tipo-mobile" name="tipo">
             <option value="movimentacoes">Movimentações do rebanho</option>
             <option value="tarefas">Tarefas</option>
             <option value="tickets">Tickets de infraestrutura</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="rfield">
+        <label class="rfield__label" for="formato-mobile">Formato</label>
+        <div class="rfield__select-wrap">
+          <select class="rfield__select" id="formato-mobile" name="formato">
+            <option value="xlsx">Excel (.xlsx)</option>
+            <option value="csv">CSV (.csv)</option>
           </select>
         </div>
       </div>
@@ -94,8 +104,9 @@
 
       <!-- Botão exportar -->
       <button type="submit" class="btn btn--primary btn--exportar">
-        Exportar planilha
+        Baixar arquivo
       </button>
+      <p id="relatorio-feedback-mobile" style="margin: 8px 0 0; font-size: 14px; line-height: 1.4;"></p>
 
     </form>
   </main>
@@ -168,18 +179,29 @@
           </div>
         </div>
 
+        <div class="tfilter">
+          <label class="tfilter__label" for="formato-desktop">Formato</label>
+          <div class="tfilter__select-wrap">
+            <select class="tfilter__select" id="formato-desktop" name="formato">
+              <option value="xlsx">Excel (.xlsx)</option>
+              <option value="csv">CSV (.csv)</option>
+            </select>
+          </div>
+        </div>
+
       </div>
     </header>
 
     <!-- Conteúdo desktop: tabela + resumo lado a lado -->
     <main class="desktop-content desktop-content--relatorio" role="main">
+      <p id="relatorio-feedback" style="margin: 0 0 12px; font-size: 14px; line-height: 1.4;"></p>
 
       <!-- Coluna esquerda: Prévia tabela -->
       <section class="relatorio-preview" aria-labelledby="previa-title">
         <h2 class="section__title" id="previa-title">Prévia do relatório</h2>
         <div class="report-table-wrap">
           <table class="report-table" aria-label="Prévia do relatório">
-            <thead>
+            <thead id="relatorio-head">
               <tr>
                 <th>Data</th>
                 <th>Retiro</th>
@@ -188,9 +210,9 @@
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="relatorio-body">
               <tr>
-                <td class="td--bold">15/06/2026</td><td>Aroeira</td><td>Nascimento</td><td>12</td>
+            <td class="td--bold">15/06/2026</td><td>Aroeira</td><td>Nascimento</td><td>12</td>
                 <td><span class="badge badge--green">Validado</span></td>
               </tr>
               <tr class="tr--alt">
@@ -242,21 +264,21 @@
           <p class="resumo-card__title">Resumo do período</p>
           <hr class="resumo-card__divider" />
           <dl class="resumo-list">
-            <div class="resumo-list__row"><dt>Total de registros</dt><dd>73</dd></div>
-            <div class="resumo-list__row"><dt>Registros validados</dt><dd>58</dd></div>
-            <div class="resumo-list__row"><dt>Pendentes</dt><dd>15</dd></div>
-            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd>6</dd></div>
-            <div class="resumo-list__row"><dt>Período</dt><dd>30 dias</dd></div>
+            <div class="resumo-list__row"><dt>Total de registros</dt><dd id="resumo-total">73</dd></div>
+            <div class="resumo-list__row"><dt>Registros validados</dt><dd id="resumo-validado">58</dd></div>
+            <div class="resumo-list__row"><dt>Pendentes</dt><dd id="resumo-pendente">15</dd></div>
+            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd id="resumo-retiros">6</dd></div>
+            <div class="resumo-list__row"><dt>Período</dt><dd id="resumo-periodo">30 dias</dd></div>
           </dl>
         </div>
 
         <button class="btn btn--primary btn--exportar-desktop" type="button">
-          Exportar planilha (.xlsx)
+          Baixar arquivo
         </button>
 
         <div class="formato-card">
-          <p class="formato-card__title">Formato .xlsx</p>
-          <p class="formato-card__desc">Compatível com Excel e Google Sheets</p>
+          <p class="formato-card__title">Formatos .xlsx e .csv</p>
+          <p class="formato-card__desc">Compatível com Excel, Google Sheets e outros editores</p>
           <p class="formato-card__desc">Apenas registros validados e sincronizados.</p>
         </div>
       </aside>
@@ -271,6 +293,249 @@
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
+
+  function getSession() {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+      if (!token || !usuarioRaw) return null;
+      return { token, usuario: JSON.parse(usuarioRaw) };
+    } catch {
+      return null;
+    }
+  }
+
+  function mostrarFeedback(mensagem, tipo) {
+    ['relatorio-feedback', 'relatorio-feedback-mobile'].forEach(id => {
+      const feedback = document.getElementById(id);
+      if (!feedback) return;
+      feedback.textContent = mensagem;
+      feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    });
+  }
+
+  function configurarFiltroRetiro(session) {
+    ['retiro-mobile', 'retiro-desktop'].forEach(id => {
+      const select = document.getElementById(id);
+      if (!select || !session?.usuario?.retiro_id) return;
+      select.innerHTML = `
+        <option value="">Todos</option>
+        <option value="${session.usuario.retiro_id}">Meu retiro</option>
+      `;
+    });
+  }
+
+  function mapearTitulo(tipo) {
+    if (tipo === 'movimentacoes') return 'Movimentação';
+    if (tipo === 'tarefas') return 'Tarefa';
+    return 'Ticket';
+  }
+
+  function mapearColunas(tipo) {
+    if (tipo === 'tarefas') {
+      return ['Data', 'Retiro', 'Descrição', 'Prioridade', 'Status'];
+    }
+
+    if (tipo === 'tickets') {
+      return ['Data', 'Retiro', 'Categoria', 'Prioridade', 'Status'];
+    }
+
+    return ['Data', 'Retiro', 'Tipo', 'Qtd.', 'Status'];
+  }
+
+  function formatarData(valor) {
+    if (!valor) return '-';
+    const data = new Date(valor);
+    if (Number.isNaN(data.getTime())) return '-';
+    return data.toLocaleDateString('pt-BR');
+  }
+
+  function montarLinha(item, tipo) {
+    if (tipo === 'tarefas') {
+      return [
+        formatarData(item.data_criacao),
+        `Retiro ${item.retiro_id}`,
+        item.descricao || '-',
+        item.prioridade || '-',
+        item.status === 'aprovado' ? 'Validado' : 'Pendente',
+      ];
+    }
+
+    if (tipo === 'tickets') {
+      return [
+        formatarData(item.data_criacao),
+        `Retiro ${item.retiro_id}`,
+        item.categoria || '-',
+        item.prioridade || '-',
+        item.status === 'aprovado' ? 'Validado' : 'Pendente',
+      ];
+    }
+
+    return [
+      formatarData(item.data_criacao),
+      `Retiro ${item.retiro_id}`,
+      item.tipo || '-',
+      item.quantidade ?? '-',
+      item.sincronizado ? 'Sincronizado' : 'Pendente',
+    ];
+  }
+
+  function renderizarTabela(dados, tipo) {
+    const tbody = document.getElementById('relatorio-body');
+    const thead = document.getElementById('relatorio-head');
+    if (!tbody || !thead) return;
+
+    const colunas = mapearColunas(tipo);
+    thead.innerHTML = `<tr>${colunas.map(coluna => `<th>${coluna}</th>`).join('')}</tr>`;
+
+    tbody.innerHTML = dados.map((item, index) => {
+      const linha = montarLinha(item, tipo);
+      const badge = linha[linha.length - 1] === 'Pendente'
+        ? '<span class="badge badge--yellow">Pendente</span>'
+        : '<span class="badge badge--green">Validado</span>';
+
+      return `
+        <tr class="${index % 2 === 1 ? 'tr--alt' : ''}">
+          <td class="td--bold">${linha[0]}</td>
+          <td>${linha[1]}</td>
+          <td>${linha[2]}</td>
+          <td>${linha[3]}</td>
+          <td>${badge}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function atualizarResumo(dados, tipo) {
+    const total = dados.length;
+    const validados = dados.filter(item => item.status === 'aprovado' || item.sincronizado === true).length;
+    const pendentes = Math.max(total - validados, 0);
+
+    const totalEl = document.getElementById('resumo-total');
+    const validadoEl = document.getElementById('resumo-validado');
+    const pendenteEl = document.getElementById('resumo-pendente');
+    const retirosEl = document.getElementById('resumo-retiros');
+    const periodoEl = document.getElementById('resumo-periodo');
+
+    if (totalEl) totalEl.textContent = String(total);
+    if (validadoEl) validadoEl.textContent = String(validados);
+    if (pendenteEl) pendenteEl.textContent = String(pendentes);
+    if (retirosEl) retirosEl.textContent = String(new Set(dados.map(item => item.retiro_id)).size);
+    if (periodoEl) periodoEl.textContent = tipo === 'tarefas' ? 'Tarefas sincronizadas' : 'Movimentações sincronizadas';
+  }
+
+  async function carregarRelatorio() {
+    const session = getSession();
+    if (!session) {
+      mostrarFeedback('Faça login para visualizar os relatórios.', 'error');
+      return;
+    }
+
+    const tipoSelect = document.getElementById('tipo-desktop');
+    const retiroSelect = document.getElementById('retiro-desktop');
+
+    const tipo = tipoSelect?.value || 'movimentacoes';
+    const retiroId = retiroSelect?.value || '';
+
+    const endpoint = tipo === 'tarefas'
+      ? '/relatorios/tarefas/dados'
+      : tipo === 'tickets'
+        ? '/relatorios/tickets/dados'
+        : '/relatorios/movimentacoes/dados';
+
+    const url = new URL(endpoint, window.location.origin);
+    if (retiroId) url.searchParams.set('retiroId', retiroId);
+
+    try {
+      const response = await fetch(url.toString(), {
+        headers: { Authorization: `Bearer ${session.token}` },
+      });
+
+      const dados = await response.json().catch(() => []);
+      if (!response.ok || !Array.isArray(dados)) {
+        throw new Error(dados?.error || 'Não foi possível carregar o relatório');
+      }
+
+      renderizarTabela(dados, tipo);
+      atualizarResumo(dados, tipo);
+      mostrarFeedback(`Relatório de ${mapearTitulo(tipo).toLowerCase()} atualizado com sucesso.`, 'success');
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao carregar relatório', 'error');
+    }
+  }
+
+  async function exportarRelatorio(contexto) {
+    const session = getSession();
+    if (!session) {
+      mostrarFeedback('Faça login para exportar os relatórios.', 'error');
+      return;
+    }
+
+    const sufixo = contexto === 'mobile' ? 'mobile' : 'desktop';
+    const tipo = document.getElementById(`tipo-${sufixo}`)?.value || 'movimentacoes';
+    const formato = document.getElementById(`formato-${sufixo}`)?.value || 'xlsx';
+    const retiroId = document.getElementById(`retiro-${sufixo}`)?.value || '';
+    const url = new URL('/relatorios/exportar', window.location.origin);
+
+    url.searchParams.set('tipo', tipo);
+    url.searchParams.set('formato', formato);
+    if (retiroId) url.searchParams.set('retiroId', retiroId);
+
+    mostrarFeedback('Gerando arquivo...', 'success');
+
+    try {
+      const response = await fetch(url.toString(), {
+        headers: { Authorization: `Bearer ${session.token}` },
+      });
+
+      if (!response.ok) {
+        const erro = await response.json().catch(() => ({}));
+        throw new Error(erro.error || 'Não foi possível exportar o relatório');
+      }
+
+      const blob = await response.blob();
+      const disposicao = response.headers.get('Content-Disposition') || '';
+      const nome = disposicao.match(/filename="([^"]+)"/)?.[1]
+        || `relatorio-${tipo}.${formato}`;
+      const link = document.createElement('a');
+      const objetoUrl = URL.createObjectURL(blob);
+
+      link.href = objetoUrl;
+      link.download = nome;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(objetoUrl);
+
+      mostrarFeedback(`Arquivo ${nome} gerado com sucesso.`, 'success');
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao exportar relatório', 'error');
+    }
+  }
+
+  const formRelatorio = document.getElementById('form-relatorio');
+  if (formRelatorio) {
+    formRelatorio.addEventListener('submit', event => {
+      event.preventDefault();
+      exportarRelatorio('mobile');
+    });
+  }
+
+  const botaoExportarDesktop = document.querySelector('.btn--exportar-desktop');
+  if (botaoExportarDesktop) {
+    botaoExportarDesktop.addEventListener('click', () => exportarRelatorio('desktop'));
+  }
+
+  ['tipo-desktop', 'retiro-desktop'].forEach(id => {
+    const select = document.getElementById(id);
+    if (select) {
+      select.addEventListener('change', carregarRelatorio);
+    }
+  });
+
+  const session = getSession();
+  configurarFiltroRetiro(session);
+  carregarRelatorio();
 </script>
 
 </body>

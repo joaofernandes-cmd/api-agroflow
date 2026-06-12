@@ -27,6 +27,8 @@
     <h1 class="topnav__title">Revisão de Tarefas</h1>
   </header>
 
+  <p id="revisao-feedback-mobile" style="margin: 12px 16px 0; font-size: 14px; line-height: 1.4;"></p>
+
   <!-- Barra de busca + badge -->
   <div class="revisao-filter-bar" role="search">
     <div class="revisao-search-wrap">
@@ -46,74 +48,74 @@
   <!-- Lista de tarefas -->
   <main class="revisao-list" role="main">
 
-    <article class="rev-card rev-card--pendente">
+    <article class="rev-card rev-card--pendente" data-tarefa-id="11">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
         <p class="rev-card__name">Conferência do rebanho — Aroeira</p>
         <p class="rev-card__meta">Capataz Lucas • há 1h</p>
       </div>
       <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída">
+      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
         <img src="https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937" alt="" width="24" height="24" />
       </button>
     </article>
 
-    <article class="rev-card rev-card--concluido">
+    <article class="rev-card rev-card--concluido" data-tarefa-id="12">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
         <p class="rev-card__name">Vacinação lote B — CMB</p>
         <p class="rev-card__meta">Capataz Alberto • há 1h</p>
       </div>
       <span class="rev-badge rev-badge--concluido">Concluído</span>
-      <button class="rev-card__check rev-card__check--done" aria-label="Concluída">
+      <button class="rev-card__check rev-card__check--done" aria-label="Concluída" data-action="aprovar">
         <img src="https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894" alt="" width="24" height="24" />
       </button>
     </article>
 
-    <article class="rev-card rev-card--concluido">
+    <article class="rev-card rev-card--concluido" data-tarefa-id="13">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
         <p class="rev-card__name">Movimentação de animais — Puga</p>
         <p class="rev-card__meta">Capataz Manoel • há 1 dia</p>
       </div>
       <span class="rev-badge rev-badge--concluido">Concluído</span>
-      <button class="rev-card__check rev-card__check--done" aria-label="Concluída">
+      <button class="rev-card__check rev-card__check--done" aria-label="Concluída" data-action="aprovar">
         <img src="https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894" alt="" width="24" height="24" />
       </button>
     </article>
 
-    <article class="rev-card rev-card--concluido">
+    <article class="rev-card rev-card--concluido" data-tarefa-id="14">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
         <p class="rev-card__name">Alimentação suplementar — Caieira</p>
         <p class="rev-card__meta">Capataz João Paulo • há 1 dia</p>
       </div>
       <span class="rev-badge rev-badge--concluido">Concluído</span>
-      <button class="rev-card__check rev-card__check--done" aria-label="Concluída">
+      <button class="rev-card__check rev-card__check--done" aria-label="Concluída" data-action="aprovar">
         <img src="https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894" alt="" width="24" height="24" />
       </button>
     </article>
 
-    <article class="rev-card rev-card--pendente">
+    <article class="rev-card rev-card--pendente" data-tarefa-id="15">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
         <p class="rev-card__name">Inspeção sanitária — Aroeira</p>
         <p class="rev-card__meta">Capataz Lucas • há 2 dias</p>
       </div>
       <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída">
+      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
         <img src="https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937" alt="" width="24" height="24" />
       </button>
     </article>
 
-    <article class="rev-card rev-card--pendente">
+    <article class="rev-card rev-card--pendente" data-tarefa-id="16">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
         <p class="rev-card__name">Contagem geral — Cristo</p>
         <p class="rev-card__meta">Capataz José Carlos • há 3 dias</p>
       </div>
       <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída">
+      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
         <img src="https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937" alt="" width="24" height="24" />
       </button>
     </article>
@@ -142,6 +144,8 @@
       <h1 class="topbar__title">Revisão de Tarefas</h1>
       <p class="topbar__date" id="data-hoje-desktop"></p>
     </header>
+
+    <p id="revisao-feedback-desktop" style="margin: 0 0 16px; font-size: 14px; line-height: 1.4;"></p>
 
     <!-- Barra de busca + badge desktop -->
     <div class="revisao-filter-bar-desktop" role="search">
@@ -175,59 +179,59 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr data-tarefa-id="11">
               <td class="td--bold">Conferência do rebanho</td>
               <td>Aroeira</td>
               <td>Capataz Lucas</td>
               <td>há 1h</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><img src="https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar">Revisar</button></td>
+              <td><button class="btn-revisar" data-action="aprovar">Revisar</button></td>
             </tr>
-            <tr class="tr--alt">
+            <tr class="tr--alt" data-tarefa-id="12">
               <td class="td--bold">Vacinação lote B</td>
               <td>CMB</td>
               <td>Capataz Alberto</td>
               <td>há 1h</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><img src="https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0" alt="concluído" width="24" height="24" /></td>
-              <td><button class="btn-revisar">Revisar</button></td>
+              <td><button class="btn-revisar" data-action="aprovar">Revisar</button></td>
             </tr>
-            <tr>
+            <tr data-tarefa-id="13">
               <td class="td--bold">Movimentação de animais</td>
               <td>Puga</td>
               <td>Capataz Manoel</td>
               <td>há 1 dia</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><img src="https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0" alt="concluído" width="24" height="24" /></td>
-              <td><button class="btn-revisar">Revisar</button></td>
+              <td><button class="btn-revisar" data-action="aprovar">Revisar</button></td>
             </tr>
-            <tr class="tr--alt">
+            <tr class="tr--alt" data-tarefa-id="14">
               <td class="td--bold">Alimentação suplementar</td>
               <td>Caieira</td>
               <td>Capataz João Paulo</td>
               <td>há 1 dia</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><img src="https://www.figma.com/api/mcp/asset/89be2e54-bd14-489c-80c3-7093f4bf8aa0" alt="concluído" width="24" height="24" /></td>
-              <td><button class="btn-revisar">Revisar</button></td>
+              <td><button class="btn-revisar" data-action="aprovar">Revisar</button></td>
             </tr>
-            <tr>
+            <tr data-tarefa-id="15">
               <td class="td--bold">Inspeção sanitária</td>
               <td>Aroeira</td>
               <td>Capataz Lucas</td>
               <td>há 2 dias</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><img src="https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar">Revisar</button></td>
+              <td><button class="btn-revisar" data-action="aprovar">Revisar</button></td>
             </tr>
-            <tr class="tr--alt">
+            <tr class="tr--alt" data-tarefa-id="16">
               <td class="td--bold">Contagem geral</td>
               <td>Cristo</td>
               <td>Capataz José Carlos</td>
               <td>há 3 dias</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><img src="https://www.figma.com/api/mcp/asset/a156aae6-81ed-44ac-bb5f-1c6c9d522ce2" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar">Revisar</button></td>
+              <td><button class="btn-revisar" data-action="aprovar">Revisar</button></td>
             </tr>
           </tbody>
         </table>
@@ -243,31 +247,109 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
+  function carregarSessao() {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+      if (!token || !usuarioRaw) return null;
+      return { token, usuario: JSON.parse(usuarioRaw) };
+    } catch {
+      return null;
+    }
+  }
+
+  function mostrarFeedback(id, mensagem, tipo) {
+    const feedback = document.getElementById(id);
+    if (!feedback) return;
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+  }
+
+  function atualizarCardMobile(card, aprovado) {
+    const badge = card.querySelector('.rev-badge');
+    const btn = card.querySelector('.rev-card__check');
+    const img = btn?.querySelector('img');
+
+    if (!badge || !btn || !img) return;
+
+    if (aprovado) {
+      btn.classList.replace('rev-card__check--empty', 'rev-card__check--done');
+      btn.setAttribute('aria-label', 'Concluída');
+      img.src = IMG_MOBILE_FEITO;
+      badge.classList.replace('rev-badge--pendente', 'rev-badge--concluido');
+      badge.textContent = 'Concluído';
+      card.classList.replace('rev-card--pendente', 'rev-card--concluido');
+    } else {
+      btn.classList.replace('rev-card__check--done', 'rev-card__check--empty');
+      btn.setAttribute('aria-label', 'Marcar como concluída');
+      img.src = IMG_MOBILE_VAZIO;
+      badge.classList.replace('rev-badge--concluido', 'rev-badge--pendente');
+      badge.textContent = 'Pendente';
+      card.classList.replace('rev-card--concluido', 'rev-card--pendente');
+    }
+  }
+
+  function atualizarLinhaDesktop(row, aprovado) {
+    const badge = row.querySelector('.badge');
+    const btn = row.querySelector('.btn-revisar');
+    const img = row.querySelector('td img');
+
+    if (!badge || !btn || !img) return;
+
+    if (aprovado) {
+      img.src = IMG_DESK_CONCLUIDO;
+      img.alt = 'concluído';
+      badge.classList.replace('badge--yellow', 'badge--green');
+      badge.textContent = 'Concluído';
+      btn.textContent = 'Revisado';
+      btn.disabled = true;
+    } else {
+      img.src = IMG_DESK_PENDENTE;
+      img.alt = 'pendente';
+      badge.classList.replace('badge--green', 'badge--yellow');
+      badge.textContent = 'Pendente';
+      btn.textContent = 'Revisar';
+      btn.disabled = false;
+    }
+  }
+
+  async function aprovarTarefaPorId(tarefaId) {
+    const session = carregarSessao();
+    if (!session) {
+      return { ok: false, mensagem: 'Sua sessão expirou. Faça login novamente.' };
+    }
+
+    const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      return { ok: false, mensagem: data.error || data.mensagem || 'Não foi possível aprovar a tarefa' };
+    }
+
+    return { ok: true, mensagem: data.mensagem || 'Tarefa aprovada com sucesso.' };
+  }
+
   // ── Toggle check mobile ──
   const IMG_MOBILE_VAZIO   = 'https://www.figma.com/api/mcp/asset/c2bc0b48-f60c-4c1e-91ae-c5b01ea1e937';
   const IMG_MOBILE_FEITO   = 'https://www.figma.com/api/mcp/asset/cbf7894c-3ec3-405a-8b8f-581cead6e894';
 
   document.querySelectorAll('.rev-card__check').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card  = btn.closest('.rev-card');
-      const badge = card.querySelector('.rev-badge');
-      const img   = btn.querySelector('img');
-      const feito = btn.classList.contains('rev-card__check--done');
+    btn.addEventListener('click', async () => {
+      const card = btn.closest('.rev-card');
+      const tarefaId = card?.dataset.tarefaId;
 
-      if (feito) {
-        btn.classList.replace('rev-card__check--done', 'rev-card__check--empty');
-        btn.setAttribute('aria-label', 'Marcar como concluída');
-        img.src = IMG_MOBILE_VAZIO;
-        badge.classList.replace('rev-badge--concluido', 'rev-badge--pendente');
-        badge.textContent = 'Pendente';
-        card.classList.replace('rev-card--concluido', 'rev-card--pendente');
-      } else {
-        btn.classList.replace('rev-card__check--empty', 'rev-card__check--done');
-        btn.setAttribute('aria-label', 'Concluída');
-        img.src = IMG_MOBILE_FEITO;
-        badge.classList.replace('rev-badge--pendente', 'rev-badge--concluido');
-        badge.textContent = 'Concluído';
-        card.classList.replace('rev-card--pendente', 'rev-card--concluido');
+      if (!card || !tarefaId) return;
+
+      const resultado = await aprovarTarefaPorId(tarefaId);
+      mostrarFeedback('revisao-feedback-mobile', resultado.mensagem, resultado.ok ? 'success' : 'error');
+
+      if (resultado.ok) {
+        atualizarCardMobile(card, true);
       }
     });
   });
@@ -278,21 +360,31 @@
 
   document.querySelectorAll('.revisao-table td img').forEach(img => {
     img.classList.add('check-img');
-    img.addEventListener('click', () => {
-      const row   = img.closest('tr');
-      const badge = row.querySelector('.badge');
-      const pendente = img.alt === 'pendente';
+    img.addEventListener('click', async () => {
+      const row = img.closest('tr');
+      const tarefaId = row?.dataset.tarefaId;
+      if (!row || !tarefaId) return;
 
-      if (pendente) {
-        img.src = IMG_DESK_CONCLUIDO;
-        img.alt = 'concluído';
-        badge.classList.replace('badge--yellow', 'badge--green');
-        badge.textContent = 'Concluído';
-      } else {
-        img.src = IMG_DESK_PENDENTE;
-        img.alt = 'pendente';
-        badge.classList.replace('badge--green', 'badge--yellow');
-        badge.textContent = 'Pendente';
+      const resultado = await aprovarTarefaPorId(tarefaId);
+      mostrarFeedback('revisao-feedback-desktop', resultado.mensagem, resultado.ok ? 'success' : 'error');
+
+      if (resultado.ok) {
+        atualizarLinhaDesktop(row, true);
+      }
+    });
+  });
+
+  document.querySelectorAll('.btn-revisar').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const row = btn.closest('tr');
+      const tarefaId = row?.dataset.tarefaId;
+      if (!row || !tarefaId) return;
+
+      const resultado = await aprovarTarefaPorId(tarefaId);
+      mostrarFeedback('revisao-feedback-desktop', resultado.mensagem, resultado.ok ? 'success' : 'error');
+
+      if (resultado.ok) {
+        atualizarLinhaDesktop(row, true);
       }
     });
   });

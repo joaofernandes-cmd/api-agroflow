@@ -65,21 +65,21 @@ describe('Sincronizacao', () => {
   })
 
   it('GET /sincronizacao/relatorios/movimentacoes deve buscar dados sincronizados', async () => {
-    const response = await request(app).get('/sincronizacao/relatorios/movimentacoes').query({ retiroId: 1 })
+    const response = await request(app).get('/sincronizacao/relatorios/movimentacoes').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacaoValidada])
   })
 
   it('GET /sincronizacao/relatorios/tarefas deve buscar tarefas sincronizadas', async () => {
-    const response = await request(app).get('/sincronizacao/relatorios/tarefas').query({ retiroId: 1 })
+    const response = await request(app).get('/sincronizacao/relatorios/tarefas').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTarefa])
   })
 
   it('GET /sincronizacao/dashboard/tickets deve buscar tickets sincronizados', async () => {
-    const response = await request(app).get('/sincronizacao/dashboard/tickets').query({ retiroId: 1 })
+    const response = await request(app).get('/sincronizacao/dashboard/tickets').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTicket])

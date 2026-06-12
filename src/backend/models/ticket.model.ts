@@ -7,8 +7,8 @@ export type TicketStatus = 'pendente' | 'aprovado'
 export type TicketPrioridade = 'alta' | 'media' | 'baixa'
 
 export interface Ticket {
-  id: number
-  retiro_id: number
+  id: UUID
+  retiro_id: UUID
   aberto_por: UUID
   categoria: TicketCategoria
   localizacao: string
@@ -23,7 +23,8 @@ export interface Ticket {
 }
 
 export interface TicketInput {
-  retiro_id: number
+  id?: UUID
+  retiro_id: UUID
   aberto_por: UUID
   categoria: TicketCategoria
   localizacao: string

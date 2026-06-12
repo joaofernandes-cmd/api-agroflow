@@ -246,11 +246,48 @@
       weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
     }).replace(/^\w/, c => c.toUpperCase());
   }
+
+  function carregarSessao() {
+    try {
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+      if (!usuarioRaw) return null;
+      return JSON.parse(usuarioRaw);
+    } catch {
+      return null;
+    }
+  }
+
   const data = formatarData();
   ['data-hoje-mobile', 'data-hoje-desktop', 'data-hoje-desktop2'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = data;
   });
+
+  const usuarioSessao = carregarSessao();
+  if (usuarioSessao?.nome) {
+    const primeiroNome = usuarioSessao.nome.split(' ')[0];
+
+    document.querySelectorAll('.greeting__name, .greeting-desktop__name').forEach(el => {
+      el.textContent = `Bom dia, ${primeiroNome}!`;
+    });
+
+    document.querySelectorAll('.sidebar__user-name').forEach(el => {
+      el.textContent = usuarioSessao.nome;
+    });
+
+    document.querySelectorAll('.sidebar__user-role').forEach(el => {
+      el.textContent = 'Gerente';
+    });
+
+    document.querySelectorAll('.sidebar__avatar').forEach(el => {
+      el.textContent = usuarioSessao.nome
+        .split(' ')
+        .map(parte => parte[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+    });
+  }
 </script>
 
 </body>

@@ -65,7 +65,7 @@ describe('Validacoes', () => {
   )
 
   it('PATCH /validacoes/movimentacoes/:id/validar deve validar movimentacao', async () => {
-    const response = await request(app).patch('/validacoes/movimentacoes/1/validar')
+    const response = await request(app).patch('/validacoes/movimentacoes/00000000-0000-4000-8000-000000000201/validar')
 
     expect(response.status).toBe(200)
     expect(response.body).toMatchObject({
@@ -79,7 +79,7 @@ describe('Validacoes', () => {
   })
 
   it('PATCH /validacoes/tickets/:id/aprovar deve aprovar ticket', async () => {
-    const response = await request(app).patch('/validacoes/tickets/21/aprovar')
+    const response = await request(app).patch('/validacoes/tickets/00000000-0000-4000-8000-000000000401/aprovar')
 
     expect(response.status).toBe(200)
     expect(response.body).toMatchObject({
@@ -89,7 +89,7 @@ describe('Validacoes', () => {
   })
 
   it('PATCH /validacoes/tarefas/:id/aprovar deve aprovar tarefa', async () => {
-    const response = await request(app).patch('/validacoes/tarefas/11/aprovar')
+    const response = await request(app).patch('/validacoes/tarefas/00000000-0000-4000-8000-000000000301/aprovar')
 
     expect(response.status).toBe(200)
     expect(response.body).toMatchObject({

@@ -11,6 +11,7 @@ usuarioRoutes.post('/login', UsuarioController.autenticar)
 // CRUD básico de usuários
 // Aqui o acesso já exige login válido.
 usuarioRoutes.use(autenticarUsuario)
+usuarioRoutes.get('/capatazes/retiro/:retiroId', UsuarioController.listarCapatazesPorRetiro)
 // E, além disso, só gerente pode mexer nesses cadastros.
 usuarioRoutes.use(exigirCargo('gerente'))
 usuarioRoutes.post('/', UsuarioController.criar)

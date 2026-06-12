@@ -55,7 +55,7 @@ export const TicketService = {
   },
 
   // RN11: Alterar prioridade de um ticket
-  async alterarPrioridade(id: number, novaPrioridade: TicketPrioridade): Promise<Ticket | null> {
+  async alterarPrioridade(id: UUID, novaPrioridade: TicketPrioridade): Promise<Ticket | null> {
     const ticket = await TicketRepository.buscarPorId(id)
 
     if (!ticket) {
@@ -74,7 +74,7 @@ export const TicketService = {
   },
 
   // Listar tickets por status
-  async listarPorStatus(status: TicketStatus, retiroId?: number): Promise<Ticket[]> {
+  async listarPorStatus(status: TicketStatus, retiroId?: UUID): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {
@@ -91,7 +91,7 @@ export const TicketService = {
   },
 
   // Listar tickets por prioridade
-  async listarPorPrioridade(prioridade: TicketPrioridade, retiroId?: number): Promise<Ticket[]> {
+  async listarPorPrioridade(prioridade: TicketPrioridade, retiroId?: UUID): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {
@@ -108,7 +108,7 @@ export const TicketService = {
   },
 
   // Listar tickets por categoria
-  async listarPorCategoria(categoria: TicketCategoria, retiroId?: number): Promise<Ticket[]> {
+  async listarPorCategoria(categoria: TicketCategoria, retiroId?: UUID): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {
@@ -125,7 +125,7 @@ export const TicketService = {
   },
 
   // Atualizar status do ticket
-  async atualizarStatus(id: number, novoStatus: TicketStatus): Promise<Ticket | null> {
+  async atualizarStatus(id: UUID, novoStatus: TicketStatus): Promise<Ticket | null> {
     const ticket = await TicketRepository.buscarPorId(id)
 
     if (!ticket) {
@@ -139,7 +139,7 @@ export const TicketService = {
   },
 
   // Atribuir ticket a um usuário
-  async atribuirA(id: number, usuarioId: UUID): Promise<Ticket | null> {
+  async atribuirA(id: UUID, usuarioId: UUID): Promise<Ticket | null> {
     const ticket = await TicketRepository.buscarPorId(id)
 
     if (!ticket) {
@@ -153,7 +153,7 @@ export const TicketService = {
   },
 
   // Buscar ticket por ID
-  async buscarPorId(id: number): Promise<Ticket | null> {
+  async buscarPorId(id: UUID): Promise<Ticket | null> {
     return TicketRepository.buscarPorId(id)
   },
 
@@ -163,7 +163,7 @@ export const TicketService = {
   },
 
   // Listar tickets pendentes (aguardando aprovação do supervisor)
-  async listarPendentes(retiroId?: number): Promise<Ticket[]> {
+  async listarPendentes(retiroId?: UUID): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {
@@ -180,7 +180,7 @@ export const TicketService = {
   },
 
   // Contar tickets por prioridade
-  async contarPorPrioridade(retiroId?: number): Promise<Record<TicketPrioridade, number>> {
+  async contarPorPrioridade(retiroId?: UUID): Promise<Record<TicketPrioridade, number>> {
     const tickets = await TicketRepository.buscarTodos()
 
     const contagem: Record<TicketPrioridade, number> = {

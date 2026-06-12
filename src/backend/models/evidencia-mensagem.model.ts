@@ -1,9 +1,11 @@
+import { UUID } from './uuid'
+
 export interface EvidenciaMensagem {
-  evidencia_id: number
+  evidencia_id: UUID
   conteudo: string
 }
 
 export interface EvidenciaMensagemInput {
-  evidencia_id: number
+  evidencia_id: UUID
   conteudo: string
 }

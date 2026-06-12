@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { Ticket, TicketInput } from '../models/ticket.model'
+import { UUID } from '../models/uuid'
 
 export const TicketRepository = {
 
@@ -11,7 +12,7 @@ export const TicketRepository = {
         `
     },
 
-    async buscarPorId(id: number): Promise<Ticket | null> {
+    async buscarPorId(id: UUID): Promise<Ticket | null> {
         const ticket = await sql<Ticket[]>`
             SELECT id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
             FROM ticket
@@ -24,8 +25,9 @@ export const TicketRepository = {
 
     async criar(input: TicketInput): Promise<Ticket> {
         const [created] = await sql<Ticket[]>`
-            INSERT INTO ticket (retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado)
+            INSERT INTO ticket (id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado)
             VALUES (
+                COALESCE(${input.id ?? null}::uuid, gen_random_uuid()),
                 ${input.retiro_id},
                 ${input.aberto_por},
                 ${input.categoria},
@@ -44,7 +46,7 @@ export const TicketRepository = {
         return created
     },
 
-    async atualizar(id: number, input: Partial<TicketInput>): Promise<Ticket | null> {
+    async atualizar(id: UUID, input: Partial<TicketInput>): Promise<Ticket | null> {
         const updated = await sql<Ticket[]>`
             UPDATE ticket
             SET

@@ -1,9 +1,11 @@
+import { UUID } from './uuid'
+
 export interface EvidenciaTicket {
-  evidencia_id: number
-  ticket_id: number
+  evidencia_id: UUID
+  ticket_id: UUID
 }
 
 export interface EvidenciaTicketInput {
-  evidencia_id: number
-  ticket_id: number
+  evidencia_id: UUID
+  ticket_id: UUID
 }

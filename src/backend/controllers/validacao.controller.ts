@@ -1,10 +1,6 @@
 import { Request, Response } from 'express'
+import { converterUUID } from '../models/uuid'
 import { ValidacaoService } from '../services/validacao.service'
-
-function converterNumero(valor: unknown): number | null {
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
-}
 
 export const ValidacaoController = {
   async podeValidar(req: Request, res: Response) {
@@ -28,7 +24,7 @@ export const ValidacaoController = {
   // RN06: Valida uma movimentação pendente — apenas supervisor
   async validarMovimentacao(req: Request, res: Response) {
     try {
-      const movimentacaoId = converterNumero(req.params.id)
+      const movimentacaoId = converterUUID(req.params.id)
       const usuario = req.usuario
 
       if (movimentacaoId === null) {
@@ -56,7 +52,7 @@ export const ValidacaoController = {
   // RN06: Aprova um ticket pendente — apenas supervisor
   async aprovarTicket(req: Request, res: Response) {
     try {
-      const ticketId = converterNumero(req.params.id)
+      const ticketId = converterUUID(req.params.id)
       const usuario = req.usuario
 
       if (ticketId === null) {
@@ -84,7 +80,7 @@ export const ValidacaoController = {
   // RN06: Aprova uma tarefa pendente — apenas supervisor
   async aprovarTarefa(req: Request, res: Response) {
     try {
-      const tarefaId = converterNumero(req.params.id)
+      const tarefaId = converterUUID(req.params.id)
       const usuario = req.usuario
 
       if (tarefaId === null) {

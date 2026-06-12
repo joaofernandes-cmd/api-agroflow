@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { EvidenciaTicket, EvidenciaTicketInput } from '../models/evidencia-ticket.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências de tickets cadastradas
 export const EvidenciaTicketRepository = {
@@ -13,7 +14,7 @@ export const EvidenciaTicketRepository = {
     },
 
     // Busca uma evidência de ticket pelo seu id e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number, ticket_id: number): Promise<EvidenciaTicket | null> {
+    async buscarPorId(evidencia_id: UUID, ticket_id: UUID): Promise<EvidenciaTicket | null> {
         const evidenciaTicket = await sql<EvidenciaTicket[]>`
             SELECT evidencia_id, ticket_id
             FROM evidencia_ticket

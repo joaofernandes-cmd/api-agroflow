@@ -1,16 +1,12 @@
 import { Request, Response } from 'express'
 import { gerarToken } from '../middlewares/autenticacao.middleware'
 import { Usuario } from '../models/usuario.model'
+import { converterUUID } from '../models/uuid'
 import { UsuarioService } from '../services/usuario.service'
 
 function removerSenha(usuario: Usuario) {
   const { senha_hash, ...usuarioSemSenha } = usuario
   return usuarioSemSenha
-}
-
-function converterNumero(valor: unknown): number | null {
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
 }
 
 export const UsuarioController = {
@@ -71,7 +67,7 @@ export const UsuarioController = {
 
   async listarPorRetiro(req: Request, res: Response) {
     try {
-      const retiroId = converterNumero(req.params.retiroId)
+      const retiroId = converterUUID(req.params.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -82,6 +78,23 @@ export const UsuarioController = {
       return res.status(200).json(usuarios.map(removerSenha))
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar usuários por retiro' })
+    }
+  },
+
+  async listarCapatazesPorRetiro(req: Request, res: Response) {
+    try {
+      const retiroId = converterUUID(req.params.retiroId)
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      const usuarios = await UsuarioService.listarPorRetiro(retiroId)
+      const capatazes = usuarios.filter(usuario => usuario.cargo === 'capataz' && usuario.status === 'ativo')
+
+      return res.status(200).json(capatazes.map(removerSenha))
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao listar capatazes por retiro' })
     }
   },
 

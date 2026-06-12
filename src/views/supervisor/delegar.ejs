@@ -12,6 +12,8 @@
      Desktop → Sidebar + TopBar + formulário (esq) + tarefas ativas (dir)
      ============================================================ -->
 
+<p id="delegar-feedback" style="margin: 0 0 16px; font-size: 14px; line-height: 1.4;"></p>
+
 <!-- ════════════════════════════════════════════════════════
      LAYOUT MOBILE
      ════════════════════════════════════════════════════════ -->
@@ -220,11 +222,189 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
-  document.querySelectorAll('.dfield__select').forEach(sel => {
-    const update = () => sel.classList.toggle('dfield__select--has-value', sel.value !== '');
-    update();
-    sel.addEventListener('change', update);
+  const feedback = document.getElementById('delegar-feedback');
+
+  function mostrarFeedback(mensagem, tipo) {
+    if (!feedback) return;
+
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+  }
+
+  function getSession() {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+
+      if (!token || !usuarioRaw) return null;
+
+      return {
+        token,
+        usuario: JSON.parse(usuarioRaw),
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  function atualizarEstadoSelect(select) {
+    select.classList.toggle('dfield__select--has-value', select.value !== '');
+  }
+
+  function preencherCapatazes(selects, capatazes) {
+    selects.forEach(select => {
+      const placeholder = select.querySelector('option[value=""]')?.textContent || 'Selecione um capataz';
+
+      select.innerHTML = '';
+
+      const optionPadrao = document.createElement('option');
+      optionPadrao.value = '';
+      optionPadrao.disabled = true;
+      optionPadrao.selected = true;
+      optionPadrao.textContent = placeholder;
+      select.appendChild(optionPadrao);
+
+      capatazes.forEach(capataz => {
+        const option = document.createElement('option');
+        option.value = capataz.id;
+        option.textContent = `${capataz.nome} • Retiro ${capataz.retiro_id}`;
+        select.appendChild(option);
+      });
+
+      select.dataset.loaded = 'true';
+      atualizarEstadoSelect(select);
+      select.addEventListener('change', () => atualizarEstadoSelect(select));
+    });
+  }
+
+  async function carregarCapatazes() {
+    const session = getSession();
+    if (!session) {
+      mostrarFeedback('Sua sessão expirou. Faça login novamente.', 'error');
+      window.location.href = '/auth/perfil';
+      return;
+    }
+
+    const selects = Array.from(document.querySelectorAll('select[name="capatazRetiro"]'));
+
+    try {
+      const response = await fetch(`/usuarios/capatazes/retiro/${session.usuario.retiro_id}`, {
+        headers: {
+          Authorization: `Bearer ${session.token}`,
+        },
+      });
+
+      const data = await response.json().catch(() => []);
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Não foi possível carregar os capatazes');
+      }
+
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error('Nenhum capataz encontrado para este retiro');
+      }
+
+      preencherCapatazes(selects, data);
+      mostrarFeedback('Capatazes carregados com sucesso.', 'success');
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao carregar capatazes', 'error');
+      selects.forEach(select => {
+        select.dataset.loaded = 'false';
+        atualizarEstadoSelect(select);
+      });
+    }
+  }
+
+  async function enviarTarefa(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const session = getSession();
+
+    if (!session) {
+      mostrarFeedback('Sua sessão expirou. Faça login novamente.', 'error');
+      window.location.href = '/auth/perfil';
+      return;
+    }
+
+    const capataz = form.querySelector('select[name="capatazRetiro"]');
+    const atividade = form.querySelector('select[name="atividade"]');
+    const prioridade = form.querySelector('select[name="prioridade"]');
+    const descricao = form.querySelector('textarea[name="descricao"]');
+
+    if (!capataz || !atividade || !prioridade || !descricao) {
+      mostrarFeedback('Formulário incompleto.', 'error');
+      return;
+    }
+
+    if (capataz.dataset.loaded !== 'true') {
+      mostrarFeedback('Os capatazes ainda não foram carregados.', 'error');
+      return;
+    }
+
+    const payload = {
+      retiro_id: session.usuario.retiro_id,
+      atribuida_a: capataz.value,
+      descricao: descricao.value.trim(),
+      categoria: atividade.value,
+      prioridade: prioridade.value,
+      usuarioCriador: session.usuario,
+    };
+
+    if (!payload.atribuida_a || !payload.categoria || !payload.prioridade || !payload.descricao) {
+      mostrarFeedback('Preencha todos os campos obrigatórios.', 'error');
+      return;
+    }
+
+    const botao = form.querySelector('button[type="submit"]');
+    if (botao) {
+      botao.disabled = true;
+      botao.textContent = 'Enviando...';
+    }
+
+    try {
+      const response = await fetch('/tarefas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Não foi possível enviar a tarefa');
+      }
+
+      mostrarFeedback('Tarefa enviada com sucesso.', 'success');
+      form.reset();
+
+      document.querySelectorAll('.dfield__select').forEach(select => atualizarEstadoSelect(select));
+      document.querySelectorAll('textarea[name="descricao"]').forEach(textarea => {
+        textarea.value = '';
+      });
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao enviar tarefa', 'error');
+    } finally {
+      if (botao) {
+        botao.disabled = false;
+        botao.textContent = form.id === 'form-delegar-desktop' ? 'Enviar tarefa' : 'Enviar';
+      }
+    }
+  }
+
+  document.querySelectorAll('#form-delegar, #form-delegar-desktop').forEach(form => {
+    form.addEventListener('submit', enviarTarefa);
   });
+
+  document.querySelectorAll('.dfield__select').forEach(select => {
+    atualizarEstadoSelect(select);
+    select.addEventListener('change', () => atualizarEstadoSelect(select));
+  });
+
+  carregarCapatazes();
 </script>
 
 </body>

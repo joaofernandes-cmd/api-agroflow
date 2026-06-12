@@ -6,6 +6,7 @@ jest.mock('../../services/sincronizacao.service', () => ({
   SincronizacaoService: {
     buscarMovimentacoesParaRelatrio: jest.fn(),
     buscarTarefasParaRelatrio: jest.fn(),
+    buscarTicketsParaDashboard: jest.fn(),
   },
 }))
 
@@ -20,7 +21,7 @@ describe('RelatorioService', () => {
   it('buscarDadosMovimentacoes deve filtrar por periodo', async () => {
     mockedSincronizacao.buscarMovimentacoesParaRelatrio.mockResolvedValueOnce([
       { ...mockMovimentacaoValidada, data_criacao: new Date('2026-05-25T10:00:00.000Z') } as any,
-      { ...mockMovimentacaoValidada, id: 2, data_criacao: new Date('2026-05-29T10:00:00.000Z') } as any,
+      { ...mockMovimentacaoValidada, id: '00000000-0000-4000-8000-000000000202', data_criacao: new Date('2026-05-29T10:00:00.000Z') } as any,
     ])
 
     const resultado = await RelatorioService.buscarDadosMovimentacoes(
@@ -30,13 +31,13 @@ describe('RelatorioService', () => {
     )
 
     expect(resultado).toHaveLength(1)
-    expect(resultado[0].id).toBe(2)
+    expect(resultado[0].id).toBe('00000000-0000-4000-8000-000000000202')
   })
 
   it('buscarDadosTarefas deve filtrar por periodo', async () => {
     mockedSincronizacao.buscarTarefasParaRelatrio.mockResolvedValueOnce([
       { ...mockTarefa, data_criacao: new Date('2026-05-25T10:00:00.000Z') } as any,
-      { ...mockTarefa, id: 12, data_criacao: new Date('2026-05-29T10:00:00.000Z') } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', data_criacao: new Date('2026-05-29T10:00:00.000Z') } as any,
     ])
 
     const resultado = await RelatorioService.buscarDadosTarefas(
@@ -46,7 +47,7 @@ describe('RelatorioService', () => {
     )
 
     expect(resultado).toHaveLength(1)
-    expect(resultado[0].id).toBe(12)
+    expect(resultado[0].id).toBe('00000000-0000-4000-8000-000000000302')
   })
 
   it('formatarRelatorioMovimentacoes deve mapear campos da planilha', async () => {
@@ -63,7 +64,7 @@ describe('RelatorioService', () => {
       expect.objectContaining({
         Data: '29/05/2026',
         Tipo: 'nascimento',
-        Retiro: 1,
+        Retiro: '00000000-0000-4000-8000-000000000001',
         Origem: 'Acurizal',
         Destino: '-',
         Quantidade: 1,
@@ -73,17 +74,35 @@ describe('RelatorioService', () => {
     ])
   })
 
+  it('gerarCsv deve criar arquivo com cabecalho e proteger formulas', () => {
+    const csv = RelatorioService.gerarCsv([
+      { Nome: '=SOMA(1;1)', Quantidade: 2 },
+    ]).toString('utf8')
+
+    expect(csv).toContain('"Nome";"Quantidade"')
+    expect(csv).toContain('"\'=SOMA(1;1)";"2"')
+  })
+
+  it('gerarXlsx deve criar uma planilha valida', async () => {
+    const arquivo = await RelatorioService.gerarXlsx([
+      { Data: '12/06/2026', Quantidade: 2 },
+    ], 'movimentacoes')
+
+    expect(arquivo.subarray(0, 2).toString()).toBe('PK')
+    expect(arquivo.length).toBeGreaterThan(1000)
+  })
+
   it('gerarRelatorioSemanal deve usar janela de 7 dias', async () => {
     jest.useFakeTimers()
     jest.setSystemTime(new Date('2026-06-10T12:00:00.000Z'))
 
     const spy = jest.spyOn(RelatorioService, 'formatarRelatorioMovimentacoes').mockResolvedValue([])
 
-    await RelatorioService.gerarRelatorioSemanal(1)
+    await RelatorioService.gerarRelatorioSemanal('00000000-0000-4000-8000-000000000001')
 
     expect(spy).toHaveBeenCalledTimes(1)
     const [dataInicio, dataFim, retiroId] = spy.mock.calls[0]
-    expect(retiroId).toBe(1)
+    expect(retiroId).toBe('00000000-0000-4000-8000-000000000001')
     expect(dataFim.getTime()).toBe(new Date('2026-06-10T12:00:00.000Z').getTime())
     expect(dataInicio.getTime()).toBe(new Date('2026-06-03T12:00:00.000Z').getTime())
 
@@ -97,11 +116,11 @@ describe('RelatorioService', () => {
 
     const spy = jest.spyOn(RelatorioService, 'formatarRelatorioMovimentacoes').mockResolvedValue([])
 
-    await RelatorioService.gerarRelatorioMensal(1)
+    await RelatorioService.gerarRelatorioMensal('00000000-0000-4000-8000-000000000001')
 
     expect(spy).toHaveBeenCalledTimes(1)
     const [dataInicio, dataFim, retiroId] = spy.mock.calls[0]
-    expect(retiroId).toBe(1)
+    expect(retiroId).toBe('00000000-0000-4000-8000-000000000001')
     expect(dataFim.getTime()).toBe(new Date('2026-06-10T12:00:00.000Z').getTime())
     expect(dataInicio.getTime()).toBe(new Date('2026-05-11T12:00:00.000Z').getTime())
 

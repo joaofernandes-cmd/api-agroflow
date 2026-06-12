@@ -38,7 +38,8 @@ describe('Tickets', () => {
 
   it('POST /tickets deve criar ticket', async () => {
     const response = await request(app).post('/tickets').send({
-      retiro_id: 1,
+      id: mockTicket.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
       categoria: 'cerca',
       localizacao: mockTicket.localizacao,
       descricao: mockTicket.descricao,
@@ -49,6 +50,11 @@ describe('Tickets', () => {
 
     expect(response.status).toBe(201)
     expect(response.body).toEqual(mockTicket)
+    expect(mockedService.criar).toHaveBeenCalledWith(
+      expect.objectContaining({ id: mockTicket.id }),
+      mockCapataz,
+      true
+    )
   })
 
   it('GET /tickets deve listar todos os tickets', async () => {
@@ -59,49 +65,49 @@ describe('Tickets', () => {
   })
 
   it('GET /tickets/pendentes deve listar tickets pendentes', async () => {
-    const response = await request(app).get('/tickets/pendentes').query({ retiroId: 1 })
+    const response = await request(app).get('/tickets/pendentes').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTicket])
   })
 
   it('GET /tickets/status deve filtrar por status', async () => {
-    const response = await request(app).get('/tickets/status').query({ status: 'pendente', retiroId: 1 })
+    const response = await request(app).get('/tickets/status').query({ status: 'pendente', retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTicket])
   })
 
   it('GET /tickets/prioridade deve filtrar por prioridade', async () => {
-    const response = await request(app).get('/tickets/prioridade').query({ prioridade: 'media', retiroId: 1 })
+    const response = await request(app).get('/tickets/prioridade').query({ prioridade: 'media', retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTicket])
   })
 
   it('GET /tickets/categoria deve filtrar por categoria', async () => {
-    const response = await request(app).get('/tickets/categoria').query({ categoria: 'cerca', retiroId: 1 })
+    const response = await request(app).get('/tickets/categoria').query({ categoria: 'cerca', retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTicket])
   })
 
   it('GET /tickets/contagem/prioridade deve retornar contagem por prioridade', async () => {
-    const response = await request(app).get('/tickets/contagem/prioridade').query({ retiroId: 1 })
+    const response = await request(app).get('/tickets/contagem/prioridade').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({ alta: 0, media: 1, baixa: 0 })
   })
 
   it('GET /tickets/:id deve buscar ticket por id', async () => {
-    const response = await request(app).get('/tickets/21')
+    const response = await request(app).get('/tickets/00000000-0000-4000-8000-000000000401')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockTicket)
   })
 
   it('PATCH /tickets/:id/status deve atualizar status', async () => {
-    const response = await request(app).patch('/tickets/21/status').send({
+    const response = await request(app).patch('/tickets/00000000-0000-4000-8000-000000000401/status').send({
       novoStatus: 'aprovado',
     })
 
@@ -110,7 +116,7 @@ describe('Tickets', () => {
   })
 
   it('PATCH /tickets/:id/prioridade deve alterar prioridade', async () => {
-    const response = await request(app).patch('/tickets/21/prioridade').send({
+    const response = await request(app).patch('/tickets/00000000-0000-4000-8000-000000000401/prioridade').send({
       novaPrioridade: 'alta',
     })
 
@@ -119,7 +125,7 @@ describe('Tickets', () => {
   })
 
   it('PATCH /tickets/:id/atribuicao deve atribuir ticket', async () => {
-    const response = await request(app).patch('/tickets/21/atribuicao').send({
+    const response = await request(app).patch('/tickets/00000000-0000-4000-8000-000000000401/atribuicao').send({
       usuarioId: mockCapataz.id,
     })
 

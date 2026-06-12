@@ -1,13 +1,14 @@
 import type { UsuarioCargo } from '../models/usuario.model'
+import type { UUID } from '../models/uuid'
 
 declare global {
   namespace Express {
     interface Request {
       usuario?: {
-        id: string
+        id: UUID
         login: string
         cargo: UsuarioCargo
-        retiro_id: number
+        retiro_id: UUID
       }
     }
   }

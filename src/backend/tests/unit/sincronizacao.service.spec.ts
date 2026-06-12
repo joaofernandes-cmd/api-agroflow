@@ -82,10 +82,10 @@ describe('SincronizacaoService', () => {
     mockedMovRepo.buscarTodos.mockResolvedValueOnce([
       mockMovimentacao as any,
       mockMovimentacaoValidada as any,
-      { ...mockMovimentacaoValidada, id: 2, retiro_id: 2 } as any,
+      { ...mockMovimentacaoValidada, id: '00000000-0000-4000-8000-000000000202', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const resultado = await SincronizacaoService.buscarMovimentacoesParaRelatrio(1)
+    const resultado = await SincronizacaoService.buscarMovimentacoesParaRelatrio('00000000-0000-4000-8000-000000000001')
 
     expect(resultado).toEqual([mockMovimentacaoValidada])
   })
@@ -93,25 +93,25 @@ describe('SincronizacaoService', () => {
   it('buscarTarefasParaRelatrio deve retornar apenas aprovadas e sincronizadas', async () => {
     mockedTarefaRepo.buscarTodos.mockResolvedValueOnce([
       mockTarefa as any,
-      { ...mockTarefa, id: 12, status: 'aprovado', sincronizado: true } as any,
-      { ...mockTarefa, id: 13, status: 'aprovado', sincronizado: true, retiro_id: 2 } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', status: 'aprovado', sincronizado: true } as any,
+      { ...mockTarefa, id: '00000000-0000-4000-8000-000000000303', status: 'aprovado', sincronizado: true, retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const resultado = await SincronizacaoService.buscarTarefasParaRelatrio(1)
+    const resultado = await SincronizacaoService.buscarTarefasParaRelatrio('00000000-0000-4000-8000-000000000001')
 
-    expect(resultado).toEqual([{ ...mockTarefa, id: 12, status: 'aprovado', sincronizado: true }])
+    expect(resultado).toEqual([{ ...mockTarefa, id: '00000000-0000-4000-8000-000000000302', status: 'aprovado', sincronizado: true }])
   })
 
   it('buscarTicketsParaDashboard deve retornar apenas aprovados e sincronizados', async () => {
     mockedTicketRepo.buscarTodos.mockResolvedValueOnce([
       mockTicket as any,
-      { ...mockTicket, id: 22, status: 'aprovado', sincronizado: true } as any,
-      { ...mockTicket, id: 23, status: 'aprovado', sincronizado: true, retiro_id: 2 } as any,
+      { ...mockTicket, id: '00000000-0000-4000-8000-000000000402', status: 'aprovado', sincronizado: true } as any,
+      { ...mockTicket, id: '00000000-0000-4000-8000-000000000403', status: 'aprovado', sincronizado: true, retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const resultado = await SincronizacaoService.buscarTicketsParaDashboard(1)
+    const resultado = await SincronizacaoService.buscarTicketsParaDashboard('00000000-0000-4000-8000-000000000001')
 
-    expect(resultado).toEqual([{ ...mockTicket, id: 22, status: 'aprovado', sincronizado: true }])
+    expect(resultado).toEqual([{ ...mockTicket, id: '00000000-0000-4000-8000-000000000402', status: 'aprovado', sincronizado: true }])
   })
 
   it('sincronizar deve retornar erro quando nao houver conexao', async () => {

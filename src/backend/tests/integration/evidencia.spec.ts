@@ -21,15 +21,15 @@ describe('Evidencias', () => {
     mockedService.buscarPorId.mockResolvedValue(mockEvidencia as any)
     mockedService.criarMensagem.mockResolvedValue({
       evidencia: mockEvidencia,
-      mensagem: { evidencia_id: 31, conteudo: 'Mensagem descritiva valida' },
+      mensagem: { evidencia_id: '00000000-0000-4000-8000-000000000501', conteudo: 'Mensagem descritiva valida' },
     } as any)
     mockedService.criarAudio.mockResolvedValue({
       evidencia: mockEvidencia,
-      audio: { evidencia_id: 31, url_arquivo: 'audio.mp3' },
+      audio: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'audio.mp3' },
     } as any)
     mockedService.criarFoto.mockResolvedValue({
       evidencia: mockEvidencia,
-      foto: { evidencia_id: 31, url_arquivo: 'foto.jpg', latitude: -19.9, longitude: -57.6 },
+      foto: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'foto.jpg', latitude: -19.9, longitude: -57.6 },
     } as any)
   })
 
@@ -41,7 +41,7 @@ describe('Evidencias', () => {
   })
 
   it('GET /evidencias/:id deve buscar evidencias por id', async () => {
-    const response = await request(app).get('/evidencias/31')
+    const response = await request(app).get('/evidencias/00000000-0000-4000-8000-000000000501')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockEvidencia)
@@ -56,7 +56,7 @@ describe('Evidencias', () => {
     expect(response.status).toBe(201)
     expect(response.body).toMatchObject({
       evidencia: mockEvidencia,
-      mensagem: { evidencia_id: 31, conteudo: 'Mensagem descritiva valida' },
+      mensagem: { evidencia_id: '00000000-0000-4000-8000-000000000501', conteudo: 'Mensagem descritiva valida' },
     })
   })
 
@@ -70,7 +70,7 @@ describe('Evidencias', () => {
     expect(response.status).toBe(201)
     expect(response.body).toMatchObject({
       evidencia: mockEvidencia,
-      audio: { evidencia_id: 31, url_arquivo: 'audio.mp3' },
+      audio: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'audio.mp3' },
     })
   })
 
@@ -85,7 +85,7 @@ describe('Evidencias', () => {
     expect(response.status).toBe(201)
     expect(response.body).toMatchObject({
       evidencia: mockEvidencia,
-      foto: { evidencia_id: 31, url_arquivo: 'foto.jpg' },
+      foto: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'foto.jpg' },
     })
   })
 })

@@ -1,5 +1,10 @@
 import { Request, Response } from 'express'
-import { RelatorioService } from '../services/relatorio.service'
+import { converterUUID } from '../models/uuid'
+import {
+  FormatoRelatorioExportacao,
+  RelatorioService,
+  TipoRelatorioExportacao,
+} from '../services/relatorio.service'
 
 // Converte uma string de query em Date.
 // Se o valor vier vazio, retorna undefined.
@@ -18,13 +23,26 @@ function converterDataQuery(valor: unknown): Date | undefined | null {
   return data
 }
 
-function converterNumeroQuery(valor: unknown): number | undefined | null {
+function converterUuidQuery(valor: unknown): string | undefined | null {
   if (valor === undefined || valor === null || valor === '') {
     return undefined
   }
 
-  const numero = Number(valor)
-  return Number.isNaN(numero) ? null : numero
+  return converterUUID(valor)
+}
+
+function converterTipoExportacao(valor: unknown): TipoRelatorioExportacao | null {
+  const tipo = String(valor ?? 'movimentacoes')
+  return ['movimentacoes', 'tarefas', 'tickets'].includes(tipo)
+    ? tipo as TipoRelatorioExportacao
+    : null
+}
+
+function converterFormatoExportacao(valor: unknown): FormatoRelatorioExportacao | null {
+  const formato = String(valor ?? 'xlsx')
+  return ['xlsx', 'csv'].includes(formato)
+    ? formato as FormatoRelatorioExportacao
+    : null
 }
 
 export const RelatorioController = {
@@ -58,7 +76,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -84,7 +102,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -109,7 +127,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -129,10 +147,79 @@ export const RelatorioController = {
     }
   },
 
+  async buscarDadosTickets(req: Request, res: Response) {
+    try {
+      const dataInicio = converterDataQuery(req.query.dataInicio)
+      const dataFim = converterDataQuery(req.query.dataFim)
+      const retiroId = converterUuidQuery(req.query.retiroId)
+
+      if (dataInicio === null || dataFim === null) {
+        return res.status(400).json({ error: 'Datas invalidas em dataInicio ou dataFim' })
+      }
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro invalido' })
+      }
+
+      const dados = await RelatorioService.buscarDadosTickets(dataInicio, dataFim, retiroId)
+      return res.status(200).json(dados)
+    } catch (error) {
+      return res.status(500).json({
+        error: error instanceof Error ? error.message : 'Erro ao buscar dados de tickets',
+      })
+    }
+  },
+
+  async exportar(req: Request, res: Response) {
+    try {
+      const dataInicio = converterDataQuery(req.query.dataInicio)
+      const dataFim = converterDataQuery(req.query.dataFim)
+      const retiroId = converterUuidQuery(req.query.retiroId)
+      const tipo = converterTipoExportacao(req.query.tipo)
+      const formato = converterFormatoExportacao(req.query.formato)
+
+      if (dataInicio === null || dataFim === null) {
+        return res.status(400).json({ error: 'Datas invalidas em dataInicio ou dataFim' })
+      }
+
+      if (retiroId === null) {
+        return res.status(400).json({ error: 'Retiro invalido' })
+      }
+
+      if (!tipo || !formato) {
+        return res.status(400).json({ error: 'Tipo ou formato de exportacao invalido' })
+      }
+
+      const arquivo = await RelatorioService.gerarArquivo(
+        tipo,
+        formato,
+        dataInicio,
+        dataFim,
+        retiroId
+      )
+      const data = new Date().toISOString().slice(0, 10)
+      const nomeArquivo = `relatorio-${tipo}-${data}.${formato}`
+
+      res.setHeader(
+        'Content-Type',
+        formato === 'xlsx'
+          ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          : 'text/csv; charset=utf-8'
+      )
+      res.setHeader('Content-Disposition', `attachment; filename="${nomeArquivo}"`)
+
+      return res.status(200).send(arquivo)
+    } catch (error) {
+      return res.status(500).json({
+        error: error instanceof Error ? error.message : 'Erro ao exportar relatorio',
+      })
+    }
+  },
+
   // RN07: Gera o relatório semanal usando os últimos 7 dias.
   async gerarRelatorioSemanal(req: Request, res: Response) {
     try {
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -151,7 +238,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório mensal usando os últimos 30 dias.
   async gerarRelatorioMensal(req: Request, res: Response) {
     try {
-      const retiroId = converterNumeroQuery(req.query.retiroId)
+      const retiroId = converterUuidQuery(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

@@ -13,9 +13,11 @@ relatorioRoutes.use(exigirCargo('gerente', 'supervisor'))
 // Dados brutos usados na montagem de relatórios
 relatorioRoutes.get('/movimentacoes/dados', RelatorioController.buscarDadosMovimentacoes)
 relatorioRoutes.get('/tarefas/dados', RelatorioController.buscarDadosTarefas)
+relatorioRoutes.get('/tickets/dados', RelatorioController.buscarDadosTickets)
 
 // Relatório de movimentações formatado para exportação em planilha
 relatorioRoutes.get('/movimentacoes', RelatorioController.formatarRelatorioMovimentacoes)
+relatorioRoutes.get('/exportar', RelatorioController.exportar)
 
 // Relatórios prontos por período padrão
 relatorioRoutes.get('/semanal', RelatorioController.gerarRelatorioSemanal)

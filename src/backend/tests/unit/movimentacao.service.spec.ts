@@ -1,5 +1,7 @@
 import { MovimentacaoService } from '../../services/movimentacao.service'
 import { MovimentacaoRepository } from '../../repositories/movimentacao.repository'
+import { EvidenciaService } from '../../services/evidencia.service'
+import { EvidenciaMovimentacaoRepository } from '../../repositories/evidencia-movimentacao.repository'
 import { mockMovimentacao, mockMovimentacaoValidada } from '../helpers/fixtures'
 
 jest.mock('../../repositories/movimentacao.repository', () => ({
@@ -12,10 +14,28 @@ jest.mock('../../repositories/movimentacao.repository', () => ({
   },
 }))
 
+jest.mock('../../services/evidencia.service', () => ({
+  EvidenciaService: {
+    validarEvidenciaDescritiva: jest.fn(),
+    validarGeorreferenciamento: jest.fn(),
+    criarMensagem: jest.fn(),
+    criarAudio: jest.fn(),
+    criarFoto: jest.fn(),
+  },
+}))
+
+jest.mock('../../repositories/evidencia-movimentacao.repository', () => ({
+  EvidenciaMovimentacaoRepository: {
+    criar: jest.fn(),
+  },
+}))
+
 const mockedRepository = MovimentacaoRepository as jest.Mocked<typeof MovimentacaoRepository>
+const mockedEvidenciaService = EvidenciaService as jest.Mocked<typeof EvidenciaService>
+const mockedVinculoRepo = EvidenciaMovimentacaoRepository as jest.Mocked<typeof EvidenciaMovimentacaoRepository>
 
 const baseMovimentacao = {
-  retiro_id: 1,
+  retiro_id: '00000000-0000-4000-8000-000000000001',
   capataz_id: 'user-003',
   estagio_vida: 'BEZERRO 0 A 7 MESES' as const,
 }
@@ -27,6 +47,12 @@ describe('MovimentacaoService', () => {
     mockedRepository.criar.mockResolvedValue(mockMovimentacao as any)
     mockedRepository.atualizar.mockResolvedValue(mockMovimentacaoValidada as any)
     mockedRepository.remover.mockResolvedValue(undefined)
+    mockedEvidenciaService.validarEvidenciaDescritiva.mockImplementation(() => undefined)
+    mockedEvidenciaService.validarGeorreferenciamento.mockImplementation(() => undefined)
+    mockedEvidenciaService.criarMensagem.mockResolvedValue({ evidencia: { id: '00000000-0000-4000-8000-000000000501' }, mensagem: { evidencia_id: '00000000-0000-4000-8000-000000000501', conteudo: 'Mensagem valida de evidencia' } } as any)
+    mockedEvidenciaService.criarAudio.mockResolvedValue({ evidencia: { id: '00000000-0000-4000-8000-000000000501' }, audio: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'audio.mp3' } } as any)
+    mockedEvidenciaService.criarFoto.mockResolvedValue({ evidencia: { id: '00000000-0000-4000-8000-000000000501' }, foto: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'foto.jpg', latitude: -20, longitude: -55 } } as any)
+    mockedVinculoRepo.criar.mockResolvedValue({ evidencia_id: '00000000-0000-4000-8000-000000000501', movimentacao_id: '00000000-0000-4000-8000-000000000201' } as any)
   })
 
   it('validarCamposObrigatorios deve exigir capataz_id', () => {
@@ -137,6 +163,25 @@ describe('MovimentacaoService', () => {
     )
   })
 
+  it('criar deve registrar evidencia de mensagem quando fornecida', async () => {
+    await MovimentacaoService.criar({
+      ...baseMovimentacao,
+      tipo: 'nascimento',
+      origem: 'Acurizal',
+      quantidade: 1,
+      evidencia: {
+        tipo: 'mensagem',
+        conteudo: 'Mensagem valida de evidencia',
+      },
+    })
+
+    expect(mockedEvidenciaService.criarMensagem).toHaveBeenCalled()
+    expect(mockedVinculoRepo.criar).toHaveBeenCalledWith({
+      evidencia_id: '00000000-0000-4000-8000-000000000501',
+      movimentacao_id: '00000000-0000-4000-8000-000000000201',
+    })
+  })
+
   it('sincronizarRecebida deve gravar como sincronizada', async () => {
     const movimentacao = await MovimentacaoService.sincronizarRecebida({
       ...baseMovimentacao,
@@ -154,13 +199,34 @@ describe('MovimentacaoService', () => {
     )
   })
 
+  it('sincronizarRecebida deve registrar evidencia quando fornecida', async () => {
+    await MovimentacaoService.sincronizarRecebida({
+      ...baseMovimentacao,
+      tipo: 'transferencia',
+      origem: 'Acurizal',
+      destino: 'Aroeira',
+      quantidade: 1,
+      evidencia: {
+        tipo: 'audio',
+        urlArquivo: 'audio.mp3',
+        duracao: 5,
+      },
+    })
+
+    expect(mockedEvidenciaService.criarAudio).toHaveBeenCalled()
+    expect(mockedVinculoRepo.criar).toHaveBeenCalledWith({
+      evidencia_id: '00000000-0000-4000-8000-000000000501',
+      movimentacao_id: '00000000-0000-4000-8000-000000000201',
+    })
+  })
+
   it('filtrar deve respeitar retiro tipo status e periodo', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockMovimentacao as any,
       {
         ...mockMovimentacaoValidada,
-        id: 99,
-        retiro_id: 2,
+        id: '00000000-0000-4000-8000-000000000299',
+        retiro_id: '00000000-0000-4000-8000-000000000002',
         tipo: 'morte',
         status: 'validado',
         data_criacao: new Date('2026-05-28T10:00:00.000Z'),
@@ -168,7 +234,7 @@ describe('MovimentacaoService', () => {
     ])
 
     const filtradas = await MovimentacaoService.filtrar(
-      1,
+      '00000000-0000-4000-8000-000000000001',
       ['nascimento'],
       ['pendente'],
       new Date('2026-05-29T00:00:00.000Z'),
@@ -181,7 +247,7 @@ describe('MovimentacaoService', () => {
   it('buscarParaRelatorio deve retornar apenas sincronizadas e validadas', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([mockMovimentacao as any, mockMovimentacaoValidada as any])
 
-    const relatorio = await MovimentacaoService.buscarParaRelatorio(1)
+    const relatorio = await MovimentacaoService.buscarParaRelatorio('00000000-0000-4000-8000-000000000001')
 
     expect(relatorio).toEqual([mockMovimentacaoValidada])
   })
@@ -189,7 +255,7 @@ describe('MovimentacaoService', () => {
   it('buscarParaDashboard deve retornar apenas sincronizadas e validadas', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([mockMovimentacao as any, mockMovimentacaoValidada as any])
 
-    const dashboard = await MovimentacaoService.buscarParaDashboard(1)
+    const dashboard = await MovimentacaoService.buscarParaDashboard('00000000-0000-4000-8000-000000000001')
 
     expect(dashboard).toEqual([mockMovimentacaoValidada])
   })
@@ -197,26 +263,26 @@ describe('MovimentacaoService', () => {
   it('sincronizar deve retornar null quando movimentacao nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const resultado = await MovimentacaoService.sincronizar(999)
+    const resultado = await MovimentacaoService.sincronizar('00000000-0000-4000-8000-000000000999')
 
     expect(resultado).toBeNull()
   })
 
   it('sincronizar deve marcar movimentacao como sincronizada', async () => {
-    const resultado = await MovimentacaoService.sincronizar(1)
+    const resultado = await MovimentacaoService.sincronizar('00000000-0000-4000-8000-000000000201')
 
     expect(resultado).toEqual(mockMovimentacaoValidada)
-    expect(mockedRepository.atualizar).toHaveBeenCalledWith(1, { sincronizado: true })
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201', { sincronizado: true })
   })
 
   it('listarPendentes deve filtrar apenas pendentes do retiro', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockMovimentacao as any,
       mockMovimentacaoValidada as any,
-      { ...mockMovimentacao, id: 2, retiro_id: 2 } as any,
+      { ...mockMovimentacao, id: '00000000-0000-4000-8000-000000000202', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const pendentes = await MovimentacaoService.listarPendentes(1)
+    const pendentes = await MovimentacaoService.listarPendentes('00000000-0000-4000-8000-000000000001')
 
     expect(pendentes).toEqual([mockMovimentacao])
   })
@@ -224,11 +290,11 @@ describe('MovimentacaoService', () => {
   it('contarPorTipo deve somar apenas registros aprovados e sincronizados', async () => {
     mockedRepository.buscarTodos.mockResolvedValueOnce([
       mockMovimentacaoValidada as any,
-      { ...mockMovimentacaoValidada, id: 2, tipo: 'morte', retiro_id: 1 } as any,
-      { ...mockMovimentacaoValidada, id: 3, tipo: 'compra', retiro_id: 2 } as any,
+      { ...mockMovimentacaoValidada, id: '00000000-0000-4000-8000-000000000202', tipo: 'morte', retiro_id: '00000000-0000-4000-8000-000000000001' } as any,
+      { ...mockMovimentacaoValidada, id: '00000000-0000-4000-8000-000000000203', tipo: 'compra', retiro_id: '00000000-0000-4000-8000-000000000002' } as any,
     ])
 
-    const contagem = await MovimentacaoService.contarPorTipo(1)
+    const contagem = await MovimentacaoService.contarPorTipo('00000000-0000-4000-8000-000000000001')
 
     expect(contagem).toMatchObject({
       nascimento: 1,
@@ -243,20 +309,20 @@ describe('MovimentacaoService', () => {
   it('atualizar deve retornar null quando movimentacao nao existe', async () => {
     mockedRepository.buscarPorId.mockResolvedValueOnce(null)
 
-    const resultado = await MovimentacaoService.atualizar(999, { quantidade: 2 })
+    const resultado = await MovimentacaoService.atualizar('00000000-0000-4000-8000-000000000999', { quantidade: 2 })
 
     expect(resultado).toBeNull()
   })
 
   it('atualizar deve revalidar quando houver alteracao estrutural', async () => {
-    const resultado = await MovimentacaoService.atualizar(1, {
+    const resultado = await MovimentacaoService.atualizar('00000000-0000-4000-8000-000000000201', {
       tipo: 'nascimento',
       origem: 'Acurizal',
       quantidade: 2,
     })
 
     expect(resultado).toEqual(mockMovimentacaoValidada)
-    expect(mockedRepository.atualizar).toHaveBeenCalledWith(1, {
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201', {
       tipo: 'nascimento',
       origem: 'Acurizal',
       quantidade: 2,
@@ -264,15 +330,15 @@ describe('MovimentacaoService', () => {
   })
 
   it('atualizar deve delegar quando nao houver alteracao estrutural', async () => {
-    const resultado = await MovimentacaoService.atualizar(1, { sincronizado: true })
+    const resultado = await MovimentacaoService.atualizar('00000000-0000-4000-8000-000000000201', { sincronizado: true })
 
     expect(resultado).toEqual(mockMovimentacaoValidada)
-    expect(mockedRepository.atualizar).toHaveBeenCalledWith(1, { sincronizado: true })
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201', { sincronizado: true })
   })
 
   it('remover deve delegar para o repository', async () => {
-    await MovimentacaoService.remover(1)
+    await MovimentacaoService.remover('00000000-0000-4000-8000-000000000201')
 
-    expect(mockedRepository.remover).toHaveBeenCalledWith(1)
+    expect(mockedRepository.remover).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
   })
 })
