@@ -4247,7 +4247,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 57). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`), além dos arquivos de entrada `index.ejs`.
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 57). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`).
 
 <div align="center">
 <p align="center">Figura 57 - Estrutura de views do Capataz</p>
