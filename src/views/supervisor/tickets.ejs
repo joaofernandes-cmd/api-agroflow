@@ -27,9 +27,19 @@
     <h1 class="topnav__title">Tickets de infraestrutura</h1>
   </header>
 
-  <!-- Filtro + badge -->
-  <div class="tickets-filter-bar">
-    <span class="tickets-filter-label">Todos os tickets</span>
+  <!-- Barra de busca + badge -->
+  <div class="tickets-filter-bar" role="search">
+    <div class="revisao-search-wrap">
+      <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        class="tickets-search"
+        type="search"
+        placeholder="Pesquisar chamados"
+        aria-label="Pesquisar chamados"
+      />
+    </div>
     <span class="tickets-badge-ativos">3 ativos</span>
   </div>
 
@@ -44,7 +54,7 @@
       </div>
       <span class="sev-badge sev-badge--alta">Alta</span>
       <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="https://www.figma.com/api/mcp/asset/14cb9276-a11c-4319-ac72-a804ca406a77" alt="" width="24" height="24" />
+        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
       </button>
     </article>
 
@@ -56,7 +66,7 @@
       </div>
       <span class="sev-badge sev-badge--media">Média</span>
       <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="https://www.figma.com/api/mcp/asset/4a9950c7-2741-4372-a4ab-bff9dab23649" alt="" width="24" height="24" />
+        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
       </button>
     </article>
 
@@ -68,7 +78,7 @@
       </div>
       <span class="sev-badge sev-badge--alta">Alta</span>
       <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="https://www.figma.com/api/mcp/asset/4a9950c7-2741-4372-a4ab-bff9dab23649" alt="" width="24" height="24" />
+        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
       </button>
     </article>
 
@@ -80,7 +90,7 @@
       </div>
       <span class="sev-badge sev-badge--alta">Alta</span>
       <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="https://www.figma.com/api/mcp/asset/4a9950c7-2741-4372-a4ab-bff9dab23649" alt="" width="24" height="24" />
+        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
       </button>
     </article>
 
@@ -92,7 +102,7 @@
       </div>
       <span class="sev-badge sev-badge--baixa">Baixa</span>
       <button class="ticket-card__check" aria-label="Resolvido">
-        <img src="https://www.figma.com/api/mcp/asset/14cb9276-a11c-4319-ac72-a804ca406a77" alt="" width="24" height="24" />
+        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
       </button>
     </article>
 
@@ -104,7 +114,7 @@
       </div>
       <span class="sev-badge sev-badge--media">Média</span>
       <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="https://www.figma.com/api/mcp/asset/14cb9276-a11c-4319-ac72-a804ca406a77" alt="" width="24" height="24" />
+        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
       </button>
     </article>
 
@@ -172,7 +182,7 @@
               <td>Hoje, 08:24</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
               <td><span class="badge badge--red-soft">Ativo</span></td>
-              <td><button class="btn-atender">Atender</button></td>
+              <td><button class="btn-validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
               <td class="td--accent td--accent-yellow"></td>
@@ -181,7 +191,7 @@
               <td>Hoje, 10:45</td>
               <td><span class="badge badge--yellow">Média</span></td>
               <td><span class="badge badge--red-soft">Ativo</span></td>
-              <td><button class="btn-atender">Atender</button></td>
+              <td><button class="btn-validar">Validar</button></td>
             </tr>
             <tr>
               <td class="td--accent td--accent-red"></td>
@@ -190,7 +200,7 @@
               <td>Amanhã</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="btn-atender">Atender</button></td>
+              <td><button class="btn-validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
               <td class="td--accent td--accent-red"></td>
@@ -199,7 +209,7 @@
               <td>em 3 dias</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="btn-atender">Atender</button></td>
+              <td><button class="btn-validar">Validar</button></td>
             </tr>
             <tr>
               <td class="td--accent td--accent-blue"></td>
@@ -207,8 +217,8 @@
               <td>Bodoquena 2</td>
               <td>há 5 dias</td>
               <td><span class="badge badge--blue">Baixa</span></td>
-              <td><span class="badge badge--green">Resolvido</span></td>
-              <td><button class="btn-ver">Ver</button></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><button class="btn-validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
               <td class="td--accent td--accent-yellow"></td>
@@ -217,7 +227,7 @@
               <td>em 4 dias</td>
               <td><span class="badge badge--yellow">Média</span></td>
               <td><span class="badge badge--red-soft">Ativo</span></td>
-              <td><button class="btn-atender">Atender</button></td>
+              <td><button class="btn-validar">Validar</button></td>
             </tr>
           </tbody>
         </table>
@@ -232,6 +242,56 @@
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
+
+  // Toggle check mobile
+  document.querySelectorAll('.ticket-card__check').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      if (!img) return;
+      const checked = img.src.includes('checked.svg') && !img.src.includes('unchecked.svg');
+      img.src = checked ? '/assets/icons/unchecked.svg' : '/assets/icons/checked.svg';
+      btn.setAttribute('aria-label', checked ? 'Marcar como resolvido' : 'Resolvido');
+    });
+  });
+
+  // Toggle Validar → Confirmado
+  document.querySelectorAll('.btn-validar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.closest('tr');
+      if (!row) return;
+      const statusCell = row.querySelector('td:nth-child(6) .badge');
+      if (statusCell) {
+        statusCell.className = 'badge badge--green';
+        statusCell.textContent = 'Resolvido';
+      }
+      btn.className = 'btn-confirmado';
+      btn.textContent = 'Confirmado';
+    });
+  });
+
+  // Filtro de busca — mobile
+  const searchMobile = document.querySelector('.tickets-search');
+  if (searchMobile) {
+    searchMobile.addEventListener('input', function () {
+      const termo = this.value.toLowerCase().trim();
+      document.querySelectorAll('.tickets-list .ticket-card').forEach(card => {
+        const nome = card.querySelector('.ticket-card__name')?.textContent.toLowerCase() ?? '';
+        card.style.display = nome.includes(termo) ? '' : 'none';
+      });
+    });
+  }
+
+  // Filtro de busca — desktop
+  const searchDesktop = document.querySelector('.revisao-search-desktop');
+  if (searchDesktop) {
+    searchDesktop.addEventListener('input', function () {
+      const termo = this.value.toLowerCase().trim();
+      document.querySelectorAll('.revisao-table tbody tr').forEach(row => {
+        const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
+        row.style.display = nome.includes(termo) ? '' : 'none';
+      });
+    });
+  }
 </script>
 
 </body>
