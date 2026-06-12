@@ -4593,7 +4593,9 @@ Preencha os nove blocos do Business Model Canvas de forma coerente com as análi
 
 
 **6.6.2) **Preço**
-*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo de precificação adotado é o de assinatura recorrente B2B (SaaS), com licenciamento por operação e faixas escalonadas conforme o número de retiros e de usuários ativos. A esse valor recorrente soma-se uma taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação. Para reduzir a barreira de adoção, propõe-se um período de piloto assistido em um subconjunto de retiros, convertendo-se em contrato pleno após a comprovação de valor em campo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo (Seção 6.3) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado — métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue — redução de retrabalho, de perdas de informação e de risco regulatório — e não o volume de funcionalidades genéricas.
 
 **6.6.3) **Praça (Distribuição) (até 200 palavras)**
 *Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
