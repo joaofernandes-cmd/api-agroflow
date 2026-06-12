@@ -4240,7 +4240,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 ## <a name="c4.2"></a>4.2. Segunda versão da aplicação web (sprint 4)
 
-*Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
+&nbsp;&nbsp;&nbsp;&nbsp;A segunda versão do AgroFlow consolidou a integração entre o frontend e o backend implementado na Sprint 3, expandindo as funcionalidades disponíveis para cada perfil de usuário e estabelecendo a camada de validação e autorização do sistema. O foco desta sprint foi tornar o sistema operacional de ponta a ponta, conectando os fluxos de campo (capataz), supervisão e gerência em uma aplicação web coesa e funcional.
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
