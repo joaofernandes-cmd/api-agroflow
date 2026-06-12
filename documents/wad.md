@@ -4584,7 +4584,13 @@ Preencha os nove blocos do Business Model Canvas de forma coerente com as análi
 ## <a name="c6.6"></a>6.6 Estratégia de Marketing
 
 **6.6.1) **Produto/Serviço**
-*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow é uma aplicação web de gestão operacional de campo para pecuária bovina de larga escala, disponibilizada em interfaces adaptadas a três perfis de usuário: capataz, supervisor e gerente. Suas funcionalidades centrais cobrem o ciclo completo da informação operacional da fazenda: registro de movimentações do rebanho (nascimentos, mortes com causa de óbito, compras, vendas e transferências), gestão e atribuição de tarefas, abertura de chamados de infraestrutura, anexação de evidências (fotos georreferenciadas com coordenadas GPS, áudios e mensagens) e geração de relatórios exportáveis em formatos compatíveis com os processos já adotados pelo parceiro.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios entregues são diretos: eliminação das boletas de papel e do retrabalho de redigitação, rastreabilidade completa com responsabilização por autor e timestamp, continuidade operacional mesmo sem conexão e adequação às exigências regulatórias crescentes (PNIB, EUDR e agendas ESG). Para a gestão, o dashboard centralizado por retiro consolida indicadores calculados exclusivamente a partir de registros validados, sustentando decisões baseadas em dados confiáveis.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os diferenciais que sustentam o posicionamento são três, raramente integrados em uma única solução: arquitetura offline-first com sincronização automática; interface para baixo letramento digital, com fluxos de no máximo três etapas e linguagem em nível fundamental, que dispensa treinamento; e fluxo de validação hierárquico (capataz registra, supervisor valida, gerente consolida) integrado à coleta de evidências digitais — recurso ausente nos concorrentes diretos.
+
+
 
 **6.6.2) **Preço**
 *Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
