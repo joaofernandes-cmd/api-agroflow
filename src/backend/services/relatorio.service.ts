@@ -1,7 +1,27 @@
 import { SincronizacaoService } from './sincronizacao.service'
 import { Movimentacao } from '../models/movimentacao.model'
 import { Tarefa } from '../models/tarefa.model'
+import { Ticket } from '../models/ticket.model'
 import { UUID } from '../models/uuid'
+import ExcelJS from 'exceljs'
+
+export type TipoRelatorioExportacao = 'movimentacoes' | 'tarefas' | 'tickets'
+export type FormatoRelatorioExportacao = 'xlsx' | 'csv'
+
+type LinhaPlanilha = Record<string, string | number>
+
+function protegerCelula(valor: string | number): string | number {
+  if (typeof valor === 'string' && (/^[=+@]/.test(valor) || /^-(?=.)/.test(valor))) {
+    return `'${valor}`
+  }
+
+  return valor
+}
+
+function escaparCsv(valor: string | number): string {
+  const texto = String(protegerCelula(valor))
+  return `"${texto.replace(/"/g, '""')}"`
+}
 
 // RN07: Relatórios com apenas dados sincronizados (sincronizado=true) e validados
 export const RelatorioService = {
@@ -73,7 +93,7 @@ export const RelatorioService = {
     dataInicio?: Date,
     dataFim?: Date,
     retiroId?: UUID
-  ): Promise<Array<Record<string, string | number>>> {
+  ): Promise<LinhaPlanilha[]> {
     // Busca dados sincronizados e validados
     const movimentacoes = await RelatorioService.buscarDadosMovimentacoes(dataInicio, dataFim, retiroId)
 
@@ -90,9 +110,150 @@ export const RelatorioService = {
     }))
   },
 
+  async formatarRelatorioTarefas(
+    dataInicio?: Date,
+    dataFim?: Date,
+    retiroId?: UUID
+  ): Promise<LinhaPlanilha[]> {
+    const tarefas = await RelatorioService.buscarDadosTarefas(dataInicio, dataFim, retiroId)
+
+    return tarefas.map(t => ({
+      Data: new Date(t.data_criacao).toLocaleDateString('pt-BR'),
+      Retiro: t.retiro_id,
+      Descricao: t.descricao,
+      Categoria: t.categoria,
+      Prioridade: t.prioridade,
+      Status: t.status,
+      'Criada por': t.criada_por,
+      'Atribuida a': t.atribuida_a,
+    }))
+  },
+
+  async buscarDadosTickets(
+    dataInicio?: Date,
+    dataFim?: Date,
+    retiroId?: UUID
+  ): Promise<Ticket[]> {
+    let tickets = await SincronizacaoService.buscarTicketsParaDashboard(retiroId)
+
+    if (dataInicio || dataFim) {
+      tickets = tickets.filter(t => {
+        const dataTicket = new Date(t.data_criacao)
+        return (!dataInicio || dataTicket >= dataInicio) && (!dataFim || dataTicket <= dataFim)
+      })
+    }
+
+    return tickets
+  },
+
+  async formatarRelatorioTickets(
+    dataInicio?: Date,
+    dataFim?: Date,
+    retiroId?: UUID
+  ): Promise<LinhaPlanilha[]> {
+    const tickets = await RelatorioService.buscarDadosTickets(dataInicio, dataFim, retiroId)
+
+    return tickets.map(t => ({
+      Data: new Date(t.data_criacao).toLocaleDateString('pt-BR'),
+      Retiro: t.retiro_id,
+      Categoria: t.categoria,
+      Localizacao: t.localizacao,
+      Descricao: t.descricao,
+      Prioridade: t.prioridade,
+      Status: t.status,
+      'Aberto por': t.aberto_por,
+      'Atribuido a': t.atribuido_a ?? '-',
+    }))
+  },
+
+  async obterLinhasExportacao(
+    tipo: TipoRelatorioExportacao,
+    dataInicio?: Date,
+    dataFim?: Date,
+    retiroId?: UUID
+  ): Promise<LinhaPlanilha[]> {
+    if (tipo === 'tarefas') {
+      return RelatorioService.formatarRelatorioTarefas(dataInicio, dataFim, retiroId)
+    }
+
+    if (tipo === 'tickets') {
+      return RelatorioService.formatarRelatorioTickets(dataInicio, dataFim, retiroId)
+    }
+
+    return RelatorioService.formatarRelatorioMovimentacoes(dataInicio, dataFim, retiroId)
+  },
+
+  gerarCsv(linhas: LinhaPlanilha[]): Buffer {
+    if (linhas.length === 0) {
+      return Buffer.from('\uFEFF', 'utf8')
+    }
+
+    const colunas = Object.keys(linhas[0])
+    const conteudo = [
+      colunas.map(escaparCsv).join(';'),
+      ...linhas.map(linha => colunas.map(coluna => escaparCsv(linha[coluna] ?? '')).join(';')),
+    ].join('\r\n')
+
+    return Buffer.from(`\uFEFF${conteudo}`, 'utf8')
+  },
+
+  async gerarXlsx(linhas: LinhaPlanilha[], nomeAba: string): Promise<Buffer> {
+    const workbook = new ExcelJS.Workbook()
+    workbook.creator = 'AgroFlow'
+    workbook.created = new Date()
+
+    const worksheet = workbook.addWorksheet(nomeAba.slice(0, 31))
+    const colunas = linhas.length > 0 ? Object.keys(linhas[0]) : ['Sem dados']
+
+    worksheet.columns = colunas.map(cabecalho => ({
+      header: cabecalho,
+      key: cabecalho,
+      width: Math.max(15, Math.min(40, cabecalho.length + 4)),
+    }))
+
+    linhas.forEach(linha => {
+      worksheet.addRow(
+        Object.fromEntries(
+          colunas.map(coluna => [coluna, protegerCelula(linha[coluna] ?? '')])
+        )
+      )
+    })
+
+    worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } }
+    worksheet.getRow(1).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FF0F5F36' },
+    }
+    worksheet.views = [{ state: 'frozen', ySplit: 1 }]
+    worksheet.autoFilter = {
+      from: { row: 1, column: 1 },
+      to: { row: Math.max(1, worksheet.rowCount), column: colunas.length },
+    }
+
+    const arquivo = await workbook.xlsx.writeBuffer()
+    return Buffer.from(arquivo)
+  },
+
+  async gerarArquivo(
+    tipo: TipoRelatorioExportacao,
+    formato: FormatoRelatorioExportacao,
+    dataInicio?: Date,
+    dataFim?: Date,
+    retiroId?: UUID
+  ): Promise<Buffer> {
+    const linhas = await RelatorioService.obterLinhasExportacao(tipo, dataInicio, dataFim, retiroId)
+
+    if (formato === 'csv') {
+      return RelatorioService.gerarCsv(linhas)
+    }
+
+    return RelatorioService.gerarXlsx(linhas, tipo)
+  },
+
   // RN07: Gerar relatório semanal
   // Exporta movimentações dos últimos 7 dias em formato de planilha
-  async gerarRelatorioSemanal(retiroId?: UUID): Promise<Array<Record<string, string | number>>> {
+  async gerarRelatorioSemanal(retiroId?: UUID): Promise<LinhaPlanilha[]> {
     const dataFim = new Date()
     const dataInicio = new Date()
     dataInicio.setDate(dataInicio.getDate() - 7)
@@ -102,7 +263,7 @@ export const RelatorioService = {
 
   // RN07: Gerar relatório mensal
   // Exporta movimentações dos últimos 30 dias em formato de planilha
-  async gerarRelatorioMensal(retiroId?: UUID): Promise<Array<Record<string, string | number>>> {
+  async gerarRelatorioMensal(retiroId?: UUID): Promise<LinhaPlanilha[]> {
     const dataFim = new Date()
     const dataInicio = new Date()
     dataInicio.setDate(dataInicio.getDate() - 30)
