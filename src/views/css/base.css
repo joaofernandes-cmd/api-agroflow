@@ -154,7 +154,47 @@
   flex-direction: column;
   flex-shrink: 0;
   overflow: hidden;
+  transition: width 0.22s ease;
 }
+
+/* ── Sidebar colapsada: apenas ícones ── */
+.sidebar--collapsed { width: 72px; }
+
+.sidebar--collapsed .sidebar__top {
+  padding: 0;
+  justify-content: center;
+}
+
+.sidebar--collapsed .sidebar__brand,
+.sidebar--collapsed .sidebar__sub { display: none; }
+
+.sidebar--collapsed .sidebar__menu-btn {
+  position: static;
+  transform: none;
+}
+
+.sidebar--collapsed .sidebar__link {
+  justify-content: center;
+  padding: 10px 0;
+  gap: 0;
+}
+
+.sidebar--collapsed .sidebar__link span { display: none; }
+
+.sidebar--collapsed .sidebar__link--active {
+  border-left: none;
+  padding-left: 0;
+}
+
+.sidebar--collapsed .sidebar__user {
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 16px 0;
+  gap: 0;
+}
+
+.sidebar--collapsed .sidebar__user-info { display: none; }
 
 .sidebar__top {
   background: var(--color-primary);
