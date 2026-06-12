@@ -1,5 +1,7 @@
 import { MovimentacaoService } from '../../services/movimentacao.service'
 import { MovimentacaoRepository } from '../../repositories/movimentacao.repository'
+import { EvidenciaService } from '../../services/evidencia.service'
+import { EvidenciaMovimentacaoRepository } from '../../repositories/evidencia-movimentacao.repository'
 import { mockMovimentacao, mockMovimentacaoValidada } from '../helpers/fixtures'
 
 jest.mock('../../repositories/movimentacao.repository', () => ({
@@ -12,7 +14,25 @@ jest.mock('../../repositories/movimentacao.repository', () => ({
   },
 }))
 
+jest.mock('../../services/evidencia.service', () => ({
+  EvidenciaService: {
+    validarEvidenciaDescritiva: jest.fn(),
+    validarGeorreferenciamento: jest.fn(),
+    criarMensagem: jest.fn(),
+    criarAudio: jest.fn(),
+    criarFoto: jest.fn(),
+  },
+}))
+
+jest.mock('../../repositories/evidencia-movimentacao.repository', () => ({
+  EvidenciaMovimentacaoRepository: {
+    criar: jest.fn(),
+  },
+}))
+
 const mockedRepository = MovimentacaoRepository as jest.Mocked<typeof MovimentacaoRepository>
+const mockedEvidenciaService = EvidenciaService as jest.Mocked<typeof EvidenciaService>
+const mockedVinculoRepo = EvidenciaMovimentacaoRepository as jest.Mocked<typeof EvidenciaMovimentacaoRepository>
 
 const baseMovimentacao = {
   retiro_id: 1,
@@ -27,6 +47,12 @@ describe('MovimentacaoService', () => {
     mockedRepository.criar.mockResolvedValue(mockMovimentacao as any)
     mockedRepository.atualizar.mockResolvedValue(mockMovimentacaoValidada as any)
     mockedRepository.remover.mockResolvedValue(undefined)
+    mockedEvidenciaService.validarEvidenciaDescritiva.mockImplementation(() => undefined)
+    mockedEvidenciaService.validarGeorreferenciamento.mockImplementation(() => undefined)
+    mockedEvidenciaService.criarMensagem.mockResolvedValue({ evidencia: { id: 31 }, mensagem: { evidencia_id: 31, conteudo: 'Mensagem valida de evidencia' } } as any)
+    mockedEvidenciaService.criarAudio.mockResolvedValue({ evidencia: { id: 31 }, audio: { evidencia_id: 31, url_arquivo: 'audio.mp3' } } as any)
+    mockedEvidenciaService.criarFoto.mockResolvedValue({ evidencia: { id: 31 }, foto: { evidencia_id: 31, url_arquivo: 'foto.jpg', latitude: -20, longitude: -55 } } as any)
+    mockedVinculoRepo.criar.mockResolvedValue({ evidencia_id: 31, movimentacao_id: 1 } as any)
   })
 
   it('validarCamposObrigatorios deve exigir capataz_id', () => {
@@ -137,6 +163,25 @@ describe('MovimentacaoService', () => {
     )
   })
 
+  it('criar deve registrar evidencia de mensagem quando fornecida', async () => {
+    await MovimentacaoService.criar({
+      ...baseMovimentacao,
+      tipo: 'nascimento',
+      origem: 'Acurizal',
+      quantidade: 1,
+      evidencia: {
+        tipo: 'mensagem',
+        conteudo: 'Mensagem valida de evidencia',
+      },
+    })
+
+    expect(mockedEvidenciaService.criarMensagem).toHaveBeenCalled()
+    expect(mockedVinculoRepo.criar).toHaveBeenCalledWith({
+      evidencia_id: 31,
+      movimentacao_id: 1,
+    })
+  })
+
   it('sincronizarRecebida deve gravar como sincronizada', async () => {
     const movimentacao = await MovimentacaoService.sincronizarRecebida({
       ...baseMovimentacao,
@@ -152,6 +197,27 @@ describe('MovimentacaoService', () => {
         status: 'pendente',
       })
     )
+  })
+
+  it('sincronizarRecebida deve registrar evidencia quando fornecida', async () => {
+    await MovimentacaoService.sincronizarRecebida({
+      ...baseMovimentacao,
+      tipo: 'transferencia',
+      origem: 'Acurizal',
+      destino: 'Aroeira',
+      quantidade: 1,
+      evidencia: {
+        tipo: 'audio',
+        urlArquivo: 'audio.mp3',
+        duracao: 5,
+      },
+    })
+
+    expect(mockedEvidenciaService.criarAudio).toHaveBeenCalled()
+    expect(mockedVinculoRepo.criar).toHaveBeenCalledWith({
+      evidencia_id: 31,
+      movimentacao_id: 1,
+    })
   })
 
   it('filtrar deve respeitar retiro tipo status e periodo', async () => {

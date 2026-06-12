@@ -1,5 +1,13 @@
-import { Movimentacao, MovimentacaoInput, MovimentacaoTipo, MovimentacaoStatus } from '../models/movimentacao.model'
+import {
+  Movimentacao,
+  MovimentacaoInput,
+  MovimentacaoTipo,
+  MovimentacaoStatus,
+  MovimentacaoEvidenciaInput,
+} from '../models/movimentacao.model'
 import { MovimentacaoRepository } from '../repositories/movimentacao.repository'
+import { EvidenciaService } from './evidencia.service'
+import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movimentacao.repository'
 
 export const MovimentacaoService = {
   // RN01: valida os campos obrigatorios antes de persistir.
@@ -60,10 +68,84 @@ export const MovimentacaoService = {
     }
   },
 
+  validarEvidencia(dados?: MovimentacaoEvidenciaInput): void {
+    if (!dados) {
+      return
+    }
+
+    if (dados.tipo === 'mensagem') {
+      EvidenciaService.validarEvidenciaDescritiva('mensagem', { conteudo: dados.conteudo })
+      return
+    }
+
+    if (dados.tipo === 'audio') {
+      if (!dados.urlArquivo) {
+        throw new Error('Campo "urlArquivo" e obrigatorio para evidencias de audio')
+      }
+
+      EvidenciaService.validarEvidenciaDescritiva('audio', { duracao: dados.duracao })
+      return
+    }
+
+    if (dados.tipo === 'foto') {
+      if (!dados.urlArquivo) {
+        throw new Error('Campo "urlArquivo" e obrigatorio para evidencias de foto')
+      }
+
+      if (dados.latitude === undefined || dados.longitude === undefined) {
+        throw new Error('Foto rejeitada: georreferenciamento invÃ¡lido ou ausente. A imagem deve ter coordenadas GPS nos metadados EXIF')
+      }
+
+      EvidenciaService.validarGeorreferenciamento(dados.latitude, dados.longitude)
+    }
+  },
+
+  async criarEvidenciaAssociada(movimentacaoId: number, capatazId: string, evidencia?: MovimentacaoEvidenciaInput): Promise<void> {
+    if (!evidencia) {
+      return
+    }
+
+    if (evidencia.tipo === 'mensagem') {
+      const criada = await EvidenciaService.criarMensagem(capatazId as any, evidencia.conteudo ?? '')
+      await EvidenciaMovimentacaoRepository.criar({
+        evidencia_id: criada.evidencia.id,
+        movimentacao_id: movimentacaoId,
+      })
+      return
+    }
+
+    if (evidencia.tipo === 'audio') {
+      const criada = await EvidenciaService.criarAudio(
+        capatazId as any,
+        evidencia.urlArquivo ?? '',
+        Number(evidencia.duracao)
+      )
+      await EvidenciaMovimentacaoRepository.criar({
+        evidencia_id: criada.evidencia.id,
+        movimentacao_id: movimentacaoId,
+      })
+      return
+    }
+
+    if (evidencia.tipo === 'foto') {
+      const criada = await EvidenciaService.criarFoto(
+        capatazId as any,
+        evidencia.urlArquivo ?? '',
+        Number(evidencia.latitude),
+        Number(evidencia.longitude)
+      )
+      await EvidenciaMovimentacaoRepository.criar({
+        evidencia_id: criada.evidencia.id,
+        movimentacao_id: movimentacaoId,
+      })
+    }
+  },
+
   // RN03: cria movimentacao no modo offline ou online.
   // O valor de sincronizado segue o dado recebido, mas padrao continua false.
   async criar(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por'>): Promise<Movimentacao> {
     this.validarCamposObrigatorios(dados as MovimentacaoInput)
+    this.validarEvidencia(dados.evidencia)
 
     const movimentacao = await MovimentacaoRepository.criar({
       ...dados,
@@ -71,6 +153,8 @@ export const MovimentacaoService = {
       sincronizado: dados.sincronizado ?? false,
       validado_por: null,
     } as MovimentacaoInput)
+
+    await this.criarEvidenciaAssociada(movimentacao.id, dados.capataz_id, dados.evidencia)
 
     return movimentacao
   },
@@ -84,13 +168,18 @@ export const MovimentacaoService = {
       sincronizado: true,
       validado_por: null,
     } as MovimentacaoInput)
+    this.validarEvidencia(dados.evidencia)
 
-    return MovimentacaoRepository.criar({
+    const movimentacao = await MovimentacaoRepository.criar({
       ...dados,
       status: 'pendente',
       sincronizado: true,
       validado_por: null,
     } as MovimentacaoInput)
+
+    await this.criarEvidenciaAssociada(movimentacao.id, dados.capataz_id, dados.evidencia)
+
+    return movimentacao
   },
 
   // RN09: filtra por retiro, tipo, status e periodo.
