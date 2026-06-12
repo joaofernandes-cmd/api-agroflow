@@ -4263,7 +4263,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, conta com apenas duas telas: a página inicial do perfil e a de relatórios. Como a página de relatórios é compartilhada entre o gerente e o supervisor, ela reside no diretório de parciais (`relatorios.ejs`), de modo que a pasta `src/views/gerente` contém somente o arquivo `home.ejs`, conforme a Figura 59.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, conta com apenas duas telas: a página inicial do perfil e a de relatórios. Como a página de relatórios é compartilhada entre o gerente e o supervisor, ela reside no diretório de parciais (`relatorios.ejs`), de modo que a pasta `src/views/gerente` contém somente o arquivo `home.ejs`.
 
 <div align="center">
 <p align="center">Figura 59 - Estrutura de views do Gerente</p>
@@ -4271,7 +4271,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 60. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-capataz.ejs`, `sidebar-gerente.ejs` e `sidebar-supervisor.ejs`) e elementos comuns de cabeçalho (`head.ejs` e `capataz-head.ejs`) e de relatórios (`relatorios.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 60. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-gerente.ejs` e `sidebar-supervisor.ejs`), os arquivos referentes ao `<head>` do HTML (`head.ejs` e `capataz-head.ejs`), responsáveis pela importação de folhas de estilo, definição do título da janela e demais metadados, e a parcial de relatórios (`relatorios.ejs`).
 
 <div align="center">
 <p align="center">Figura 60 - Componentes parciais compartilhados</p>
@@ -4279,7 +4279,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 61. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`), além do arquivo de entrada `index.ejs`.
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 61. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`).
 
 <div align="center">
 <p align="center">Figura 61 - Estrutura de views do Supervisor</p>
