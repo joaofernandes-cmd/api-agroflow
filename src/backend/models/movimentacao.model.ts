@@ -4,9 +4,46 @@ export type MovimentacaoTipo = 'nascimento' | 'morte' | 'transferencia' | 'compr
 
 export type MovimentacaoStatus = 'pendente' | 'validado'
 
-export type RetiroNome = 'Acurizal' | 'Aroeira' | 'Baia Bonita' | 'Bodoquena 1' | 'Bonoquena 2' | 'Boqueirão' | 'Caieira' | 'CMB' | 'Confinamento' | 'Cristo' | 'Morada Nova' | 'Morro Azul' | 'Puga' | 'São Miguel' | 'Vista Alegre'
+export type RetiroNome =
+  | 'Acurizal'
+  | 'Aroeira'
+  | 'Baia Bonita'
+  | 'Bodoquena 1'
+  | 'Bonoquena 2'
+  | 'BoqueirÃ£o'
+  | 'Caieira'
+  | 'CMB'
+  | 'Confinamento'
+  | 'Cristo'
+  | 'Morada Nova'
+  | 'Morro Azul'
+  | 'Puga'
+  | 'SÃ£o Miguel'
+  | 'Vista Alegre'
 
-export type EstagioVida = 'BEZERRO 0 A 7 MESES' | 'GARROTE 8 A 12 MESES' | 'NOVILHA 8 A 12 MESES' | 'GARROTE 13 A 24 MESES' | 'NOVILHA 13 A 24 MESES' | 'BOI 25 A 36 MESES' | 'NOVILHA 25 A 36 MESES' | 'TOURO 25 A 36 MESES' | 'VACA ACIMA 36 MESES' | 'BOI ACIMA 36 MESES' | 'TOURO ACIMA 36 MESES'
+export type EstagioVida =
+  | 'BEZERRO 0 A 7 MESES'
+  | 'GARROTE 8 A 12 MESES'
+  | 'NOVILHA 8 A 12 MESES'
+  | 'GARROTE 13 A 24 MESES'
+  | 'NOVILHA 13 A 24 MESES'
+  | 'BOI 25 A 36 MESES'
+  | 'NOVILHA 25 A 36 MESES'
+  | 'TOURO 25 A 36 MESES'
+  | 'VACA ACIMA 36 MESES'
+  | 'BOI ACIMA 36 MESES'
+  | 'TOURO ACIMA 36 MESES'
+
+export type EvidenciaTipo = 'foto' | 'audio' | 'mensagem'
+
+export interface MovimentacaoEvidenciaInput {
+  tipo: EvidenciaTipo
+  conteudo?: string
+  urlArquivo?: string
+  duracao?: number
+  latitude?: number
+  longitude?: number
+}
 
 export interface Movimentacao {
   id: number
@@ -39,4 +76,5 @@ export interface MovimentacaoInput {
   data_validacao?: Date | null
   causa_obito?: string | null
   estagio_vida: EstagioVida
+  evidencia?: MovimentacaoEvidenciaInput
 }

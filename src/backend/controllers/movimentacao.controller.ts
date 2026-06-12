@@ -60,8 +60,18 @@ function listaOuFallback<T extends string>(valor: unknown, fallback?: T[]): T[] 
 export const MovimentacaoController = {
   async criar(req: Request, res: Response) {
     try {
-      const { retiro_id, capataz_id, tipo, origem, destino, quantidade, sincronizado, causa_obito, estagio_vida } =
-        req.body
+      const {
+        retiro_id,
+        capataz_id,
+        tipo,
+        origem,
+        destino,
+        quantidade,
+        sincronizado,
+        causa_obito,
+        estagio_vida,
+        evidencia,
+      } = req.body
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
@@ -88,6 +98,7 @@ export const MovimentacaoController = {
         sincronizado,
         causa_obito,
         estagio_vida,
+        evidencia,
       })
 
       return res.status(201).json(movimentacao)
@@ -102,7 +113,7 @@ export const MovimentacaoController = {
   // O registro chega completo e ja deve ser gravado como sincronizado no servidor.
   async sincronizarRecebida(req: Request, res: Response) {
     try {
-      const { retiro_id, capataz_id, tipo, origem, destino, quantidade, causa_obito, estagio_vida } = req.body
+      const { retiro_id, capataz_id, tipo, origem, destino, quantidade, causa_obito, estagio_vida, evidencia } = req.body
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
@@ -128,6 +139,7 @@ export const MovimentacaoController = {
         quantidade: quantidadeNumerica,
         causa_obito,
         estagio_vida,
+        evidencia,
       })
 
       return res.status(201).json(movimentacao)

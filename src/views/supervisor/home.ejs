@@ -240,11 +240,42 @@
       weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
     }).replace(/^\w/, c => c.toUpperCase());
   }
+
+  function carregarSessao() {
+    try {
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+      if (!usuarioRaw) return null;
+      return JSON.parse(usuarioRaw);
+    } catch {
+      return null;
+    }
+  }
+
   const data = formatarData();
   ['data-hoje', 'data-hoje-desktop', 'data-hoje-desktop2'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = data;
   });
+
+  const usuario = carregarSessao();
+  if (usuario?.nome) {
+    document.querySelectorAll('.greeting__name, .greeting-desktop__name, .sidebar__user-name').forEach(el => {
+      el.textContent = `Bom dia, ${usuario.nome.split(' ')[0]}!`;
+    });
+
+    document.querySelectorAll('.sidebar__user-role').forEach(el => {
+      el.textContent = 'Supervisor';
+    });
+
+    document.querySelectorAll('.sidebar__avatar').forEach(el => {
+      el.textContent = usuario.nome
+        .split(' ')
+        .map(parte => parte[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+    });
+  }
 </script>
 
 </body>

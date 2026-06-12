@@ -266,6 +266,32 @@ textarea.input { resize: none; }
 .evidencia__btn--foto { background: var(--primaria); }
 .evidencia__btn--audio { background: var(--info); }
 .evidencia__btn--texto { background: var(--atencao); }
+.evidencia__btn.ativo {
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.12);
+}
+.painel-evidencia {
+  margin-bottom: 16px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px -20px rgba(0, 0, 0, 0.28);
+}
+.ajuda-evidencia {
+  margin-top: 8px;
+  color: var(--texto-sec);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.preview-evidencia {
+  background: #eef7f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--interacao);
+  font-size: 13px;
+  line-height: 1.4;
+}
 
 /* Aviso de localização -------------------------------------------------- */
 .aviso-local {
