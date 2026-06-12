@@ -1,5 +1,8 @@
+import bcrypt from 'bcrypt'
 import { Usuario, UsuarioInput, UsuarioCargo } from '../models/usuario.model'
 import { UsuarioRepository } from '../repositories/usuario.repository'
+
+const BCRYPT_SALT_ROUNDS = 12
 
 export const UsuarioService = {
   // RN05: Autenticação simples com no máximo 3 interações
@@ -11,9 +14,9 @@ export const UsuarioService = {
       return null
     }
 
-    // RN05: Validar senha contra senha_hash (implementar com bcrypt quando disponível)
-    // Por enquanto, comparação simples (remover em produção com bcrypt.compare)
-    if (usuario.senha_hash !== senha) {
+    const senhaValida = await bcrypt.compare(senha, usuario.senha_hash)
+
+    if (!senhaValida) {
       return null
     }
 
@@ -67,15 +70,26 @@ export const UsuarioService = {
       throw new Error('Login deve ser um email válido')
     }
 
-    // TODO: Implementar hash da senha usando bcrypt
-    // Por enquanto, armazenar como está (remover em produção)
-    return UsuarioRepository.criar(dados)
+    const senhaHash = await bcrypt.hash(dados.senha_hash, BCRYPT_SALT_ROUNDS)
+
+    return UsuarioRepository.criar({
+      ...dados,
+      senha_hash: senhaHash,
+    })
   },
 
   // Atualizar usuário
   async atualizar(id: string, dados: Partial<UsuarioInput>): Promise<Usuario | null> {
-    // TODO: Validar que usuário existe antes de atualizar
-    return UsuarioRepository.atualizar(id, dados)
+    if (!dados.senha_hash) {
+      return UsuarioRepository.atualizar(id, dados)
+    }
+
+    const senhaHash = await bcrypt.hash(dados.senha_hash, BCRYPT_SALT_ROUNDS)
+
+    return UsuarioRepository.atualizar(id, {
+      ...dados,
+      senha_hash: senhaHash,
+    })
   },
 
   // Validar se usuário está ativo

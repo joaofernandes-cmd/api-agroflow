@@ -1,6 +1,15 @@
+import bcrypt from 'bcrypt'
 import { UsuarioService } from '../../services/usuario.service'
 import { UsuarioRepository } from '../../repositories/usuario.repository'
 import { mockGerente, mockSupervisor } from '../helpers/fixtures'
+
+jest.mock('bcrypt', () => ({
+  __esModule: true,
+  default: {
+    compare: jest.fn(),
+    hash: jest.fn(),
+  },
+}))
 
 jest.mock('../../repositories/usuario.repository', () => ({
   UsuarioRepository: {
@@ -14,9 +23,12 @@ jest.mock('../../repositories/usuario.repository', () => ({
 }))
 
 const mockedRepository = UsuarioRepository as jest.Mocked<typeof UsuarioRepository>
+const mockedBcrypt = bcrypt as jest.Mocked<typeof bcrypt>
 
 describe('UsuarioService', () => {
   beforeEach(() => {
+    mockedBcrypt.compare.mockResolvedValue(true as never)
+    mockedBcrypt.hash.mockResolvedValue('bcrypt-hash' as never)
     mockedRepository.buscarPorLogin.mockResolvedValue(mockSupervisor as any)
     mockedRepository.buscarPorId.mockResolvedValue(mockGerente as any)
     mockedRepository.buscarTodos.mockResolvedValue([mockSupervisor as any, mockGerente as any])
@@ -26,12 +38,15 @@ describe('UsuarioService', () => {
   })
 
   it('autenticar deve retornar usuario quando senha bate', async () => {
-    const usuario = await UsuarioService.autenticar(mockSupervisor.login, 'hashed-password')
+    const usuario = await UsuarioService.autenticar(mockSupervisor.login, 'senha')
 
     expect(usuario).toEqual(mockSupervisor)
+    expect(mockedBcrypt.compare).toHaveBeenCalledWith('senha', mockSupervisor.senha_hash)
   })
 
   it('autenticar deve retornar null quando senha nao bate', async () => {
+    mockedBcrypt.compare.mockResolvedValueOnce(false as never)
+
     const usuario = await UsuarioService.autenticar(mockSupervisor.login, 'senha-errada')
 
     expect(usuario).toBeNull()
@@ -133,8 +148,10 @@ describe('UsuarioService', () => {
       expect.objectContaining({
         login: 'gerente.novo@agroflow.com',
         cargo: 'gerente',
+        senha_hash: 'bcrypt-hash',
       })
     )
+    expect(mockedBcrypt.hash).toHaveBeenCalledWith('senha', 12)
   })
 
   it('atualizar deve delegar para o repository', async () => {
@@ -142,6 +159,16 @@ describe('UsuarioService', () => {
 
     expect(usuario).toEqual(mockGerente)
     expect(mockedRepository.atualizar).toHaveBeenCalledWith(mockGerente.id, { nome: 'Gerente Atualizado' })
+  })
+
+  it('atualizar deve gerar hash quando uma nova senha for enviada', async () => {
+    const usuario = await UsuarioService.atualizar(mockGerente.id, { senha_hash: 'nova-senha' })
+
+    expect(usuario).toEqual(mockGerente)
+    expect(mockedBcrypt.hash).toHaveBeenCalledWith('nova-senha', 12)
+    expect(mockedRepository.atualizar).toHaveBeenCalledWith(mockGerente.id, {
+      senha_hash: 'bcrypt-hash',
+    })
   })
 
   it('remover deve delegar para o repository', async () => {

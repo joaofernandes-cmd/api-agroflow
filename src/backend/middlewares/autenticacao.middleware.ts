@@ -15,7 +15,17 @@ export interface UsuarioAutenticado {
 
 type JwtPayloadUsuario = UsuarioAutenticado & jwt.JwtPayload
 
-const JWT_SECRET = process.env.JWT_SECRET ?? 'troque-este-segredo-em-producao'
+function obterJwtSecret(): string {
+  const jwtSecret = process.env.JWT_SECRET
+
+  if (!jwtSecret) {
+    throw new Error('JWT_SECRET nao definida no ambiente')
+  }
+
+  return jwtSecret
+}
+
+const JWT_SECRET = obterJwtSecret()
 const JWT_EXPIRES_IN = '1d'
 
 // Gera o token que sera enviado ao cliente apos o login.
