@@ -1,25 +1,12 @@
-<%- include('../partials/capataz-head', { titulo: 'Alow · Nova Movimentação' }) %>
+<%- include('partials/head', { titulo: 'Alow · Nova Movimentação' }) %>
 
 <%
-  var RETIROS = ['Acurizal','Aroeira','Baia Bonita','Bodoquena 1','Bodoquena 2','Boqueirão','Caieira','CMB','Confinamento','Cristo','Morada Nova','Morro Azul','Puga','São Miguel','Vista Alegre'];
-  var TIPOS = [
-    { value: 'nascimento', label: 'Nascimento' },
-    { value: 'morte', label: 'Morte' },
-    { value: 'transferencia', label: 'Transferência' }
-  ];
-  var ESTAGIOS = [
-    'BEZERRO 0 A 7 MESES',
-    'GARROTE 8 A 12 MESES',
-    'NOVILHA 8 A 12 MESES',
-    'GARROTE 13 A 24 MESES',
-    'NOVILHA 13 A 24 MESES',
-    'BOI 25 A 36 MESES',
-    'NOVILHA 25 A 36 MESES',
-    'TOURO 25 A 36 MESES',
-    'VACA ACIMA 36 MESES',
-    'BOI ACIMA 36 MESES',
-    'TOURO ACIMA 36 MESES'
-  ];
+  /* Listas hardcoded — depois podem vir do back-end. */
+  var RETIROS = ['Acurizal','Aroeira','Baia Bonita','Bodoquena 1','Bodoquena 2',
+    'Boqueirão','Caieira','CMB','Confinamento','Cristo','Morada Nova','Morro Azul',
+    'Puga','São Miguel','Vista Alegre'];
+  var TIPOS = ['Nascimento','Morte','Transferência','Compra','Venda'];
+  var ESTAGIOS = ['Bezerro','Novilho','Adulto'];
   var CAUSAS = ['Doença','Acidente','Predador','Causa natural','Desconhecida'];
 %>
 
@@ -36,127 +23,71 @@
     </div>
   </header>
 
-  <p id="mov-feedback" style="margin: 12px 16px 0; font-size: 14px; line-height: 1.4;"></p>
-
   <div class="conteudo">
     <div class="campo">
-      <label class="campo__rotulo" for="tipoMov">Tipo de movimentação</label>
+      <label class="campo__rotulo">Tipo de movimentação</label>
       <select class="select" id="tipoMov" required>
-        <option value="" disabled selected>Selecione o tipo</option>
-        <% TIPOS.forEach(function (item) { %>
-          <option value="<%= item.value %>"><%= item.label %></option>
-        <% }) %>
+        <option value="" disabled selected>Nascimento / Morte / Transferência...</option>
+        <% TIPOS.forEach(function (t) { %><option value="<%= t %>"><%= t %></option><% }) %>
       </select>
     </div>
 
+    <!-- Retiro de origem — usado por todos os tipos -->
     <div class="campo">
-      <label class="campo__rotulo" for="retiroMov">Retiro</label>
-      <select class="select" id="retiroMov" required>
+      <label class="campo__rotulo" id="rotuloOrigem">Retiro</label>
+      <select class="select" required>
         <option value="" disabled selected>Selecione o retiro</option>
-        <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
+        <% RETIROS.forEach(function (r) { %><option><%= r %></option><% }) %>
       </select>
     </div>
 
-    <div id="camposPadrao">
-      <div class="campo">
-        <label class="campo__rotulo" for="origemMov">Retiro de origem</label>
-        <select class="select" id="origemMov">
-          <option value="">Selecione o retiro</option>
-          <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label class="campo__rotulo" for="destinoMov">Retiro de destino</label>
-        <select class="select" id="destinoMov">
-          <option value="">Selecione o retiro</option>
-          <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label class="campo__rotulo" for="quantidadeMov">Quantidade de animais</label>
-        <input class="input" type="number" id="quantidadeMov" min="1" placeholder="Ex: 12" />
-      </div>
-
-      <div class="campo">
-        <label class="campo__rotulo" for="estagioMov">Estágio da vida</label>
-        <select class="select" id="estagioMov">
-          <option value="" disabled selected>Selecione o estágio</option>
-          <% ESTAGIOS.forEach(function (e) { %><option value="<%= e %>"><%= e %></option><% }) %>
-        </select>
-      </div>
-    </div>
-
-    <div id="camposMorte" style="display: none;">
-      <div class="campo">
-        <label class="campo__rotulo" for="origemMorte">Retiro de origem</label>
-        <select class="select" id="origemMorte">
-          <option value="">Selecione o retiro</option>
-          <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label class="campo__rotulo" for="quantidadeMorte">Quantidade</label>
-        <input class="input" type="number" id="quantidadeMorte" min="1" placeholder="Ex: 3" />
-      </div>
-
-      <div class="campo">
-        <label class="campo__rotulo" for="estagioMorte">Estágio da vida</label>
-        <select class="select" id="estagioMorte">
-          <option value="" disabled selected>Selecione o estágio</option>
-          <% ESTAGIOS.forEach(function (e) { %><option value="<%= e %>"><%= e %></option><% }) %>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label class="campo__rotulo" for="causaObito">Causa do óbito <span class="obrigatorio">*</span></label>
-        <select class="select" id="causaObito">
-          <option value="" disabled selected>Selecione a causa</option>
-          <% CAUSAS.forEach(function (c) { %><option value="<%= c %>"><%= c %></option><% }) %>
-        </select>
-      </div>
+    <!-- Retiro de destino — apenas para Transferência -->
+    <div class="campo" id="campoDestino" style="display: none;">
+      <label class="campo__rotulo">Retiro de destino</label>
+      <select class="select">
+        <option value="" disabled selected>Selecione o retiro</option>
+        <% RETIROS.forEach(function (r) { %><option><%= r %></option><% }) %>
+      </select>
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Evidência</label>
-      <div class="evidencia">
-        <button type="button" class="evidencia__btn evidencia__btn--foto" data-evidencia="foto">Foto</button>
-        <button type="button" class="evidencia__btn evidencia__btn--audio" data-evidencia="audio">Áudio</button>
-        <button type="button" class="evidencia__btn evidencia__btn--texto" data-evidencia="texto">Texto</button>
-      </div>
+      <label class="campo__rotulo">Quantidade de animais</label>
+      <input class="input" type="number" placeholder="Ex: 12" />
     </div>
 
-    <div id="painelEvidencia" class="painel-evidencia" hidden>
-      <div class="campo" id="campoTextoEvidencia" hidden>
-        <label class="campo__rotulo" for="textoEvidencia">Mensagem da evidência</label>
-        <textarea class="input" id="textoEvidencia" rows="4" placeholder="Descreva a movimentação com pelo menos 10 caracteres"></textarea>
-      </div>
+    <div class="campo">
+      <label class="campo__rotulo">Estágio da vida</label>
+      <select class="select" required>
+        <option value="" disabled selected>Bezerro / Novilho / Adulto</option>
+        <% ESTAGIOS.forEach(function (e) { %><option><%= e %></option><% }) %>
+      </select>
+    </div>
 
-      <div class="campo" id="campoArquivoEvidencia" hidden>
-        <label class="campo__rotulo" id="rotuloArquivoEvidencia" for="arquivoEvidencia">Arquivo</label>
-        <input class="input" type="file" id="arquivoEvidencia" />
-        <p class="ajuda-evidencia" id="arquivoSelecionado">Nenhum arquivo selecionado.</p>
-      </div>
+    <!-- Causa do óbito — apenas para Morte -->
+    <div class="campo" id="campoCausa" style="display: none;">
+      <label class="campo__rotulo">Causa do óbito <span class="obrigatorio">*</span></label>
+      <select class="select" id="causaObito">
+        <option value="" disabled selected>Selecione a causa...</option>
+        <% CAUSAS.forEach(function (c) { %><option><%= c %></option><% }) %>
+      </select>
+    </div>
 
-      <div id="camposFotoEvidencia" hidden>
-        <div class="campo">
-          <label class="campo__rotulo" for="latitudeFoto">Latitude</label>
-          <input class="input" type="number" id="latitudeFoto" step="any" placeholder="Ex: -19.9234" />
-        </div>
-
-        <div class="campo">
-          <label class="campo__rotulo" for="longitudeFoto">Longitude</label>
-          <input class="input" type="number" id="longitudeFoto" step="any" placeholder="Ex: -57.1234" />
-        </div>
-
-        <button type="button" class="btn-secundario" id="btnLocalizacaoFoto" style="margin-bottom: 12px;">
-          Usar localização atual
+    <div class="campo">
+      <label class="campo__rotulo">Evidência (obrigatório)</label>
+      <div class="evidencia">
+        <button type="button" class="evidencia__btn evidencia__btn--foto">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          Foto
+        </button>
+        <button type="button" class="evidencia__btn evidencia__btn--audio">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+          Áudio
+        </button>
+        <button type="button" class="evidencia__btn evidencia__btn--texto">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          Texto
         </button>
       </div>
-
-      <div class="preview-evidencia" id="previewEvidencia" hidden></div>
     </div>
 
     <button type="button" class="btn-primario" id="btnSalvar" style="margin-top: 6px;">
@@ -164,362 +95,41 @@
     </button>
   </div>
 
-  <%- include('../partials/bottomnav-capataz', { ativa: 'movimentacao' }) %>
+  <%- include('partials/bottomnav-capataz', { ativa: 'movimentacao' }) %>
 </main>
 
 <script>
-  const CAPATAZ_DEMO = {
-    id: '11111111-1111-1111-1111-111111111111',
-  };
+  var tipoMov = document.getElementById('tipoMov');
+  var campoDestino = document.getElementById('campoDestino');
+  var campoCausa = document.getElementById('campoCausa');
+  var rotuloOrigem = document.getElementById('rotuloOrigem');
+  var causa = document.getElementById('causaObito');
 
-  const RETIROS = <%- JSON.stringify(RETIROS) %>;
-  const tipoMov = document.getElementById('tipoMov');
-  const retiroMov = document.getElementById('retiroMov');
-  const camposPadrao = document.getElementById('camposPadrao');
-  const camposMorte = document.getElementById('camposMorte');
-  const feedback = document.getElementById('mov-feedback');
-  const botaoSalvar = document.getElementById('btnSalvar');
-  const painelEvidencia = document.getElementById('painelEvidencia');
-  const campoTextoEvidencia = document.getElementById('campoTextoEvidencia');
-  const campoArquivoEvidencia = document.getElementById('campoArquivoEvidencia');
-  const camposFotoEvidencia = document.getElementById('camposFotoEvidencia');
-  const textoEvidencia = document.getElementById('textoEvidencia');
-  const arquivoEvidencia = document.getElementById('arquivoEvidencia');
-  const arquivoSelecionado = document.getElementById('arquivoSelecionado');
-  const previewEvidencia = document.getElementById('previewEvidencia');
-  const rotuloArquivoEvidencia = document.getElementById('rotuloArquivoEvidencia');
-  const btnLocalizacaoFoto = document.getElementById('btnLocalizacaoFoto');
-  const latitudeFoto = document.getElementById('latitudeFoto');
-  const longitudeFoto = document.getElementById('longitudeFoto');
-  const botoesEvidencia = Array.from(document.querySelectorAll('[data-evidencia]'));
+  // Ajusta os campos conforme o tipo de movimentação escolhido.
+  tipoMov.addEventListener('change', function () {
+    var tipo = tipoMov.value;
+    var ehTransferencia = tipo === 'Transferência';
+    var ehMorte = tipo === 'Morte';
 
-  let modoEvidencia = '';
-  let arquivoEmBase64 = '';
-  let duracaoAudio = null;
+    // Retiro de destino aparece só na Transferência.
+    campoDestino.style.display = ehTransferencia ? 'block' : 'none';
 
-  function mostrarFeedback(mensagem, tipo) {
-    if (!feedback) return;
-    feedback.textContent = mensagem;
-    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
-  }
+    // Causa do óbito aparece só na Morte.
+    campoCausa.style.display = ehMorte ? 'block' : 'none';
+    if (!ehMorte) causa.classList.remove('erro');
 
-  function atualizarVisibilidadeCampos() {
-    const ehMorte = tipoMov.value === 'morte';
-    camposMorte.style.display = ehMorte ? 'block' : 'none';
-    camposPadrao.style.display = ehMorte ? 'none' : 'block';
-  }
-
-  function limparEvidencia() {
-    textoEvidencia.value = '';
-    arquivoEvidencia.value = '';
-    arquivoEmBase64 = '';
-    duracaoAudio = null;
-    arquivoSelecionado.textContent = 'Nenhum arquivo selecionado.';
-    previewEvidencia.hidden = true;
-    previewEvidencia.innerHTML = '';
-    latitudeFoto.value = '';
-    longitudeFoto.value = '';
-  }
-
-  function atualizarModoEvidencia(novoModo) {
-    modoEvidencia = modoEvidencia === novoModo ? '' : novoModo;
-
-    botoesEvidencia.forEach(botao => {
-      botao.classList.toggle('ativo', botao.dataset.evidencia === modoEvidencia);
-    });
-
-    painelEvidencia.hidden = !modoEvidencia;
-    campoTextoEvidencia.hidden = modoEvidencia !== 'texto';
-    campoArquivoEvidencia.hidden = modoEvidencia === '' || modoEvidencia === 'texto';
-    camposFotoEvidencia.hidden = modoEvidencia !== 'foto';
-
-    limparEvidencia();
-
-    if (modoEvidencia === 'texto') {
-      previewEvidencia.hidden = false;
-      previewEvidencia.textContent = 'Digite a mensagem da evidência abaixo.';
-      arquivoEvidencia.removeAttribute('accept');
-      rotuloArquivoEvidencia.textContent = 'Arquivo';
-      return;
-    }
-
-    if (modoEvidencia === 'audio') {
-      previewEvidencia.hidden = false;
-      previewEvidencia.textContent = 'Selecione um arquivo de áudio para anexar.';
-      arquivoEvidencia.accept = 'audio/*';
-      rotuloArquivoEvidencia.textContent = 'Arquivo de áudio';
-      return;
-    }
-
-    if (modoEvidencia === 'foto') {
-      previewEvidencia.hidden = false;
-      previewEvidencia.textContent = 'Selecione uma foto para anexar e informe as coordenadas.';
-      arquivoEvidencia.accept = 'image/*';
-      rotuloArquivoEvidencia.textContent = 'Arquivo de foto';
-    }
-  }
-
-  function obterValorPrimeiro(ids) {
-    for (const id of ids) {
-      const el = document.getElementById(id);
-      if (el && String(el.value || '').trim()) {
-        return String(el.value).trim();
-      }
-    }
-    return '';
-  }
-
-  function obterNumeroOuNulo(ids) {
-    const valor = obterValorPrimeiro(ids);
-    if (!valor) return null;
-    const numero = Number(valor);
-    return Number.isNaN(numero) ? null : numero;
-  }
-
-  function arquivoParaBase64(file) {
-    return new Promise((resolve, reject) => {
-      const leitor = new FileReader();
-      leitor.onload = () => resolve(String(leitor.result || ''));
-      leitor.onerror = () => reject(new Error('Não foi possível ler o arquivo selecionado.'));
-      leitor.readAsDataURL(file);
-    });
-  }
-
-  function obterDuracaoAudio(file) {
-    return new Promise((resolve, reject) => {
-      const audio = document.createElement('audio');
-      const url = URL.createObjectURL(file);
-
-      audio.preload = 'metadata';
-      audio.onloadedmetadata = () => {
-        URL.revokeObjectURL(url);
-        resolve(audio.duration);
-      };
-      audio.onerror = () => {
-        URL.revokeObjectURL(url);
-        reject(new Error('Não foi possível ler a duração do áudio.'));
-      };
-      audio.src = url;
-    });
-  }
-
-  function preencherLocalizacaoAtual() {
-    if (!navigator.geolocation) {
-      mostrarFeedback('Seu navegador não suporta localização automática.', 'error');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        latitudeFoto.value = String(position.coords.latitude);
-        longitudeFoto.value = String(position.coords.longitude);
-        mostrarFeedback('Localização atual preenchida.', 'success');
-      },
-      () => {
-        mostrarFeedback('Não foi possível obter a localização atual.', 'error');
-      },
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  }
-
-  async function prepararArquivoSelecionado(file) {
-    if (!file) {
-      arquivoSelecionado.textContent = 'Nenhum arquivo selecionado.';
-      arquivoEmBase64 = '';
-      duracaoAudio = null;
-      return;
-    }
-
-    arquivoEmBase64 = await arquivoParaBase64(file);
-    arquivoSelecionado.textContent = `Selecionado: ${file.name}`;
-
-    if (modoEvidencia === 'audio') {
-      duracaoAudio = await obterDuracaoAudio(file);
-      previewEvidencia.textContent = `Áudio pronto para envio. Duração aproximada: ${duracaoAudio.toFixed(1)} segundos.`;
-      return;
-    }
-
-    if (modoEvidencia === 'foto') {
-      previewEvidencia.textContent = `Foto pronta para envio: ${file.name}`;
-    }
-  }
-
-  async function montarEvidencia() {
-    if (!modoEvidencia) {
-      return null;
-    }
-
-    if (modoEvidencia === 'texto') {
-      const conteudo = textoEvidencia.value.trim();
-      if (!conteudo) {
-        throw new Error('Digite a mensagem da evidência.');
-      }
-
-      return {
-        tipo: 'mensagem',
-        conteudo,
-      };
-    }
-
-    if (!arquivoEvidencia.files || arquivoEvidencia.files.length === 0) {
-      throw new Error('Selecione um arquivo para a evidência.');
-    }
-
-    if (!arquivoEmBase64) {
-      await prepararArquivoSelecionado(arquivoEvidencia.files[0]);
-    }
-
-    if (modoEvidencia === 'audio') {
-      if (duracaoAudio === null) {
-        duracaoAudio = await obterDuracaoAudio(arquivoEvidencia.files[0]);
-      }
-
-      return {
-        tipo: 'audio',
-        urlArquivo: arquivoEmBase64,
-        duracao: Number(duracaoAudio),
-      };
-    }
-
-    if (modoEvidencia === 'foto') {
-      const latitude = Number(latitudeFoto.value);
-      const longitude = Number(longitudeFoto.value);
-
-      if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
-        throw new Error('Preencha latitude e longitude da foto ou use a localização atual.');
-      }
-
-      return {
-        tipo: 'foto',
-        urlArquivo: arquivoEmBase64,
-        latitude,
-        longitude,
-      };
-    }
-
-    return null;
-  }
-
-  function montarPayloadBase() {
-    const tipo = tipoMov.value;
-    const retiro = retiroMov.value;
-
-    if (!tipo || !retiro) {
-      throw new Error('Selecione o tipo e o retiro.');
-    }
-
-    const payload = {
-      retiro_id: 1,
-      capataz_id: CAPATAZ_DEMO.id,
-      tipo,
-      estagio_vida: tipo === 'morte'
-        ? obterValorPrimeiro(['estagioMorte'])
-        : obterValorPrimeiro(['estagioMov']),
-      origem: tipo === 'morte'
-        ? obterValorPrimeiro(['origemMorte'])
-        : obterValorPrimeiro(['origemMov']),
-      destino: tipo === 'transferencia'
-        ? obterValorPrimeiro(['destinoMov'])
-        : undefined,
-      quantidade: tipo === 'morte'
-        ? null
-        : obterNumeroOuNulo(['quantidadeMov', 'quantidadeMorte']),
-      causa_obito: tipo === 'morte' ? obterValorPrimeiro(['causaObito']) : undefined,
-      sincronizado: false,
-    };
-
-    if (!payload.estagio_vida) {
-      throw new Error('Selecione o estágio da vida.');
-    }
-
-    if (tipo === 'morte') {
-      if (!payload.origem || !payload.causa_obito) {
-        throw new Error('Preencha origem e causa do óbito.');
-      }
-    }
-
-    if (tipo === 'nascimento') {
-      if (!payload.origem || !payload.quantidade) {
-        throw new Error('Preencha origem e quantidade.');
-      }
-      payload.destino = undefined;
-      payload.causa_obito = undefined;
-    }
-
-    if (tipo === 'transferencia') {
-      if (!payload.origem || !payload.destino || !payload.quantidade) {
-        throw new Error('Preencha origem, destino e quantidade.');
-      }
-      payload.causa_obito = undefined;
-    }
-
-    return payload;
-  }
-
-  async function salvarMovimentacao() {
-    try {
-      botaoSalvar.disabled = true;
-      botaoSalvar.textContent = 'Enviando...';
-
-      const payload = montarPayloadBase();
-      const evidencia = await montarEvidencia();
-      if (evidencia) {
-        payload.evidencia = evidencia;
-      }
-
-      const response = await fetch('/movimentacoes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(data.error || 'Não foi possível salvar a movimentação');
-      }
-
-      mostrarFeedback('Movimentação registrada com sucesso.', 'success');
-      document.querySelectorAll('.select, .input, textarea').forEach(el => {
-        if (el instanceof HTMLInputElement) {
-          if (el.type === 'file') {
-            el.value = '';
-          } else {
-            el.value = '';
-          }
-        } else if (el instanceof HTMLTextAreaElement) {
-          el.value = '';
-        } else if (el instanceof HTMLSelectElement) {
-          el.selectedIndex = 0;
-        }
-      });
-      modoEvidencia = '';
-      botoesEvidencia.forEach(botao => botao.classList.remove('ativo'));
-      painelEvidencia.hidden = true;
-      limparEvidencia();
-      atualizarVisibilidadeCampos();
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao salvar movimentação', 'error');
-    } finally {
-      botaoSalvar.disabled = false;
-      botaoSalvar.textContent = 'Salvar movimentação';
-    }
-  }
-
-  tipoMov.addEventListener('change', atualizarVisibilidadeCampos);
-  botoesEvidencia.forEach(botao => {
-    botao.addEventListener('click', () => atualizarModoEvidencia(String(botao.dataset.evidencia || '')));
+    // Quando há destino, o primeiro retiro vira "de origem";
+    // nos demais tipos é apenas "Retiro".
+    rotuloOrigem.textContent = ehTransferencia ? 'Retiro de origem' : 'Retiro';
   });
-  arquivoEvidencia.addEventListener('change', async () => {
-    try {
-      await prepararArquivoSelecionado(arquivoEvidencia.files && arquivoEvidencia.files[0] ? arquivoEvidencia.files[0] : null);
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao ler arquivo selecionado', 'error');
+
+  // Validação visual do campo obrigatório (Causa do óbito) ao salvar.
+  document.getElementById('btnSalvar').addEventListener('click', function () {
+    if (tipoMov.value === 'Morte') {
+      if (!causa.value) causa.classList.add('erro');
+      else causa.classList.remove('erro');
     }
   });
-  btnLocalizacaoFoto.addEventListener('click', preencherLocalizacaoAtual);
-  botaoSalvar.addEventListener('click', salvarMovimentacao);
-
-  atualizarVisibilidadeCampos();
 </script>
 
 </body>
