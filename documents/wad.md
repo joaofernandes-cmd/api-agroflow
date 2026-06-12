@@ -4635,11 +4635,36 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 &nbsp;&nbsp;&nbsp;&nbsp;A **percepção de valor desejada** é que o AgroFlow seja reconhecido como o sistema que funciona onde outros falham — em campo, sem internet, com rastreabilidade completa — tornando-se referência em gestão pecuária para grandes operações descentralizadas.
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
-Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e estrutura de custos (somente se couber nesse momento da análise com o parceiro).
+
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo (Seção 6.3), proposta de valor e posicionamento (Seção 6.4) e estratégia de marketing (Seção 6.6), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 58 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+
+<div align="center">
+  <p align="center">Figura 58 - Business Model Canvas do AgroFlow</p>
+  <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;**1) Segmentos de Clientes** — Em coerência com a Seção 6.3, o AgroFlow atende dois segmentos primários e complementares da pecuária bovina comercial. O primeiro reúne grandes produtores pecuários em regiões remotas com conectividade limitada ou instável, que operam rebanhos de grande porte e ainda dependem de registros manuais em papel. O segundo abrange produtores com conectividade disponível, porém sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade (PNIB, Código Florestal e agendas ESG), incluindo operações integradas agricultura-pecuária e fazendas corporativas — perfil representado pela parceira BrPec (MAPA, 2025; BRASIL, 2012; BANCO DO NORDESTE, 2025).
+
+&nbsp;&nbsp;&nbsp;&nbsp;**2) Proposta de Valor** — Conforme detalhado na Seção 6.4, o AgroFlow digitaliza e centraliza a gestão do rebanho para reduzir erros, aumentar a rastreabilidade e otimizar o processo operacional. O valor entregue assenta-se em três pilares: a redução da dependência de boletas de papel e do retrabalho de redigitação; a operação offline com sincronização automática ao restabelecer a conexão; e a rastreabilidade com responsabilização por autor, sustentando uma consolidação gerencial baseada em dados confiáveis.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**3) Canais** — Alinhados à estratégia de distribuição e promoção descrita na Seção 6.6, os canais de relacionamento e divulgação compreendem redes sociais (LinkedIn para decisores; Instagram e YouTube para provas de uso em campo), anúncios em sites voltados ao agronegócio, presença em eventos e feiras de agropecuária (como Agrishow e Expodireto) e tráfego pago segmentado por região e cargo, direcionando leads à página de solicitação de demonstração.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**4) Relacionamento com Clientes** — O relacionamento combina proximidade na fase de desenvolvimento e suporte remoto na operação. Durante a construção da solução, são realizadas reuniões quinzenais com o cliente para validação do processo. Após a entrega, o modelo prevê atualizações da aplicação sob demanda, suporte e atualizações remotas sem deslocamento ao campo, onboarding remoto com implantação assistida e uma estratégia de sucesso do cliente apoiada na coleta contínua de feedback para a evolução do produto.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**5) Fontes de Receita** — Em relação com o modelo de precificação da Seção 6.6.2, as receitas provêm de duas fontes: a assinatura recorrente de planos no modelo SaaS (licenciamento B2B por operação, em faixas escalonadas conforme o número de retiros e usuários ativos) e a taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**6) Recursos Principais** — Os recursos que sustentam a entrega de valor são, sobretudo, tecnológicos e de conhecimento: o banco de dados PostgreSQL; o sistema offline-first com sincronização automática; a infraestrutura em nuvem (servidor de aplicação e Supabase); as interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente); a equipe de desenvolvimento e sua expertise de software; o know-how sobre o uso por usuários com baixo letramento digital; e a parceria estratégica com a BrPec, que funciona como caso de referência.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**7) Atividades Principais** — As atividades essenciais ao funcionamento do modelo são o desenvolvimento e o gerenciamento da aplicação web; a engenharia de sincronização e integridade de dados, núcleo do diferencial offline-first; a modelagem e a gestão dos fluxos por perfil de usuário; as ações de vendas, marketing e expansão da base de clientes; e o suporte e o sucesso do cliente, garantindo retenção e evolução contínua do produto.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**8) Parcerias Principais** — As parcerias-chave habilitam a infraestrutura e a aquisição de clientes: empresas que promovem eventos agropecuários, que dão acesso ao público-alvo e geram leads qualificados; o provedor de nuvem responsável pelo armazenamento e pela disponibilidade dos dados; e instituições do agronegócio, que ampliam a presença de mercado e reforçam a autoridade técnica da solução no nicho.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**9) Estrutura de Custos** — Os principais custos do modelo concentram-se no desenvolvimento e na manutenção do sistema; na infraestrutura e tecnologia em nuvem (servidor e Supabase), cujo custo escala com o volume de dados e operações; nos processos internos de operação do negócio; e na aquisição de clientes (marketing, tráfego pago e venda consultiva). A estrutura é predominantemente digital e escalável, o que mantém o custo marginal de expansão para novas operações relativamente baixo, coerente com a natureza SaaS da solução.
 
 ## <a name="c6.6"></a>6.6 Estratégia de Marketing
 
-**6.6.1) **Produto/Serviço**
+**6.6.1)** **Produto/Serviço**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow é uma aplicação web de gestão operacional de campo para pecuária bovina de larga escala, disponibilizada em interfaces adaptadas a três perfis de usuário: capataz, supervisor e gerente. Suas funcionalidades centrais cobrem o ciclo completo da informação operacional da fazenda: registro de movimentações do rebanho (nascimentos, mortes com causa de óbito, compras, vendas e transferências), gestão e atribuição de tarefas, abertura de chamados de infraestrutura, anexação de evidências (fotos georreferenciadas com coordenadas GPS, áudios e mensagens) e geração de relatórios exportáveis em formatos compatíveis com os processos já adotados pelo parceiro.
 
@@ -4649,19 +4674,19 @@ Preencha os nove blocos do Business Model Canvas de forma coerente com as análi
 
 
 
-**6.6.2) **Preço**
+**6.6.2)** **Preço**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo de precificação adotado é o de assinatura recorrente B2B (SaaS), com licenciamento por operação e faixas escalonadas conforme o número de retiros e de usuários ativos. A esse valor recorrente soma-se uma taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação. Para reduzir a barreira de adoção, propõe-se um período de piloto assistido em um subconjunto de retiros, convertendo-se em contrato pleno após a comprovação de valor em campo.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo (Seção 6.3) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado — métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue: redução de retrabalho, de perdas de informação e de risco regulatório; e não o volume de funcionalidades genéricas.
 
-**6.6.3) **Praça (Distribuição)**
+**6.6.3)** **Praça (Distribuição)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Por ser uma aplicação web responsiva, o AgroFlow é distribuído de forma totalmente digital, sem necessidade de instalação física ou logística de hardware. O acesso ocorre via navegador em dispositivos móveis (capatazes em campo) e desktops (supervisores e gerentes no escritório), com a arquitetura offline-first garantindo a entrega da funcionalidade mesmo nos retiros do Pantanal e do Cerrado, onde a conectividade é intermitente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O canal de aquisição principal é a venda consultiva direta (B2B), adequada ao ciclo de decisão de fazendas corporativas, iniciada pela relação com o parceiro BrPec como caso de referência. Complementam a distribuição um site institucional com solicitação de demonstração, presença em marketplaces de soluções AgroTech e participação em feiras e eventos do agronegócio (como Agrishow e Expodireto) para geração de leads qualificados. A entrega e a atualização do produto são contínuas: por se tratar de SaaS, novas versões são publicadas centralmente e disponibilizadas a todos os clientes sem reinstalação, e o onboarding remoto reduz o custo de expansão para novas operações.
 
-**6.6.4) **Promoção**
+**6.6.4)** **Promoção**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estratégia de promoção é predominantemente digital e orientada à autoridade técnica no nicho. Em SEO e marketing de conteúdo, o foco recai sobre termos de alta intenção e baixa concorrência ligados às dores reais do público — "gestão de rebanho offline", "rastreabilidade PNIB", "registro de movimentação sem internet" —, sustentados por artigos, guias e estudos de caso que educam o mercado sobre a digitalização em regiões remotas. Em redes sociais, prioriza-se o LinkedIn (decisores e gestores corporativos) e o Instagram/YouTube (demonstrações em campo e provas de uso real), reforçando os atributos de marca: confiabilidade, resiliência e acessibilidade.
 
