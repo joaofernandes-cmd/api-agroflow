@@ -188,7 +188,7 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;No início do projeto, a **BrPec Agro-Pecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa compromete a precisão do inventário pecuário e impede maior agilidade na consolidação das informações, fator crítico para a gestão eficiente.
+&nbsp;&nbsp;&nbsp;&nbsp;No início do projeto, a **BrPec Agropecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa compromete a precisão do inventário pecuário e impede maior agilidade na consolidação das informações, fator crítico para a gestão eficiente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização** de dados assim que a conexão for restabelecida, eliminando a dependência de processos manuais e reduzindo a janela de inconsistência entre campo e escritório.
 
@@ -202,7 +202,7 @@
 
 #### Análise das 5 Forças de Porter - BrPec Agropecuária
 
-&nbsp;&nbsp;&nbsp;&nbsp;A análise das Cinco Forças de Porter permite compreender a estrutura competitiva do setor em que a BRPec está inserida, avaliando fatores que impactam diretamente sua rentabilidade e posicionamento estratégico. No contexto do agronegócio, especialmente na pecuária de larga escala no Pantanal e Cerrado, essa análise se torna essencial devido à alta dependência de capital, fatores ambientais, logística e dinâmica de mercado. A partir desse modelo, é possível identificar como barreiras à entrada, produtos substitutos, relações com fornecedores e compradores, além da intensidade da concorrência, influenciam as decisões da empresa, contribuindo para uma visão mais clara dos desafios e oportunidades do negócio (PORTER, 2008).
+&nbsp;&nbsp;&nbsp;&nbsp;A análise das Cinco Forças de Porter permite compreender a estrutura competitiva do setor em que a BrPec está inserida, avaliando fatores que impactam diretamente sua rentabilidade e posicionamento estratégico. No contexto do agronegócio, especialmente na pecuária de larga escala no Pantanal e Cerrado, essa análise se torna essencial devido à alta dependência de capital, fatores ambientais, logística e dinâmica de mercado. A partir desse modelo, é possível identificar como barreiras à entrada, produtos substitutos, relações com fornecedores e compradores, além da intensidade da concorrência, influenciam as decisões da empresa, contribuindo para uma visão mais clara dos desafios e oportunidades do negócio (PORTER, 2008).
 
 
 <div align="center">
@@ -239,13 +239,13 @@
 
 **5. Rivalidade entre Concorrentes Existentes:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui um dos maiores rebanhos comercias do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
+&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui um dos maiores rebanhos comerciais do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Além disso, a presença crescente de grupos agropecuários corporativos vinculados ao mercado financeiro amplia a concorrência por terras, tecnologia, mão de obra qualificada e acesso a capital. Nesse contexto, empresas com maior capacidade operacional e financeira conseguem suportar oscilações de mercado com maior estabilidade. O modelo “flex” da BrPec representa uma resposta estratégica à intensidade competitiva do setor, permitindo maior adaptação às variações de margem ao longo da cadeia produtiva.
 
 ### <a name="c2.1.2"></a>2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças. Com base nisso, realizou-se a análise SWOT da BRPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado, como demonstra a figura 2.
+&nbsp;&nbsp;&nbsp;&nbsp;A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico utilizada para avaliar fatores internos e externos que impactam o desempenho organizacional, sendo estruturada em forças, fraquezas, oportunidades e ameaças. Com base nisso, realizou-se a análise SWOT da BrPec Agropecuária S.A., considerando seu contexto operacional, financeiro e de mercado, como demonstra a figura 2.
 
 <div align="center">
 <p align="center">Figura 2 - Análise de SWOT</p>
@@ -258,19 +258,19 @@
 
 **1. Forças:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A BRPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, a consolidação de suas operações e sua localização logística estratégica, com acesso a diferentes modais de transporte, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
+&nbsp;&nbsp;&nbsp;&nbsp;A BrPec apresenta vantagens competitivas relevantes, destacando-se pela integração entre agricultura e pecuária, que permite redução de custos e maior eficiência operacional (ECONODATA, 2026). Sua grande escala produtiva contribui para ganhos de produtividade e diluição de riscos, enquanto o suporte financeiro do BTG Pactual amplia o acesso a crédito e instrumentos financeiros. Além disso, a consolidação de suas operações e sua localização logística estratégica, com acesso a diferentes modais de transporte, favorece o escoamento da produção e a inserção em mercados relevantes (BRPEC, 2026).
 
 **2. Fraquezas:** 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BRPEC, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a presença de gargalos operacionais relacionados à utilização de boletas físicas, ao retrabalho na consolidação de dados e à ausência de rastreabilidade das informações de campo. Adicionalmente, a exposição a riscos ambientais e regulatórios pode gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012).
+&nbsp;&nbsp;&nbsp;&nbsp;Por outro lado, a dependência das decisões estratégicas do BTG Pactual, empresa controladora da BrPec, pode limitar a autonomia da organização. A complexidade operacional, característica de operações de grande escala, exige elevado nível de gestão e controle, além de envolver forte dependência de mão de obra operacional, devido ao grande número de trabalhadores, aos custos associados e às dificuldades de gestão em áreas remotas. Soma-se a isso a presença de gargalos operacionais relacionados à utilização de boletas físicas, ao retrabalho na consolidação de dados e à ausência de rastreabilidade das informações de campo. Adicionalmente, a exposição a riscos ambientais e regulatórios pode gerar impactos reputacionais e financeiros, especialmente diante das exigências do Código Florestal (BRASIL, 2012).
 
 **3. Oportunidades:**
 
-&nbsp;&nbsp;&nbsp;&nbsp; No ambiente externo, a digitalização das operações de campo surge como oportunidade estratégica para aumentar eficiência, integração e controle operacional, reduzindo falhas de comunicação, retrabalho e atrasos na consolidação das informações. Além disso, a crescente demanda global por proteína animal, a valorização de práticas sustentáveis ligadas à agenda ESG e créditos de carbono (DE OLHO NOS RURALISTAS, 2025), bem como o avanço de tecnologias aplicadas ao agronegócio, ampliam o potencial competitivo da BRPec e fortalecem suas possibilidades de expansão e otimização operacional (APROSOJA MS, 2024).
+&nbsp;&nbsp;&nbsp;&nbsp; No ambiente externo, a digitalização das operações de campo surge como oportunidade estratégica para aumentar eficiência, integração e controle operacional, reduzindo falhas de comunicação, retrabalho e atrasos na consolidação das informações. Além disso, a crescente demanda global por proteína animal, a valorização de práticas sustentáveis ligadas à agenda ESG e créditos de carbono (DE OLHO NOS RURALISTAS, 2025), bem como o avanço de tecnologias aplicadas ao agronegócio, ampliam o potencial competitivo da BrPec e fortalecem suas possibilidades de expansão e otimização operacional (APROSOJA MS, 2024).
 
 **4. Ameaças:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a continuidade de processos manuais e descentralizados pode ampliar riscos de falhas na comunicação, perda de informações e atrasos na consolidação dos dados operacionais. Soma-se isso a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo.
+&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BrPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a continuidade de processos manuais e descentralizados pode ampliar riscos de falhas na comunicação, perda de informações e atrasos na consolidação dos dados operacionais. Soma-se a isso a oscilação nos preços de commodities e o aumento dos custos operacionais, que representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo.
 
 
 ### <a name="c2.1.3"></a>2.1.3. Solução
@@ -301,7 +301,7 @@
 
 
 ### <a name="c2.1.4"></a>2.1.4. Value Proposition Canvas (sprint 1)
-&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2014), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BRPec Agropecuária S.A. Conforme a figura 3.
+&nbsp;&nbsp;&nbsp;&nbsp;Segundo Osterwalder (2014), a ferramenta Canvas de Proposta de Valor (CPV) é utilizada estrategicamente para mapear e validar se a proposta de valor de um produto ou serviço se adequa às necessidades, dores e expectativas dos clientes. Essa ferramenta permite compreender a relação entre o que a empresa oferece e o que o cliente busca, facilitando a criação de soluções eficazes e relevantes. Assim, esse recurso foi utilizado no presente projeto a fim de apresentar a construção da proposta de valor e o diagnóstico dos problemas identificados a partir das demandas da BrPec Agropecuária S.A. Conforme a figura 3.
 
 <div align="center">
 <p align="center">Figura 3 - Canvas Proposta de Valor</p>
@@ -375,7 +375,7 @@
 
 ### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BRPEC, conforme apresentado na Figura 4.
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BrPec, conforme apresentado na Figura 4.
 
 <div align="center">
   <p align="center">Figura 4 - Matriz de Risco</p>
@@ -385,7 +385,7 @@
 
 **Planos de ação, impacto e probabilidade**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BRPEC, de acordo com os quadros 1 e 2. Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
+&nbsp;&nbsp;&nbsp;&nbsp;Em linhas gerais, um plano de ação consiste em um conjunto de medidas definidas para lidar com os riscos identificados, estando diretamente relacionado à matriz de riscos, com o objetivo de potencializar oportunidades e mitigar ameaças ao longo do projeto (PMI, 2021). Dessa forma, foram elaborados planos de ação referentes aos riscos apresentados na matriz de risco do projeto BrPec, de acordo com os quadros 1 e 2. Além disso, foram considerados os impactos e as probabilidades de cada risco, uma vez que são fundamentais para sua análise e acompanhamento durante o desenvolvimento do projeto. 
 
 <p align="center">Quadro 1 - Plano de ação para as ameaças.</p>
 
@@ -424,7 +424,7 @@
 
 ***Conclusão***
 
-&nbsp;&nbsp;&nbsp;&nbsp;A aplicação integrada das análises SWOT, Cinco Forças de Porter e Business Model Canvas foi fundamental para entender melhor o problema enfrentado pela BRPec e direcionar a solução proposta. A análise SWOT ajudou a organizar os principais pontos internos e externos do negócio, evidenciando tanto a força da operação quanto limitações como a dependência de processos manuais. Já o modelo de Porter mostrou como o setor é altamente competitivo, com forte pressão de compradores e baixa diferenciação, exigindo maior eficiência operacional. Por fim, o Canvas permitiu enxergar o negócio de forma mais completa, conectando a proposta de valor com as necessidades reais da operação. No conjunto, essas análises deixaram claro que o principal desafio está na organização e confiabilidade das informações do campo, e que a digitalização dos processos é essencial para reduzir retrabalho, organizar os dados e aumentar o controle da operação.
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação integrada das análises SWOT, Cinco Forças de Porter e Business Model Canvas foi fundamental para entender melhor o problema enfrentado pela BrPec e direcionar a solução proposta. A análise SWOT ajudou a organizar os principais pontos internos e externos do negócio, evidenciando tanto a força da operação quanto limitações como a dependência de processos manuais. Já o modelo de Porter mostrou como o setor é altamente competitivo, com forte pressão de compradores e baixa diferenciação, exigindo maior eficiência operacional. Por fim, o Canvas permitiu enxergar o negócio de forma mais completa, conectando a proposta de valor com as necessidades reais da operação. No conjunto, essas análises deixaram claro que o principal desafio está na organização e confiabilidade das informações do campo, e que a digitalização dos processos é essencial para reduzir retrabalho, organizar os dados e aumentar o controle da operação.
 
 ## <a name="c2.2"></a>2.2. Personas (sprint 1)
 
@@ -606,7 +606,7 @@
 
 ## <a name="c2.3"></a>2.3. User Stories (sprints 1 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BRPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17.
+&nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BrPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17.
 
 <p align="center">Quadro 6 - User Story 01.</p>
 
@@ -887,7 +887,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 |:--|:--|
 | **Requisito Não Funcional** | A interface deve ser operável por usuários com baixa alfabetização digital (ensino fundamental incompleto), sem necessidade de treinamento extenso ou suporte presencial. |
 | **Métrica / Critério de Aceite** | **Quantitativa:** ≥80% dos capatazes testados (mínimo 5 participantes do perfil real: ensino fundamental incompleto, sem experiência com apps de gestão) concluem a tarefa de registrar uma movimentação de rebanho completa em até 3 minutos, sem auxílio externo, em no máximo 2 tentativas. **Protocolo de teste:** Sessão de usabilidade observada, com registro de tempo, número de tentativas e taxa de conclusão. Captura de erros de navegação e pontos de travamento. |
-| **Derivação do Contexto do Parceiro** | Derivado do perfil dos capatazes da BrPec (baixo letramento digital, conforme personas Daniel e Luiz), da ausência de suporte técnico nos retiros isolados (restrição organizacional) e da necessidade de operação autônoma em campo. O RF005 exige identificação simples e intuitiva, traduzindo-se aqui em um critério de usabilidade mensurável aplicado ao fluxo crítico do sistema. |
+| **Derivação do Contexto do Parceiro** | Derivado do perfil dos capatazes da BrPec (baixo letramento digital, conforme a persona Daniel), da ausência de suporte técnico nos retiros isolados (restrição organizacional) e da necessidade de operação autônoma em campo. O RF005 exige identificação simples e intuitiva, traduzindo-se aqui em um critério de usabilidade mensurável aplicado ao fluxo crítico do sistema. |
 | **RF/RN Associados** | RF001, RF005, RN05 |
 | **Como será atendido** | Interface com ícones grandes, botões visuais autoexplicativos, textos curtos em linguagem simples (nível fundamental), fluxos de no máximo 3 etapas e feedback visual imediato. Design validado com usuários reais em sessões iterativas. |
 
@@ -1057,7 +1057,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 # 3.2.1 Arquitetura em Camadas
 
-&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do sistema BRPEC foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository**, fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
+&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do sistema BrPec foi estruturada segundo o padrão **Arquitetura em Camadas** (*Layered Architecture*), no estilo **Controller-Service-Repository**, fundamentado nos princípios da separação de responsabilidades, do baixo acoplamento e da alta coesão. A escolha decorreu da necessidade de gerenciar regras de negócio complexas do domínio agropecuário, aliada à exigência de operação em ambientes com conectividade intermitente via Starlink.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O sistema foi organizado em sete camadas no servidor (Views, Routes, Middlewares, Controllers, Services, Repositories e Models), dispostas em fluxo unidirecional, no qual cada camada comunica-se exclusivamente com a subsequente.
 
@@ -1078,9 +1078,9 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 ### <a name="c3.2.1.1"></a>3.2.1.1 Diagrama de Arquitetura 
 
 
-**Diagrama Arquitetural - Sistema BRPEC**
+**Diagrama Arquitetural - Sistema BrPec**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O diagrama a seguir ilustra a arquitetura do sistema BRPEC, estruturada com base no padrão de Arquitetura em Camadas (Layered Architecture), seguindo o modelo Controller-Service-Repository e adotando camadas específicas para Routes e Middlewares. Essa organização favorece a separação clara de responsabilidades entre roteamento, validações transversais, lógica de negócio, acesso a dados e persistência, contribuindo para maior modularidade, manutenção e escalabilidade do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama a seguir ilustra a arquitetura do sistema BrPec, estruturada com base no padrão de Arquitetura em Camadas (Layered Architecture), seguindo o modelo Controller-Service-Repository e adotando camadas específicas para Routes e Middlewares. Essa organização favorece a separação clara de responsabilidades entre roteamento, validações transversais, lógica de negócio, acesso a dados e persistência, contribuindo para maior modularidade, manutenção e escalabilidade do sistema.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A camada de Cliente corresponde ao sistema web utilizado pelos perfis Capataz, Supervisor e Gerente. No lado do servidor, as Views compõem a interface do usuário com telas de Login, Validação, Movimentação, Evidência, Tarefas, Chamados, Relatórios e Sincronização; as Routes (8 arquivos) declaram os endpoints REST em conformidade com a Matriz RF → RN → Endpoint; os Middlewares (5 arquivos: autenticacao, cargo, validacaoRequisicao, log e erros) interceptam as requisições aplicando autenticação JWT, controle de acesso por cargo e validações transversais; os Controllers (8 controladores) orquestram as requisições HTTP; os Services (8 serviços) concentram as regras de negócio e validações de domínio; e os Repositories (13 repositórios) abstraem o acesso aos dados, isolando a persistência da lógica da aplicação. Os Models (13 entidades de domínio + o utilitário uuid.ts) representam os objetos do sistema antes da persistência em banco PostgreSQL; destaca-se a entidade Evidência, segmentada em sete repositórios e sete models especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket).
 
@@ -1647,7 +1647,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso todas as informações estejam corretas, o serviço solicita ao *RepositorioMovimentacao* o salvamento da movimentação no banco de dados.
 
-• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente./
+• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente.
 
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação do registro da movimentação.
 
@@ -1857,7 +1857,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Fluxo Principal**
 
-• O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação./
+• O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação.
 
 • Em seguida, a interface envia uma requisição `GET` para os endpoints de relatórios implementados, como `/relatorios/movimentacoes`, `/relatorios/semanal` ou `/relatorios/mensal`, encaminhando os parâmetros ao *ControladorRelatorio*.
 
@@ -2100,7 +2100,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BRPEC.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BrPec.
 
 
 ### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
@@ -2154,7 +2154,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do projeto BRPEC segue o padrão Model-View-Controller (MVC) adaptado para uma aplicação backend em API REST. Nesta implementação, o Model encapsula estrutura de dados e persistência através de Repositories, o Controller gerencia fluxo de requisições HTTP e orquestração com Services, e a View é abstraída pela própria API REST, consumida pelos clientes frontend (web e mobile). Esta separação permite que cada camada tenha responsabilidades bem definidas e desacopladas, facilitando testes unitários, manutenção independente e a possibilidade de múltiplos clientes consumirem a mesma lógica de negócio sem duplicação. Nas seções seguintes, detalha-se a implementação específica de cada componente e os padrões complementares utilizados.
+&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do projeto BrPec segue o padrão Model-View-Controller (MVC) adaptado para uma aplicação backend em API REST. Nesta implementação, o Model encapsula estrutura de dados e persistência através de Repositories, o Controller gerencia fluxo de requisições HTTP e orquestração com Services, e a View é abstraída pela própria API REST, consumida pelos clientes frontend (web e mobile). Esta separação permite que cada camada tenha responsabilidades bem definidas e desacopladas, facilitando testes unitários, manutenção independente e a possibilidade de múltiplos clientes consumirem a mesma lógica de negócio sem duplicação. Nas seções seguintes, detalha-se a implementação específica de cada componente e os padrões complementares utilizados.
 
 ***Model***
 
@@ -2170,13 +2170,13 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ***Services***
 
-&nbsp;&nbsp;&nbsp;&nbsp;A camada de Services, localizada em /src/backend/services/, concentra toda a lógica de negócio do sistema, atuando como intermediária entre os Controllers e os Repositories. É nesta camada que residem as validações, as regras de negócio e a orquestração de operações que podem envolver múltiplas entidades. No projeto BRPEC, os Services implementam as regras de negócio levantadas durante o desenvolvimento, como a validação de campos obrigatórios específicos para cada tipo de movimentação, a verificação de permissões de acordo com o cargo do usuário (apenas supervisores podem validar registros), o controle de sincronização de dados produzidos em modo offline e a filtragem de informações que alimentam relatórios e dashboards. Por exemplo, o MovimentacaoService valida que uma movimentação do tipo "morte" possua a causa do óbito e que uma "transferência" contenha origem e destino antes de persistir o registro, enquanto o UsuarioService é responsável pela autenticação e pela verificação de permissões. 
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Services, localizada em /src/backend/services/, concentra toda a lógica de negócio do sistema, atuando como intermediária entre os Controllers e os Repositories. É nesta camada que residem as validações, as regras de negócio e a orquestração de operações que podem envolver múltiplas entidades. No projeto BrPec, os Services implementam as regras de negócio levantadas durante o desenvolvimento, como a validação de campos obrigatórios específicos para cada tipo de movimentação, a verificação de permissões de acordo com o cargo do usuário (apenas supervisores podem validar registros), o controle de sincronização de dados produzidos em modo offline e a filtragem de informações que alimentam relatórios e dashboards. Por exemplo, o MovimentacaoService valida que uma movimentação do tipo "morte" possua a causa do óbito e que uma "transferência" contenha origem e destino antes de persistir o registro, enquanto o UsuarioService é responsável pela autenticação e pela verificação de permissões. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Services exemplificam o princípio Open/Closed, pois novas regras de negócio podem ser incorporadas a um serviço ou novos serviços podem ser criados sem alterar Controllers e Repositories existentes, e o princípio Single Responsibility, ao manter a lógica de negócio isolada das responsabilidades de transporte HTTP e de persistência, garantindo que mudanças nas regras do domínio não afetem as demais camadas.
 
 ***Middlewares***
 
-&nbsp;&nbsp;&nbsp;&nbsp;A camada de Middlewares, localizada em /src/backend/middlewares/, é responsável por interceptar as requisições antes que cheguem aos Controllers, concentrando funcionalidades transversais que se aplicam a múltiplos endpoints. No projeto BRPEC, essa camada reúne quatro responsabilidades distintas: a autenticação, por meio da função autenticarUsuario, que valida o token JWT enviado no cabeçalho de autorização e anexa os dados do usuário autenticado à requisição; a autorização por cargo, por meio da função exigirCargo, que bloqueia o acesso a rotas quando o cargo do usuário é insuficiente (retornando status 403), garantindo, por exemplo, que apenas supervisores acessem determinadas operações; a validação de dados, que verifica se os campos obrigatórios estão presentes no corpo da requisição antes de prosseguir, como a exigência de tipo, origem e destino ao registrar uma movimentação; e o tratamento centralizado de erros, que captura exceções de qualquer camada e as converte em respostas HTTP consistentes. A adoção dessa camada justifica-se pela necessidade de evitar a duplicação de lógicas como autenticação e validação em cada Controller, centralizando essas preocupações em pontos únicos e reutilizáveis, o que aumenta a segurança e a consistência da API.
+&nbsp;&nbsp;&nbsp;&nbsp;A camada de Middlewares, localizada em /src/backend/middlewares/, é responsável por interceptar as requisições antes que cheguem aos Controllers, concentrando funcionalidades transversais que se aplicam a múltiplos endpoints. No projeto BrPec, essa camada reúne cinco responsabilidades distintas: a autenticação, por meio da função autenticarUsuario, que valida o token JWT enviado no cabeçalho de autorização e anexa os dados do usuário autenticado à requisição; a autorização por cargo, por meio da função exigirCargo, que bloqueia o acesso a rotas quando o cargo do usuário é insuficiente (retornando status 403), garantindo, por exemplo, que apenas supervisores acessem determinadas operações; a validação de dados, que verifica se os campos obrigatórios estão presentes no corpo da requisição antes de prosseguir, como a exigência de tipo, origem e destino ao registrar uma movimentação; o registro de requisições para auditoria, por meio do middleware de log; e o tratamento centralizado de erros, que captura exceções de qualquer camada e as converte em respostas HTTP consistentes. A adoção dessa camada justifica-se pela necessidade de evitar a duplicação de lógicas como autenticação e validação em cada Controller, centralizando essas preocupações em pontos únicos e reutilizáveis, o que aumenta a segurança e a consistência da API.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Middlewares exemplificam o princípio Open/Closed, pois novas verificações podem ser adicionadas à cadeia de processamento sem alterar Controllers ou Services existentes, e o princípio Single Responsibility, uma vez que cada middleware se ocupa de uma única responsabilidade transversal, mantendo as demais camadas livres dessas preocupações.
 
@@ -2197,12 +2197,12 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BRPEC, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. 
+&nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BrPec, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. 
 &nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#c2.3) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
 
 ### Capataz
 
-&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
+&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construída visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para atender à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada de forma a permitir acesso rápido às funcionalidades principais mesmo em ambientes com baixa ou ausência de conexão com a internet. Além disso, os registros realizados pelo usuário podem ser armazenados localmente até que a conexão seja restabelecida e os dados sincronizados automaticamente.
 
@@ -2341,7 +2341,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### Gerente
 
-&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do gerente foram desenvolvidas com foco estratégico e gerencial, permitindo acompanhamento consolidado das operações da BRPEC. O fluxo inicial também contempla telas de login simplificadas, organizadas de forma intuitiva para facilitar a navegação e o acesso rápido às funcionalidades do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces do gerente foram desenvolvidas com foco estratégico e gerencial, permitindo acompanhamento consolidado das operações da BrPec. O fluxo inicial também contempla telas de login simplificadas, organizadas de forma intuitiva para facilitar a navegação e o acesso rápido às funcionalidades do sistema.
 
 
 **Versão Mobile:**
@@ -2401,7 +2401,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.4.1"></a>3.4.1 Cores
 
-&nbsp;&nbsp;&nbsp;&nbsp;A paleta de cores da aplicação constitui um dos principais elementos da identidade visual do sistema, sendo responsável por transmitir organização, clareza e coerência visual durante a utilização da interface. Além do aspecto estético, a definição cromática contribui diretamente para a legibilidade, hierarquia das informações e identificação rápida de elementos importantes dentro da aplicação. Em sistemas utilizados em ambientes operacionais e dispositivos móveis, como no contexto da BRPEC, a escolha das cores também precisa considerar fatores como contraste, acessibilidade e visibilidade em ambientes externos com alta luminosidade.
+&nbsp;&nbsp;&nbsp;&nbsp;A paleta de cores da aplicação constitui um dos principais elementos da identidade visual do sistema, sendo responsável por transmitir organização, clareza e coerência visual durante a utilização da interface. Além do aspecto estético, a definição cromática contribui diretamente para a legibilidade, hierarquia das informações e identificação rápida de elementos importantes dentro da aplicação. Em sistemas utilizados em ambientes operacionais e dispositivos móveis, como no contexto da BrPec, a escolha das cores também precisa considerar fatores como contraste, acessibilidade e visibilidade em ambientes externos com alta luminosidade.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a paleta cromática da aplicação foi desenvolvida considerando o contexto do agronegócio e as necessidades operacionais da fazenda. Os tons de verde foram definidos como cores principais por remeterem visualmente ao campo, à natureza e à identidade do setor agropecuário, além de transmitirem sensação de estabilidade, confiabilidade e equilíbrio.
 
@@ -2459,7 +2459,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.4.2"></a>3.4.2 Tipografia
 
-&nbsp;&nbsp;&nbsp;&nbsp;A tipografia constitui um dos principais elementos da identidade visual de uma interface digital, sendo responsável por influenciar diretamente a legibilidade, a organização das informações e a experiência de navegação do usuário. A definição padronizada de fontes, tamanhos, pesos e espaçamentos contribui para a criação de interfaces mais consistentes, acessíveis e visualmente organizadas, facilitando a interpretação rápida dos conteúdos apresentados. Além disso, em aplicações utilizadas em dispositivos móveis e ambientes externos, como no contexto operacional da BRPEC, a escolha tipográfica torna-se ainda mais relevante devido à necessidade de boa visualização em diferentes condições de luminosidade e uso contínuo em campo.
+&nbsp;&nbsp;&nbsp;&nbsp;A tipografia constitui um dos principais elementos da identidade visual de uma interface digital, sendo responsável por influenciar diretamente a legibilidade, a organização das informações e a experiência de navegação do usuário. A definição padronizada de fontes, tamanhos, pesos e espaçamentos contribui para a criação de interfaces mais consistentes, acessíveis e visualmente organizadas, facilitando a interpretação rápida dos conteúdos apresentados. Além disso, em aplicações utilizadas em dispositivos móveis e ambientes externos, como no contexto operacional da BrPec, a escolha tipográfica torna-se ainda mais relevante devido à necessidade de boa visualização em diferentes condições de luminosidade e uso contínuo em campo.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Com base nisso, a aplicação adota a família tipográfica Poppins, escolhida por sua aparência moderna, limpa e alta legibilidade em interfaces digitais. A tipografia é aplicada em diferentes pesos e tamanhos conforme a hierarquia textual definida no sistema, contribuindo para a clareza visual, organização dos conteúdos e melhor experiência de uso dos usuários da aplicação.
 
@@ -2473,7 +2473,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a utilização padronizada da tipografia contribui para uma interface mais clara, organizada e alinhada à identidade visual da aplicação. A definição hierárquica dos textos facilita a navegação e a interpretação das informações pelos usuários, especialmente no contexto operacional da BRPEC, no qual rapidez e facilidade de leitura são fatores essenciais para o uso eficiente da aplicação em campo.
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a utilização padronizada da tipografia contribui para uma interface mais clara, organizada e alinhada à identidade visual da aplicação. A definição hierárquica dos textos facilita a navegação e a interpretação das informações pelos usuários, especialmente no contexto operacional da BrPec, no qual rapidez e facilidade de leitura são fatores essenciais para o uso eficiente da aplicação em campo.
 
 ### <a name="c3.4.3"></a>3.4.3 Iconografia e imagens
 
@@ -2620,16 +2620,16 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BRPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### Entidades e Atributos
-&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas dezoito entidades no domínio da BRPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. Além disso, os dados específicos de movimentação foram separados nas entidades MOVIMENTACAO_COMPRA, MOVIMENTACAO_VENDA, MOVIMENTACAO_TRANSFERENCIA, MOVIMENTACAO_NASCIMENTO e MOVIMENTACAO_MORTE. O controle de sincronização offline é representado pelo atributo sincronizado nas entidades operacionais que passam por sincronização, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status, validado_por e data_validacao dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
+&nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas dezoito entidades no domínio da BrPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. Além disso, os dados específicos de movimentação foram separados nas entidades MOVIMENTACAO_COMPRA, MOVIMENTACAO_VENDA, MOVIMENTACAO_TRANSFERENCIA, MOVIMENTACAO_NASCIMENTO e MOVIMENTACAO_MORTE. O controle de sincronização offline é representado pelo atributo sincronizado nas entidades operacionais que passam por sincronização, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status, validado_por e data_validacao dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) nas entidades operacionais aplicáveis, inicializado como false no momento do registro. Isso significa que registros criados em campo podem ser armazenados localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização nos próprios registros, em conformidade com a US01, US02 e RN03.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O atributo estagio_vida permanece na entidade MOVIMENTACAO por ser comum ao registro do rebanho. Já atributos específicos, como causa_obito, origem, destino e quantidade, são distribuídos nas tabelas especializadas de movimentação conforme o tipo do evento registrado. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
 
-<p align="center">Quadro 39 - Entidades do modelo conceitual da BRPec.</p>
+<p align="center">Quadro 39 - Entidades do modelo conceitual da BrPec.</p>
 
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
@@ -2754,7 +2754,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. A tabela movimentacao armazena os dados comuns do registro, enquanto os dados específicos de compra, venda, transferência, nascimento e morte foram separados em tabelas especializadas. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado recebeu valor padrão false nas tabelas operacionais, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN07. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. A tabela movimentacao armazena os dados comuns do registro, enquanto os dados específicos de compra, venda, transferência, nascimento e morte foram separados em tabelas especializadas. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado recebeu valor padrão false nas tabelas operacionais, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN03. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
 
@@ -2939,7 +2939,7 @@ CREATE TABLE relatorio (
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Para a tabela usuario, optou-se pelo tipo UUID, considerando a sensibilidade dos dados de identificação dos usuários. Para as demais entidades operacionais, foram utilizados identificadores numéricos BIGINT gerados automaticamente por identidade, simplificando chaves primárias, chaves estrangeiras e consultas internas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado foi definido como BOOLEAN com valor padrão false nas tabelas operacionais que passam pelo fluxo offline, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se true apenas após a sincronização com o servidor, em conformidade com a RN07. Os campos latitude e longitude foram concentrados na tabela evidencia_foto, pois o georreferenciamento é exigido apenas para evidências do tipo foto. Os campos de data utilizam DATE ou TIMESTAMP conforme a necessidade de registrar apenas o dia ou o momento completo da operação.
+&nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado foi definido como BOOLEAN com valor padrão false nas tabelas operacionais que passam pelo fluxo offline, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se true apenas após a sincronização com o servidor, em conformidade com a RN03. Os campos latitude e longitude foram concentrados na tabela evidencia_foto, pois o georreferenciamento é exigido apenas para evidências do tipo foto. Os campos de data utilizam DATE ou TIMESTAMP conforme a necessidade de registrar apenas o dia ou o momento completo da operação.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
 
@@ -4082,7 +4082,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 **1. Estrutura do Projeto e Configuração do Ambiente**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, pg, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 48).
+&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, postgres, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 48).
 
 <div align="center">
   <p align="center">Figura 48 - package.json com dependências do projeto</p>
@@ -4104,7 +4104,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 50).
+&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda, outros), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 50).
 
 <div align="center">
   <p align="center">Figura 50 - Script de migração com ENUMs e estrutura de tabelas</p>
@@ -4368,6 +4368,7 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 | CT09 | RN09 | RF009 | MovimentacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts` | Filtro por retiro, tipo, status e período | Lista filtrada corretamente conforme os parâmetros informados |
 | CT10 | RN10 | RF010 | MovimentacaoService, TarefaService, TicketService, SincronizacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts`; `src/backend/tests/unit/tarefa.service.spec.ts`; `src/backend/tests/unit/ticket.service.spec.ts`; `src/backend/tests/unit/sincronizacao.service.spec.ts` | Consolidação de indicadores por retiro | Contagens do dashboard retornam apenas registros sincronizados e validados/aprovados |
 | CT11 | RN11 | RF011 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Prioridade obrigatória e alteração posterior | Prioridade inválida rejeitada e prioridade válida atualizada com sucesso |
+| CT12 | RN12 | RF012 | UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Gestão de usuários: campos obrigatórios, login em formato de e-mail e operações de CRUD | Usuário criado quando válido e rejeitado quando o login é inválido ou faltam campos obrigatórios |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -4545,6 +4546,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 | CT09 | RN09 | RF009 |
 | CT10 | RN10 | RF010 |
 | CT11 | RN11 | RF011 |
+| CT12 | RN12 | RF012 |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -4594,14 +4596,14 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 ## <a name="c6.3"></a>6.3 Público-Alvo
 
-**6.3.1) **Segmentação de Mercado**
+**6.3.1) Segmentação de Mercado**
 
 &nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel — boletas — para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. À medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, a ausência de soluções offline-first mantém esses produtores presos a processos manuais (TOTVS, 2025).
 
 &nbsp;&nbsp;&nbsp;&nbsp;O segundo segmento compreende produtores com conectividade disponível, mas sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade que demandam digitalização confiável dos registros. Esse segmento inclui operações integradas agricultura-pecuária (como BrPec) e fazendas corporativas que precisam cumprir o PNIB (MAPA, 2025), o Código Florestal (BRASIL, 2012) e agendas ESG (BANCO DO NORDESTE, 2025). Embora tenham infraestrutura, enfrentam gargalos similares: processos descentralizados, falta de rastreabilidade por responsável, e dificuldade na consolidação de dados entre campo e escritório. Ambos os segmentos convergem para a necessidade de digitalização confiável com fluxos simples e rastreabilidade completa.
 
 
-**6.3.2) **Perfil do Público-Alvo**
+**6.3.2) Perfil do Público-Alvo**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto demográfico, o público-alvo compreende empresas agropecuárias de médio e grande porte dedicadas à pecuária bovina comercial, incluindo tanto operações especializadas quanto modelos integrados agricultura-pecuária. São organizações com capacidade de investimento em tecnologia e volume operacional que torna inviável a gestão manual de dados. No aspecto comportamental, caracterizam-se pela dependência de registros em papel e pela baixa adoção de ferramentas digitais adequadas à sua realidade: embora 40% dos produtores rurais já utilizem algum software de gestão, a oferta existente é majoritariamente voltada a operações com infraestrutura digital robusta, deixando descoberta justamente a parcela que opera com conectividade intermitente (PANORAMA DA GESTÃO RURAL, 2024).
 
@@ -4610,7 +4612,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 ## <a name="c6.4"></a>6.4 Posicionamento e Branding
 
-**6.4.1) **Proposta de Valor**
+**6.4.1) Proposta de Valor**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
 
@@ -4622,7 +4624,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;Combinados em uma única aplicação web com interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente), esses três pilares transformam o fluxo de informação da fazenda: do papel e do repasse verbal para um ciclo digital controlado, rastreável e acessível em tempo real.
 
-**6.4.2) **Posicionamento e Diferenciação**
+**6.4.2) Posicionamento e Diferenciação**
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow se posiciona como a solução de gestão operacional de campo projetada especificamente para fazendas de pecuária de larga escala com operações distribuídas em múltiplos retiros e conectividade de rede limitada ou instável. Enquanto ferramentas concorrentes tratam a conexão à internet como pré-requisito indispensável, o AgroFlow trata a ausência de conexão como o cenário operacional padrão, adaptando toda a sua arquitetura em torno dessa realidade.
 
@@ -4706,18 +4708,20 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 APROSOJA MS. Panorama da soja em Mato Grosso do Sul. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br
 . Acesso em: 30 abr. 2026.
 
+BANCO DO NORDESTE. 6 tendências do agronegócio para 2025: IA, Sustentabilidade e Inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
+
 BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da vegetação nativa (Código Florestal). Diário Oficial da União: seção 1, Brasília, DF, 28 maio 2012.
 
 BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
 
-BANCO DO NORDESTE. 6 tendências do agronegócio para 2025: IA, Sustentabilidade e Inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
-
 CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
+
+COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addison-Wesley, 2004.
 
 DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
 . Acesso em: 30 abr. 2026.
 
-ECONODATA. Dados empresariais da BRPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
+ECONODATA. Dados empresariais da BrPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
 . Acesso em: 30 abr. 2026.
 
 FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Software Architectures. 2000. Tese (Doutorado em Ciência da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 15 maio 2026.
@@ -4725,10 +4729,10 @@ FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Softw
 G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com
 . Acesso em: 30 abr. 2026.
 
+GRAND VIEW RESEARCH. Brazil Precision Farming Market Size & Outlook, 2025-2030. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
+
 HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
 . Acesso em: 30 abr. 2026.
-
-GRAND VIEW RESEARCH. Brazil Precision Farming Market Size & Outlook, 2025-2030. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
 
 IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Abate de bovinos atinge recorde em 2024. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
 
@@ -4738,21 +4742,19 @@ JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succ
 
 LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
 
-MARKET DATA FORECAST. Latin America Precision Agriculture Market Size Report 2033. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
-
 MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
+
+MARKET DATA FORECAST. Latin America Precision Agriculture Market Size Report 2033. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
 
 OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
 
-PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
-
 PANORAMA DA GESTÃO RURAL. Pesquisa Panorama da Gestão Rural 2024. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
 
-PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
-
-COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addison-Wesley, 2004.
-
 PATTON, Jeff. User Story Mapping: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
+
+PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+
+PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
 
 PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
 
