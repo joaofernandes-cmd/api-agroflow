@@ -4280,6 +4280,10 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 
 &nbsp;&nbsp;&nbsp;&nbsp;O armazenamento seguro de senhas com `bcrypt` permaneceu pendente. A cobertura de testes automatizados não atingiu os quatro cenários obrigatórios por endpoint em sua totalidade.
 
+### (c) Dificuldades técnicas enfrentadas e próximos passos
+
+&nbsp;&nbsp;&nbsp;&nbsp;A coordenação entre branches da equipe gerou conflitos pontuais na integração dos módulos de frontend e backend. Para a Sprint 5, os próximos passos incluem a implementação do `bcrypt`, expansão da cobertura de testes e correções finais de interface.
+
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
