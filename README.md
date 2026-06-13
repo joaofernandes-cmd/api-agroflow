@@ -77,7 +77,11 @@
 
 ## 📝 Link de demonstração
 
-_Coloque aqui o link para o vídeo de demonstração do projeto_
+Vídeos de demonstração da aplicação por perfil de usuário:
+
+- **Capataz:** [Assistir demonstração](https://drive.google.com/file/d/1K0guUF_NzNWkvYyfJUYhfoKgsJ9PIjO5/view?usp=drive_link)
+- **Supervisor:** [Assistir demonstração](https://drive.google.com/file/d/14vpjfgeATwAM5fS9e7XvAn7X0u9t5An3/view?usp=drive_link)
+- **Gerente:** [Assistir demonstração](https://drive.google.com/file/d/1VjnIooynWBbvwom_4UG_jAqoW7YaBxoz/view?usp=drive_link)
 
 ## 📁 Estrutura de pastas
 
