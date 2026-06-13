@@ -889,7 +889,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** ≥80% dos capatazes testados (mínimo 5 participantes do perfil real: ensino fundamental incompleto, sem experiência com apps de gestão) concluem a tarefa de registrar uma movimentação de rebanho completa em até 3 minutos, sem auxílio externo, em no máximo 2 tentativas. **Protocolo de teste:** Sessão de usabilidade observada, com registro de tempo, número de tentativas e taxa de conclusão. Captura de erros de navegação e pontos de travamento. |
 | **Derivação do Contexto do Parceiro** | Derivado do perfil dos capatazes da BrPec (baixo letramento digital, conforme a persona Daniel), da ausência de suporte técnico nos retiros isolados (restrição organizacional) e da necessidade de operação autônoma em campo. O RF005 exige identificação simples e intuitiva, traduzindo-se aqui em um critério de usabilidade mensurável aplicado ao fluxo crítico do sistema. |
 | **RF/RN Associados** | RF001, RF005, RN05 |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; o fluxo de no máximo 3 etapas é organizado pela camada de Views, composta por templates EJS separados por perfil de usuário. **(b) Implementação no código:** Os formulários são implementados nas Views EJS e estilizados com CSS responsivo; no backend, `validacaoRequisicao.middleware.ts` disponibiliza funções de validação que retornam mensagens de erro em linguagem simples via HTTP 400. **(c) Validação:** Sessão de usabilidade observada com ≥5 capatazes reais (ensino fundamental, sem experiência prévia com apps de gestão); critério: ≥80% concluem registro de movimentação em até 3 minutos sem auxílio, em no máximo 2 tentativas. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; o fluxo de no máximo 3 etapas é garantido pela camada de Views com templates EJS organizados por perfil de usuário. **(b) Implementação no código:** `validacaoRequisicao.middleware.ts` — funções `textoObrigatorio()` e `numeroObrigatorio()` retornam mensagens de erro em linguagem simples via HTTP 400 com array `details[]`; feedback visual imediato implementado nos formulários das views EJS via JavaScript no cliente. **(c) Validação:** Sessão de usabilidade observada com ≥5 capatazes reais (ensino fundamental, sem experiência prévia com apps de gestão); critério: ≥80% concluem registro de movimentação em até 3 minutos sem auxílio, em no máximo 2 tentativas. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -995,7 +995,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e celulares Android (viewport 768px–1024px). |
 | **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; a restrição é tratada na camada de Views por meio de templates EJS e folhas de estilo organizadas por perfil. **(b) Implementação no código:** Variáveis CSS, classes reutilizáveis e media queries definem paleta, tipografia, espaçamentos e adaptação das telas para diferentes larguras de viewport. **(c) Validação:** Aprovação do stakeholder em sprint review e verificação manual da renderização das páginas nos formatos mobile e desktop previstos nos protótipos. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; restrição aplicada na camada de Views com tokens CSS globais e breakpoints definidos para tablets Android (768px e 1024px). **(b) Implementação no código:** Variáveis CSS (CSS Custom Properties) em arquivo de tokens do frontend definem paleta BrPec, tipografia e espaçamentos; media queries no CSS das views EJS garantem responsividade para viewport tablet; compatibilidade cross-browser validada em Chrome 120+, Edge 120+ e Safari 17+. **(c) Validação:** Aprovação formal do stakeholder (Marcos Ferreira) em sprint review com protótipos navegáveis; testes de compatibilidade cross-browser em Chrome, Edge e Safari; verificação de renderização em tablets Android com viewport 768px–1024px. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -2117,11 +2117,11 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 ### Explicação do diagrama:
 **Nós Clientes**
  
-• O dispositivo do *Capataz* é um celular utilizado em campo, acessando pelo navegador as páginas renderizadas com EJS pelo servidor da aplicação.
+• O dispositivo do *Capataz* é um celular Android utilizado em campo, acessando a *interface web em EJS* (renderizada pelo servidor de aplicação) e mantendo armazenamento local no navegador via *IndexedDB* (buffer de mídias, como gravações de áudio) e *localStorage* (sessão), essencial para a captura de dados em campo sob conectividade intermitente conforme definido pelo RF003 e pela RN03.
  
-• O dispositivo do *Supervisor* pode ser mobile ou desktop e acessa pelo navegador as telas de acompanhamento, delegação, revisão, tickets e relatórios.
+• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, acessando apenas a *interface web em EJS*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
  
-• O dispositivo do *Gerente* pode ser mobile ou desktop e acessa pelo navegador o painel consolidado e os relatórios gerenciais.
+• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também acessando apenas a *interface web em EJS*, com acesso ao painel consolidado e aos relatórios gerenciais.
 
 **Nó do Servidor de Aplicação**
  
@@ -4031,6 +4031,71 @@ VALUES (?, ?, ?, ?);
       - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
       - `500 Internal Server Error`: Falha interna.
 
+64. Receber Tarefa Sincronizada do Cliente Offline
+
+    - **Endereço:** `/tarefas/sincronizar`
+    - **Método:** POST
+    - **Descrição:** Recebe uma tarefa criada offline e a persiste no servidor marcada como `sincronizado = true`.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos da tarefa, incluindo `criada_por` (obrigatório), `status` (obrigatório) e os campos validados como obrigatórios (`retiro_id`, `atribuida_a`, `descricao`, `prioridade`, `categoria`). Aceita opcionalmente `id` (string UUID) gerado localmente em modo offline.
+    - **Respostas:**
+      - `201 Created`: Tarefa sincronizada e criada.
+      - `400 Bad Request`: Campo obrigatório ausente (incluindo `criada_por` ou `status`).
+      - `500 Internal Server Error`: Falha interna.
+
+65. Receber Ticket Sincronizado do Cliente Offline
+
+    - **Endereço:** `/tickets/sincronizar`
+    - **Método:** POST
+    - **Descrição:** Recebe um chamado criado offline e o persiste no servidor marcado como `sincronizado = true`.
+    - **Headers:** `Content-Type: application/json`
+    - **Body:** Campos do chamado, incluindo `aberto_por` (obrigatório), `status` (obrigatório) e os demais campos obrigatórios (`retiro_id`, `categoria`, `localizacao`, `descricao`, `prioridade`). Aceita opcionalmente `id` (string UUID) gerado localmente em modo offline.
+    - **Respostas:**
+      - `201 Created`: Ticket sincronizado e criado.
+      - `400 Bad Request`: Campo obrigatório ausente (incluindo `aberto_por` ou `status`).
+      - `500 Internal Server Error`: Falha interna.
+
+66. Buscar Dados de Tickets para Relatório
+
+    - **Endereço:** `/relatorios/tickets/dados`
+    - **Método:** GET
+    - **Descrição:** Retorna os dados de chamados consolidados, filtrados por período e retiro, para a composição de relatórios. Requer JWT com cargo `gerente` ou `supervisor`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Query params:** `dataInicio`, `dataFim` (datas) e `retiroId` (string UUID).
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array com os dados de tickets do período.
+      - `400 Bad Request`: `dataInicio`/`dataFim` inválidas ou `retiroId` inválido.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+67. Exportar Relatório em Arquivo
+
+    - **Endereço:** `/relatorios/exportar`
+    - **Método:** GET
+    - **Descrição:** Gera e disponibiliza o relatório como arquivo para download (`xlsx` ou `csv`), conforme o tipo e o formato solicitados. Requer JWT com cargo `gerente` ou `supervisor`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Query params:** `tipo`, `formato` (`xlsx` ou `csv`), `dataInicio`, `dataFim` e `retiroId` (string UUID).
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Arquivo gerado, retornado com `Content-Disposition: attachment`.
+      - `400 Bad Request`: Datas inválidas, `retiroId` inválido ou `tipo`/`formato` de exportação inválido.
+      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
+      - `500 Internal Server Error`: Falha interna.
+
+68. Listar Capatazes por Retiro
+
+    - **Endereço:** `/usuarios/capatazes/retiro/:retiroId`
+    - **Método:** GET
+    - **Descrição:** Retorna os capatazes ativos vinculados a um retiro específico, utilizado, por exemplo, na atribuição de tarefas. Diferentemente dos demais endpoints de gestão de usuários, exige apenas JWT autenticado, sem restrição ao cargo `gerente`.
+    - **Headers:** `Authorization: Bearer <token>`
+    - **Body:** Nenhum.
+    - **Respostas:**
+      - `200 OK`: Array de capatazes ativos do retiro (sem `senha_hash`).
+      - `400 Bad Request`: `retiroId` inválido.
+      - `401 Unauthorized`: Token ausente ou inválido.
+      - `500 Internal Server Error`: Falha interna.
+
 &nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
 
 ## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
@@ -4656,10 +4721,10 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo (Seção 6.3), proposta de valor e posicionamento (Seção 6.4) e estratégia de marketing (Seção 6.6), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 58 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo (Seção 6.3), proposta de valor e posicionamento (Seção 6.4) e estratégia de marketing (Seção 6.6), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 65 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
-  <p align="center">Figura 58 - Business Model Canvas do AgroFlow</p>
+  <p align="center">Figura 65 - Business Model Canvas do AgroFlow</p>
   <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4779,6 +4844,8 @@ PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profis
 RADAR AGTECH BRASIL. Mapeamento das startups do agronegócio brasileiro: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
 
 TOTVS. Tendências Agronegócio 2026: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
+
+UNIÃO EUROPEIA. Regulamento (UE) 2023/1115 do Parlamento Europeu e do Conselho, de 31 de maio de 2023, relativo à disponibilização no mercado da União e à exportação da União de determinadas matérias-primas e produtos associados à desflorestação e à degradação florestal (EUDR). Jornal Oficial da União Europeia, L 150, 9 jun. 2023.
 
 # <a name="c9"></a>Anexos
 
