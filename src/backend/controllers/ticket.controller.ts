@@ -79,6 +79,17 @@ export const TicketController = {
     }
   },
 
+  async sincronizarRecebida(req: Request, res: Response) {
+    try {
+      const ticket = await TicketService.sincronizarRecebida(req.body)
+      return res.status(201).json(ticket)
+    } catch (error) {
+      return res.status(400).json({
+        error: error instanceof Error ? error.message : 'Erro ao sincronizar ticket',
+      })
+    }
+  },
+
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.query.status ?? '')

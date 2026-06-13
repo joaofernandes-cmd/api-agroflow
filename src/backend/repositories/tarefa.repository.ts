@@ -39,6 +39,17 @@ export const TarefaRepository = {
                 ${input.aprovado_por ?? null},
                 ${input.sincronizado ?? false}
             )
+            ON CONFLICT (id) DO UPDATE SET
+                retiro_id = EXCLUDED.retiro_id,
+                criada_por = EXCLUDED.criada_por,
+                atribuida_a = EXCLUDED.atribuida_a,
+                descricao = EXCLUDED.descricao,
+                categoria = EXCLUDED.categoria,
+                prioridade = EXCLUDED.prioridade,
+                data_criacao = EXCLUDED.data_criacao,
+                status = EXCLUDED.status,
+                aprovado_por = EXCLUDED.aprovado_por,
+                sincronizado = EXCLUDED.sincronizado
             RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
         `
 

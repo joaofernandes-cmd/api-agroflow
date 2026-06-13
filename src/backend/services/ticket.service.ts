@@ -54,6 +54,23 @@ export const TicketService = {
     return ticket
   },
 
+  async sincronizarRecebida(dados: TicketInput): Promise<Ticket> {
+    if (!dados.aberto_por) {
+      throw new Error('Campo "aberto_por" é obrigatório')
+    }
+
+    if (!dados.status) {
+      throw new Error('Campo "status" é obrigatório')
+    }
+
+    this.validarCamposObrigatorios(dados)
+
+    return TicketRepository.criar({
+      ...dados,
+      sincronizado: true,
+    })
+  },
+
   // RN11: Alterar prioridade de um ticket
   async alterarPrioridade(id: UUID, novaPrioridade: TicketPrioridade): Promise<Ticket | null> {
     const ticket = await TicketRepository.buscarPorId(id)
