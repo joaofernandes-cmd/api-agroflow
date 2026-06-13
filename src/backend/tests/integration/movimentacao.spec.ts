@@ -64,6 +64,33 @@ describe('Movimentacoes', () => {
     expect(mockedService.criar).toHaveBeenCalledTimes(1)
   })
 
+  it('POST /movimentacoes deve rejeitar payload incompleto', async () => {
+    const response = await request(app).post('/movimentacoes').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      tipo: 'nascimento',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Campos obrigatorios nao informados' })
+    expect(mockedService.criar).not.toHaveBeenCalled()
+  })
+
+  it('POST /movimentacoes deve rejeitar violacao de regra de negocio', async () => {
+    mockedService.criar.mockRejectedValueOnce(new Error('Quantidade deve ser maior que zero'))
+
+    const response = await request(app).post('/movimentacoes').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      capataz_id: 'user-003',
+      tipo: 'nascimento',
+      origem: 'Acurizal',
+      quantidade: 0,
+      estagio_vida: 'BEZERRO 0 A 7 MESES',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Quantidade deve ser maior que zero' })
+  })
+
   it('GET /movimentacoes deve listar todas as movimentacoes', async () => {
     const response = await request(app).get('/movimentacoes')
 
@@ -140,6 +167,15 @@ describe('Movimentacoes', () => {
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockMovimentacao)
     expect(mockedService.buscarPorId).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
+  })
+
+  it('GET /movimentacoes/:id deve retornar 404 para movimentacao inexistente', async () => {
+    mockedService.buscarPorId.mockResolvedValueOnce(null)
+
+    const response = await request(app).get('/movimentacoes/00000000-0000-4000-8000-999999999999')
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({ error: 'Movimentacao nao encontrada' })
   })
 
   it('PATCH /movimentacoes/:id deve atualizar uma movimentacao', async () => {

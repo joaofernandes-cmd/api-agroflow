@@ -59,6 +59,38 @@ describe('Tickets', () => {
     )
   })
 
+  it('POST /tickets deve rejeitar payload incompleto', async () => {
+    const response = await request(app).post('/tickets').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      categoria: 'cerca',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Campos obrigatórios não informados' })
+    expect(mockedService.criar).not.toHaveBeenCalled()
+  })
+
+  it('POST /tickets deve rejeitar violacao de regra de negocio', async () => {
+    mockedService.criar.mockRejectedValueOnce(
+      new Error('Ticket rejeitado: ao menos uma evidência descritiva é obrigatória')
+    )
+
+    const response = await request(app).post('/tickets').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      categoria: 'cerca',
+      localizacao: mockTicket.localizacao,
+      descricao: mockTicket.descricao,
+      prioridade: mockTicket.prioridade,
+      usuarioAbridorTicket: mockCapataz,
+      temEvidenciaDescritiva: false,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      error: 'Ticket rejeitado: ao menos uma evidência descritiva é obrigatória',
+    })
+  })
+
   it('POST /tickets/sincronizar deve criar ticket sincronizado', async () => {
     const response = await request(app).post('/tickets/sincronizar').send({
       id: mockTicket.id,
@@ -124,6 +156,15 @@ describe('Tickets', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockTicket)
+  })
+
+  it('GET /tickets/:id deve retornar 404 para ticket inexistente', async () => {
+    mockedService.buscarPorId.mockResolvedValueOnce(null)
+
+    const response = await request(app).get('/tickets/00000000-0000-4000-8000-999999999999')
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({ error: 'Ticket não encontrado' })
   })
 
   it('PATCH /tickets/:id/status deve atualizar status', async () => {

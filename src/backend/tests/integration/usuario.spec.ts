@@ -51,6 +51,14 @@ describe('Usuarios', () => {
     })
   })
 
+  it('POST /usuarios/login deve rejeitar credenciais ausentes', async () => {
+    const response = await request(app).post('/usuarios/login').send({})
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Login e senha são obrigatórios' })
+    expect(mockedService.autenticar).not.toHaveBeenCalled()
+  })
+
   it('POST /usuarios/login deve bloquear capataz sem acesso por login', async () => {
     mockedService.autenticar.mockResolvedValueOnce(mockCapataz as any)
 
@@ -110,6 +118,15 @@ describe('Usuarios', () => {
       nome: mockGerente.nome,
       login: mockGerente.login,
     })
+  })
+
+  it('GET /usuarios/:id deve retornar 404 para usuario inexistente', async () => {
+    mockedService.buscarPorId.mockResolvedValueOnce(null)
+
+    const response = await request(app).get('/usuarios/usuario-inexistente')
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({ error: 'Usuário não encontrado' })
   })
 
   it('POST /usuarios deve criar usuario', async () => {

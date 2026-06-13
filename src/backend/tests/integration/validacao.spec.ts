@@ -78,6 +78,47 @@ describe('Validacoes', () => {
     })
   })
 
+  it('PATCH /validacoes/movimentacoes/:id/validar deve rejeitar id invalido', async () => {
+    const response = await request(app).patch('/validacoes/movimentacoes/id-invalido/validar')
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'ID inválido' })
+  })
+
+  it('PATCH /validacoes/movimentacoes/:id/validar deve informar recurso inexistente', async () => {
+    mockedService.validarMovimentacao.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Movimentação não encontrada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/movimentacoes/00000000-0000-4000-8000-999999999999/validar'
+    )
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({
+      sucesso: false,
+      mensagem: 'Movimentação não encontrada.',
+    })
+  })
+
+  it('PATCH /validacoes/movimentacoes/:id/validar deve rejeitar registro ja processado', async () => {
+    mockedService.validarMovimentacao.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Movimentação já foi validado. Não pode ser alterada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/movimentacoes/00000000-0000-4000-8000-000000000201/validar'
+    )
+
+    expect(response.status).toBe(409)
+    expect(response.body).toEqual({
+      sucesso: false,
+      mensagem: 'Movimentação já foi validado. Não pode ser alterada.',
+    })
+  })
+
   it('PATCH /validacoes/tickets/:id/aprovar deve aprovar ticket', async () => {
     const response = await request(app).patch('/validacoes/tickets/00000000-0000-4000-8000-000000000401/aprovar')
 
@@ -88,6 +129,32 @@ describe('Validacoes', () => {
     })
   })
 
+  it('PATCH /validacoes/tickets/:id/aprovar deve retornar 404 para ticket inexistente', async () => {
+    mockedService.aprovarTicket.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Ticket não encontrado.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tickets/00000000-0000-4000-8000-999999999999/aprovar'
+    )
+
+    expect(response.status).toBe(404)
+  })
+
+  it('PATCH /validacoes/tickets/:id/aprovar deve retornar 409 para ticket ja processado', async () => {
+    mockedService.aprovarTicket.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Ticket já foi aprovado. Não pode ser alterado.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tickets/00000000-0000-4000-8000-000000000401/aprovar'
+    )
+
+    expect(response.status).toBe(409)
+  })
+
   it('PATCH /validacoes/tarefas/:id/aprovar deve aprovar tarefa', async () => {
     const response = await request(app).patch('/validacoes/tarefas/00000000-0000-4000-8000-000000000301/aprovar')
 
@@ -96,5 +163,31 @@ describe('Validacoes', () => {
       sucesso: true,
       mensagem: 'Tarefa aprovada com sucesso.',
     })
+  })
+
+  it('PATCH /validacoes/tarefas/:id/aprovar deve retornar 404 para tarefa inexistente', async () => {
+    mockedService.aprovarTarefa.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Tarefa não encontrada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tarefas/00000000-0000-4000-8000-999999999999/aprovar'
+    )
+
+    expect(response.status).toBe(404)
+  })
+
+  it('PATCH /validacoes/tarefas/:id/aprovar deve retornar 409 para tarefa ja processada', async () => {
+    mockedService.aprovarTarefa.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Tarefa já foi aprovada. Não pode ser alterada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tarefas/00000000-0000-4000-8000-000000000301/aprovar'
+    )
+
+    expect(response.status).toBe(409)
   })
 })
