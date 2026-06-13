@@ -5,6 +5,7 @@ const ticketRoutes = Router()
 
 // Criação e listagem geral de tickets.
 ticketRoutes.post('/', TicketController.criar)
+ticketRoutes.post('/sincronizar', TicketController.sincronizarRecebida)
 ticketRoutes.get('/', TicketController.listarTodos)
 
 // Consultas específicas usadas por filtros, dashboard e acompanhamento.

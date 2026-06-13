@@ -1,13 +1,30 @@
-<%- include('partials/head', { titulo: 'Alow · Nova Movimentação' }) %>
+<%- include('../partials/capataz-head', { titulo: 'Alow · Nova Movimentação' }) %>
 
 <%
-  /* Listas hardcoded — depois podem vir do back-end. */
   var RETIROS = ['Acurizal','Aroeira','Baia Bonita','Bodoquena 1','Bodoquena 2',
     'Boqueirão','Caieira','CMB','Confinamento','Cristo','Morada Nova','Morro Azul',
     'Puga','São Miguel','Vista Alegre'];
-  var TIPOS = ['Nascimento','Morte','Transferência','Compra','Venda'];
-  var ESTAGIOS = ['Bezerro','Novilho','Adulto'];
-  var CAUSAS = ['Doença','Acidente','Predador','Causa natural','Desconhecida'];
+  var TIPOS = [
+    { value: 'nascimento', label: 'Nascimento' },
+    { value: 'morte', label: 'Morte' },
+    { value: 'transferencia', label: 'Transferência' },
+    { value: 'compra', label: 'Compra' },
+    { value: 'venda', label: 'Venda' },
+    { value: 'outros', label: 'Outros' }
+  ];
+  var ESTAGIOS = [
+    'BEZERRO 0 A 7 MESES',
+    'GARROTE 8 A 12 MESES',
+    'NOVILHA 8 A 12 MESES',
+    'GARROTE 13 A 24 MESES',
+    'NOVILHA 13 A 24 MESES',
+    'BOI 25 A 36 MESES',
+    'NOVILHA 25 A 36 MESES',
+    'TOURO 25 A 36 MESES',
+    'VACA ACIMA 36 MESES',
+    'BOI ACIMA 36 MESES',
+    'TOURO ACIMA 36 MESES'
+  ];
 %>
 
 <main class="celular">
@@ -23,111 +40,869 @@
     </div>
   </header>
 
-  <div class="conteudo">
+  <form class="conteudo" id="form-movimentacao" novalidate>
+    <p id="mov-feedback" style="margin: 0 0 12px; font-size: 14px; line-height: 1.4;"></p>
+
     <div class="campo">
-      <label class="campo__rotulo">Tipo de movimentação</label>
+      <label class="campo__rotulo" for="tipoMov">Tipo de movimentação</label>
       <select class="select" id="tipoMov" required>
-        <option value="" disabled selected>Nascimento / Morte / Transferência...</option>
-        <% TIPOS.forEach(function (t) { %><option value="<%= t %>"><%= t %></option><% }) %>
+        <option value="" disabled selected>Selecione o tipo</option>
+        <% TIPOS.forEach(function (t) { %><option value="<%= t.value %>"><%= t.label %></option><% }) %>
       </select>
     </div>
 
-    <!-- Retiro de origem — usado por todos os tipos -->
     <div class="campo">
-      <label class="campo__rotulo" id="rotuloOrigem">Retiro</label>
-      <select class="select" required>
+      <label class="campo__rotulo" id="rotuloOrigem" for="origemMov">Retiro</label>
+      <select class="select" id="origemMov" required>
         <option value="" disabled selected>Selecione o retiro</option>
-        <% RETIROS.forEach(function (r) { %><option><%= r %></option><% }) %>
+        <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
       </select>
     </div>
 
-    <!-- Retiro de destino — apenas para Transferência -->
     <div class="campo" id="campoDestino" style="display: none;">
-      <label class="campo__rotulo">Retiro de destino</label>
-      <select class="select">
+      <label class="campo__rotulo" for="destinoMov">Retiro de destino</label>
+      <select class="select" id="destinoMov">
         <option value="" disabled selected>Selecione o retiro</option>
-        <% RETIROS.forEach(function (r) { %><option><%= r %></option><% }) %>
+        <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
       </select>
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Quantidade de animais</label>
-      <input class="input" type="number" placeholder="Ex: 12" />
+      <label class="campo__rotulo" for="quantidadeMov">Quantidade de animais</label>
+      <input class="input" id="quantidadeMov" type="number" min="1" step="1" placeholder="Ex: 12" />
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Estágio da vida</label>
-      <select class="select" required>
-        <option value="" disabled selected>Bezerro / Novilho / Adulto</option>
-        <% ESTAGIOS.forEach(function (e) { %><option><%= e %></option><% }) %>
+      <label class="campo__rotulo" for="estagioMov">Estágio da vida</label>
+      <select class="select" id="estagioMov" required>
+        <option value="" disabled selected>Selecione o estágio</option>
+        <% ESTAGIOS.forEach(function (e) { %><option value="<%= e %>"><%= e %></option><% }) %>
       </select>
     </div>
 
-    <!-- Causa do óbito — apenas para Morte -->
     <div class="campo" id="campoCausa" style="display: none;">
-      <label class="campo__rotulo">Causa do óbito <span class="obrigatorio">*</span></label>
+      <label class="campo__rotulo" for="causaObito">Causa do óbito <span class="obrigatorio">*</span></label>
       <select class="select" id="causaObito">
-        <option value="" disabled selected>Selecione a causa...</option>
-        <% CAUSAS.forEach(function (c) { %><option><%= c %></option><% }) %>
+        <option value="" disabled selected>Selecione a causa</option>
+        <option value="Doença">Doença</option>
+        <option value="Acidente">Acidente</option>
+        <option value="Predador">Predador</option>
+        <option value="Causa natural">Causa natural</option>
+        <option value="Desconhecida">Desconhecida</option>
       </select>
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo">Evidência (obrigatório)</label>
+      <label class="campo__rotulo">Evidência</label>
       <div class="evidencia">
-        <button type="button" class="evidencia__btn evidencia__btn--foto">
+        <button type="button" class="evidencia__btn evidencia__btn--foto" data-evidencia="foto">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
           Foto
         </button>
-        <button type="button" class="evidencia__btn evidencia__btn--audio">
+        <button type="button" class="evidencia__btn evidencia__btn--audio" data-evidencia="audio">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
           Áudio
         </button>
-        <button type="button" class="evidencia__btn evidencia__btn--texto">
+        <button type="button" class="evidencia__btn evidencia__btn--texto" data-evidencia="mensagem">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
           Texto
         </button>
       </div>
     </div>
 
-    <button type="button" class="btn-primario" id="btnSalvar" style="margin-top: 6px;">
+    <input type="hidden" id="tipoEvidencia" value="mensagem" />
+
+    <div class="campo" id="evidenciaMensagemCampo">
+      <label class="campo__rotulo" for="conteudoEvidencia">Texto da evidência</label>
+      <textarea class="input" id="conteudoEvidencia" rows="3" placeholder="Descreva a ocorrência com ao menos 10 caracteres"></textarea>
+    </div>
+
+    <div class="campo" id="evidenciaAudioCampo" style="display: none;">
+      <label class="campo__rotulo">Gravação de áudio</label>
+      <div class="evidencia">
+        <button type="button" class="evidencia__btn evidencia__btn--audio" id="btnGravarAudio">
+          Gravar
+        </button>
+        <button type="button" class="evidencia__btn evidencia__btn--stop" id="btnPararAudio" disabled>
+          Parar
+        </button>
+        <button type="button" class="evidencia__btn evidencia__btn--danger" id="btnExcluirAudio" disabled>
+          Excluir
+        </button>
+      </div>
+      <p id="audioStatus" style="margin: 8px 0 0; font-size: 14px;"></p>
+      <audio id="audioPreview" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
+    </div>
+
+    <div class="campo" id="evidenciaFotoCampo" style="display: none;">
+      <label class="campo__rotulo">Foto em tempo real</label>
+      <div class="camera-stage">
+        <video id="cameraPreview" class="camera-stage__view" autoplay playsinline muted></video>
+        <img id="fotoPreview" class="camera-stage__preview" alt="Prévia da foto capturada" style="display: none;" />
+        <div class="camera-stage__toolbar">
+          <button type="button" class="evidencia__btn evidencia__btn--foto" id="btnAbrirCamera">
+            Abrir câmera
+          </button>
+          <button type="button" class="evidencia__btn evidencia__btn--audio" id="btnCapturarFoto" disabled>
+            Capturar
+          </button>
+          <button type="button" class="evidencia__btn evidencia__btn--ghost" id="btnRefazerFoto" disabled>
+            Refazer
+          </button>
+          <button type="button" class="evidencia__btn evidencia__btn--danger" id="btnExcluirFoto" disabled>
+            Excluir
+          </button>
+        </div>
+        <p class="camera-stage__hint" id="cameraStatus">Abra a câmera para capturar a foto em tempo real.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primario" id="btnSalvar" style="margin-top: 6px;">
       Salvar movimentação
     </button>
-  </div>
+  </form>
 
-  <%- include('partials/bottomnav-capataz', { ativa: 'movimentacao' }) %>
+  <%- include('../partials/bottomnav-capataz', { ativa: 'movimentacao' }) %>
 </main>
 
 <script>
-  var tipoMov = document.getElementById('tipoMov');
-  var campoDestino = document.getElementById('campoDestino');
-  var campoCausa = document.getElementById('campoCausa');
-  var rotuloOrigem = document.getElementById('rotuloOrigem');
-  var causa = document.getElementById('causaObito');
+  const CAPATAZ_DEMO = {
+    id: '11111111-1111-1111-1111-111111111111',
+    nome: 'Capataz Daniel',
+    cargo: 'capataz',
+    retiro_id: '00000000-0000-4000-8000-000000000001',
+  };
 
-  // Ajusta os campos conforme o tipo de movimentação escolhido.
-  tipoMov.addEventListener('change', function () {
-    var tipo = tipoMov.value;
-    var ehTransferencia = tipo === 'Transferência';
-    var ehMorte = tipo === 'Morte';
+  const form = document.getElementById('form-movimentacao');
+  const feedback = document.getElementById('mov-feedback');
+  const tipoMov = document.getElementById('tipoMov');
+  const campoDestino = document.getElementById('campoDestino');
+  const campoCausa = document.getElementById('campoCausa');
+  const rotuloOrigem = document.getElementById('rotuloOrigem');
+  const origemMov = document.getElementById('origemMov');
+  const destinoMov = document.getElementById('destinoMov');
+  const quantidadeMov = document.getElementById('quantidadeMov');
+  const estagioMov = document.getElementById('estagioMov');
+  const causaObito = document.getElementById('causaObito');
+  const tipoEvidencia = document.getElementById('tipoEvidencia');
+  const evidenciaMensagemCampo = document.getElementById('evidenciaMensagemCampo');
+  const evidenciaAudioCampo = document.getElementById('evidenciaAudioCampo');
+  const evidenciaFotoCampo = document.getElementById('evidenciaFotoCampo');
+  const btnGravarAudio = document.getElementById('btnGravarAudio');
+  const btnPararAudio = document.getElementById('btnPararAudio');
+  const btnExcluirAudio = document.getElementById('btnExcluirAudio');
+  const audioStatus = document.getElementById('audioStatus');
+  const audioPreview = document.getElementById('audioPreview');
+  const btnAbrirCamera = document.getElementById('btnAbrirCamera');
+  const btnCapturarFoto = document.getElementById('btnCapturarFoto');
+  const btnRefazerFoto = document.getElementById('btnRefazerFoto');
+  const btnExcluirFoto = document.getElementById('btnExcluirFoto');
+  const cameraStatus = document.getElementById('cameraStatus');
+  const cameraPreview = document.getElementById('cameraPreview');
+  const fotoPreview = document.getElementById('fotoPreview');
 
-    // Retiro de destino aparece só na Transferência.
+  const AUDIO_DRAFT_KEY = 'movimentacao-audio-draft';
+  const FOTO_DRAFT_KEY = 'movimentacao-foto-draft';
+  const IDB_NAME = 'agroflow-media';
+  const IDB_STORE = 'drafts';
+  const SUPABASE = window.__SUPABASE__ || null;
+
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let gravando = false;
+  let ultimoPreviewUrl = null;
+  let cameraStream = null;
+  let fotoBlob = null;
+  let fotoLocalizacao = null;
+  let ultimoFotoPreviewUrl = null;
+
+  function getSession() {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+
+      if (!usuarioRaw) {
+        return null;
+      }
+
+      return {
+        token,
+        usuario: JSON.parse(usuarioRaw),
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  function mostrarFeedback(mensagem, tipo) {
+    if (!feedback) return;
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+  }
+
+  function abrirIndexedDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(IDB_NAME, 1);
+
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains(IDB_STORE)) {
+          db.createObjectStore(IDB_STORE, { keyPath: 'id' });
+        }
+      };
+
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function salvarAudioNoIndexedDb(registro) {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(registro);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function lerAudioDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readonly');
+        const req = tx.objectStore(IDB_STORE).get(AUDIO_DRAFT_KEY);
+        req.onsuccess = () => resolve(req.result ?? null);
+        req.onerror = () => reject(req.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function removerAudioDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).delete(AUDIO_DRAFT_KEY);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function salvarFotoNoIndexedDb(registro) {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(registro);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function lerFotoDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readonly');
+        const req = tx.objectStore(IDB_STORE).get(FOTO_DRAFT_KEY);
+        req.onsuccess = () => resolve(req.result ?? null);
+        req.onerror = () => reject(req.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function removerFotoDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).delete(FOTO_DRAFT_KEY);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  function obterLocalizacaoAtual() {
+    if (!navigator.geolocation) {
+      return Promise.reject(new Error('Geolocalização indisponível neste navegador.'));
+    }
+
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        posicao => {
+          resolve({
+            latitude: posicao.coords.latitude,
+            longitude: posicao.coords.longitude,
+          });
+        },
+        () => reject(new Error('Autorize a localização para registrar a foto com georreferenciamento.')),
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    });
+  }
+
+  function formatarDuracao(segundos) {
+    const total = Math.max(0, Math.round(segundos));
+    const min = String(Math.floor(total / 60)).padStart(2, '0');
+    const sec = String(total % 60).padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  function atualizarControlesAudio() {
+    btnGravarAudio.disabled = gravando;
+    btnPararAudio.disabled = !gravando;
+    btnExcluirAudio.disabled = !audioPreview.src;
+    audioStatus.textContent = gravando
+      ? 'Gravando...'
+      : audioPreview.src
+        ? `Áudio pronto (${audioPreview.dataset.duration || '00:00'})`
+        : 'Nenhum áudio gravado ainda.';
+  }
+
+  function limparPreviewAudio() {
+    if (ultimoPreviewUrl) {
+      URL.revokeObjectURL(ultimoPreviewUrl);
+      ultimoPreviewUrl = null;
+    }
+
+    audioPreview.removeAttribute('src');
+    audioPreview.style.display = 'none';
+    audioPreview.dataset.duration = '';
+  }
+
+  function limparPreviewFoto() {
+    if (ultimoFotoPreviewUrl) {
+      URL.revokeObjectURL(ultimoFotoPreviewUrl);
+      ultimoFotoPreviewUrl = null;
+    }
+
+    fotoPreview.removeAttribute('src');
+    fotoPreview.style.display = 'none';
+  }
+
+  function atualizarControlesFoto() {
+    const temCamera = Boolean(cameraStream);
+    const temFoto = Boolean(fotoBlob);
+
+    btnAbrirCamera.disabled = temCamera;
+    btnCapturarFoto.disabled = !temCamera;
+    btnRefazerFoto.disabled = !temFoto;
+    btnExcluirFoto.disabled = !temFoto && !temCamera;
+
+    if (temFoto) {
+      cameraStatus.textContent = 'Foto capturada. Você pode refazer, excluir ou enviar.';
+    } else if (temCamera) {
+      cameraStatus.textContent = 'Câmera aberta. Posicione o animal/ocorrência e capture.';
+    } else {
+      cameraStatus.textContent = 'Abra a câmera para capturar a foto em tempo real.';
+    }
+  }
+
+  async function carregarFotoSalva() {
+    const draft = await lerFotoDoIndexedDb();
+    if (!draft?.blob) {
+      atualizarControlesFoto();
+      return;
+    }
+
+    fotoBlob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'image/jpeg' });
+    fotoLocalizacao = draft.latitude != null && draft.longitude != null
+      ? { latitude: draft.latitude, longitude: draft.longitude }
+      : null;
+    limparPreviewFoto();
+    ultimoFotoPreviewUrl = URL.createObjectURL(fotoBlob);
+    fotoPreview.src = ultimoFotoPreviewUrl;
+    fotoPreview.style.display = 'block';
+    atualizarControlesFoto();
+  }
+
+  async function abrirCamera() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      mostrarFeedback('Seu navegador não suporta câmera ao vivo.', 'error');
+      return;
+    }
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' } },
+        audio: false,
+      });
+
+      cameraPreview.srcObject = cameraStream;
+      await cameraPreview.play();
+      atualizarControlesFoto();
+    } catch (error) {
+      cameraStream = null;
+      atualizarControlesFoto();
+      mostrarFeedback(error instanceof Error ? error.message : 'Não foi possível abrir a câmera.', 'error');
+    }
+  }
+
+  async function capturarFoto() {
+    if (!cameraStream) {
+      mostrarFeedback('Abra a câmera antes de capturar a foto.', 'error');
+      return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const largura = cameraPreview.videoWidth || 1280;
+    const altura = cameraPreview.videoHeight || 720;
+    canvas.width = largura;
+    canvas.height = altura;
+
+    const contexto = canvas.getContext('2d');
+    if (!contexto) {
+      mostrarFeedback('Não foi possível preparar a foto.', 'error');
+      return;
+    }
+
+    contexto.drawImage(cameraPreview, 0, 0, largura, altura);
+
+    const blob = await new Promise((resolve, reject) => {
+      canvas.toBlob(
+        resultado => {
+          if (!resultado) {
+            reject(new Error('Falha ao gerar a foto capturada.'));
+            return;
+          }
+
+          resolve(resultado);
+        },
+        'image/jpeg',
+        0.92
+      );
+    });
+
+    const localizacao = await obterLocalizacaoAtual();
+    fotoBlob = blob;
+    fotoLocalizacao = localizacao;
+    await salvarFotoNoIndexedDb({
+      id: FOTO_DRAFT_KEY,
+      blob,
+      mimeType: blob.type,
+      latitude: localizacao.latitude,
+      longitude: localizacao.longitude,
+      createdAt: new Date().toISOString(),
+    });
+
+    limparPreviewFoto();
+    ultimoFotoPreviewUrl = URL.createObjectURL(blob);
+    fotoPreview.src = ultimoFotoPreviewUrl;
+    fotoPreview.style.display = 'block';
+
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+      cameraPreview.srcObject = null;
+    }
+
+    atualizarControlesFoto();
+  }
+
+  async function refazerFoto() {
+    fotoBlob = null;
+    fotoLocalizacao = null;
+    limparPreviewFoto();
+    await removerFotoDoIndexedDb();
+    await abrirCamera();
+    atualizarControlesFoto();
+  }
+
+  async function excluirFoto() {
+    fotoBlob = null;
+    fotoLocalizacao = null;
+    limparPreviewFoto();
+    await removerFotoDoIndexedDb();
+
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+      cameraPreview.srcObject = null;
+    }
+
+    atualizarControlesFoto();
+  }
+
+  async function carregarAudioSalvo() {
+    const draft = await lerAudioDoIndexedDb();
+    if (!draft?.blob) {
+      atualizarControlesAudio();
+      return;
+    }
+
+    const blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'audio/webm' });
+    limparPreviewAudio();
+    ultimoPreviewUrl = URL.createObjectURL(blob);
+    audioPreview.src = ultimoPreviewUrl;
+    audioPreview.style.display = 'block';
+    audioPreview.dataset.duration = formatarDuracao(draft.durationSeconds || 0);
+    atualizarControlesAudio();
+  }
+
+  async function iniciarGravacao() {
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      mostrarFeedback('Seu navegador não suporta gravação de áudio.', 'error');
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      const inicio = Date.now();
+
+      mediaRecorder = new MediaRecorder(stream);
+      gravando = true;
+      atualizarControlesAudio();
+
+      mediaRecorder.ondataavailable = event => {
+        if (event.data && event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const duracao = (Date.now() - inicio) / 1000;
+        const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+        const registro = {
+          id: AUDIO_DRAFT_KEY,
+          blob,
+          mimeType: blob.type,
+          durationSeconds: Math.max(3, Math.round(duracao)),
+          createdAt: new Date().toISOString(),
+        };
+
+        await salvarAudioNoIndexedDb(registro);
+
+        limparPreviewAudio();
+        ultimoPreviewUrl = URL.createObjectURL(blob);
+        audioPreview.src = ultimoPreviewUrl;
+        audioPreview.style.display = 'block';
+        audioPreview.dataset.duration = formatarDuracao(registro.durationSeconds);
+
+        stream.getTracks().forEach(track => track.stop());
+        gravando = false;
+        atualizarControlesAudio();
+      };
+
+      mediaRecorder.start();
+    } catch (error) {
+      gravando = false;
+      atualizarControlesAudio();
+      mostrarFeedback(error instanceof Error ? error.message : 'Não foi possível iniciar a gravação.', 'error');
+    }
+  }
+
+  function pararGravacao() {
+    if (!mediaRecorder || mediaRecorder.state !== 'recording') {
+      return;
+    }
+
+    mediaRecorder.stop();
+  }
+
+  async function excluirAudio() {
+    limparPreviewAudio();
+    await removerAudioDoIndexedDb();
+    atualizarControlesAudio();
+  }
+
+  async function uploadAudioParaSupabase(draft, usuarioId) {
+    if (!SUPABASE?.url || !SUPABASE?.anonKey || !SUPABASE?.bucket) {
+      throw new Error('Configuração do Supabase ausente. Defina `window.__SUPABASE__ = { url, anonKey, bucket }` na página.')
+    }
+
+    const extensao = draft.mimeType === 'audio/mp4' ? 'm4a' : 'webm';
+    const pasta = SUPABASE.folder || 'evidencias/audio';
+    const nomeArquivo = `${usuarioId}/${Date.now()}.${extensao}`;
+    const caminho = `${pasta}/${nomeArquivo}`.replace(/^\/+/, '');
+    const uploadUrl = `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/${SUPABASE.bucket}/${caminho}`;
+
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE.anonKey,
+        Authorization: `Bearer ${SUPABASE.anonKey}`,
+        'Content-Type': draft.mimeType || 'audio/webm',
+        'x-upsert': 'true',
+      },
+      body: draft.blob,
+    });
+
+    if (!response.ok) {
+      const texto = await response.text().catch(() => '');
+      throw new Error(`Falha ao enviar áudio para o Supabase (${response.status}): ${texto || 'sem detalhes'}`);
+    }
+
+    return {
+      urlArquivo: `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/public/${SUPABASE.bucket}/${caminho}`,
+      caminho,
+    };
+  }
+
+  async function uploadFotoParaSupabase(draft, usuarioId) {
+    if (!SUPABASE?.url || !SUPABASE?.anonKey || !SUPABASE?.bucket) {
+      throw new Error('Configuração do Supabase ausente. Defina `window.__SUPABASE__ = { url, anonKey, bucket }` na página.')
+    }
+
+    const extensao = 'jpg';
+    const pasta = SUPABASE.folder || 'evidencias/foto';
+    const nomeArquivo = `${usuarioId}/${Date.now()}.${extensao}`;
+    const caminho = `${pasta}/${nomeArquivo}`.replace(/^\/+/, '');
+    const uploadUrl = `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/${SUPABASE.bucket}/${caminho}`;
+
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE.anonKey,
+        Authorization: `Bearer ${SUPABASE.anonKey}`,
+        'Content-Type': draft.mimeType || 'image/jpeg',
+        'x-upsert': 'true',
+      },
+      body: draft.blob,
+    });
+
+    if (!response.ok) {
+      const texto = await response.text().catch(() => '');
+      throw new Error(`Falha ao enviar foto para o Supabase (${response.status}): ${texto || 'sem detalhes'}`);
+    }
+
+    return {
+      urlArquivo: `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/public/${SUPABASE.bucket}/${caminho}`,
+      caminho,
+    };
+  }
+
+  function atualizarEstadoEvidencia() {
+    const tipo = tipoEvidencia.value;
+    evidenciaMensagemCampo.style.display = tipo === 'mensagem' ? 'block' : 'none';
+    evidenciaAudioCampo.style.display = tipo === 'audio' ? 'block' : 'none';
+    evidenciaFotoCampo.style.display = tipo === 'foto' ? 'block' : 'none';
+    if (tipo !== 'audio') {
+      gravando = false;
+    }
+    if (tipo !== 'foto' && cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+      cameraPreview.srcObject = null;
+    }
+    atualizarControlesAudio();
+    atualizarControlesFoto();
+  }
+
+  function atualizarCampos() {
+    const tipo = tipoMov.value;
+    const ehTransferencia = tipo === 'transferencia';
+    const ehMorte = tipo === 'morte';
+
     campoDestino.style.display = ehTransferencia ? 'block' : 'none';
-
-    // Causa do óbito aparece só na Morte.
     campoCausa.style.display = ehMorte ? 'block' : 'none';
-    if (!ehMorte) causa.classList.remove('erro');
-
-    // Quando há destino, o primeiro retiro vira "de origem";
-    // nos demais tipos é apenas "Retiro".
     rotuloOrigem.textContent = ehTransferencia ? 'Retiro de origem' : 'Retiro';
-  });
 
-  // Validação visual do campo obrigatório (Causa do óbito) ao salvar.
-  document.getElementById('btnSalvar').addEventListener('click', function () {
-    if (tipoMov.value === 'Morte') {
-      if (!causa.value) causa.classList.add('erro');
-      else causa.classList.remove('erro');
+    if (!ehTransferencia) {
+      destinoMov.value = '';
+    }
+
+    if (!ehMorte) {
+      causaObito.value = '';
+    }
+  }
+
+  function selecionarEvidencia(tipo) {
+    tipoEvidencia.value = tipo;
+    document.querySelectorAll('.evidencia__btn').forEach(btn => {
+      btn.classList.toggle('evidencia__btn--ativo', btn.dataset.evidencia === tipo);
+    });
+    atualizarEstadoEvidencia();
+  }
+
+  function obterEvidencia() {
+    const tipo = tipoEvidencia.value;
+
+    if (tipo === 'mensagem') {
+      const conteudo = document.getElementById('conteudoEvidencia').value.trim();
+      if (conteudo.length < 10) {
+        throw new Error('A evidência em texto precisa ter ao menos 10 caracteres.');
+      }
+      return { tipo: 'mensagem', conteudo };
+    }
+
+    if (tipo === 'audio') {
+      throw new Error('O áudio deve ser gravado e enviado pelo fluxo de envio.');
+    }
+
+    if (tipo === 'foto') {
+      throw new Error('A foto deve ser capturada pela câmera antes do envio.');
+    }
+
+    return null;
+  }
+
+  tipoMov.addEventListener('change', atualizarCampos);
+  document.querySelectorAll('.evidencia__btn').forEach(btn => {
+    if (!btn.dataset.evidencia) {
+      return;
+    }
+    btn.addEventListener('click', () => selecionarEvidencia(btn.dataset.evidencia));
+  });
+  btnGravarAudio.addEventListener('click', iniciarGravacao);
+  btnPararAudio.addEventListener('click', pararGravacao);
+  btnExcluirAudio.addEventListener('click', excluirAudio);
+  btnAbrirCamera.addEventListener('click', abrirCamera);
+  btnCapturarFoto.addEventListener('click', capturarFoto);
+  btnRefazerFoto.addEventListener('click', refazerFoto);
+  btnExcluirFoto.addEventListener('click', excluirFoto);
+
+  atualizarCampos();
+  selecionarEvidencia('mensagem');
+  carregarAudioSalvo().catch(() => atualizarControlesAudio());
+  carregarFotoSalva().catch(() => atualizarControlesFoto());
+
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const session = getSession();
+    const usuario = session?.usuario ?? CAPATAZ_DEMO;
+    const tipo = tipoMov.value;
+    const origem = origemMov.value;
+    const destino = destinoMov.value;
+    const quantidade = quantidadeMov.value ? Number(quantidadeMov.value) : null;
+    const estagio = estagioMov.value;
+
+    if (!tipo || !origem || !estagio) {
+      mostrarFeedback('Preencha tipo, retiro e estágio da vida.', 'error');
+      return;
+    }
+
+    if (tipo === 'transferencia' && !destino) {
+      mostrarFeedback('Selecione o retiro de destino.', 'error');
+      return;
+    }
+
+    if ((tipo === 'compra' || tipo === 'venda' || tipo === 'transferencia' || tipo === 'nascimento') && (!quantidade || quantidade <= 0)) {
+      mostrarFeedback('Informe uma quantidade válida de animais.', 'error');
+      return;
+    }
+
+    if (tipo === 'morte' && !causaObito.value) {
+      mostrarFeedback('Informe a causa do óbito.', 'error');
+      return;
+    }
+
+    let evidencia;
+
+    try {
+      evidencia = await (async () => {
+        const tipo = tipoEvidencia.value;
+        if (tipo === 'audio') {
+          const draft = await lerAudioDoIndexedDb();
+          if (!draft?.blob) {
+            throw new Error('Grave um áudio antes de enviar.');
+          }
+
+          const audioUpload = await uploadAudioParaSupabase(draft, usuario.id ?? CAPATAZ_DEMO.id);
+          return {
+            tipo: 'audio',
+            urlArquivo: audioUpload.urlArquivo,
+            duracao: draft.durationSeconds,
+          };
+        }
+
+        if (tipo === 'foto') {
+          const draft = await lerFotoDoIndexedDb();
+          if (!draft?.blob) {
+            throw new Error('Capture uma foto antes de enviar.');
+          }
+
+          const fotoUpload = await uploadFotoParaSupabase(draft, usuario.id ?? CAPATAZ_DEMO.id);
+          return {
+            tipo: 'foto',
+            urlArquivo: fotoUpload.urlArquivo,
+            latitude: draft.latitude ?? fotoLocalizacao?.latitude,
+            longitude: draft.longitude ?? fotoLocalizacao?.longitude,
+          };
+        }
+
+        return obterEvidencia();
+      })();
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Evidência inválida.', 'error');
+      return;
+    }
+
+    const botao = document.getElementById('btnSalvar');
+    if (botao) {
+      botao.disabled = true;
+      botao.textContent = 'Salvando...';
+    }
+
+    try {
+      const payload = {
+        retiro_id: usuario.retiro_id ?? CAPATAZ_DEMO.retiro_id,
+        capataz_id: usuario.id ?? CAPATAZ_DEMO.id,
+        tipo,
+        origem: origem || null,
+        destino: tipo === 'transferencia' ? destino : null,
+        quantidade,
+        causa_obito: tipo === 'morte' ? causaObito.value : null,
+        estagio_vida: estagio,
+        evidencia,
+      };
+
+      const response = await fetch('/movimentacoes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Não foi possível salvar a movimentação.');
+      }
+
+      mostrarFeedback('Movimentação salva com sucesso.', 'success');
+      if (tipoEvidencia.value === 'audio') {
+        await removerAudioDoIndexedDb();
+        limparPreviewAudio();
+        atualizarControlesAudio();
+      }
+      if (tipoEvidencia.value === 'foto') {
+        await removerFotoDoIndexedDb();
+        limparPreviewFoto();
+        fotoLocalizacao = null;
+        atualizarControlesFoto();
+      }
+      form.reset();
+      atualizarCampos();
+      selecionarEvidencia('mensagem');
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao salvar movimentação.', 'error');
+    } finally {
+      if (botao) {
+        botao.disabled = false;
+        botao.textContent = 'Salvar movimentação';
+      }
     }
   });
 </script>

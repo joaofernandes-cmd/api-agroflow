@@ -49,6 +49,23 @@ export const TarefaService = {
     return tarefa
   },
 
+  async sincronizarRecebida(dados: TarefaInput): Promise<Tarefa> {
+    if (!dados.criada_por) {
+      throw new Error('Campo "criada_por" é obrigatório')
+    }
+
+    if (!dados.status) {
+      throw new Error('Campo "status" é obrigatório')
+    }
+
+    this.validarCamposObrigatorios(dados)
+
+    return TarefaRepository.criar({
+      ...dados,
+      sincronizado: true,
+    })
+  },
+
 
 
   // RN10: Buscar tarefas para dashboard (apenas concluídas)

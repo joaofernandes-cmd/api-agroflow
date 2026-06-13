@@ -5,6 +5,7 @@ const tarefaRoutes = Router()
 
 // Criação e listagem geral de tarefas
 tarefaRoutes.post('/', TarefaController.criar)
+tarefaRoutes.post('/sincronizar', TarefaController.sincronizarRecebida)
 tarefaRoutes.get('/', TarefaController.listarTodas)
 
 // Consultas específicas usadas por dashboard e filtros

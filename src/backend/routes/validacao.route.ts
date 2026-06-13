@@ -5,9 +5,9 @@ import { exigirCargo } from '../middlewares/cargo.middleware'
 
 const validacaoRoutes = Router()
 
-// TODO: reativar autenticação após testes
-// validacaoRoutes.use(autenticarUsuario)
-// validacaoRoutes.use(exigirCargo('supervisor'))
+// Validação só pode ser acessada por usuários autenticados com cargo supervisor.
+validacaoRoutes.use(autenticarUsuario)
+validacaoRoutes.use(exigirCargo('supervisor'))
 
 // Verifica se um usuário tem permissão para validar registros
 validacaoRoutes.post('/permissao', ValidacaoController.podeValidar)

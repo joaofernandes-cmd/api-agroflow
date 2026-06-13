@@ -6,6 +6,20 @@ import { Tarefa } from '../models/tarefa.model'
 import { Ticket } from '../models/ticket.model'
 import { UUID } from '../models/uuid'
 
+function obterBaseApi(): string {
+  const base = process.env.API_BASE_URL?.trim()
+  if (base) {
+    return base.replace(/\/+$/, '')
+  }
+
+  const porta = process.env.PORT ?? '3000'
+  return `http://127.0.0.1:${porta}`
+}
+
+function montarUrlApi(caminho: string): string {
+  return `${obterBaseApi()}${caminho.startsWith('/') ? caminho : `/${caminho}`}`
+}
+
 // RN03: Sincronização offline com detecção automática de conexão
 // RN07: Apenas dados com sincronizado=true entram em relatórios
 export const SincronizacaoService = {
@@ -13,7 +27,7 @@ export const SincronizacaoService = {
   // Retorna true se HTTP 200 foi recebido do servidor
   async detectarConexao(): Promise<boolean> {
     try {
-      const response = await fetch('/api/health', {
+      const response = await fetch(montarUrlApi('/health'), {
         method: 'HEAD',
         cache: 'no-cache',
       })
@@ -158,7 +172,7 @@ export const SincronizacaoService = {
 
   // RN03: Envia movimentação para o servidor
   async enviarMovimentacao(movimentacao: Movimentacao): Promise<void> {
-    const response = await fetch('/api/movimentacoes/sincronizar', {
+    const response = await fetch(montarUrlApi('/movimentacoes/sincronizar'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(movimentacao),
@@ -171,7 +185,7 @@ export const SincronizacaoService = {
 
   // RN03: Envia tarefa para o servidor
   async enviarTarefa(tarefa: Tarefa): Promise<void> {
-    const response = await fetch('/api/tarefas/sincronizar', {
+    const response = await fetch(montarUrlApi('/tarefas/sincronizar'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(tarefa),
@@ -184,7 +198,7 @@ export const SincronizacaoService = {
 
   // RN03: Envia ticket para o servidor
   async enviarTicket(ticket: Ticket): Promise<void> {
-    const response = await fetch('/api/tickets/sincronizar', {
+    const response = await fetch(montarUrlApi('/tickets/sincronizar'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(ticket),

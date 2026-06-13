@@ -6,6 +6,7 @@ import { mockCapataz, mockTicket } from '../helpers/fixtures'
 jest.mock('../../services/ticket.service', () => ({
   TicketService: {
     criar: jest.fn(),
+    sincronizarRecebida: jest.fn(),
     listarTodos: jest.fn(),
     buscarPorId: jest.fn(),
     listarPendentes: jest.fn(),
@@ -24,6 +25,7 @@ const mockedService = TicketService as jest.Mocked<typeof TicketService>
 describe('Tickets', () => {
   beforeEach(() => {
     mockedService.criar.mockResolvedValue(mockTicket as any)
+    mockedService.sincronizarRecebida.mockResolvedValue(mockTicket as any)
     mockedService.listarTodos.mockResolvedValue([mockTicket as any])
     mockedService.buscarPorId.mockResolvedValue(mockTicket as any)
     mockedService.listarPendentes.mockResolvedValue([mockTicket as any])
@@ -55,6 +57,24 @@ describe('Tickets', () => {
       mockCapataz,
       true
     )
+  })
+
+  it('POST /tickets/sincronizar deve criar ticket sincronizado', async () => {
+    const response = await request(app).post('/tickets/sincronizar').send({
+      id: mockTicket.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      aberto_por: mockCapataz.id,
+      categoria: mockTicket.categoria,
+      localizacao: mockTicket.localizacao,
+      descricao: mockTicket.descricao,
+      prioridade: mockTicket.prioridade,
+      status: 'pendente',
+      sincronizado: false,
+    })
+
+    expect(response.status).toBe(201)
+    expect(response.body).toEqual(mockTicket)
+    expect(mockedService.sincronizarRecebida).toHaveBeenCalledTimes(1)
   })
 
   it('GET /tickets deve listar todos os tickets', async () => {

@@ -6,6 +6,7 @@ import { mockSupervisor, mockTarefa } from '../helpers/fixtures'
 jest.mock('../../services/tarefa.service', () => ({
   TarefaService: {
     criar: jest.fn(),
+    sincronizarRecebida: jest.fn(),
     listarTodas: jest.fn(),
     buscarPorId: jest.fn(),
     buscarParaDashboard: jest.fn(),
@@ -25,6 +26,7 @@ const mockedService = TarefaService as jest.Mocked<typeof TarefaService>
 describe('Tarefas', () => {
   beforeEach(() => {
     mockedService.criar.mockResolvedValue(mockTarefa as any)
+    mockedService.sincronizarRecebida.mockResolvedValue(mockTarefa as any)
     mockedService.listarTodas.mockResolvedValue([mockTarefa as any])
     mockedService.buscarPorId.mockResolvedValue(mockTarefa as any)
     mockedService.buscarParaDashboard.mockResolvedValue([mockTarefa as any])
@@ -55,6 +57,24 @@ describe('Tarefas', () => {
       expect.objectContaining({ id: mockTarefa.id }),
       mockSupervisor
     )
+  })
+
+  it('POST /tarefas/sincronizar deve criar tarefa sincronizada', async () => {
+    const response = await request(app).post('/tarefas/sincronizar').send({
+      id: mockTarefa.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      criada_por: mockSupervisor.id,
+      atribuida_a: mockSupervisor.id,
+      descricao: mockTarefa.descricao,
+      categoria: mockTarefa.categoria,
+      prioridade: mockTarefa.prioridade,
+      status: 'pendente',
+      sincronizado: false,
+    })
+
+    expect(response.status).toBe(201)
+    expect(response.body).toEqual(mockTarefa)
+    expect(mockedService.sincronizarRecebida).toHaveBeenCalledTimes(1)
   })
 
   it('GET /tarefas deve listar todas as tarefas', async () => {

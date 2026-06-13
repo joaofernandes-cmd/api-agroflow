@@ -44,6 +44,17 @@ export const TarefaController = {
     }
   },
 
+  async sincronizarRecebida(req: Request, res: Response) {
+    try {
+      const tarefa = await TarefaService.sincronizarRecebida(req.body)
+      return res.status(201).json(tarefa)
+    } catch (error) {
+      return res.status(400).json({
+        error: error instanceof Error ? error.message : 'Erro ao sincronizar tarefa',
+      })
+    }
+  },
+
   async listarTodas(req: Request, res: Response) {
     try {
       const tarefas = await TarefaService.listarTodas()

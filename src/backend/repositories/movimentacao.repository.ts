@@ -74,9 +74,20 @@ export const MovimentacaoRepository = {
           ${input.estagio_vida},
           ${input.data_validacao ?? null}
         )
+        ON CONFLICT (id) DO UPDATE SET
+          retiro_id = EXCLUDED.retiro_id,
+          capataz_id = EXCLUDED.capataz_id,
+          validado_por = EXCLUDED.validado_por,
+          tipo = EXCLUDED.tipo,
+          status = EXCLUDED.status,
+          sincronizado = EXCLUDED.sincronizado,
+          data_criacao = EXCLUDED.data_criacao,
+          estagio_vida = EXCLUDED.estagio_vida,
+          data_validacao = EXCLUDED.data_validacao
         RETURNING id
       `
 
+      await this.removerDetalhes(transaction, created.id)
       await this.criarDetalhes(transaction, created.id, input)
 
       return created.id
