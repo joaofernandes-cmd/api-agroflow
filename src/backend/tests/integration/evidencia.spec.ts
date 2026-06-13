@@ -47,6 +47,15 @@ describe('Evidencias', () => {
     expect(response.body).toEqual(mockEvidencia)
   })
 
+  it('GET /evidencias/:id deve retornar 404 para evidencia inexistente', async () => {
+    mockedService.buscarPorId.mockResolvedValueOnce(null)
+
+    const response = await request(app).get('/evidencias/00000000-0000-4000-8000-999999999999')
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({ error: 'Evidência não encontrada' })
+  })
+
   it('POST /evidencias/mensagens deve criar evidenca de mensagem', async () => {
     const response = await request(app).post('/evidencias/mensagens').send({
       usuarioId: 'user-003',
@@ -86,6 +95,37 @@ describe('Evidencias', () => {
     expect(response.body).toMatchObject({
       evidencia: mockEvidencia,
       foto: { evidencia_id: '00000000-0000-4000-8000-000000000501', url_arquivo: 'foto.jpg' },
+    })
+  })
+
+  it('POST /evidencias/fotos deve rejeitar payload incompleto', async () => {
+    const response = await request(app).post('/evidencias/fotos').send({
+      usuarioId: 'user-003',
+      urlArquivo: 'foto.jpg',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      error: 'Usuário, arquivo, latitude e longitude são obrigatórios',
+    })
+    expect(mockedService.criarFoto).not.toHaveBeenCalled()
+  })
+
+  it('POST /evidencias/fotos deve rejeitar violacao de regra de negocio', async () => {
+    mockedService.criarFoto.mockRejectedValueOnce(
+      new Error('Foto rejeitada: georreferenciamento inválido')
+    )
+
+    const response = await request(app).post('/evidencias/fotos').send({
+      usuarioId: 'user-003',
+      urlArquivo: 'foto.jpg',
+      latitude: 100,
+      longitude: -57.6,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      error: 'Foto rejeitada: georreferenciamento inválido',
     })
   })
 })

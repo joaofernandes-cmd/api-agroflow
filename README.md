@@ -71,7 +71,7 @@
 
 &emsp;&emsp;A Solução atende a três níveis hierárquicos de cada retiro: capatazes, supervisores e gerentes. Os escopos de atuação de cada nível na aplicação são os seguintes: os capatazes fazem o registro das operações e abrem tickets de infraestrutura; os supervisores validam os registros dos capatazes e criam novas tarefas para eles; e gerentes consultam relatórios operacionais organizados por período. O controle de acesso é feito por cargo: capatazes acessam por qrcode único, supervisores e gerentes acessam por login e senha, garantindo que cada perfil tenha acesso somente às funcionalidades compatíveis com seu escopo de atuação.
 
-&emsp;&emsp;Por fim, a característica-chave da aplicação desenvolvida é a operação offline (uma demanda que foi trazida pela empresa parceira e que é necessária para a aplicabilidade da solução): quando o capataz faz os registros em campo eles são salvos localmente em seu aparelho, assim que a conexão é reestabelecida, os registros são sincronizados, permitindo que o escritório tenha acesso aos eventos do campo.
+&emsp;&emsp;A operação offline é uma demanda da empresa parceira e está planejada para implementação futura. A versão atual possui endpoints e mecanismos backend de sincronização, mas ainda não armazena registros localmente no dispositivo nem realiza sincronização automática após o restabelecimento da conexão.
 
 
 
@@ -93,21 +93,22 @@ g02/
 │   ├── index.html              # Versão renderizada do WAD
 │   └── wad.md                  # Web Application Document (documentação principal)
 ├── src/
-│   └── backend/
-│       ├── @types/             # Extensões de tipos do Express
-│       ├── controllers/        # Camada de entrada das rotas (HTTP)
-│       ├── database/
-│       │   ├── migrations/     # Migrations SQL (DDL) versionadas
-│       │   ├── connection.ts   # Conexão com o PostgreSQL
-│       │   └── migrate.ts      # Runner de migrations
-│       ├── middlewares/        # Autenticação, autorização por cargo, logs e erros
-│       ├── models/             # Tipos de domínio
-│       ├── repositories/       # Acesso a dados
-│       ├── routes/             # Definição dos endpoints
-│       ├── services/           # Regras de negócio
-│       ├── tests/              # Testes unitários e de integração (Jest)
-│       ├── app.ts              # Configuração do app Express
-│       └── server.ts           # Inicialização do servidor
+│   ├── backend/
+│   │   ├── @types/             # Extensões de tipos do Express
+│   │   ├── controllers/        # Camada de entrada das rotas (HTTP)
+│   │   ├── database/
+│   │   │   ├── migrations/     # Migrations SQL (DDL) versionadas
+│   │   │   ├── connection.ts   # Conexão com o PostgreSQL
+│   │   │   └── migrate.ts      # Runner de migrations
+│   │   ├── middlewares/        # Autenticação, autorização por cargo, logs e erros
+│   │   ├── models/             # Tipos de domínio
+│   │   ├── repositories/       # Acesso a dados
+│   │   ├── routes/             # Definição dos endpoints
+│   │   ├── services/           # Regras de negócio
+│   │   ├── tests/              # Testes unitários e de integração (Jest)
+│   │   ├── app.ts              # Configuração do app Express
+│   │   └── server.ts           # Inicialização do servidor
+│   └── views/                  # Templates EJS, estilos e scripts das interfaces
 ├── jest.config.ts
 ├── tsconfig.json
 ├── package.json
@@ -118,6 +119,7 @@ Descrição dos principais diretórios:
 - `assets/`: arquivos não estruturados do repositório, como os logos institucionais.
 - `documents/`: documentação do projeto, com destaque para o **WAD** (`wad.md`); a pasta `others/` reúne assets da documentação.
 - `src/backend/`: código-fonte da aplicação, organizado em camadas (routes → controllers → services → repositories) com middlewares, modelos e migrations.
+- `src/views/`: templates EJS, folhas de estilo e scripts das interfaces organizadas por perfil de usuário.
 - `src/backend/database/migrations/`: scripts SQL que criam e versionam o esquema do banco.
 - `src/backend/tests/`: testes automatizados.
 - `README.md`: visão geral do projeto, instruções de execução e informações da equipe.
@@ -131,7 +133,7 @@ Descrição dos principais diretórios:
 - Gestão de tarefas operacionais por status, prioridade, categoria, usuário e retiro.
 - Abertura e acompanhamento de tickets de manutenção por categoria, prioridade e status.
 - Anexo de evidências em foto, áudio e mensagem.
-- Operação offline com endpoints de sincronização e detecção de conexão.
+- Endpoints e mecanismos backend que preparam a implementação futura da operação offline e da sincronização automática.
 - Dados consolidados para dashboard (contagens por tipo, status e prioridade).
 - Relatórios por período (semanal e mensal) e exportação de dados de movimentações.
 
@@ -142,7 +144,9 @@ Descrição dos principais diretórios:
 | Linguagem | TypeScript | 6.0.3 |
 | Runtime | Node.js | 22.x |
 | Framework HTTP | Express | 5.2.1 |
-| Banco de dados | PostgreSQL | 13+ |
+| Templates de interface | EJS | 6.0.1 |
+| Interface | HTML, CSS e JavaScript | - |
+| Banco de dados | PostgreSQL hospedado no Supabase | 13+ |
 | Driver de banco | `postgres` | 3.4.9 |
 | Driver de banco | `pg` | 8.21.0 |
 | Autenticação | `jsonwebtoken` (JWT) | 9.0.3 |
@@ -185,7 +189,7 @@ JWT_SECRET=defina-uma-senha-forte
 PORT=3000
 ```
  
-> A aplicação não inicia sem a variável `DATABASE_URL`. O `JWT_SECRET` deve ser definido para o ambiente de produção (o código possui um valor padrão apenas para desenvolvimento).
+> A aplicação não inicia sem as variáveis `DATABASE_URL` e `JWT_SECRET`.
  
 4. Execute as migrations para criar o esquema do banco:
 ```sh
@@ -195,6 +199,11 @@ npm run migrate
 5. Inicie a aplicação em modo de desenvolvimento:
 ```sh
 npm run dev
+```
+
+6. Acesse a aplicação em:
+```text
+http://localhost:3000
 ```
 
 ### Scripts disponíveis
@@ -213,8 +222,8 @@ npm run dev
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 — 26/06/2026 — Sprint 5
-    * Versão final da aplicação; consolidação de autenticação, controle de sessão e autorização; estratégias de resiliência.
+* 0.5.0 — prevista para 26/06/2026 — Sprint 5
+    * Versão final planejada; consolidação de autenticação, controle de sessão e autorização; estratégias de resiliência.
 * 0.4.0 — 12/06/2026 — Sprint 4
     * Segunda versão; WebAPI completa; testes de integração automatizados; atualização do modelo físico do banco.
 * 0.3.0 — 29/05/2026 — Sprint 3
