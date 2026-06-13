@@ -41,6 +41,19 @@ export const TicketRepository = {
                 ${input.data_realizado ?? new Date()},
                 ${input.sincronizado ?? false}
             )
+            ON CONFLICT (id) DO UPDATE SET
+                retiro_id = EXCLUDED.retiro_id,
+                aberto_por = EXCLUDED.aberto_por,
+                categoria = EXCLUDED.categoria,
+                localizacao = EXCLUDED.localizacao,
+                status = EXCLUDED.status,
+                atribuido_a = EXCLUDED.atribuido_a,
+                aprovado_por = EXCLUDED.aprovado_por,
+                descricao = EXCLUDED.descricao,
+                prioridade = EXCLUDED.prioridade,
+                data_criacao = EXCLUDED.data_criacao,
+                data_realizado = EXCLUDED.data_realizado,
+                sincronizado = EXCLUDED.sincronizado
             RETURNING id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
         `
         return created

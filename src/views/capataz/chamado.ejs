@@ -85,11 +85,29 @@
     id: '11111111-1111-1111-1111-111111111111',
     nome: 'Capataz Daniel',
     cargo: 'capataz',
-    retiro_id: 1,
+    retiro_id: '00000000-0000-4000-8000-000000000001',
   };
 
   const feedback = document.getElementById('ticket-feedback');
   const botao = document.getElementById('btnEnviarTicket');
+
+  function getSession() {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+
+      if (!usuarioRaw) {
+        return null;
+      }
+
+      return {
+        token,
+        usuario: JSON.parse(usuarioRaw),
+      };
+    } catch {
+      return null;
+    }
+  }
 
   function mostrarFeedback(mensagem, tipo) {
     if (!feedback) return;
@@ -98,6 +116,7 @@
   }
 
   function montarPayload() {
+    const session = getSession();
     const categoria = document.getElementById('categoriaTicket').value;
     const prioridade = document.getElementById('prioridadeTicket').value;
     const localizacao = document.getElementById('localizacaoTicket').value.trim();
@@ -109,12 +128,12 @@
     }
 
     return {
-      retiro_id: CAPATAZ_DEMO.retiro_id,
+      retiro_id: session?.usuario?.retiro_id ?? CAPATAZ_DEMO.retiro_id,
       categoria,
       localizacao,
       descricao,
       prioridade,
-      usuarioAbridorTicket: CAPATAZ_DEMO,
+      usuarioAbridorTicket: session?.usuario ?? CAPATAZ_DEMO,
       temEvidenciaDescritiva: evidencia.length >= 10 || descricao.length >= 10,
     };
   }
