@@ -118,19 +118,43 @@
     </div>
 
     <div class="campo" id="evidenciaAudioCampo" style="display: none;">
-      <label class="campo__rotulo" for="urlArquivoAudio">URL do áudio</label>
-      <input class="input" id="urlArquivoAudio" type="text" placeholder="https://..." />
-      <label class="campo__rotulo" for="duracaoAudio" style="margin-top: 8px;">Duração em segundos</label>
-      <input class="input" id="duracaoAudio" type="number" min="3" step="1" placeholder="3" />
+      <label class="campo__rotulo">Gravação de áudio</label>
+      <div class="evidencia">
+        <button type="button" class="evidencia__btn evidencia__btn--audio" id="btnGravarAudio">
+          Gravar
+        </button>
+        <button type="button" class="evidencia__btn evidencia__btn--stop" id="btnPararAudio" disabled>
+          Parar
+        </button>
+        <button type="button" class="evidencia__btn evidencia__btn--danger" id="btnExcluirAudio" disabled>
+          Excluir
+        </button>
+      </div>
+      <p id="audioStatus" style="margin: 8px 0 0; font-size: 14px;"></p>
+      <audio id="audioPreview" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
     </div>
 
     <div class="campo" id="evidenciaFotoCampo" style="display: none;">
-      <label class="campo__rotulo" for="urlArquivoFoto">URL da foto</label>
-      <input class="input" id="urlArquivoFoto" type="text" placeholder="https://..." />
-      <label class="campo__rotulo" for="latitudeFoto" style="margin-top: 8px;">Latitude</label>
-      <input class="input" id="latitudeFoto" type="number" step="any" placeholder="-16.5" />
-      <label class="campo__rotulo" for="longitudeFoto" style="margin-top: 8px;">Longitude</label>
-      <input class="input" id="longitudeFoto" type="number" step="any" placeholder="-55.7" />
+      <label class="campo__rotulo">Foto em tempo real</label>
+      <div class="camera-stage">
+        <video id="cameraPreview" class="camera-stage__view" autoplay playsinline muted></video>
+        <img id="fotoPreview" class="camera-stage__preview" alt="Prévia da foto capturada" style="display: none;" />
+        <div class="camera-stage__toolbar">
+          <button type="button" class="evidencia__btn evidencia__btn--foto" id="btnAbrirCamera">
+            Abrir câmera
+          </button>
+          <button type="button" class="evidencia__btn evidencia__btn--audio" id="btnCapturarFoto" disabled>
+            Capturar
+          </button>
+          <button type="button" class="evidencia__btn evidencia__btn--ghost" id="btnRefazerFoto" disabled>
+            Refazer
+          </button>
+          <button type="button" class="evidencia__btn evidencia__btn--danger" id="btnExcluirFoto" disabled>
+            Excluir
+          </button>
+        </div>
+        <p class="camera-stage__hint" id="cameraStatus">Abra a câmera para capturar a foto em tempo real.</p>
+      </div>
     </div>
 
     <button type="submit" class="btn-primario" id="btnSalvar" style="margin-top: 6px;">
@@ -164,6 +188,33 @@
   const evidenciaMensagemCampo = document.getElementById('evidenciaMensagemCampo');
   const evidenciaAudioCampo = document.getElementById('evidenciaAudioCampo');
   const evidenciaFotoCampo = document.getElementById('evidenciaFotoCampo');
+  const btnGravarAudio = document.getElementById('btnGravarAudio');
+  const btnPararAudio = document.getElementById('btnPararAudio');
+  const btnExcluirAudio = document.getElementById('btnExcluirAudio');
+  const audioStatus = document.getElementById('audioStatus');
+  const audioPreview = document.getElementById('audioPreview');
+  const btnAbrirCamera = document.getElementById('btnAbrirCamera');
+  const btnCapturarFoto = document.getElementById('btnCapturarFoto');
+  const btnRefazerFoto = document.getElementById('btnRefazerFoto');
+  const btnExcluirFoto = document.getElementById('btnExcluirFoto');
+  const cameraStatus = document.getElementById('cameraStatus');
+  const cameraPreview = document.getElementById('cameraPreview');
+  const fotoPreview = document.getElementById('fotoPreview');
+
+  const AUDIO_DRAFT_KEY = 'movimentacao-audio-draft';
+  const FOTO_DRAFT_KEY = 'movimentacao-foto-draft';
+  const IDB_NAME = 'agroflow-media';
+  const IDB_STORE = 'drafts';
+  const SUPABASE = window.__SUPABASE__ || null;
+
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let gravando = false;
+  let ultimoPreviewUrl = null;
+  let cameraStream = null;
+  let fotoBlob = null;
+  let fotoLocalizacao = null;
+  let ultimoFotoPreviewUrl = null;
 
   function getSession() {
     try {
@@ -189,11 +240,471 @@
     feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
   }
 
+  function abrirIndexedDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(IDB_NAME, 1);
+
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains(IDB_STORE)) {
+          db.createObjectStore(IDB_STORE, { keyPath: 'id' });
+        }
+      };
+
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function salvarAudioNoIndexedDb(registro) {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(registro);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function lerAudioDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readonly');
+        const req = tx.objectStore(IDB_STORE).get(AUDIO_DRAFT_KEY);
+        req.onsuccess = () => resolve(req.result ?? null);
+        req.onerror = () => reject(req.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function removerAudioDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).delete(AUDIO_DRAFT_KEY);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function salvarFotoNoIndexedDb(registro) {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(registro);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function lerFotoDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readonly');
+        const req = tx.objectStore(IDB_STORE).get(FOTO_DRAFT_KEY);
+        req.onsuccess = () => resolve(req.result ?? null);
+        req.onerror = () => reject(req.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function removerFotoDoIndexedDb() {
+    const db = await abrirIndexedDB();
+    try {
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).delete(FOTO_DRAFT_KEY);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  function obterLocalizacaoAtual() {
+    if (!navigator.geolocation) {
+      return Promise.reject(new Error('Geolocalização indisponível neste navegador.'));
+    }
+
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        posicao => {
+          resolve({
+            latitude: posicao.coords.latitude,
+            longitude: posicao.coords.longitude,
+          });
+        },
+        () => reject(new Error('Autorize a localização para registrar a foto com georreferenciamento.')),
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    });
+  }
+
+  function formatarDuracao(segundos) {
+    const total = Math.max(0, Math.round(segundos));
+    const min = String(Math.floor(total / 60)).padStart(2, '0');
+    const sec = String(total % 60).padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  function atualizarControlesAudio() {
+    btnGravarAudio.disabled = gravando;
+    btnPararAudio.disabled = !gravando;
+    btnExcluirAudio.disabled = !audioPreview.src;
+    audioStatus.textContent = gravando
+      ? 'Gravando...'
+      : audioPreview.src
+        ? `Áudio pronto (${audioPreview.dataset.duration || '00:00'})`
+        : 'Nenhum áudio gravado ainda.';
+  }
+
+  function limparPreviewAudio() {
+    if (ultimoPreviewUrl) {
+      URL.revokeObjectURL(ultimoPreviewUrl);
+      ultimoPreviewUrl = null;
+    }
+
+    audioPreview.removeAttribute('src');
+    audioPreview.style.display = 'none';
+    audioPreview.dataset.duration = '';
+  }
+
+  function limparPreviewFoto() {
+    if (ultimoFotoPreviewUrl) {
+      URL.revokeObjectURL(ultimoFotoPreviewUrl);
+      ultimoFotoPreviewUrl = null;
+    }
+
+    fotoPreview.removeAttribute('src');
+    fotoPreview.style.display = 'none';
+  }
+
+  function atualizarControlesFoto() {
+    const temCamera = Boolean(cameraStream);
+    const temFoto = Boolean(fotoBlob);
+
+    btnAbrirCamera.disabled = temCamera;
+    btnCapturarFoto.disabled = !temCamera;
+    btnRefazerFoto.disabled = !temFoto;
+    btnExcluirFoto.disabled = !temFoto && !temCamera;
+
+    if (temFoto) {
+      cameraStatus.textContent = 'Foto capturada. Você pode refazer, excluir ou enviar.';
+    } else if (temCamera) {
+      cameraStatus.textContent = 'Câmera aberta. Posicione o animal/ocorrência e capture.';
+    } else {
+      cameraStatus.textContent = 'Abra a câmera para capturar a foto em tempo real.';
+    }
+  }
+
+  async function carregarFotoSalva() {
+    const draft = await lerFotoDoIndexedDb();
+    if (!draft?.blob) {
+      atualizarControlesFoto();
+      return;
+    }
+
+    fotoBlob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'image/jpeg' });
+    fotoLocalizacao = draft.latitude != null && draft.longitude != null
+      ? { latitude: draft.latitude, longitude: draft.longitude }
+      : null;
+    limparPreviewFoto();
+    ultimoFotoPreviewUrl = URL.createObjectURL(fotoBlob);
+    fotoPreview.src = ultimoFotoPreviewUrl;
+    fotoPreview.style.display = 'block';
+    atualizarControlesFoto();
+  }
+
+  async function abrirCamera() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      mostrarFeedback('Seu navegador não suporta câmera ao vivo.', 'error');
+      return;
+    }
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' } },
+        audio: false,
+      });
+
+      cameraPreview.srcObject = cameraStream;
+      await cameraPreview.play();
+      atualizarControlesFoto();
+    } catch (error) {
+      cameraStream = null;
+      atualizarControlesFoto();
+      mostrarFeedback(error instanceof Error ? error.message : 'Não foi possível abrir a câmera.', 'error');
+    }
+  }
+
+  async function capturarFoto() {
+    if (!cameraStream) {
+      mostrarFeedback('Abra a câmera antes de capturar a foto.', 'error');
+      return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const largura = cameraPreview.videoWidth || 1280;
+    const altura = cameraPreview.videoHeight || 720;
+    canvas.width = largura;
+    canvas.height = altura;
+
+    const contexto = canvas.getContext('2d');
+    if (!contexto) {
+      mostrarFeedback('Não foi possível preparar a foto.', 'error');
+      return;
+    }
+
+    contexto.drawImage(cameraPreview, 0, 0, largura, altura);
+
+    const blob = await new Promise((resolve, reject) => {
+      canvas.toBlob(
+        resultado => {
+          if (!resultado) {
+            reject(new Error('Falha ao gerar a foto capturada.'));
+            return;
+          }
+
+          resolve(resultado);
+        },
+        'image/jpeg',
+        0.92
+      );
+    });
+
+    const localizacao = await obterLocalizacaoAtual();
+    fotoBlob = blob;
+    fotoLocalizacao = localizacao;
+    await salvarFotoNoIndexedDb({
+      id: FOTO_DRAFT_KEY,
+      blob,
+      mimeType: blob.type,
+      latitude: localizacao.latitude,
+      longitude: localizacao.longitude,
+      createdAt: new Date().toISOString(),
+    });
+
+    limparPreviewFoto();
+    ultimoFotoPreviewUrl = URL.createObjectURL(blob);
+    fotoPreview.src = ultimoFotoPreviewUrl;
+    fotoPreview.style.display = 'block';
+
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+      cameraPreview.srcObject = null;
+    }
+
+    atualizarControlesFoto();
+  }
+
+  async function refazerFoto() {
+    fotoBlob = null;
+    fotoLocalizacao = null;
+    limparPreviewFoto();
+    await removerFotoDoIndexedDb();
+    await abrirCamera();
+    atualizarControlesFoto();
+  }
+
+  async function excluirFoto() {
+    fotoBlob = null;
+    fotoLocalizacao = null;
+    limparPreviewFoto();
+    await removerFotoDoIndexedDb();
+
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+      cameraPreview.srcObject = null;
+    }
+
+    atualizarControlesFoto();
+  }
+
+  async function carregarAudioSalvo() {
+    const draft = await lerAudioDoIndexedDb();
+    if (!draft?.blob) {
+      atualizarControlesAudio();
+      return;
+    }
+
+    const blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'audio/webm' });
+    limparPreviewAudio();
+    ultimoPreviewUrl = URL.createObjectURL(blob);
+    audioPreview.src = ultimoPreviewUrl;
+    audioPreview.style.display = 'block';
+    audioPreview.dataset.duration = formatarDuracao(draft.durationSeconds || 0);
+    atualizarControlesAudio();
+  }
+
+  async function iniciarGravacao() {
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      mostrarFeedback('Seu navegador não suporta gravação de áudio.', 'error');
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      const inicio = Date.now();
+
+      mediaRecorder = new MediaRecorder(stream);
+      gravando = true;
+      atualizarControlesAudio();
+
+      mediaRecorder.ondataavailable = event => {
+        if (event.data && event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const duracao = (Date.now() - inicio) / 1000;
+        const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+        const registro = {
+          id: AUDIO_DRAFT_KEY,
+          blob,
+          mimeType: blob.type,
+          durationSeconds: Math.max(3, Math.round(duracao)),
+          createdAt: new Date().toISOString(),
+        };
+
+        await salvarAudioNoIndexedDb(registro);
+
+        limparPreviewAudio();
+        ultimoPreviewUrl = URL.createObjectURL(blob);
+        audioPreview.src = ultimoPreviewUrl;
+        audioPreview.style.display = 'block';
+        audioPreview.dataset.duration = formatarDuracao(registro.durationSeconds);
+
+        stream.getTracks().forEach(track => track.stop());
+        gravando = false;
+        atualizarControlesAudio();
+      };
+
+      mediaRecorder.start();
+    } catch (error) {
+      gravando = false;
+      atualizarControlesAudio();
+      mostrarFeedback(error instanceof Error ? error.message : 'Não foi possível iniciar a gravação.', 'error');
+    }
+  }
+
+  function pararGravacao() {
+    if (!mediaRecorder || mediaRecorder.state !== 'recording') {
+      return;
+    }
+
+    mediaRecorder.stop();
+  }
+
+  async function excluirAudio() {
+    limparPreviewAudio();
+    await removerAudioDoIndexedDb();
+    atualizarControlesAudio();
+  }
+
+  async function uploadAudioParaSupabase(draft, usuarioId) {
+    if (!SUPABASE?.url || !SUPABASE?.anonKey || !SUPABASE?.bucket) {
+      throw new Error('Configuração do Supabase ausente. Defina `window.__SUPABASE__ = { url, anonKey, bucket }` na página.')
+    }
+
+    const extensao = draft.mimeType === 'audio/mp4' ? 'm4a' : 'webm';
+    const pasta = SUPABASE.folder || 'evidencias/audio';
+    const nomeArquivo = `${usuarioId}/${Date.now()}.${extensao}`;
+    const caminho = `${pasta}/${nomeArquivo}`.replace(/^\/+/, '');
+    const uploadUrl = `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/${SUPABASE.bucket}/${caminho}`;
+
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE.anonKey,
+        Authorization: `Bearer ${SUPABASE.anonKey}`,
+        'Content-Type': draft.mimeType || 'audio/webm',
+        'x-upsert': 'true',
+      },
+      body: draft.blob,
+    });
+
+    if (!response.ok) {
+      const texto = await response.text().catch(() => '');
+      throw new Error(`Falha ao enviar áudio para o Supabase (${response.status}): ${texto || 'sem detalhes'}`);
+    }
+
+    return {
+      urlArquivo: `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/public/${SUPABASE.bucket}/${caminho}`,
+      caminho,
+    };
+  }
+
+  async function uploadFotoParaSupabase(draft, usuarioId) {
+    if (!SUPABASE?.url || !SUPABASE?.anonKey || !SUPABASE?.bucket) {
+      throw new Error('Configuração do Supabase ausente. Defina `window.__SUPABASE__ = { url, anonKey, bucket }` na página.')
+    }
+
+    const extensao = 'jpg';
+    const pasta = SUPABASE.folder || 'evidencias/foto';
+    const nomeArquivo = `${usuarioId}/${Date.now()}.${extensao}`;
+    const caminho = `${pasta}/${nomeArquivo}`.replace(/^\/+/, '');
+    const uploadUrl = `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/${SUPABASE.bucket}/${caminho}`;
+
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE.anonKey,
+        Authorization: `Bearer ${SUPABASE.anonKey}`,
+        'Content-Type': draft.mimeType || 'image/jpeg',
+        'x-upsert': 'true',
+      },
+      body: draft.blob,
+    });
+
+    if (!response.ok) {
+      const texto = await response.text().catch(() => '');
+      throw new Error(`Falha ao enviar foto para o Supabase (${response.status}): ${texto || 'sem detalhes'}`);
+    }
+
+    return {
+      urlArquivo: `${SUPABASE.url.replace(/\/+$/, '')}/storage/v1/object/public/${SUPABASE.bucket}/${caminho}`,
+      caminho,
+    };
+  }
+
   function atualizarEstadoEvidencia() {
     const tipo = tipoEvidencia.value;
     evidenciaMensagemCampo.style.display = tipo === 'mensagem' ? 'block' : 'none';
     evidenciaAudioCampo.style.display = tipo === 'audio' ? 'block' : 'none';
     evidenciaFotoCampo.style.display = tipo === 'foto' ? 'block' : 'none';
+    if (tipo !== 'audio') {
+      gravando = false;
+    }
+    if (tipo !== 'foto' && cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+      cameraPreview.srcObject = null;
+    }
+    atualizarControlesAudio();
+    atualizarControlesFoto();
   }
 
   function atualizarCampos() {
@@ -234,42 +745,35 @@
     }
 
     if (tipo === 'audio') {
-      const urlArquivo = document.getElementById('urlArquivoAudio').value.trim();
-      const duracao = Number(document.getElementById('duracaoAudio').value);
-
-      if (!urlArquivo) {
-        throw new Error('Informe a URL do áudio.');
-      }
-
-      if (!Number.isFinite(duracao) || duracao < 3) {
-        throw new Error('A duração do áudio precisa ser de pelo menos 3 segundos.');
-      }
-
-      return { tipo: 'audio', urlArquivo, duracao };
+      throw new Error('O áudio deve ser gravado e enviado pelo fluxo de envio.');
     }
 
-    const urlArquivo = document.getElementById('urlArquivoFoto').value.trim();
-    const latitude = Number(document.getElementById('latitudeFoto').value);
-    const longitude = Number(document.getElementById('longitudeFoto').value);
-
-    if (!urlArquivo) {
-      throw new Error('Informe a URL da foto.');
+    if (tipo === 'foto') {
+      throw new Error('A foto deve ser capturada pela câmera antes do envio.');
     }
 
-    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-      throw new Error('Latitude e longitude são obrigatórias para foto.');
-    }
-
-    return { tipo: 'foto', urlArquivo, latitude, longitude };
+    return null;
   }
 
   tipoMov.addEventListener('change', atualizarCampos);
   document.querySelectorAll('.evidencia__btn').forEach(btn => {
+    if (!btn.dataset.evidencia) {
+      return;
+    }
     btn.addEventListener('click', () => selecionarEvidencia(btn.dataset.evidencia));
   });
+  btnGravarAudio.addEventListener('click', iniciarGravacao);
+  btnPararAudio.addEventListener('click', pararGravacao);
+  btnExcluirAudio.addEventListener('click', excluirAudio);
+  btnAbrirCamera.addEventListener('click', abrirCamera);
+  btnCapturarFoto.addEventListener('click', capturarFoto);
+  btnRefazerFoto.addEventListener('click', refazerFoto);
+  btnExcluirFoto.addEventListener('click', excluirFoto);
 
   atualizarCampos();
   selecionarEvidencia('mensagem');
+  carregarAudioSalvo().catch(() => atualizarControlesAudio());
+  carregarFotoSalva().catch(() => atualizarControlesFoto());
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -305,7 +809,39 @@
     let evidencia;
 
     try {
-      evidencia = obterEvidencia();
+      evidencia = await (async () => {
+        const tipo = tipoEvidencia.value;
+        if (tipo === 'audio') {
+          const draft = await lerAudioDoIndexedDb();
+          if (!draft?.blob) {
+            throw new Error('Grave um áudio antes de enviar.');
+          }
+
+          const audioUpload = await uploadAudioParaSupabase(draft, usuario.id ?? CAPATAZ_DEMO.id);
+          return {
+            tipo: 'audio',
+            urlArquivo: audioUpload.urlArquivo,
+            duracao: draft.durationSeconds,
+          };
+        }
+
+        if (tipo === 'foto') {
+          const draft = await lerFotoDoIndexedDb();
+          if (!draft?.blob) {
+            throw new Error('Capture uma foto antes de enviar.');
+          }
+
+          const fotoUpload = await uploadFotoParaSupabase(draft, usuario.id ?? CAPATAZ_DEMO.id);
+          return {
+            tipo: 'foto',
+            urlArquivo: fotoUpload.urlArquivo,
+            latitude: draft.latitude ?? fotoLocalizacao?.latitude,
+            longitude: draft.longitude ?? fotoLocalizacao?.longitude,
+          };
+        }
+
+        return obterEvidencia();
+      })();
     } catch (error) {
       mostrarFeedback(error instanceof Error ? error.message : 'Evidência inválida.', 'error');
       return;
@@ -346,6 +882,17 @@
       }
 
       mostrarFeedback('Movimentação salva com sucesso.', 'success');
+      if (tipoEvidencia.value === 'audio') {
+        await removerAudioDoIndexedDb();
+        limparPreviewAudio();
+        atualizarControlesAudio();
+      }
+      if (tipoEvidencia.value === 'foto') {
+        await removerFotoDoIndexedDb();
+        limparPreviewFoto();
+        fotoLocalizacao = null;
+        atualizarControlesFoto();
+      }
       form.reset();
       atualizarCampos();
       selecionarEvidencia('mensagem');
