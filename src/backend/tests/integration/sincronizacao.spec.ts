@@ -50,6 +50,23 @@ describe('Sincronizacao', () => {
     })
   })
 
+  it('POST /sincronizacao deve retornar 400 quando a sincronizacao falhar', async () => {
+    mockedService.sincronizar.mockResolvedValueOnce({
+      sucesso: false,
+      registrosSincronizados: 0,
+      erros: ['Sem conexão com o servidor'],
+    })
+
+    const response = await request(app).post('/sincronizacao')
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      sucesso: false,
+      registrosSincronizados: 0,
+      erros: ['Sem conexão com o servidor'],
+    })
+  })
+
   it('GET /sincronizacao/status deve retornar status geral', async () => {
     const response = await request(app).get('/sincronizacao/status')
 
@@ -69,6 +86,15 @@ describe('Sincronizacao', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacaoValidada])
+  })
+
+  it('GET /sincronizacao/relatorios/movimentacoes deve rejeitar retiro invalido', async () => {
+    const response = await request(app)
+      .get('/sincronizacao/relatorios/movimentacoes')
+      .query({ retiroId: 'retiro-invalido' })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Retiro inválido' })
   })
 
   it('GET /sincronizacao/relatorios/tarefas deve buscar tarefas sincronizadas', async () => {

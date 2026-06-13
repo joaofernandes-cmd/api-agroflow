@@ -39,6 +39,16 @@ describe('Relatorios', () => {
     expect(response.body).toEqual([mockRelatorioLinha])
   })
 
+  it('GET /relatorios/movimentacoes/dados deve rejeitar periodo invalido', async () => {
+    const response = await request(app).get('/relatorios/movimentacoes/dados').query({
+      dataInicio: 'data-invalida',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Datas inválidas em dataInicio ou dataFim' })
+    expect(mockedService.buscarDadosMovimentacoes).not.toHaveBeenCalled()
+  })
+
   it('GET /relatorios/tarefas/dados deve buscar dados brutos de tarefas', async () => {
     const response = await request(app).get('/relatorios/tarefas/dados').query({
       retiroId: '00000000-0000-4000-8000-000000000001',

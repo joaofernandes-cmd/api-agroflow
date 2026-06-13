@@ -2,6 +2,20 @@ import { Request, Response } from 'express'
 import { converterUUID } from '../models/uuid'
 import { ValidacaoService } from '../services/validacao.service'
 
+function statusDoResultado(mensagem: string): number {
+  const texto = mensagem.toLowerCase()
+
+  if (texto.includes('não encontrad')) {
+    return 404
+  }
+
+  if (texto.includes('já foi')) {
+    return 409
+  }
+
+  return 400
+}
+
 export const ValidacaoController = {
   async podeValidar(req: Request, res: Response) {
     try {
@@ -41,7 +55,7 @@ export const ValidacaoController = {
         usuario.cargo
       )
 
-      return res.status(resultado.sucesso ? 200 : 400).json(resultado)
+      return res.status(resultado.sucesso ? 200 : statusDoResultado(resultado.mensagem)).json(resultado)
     } catch (error) {
       return res.status(500).json({
         error: error instanceof Error ? error.message : 'Erro ao validar movimentação',
@@ -69,7 +83,7 @@ export const ValidacaoController = {
         usuario.cargo
       )
 
-      return res.status(resultado.sucesso ? 200 : 400).json(resultado)
+      return res.status(resultado.sucesso ? 200 : statusDoResultado(resultado.mensagem)).json(resultado)
     } catch (error) {
       return res.status(500).json({
         error: error instanceof Error ? error.message : 'Erro ao aprovar ticket',
@@ -97,7 +111,7 @@ export const ValidacaoController = {
         usuario.cargo
       )
 
-      return res.status(resultado.sucesso ? 200 : 400).json(resultado)
+      return res.status(resultado.sucesso ? 200 : statusDoResultado(resultado.mensagem)).json(resultado)
     } catch (error) {
       return res.status(500).json({
         error: error instanceof Error ? error.message : 'Erro ao aprovar tarefa',

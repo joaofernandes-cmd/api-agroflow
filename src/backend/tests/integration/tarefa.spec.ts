@@ -59,6 +59,33 @@ describe('Tarefas', () => {
     )
   })
 
+  it('POST /tarefas deve rejeitar payload incompleto', async () => {
+    const response = await request(app).post('/tarefas').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      descricao: 'Tarefa incompleta',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Campos obrigatorios nao informados' })
+    expect(mockedService.criar).not.toHaveBeenCalled()
+  })
+
+  it('POST /tarefas deve rejeitar violacao de regra de negocio', async () => {
+    mockedService.criar.mockRejectedValueOnce(new Error('Apenas supervisores podem criar tarefas'))
+
+    const response = await request(app).post('/tarefas').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      atribuida_a: mockSupervisor.id,
+      descricao: mockTarefa.descricao,
+      categoria: mockTarefa.categoria,
+      prioridade: mockTarefa.prioridade,
+      usuarioCriador: { ...mockSupervisor, cargo: 'gerente' },
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Apenas supervisores podem criar tarefas' })
+  })
+
   it('POST /tarefas/sincronizar deve criar tarefa sincronizada', async () => {
     const response = await request(app).post('/tarefas/sincronizar').send({
       id: mockTarefa.id,
@@ -131,6 +158,15 @@ describe('Tarefas', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockTarefa)
+  })
+
+  it('GET /tarefas/:id deve retornar 404 para tarefa inexistente', async () => {
+    mockedService.buscarPorId.mockResolvedValueOnce(null)
+
+    const response = await request(app).get('/tarefas/00000000-0000-4000-8000-999999999999')
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({ error: 'Tarefa nao encontrada' })
   })
 
   it('PATCH /tarefas/:id deve atualizar tarefa', async () => {

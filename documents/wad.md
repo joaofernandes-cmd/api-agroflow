@@ -285,11 +285,11 @@
 
 **3. Solução proposta**
 
- &nbsp;&nbsp;&nbsp;&nbsp;A solução proposta é uma aplicação web offline-first para registrar informações operacionais em campo, com sincronização automática ao restabelecer a conexão com a internet. O sistema permitirá registrar eventos, anexar evidências multimodais, organizar dados por retiro e tipo de ocorrência, além de possibilitar exportação em Excel/CSV e acompanhamento por diferentes perfis de usuário.
+ &nbsp;&nbsp;&nbsp;&nbsp;A solução proposta é uma aplicação web para registrar informações operacionais em campo. A versão atual permite registrar eventos, anexar evidências multimodais, organizar dados por retiro e tipo de ocorrência, exportar informações e acompanhar a operação por diferentes perfis de usuário. A operação offline-first, com armazenamento local e sincronização automática, permanece planejada para uma versão futura.
 
 **4. Forma de utilização da solução**
 
-&nbsp;&nbsp;&nbsp;&nbsp; Os capatazes utilizarão a aplicação em dispositivos móveis durante as atividades no campo, mesmo sem internet. Os dados serão salvos localmente e sincronizados automaticamente quando houver conexão disponível. Supervisores e gerentes poderão acessar os registros consolidados, acompanhar ocorrências, validar informações e exportar relatórios para apoio à gestão operacional.
+&nbsp;&nbsp;&nbsp;&nbsp; Os capatazes utilizarão a aplicação em dispositivos móveis durante as atividades no campo, com conexão ao servidor. Supervisores e gerentes poderão acessar os registros consolidados, acompanhar ocorrências, validar informações e exportar relatórios para apoio à gestão operacional. O uso sem internet, com salvamento local e sincronização posterior, será incorporado em uma evolução futura.
 
 **5. Benefícios esperados**
 
@@ -353,7 +353,7 @@
 
 - Interface de calendarização e acompanhamento operacional para supervisores e gerentes;
 - Aplicação web com interface de campo para o capataz registrar digitalmente eventos do rebanho (nascimentos, mortes, compras, vendas e transferências);
-- Funcionalidade offline com sincronização automática ao restabelecer conexão com a internet.
+- Endpoints e mecanismos backend que preparam a implementação futura da operação offline e da sincronização automática.
 
 **- Criadores de Ganho:**
 
@@ -369,7 +369,7 @@
 
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
 - Reduz retrabalho operacional ao eliminar a necessidade de transcrição manual entre papel e planilha;
-- Garante operação contínua em campo mesmo sem conexão com a internet (via modo offline);
+- Prevê, como evolução futura, operação contínua em campo mesmo sem conexão com a internet;
 - Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
 
 
@@ -831,7 +831,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 |-------|-----------|------------|--------------|
 | RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
 | RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Implementado    |
-| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Implementado |
+| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Planejado para implementação futura |
 | RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Implementado |
 | RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Implementado |
 | RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Implementado |
@@ -889,7 +889,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** ≥80% dos capatazes testados (mínimo 5 participantes do perfil real: ensino fundamental incompleto, sem experiência com apps de gestão) concluem a tarefa de registrar uma movimentação de rebanho completa em até 3 minutos, sem auxílio externo, em no máximo 2 tentativas. **Protocolo de teste:** Sessão de usabilidade observada, com registro de tempo, número de tentativas e taxa de conclusão. Captura de erros de navegação e pontos de travamento. |
 | **Derivação do Contexto do Parceiro** | Derivado do perfil dos capatazes da BrPec (baixo letramento digital, conforme a persona Daniel), da ausência de suporte técnico nos retiros isolados (restrição organizacional) e da necessidade de operação autônoma em campo. O RF005 exige identificação simples e intuitiva, traduzindo-se aqui em um critério de usabilidade mensurável aplicado ao fluxo crítico do sistema. |
 | **RF/RN Associados** | RF001, RF005, RN05 |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; o fluxo de no máximo 3 etapas é garantido pela camada de Views com componentes React organizados por perfil de usuário. **(b) Implementação no código:** `validacaoRequisicao.middleware.ts` — funções `textoObrigatorio()` e `numeroObrigatorio()` retornam mensagens de erro em linguagem simples via HTTP 400 com array `details[]`; feedback visual imediato implementado nos componentes de formulário React. **(c) Validação:** Sessão de usabilidade observada com ≥5 capatazes reais (ensino fundamental, sem experiência prévia com apps de gestão); critério: ≥80% concluem registro de movimentação em até 3 minutos sem auxílio, em no máximo 2 tentativas. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; o fluxo de no máximo 3 etapas é organizado pela camada de Views, composta por templates EJS separados por perfil de usuário. **(b) Implementação no código:** Os formulários são implementados nas Views EJS e estilizados com CSS responsivo; no backend, `validacaoRequisicao.middleware.ts` disponibiliza funções de validação que retornam mensagens de erro em linguagem simples via HTTP 400. **(c) Validação:** Sessão de usabilidade observada com ≥5 capatazes reais (ensino fundamental, sem experiência prévia com apps de gestão); critério: ≥80% concluem registro de movimentação em até 3 minutos sem auxílio, em no máximo 2 tentativas. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -924,7 +924,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (celulares Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Operações offline leem direto do estado local (sem requisição de rede), eliminando latência; assets estáticos cacheados via Service Worker reduzem tempo de carregamento inicial. **(b) Implementação no código:** `app.ts` — compressão gzip via middleware Express; `sincronizacao.service.ts` — operações offline executadas localmente por `MovimentacaoRepository.buscarTodos()` sem chamada HTTP; Service Worker registrado no frontend para cache de recursos estáticos. **(c) Validação:** `npx lighthouse http://localhost:3000 --output json` — p95 < 3000ms no carregamento inicial; operações offline medidas com Chrome DevTools Network (modo offline) com latência < 200ms; testes de regressão a cada sprint. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** As Views EJS e os arquivos estáticos são servidos pelo Express, com folhas de estilo separadas por perfil e layouts responsivos. A operação offline e o cache de recursos ainda não foram implementados nesta versão. **(b) Implementação no código:** `app.ts` configura a renderização EJS e a disponibilização de CSS e imagens estáticas; os endpoints de sincronização e a flag `sincronizado` constituem a base backend para uma implementação offline futura. **(c) Validação:** O carregamento das telas poderá ser medido com Lighthouse e Chrome DevTools. Os critérios específicos de desempenho offline somente poderão ser validados após a implementação da PWA e do armazenamento local. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -939,10 +939,10 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | Campo | Conteúdo |
 |:--|:--|
 | **Requisito Não Funcional** | O sistema deve operar sem necessidade de suporte técnico presencial nos retiros, sendo mantido, atualizado e corrigido remotamente pela equipe técnica na sede em São Paulo. |
-| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das atualizações de versão, correções de bugs e ajustes de configuração realizadas sem deslocamento físico a campo. Tempo de deployment de atualizações < 10 minutos. Logs de erro centralizados e acessíveis em tempo real pela equipe de suporte. **Protocolo de teste:** Simulação de ciclo completo de atualização (desenvolvimento → staging → produção) sem intervenção local. Validação de rollback automático em caso de falha de deploy. Testes de acesso remoto a logs via painel de monitoramento. |
+| **Métrica / Critério de Aceite** | **Quantitativa:** 100% das atualizações de versão, correções de bugs e ajustes de configuração realizadas sem deslocamento físico a campo. **Protocolo de teste:** Execução do processo documentado de compilação, migrations e inicialização da aplicação em ambiente remoto, seguida da verificação dos logs gerados pelo servidor. |
 | **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional de ausência de equipe técnica nos retiros (identificada em entrevistas), da distância geográfica entre os 14 retiros e a sede (São Paulo) e do custo/tempo de deslocamento para manutenção presencial. O parceiro exige autonomia operacional completa sem dependência de técnicos no campo. |
 | **RF/RN Associados** | Restrição organizacional (ausência de suporte local), RF003 |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Separação frontend SPA / backend REST permite deploy independente de cada camada; migrations versionadas em `src/backend/database/migrations/` garantem reprodutibilidade do ambiente sem intervenção local. **(b) Implementação no código:** `database/migrate.ts` — executa migrations numeradas em ordem; `log.middleware.ts` — registra todas as requisições com timestamp, rota e status HTTP para monitoramento remoto; deploy automatizado via CI/CD (GitHub Actions) sem necessidade de acesso físico ao servidor. **(c) Validação:** `npx ts-node src/backend/database/migrate.ts` — ciclo completo de migrations em ambiente limpo; verificação de logs centralizados via painel de monitoramento; simulação de rollback automático em caso de falha de deploy. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** A aplicação Express integra as Views EJS e a API REST no mesmo servidor; migrations versionadas em `src/backend/database/migrations/` garantem a reprodução do esquema do banco. **(b) Implementação no código:** `database/migrate.ts` executa as migrations numeradas em ordem, enquanto `log.middleware.ts` registra método, rota, status HTTP, duração e usuário associado à requisição. O processo de implantação é realizado por meio dos scripts definidos no `package.json`. **(c) Validação:** Execução de `npm run migrate`, `npm run build` e `npm start` em ambiente configurado, seguida da verificação do endpoint `/health` e dos logs da aplicação. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -995,7 +995,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** 100% das telas aprovadas pelo stakeholder da BrPec (Marcos Ferreira, Gerente) em revisão formal de UI/UX ao final de cada sprint. Conformidade visual validada via design tokens extraídos do manual de identidade visual. **Protocolo de aceite:** Apresentação de protótipos navegáveis (Figma ou similar) para validação prévia. Aprovação formal registrada em ata. Testes de compatibilidade cross-browser em Chrome 120+, Edge 120+, Safari 17+ e celulares Android (viewport 768px–1024px). |
 | **Derivação do Contexto do Parceiro** | Derivado da restrição organizacional explícita do parceiro (identidade visual da BrPec deve ser mantida para reconhecimento da marca pelos colaboradores) e da decisão técnica de aplicação web (não nativa) para simplificar manutenção e garantir atualizações instantâneas sem necessidade de app stores. O contexto operacional identifica celulares Android como dispositivos de campo dos capatazes. |
 | **RF/RN Associados** | Restrição organizacional (identidade visual BrPec), Restrição técnica (plataforma web) |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; restrição aplicada na camada de Views com tokens CSS globais e breakpoints definidos para tablets Android (768px e 1024px). **(b) Implementação no código:** Variáveis CSS (CSS Custom Properties) em arquivo de tokens do frontend definem paleta BrPec, tipografia e espaçamentos; media queries nos componentes React garantem responsividade para viewport tablet; compatibilidade cross-browser validada em Chrome 120+, Edge 120+ e Safari 17+. **(c) Validação:** Aprovação formal do stakeholder (Marcos Ferreira) em sprint review com protótipos navegáveis; testes de compatibilidade cross-browser em Chrome, Edge e Safari; verificação de renderização em tablets Android com viewport 768px–1024px. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** Sem impacto na estrutura de dados; a restrição é tratada na camada de Views por meio de templates EJS e folhas de estilo organizadas por perfil. **(b) Implementação no código:** Variáveis CSS, classes reutilizáveis e media queries definem paleta, tipografia, espaçamentos e adaptação das telas para diferentes larguras de viewport. **(c) Validação:** Aprovação do stakeholder em sprint review e verificação manual da renderização das páginas nos formatos mobile e desktop previstos nos protótipos. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -1073,7 +1073,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Repositories** abstrai o acesso ao banco por meio dos repositories. A entidade Evidência é segmentada em sete repositórios distintos sendo um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket), refletindo a estratégia de **herança polimórfica** adotada.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Models** contém entidades de domínio, persistidas em **PostgreSQL** conforme o modelo relacional da [Seção 3.6.3](#c3.6.3). As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da [Seção 3.1.3](#c3.1.3).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Models** contém entidades de domínio, persistidas em **PostgreSQL** conforme o modelo relacional da [Seção 3.6.3](#c3.6.3). As tecnologias adotadas são EJS, HTML, CSS e JavaScript nas Views, Node.js com Express e TypeScript no servidor e PostgreSQL na persistência. As funcionalidades de backend são disponibilizadas por meio de uma API REST, com autenticação JWT aplicada às rotas protegidas.
 
 ### <a name="c3.2.1.1"></a>3.2.1.1 Diagrama de Arquitetura 
 
@@ -1132,7 +1132,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 </div>
 
 ---
-**Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem acesso ao retiro associado à sua conta. O dispositivo possui armazenamento local funcional, mesmo sem conexão com a internet.
+**Pré-condição:** O Capataz está identificado no sistema (UC-07) com perfil "Capataz" e tem acesso ao retiro associado à sua conta. Para o fluxo offline planejado, o dispositivo deverá possuir armazenamento local funcional.
 
 **Fluxo Principal (cenário de sucesso):**
 
@@ -1150,7 +1150,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 - **A1** (no passo 3): se o Capataz seleciona "morte" como tipo de movimentação, o sistema dispara o UC-08 (Registrar Causa de Óbito), tornando o campo "causa do óbito" estritamente obrigatório e exibindo-o em destaque junto aos demais campos obrigatórios (RN01). `<<extend>>`
 - **A2** (no passo 5): se o Capataz opta por anexar áudio ou mensagem escrita em vez de foto, o sistema aceita a evidência alternativa e pula a validação de georreferenciamento do passo 6. O Capataz pode também anexar evidências adicionais via UC-09 (Anexar Evidência). `<<include>>`
-- **A3** (no passo 8): se houver conexão ativa com a internet no momento do registro, o sistema dispara a sincronização automática (UC-02) e marca a movimentação como "sincronizada" (RN03).
+- **A3** (no passo 8, fluxo planejado do RF003): se houver conexão ativa com a internet no momento do registro, o sistema deverá disparar a sincronização automática (UC-02) e marcar a movimentação como "sincronizada" (RN03).
 
 **Exceções:**
 
@@ -1441,7 +1441,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 **Exceções:**
 
 - **E1** (no passo 4): se a credencial é inválida, o sistema exibe mensagem clara em linguagem objetiva e oferece nova tentativa.
-- **E2** (no passo 4): se não há conexão com o servidor, o sistema permite identificação offline com credencial armazenada localmente, mantendo a sessão limitada às funcionalidades offline.
+- **E2** (no passo 4, fluxo planejado do RF003): se não houver conexão com o servidor, o sistema deverá permitir identificação offline com credencial armazenada localmente, mantendo a sessão limitada às funcionalidades offline.
 
 **Pós-condição:** O usuário está autenticado com perfil identificado e token de acesso ativo. O menu exibe apenas as ações do perfil: Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". O fluxo de login do backend não emite token para Capataz; registros operacionais desse perfil seguem os fluxos específicos de campo e sincronização.
 
@@ -1652,13 +1652,13 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação do registro da movimentação.
 
 
-**Fluxo Alternativo - Operação offline**
+**Fluxo Alternativo Planejado - Operação offline**
 
-• Caso o dispositivo esteja sem conexão com a internet durante o preenchimento do formulário, a aplicação ativa o modo offline automaticamente.
+• Este fluxo descreve o comportamento planejado para uma versão futura. Caso o dispositivo esteja sem conexão com a internet durante o preenchimento do formulário, a aplicação deverá ativar o modo offline automaticamente.
 
-• Nesse cenário, os dados da movimentação são armazenados localmente no dispositivo do usuário.
+• Nesse cenário, os dados da movimentação deverão ser armazenados localmente no dispositivo do usuário.
 
-• Após o salvamento local, a interface exibe uma mensagem confirmando que o registro foi salvo e será sincronizado posteriormente quando houver conexão disponível.
+• Após o salvamento local, a interface deverá exibir uma mensagem confirmando que o registro foi salvo e será sincronizado posteriormente quando houver conexão disponível.
 
 
 **Fluxo Alternativo - Registro de morte sem causa informada**
@@ -1718,15 +1718,15 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ----
 
-#### 4. Sincronização Offline (`/sincronizacao`)
+#### 4. Sincronização Offline Planejada (`/sincronizacao`)
 
-**Fluxo Principal**
+**Fluxo Principal Planejado**
 
-• O processo inicia automaticamente quando a aplicação detecta que a conexão com a internet foi restabelecida no dispositivo utilizado em campo. Nesse momento, a interface identifica os registros armazenados localmente durante o período offline e prepara um lote de dados para sincronização.
+• Este fluxo representa o comportamento esperado após a implementação do armazenamento local no cliente. O processo deverá iniciar automaticamente quando a aplicação detectar que a conexão com a internet foi restabelecida, preparando os registros pendentes para sincronização.
 
-• Após a leitura dos registros locais, a interface envia uma requisição `POST` para o endpoint `/sincronizacao`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
+• Após a leitura dos registros locais, a interface deverá enviar uma requisição `POST` para o endpoint `/sincronizacao`, encaminhando todas as informações pendentes ao *ControladorSincronizacao*.
 
-• O controlador encaminha o lote ao *ServicoSincronizacao*, responsável por processar individualmente cada registro armazenado localmente.
+• O controlador encaminhará o lote ao *ServicoSincronizacao*, responsável por processar individualmente cada registro recebido.
 
 • Durante o processamento, o serviço percorre os itens do lote em um fluxo iterativo (*loop*), identificando o tipo de cada registro recebido.
 
@@ -1745,7 +1745,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso algum registro apresente erro durante a tentativa de salvamento, o *ServicoSincronizacao* identifica a falha e interrompe apenas o processamento daquele item específico.
 
-• Nesse cenário, o sistema marca o registro como “falha de sincronização”, mantendo os dados armazenados localmente no dispositivo.
+• Nesse cenário, o cliente deverá marcar o registro como “falha de sincronização”, mantendo os dados no armazenamento local do dispositivo.
 
 • Dessa forma, o item permanece disponível para uma nova tentativa automática de sincronização quando houver conexão estável, evitando perda das informações registradas em campo.
 
@@ -2111,28 +2111,28 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o diagrama contempla os dispositivos dos três perfis de usuário (Capataz, Supervisor e Gerente), o servidor de aplicação que hospeda a API REST, o banco de dados PostgreSQL/Supabase e o armazenamento local via IndexedDB nos dispositivos em campo, essencial para a operação offline-first definida pelo RF003 e pela RN03. A comunicação entre cliente e servidor ocorre via HTTPS com autenticação JWT, atendendo ao RNF SEG da [Seção 3.1.3](#c3.1.3).
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. A implementação de armazenamento local e operação offline foi mantida como evolução futura do projeto.
 
 
 ### Explicação do diagrama:
 **Nós Clientes**
  
-• O dispositivo do *Capataz* é um celular Android utilizado em campo, hospedando a *React SPA* responsável pela interface da aplicação e o armazenamento local *IndexedDB*, essencial para a operação offline conforme definido pelo RF003 e pela RN03.
+• O dispositivo do *Capataz* é um celular utilizado em campo, acessando pelo navegador as páginas renderizadas com EJS pelo servidor da aplicação.
  
-• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, hospedando apenas a *React SPA*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+• O dispositivo do *Supervisor* pode ser mobile ou desktop e acessa pelo navegador as telas de acompanhamento, delegação, revisão, tickets e relatórios.
  
-• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também hospedando apenas a *React SPA*, com acesso ao painel consolidado e aos relatórios gerenciais.
+• O dispositivo do *Gerente* pode ser mobile ou desktop e acessa pelo navegador o painel consolidado e os relatórios gerenciais.
 
 **Nó do Servidor de Aplicação**
  
-• O *Application Server* é hospedado em nuvem (AWS ou equivalente) e executa o backend desenvolvido em *Node.js + Express + TypeScript*, responsável pela camada REST do sistema.
+• O *Application Server* executa a aplicação desenvolvida em *Node.js + Express + TypeScript*, sendo responsável pela renderização das Views EJS, pela disponibilização dos arquivos estáticos e pela API REST.
  
 • Esse nó concentra todos os controladores e serviços do AgroFlow, processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
  
  
 **Nó do Servidor de Banco de Dados**
  
-• O *Database Server* é hospedado no *Supabase* e executa o *PostgreSQL* como sistema de gerenciamento de banco de dados relacional.
+• O *Database Server* é hospedado no Supabase, executa o PostgreSQL como sistema de gerenciamento de banco de dados relacional e é acessado pela aplicação por meio da conexão definida em `DATABASE_URL`.
  
 • Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
 
@@ -2204,7 +2204,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construída visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para atender à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada de forma a permitir acesso rápido às funcionalidades principais mesmo em ambientes com baixa ou ausência de conexão com a internet. Além disso, os registros realizados pelo usuário podem ser armazenados localmente até que a conexão seja restabelecida e os dados sincronizados automaticamente.
+&nbsp;&nbsp;&nbsp;&nbsp;Para atender futuramente à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada para receber armazenamento local e sincronização automática. Esses recursos ainda não integram a versão atual, que depende de conexão com o servidor para persistir os registros.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dentro da seção de operações de campo, foi desenvolvida a funcionalidade de movimentação do rebanho que foi implementada para atender à US02, permitindo que os capatazes realizem registros digitais das movimentações bovinas, substituindo o uso de boletas em papel. Para isso, foram desenvolvidos formulários simplificados e adaptados ao uso em campo, priorizando rapidez no preenchimento e facilidade de utilização. 
 
@@ -2514,7 +2514,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;A tela de login foi projetada com apenas um botão de entrar, visto que os capatazes acessarão seus perfis através de um QR code, reduzindo ao máximo as etapas necessárias para que o capataz acesse o sistema. Após a autenticação, o usuário é direcionado à tela inicial, que apresenta de forma centralizada os principais atalhos da aplicação: registrar movimentações, abrir ticket e minhas tarefas. Essa organização minimiza a necessidade de navegação entre menus, permitindo que o capataz alcance qualquer funcionalidade em poucos toques.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de registro de movimentações foi desenvolvida para atender à US02, substituindo o uso de boletas em papel pelo preenchimento de um formulário digital simplificado. Os campos foram organizados de forma sequencial e objetiva, com uso de dropdowns para tipo de movimentação, origem, destino, quantidade e estágio de vida do animal, minimizando a necessidade de digitação. Alinhado à US01, todos os registros realizados sem conexão com a internet são armazenados localmente no dispositivo e sincronizados de forma automática com o servidor assim que a conexão é restabelecida, sem qualquer ação adicional do usuário.
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de registro de movimentações foi desenvolvida para atender à US02, substituindo o uso de boletas em papel pelo preenchimento de um formulário digital simplificado. Os campos foram organizados de forma sequencial e objetiva, com uso de dropdowns para tipo de movimentação, origem, destino, quantidade e estágio de vida do animal, minimizando a necessidade de digitação. O armazenamento local e a sincronização automática previstos na US01 ainda serão implementados; atualmente, o envio depende de conexão com o servidor.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de abertura de tickets atende à US07 e permite que o capataz reporte problemas de infraestrutura identificados no retiro diretamente pelo celular, como cercas danificadas, falta de água ou equipamentos avariados. O formulário exige o anexo de ao menos uma evidência descritiva, conforme a RN08. Complementando essa funcionalidade, o sistema permite o envio de fotos georreferenciadas como evidência adicional, cumprindo à US12, aumentando a rastreabilidade e a confiabilidade das informações registradas.
 
@@ -2620,12 +2620,12 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro offline de movimentações do rebanho, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro de movimentações do rebanho, a futura sincronização offline, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### Entidades e Atributos
 &nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas dezoito entidades no domínio da BrPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. Além disso, os dados específicos de movimentação foram separados nas entidades MOVIMENTACAO_COMPRA, MOVIMENTACAO_VENDA, MOVIMENTACAO_TRANSFERENCIA, MOVIMENTACAO_NASCIMENTO e MOVIMENTACAO_MORTE. O controle de sincronização offline é representado pelo atributo sincronizado nas entidades operacionais que passam por sincronização, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status, validado_por e data_validacao dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O controle de sincronização offline é gerenciado diretamente pelo atributo sincronizado (boolean) nas entidades operacionais aplicáveis, inicializado como false no momento do registro. Isso significa que registros criados em campo podem ser armazenados localmente no dispositivo e, quando a conexão com o servidor é restabelecida, o sistema sincroniza automaticamente os dados e atualiza o atributo para true. Essa abordagem substitui a necessidade de uma entidade de fila separada, centralizando o controle de sincronização nos próprios registros, em conformidade com a US01, US02 e RN03.
+&nbsp;&nbsp;&nbsp;&nbsp;A preparação backend para a sincronização utiliza o atributo `sincronizado` (boolean) nas entidades operacionais aplicáveis. Esse atributo e os endpoints existentes permitem identificar e processar registros pendentes no servidor. O armazenamento local no dispositivo, a detecção de reconexão e o disparo automático da sincronização ainda não foram implementados e permanecem previstos na US01 e na RN03.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O atributo estagio_vida permanece na entidade MOVIMENTACAO por ser comum ao registro do rebanho. Já atributos específicos, como causa_obito, origem, destino e quantidade, são distribuídos nas tabelas especializadas de movimentação conforme o tipo do evento registrado. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
 
@@ -2752,7 +2752,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL, utilizado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na [Seção 3.1](#c3.1), adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na [Seção 3.1](#c3.1), adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
 
@@ -2764,7 +2764,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 **Modelo Físico**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em um script DDL executável no PostgreSQL/Supabase. A seguir, são apresentados os comandos CREATE TYPE e CREATE TABLE utilizados para a criação dos tipos enumerados, tabelas, constraints e chaves estrangeiras do banco de dados do AgroFlow.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo físico foi desenvolvido a partir do modelo relacional apresentado anteriormente, traduzindo as tabelas, campos e relacionamentos em scripts DDL executáveis no PostgreSQL hospedado no Supabase. A seguir, são apresentados os comandos CREATE TYPE e CREATE TABLE utilizados para a criação dos tipos enumerados, tabelas, constraints e chaves estrangeiras do banco de dados do AgroFlow.
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2941,7 +2941,7 @@ CREATE TABLE relatorio (
     url_arquivo TEXT NOT NULL
 );
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Optou-se pelo tipo UUID como chave primária em todas as entidades, gerado por meio da função `gen_random_uuid()`. Essa escolha atende diretamente ao caráter offline-first do sistema previsto na RN03: como os capatazes registram movimentações, tarefas e tickets em campo sem conexão e sincronizam posteriormente com o servidor, os identificadores precisam ser gerados de forma independente no próprio dispositivo, sem depender de uma sequência centralizada no banco. O UUID permite que a PWA gere identificadores únicos localmente e preserve-os ao sincronizar com o servidor, eliminando o risco de colisão de chaves durante a sincronização de registros criados offline por diferentes dispositivos — algo que identificadores numéricos sequenciais não garantiriam. Além disso, a adoção de UUIDs também contribui para a segurança, evitando a exposição de identificadores previsíveis dos usuários.
+&nbsp;&nbsp;&nbsp;&nbsp;Ao longo do desenvolvimento do modelo, algumas decisões técnicas foram tomadas com base nas regras de negócio e nos requisitos do sistema. Optou-se pelo tipo UUID como chave primária nas entidades operacionais, gerado por meio da função `gen_random_uuid()`. Essa escolha reduz a dependência de identificadores numéricos sequenciais, dificulta a exposição de identificadores previsíveis e prepara o modelo para uma implementação futura de geração de registros em diferentes dispositivos.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado foi definido como BOOLEAN com valor padrão false nas tabelas operacionais que passam pelo fluxo offline, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se true apenas após a sincronização com o servidor, em conformidade com a RN03. Os campos latitude e longitude foram concentrados na tabela evidencia_foto, pois o georreferenciamento é exigido apenas para evidências do tipo foto. Os campos de data utilizam DATE ou TIMESTAMP conforme a necessidade de registrar apenas o dia ou o momento completo da operação.
 
@@ -2950,7 +2950,7 @@ CREATE TABLE relatorio (
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL/Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja não apenas funcional, mas também consistente com a realidade operacional dos retiros. Com o modelo físico implementado, o sistema passa a contar com uma base de dados estruturada para suportar o ciclo completo de dados previsto no projeto: o registro de movimentações e tarefas em campo pelos capatazes, a sincronização com o servidor, a validação pelos supervisores e a consolidação das informações para geração de relatórios pelos gerentes.
+&nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação e a consolidação das informações, além de preparar a persistência para a evolução futura do fluxo de sincronização.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
  
@@ -3143,7 +3143,7 @@ WHERE id = ?
 
 #### Consulta 4 - INSERT (Registro de movimentação do rebanho):
  
-&nbsp;&nbsp;&nbsp;&nbsp;A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo sincronizado recebe FALSE quando o Capataz está offline e TRUE quando o registro é criado diretamente com conectividade, refletindo o RF003. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
+&nbsp;&nbsp;&nbsp;&nbsp;A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo `sincronizado` registra no backend se o item já foi processado pelos mecanismos de sincronização. A definição automática dessa flag a partir do armazenamento offline no dispositivo dependerá da futura implementação do cliente prevista no RF003. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
  
 **Código SQL:**
  
@@ -3475,7 +3475,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/sincronizacao/conexao`
     - **Método:** GET
-    - **Descrição:** Verifica se existe conexão disponível com o servidor. O cliente usa esta rota para disparar sincronização automática conforme RN03.
+    - **Descrição:** Verifica se existe conexão disponível com o servidor. A rota prepara o disparo automático previsto na RN03, ainda dependente de implementação no cliente.
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Resposta:** `200 OK` — Conexão disponível; `500 Internal Server Error` — Falha interna.
@@ -3484,7 +3484,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/sincronizacao`
     - **Método:** POST
-    - **Descrição:** Processa e persiste no servidor os dados armazenados localmente com `sincronizado = false`.
+    - **Descrição:** Processa e persiste no servidor os dados pendentes recebidos com `sincronizado = false`. O armazenamento local no cliente ainda não foi implementado.
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Respostas:**
@@ -3634,7 +3634,9 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Movimentação validada.
-      - `400 Bad Request`: Movimentação não encontrada, já validada ou violação de regra.
+      - `400 Bad Request`: ID inválido ou violação de regra.
+      - `404 Not Found`: Movimentação não encontrada.
+      - `409 Conflict`: Movimentação já validada.
       - `403 Forbidden`: Cargo não autorizado.
       - `500 Internal Server Error`: Falha interna.
 
@@ -3647,7 +3649,9 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Tarefa aprovada.
-      - `400 Bad Request`: Tarefa não encontrada, já aprovada ou violação de regra.
+      - `400 Bad Request`: ID inválido ou violação de regra.
+      - `404 Not Found`: Tarefa não encontrada.
+      - `409 Conflict`: Tarefa já aprovada.
       - `403 Forbidden`: Cargo não autorizado.
       - `500 Internal Server Error`: Falha interna.
 
@@ -3660,7 +3664,9 @@ VALUES (?, ?, ?, ?);
     - **Body:** Nenhum.
     - **Respostas:**
       - `200 OK`: Ticket aprovado.
-      - `400 Bad Request`: Ticket não encontrado, já aprovado ou violação de regra.
+      - `400 Bad Request`: ID inválido ou violação de regra.
+      - `404 Not Found`: Ticket não encontrado.
+      - `409 Conflict`: Ticket já aprovado.
       - `403 Forbidden`: Cargo não autorizado.
       - `500 Internal Server Error`: Falha interna.
 
@@ -4055,7 +4061,7 @@ O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A es
 |---------|----|----|----------|------|-------|-----------|
 | Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`; `GET /movimentacoes/{id}`; `PATCH /movimentacoes/{id}`; `DELETE /movimentacoes/{id}` | Registro de movimentação | CT-RF001 (`movimentacao.spec.ts`) | Testes automatizados executados: `POST /movimentacoes` retornando HTTP 201 e objeto da movimentação; `GET` e `PATCH /movimentacoes/{id}` retornando HTTP 200; `DELETE /movimentacoes/{id}` retornando HTTP 204 |
 | Supervisor Luiz | RF002 | RN02 | `POST /tarefas`; `GET /tarefas`; `GET /tarefas/{id}`; `GET /tarefas/status/{status}`; `GET /tarefas/usuario/{usuarioId}`; `GET /tarefas/prioridade/{prioridade}`; `GET /tarefas/categoria/{categoria}`; `PATCH /tarefas/{id}`; `PATCH /tarefas/{id}/status`; `DELETE /tarefas/{id}` | Criar e acompanhar tarefas | CT-RF002 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204 |
-| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Sincronização offline/online | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`; `POST /sincronizacao`; `GET /sincronizacao/status`; `GET /sincronizacao/mensagem`; `POST /movimentacoes/sincronizar`; `PATCH /movimentacoes/{id}/sincronizar` | Mecanismos backend de sincronização | CT-RF003 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada. Armazenamento local e disparo automático no cliente não fazem parte desta cobertura. |
 | Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`; `GET /evidencias/{id}`; `POST /evidencias/fotos`; `POST /evidencias/audios`; `POST /evidencias/mensagens` | Anexar evidência | CT-RF004 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias` e `GET /evidencias/{id}` retornando HTTP 200 |
 | Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT-RF005 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
 | Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`; `PATCH /validacoes/movimentacoes/{id}/validar`; `PATCH /validacoes/tarefas/{id}/aprovar`; `PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT-RF006 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
@@ -4368,7 +4374,7 @@ Para sustentar essa documentação, foram analisados:
 ### 5.1.2 White Box
 Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema.
 
-A execução de `npm test -- --coverage` demonstrou que a camada `backend/services` atingiu **92.18% de statements**, **85.32% de branches**, **98.11% de functions** e **92.02% de lines**, superando o mínimo de 80% exigido para a seção. Os testes cobrem os principais serviços do sistema, incluindo autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **90,33% de statements**, **81,9% de branches**, **96,89% de functions** e **90,1% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
 
 Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da seção 3.9, preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
 
@@ -4435,9 +4441,9 @@ Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de
 ### 5.1.3 Black Box
 Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
 
-Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP reais e validar os fluxos de sucesso mais relevantes da aplicação, como criação, listagem, atualização, exclusão, filtros, sincronização e aprovação. No estado atual da suíte, a cobertura black-box está concentrada principalmente nos cenários `200/201/204` e em alguns bloqueios de acesso, como o `403` no fluxo de login do usuário capataz.
+Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP e validar os fluxos de sucesso, entrada inválida, violação de regra de negócio e recurso inexistente. Os cenários foram adicionados aos arquivos de integração existentes, sem mudanças nas rotas, nos payloads ou nos códigos utilizados pelas telas.
 
-Em relação ao critério desejado para esta seção, a cobertura ainda é **parcial**: os testes atuais não demonstram, para cada endpoint principal, os quatro cenários obrigatórios de forma explícita e completa (`200/201`, `400/422`, `409 ou equivalente` e `404`). Dessa forma, esta seção documenta a cobertura existente e também evidencia as lacunas que devem ser complementadas para atingir integralmente o padrão solicitado.
+Para os endpoints que endereçam recursos individuais, foram exercitados sucesso (`200/201/204`), validação (`400`), regra de negócio (`403`, `409` ou `400` equivalente) e recurso inexistente (`404`). Nos endpoints agregados, como sincronização, relatórios e health check, `404` e conflito não se aplicam quando não há recurso individual nem transição concorrente. No fluxo de validação, registros inexistentes retornam `404` e registros já processados retornam `409`.
 
 ### Tabela Complementar de Testes Black-Box
 
@@ -4447,29 +4453,28 @@ Em relação ao critério desejado para esta seção, a cobertura ainda é **par
 
 | Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
 |---|---|---|---|---|
-| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Autenticação de usuário | `POST /usuarios/login` | Retorno do usuário autenticado e token JWT |
-| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Bloqueio de capataz no login | `POST /usuarios/login` | Retorno 403 |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Autenticação, credenciais ausentes e bloqueio de capataz | `POST /usuarios/login` | Retornos 200, 400 e 403 |
 | Usuários | `src/backend/tests/integration/usuario.spec.ts` | Listagem de usuários | `GET /usuarios` | Retorno da lista sem dados sensíveis |
-| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Busca por usuário, criação, atualização e remoção | `GET /usuarios/:id`, `POST /usuarios`, `PATCH /usuarios/:id`, `DELETE /usuarios/:id` | Status coerentes e corpo esperado |
-| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Criação de movimentação | `POST /movimentacoes` | Retorno 201 com o registro criado |
+| Usuários | `src/backend/tests/integration/usuario.spec.ts` | Busca existente e inexistente, criação, atualização e remoção | `GET /usuarios/:id`, `POST /usuarios`, `PATCH /usuarios/:id`, `DELETE /usuarios/:id` | Retornos 200/201/204, 400 e 404 |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Criação válida, payload incompleto e regra de quantidade | `POST /movimentacoes` | Retornos 201 e 400 |
 | Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Listagem e filtros | `GET /movimentacoes`, `GET /movimentacoes/filtrar` | Retorno da lista filtrada corretamente |
 | Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Sincronização de movimentação | `POST /movimentacoes/sincronizar`, `PATCH /movimentacoes/:id/sincronizar` | Retorno com movimentação sincronizada |
 | Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Pendências, dashboard e contagem por tipo | `GET /movimentacoes/pendentes`, `GET /movimentacoes/dashboard`, `GET /movimentacoes/contagem/tipo` | Dados consolidados e contagens corretas |
-| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Busca, atualização e remoção | `GET /movimentacoes/:id`, `PATCH /movimentacoes/:id`, `DELETE /movimentacoes/:id` | Status coerentes com o CRUD |
-| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Criação e listagem de tarefas | `POST /tarefas`, `GET /tarefas` | Retorno 201 e listagem correta |
+| Movimentações | `src/backend/tests/integration/movimentacao.spec.ts` | Busca existente e inexistente, atualização e remoção | `GET /movimentacoes/:id`, `PATCH /movimentacoes/:id`, `DELETE /movimentacoes/:id` | Retornos 200/204 e 404 |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Criação válida, payload incompleto e permissão de criação | `POST /tarefas` | Retornos 201 e 400 |
 | Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Dashboard e filtros | `GET /tarefas/dashboard`, `GET /tarefas/status/:status`, `GET /tarefas/usuario/:usuarioId`, `GET /tarefas/prioridade/:prioridade`, `GET /tarefas/categoria/:categoria` | Listas filtradas e agregações corretas |
-| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Contagem, atualização e remoção | `GET /tarefas/contagem/status`, `GET /tarefas/:id`, `PATCH /tarefas/:id`, `PATCH /tarefas/:id/status`, `DELETE /tarefas/:id` | Status esperados e operações válidas |
-| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Criação e listagem | `POST /tickets`, `GET /tickets` | Retorno 201 e lista correta |
+| Tarefas | `src/backend/tests/integration/tarefa.spec.ts` | Contagem, busca existente e inexistente, atualização e remoção | `GET /tarefas/contagem/status`, `GET /tarefas/:id`, `PATCH /tarefas/:id`, `PATCH /tarefas/:id/status`, `DELETE /tarefas/:id` | Retornos 200/204 e 404 |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Criação válida, payload incompleto e evidência obrigatória | `POST /tickets` | Retornos 201 e 400 |
 | Tickets | `src/backend/tests/integration/ticket.spec.ts` | Pendentes e filtros | `GET /tickets/pendentes`, `GET /tickets/status`, `GET /tickets/prioridade`, `GET /tickets/categoria` | Filtros aplicados corretamente |
 | Tickets | `src/backend/tests/integration/ticket.spec.ts` | Contagem por prioridade | `GET /tickets/contagem/prioridade` | Retorno das quantidades corretas |
-| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Busca, status, prioridade e atribuição | `GET /tickets/:id`, `PATCH /tickets/:id/status`, `PATCH /tickets/:id/prioridade`, `PATCH /tickets/:id/atribuicao` | Atualizações e retornos coerentes |
-| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Listagem e busca | `GET /evidencias`, `GET /evidencias/:id` | Retorno correto dos registros |
-| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Criação de mensagens, áudios e fotos | `POST /evidencias/mensagens`, `POST /evidencias/audios`, `POST /evidencias/fotos` | Criação bem-sucedida dos tipos de evidência |
+| Tickets | `src/backend/tests/integration/ticket.spec.ts` | Busca existente e inexistente, status, prioridade e atribuição | `GET /tickets/:id`, `PATCH /tickets/:id/status`, `PATCH /tickets/:id/prioridade`, `PATCH /tickets/:id/atribuicao` | Retornos 200 e 404 |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Listagem e busca existente ou inexistente | `GET /evidencias`, `GET /evidencias/:id` | Retornos 200 e 404 |
+| Evidências | `src/backend/tests/integration/evidencia.spec.ts` | Criação válida, payload incompleto e georreferenciamento inválido | `POST /evidencias/mensagens`, `POST /evidencias/audios`, `POST /evidencias/fotos` | Retornos 201 e 400 |
 | Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Conexão e status geral | `GET /sincronizacao/conexao`, `GET /sincronizacao/status`, `GET /sincronizacao/mensagem` | Retorno do estado de conexão e mensagens amigáveis |
-| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Sincronização de dados e relatórios | `POST /sincronizacao`, `GET /sincronizacao/relatorios/movimentacoes`, `GET /sincronizacao/relatorios/tarefas`, `GET /sincronizacao/dashboard/tickets` | Dados sincronizados e consolidados |
+| Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Sincronização com sucesso, falha e retiro inválido | `POST /sincronizacao`, `GET /sincronizacao/relatorios/movimentacoes`, `GET /sincronizacao/relatorios/tarefas`, `GET /sincronizacao/dashboard/tickets` | Retornos 200 e 400 |
 | Validações | `src/backend/tests/integration/validacao.spec.ts` | Permissão do usuário | `POST /validacoes/permissao` | Retorno indicando acesso autorizado |
-| Validações | `src/backend/tests/integration/validacao.spec.ts` | Validação e aprovação | `PATCH /validacoes/movimentacoes/:id/validar`, `PATCH /validacoes/tickets/:id/aprovar`, `PATCH /validacoes/tarefas/:id/aprovar` | Atualização correta do status |
-| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retorno dos dados e formatação esperada |
+| Validações | `src/backend/tests/integration/validacao.spec.ts` | Sucesso, ID inválido, registro inexistente e já processado | `PATCH /validacoes/movimentacoes/:id/validar`, `PATCH /validacoes/tickets/:id/aprovar`, `PATCH /validacoes/tarefas/:id/aprovar` | Retornos 200, 400, 404 e 409 |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos, período inválido e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retornos 200 e 400 |
 | Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
 | Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
 
@@ -4483,14 +4488,14 @@ Em relação ao critério desejado para esta seção, a cobertura ainda é **par
 
 | Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
 |---|---|---|---|---|---|
-| Usuários | Coberto | Não coberto explicitamente | Parcial, com bloqueio `403` no login do capataz | Não coberto explicitamente | Parcial |
-| Movimentações | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
-| Tarefas | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
-| Tickets | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
-| Evidências | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
-| Sincronização | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
-| Validações | Coberto | Não coberto explicitamente | Parcial, com bloqueio de autorização por perfil | Não coberto explicitamente | Parcial |
-| Relatórios | Coberto | Não coberto explicitamente | Não coberto explicitamente | Não coberto explicitamente | Parcial |
+| Usuários | Coberto | Coberto | Coberto por `403` equivalente | Coberto | Conforme |
+| Movimentações | Coberto | Coberto | Coberto por `400` equivalente | Coberto | Conforme |
+| Tarefas | Coberto | Coberto | Coberto por `400` equivalente | Coberto | Conforme |
+| Tickets | Coberto | Coberto | Coberto por `400` equivalente | Coberto | Conforme |
+| Evidências | Coberto | Coberto | Coberto por `400` equivalente | Coberto | Conforme |
+| Sincronização | Coberto | Coberto | Coberto por falha `400` | Não aplicável | Conforme ao contrato |
+| Validações | Coberto | Coberto | Coberto por `409` | Coberto | Conforme |
+| Relatórios | Coberto | Coberto | Não aplicável | Não aplicável | Conforme ao contrato |
 | Health Check | Coberto | Não aplicável | Não aplicável | Não aplicável | Adequado ao propósito |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -4498,7 +4503,7 @@ Em relação ao critério desejado para esta seção, a cobertura ainda é **par
 ### 5.1.4 Relatório de cobertura Jest
 Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
  
-Complementarmente, foi executado o comando `npm test -- --coverage`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80%, atendendo ao critério estabelecido para a seção 5.1.2, enquanto as demais camadas foram registradas como evidência complementar da maturidade da suíte.
+Complementarmente, foi executado o comando `npm run test:coverage -- --runInBand`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80% em todas as métricas.
  
 Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
  
@@ -4507,11 +4512,11 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 #### Relatório de Cobertura Jest
  
 **Comando executado:** 
-`npm test -- --coverage`
+`npm run test:coverage -- --runInBand`
 
 <div align="center">
-  <p align="center">Figura 57 - Cobertura de testes da camada de services</p>
-  <img src="others/assets/testes-coverage.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Figura 62 - Cobertura atual dos testes</p>
+  <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
  
@@ -4520,67 +4525,22 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 #### Evidência de Execução
  
 - `npm test` executado com sucesso.
-- `npm test -- --coverage` executado com sucesso.
+- `npm run test:coverage -- --runInBand` executado com sucesso.
 - Suíte atual: **17 test suites aprovadas**.
-- Casos de teste aprovados na execução de cobertura: **185**.
+- Casos de teste aprovados na execução de cobertura: **238**.
+- Testes de integração aprovados: **97** em **9 test suites**.
+- Cobertura global: **71,38% de statements**, **51,05% de branches**, **66,66% de functions** e **71,25% de lines**.
+- Cobertura da camada de services: **90,33% de statements**, **81,9% de branches**, **96,89% de functions** e **90,1% de lines**.
 
 <div align="center">
-  <p align="center">Figura 58 - Execução dos testes de tickets</p>
-  <img src="others/assets/teste1.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Figura 63 - Execução atual dos testes de integração</p>
+  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das nove suítes de integração, com 97 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
----
+
 <div align="center">
-  <p align="center">Figura 59 - Execução dos testes de usuários</p>
-  <img src="others/assets/teste2.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 60 - Execução dos testes de evidências</p>
-  <img src="others/assets/teste4.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 61 - Execução dos testes de validações</p>
-  <img src="others/assets/teste6.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 62 - Execução dos testes de relatórios</p>
-  <img src="others/assets/teste7.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 63 - Execução dos testes de movimentações</p>
-  <img src="others/assets/teste8.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 64 - Execução dos testes de sincronização</p>
-  <img src="others/assets/teste9.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 65 - Execução do teste do endpoint de health</p>
-  <img src="others/assets/teste10.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 66 - Execução dos testes de tarefas</p>
-  <img src="others/assets/teste11.png" alt="Resultados de testes coverages em services." />
-  <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
----
-<div align="center">
-  <p align="center">Figura 67 - Execução completa das suítes de teste</p>
-  <img src="others/assets/teste12.png" alt="Resultados de testes coverages em services." />
+  <p align="center">Figura 64 - Execução atual da suíte completa</p>
+  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 17 suítes, com 238 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
@@ -4624,9 +4584,9 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O agronegócio brasileiro representa um dos pilares da economia nacional, respondendo por parcela significativa do PIB e das exportações do país. No entanto, no segmento da pecuária bovina, a digitalização dos processos operacionais ainda é incipiente, especialmente em fazendas de grande porte localizadas em regiões remotas, como o Pantanal e o Cerrado sul mato-grossenses. A dependência de registros manuais em papel gera retrabalho, inconsistências de dados e atrasos na consolidação de informações críticas para a tomada de decisão gerencial.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A lacuna que o AgroFlow ocupa é específica: as soluções de gestão agropecuária disponíveis no mercado assumem conectividade estável e usuários com letramento digital intermediário ou avançado, condições que não existem nos retiros da BrPec. Operar no Pantanal com internet instável e com capatazes de ensino fundamental incompleto inviabiliza a adoção de sistemas convencionais, o que força as fazendas a manterem processos manuais por falta de alternativa viável. O AgroFlow foi desenhado especificamente para esse contexto — um nicho que sistemas convencionais de gestão agropecuária simplesmente não atendem.
+&nbsp;&nbsp;&nbsp;&nbsp;A lacuna que o AgroFlow ocupa é específica: as soluções de gestão agropecuária disponíveis no mercado assumem conectividade estável e usuários com letramento digital intermediário ou avançado, condições que não existem nos retiros da BrPec. Operar no Pantanal com internet instável e com capatazes de ensino fundamental incompleto inviabiliza a adoção de sistemas convencionais, o que força as fazendas a manterem processos manuais por falta de alternativa viável. O AgroFlow foi desenhado especificamente para esse contexto, que não é atendido pelos sistemas convencionais de gestão agropecuária.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O sistema combina três diferenciais raramente integrados em uma solução para o agronegócio. Primeiro, arquitetura offline-first: registros salvos localmente e sincronizados automaticamente ao restabelecer conexão. Segundo, interface projetada para baixo letramento digital: fluxos de no máximo três etapas e linguagem em nível fundamental, permitindo uso autônomo sem treinamento. Terceiro, fluxo de validação hierárquico: capataz registra, supervisor valida, gerente consolida, com rastreabilidade completa de autoria e timestamp. Complementam esse conjunto evidências fotográficas georreferenciadas, isolamento de dados por retiro e exportação em formatos compatíveis com os processos já adotados pelo parceiro.
+&nbsp;&nbsp;&nbsp;&nbsp;O sistema combina recursos relevantes para a operação agropecuária: interface projetada para baixo letramento digital, fluxo de validação hierárquico entre capataz, supervisor e gerente, rastreabilidade de autoria, evidências digitais e organização dos dados por retiro. A arquitetura offline-first, com armazenamento local e sincronização automática, permanece como diferencial planejado para uma evolução futura.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os objetivos estratégicos são eliminar boletas de papel, garantir rastreabilidade das movimentações do rebanho e viabilizar decisões baseadas em dados confiáveis, reduzindo a janela de inconsistência entre campo e escritório que hoje compromete a operação da BrPec.
 
@@ -4656,7 +4616,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 **6.3.1) Segmentação de Mercado**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel — boletas — para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. À medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, a ausência de soluções offline-first mantém esses produtores presos a processos manuais (TOTVS, 2025).
+&nbsp;&nbsp;&nbsp;&nbsp;A aplicação AgroFlow se posiciona para atender dois segmentos primários e complementares do mercado de pecuária bovina. O primeiro segmento abrange grandes produtores pecuários em regiões remotas com infraestrutura digital limitada, onde a baixa ou intermitente conectividade inviabiliza a adoção de sistemas convencionais de gestão. Estes produtores operam rebanhos comerciais de grande porte (superior a 10 mil cabeças) e dependem atualmente de registros manuais em papel, como as boletas, para documentar movimentações do rebanho, criando retrabalho na consolidação de dados. À medida que o mercado reconhece que a digitalização rural não pode depender de internet estável, a ausência de soluções offline-first mantém esses produtores presos a processos manuais (TOTVS, 2025).
 
 &nbsp;&nbsp;&nbsp;&nbsp;O segundo segmento compreende produtores com conectividade disponível, mas sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade que demandam digitalização confiável dos registros. Esse segmento inclui operações integradas agricultura-pecuária (como BrPec) e fazendas corporativas que precisam cumprir o PNIB (MAPA, 2025), o Código Florestal (BRASIL, 2012) e agendas ESG (BANCO DO NORDESTE, 2025). Embora tenham infraestrutura, enfrentam gargalos similares: processos descentralizados, falta de rastreabilidade por responsável, e dificuldade na consolidação de dados entre campo e escritório. Ambos os segmentos convergem para a necessidade de digitalização confiável com fluxos simples e rastreabilidade completa.
 
@@ -4666,7 +4626,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 &nbsp;&nbsp;&nbsp;&nbsp;Sob o aspecto demográfico, o público-alvo compreende empresas agropecuárias de médio e grande porte dedicadas à pecuária bovina comercial, incluindo tanto operações especializadas quanto modelos integrados agricultura-pecuária. São organizações com capacidade de investimento em tecnologia e volume operacional que torna inviável a gestão manual de dados. No aspecto comportamental, caracterizam-se pela dependência de registros em papel e pela baixa adoção de ferramentas digitais adequadas à sua realidade: embora 40% dos produtores rurais já utilizem algum software de gestão, a oferta existente é majoritariamente voltada a operações com infraestrutura digital robusta, deixando descoberta justamente a parcela que opera com conectividade intermitente (PANORAMA DA GESTÃO RURAL, 2024).
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Quanto às necessidades específicas, essas empresas demandam consolidação confiável das informações entre campo e escritório, rastreabilidade das movimentações do rebanho e adequação às exigências regulatórias crescentes, como o PNIB (MAPA, 2025) e o Código Florestal (BRASIL, 2012). As dores centrais relacionam-se ao retrabalho na transcrição manual, aos erros e inconsistências entre registros operacionais e administrativos e à lentidão na consolidação de dados críticos para a gestão. Como expectativas, buscam uma solução que opere mesmo sem conexão estável, sincronize automaticamente ao restabelecer a internet, gere relatórios auditáveis e se adapte ao contexto operacional real — sem exigir infraestrutura digital avançada ou reformulação completa de seus processos.
+&nbsp;&nbsp;&nbsp;&nbsp;Quanto às necessidades específicas, essas empresas demandam consolidação confiável das informações entre campo e escritório, rastreabilidade das movimentações do rebanho e adequação às exigências regulatórias crescentes, como o PNIB (MAPA, 2025) e o Código Florestal (BRASIL, 2012). As dores centrais relacionam-se ao retrabalho na transcrição manual, aos erros e inconsistências entre registros operacionais e administrativos e à lentidão na consolidação de dados críticos para a gestão. Como expectativas, buscam uma solução que opere mesmo sem conexão estável, sincronize automaticamente ao restabelecer a internet, gere relatórios auditáveis e se adapte ao contexto operacional real, sem exigir infraestrutura digital avançada ou reformulação completa de seus processos.
 
 ## <a name="c6.4"></a>6.4 Posicionamento e Branding
 
@@ -4674,25 +4634,25 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O primeiro é a **operação offline contínua**: capatazes que atuam em retiros com conectividade instável — realidade do Pantanal e Cerrado sul mato-grossense — registram nascimentos, mortes, compras, vendas, transferências e chamados de manutenção diretamente no dispositivo móvel. Os dados são armazenados localmente e sincronizados de forma automática ao restabelecer a conexão com o servidor, garantindo continuidade operacional sem perda de informação e sem necessidade de intervenção manual.
+&nbsp;&nbsp;&nbsp;&nbsp;O primeiro pilar planejado é a **operação offline contínua**, necessária para capatazes que atuam em retiros com conectividade instável. A versão atual já oferece os formulários digitais e os mecanismos backend de sincronização, enquanto o armazenamento local e o envio automático após a reconexão permanecem previstos para uma evolução futura.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O segundo é a **rastreabilidade com responsabilização**: cada registro é vinculado ao usuário que o criou, e movimentações do rebanho passam por um fluxo de validação obrigatória pelo supervisor antes de serem consideradas válidas para fins operacionais e gerenciais. Evidências — fotos georreferenciadas com coordenadas GPS, áudios e mensagens de texto — podem ser anexadas a registros, tarefas e chamados, aumentando a confiabilidade e a auditabilidade das informações.
+&nbsp;&nbsp;&nbsp;&nbsp;O segundo é a **rastreabilidade com responsabilização**: cada registro é vinculado ao usuário que o criou, e movimentações do rebanho passam por um fluxo de validação obrigatória pelo supervisor antes de serem consideradas válidas para fins operacionais e gerenciais. Evidências, como fotos georreferenciadas com coordenadas GPS, áudios e mensagens de texto, podem ser anexadas a registros, tarefas e chamados, aumentando a confiabilidade e a auditabilidade das informações.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O terceiro é a **consolidação gerencial baseada em dados confiáveis**: gerentes acessam um dashboard centralizado com indicadores operacionais por retiro — total de nascimentos, mortes, transferências, tarefas aprovadas e tickets resolvidos — calculados exclusivamente a partir de registros validados e sincronizados, oferecendo uma visão estratégica precisa da operação.
+&nbsp;&nbsp;&nbsp;&nbsp;O terceiro é a **consolidação gerencial baseada em dados confiáveis**: gerentes acessam um dashboard centralizado com indicadores operacionais por retiro, como total de nascimentos, mortes, transferências, tarefas aprovadas e tickets resolvidos, calculados exclusivamente a partir de registros validados e sincronizados.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Combinados em uma única aplicação web com interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente), esses três pilares transformam o fluxo de informação da fazenda: do papel e do repasse verbal para um ciclo digital controlado, rastreável e acessível em tempo real.
 
 **6.4.2) Posicionamento e Diferenciação**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow se posiciona como a solução de gestão operacional de campo projetada especificamente para fazendas de pecuária de larga escala com operações distribuídas em múltiplos retiros e conectividade de rede limitada ou instável. Enquanto ferramentas concorrentes tratam a conexão à internet como pré-requisito indispensável, o AgroFlow trata a ausência de conexão como o cenário operacional padrão, adaptando toda a sua arquitetura em torno dessa realidade.
+&nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow se posiciona como uma solução de gestão operacional de campo para fazendas de pecuária de larga escala com operações distribuídas em múltiplos retiros. A versão atual digitaliza e centraliza os registros com conexão ao servidor, e sua evolução planejada considera a conectividade limitada ou instável presente nesse contexto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Concorrentes diretos** — como Bovcontrol, Ideagri e Tecnopec — oferecem funcionalidades de gestão pecuária e monitoramento do rebanho, mas são concebidos para ambientes com conectividade estável e não possuem nativamente fluxos de validação hierárquica integrados com coleta de evidências digitais. **Concorrentes indiretos** — planilhas Excel, formulários físicos e boletas de papel — representam o modelo atual da BrPec e ainda predominam em grandes propriedades rurais que carecem de ferramentas digitais especializadas para operações de campo.
+&nbsp;&nbsp;&nbsp;&nbsp;Os **concorrentes diretos**, como Bovcontrol, Ideagri e Tecnopec, oferecem funcionalidades de gestão pecuária e monitoramento do rebanho, mas são concebidos para ambientes com conectividade estável e não possuem nativamente fluxos de validação hierárquica integrados com coleta de evidências digitais. Os **concorrentes indiretos**, como planilhas Excel, formulários físicos e boletas de papel, representam o modelo atual da BrPec e ainda predominam em grandes propriedades rurais que carecem de ferramentas digitais especializadas para operações de campo.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os **atributos da marca** do AgroFlow são: confiabilidade (dados validados antes de compor relatórios), resiliência (operação garantida sem conexão) e acessibilidade (interface projetada para usuários com baixa familiaridade digital, como capatazes com ensino fundamental).
+&nbsp;&nbsp;&nbsp;&nbsp;Os **atributos da marca** do AgroFlow são: confiabilidade, com dados validados antes de compor relatórios; acessibilidade, com interface projetada para usuários com baixa familiaridade digital; e resiliência como objetivo de evolução, por meio da futura operação sem conexão.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **identidade pretendida** é a de uma ferramenta robusta e precisa: sem disputar por volume de funcionalidades genéricas, mas por aderência total à realidade operacional de fazendas como a BrPec, com 14 retiros no Pantanal e Cerrado.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A **percepção de valor desejada** é que o AgroFlow seja reconhecido como o sistema que funciona onde outros falham — em campo, sem internet, com rastreabilidade completa — tornando-se referência em gestão pecuária para grandes operações descentralizadas.
+&nbsp;&nbsp;&nbsp;&nbsp;A **percepção de valor desejada** é que o AgroFlow seja reconhecido como um sistema adequado ao trabalho em campo e com rastreabilidade completa, evoluindo para atender também à operação sem internet em grandes operações descentralizadas.
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
@@ -4704,23 +4664,23 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**1) Segmentos de Clientes** — Em coerência com a Seção 6.3, o AgroFlow atende dois segmentos primários e complementares da pecuária bovina comercial. O primeiro reúne grandes produtores pecuários em regiões remotas com conectividade limitada ou instável, que operam rebanhos de grande porte e ainda dependem de registros manuais em papel. O segundo abrange produtores com conectividade disponível, porém sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade (PNIB, Código Florestal e agendas ESG), incluindo operações integradas agricultura-pecuária e fazendas corporativas — perfil representado pela parceira BrPec (MAPA, 2025; BRASIL, 2012; BANCO DO NORDESTE, 2025).
+&nbsp;&nbsp;&nbsp;&nbsp;**1) Segmentos de Clientes:** Em coerência com a Seção 6.3, o AgroFlow atende dois segmentos primários e complementares da pecuária bovina comercial. O primeiro reúne grandes produtores pecuários em regiões remotas com conectividade limitada ou instável, que operam rebanhos de grande porte e ainda dependem de registros manuais em papel. O segundo abrange produtores com conectividade disponível, porém sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade (PNIB, Código Florestal e agendas ESG), incluindo operações integradas agricultura-pecuária e fazendas corporativas, perfil representado pela parceira BrPec (MAPA, 2025; BRASIL, 2012; BANCO DO NORDESTE, 2025).
 
-&nbsp;&nbsp;&nbsp;&nbsp;**2) Proposta de Valor** — Conforme detalhado na Seção 6.4, o AgroFlow digitaliza e centraliza a gestão do rebanho para reduzir erros, aumentar a rastreabilidade e otimizar o processo operacional. O valor entregue assenta-se em três pilares: a redução da dependência de boletas de papel e do retrabalho de redigitação; a operação offline com sincronização automática ao restabelecer a conexão; e a rastreabilidade com responsabilização por autor, sustentando uma consolidação gerencial baseada em dados confiáveis.
+&nbsp;&nbsp;&nbsp;&nbsp;**2) Proposta de Valor:** Conforme detalhado na Seção 6.4, o AgroFlow digitaliza e centraliza a gestão do rebanho para reduzir erros, aumentar a rastreabilidade e otimizar o processo operacional. O valor atual está na redução da dependência de boletas de papel, na rastreabilidade por autor e na consolidação gerencial de dados. A operação offline com sincronização automática permanece como evolução planejada.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**3) Canais** — Alinhados à estratégia de distribuição e promoção descrita na Seção 6.6, os canais de relacionamento e divulgação compreendem redes sociais (LinkedIn para decisores; Instagram e YouTube para provas de uso em campo), anúncios em sites voltados ao agronegócio, presença em eventos e feiras de agropecuária (como Agrishow e Expodireto) e tráfego pago segmentado por região e cargo, direcionando leads à página de solicitação de demonstração.
+&nbsp;&nbsp;&nbsp;&nbsp;**3) Canais:** Alinhados à estratégia de distribuição e promoção descrita na Seção 6.6, os canais de relacionamento e divulgação compreendem redes sociais (LinkedIn para decisores; Instagram e YouTube para provas de uso em campo), anúncios em sites voltados ao agronegócio, presença em eventos e feiras de agropecuária (como Agrishow e Expodireto) e tráfego pago segmentado por região e cargo, direcionando leads à página de solicitação de demonstração.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**4) Relacionamento com Clientes** — O relacionamento combina proximidade na fase de desenvolvimento e suporte remoto na operação. Durante a construção da solução, são realizadas reuniões quinzenais com o cliente para validação do processo. Após a entrega, o modelo prevê atualizações da aplicação sob demanda, suporte e atualizações remotas sem deslocamento ao campo, onboarding remoto com implantação assistida e uma estratégia de sucesso do cliente apoiada na coleta contínua de feedback para a evolução do produto.
+&nbsp;&nbsp;&nbsp;&nbsp;**4) Relacionamento com Clientes:** O relacionamento combina proximidade na fase de desenvolvimento e suporte remoto na operação. Durante a construção da solução, são realizadas reuniões quinzenais com o cliente para validação do processo. Após a entrega, o modelo prevê atualizações da aplicação sob demanda, suporte e atualizações remotas sem deslocamento ao campo, onboarding remoto com implantação assistida e uma estratégia de sucesso do cliente apoiada na coleta contínua de feedback para a evolução do produto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**5) Fontes de Receita** — Em relação com o modelo de precificação da Seção 6.6.2, as receitas provêm de duas fontes: a assinatura recorrente de planos no modelo SaaS (licenciamento B2B por operação, em faixas escalonadas conforme o número de retiros e usuários ativos) e a taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação.
+&nbsp;&nbsp;&nbsp;&nbsp;**5) Fontes de Receita:** Em relação com o modelo de precificação da Seção 6.6.2, as receitas provêm de duas fontes: a assinatura recorrente de planos no modelo SaaS (licenciamento B2B por operação, em faixas escalonadas conforme o número de retiros e usuários ativos) e a taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**6) Recursos Principais** — Os recursos que sustentam a entrega de valor são, sobretudo, tecnológicos e de conhecimento: o banco de dados PostgreSQL; o sistema offline-first com sincronização automática; a infraestrutura em nuvem (servidor de aplicação e Supabase); as interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente); a equipe de desenvolvimento e sua expertise de software; o know-how sobre o uso por usuários com baixo letramento digital; e a parceria estratégica com a BrPec, que funciona como caso de referência.
+&nbsp;&nbsp;&nbsp;&nbsp;**6) Recursos Principais:** Os recursos que sustentam a entrega de valor são, sobretudo, tecnológicos e de conhecimento: o banco de dados PostgreSQL hospedado no Supabase; os endpoints e mecanismos backend de sincronização; a infraestrutura necessária para hospedar o servidor de aplicação; as interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente); a equipe de desenvolvimento e sua expertise de software; o know-how sobre o uso por usuários com baixo letramento digital; e a parceria estratégica com a BrPec, que funciona como caso de referência.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**7) Atividades Principais** — As atividades essenciais ao funcionamento do modelo são o desenvolvimento e o gerenciamento da aplicação web; a engenharia de sincronização e integridade de dados, núcleo do diferencial offline-first; a modelagem e a gestão dos fluxos por perfil de usuário; as ações de vendas, marketing e expansão da base de clientes; e o suporte e o sucesso do cliente, garantindo retenção e evolução contínua do produto.
+&nbsp;&nbsp;&nbsp;&nbsp;**7) Atividades Principais:** As atividades essenciais ao funcionamento do modelo são o desenvolvimento e o gerenciamento da aplicação web; a manutenção da integridade dos dados e dos endpoints de sincronização; a evolução futura do suporte offline; a modelagem e a gestão dos fluxos por perfil de usuário; as ações de vendas, marketing e expansão da base de clientes; e o suporte ao cliente.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**8) Parcerias Principais** — As parcerias-chave habilitam a infraestrutura e a aquisição de clientes: empresas que promovem eventos agropecuários, que dão acesso ao público-alvo e geram leads qualificados; o provedor de nuvem responsável pelo armazenamento e pela disponibilidade dos dados; e instituições do agronegócio, que ampliam a presença de mercado e reforçam a autoridade técnica da solução no nicho.
+&nbsp;&nbsp;&nbsp;&nbsp;**8) Parcerias Principais:** As parcerias-chave habilitam a infraestrutura e a aquisição de clientes: empresas que promovem eventos agropecuários, que dão acesso ao público-alvo e geram leads qualificados; o provedor de nuvem responsável pelo armazenamento e pela disponibilidade dos dados; e instituições do agronegócio, que ampliam a presença de mercado e reforçam a autoridade técnica da solução no nicho.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**9) Estrutura de Custos** — Os principais custos do modelo concentram-se no desenvolvimento e na manutenção do sistema; na infraestrutura e tecnologia em nuvem (servidor e Supabase), cujo custo escala com o volume de dados e operações; nos processos internos de operação do negócio; e na aquisição de clientes (marketing, tráfego pago e venda consultiva). A estrutura é predominantemente digital e escalável, o que mantém o custo marginal de expansão para novas operações relativamente baixo, coerente com a natureza SaaS da solução.
+&nbsp;&nbsp;&nbsp;&nbsp;**9) Estrutura de Custos:** Os principais custos do modelo concentram-se no desenvolvimento e na manutenção do sistema; na infraestrutura de hospedagem do servidor e do banco de dados PostgreSQL no Supabase, cujo custo escala com o volume de dados e operações; nos processos internos de operação do negócio; e na aquisição de clientes (marketing, tráfego pago e venda consultiva). A estrutura é predominantemente digital e escalável, coerente com a natureza SaaS da solução.
 
 ## <a name="c6.6"></a>6.6 Estratégia de Marketing
 
@@ -4728,9 +4688,9 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow é uma aplicação web de gestão operacional de campo para pecuária bovina de larga escala, disponibilizada em interfaces adaptadas a três perfis de usuário: capataz, supervisor e gerente. Suas funcionalidades centrais cobrem o ciclo completo da informação operacional da fazenda: registro de movimentações do rebanho (nascimentos, mortes com causa de óbito, compras, vendas e transferências), gestão e atribuição de tarefas, abertura de chamados de infraestrutura, anexação de evidências (fotos georreferenciadas com coordenadas GPS, áudios e mensagens) e geração de relatórios exportáveis em formatos compatíveis com os processos já adotados pelo parceiro.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios entregues são diretos: eliminação das boletas de papel e do retrabalho de redigitação, rastreabilidade completa com responsabilização por autor e timestamp, continuidade operacional mesmo sem conexão e adequação às exigências regulatórias crescentes (PNIB, EUDR e agendas ESG). Para a gestão, o dashboard centralizado por retiro consolida indicadores calculados exclusivamente a partir de registros validados, sustentando decisões baseadas em dados confiáveis.
+&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios entregues são diretos: redução do uso de boletas de papel e do retrabalho de redigitação, rastreabilidade com responsabilização por autor e timestamp e apoio às exigências regulatórias crescentes (PNIB, EUDR e agendas ESG). Para a gestão, o dashboard centralizado por retiro consolida indicadores calculados a partir de registros validados, sustentando decisões baseadas em dados confiáveis. A continuidade operacional sem conexão permanece como benefício planejado.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os diferenciais que sustentam o posicionamento são três, raramente integrados em uma única solução: arquitetura offline-first com sincronização automática; interface para baixo letramento digital, com fluxos de no máximo três etapas e linguagem em nível fundamental, que dispensa treinamento; e fluxo de validação hierárquico (capataz registra, supervisor valida, gerente consolida) integrado à coleta de evidências digitais — recurso ausente nos concorrentes diretos.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diferenciais atuais são a interface voltada ao baixo letramento digital e o fluxo de validação hierárquico integrado à coleta de evidências digitais. A arquitetura offline-first com sincronização automática complementará esse posicionamento após sua implementação futura.
 
 
 
@@ -4738,19 +4698,19 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo de precificação adotado é o de assinatura recorrente B2B (SaaS), com licenciamento por operação e faixas escalonadas conforme o número de retiros e de usuários ativos. A esse valor recorrente soma-se uma taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação. Para reduzir a barreira de adoção, propõe-se um período de piloto assistido em um subconjunto de retiros, convertendo-se em contrato pleno após a comprovação de valor em campo.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo (Seção 6.3) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado — métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue: redução de retrabalho, de perdas de informação e de risco regulatório; e não o volume de funcionalidades genéricas.
+&nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo (Seção 6.3) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado, métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue: redução de retrabalho, de perdas de informação e de risco regulatório; e não o volume de funcionalidades genéricas.
 
 **6.6.3)** **Praça (Distribuição)**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por ser uma aplicação web responsiva, o AgroFlow é distribuído de forma totalmente digital, sem necessidade de instalação física ou logística de hardware. O acesso ocorre via navegador em dispositivos móveis (capatazes em campo) e desktops (supervisores e gerentes no escritório), com a arquitetura offline-first garantindo a entrega da funcionalidade mesmo nos retiros do Pantanal e do Cerrado, onde a conectividade é intermitente.
+&nbsp;&nbsp;&nbsp;&nbsp;Por ser uma aplicação web responsiva, o AgroFlow é distribuído de forma totalmente digital, sem necessidade de instalação física ou logística de hardware. O acesso atual ocorre via navegador em dispositivos móveis e desktops com conexão ao servidor. A futura arquitetura offline-first deverá ampliar esse acesso nos retiros onde a conectividade é intermitente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O canal de aquisição principal é a venda consultiva direta (B2B), adequada ao ciclo de decisão de fazendas corporativas, iniciada pela relação com o parceiro BrPec como caso de referência. Complementam a distribuição um site institucional com solicitação de demonstração, presença em marketplaces de soluções AgroTech e participação em feiras e eventos do agronegócio (como Agrishow e Expodireto) para geração de leads qualificados. A entrega e a atualização do produto são contínuas: por se tratar de SaaS, novas versões são publicadas centralmente e disponibilizadas a todos os clientes sem reinstalação, e o onboarding remoto reduz o custo de expansão para novas operações.
 
 **6.6.4)** **Promoção**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estratégia de promoção é predominantemente digital e orientada à autoridade técnica no nicho. Em SEO e marketing de conteúdo, o foco recai sobre termos de alta intenção e baixa concorrência ligados às dores reais do público — "gestão de rebanho offline", "rastreabilidade PNIB", "registro de movimentação sem internet" —, sustentados por artigos, guias e estudos de caso que educam o mercado sobre a digitalização em regiões remotas. Em redes sociais, prioriza-se o LinkedIn (decisores e gestores corporativos) e o Instagram/YouTube (demonstrações em campo e provas de uso real), reforçando os atributos de marca: confiabilidade, resiliência e acessibilidade.
+&nbsp;&nbsp;&nbsp;&nbsp;A estratégia de promoção é predominantemente digital e orientada à autoridade técnica no nicho. Em SEO e marketing de conteúdo, o foco recai sobre termos de alta intenção e baixa concorrência ligados às dores reais do público, como "gestão de rebanho offline", "rastreabilidade PNIB" e "registro de movimentação sem internet", sustentados por artigos, guias e estudos de caso que educam o mercado sobre a digitalização em regiões remotas. Em redes sociais, prioriza-se o LinkedIn (decisores e gestores corporativos) e o Instagram/YouTube (demonstrações em campo e provas de uso real), reforçando os atributos de marca: confiabilidade, resiliência e acessibilidade.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As campanhas pagas (Google Ads e LinkedIn Ads) são segmentadas por região e por cargo, direcionando o tráfego a uma página de solicitação de demonstração. A peça central da conversão é o caso de sucesso da BrPec — com 14 retiros — usado como prova social do princípio "funciona onde os outros falham". A comunicação ancora o gatilho regulatório (prazos do PNIB até 2032) como motivador de urgência, posicionando o AgroFlow como o caminho de menor atrito para a conformidade de operações que hoje ainda dependem do papel.
+&nbsp;&nbsp;&nbsp;&nbsp;As campanhas pagas (Google Ads e LinkedIn Ads) são segmentadas por região e por cargo, direcionando o tráfego a uma página de solicitação de demonstração. A peça central da conversão é o caso de sucesso da BrPec, que possui 14 retiros e é usado como prova social do princípio "funciona onde os outros falham". A comunicação utiliza os prazos do PNIB até 2032 como motivador de urgência, posicionando o AgroFlow como uma alternativa para a conformidade de operações que hoje ainda dependem do papel.
 
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
