@@ -44,4 +44,53 @@ describe('Rotas protegidas', () => {
     expect(response.status).toBe(200)
     expect(response.body).toEqual({ podeValidar: true })
   })
+
+  it('deve redirecionar view protegida quando nao houver cookie de sessao', async () => {
+    const response = await request(app).get('/supervisor/home')
+
+    expect(response.status).toBe(302)
+    expect(response.headers.location).toBe('/auth/perfil')
+  })
+
+  it('deve permitir logout sem header e limpar cookie de sessao', async () => {
+    const response = await request(app).post('/usuarios/logout')
+    const cookies = response.headers['set-cookie']
+    const setCookie = Array.isArray(cookies) ? cookies.join(';') : String(cookies ?? '')
+
+    expect(response.status).toBe(204)
+    expect(setCookie).toContain('agroflow_token=')
+  })
+
+  it('deve bloquear supervisor tentando acessar view de gerente', async () => {
+    const tokenSupervisor = gerarToken(mockSupervisor as any)
+
+    const response = await request(app)
+      .get('/gerente/home')
+      .set('Cookie', [`agroflow_token=${tokenSupervisor}`])
+
+    expect(response.status).toBe(302)
+    expect(response.headers.location).toBe('/supervisor/home')
+  })
+
+  it('deve bloquear gerente tentando acessar view de supervisor', async () => {
+    const tokenGerente = gerarToken(mockGerente as any)
+
+    const response = await request(app)
+      .get('/supervisor/home')
+      .set('Cookie', [`agroflow_token=${tokenGerente}`])
+
+    expect(response.status).toBe(302)
+    expect(response.headers.location).toBe('/gerente/home')
+  })
+
+  it('deve renderizar view quando o cookie pertence ao cargo correto', async () => {
+    const tokenSupervisor = gerarToken(mockSupervisor as any)
+
+    const response = await request(app)
+      .get('/supervisor/home')
+      .set('Cookie', [`agroflow_token=${tokenSupervisor}`])
+
+    expect(response.status).toBe(200)
+    expect(response.text).toContain('Home Supervisor')
+  })
 })

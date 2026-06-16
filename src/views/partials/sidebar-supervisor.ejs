@@ -54,13 +54,11 @@
   document.querySelector('[data-logout]')?.addEventListener('click', function () {
     const token = localStorage.getItem('agroflow.token');
 
-    if (token) {
-      fetch('/usuarios/logout', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-        keepalive: true
-      }).catch(() => {});
-    }
+    fetch('/usuarios/logout', {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      keepalive: true
+    }).catch(() => {});
 
     localStorage.removeItem('agroflow.token');
     localStorage.removeItem('agroflow.usuario');
