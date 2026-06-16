@@ -2,16 +2,16 @@
 
 <%
   var tarefa = {
-    titulo: 'Transferência de gado lote B — Aroeira',
+    titulo: 'Inspeção das cercas — Aroeira',
     autor: 'Criada por Supervisor Luiz',
     nivel: 'Alta',
     prazo: 'Amanhã, 08:00',
-    categoria: 'Manejo de rebanho',
+    categoria: 'Manutenção',
     retiro: 'Fazenda Aroeira',
     data: '30/05/2026 às 08:00',
     status: 'Pendente',
     supervisor: 'Luiz Ferreira',
-    descricao: 'Realizar a transferência do gado do lote B para o retiro de destino. Verificar documentação e condições dos animais.'
+    descricao: 'Percorrer as cercas do retiro e verificar se há partes danificadas. Registrar o que precisar de conserto e abrir chamado de infraestrutura.'
   };
 %>
 
@@ -72,71 +72,12 @@
 </main>
 
 <script>
-  function formatarData(valor) {
-    if (!valor) return 'Sem data';
-    const data = new Date(valor);
-    if (Number.isNaN(data.getTime())) return 'Sem data';
-
-    return data.toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  }
-
-  function prioridadeParaRotulo(prioridade) {
-    if (prioridade === 'alta') return 'Alta';
-    if (prioridade === 'media') return 'Média';
-    return 'Baixa';
-  }
-
-  async function carregarTarefa() {
-    const params = new URLSearchParams(window.location.search);
-    const tarefaId = params.get('id');
-
-    try {
-      const response = tarefaId
-        ? await fetch(`/tarefas/${tarefaId}`)
-        : await fetch('/tarefas');
-
-      const data = await response.json();
-      const tarefa = Array.isArray(data) ? data[0] : data;
-
-      if (!response.ok || !tarefa) {
-        return;
-      }
-
-      document.getElementById('tarefaTitulo').textContent = tarefa.descricao;
-      document.getElementById('tarefaAutor').textContent = `Criada por ${tarefa.criada_por}`;
-      document.getElementById('tarefaNivel').textContent = prioridadeParaRotulo(tarefa.prioridade);
-      document.getElementById('tarefaPrazo').textContent = tarefa.status === 'aprovado' ? 'Concluída' : 'Pendente';
-      document.getElementById('tarefaCategoria').textContent = tarefa.categoria;
-      document.getElementById('tarefaRetiro').textContent = `Retiro ${tarefa.retiro_id}`;
-      document.getElementById('tarefaData').textContent = formatarData(tarefa.data_criacao);
-      document.getElementById('statusTarefa').textContent = tarefa.status === 'aprovado' ? 'Concluída' : 'Pendente';
-      document.getElementById('tarefaSupervisor').textContent = `Usuário ${tarefa.criada_por}`;
-      document.getElementById('tarefaDescricao').textContent = tarefa.descricao;
-
-      const botao = document.getElementById('btnConcluir');
-      if (tarefa.status === 'aprovado' && botao) {
-        botao.textContent = 'Concluída';
-        botao.disabled = true;
-      }
-    } catch {
-      // Mantém o conteúdo estático se a API não responder.
-    }
-  }
-
   document.getElementById('btnConcluir').addEventListener('click', function () {
     const status = document.getElementById('statusTarefa');
     if (status) status.textContent = 'Concluída';
     this.textContent = 'Concluída';
     this.disabled = true;
   });
-
-  carregarTarefa();
 </script>
 
 </body>

@@ -2,8 +2,8 @@
 
 <%
   var tarefas = [
-    { cor: 'var(--alerta)', titulo: 'Transferência de gado lote B', sub: 'Supervisor Luiz • Alta • Amanhã 08h', nivel: 'Alta',  classe: 'alta'  },
-    { cor: 'var(--info)',   titulo: 'Conferência do rebanho', sub: 'Supervisor Luiz • Média • Hoje 14h',  nivel: 'Média', classe: 'media' }
+    { cor: 'var(--alerta)', titulo: 'Inspeção das cercas', sub: 'Supervisor Luiz • Alta • Amanhã 08h', nivel: 'Alta',  classe: 'alta'  },
+    { cor: 'var(--info)',   titulo: 'Conferência do gado', sub: 'Supervisor Luiz • Média • Hoje 14h',  nivel: 'Média', classe: 'media' }
   ];
   var operacoes = [
     { cor: 'var(--primaria)', titulo: 'Registrar movimentação', sub: 'Nascimento, morte, transferência...',  href: '/capataz/movimentacao' },
@@ -61,18 +61,6 @@
 </main>
 
 <script>
-  function formatarData(valor) {
-    if (!valor) return 'Sem data';
-    const data = new Date(valor);
-    if (Number.isNaN(data.getTime())) return 'Sem data';
-
-    return data.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    });
-  }
-
   document.getElementById('data-hoje').textContent =
     new Date().toLocaleDateString('pt-BR', {
       weekday: 'long',
@@ -82,52 +70,6 @@
     }).replace(/^\w/, function (letra) {
       return letra.toUpperCase();
     });
-
-  async function carregarTarefas() {
-    const cards = Array.from(document.querySelectorAll('.conteudo > a.card')).slice(0, 2);
-
-    try {
-      const response = await fetch('/tarefas');
-      const tarefas = await response.json();
-
-      if (!response.ok || !Array.isArray(tarefas)) {
-        return;
-      }
-
-      cards.forEach((card, index) => {
-        const tarefa = tarefas[index];
-        if (!tarefa) return;
-
-        const titulo = card.querySelector('.card__titulo');
-        const sub = card.querySelector('.card__sub');
-        const etiqueta = card.querySelector('.etiqueta');
-
-        if (titulo) {
-          titulo.textContent = tarefa.descricao;
-        }
-
-        if (sub) {
-          sub.textContent = `Retiro ${tarefa.retiro_id} • ${tarefa.categoria} • ${formatarData(tarefa.data_criacao)}`;
-        }
-
-        if (etiqueta) {
-          etiqueta.textContent = tarefa.prioridade === 'alta'
-            ? 'Alta'
-            : tarefa.prioridade === 'media'
-              ? 'Média'
-              : 'Baixa';
-
-          etiqueta.className = `etiqueta etiqueta--${tarefa.prioridade === 'alta' ? 'alta' : tarefa.prioridade === 'media' ? 'media' : 'baixa'}`;
-        }
-
-        card.href = `/capataz/detalhe-tarefa?id=${tarefa.id}`;
-      });
-    } catch {
-      // Mantém o conteúdo estático caso a API não responda.
-    }
-  }
-
-  carregarTarefas();
 </script>
 
 </body>
