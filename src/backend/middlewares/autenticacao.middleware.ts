@@ -28,6 +28,7 @@ function obterJwtSecret(): string {
 
 const JWT_SECRET = obterJwtSecret()
 const JWT_EXPIRES_IN = '1d'
+export const COOKIE_TOKEN_AUTENTICACAO = 'agroflow_token'
 
 // Gera o token que sera enviado ao cliente apos o login.
 export function gerarToken(usuario: UsuarioAutenticado): string {
@@ -45,6 +46,40 @@ export function gerarToken(usuario: UsuarioAutenticado): string {
   )
 }
 
+function montarUsuarioAPartirDoToken(token: string): UsuarioAutenticado {
+  const payload = jwt.verify(token, JWT_SECRET) as JwtPayloadUsuario
+
+  if (!payload.sub || !payload.login || !payload.cargo) {
+    throw new Error('Token invalido')
+  }
+
+  return {
+    id: payload.sub,
+    login: payload.login,
+    cargo: payload.cargo,
+    retiro_id: payload.retiro_id,
+  }
+}
+
+function obterCookie(req: Request, nome: string): string | null {
+  const cookies = req.headers.cookie
+
+  if (!cookies) {
+    return null
+  }
+
+  const cookie = cookies
+    .split(';')
+    .map(parte => parte.trim())
+    .find(parte => parte.startsWith(`${nome}=`))
+
+  if (!cookie) {
+    return null
+  }
+
+  return decodeURIComponent(cookie.slice(nome.length + 1))
+}
+
 // Middleware de autenticacao.
 // Verifica se existe token Bearer valido e, se existir, preenche req.usuario.
 export function autenticarUsuario(req: Request, res: Response, next: NextFunction) {
@@ -59,24 +94,27 @@ export function autenticarUsuario(req: Request, res: Response, next: NextFunctio
 
   try {
     // Valida e decodifica o JWT usando o segredo do servidor.
-    const payload = jwt.verify(token, JWT_SECRET) as JwtPayloadUsuario
-
-    // Confere se os dados essenciais realmente vieram no token.
-    if (!payload.sub || !payload.login || !payload.cargo) {
-      return res.status(401).json({ error: 'Token invalido' })
-    }
-
-    // Anexa o usuario autenticado na request para uso nas proximas camadas.
-    req.usuario = {
-      id: payload.sub,
-      login: payload.login,
-      cargo: payload.cargo,
-      retiro_id: payload.retiro_id,
-    }
+    req.usuario = montarUsuarioAPartirDoToken(token)
 
     return next()
   } catch {
     // Qualquer falha de verificacao vira erro de autenticacao.
     return res.status(401).json({ error: 'Token invalido ou expirado' })
+  }
+}
+
+export function autenticarViewPorCookie(req: Request, res: Response, next: NextFunction) {
+  const token = obterCookie(req, COOKIE_TOKEN_AUTENTICACAO)
+
+  if (!token) {
+    return res.redirect('/auth/perfil')
+  }
+
+  try {
+    req.usuario = montarUsuarioAPartirDoToken(token)
+    return next()
+  } catch {
+    res.clearCookie(COOKIE_TOKEN_AUTENTICACAO)
+    return res.redirect('/auth/perfil')
   }
 }

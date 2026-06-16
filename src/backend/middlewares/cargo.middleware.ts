@@ -19,3 +19,18 @@ export function exigirCargo(...cargosPermitidos: UsuarioCargo[]) {
     return next()
   }
 }
+
+export function exigirCargoView(...cargosPermitidos: UsuarioCargo[]) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.usuario) {
+      return res.redirect('/auth/perfil')
+    }
+
+    if (!cargosPermitidos.includes(req.usuario.cargo)) {
+      const destino = req.usuario.cargo === 'gerente' ? '/gerente/home' : '/supervisor/home'
+      return res.redirect(destino)
+    }
+
+    return next()
+  }
+}

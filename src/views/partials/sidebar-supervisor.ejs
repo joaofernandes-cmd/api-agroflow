@@ -38,6 +38,7 @@
       <p class="sidebar__user-name"><%= usuario?.nome || 'Luiz Felipe' %></p>
       <p class="sidebar__user-role">Supervisor</p>
     </div>
+    <button type="button" class="sidebar__logout" data-logout aria-label="Sair da conta">Sair</button>
   </div>
 </aside>
 <script>
@@ -48,5 +49,19 @@
   document.querySelector('.sidebar__menu-btn').addEventListener('click', function () {
     sidebar.classList.toggle('sidebar--collapsed');
     localStorage.setItem('sidebar-collapsed', sidebar.classList.contains('sidebar--collapsed') ? '1' : '0');
+  });
+
+  document.querySelector('[data-logout]')?.addEventListener('click', function () {
+    const token = localStorage.getItem('agroflow.token');
+
+    fetch('/usuarios/logout', {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      keepalive: true
+    }).catch(() => {});
+
+    localStorage.removeItem('agroflow.token');
+    localStorage.removeItem('agroflow.usuario');
+    window.location.assign('/auth/perfil');
   });
 </script>
