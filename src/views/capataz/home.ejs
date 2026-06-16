@@ -26,8 +26,8 @@
 
   <div class="conteudo">
     <h3 class="secao-titulo">Minhas tarefas</h3>
-    <% tarefas.forEach(function (t) { %>
-      <a href="/capataz/detalhe-tarefa" class="card">
+    <% tarefas.forEach(function (t, index) { %>
+      <a href="/capataz/detalhe-tarefa?id=<%= index + 1 %>" class="card">
         <span class="card__barra" style="background: <%= t.cor %>;"></span>
         <div class="card__corpo">
           <div class="card__titulo"><%= t.titulo %></div>

@@ -65,8 +65,8 @@ app.get('/capataz/tarefas', (_req, res) => {
   res.render('capataz/tarefas')
 })
 
-app.get('/capataz/detalhe-tarefa', (_req, res) => {
-  res.render('capataz/detalhe-tarefa')
+app.get('/capataz/detalhe-tarefa', (req, res) => {
+  res.render('capataz/detalhe-tarefa', { id: req.query.id })
 })
 
 app.get('/capataz/movimentacao', (_req, res) => {
