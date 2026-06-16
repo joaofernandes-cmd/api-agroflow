@@ -8,7 +8,7 @@
     { value: 'edificacao', label: 'Edificação' },
     { value: 'abastecimento_agua', label: 'Abastecimento de água' },
     { value: 'outro', label: 'Outro' }
-    
+
   ];
   var PRIORIDADES = [
     { value: 'alta', label: 'Alta' },
@@ -148,18 +148,19 @@
       throw new Error('Preencha categoria, prioridade, localização e descrição.');
     }
 
-    // "Outro": usa o nome digitado como categoria do chamado.
+    // "Outro": mantém categoria='outro' (enum do banco) e guarda o nome digitado à parte.
+    let categoriaOutro = null;
     if (categoria === 'outro') {
-      const nomeOutro = document.getElementById('categoriaOutro').value.trim();
-      if (!nomeOutro) {
+      categoriaOutro = document.getElementById('categoriaOutro').value.trim();
+      if (!categoriaOutro) {
         throw new Error('Diga o nome da categoria.');
       }
-      categoria = nomeOutro;
     }
 
     return {
       retiro_id: session?.usuario?.retiro_id ?? CAPATAZ_DEMO.retiro_id,
       categoria,
+      categoria_outro: categoriaOutro,
       localizacao,
       descricao,
       prioridade,
