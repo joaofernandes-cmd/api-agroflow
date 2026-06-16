@@ -12,7 +12,7 @@ import { tratadorDeErros, ErroDeAplicacao } from './middlewares/erros.middleware
 import { middlewareDeLog } from './middlewares/log.middleware'
 import { autenticarViewPorCookie } from './middlewares/autenticacao.middleware'
 import { exigirCargoView } from './middlewares/cargo.middleware'
-import { tarefasCapataz, buscarTarefaCapataz } from './data/tarefas-capataz'
+import { tarefasCapataz, tarefasCapatazRecentes, buscarTarefaCapataz } from './data/tarefas-capataz'
 
 const app = express()
 
@@ -64,7 +64,7 @@ app.get('/capataz/home', (_req, res) => {
 })
 
 app.get('/capataz/tarefas', (_req, res) => {
-  res.render('capataz/tarefas', { tarefas: tarefasCapataz })
+  res.render('capataz/tarefas', { tarefas: tarefasCapatazRecentes })
 })
 
 app.get('/capataz/detalhe-tarefa', (req, res) => {

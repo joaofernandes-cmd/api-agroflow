@@ -448,7 +448,7 @@ textarea.input { resize: none; }
 .detalhe-card__titulo { font-size: 17px; font-weight: 700; color: var(--texto); }
 .detalhe-card__autor { font-size: 13px; color: var(--texto-sec); margin: 4px 0 10px; }
 .detalhe-card__meta { display: flex; align-items: center; gap: 12px; }
-.detalhe-card__meta span { font-size: 13px; color: var(--texto-sec); }
+.detalhe-card__meta span:not(.etiqueta) { font-size: 13px; color: var(--texto-sec); }
 .detalhe-card__cat { font-size: 13px; color: var(--texto-sec); margin-top: 10px; }
 
 .detalhe-linha {

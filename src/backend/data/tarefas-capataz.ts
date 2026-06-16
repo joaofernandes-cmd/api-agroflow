@@ -14,6 +14,7 @@ export interface TarefaBase {
   prazo: string
   categoria: string
   data: string
+  criadaEm: string // data/hora de criação (ISO), usada para ordenar a lista
   descricao: string
 }
 
@@ -36,6 +37,7 @@ const TAREFAS: TarefaBase[] = [
     prazo: 'Amanhã 08:00',
     categoria: 'Manutenção',
     data: '16/06/2026 às 08:00',
+    criadaEm: '2026-06-15T14:00:00',
     descricao:
       'Percorrer as cercas do retiro e verificar se há partes danificadas. Registrar o que precisar de conserto e abrir chamado de infraestrutura.',
   },
@@ -48,6 +50,7 @@ const TAREFAS: TarefaBase[] = [
     prazo: 'Hoje 14:00',
     categoria: 'Manejo',
     data: '15/06/2026 às 14:00',
+    criadaEm: '2026-06-16T08:30:00',
     descricao:
       'Conferir a quantidade de cabeças de gado do retiro e comparar com o registro. Anotar qualquer diferença.',
   },
@@ -60,6 +63,7 @@ const TAREFAS: TarefaBase[] = [
     prazo: 'Sexta 10:00',
     categoria: 'Sanidade',
     data: '19/06/2026 às 10:00',
+    criadaEm: '2026-06-14T09:00:00',
     descricao:
       'Inspecionar a saúde dos animais e registrar sinais de doença. Avisar o supervisor se encontrar algo.',
   },
@@ -72,6 +76,7 @@ const TAREFAS: TarefaBase[] = [
     prazo: 'Há 2 dias',
     categoria: 'Nutrição',
     data: '13/06/2026',
+    criadaEm: '2026-06-12T10:00:00',
     descricao:
       'Fornecer a alimentação suplementar ao gado conforme a orientação e registrar a quantidade usada.',
   },
@@ -84,6 +89,7 @@ const TAREFAS: TarefaBase[] = [
     prazo: 'Há 3 dias',
     categoria: 'Movimentação',
     data: '12/06/2026',
+    criadaEm: '2026-06-11T08:00:00',
     descricao:
       'Movimentar o gado entre os retiros conforme a ordem. Registrar a origem e o destino.',
   },
@@ -116,6 +122,11 @@ function decorar(t: TarefaBase, id: number): TarefaExibicao {
 
 // Lista pronta para exibição (com selo, cor e autor já calculados).
 export const tarefasCapataz: TarefaExibicao[] = TAREFAS.map((t, i) => decorar(t, i + 1))
+
+// Mesma lista, ordenada da mais recente para a mais antiga (por data de criação).
+export const tarefasCapatazRecentes: TarefaExibicao[] = tarefasCapataz
+  .slice()
+  .sort((a, b) => b.criadaEm.localeCompare(a.criadaEm))
 
 // Seleciona a tarefa pelo id da query (?id=N, 1-based). Faz fallback para a
 // primeira quando o id está ausente ou é inválido.

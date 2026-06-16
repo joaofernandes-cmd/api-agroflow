@@ -21,7 +21,7 @@
 
     <div id="lista-tarefas">
       <% tarefas.forEach(function (t, index) { %>
-        <a href="/capataz/detalhe-tarefa?id=<%= index + 1 %>" class="card" data-status="<%= t.status %>">
+        <a href="/capataz/detalhe-tarefa?id=<%= t.id %>" class="card" data-status="<%= t.status %>">
           <span class="card__barra" style="background: <%= t.cor %>;"></span>
           <div class="card__corpo">
             <div class="card__titulo"><%= t.titulo %> - <%= t.retiro %></div>
