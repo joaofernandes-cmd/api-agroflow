@@ -103,8 +103,8 @@ const ROTULO_PRIORIDADE: Record<Prioridade, string> = {
 
 const COR_PRIORIDADE: Record<Prioridade, string> = {
   alta: 'var(--alerta)',
-  media: 'var(--info)',
-  baixa: 'var(--texto-sec)',
+  media: '#f0ad00',
+  baixa: 'var(--sucesso)',
 }
 
 function decorar(t: TarefaBase, id: number): TarefaExibicao {
