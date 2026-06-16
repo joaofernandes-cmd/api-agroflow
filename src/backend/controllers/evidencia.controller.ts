@@ -35,7 +35,8 @@ export const EvidenciaController = {
 
   async criarMensagem(req: Request, res: Response) {
     try {
-      const { usuarioId, conteudo } = req.body
+      const { conteudo } = req.body
+      const usuarioId = req.usuario?.id ?? req.body.usuarioId
 
       if (!usuarioId || !conteudo) {
         return res.status(400).json({ error: 'Usuário e conteúdo são obrigatórios' })
@@ -53,7 +54,8 @@ export const EvidenciaController = {
 
   async criarAudio(req: Request, res: Response) {
     try {
-      const { usuarioId, urlArquivo, duracao } = req.body
+      const { urlArquivo, duracao } = req.body
+      const usuarioId = req.usuario?.id ?? req.body.usuarioId
 
       if (!usuarioId || !urlArquivo || duracao === undefined) {
         return res.status(400).json({ error: 'Usuário, arquivo e duração são obrigatórios' })
@@ -71,7 +73,8 @@ export const EvidenciaController = {
 
   async criarFoto(req: Request, res: Response) {
     try {
-      const { usuarioId, urlArquivo, latitude, longitude } = req.body
+      const { urlArquivo, latitude, longitude } = req.body
+      const usuarioId = req.usuario?.id ?? req.body.usuarioId
 
       if (!usuarioId || !urlArquivo || latitude === undefined || longitude === undefined) {
         return res.status(400).json({ error: 'Usuário, arquivo, latitude e longitude são obrigatórios' })

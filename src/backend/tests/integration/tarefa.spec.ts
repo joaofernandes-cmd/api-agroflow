@@ -55,7 +55,11 @@ describe('Tarefas', () => {
     expect(response.body).toEqual(mockTarefa)
     expect(mockedService.criar).toHaveBeenCalledWith(
       expect.objectContaining({ id: mockTarefa.id }),
-      mockSupervisor
+      expect.objectContaining({
+        id: mockSupervisor.id,
+        cargo: mockSupervisor.cargo,
+        retiro_id: mockSupervisor.retiro_id,
+      })
     )
   })
 

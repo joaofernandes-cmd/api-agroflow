@@ -96,7 +96,7 @@ describe('Movimentacoes', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacao])
-    expect(mockedService.listarTodas).toHaveBeenCalledTimes(1)
+    expect(mockedService.filtrar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000001')
   })
 
   it('GET /movimentacoes/filtrar deve aplicar filtros', async () => {
