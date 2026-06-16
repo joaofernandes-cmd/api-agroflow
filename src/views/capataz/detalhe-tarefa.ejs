@@ -1,76 +1,5 @@
 <%- include('../partials/capataz-head', { titulo: 'Alow · Detalhe da Tarefa' }) %>
 
-<%
-  // Mesmas tarefas (na mesma ordem) da lista em capataz/tarefas.ejs.
-  // O id vem da query (?id=N) e seleciona qual tarefa mostrar.
-  var tarefas = [
-    {
-      titulo: 'Inspeção das cercas — Aroeira',
-      autor: 'Criada por Supervisor Luiz',
-      nivel: 'Alta', classe: 'alta',
-      prazo: 'Amanhã, 08:00',
-      categoria: 'Manutenção',
-      retiro: 'Aroeira',
-      data: '16/06/2026 às 08:00',
-      status: 'Pendente',
-      supervisor: 'Luiz',
-      descricao: 'Percorrer as cercas do retiro e verificar se há partes danificadas. Registrar o que precisar de conserto e abrir chamado de infraestrutura.'
-    },
-    {
-      titulo: 'Conferência do gado — CMB',
-      autor: 'Criada por Supervisor Luiz',
-      nivel: 'Média', classe: 'media',
-      prazo: 'Hoje, 14:00',
-      categoria: 'Manejo',
-      retiro: 'CMB',
-      data: '15/06/2026 às 14:00',
-      status: 'Pendente',
-      supervisor: 'Luiz',
-      descricao: 'Conferir a quantidade de cabeças de gado do retiro e comparar com o registro. Anotar qualquer diferença.'
-    },
-    {
-      titulo: 'Inspeção sanitária — Puga',
-      autor: 'Criada por Supervisor Luiz',
-      nivel: 'Baixa', classe: 'baixa',
-      prazo: 'Sexta, 10:00',
-      categoria: 'Sanidade',
-      retiro: 'Puga',
-      data: '19/06/2026 às 10:00',
-      status: 'Pendente',
-      supervisor: 'Luiz',
-      descricao: 'Inspecionar a saúde dos animais e registrar sinais de doença. Avisar o supervisor se encontrar algo.'
-    },
-    {
-      titulo: 'Alimentação suplementar — Cristo',
-      autor: 'Criada por Supervisor Alberto',
-      nivel: 'Concluída', classe: 'concluida',
-      prazo: 'Há 2 dias',
-      categoria: 'Nutrição',
-      retiro: 'Cristo',
-      data: '13/06/2026',
-      status: 'Concluída',
-      supervisor: 'Alberto',
-      descricao: 'Fornecer a alimentação suplementar ao gado conforme a orientação e registrar a quantidade usada.'
-    },
-    {
-      titulo: 'Movimentação de gado — Bodoquena',
-      autor: 'Criada por Supervisor José',
-      nivel: 'Concluída', classe: 'concluida',
-      prazo: 'Há 3 dias',
-      categoria: 'Movimentação',
-      retiro: 'Bodoquena',
-      data: '12/06/2026',
-      status: 'Concluída',
-      supervisor: 'José',
-      descricao: 'Movimentar o gado entre os retiros conforme a ordem. Registrar a origem e o destino.'
-    }
-  ];
-
-  var indice = parseInt(typeof id !== 'undefined' ? id : 1, 10);
-  if (isNaN(indice) || indice < 1 || indice > tarefas.length) indice = 1;
-  var tarefa = tarefas[indice - 1];
-%>
-
 <main class="celular">
   <header class="cabecalho">
     <div class="cabecalho__barra">
@@ -88,7 +17,7 @@
     <div class="detalhe-card">
       <span class="detalhe-card__barra"></span>
       <div class="detalhe-card__conteudo">
-        <div class="detalhe-card__titulo" id="tarefaTitulo"><%= tarefa.titulo %></div>
+        <div class="detalhe-card__titulo" id="tarefaTitulo"><%= tarefa.titulo %> — <%= tarefa.retiro %></div>
         <div class="detalhe-card__autor" id="tarefaAutor"><%= tarefa.autor %></div>
         <div class="detalhe-card__meta">
           <span class="etiqueta etiqueta--<%= tarefa.classe %>" id="tarefaNivel"><%= tarefa.nivel %></span>
@@ -108,7 +37,7 @@
     </div>
     <div class="detalhe-linha">
       <span class="detalhe-linha__rotulo">Status</span>
-      <span class="detalhe-linha__valor" id="statusTarefa"><%= tarefa.status %></span>
+      <span class="detalhe-linha__valor" id="statusTarefa"><%= tarefa.statusRotulo %></span>
     </div>
     <div class="detalhe-linha">
       <span class="detalhe-linha__rotulo">Supervisor</span>
@@ -118,8 +47,8 @@
     <label class="detalhe-descricao-rotulo">Descrição</label>
     <div class="detalhe-descricao" id="tarefaDescricao"><%= tarefa.descricao %></div>
 
-    <button type="button" class="btn-primario" id="btnConcluir" style="margin-bottom: 12px;">
-      Marcar como concluída
+    <button type="button" class="btn-primario" id="btnConcluir" style="margin-bottom: 12px;" <%= tarefa.status === 'concluida' ? 'disabled' : '' %>>
+      <%= tarefa.status === 'concluida' ? 'Concluída' : 'Marcar como concluída' %>
     </button>
     <button type="button" class="btn-secundario">Anexar evidência</button>
   </div>
