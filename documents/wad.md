@@ -4116,7 +4116,28 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.3"></a>3.8.3. Autorização
 
-*Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
+&nbsp;&nbsp;&nbsp;&nbsp;A autorização é aplicada no backend por meio do middleware `exigirCargo`, que verifica o cargo presente em `req.usuario` antes que a requisição chegue ao controller. Quando o usuário está autenticado, mas não possui o cargo exigido para a operação, o sistema retorna `403 Forbidden`. As rotas protegidas são organizadas por módulo e recebem explicitamente os cargos autorizados para cada operação.
+
+<p align="center">Quadro - Regras de autorização por módulo</p>
+
+| Módulo | Capataz | Supervisor | Gerente |
+|---|---|---|---|
+| Views internas de Capataz (`/capataz/home` e demais telas protegidas) | Acessa | Bloqueado | Bloqueado |
+| Views de Supervisor (`/supervisor/*`) | Bloqueado | Acessa | Bloqueado |
+| Views de Gerente (`/gerente/*`) | Bloqueado | Bloqueado | Acessa |
+| Movimentações | Cria e sincroniza | Lista, consulta, atualiza e remove | Lista e consulta |
+| Tarefas | Consulta atribuídas e atualiza status | Cria, lista, atualiza e remove | Lista e consulta |
+| Tickets | Cria e sincroniza | Lista, consulta, altera status, prioridade e atribuição | Lista e consulta |
+| Evidências | Cria e consulta | Cria, lista e consulta | Lista e consulta |
+| Sincronização | Executa e consulta status | Executa, consulta status e acessa dados consolidados | Consulta status e dados consolidados |
+| Validações | Bloqueado | Valida movimentações, tarefas e tickets | Bloqueado |
+| Relatórios | Bloqueado | Consulta e exporta | Consulta e exporta |
+| Consulta de capatazes ativos por retiro | Consulta autenticada | Consulta autenticada | Consulta autenticada |
+| Gestão de usuários | Bloqueado | Bloqueado | Cria, lista, atualiza e remove |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além do controle por cargo, os controllers usam os dados da sessão autenticada para reduzir risco de manipulação de autoria e escopo. Em criações feitas por Capataz, o backend usa o `id` e o `retiro_id` do usuário autenticado para preencher autor e retiro. Em consultas operacionais, Supervisores e Capatazes ficam restritos ao próprio retiro, enquanto Gerentes podem consultar dados consolidados por diferentes retiros quando a rota permite esse filtro.
 
 ### <a name="c3.8.4"></a>3.8.4. Estratégias de Resiliência
 
