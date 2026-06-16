@@ -219,6 +219,7 @@
 }
 
 .sidebar--collapsed .sidebar__user-info { display: none; }
+.sidebar--collapsed .sidebar__logout { display: none; }
 
 .sidebar__top {
   background: var(--color-primary);
@@ -319,6 +320,24 @@
 .sidebar__user-role {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.55);
+}
+
+.sidebar__logout {
+  margin-left: auto;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  height: 32px;
+  padding: 0 10px;
+}
+
+.sidebar__logout:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /* ════════════════════════════════════════════════════════════

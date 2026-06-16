@@ -10,6 +10,8 @@ import usuarioRoutes from './routes/usuario.route'
 import validacaoRoutes from './routes/validacao.route'
 import { tratadorDeErros, ErroDeAplicacao } from './middlewares/erros.middleware'
 import { middlewareDeLog } from './middlewares/log.middleware'
+import { autenticarViewPorCookie } from './middlewares/autenticacao.middleware'
+import { exigirCargoView } from './middlewares/cargo.middleware'
 
 const app = express()
 
@@ -75,6 +77,8 @@ app.get('/capataz/chamado', (_req, res) => {
   res.render('capataz/chamado')
 })
 
+app.use('/supervisor', autenticarViewPorCookie, exigirCargoView('supervisor'))
+
 app.get('/supervisor/home', (req, res) => {
   res.render('supervisor/home', {
     title: 'Início',
@@ -116,6 +120,8 @@ app.get('/supervisor/relatorios', (req, res) => {
     usuario: { nome: 'Luiz Felipe' }
   })
 })
+
+app.use('/gerente', autenticarViewPorCookie, exigirCargoView('gerente'))
 
 app.get('/gerente/home', (req, res) => {
   res.render('gerente/home', {

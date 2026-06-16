@@ -26,10 +26,30 @@
       <p class="sidebar__user-name"><%= usuario?.nome || 'Marcos Ferreira' %></p>
       <p class="sidebar__user-role">Gerente</p>
     </div>
+    <button type="button" class="sidebar__logout" data-logout aria-label="Sair da conta">Sair</button>
   </div>
 </aside>
 <script>
+  const sidebar = document.querySelector('.sidebar');
+  if (localStorage.getItem('sidebar-collapsed') === '1') {
+    sidebar.classList.add('sidebar--collapsed');
+  }
   document.querySelector('.sidebar__menu-btn').addEventListener('click', function () {
-    document.querySelector('.sidebar').classList.toggle('sidebar--collapsed');
+    sidebar.classList.toggle('sidebar--collapsed');
+    localStorage.setItem('sidebar-collapsed', sidebar.classList.contains('sidebar--collapsed') ? '1' : '0');
+  });
+
+  document.querySelector('[data-logout]')?.addEventListener('click', function () {
+    const token = localStorage.getItem('agroflow.token');
+
+    fetch('/usuarios/logout', {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      keepalive: true
+    }).catch(() => {});
+
+    localStorage.removeItem('agroflow.token');
+    localStorage.removeItem('agroflow.usuario');
+    window.location.assign('/auth/perfil');
   });
 </script>

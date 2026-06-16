@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { gerarToken } from '../middlewares/autenticacao.middleware'
+import { COOKIE_TOKEN_AUTENTICACAO, gerarToken } from '../middlewares/autenticacao.middleware'
 import { Usuario } from '../models/usuario.model'
 import { converterUUID } from '../models/uuid'
 import { UsuarioService } from '../services/usuario.service'
@@ -32,13 +32,26 @@ export const UsuarioController = {
         return res.status(403).json({ error: 'Capataz não possui acesso por login' })
       }
 
+      const token = gerarToken(usuario)
+
+      res.cookie(COOKIE_TOKEN_AUTENTICACAO, token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000,
+      })
+
       return res.status(200).json({
         usuario: removerSenha(usuario),
-        token: gerarToken(usuario),
+        token,
       })
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao autenticar usuário' })
     }
+  },
+
+  async logout(_req: Request, res: Response) {
+    res.clearCookie(COOKIE_TOKEN_AUTENTICACAO)
+    return res.status(204).send()
   },
 
   async listarTodos(req: Request, res: Response) {
