@@ -77,6 +77,13 @@
 
 ## 📝 Link de demonstração
 
+<!-- 
+
+* **Projeto Publicado:** [link do deploy do site](link_deploy)
+* **Vídeo de Demonstração:** [link para o vídeo](link_video_google_drive)
+
+-->
+
 Vídeos de demonstração da aplicação por perfil de usuário:
 
 - **Capataz:** [Assistir demonstração](https://drive.google.com/file/d/1K0guUF_NzNWkvYyfJUYhfoKgsJ9PIjO5/view?usp=drive_link)
@@ -126,8 +133,9 @@ Descrição dos principais diretórios:
 
 
 ## 🎮 Funcionalidades
-- Autenticação de usuários via login e senha com emissão de token JWT.
-- Controle de acesso por cargo (capataz, supervisor e gerente) verificado no backend.
+- Autenticação de supervisores e gerentes por senha.
+- Autenticação de capatazes por token de acesso via QR Code.
+- Controle de acesso por cargo (capataz, supervisor e gerente) verificado no backend (proteção por RBAC).
 - Registro e gestão de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida do animal.
 - Validação e aprovação de movimentações, tickets e tarefas pendentes pelo supervisor.
 - Gestão de tarefas operacionais por status, prioridade, categoria, usuário e retiro.
@@ -222,15 +230,15 @@ http://localhost:3000
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 — prevista para 26/06/2026 — Sprint 5
-    * Versão final planejada; consolidação de autenticação, controle de sessão e autorização; estratégias de resiliência.
-* 0.4.0 — 12/06/2026 — Sprint 4
+* **0.5.0 — prevista para 26/06/2026 — Sprint 5**
+    * Versão final; autenticação completa, controle de sessão e autorização, acesso por QR code do capataz.
+* **0.4.0 — 12/06/2026 — Sprint 4**
     * Segunda versão; WebAPI completa; testes de integração automatizados; atualização do modelo físico do banco.
-* 0.3.0 — 29/05/2026 — Sprint 3
+* **0.3.0 — 29/05/2026 — Sprint 3**
     * Primeira versão funcional; endpoints de leitura e escrita (WebAPI v1); guia de estilos e protótipo de alta fidelidade.
-* 0.2.0 — 15/05/2026 — Sprint 2
+* **0.2.0 — 15/05/2026 — Sprint 2**
     * Modelagem do banco de dados (ER, DER, modelo relacional e migrations DDL); wireframes; diagrama de classes.
-* 0.1.0 — 30/04/2026 — Sprint 1
+* **0.1.0 — 30/04/2026 — Sprint 1**
     * Fundação do projeto: escopo, personas, user stories iniciais, requisitos funcionais e regras de negócio.
 
 ## 📋 Licença/License
