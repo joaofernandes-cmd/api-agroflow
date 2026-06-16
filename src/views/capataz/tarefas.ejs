@@ -9,7 +9,8 @@
 
   <div class="conteudo">
     <div class="busca-barra">
-      <span class="busca-barra__texto">Pesquisar tarefas</span>
+      <input type="search" id="busca-tarefas" class="busca-barra__input"
+             placeholder="Pesquisar tarefas" aria-label="Pesquisar tarefas" autocomplete="off">
       <span class="etiqueta etiqueta--pendente">Pendente</span>
     </div>
 
@@ -29,10 +30,34 @@
         </a>
       <% }) %>
     </div>
+
+    <p id="busca-vazia" class="busca-vazia" hidden>Nenhuma tarefa encontrada.</p>
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
 </main>
+
+<script>
+  (function () {
+    var input = document.getElementById('busca-tarefas');
+    var lista = document.getElementById('lista-tarefas');
+    var vazia = document.getElementById('busca-vazia');
+    if (!input || !lista) return;
+
+    var cards = Array.prototype.slice.call(lista.querySelectorAll('.card'));
+
+    input.addEventListener('input', function () {
+      var termo = input.value.trim().toLowerCase();
+      var visiveis = 0;
+      cards.forEach(function (card) {
+        var combina = card.textContent.toLowerCase().indexOf(termo) !== -1;
+        card.style.display = combina ? '' : 'none';
+        if (combina) visiveis++;
+      });
+      if (vazia) vazia.hidden = visiveis !== 0;
+    });
+  })();
+</script>
 
 </body>
 </html>

@@ -364,7 +364,26 @@ textarea.input { resize: none; }
   align-items: center;
   margin-bottom: var(--gap-md);
 }
-.busca-barra__texto { color: var(--texto-sec); font-size: 14px; }
+.busca-barra__input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-input);
+}
+.busca-barra__input::placeholder { color: var(--texto-sec); }
+.busca-barra__input:focus { outline: none; border-color: var(--primaria); }
+
+.busca-vazia {
+  color: var(--texto-sec);
+  font-size: 14px;
+  text-align: center;
+  padding: 16px 0;
+}
 
 /* Detalhe da tarefa ----------------------------------------------------- */
 .detalhe-card {
