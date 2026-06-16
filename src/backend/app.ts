@@ -108,6 +108,17 @@ app.get('/supervisor/delegar', (req, res) => {
   });
 });
 
+// Preview read-only de uma tarefa delegada (com a descrição e tudo que o
+// supervisor preencheu ao criar). Acessada ao clicar numa tarefa da home.
+app.get('/supervisor/tarefa', (req, res) => {
+  res.render('supervisor/tarefa', {
+    title: 'Tarefa delegada',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' },
+    tarefa: buscarTarefaCapataz(req.query.id)
+  });
+});
+
 app.get('/supervisor/revisao', (req, res) => {
   res.render('supervisor/revisao', {
     title: 'Revisão de Tarefas',

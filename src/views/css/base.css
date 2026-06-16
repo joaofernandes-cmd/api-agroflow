@@ -372,6 +372,24 @@
   color: var(--color-muted);
 }
 
+/* Grupo título + voltar (desktop) */
+.topbar__lead { display: flex; flex-direction: column; gap: 3px; }
+
+/* Link "Voltar para o início" no topbar (desktop) */
+.topbar__back {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.topbar__back:hover { color: var(--color-text); }
+.topbar__back svg { flex-shrink: 0; }
+
 .greeting-desktop {
   background: rgba(47, 108, 61, 0.04);
   padding: 20px 32px;

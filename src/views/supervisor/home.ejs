@@ -88,7 +88,7 @@
           <p class="atencao-vazio">Tudo em dia — nenhuma tarefa pendente com os capatazes.</p>
         <% } %>
         <% tarefasDelegadas.forEach((t) => { %>
-          <a href="/supervisor/delegar" class="task-row task-row--<%= t.prioridade %>">
+          <a href="/supervisor/tarefa?id=<%= t.id %>" class="task-row task-row--<%= t.prioridade %>">
             <span class="task-row__accent" aria-hidden="true"></span>
             <span class="task-row__body">
               <span class="task-row__head">
@@ -195,7 +195,7 @@
             <p class="atencao-vazio">Tudo em dia — nenhuma tarefa pendente com os capatazes.</p>
           <% } %>
           <% tarefasDelegadas.forEach((t) => { %>
-            <a href="/supervisor/delegar" class="task-row task-row--<%= t.prioridade %>">
+            <a href="/supervisor/tarefa?id=<%= t.id %>" class="task-row task-row--<%= t.prioridade %>">
               <span class="task-row__accent" aria-hidden="true"></span>
               <span class="task-row__body">
                 <span class="task-row__head">

@@ -192,6 +192,102 @@
 }
 
 /* ════════════════════════════════════════════════════════════
+   TAREFA DELEGADA — Preview read-only (o que o supervisor criou)
+   ════════════════════════════════════════════════════════════ */
+.preview {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.4);
+  padding: 0 18px 18px;
+  margin-bottom: 24px;
+}
+
+.preview__head {
+  display: flex;
+  gap: 14px;
+  padding: 18px 0 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.preview__accent {
+  width: 5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+.preview__accent--alta  { background: #ff3b30; }
+.preview__accent--media { background: #d99a00; }
+.preview__accent--baixa { background: #2f7d34; }
+
+.preview__head-body { flex: 1; min-width: 0; }
+.preview__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+.preview__sub { font-size: 13px; color: var(--color-muted); margin-top: 3px; }
+.preview__badges { display: flex; gap: 8px; margin-top: 10px; }
+.preview__badges .prioridade-badge { margin-right: 0; }
+
+.preview__info { margin: 0; padding: 6px 0 0; }
+.preview__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.preview__label { font-size: 13px; color: var(--color-muted); }
+.preview__value {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: right;
+}
+
+.preview__desc { padding-top: 16px; }
+.preview__desc-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+.preview__desc-text { font-size: 14px; line-height: 1.55; color: var(--color-text); }
+
+.preview__nota {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  background: rgba(217, 154, 0, 0.08);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+.preview__nota svg { color: #d99a00; flex-shrink: 0; margin-top: 1px; }
+
+/* Voltar (desktop) + largura do preview */
+.preview-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+.preview-back:hover { color: var(--color-text); }
+.preview-wrap { max-width: 640px; }
+
+/* ════════════════════════════════════════════════════════════
    DELEGAR TAREFA — Campos de formulário (mobile + desktop)
    ════════════════════════════════════════════════════════════ */
 
