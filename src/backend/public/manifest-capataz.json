@@ -1,0 +1,39 @@
+{
+  "name": "AgroFlow Capataz",
+  "short_name": "Capataz",
+  "description": "Aplicação do capataz para registro de movimentações, tarefas e tickets em campo.",
+  "start_url": "/capataz/home",
+  "scope": "/capataz/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#2f6c3d",
+  "background_color": "#f7f8f5",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/assets/pwa/icon-agroflow-550.png",
+      "sizes": "550x550",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/pwa/icon-agroflow-550-maskeable.png",
+      "sizes": "550x550",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/pwa/icon-agroflow.png",
+      "sizes": "651x651",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/pwa/icon-agroflow-maskable.png",
+      "sizes": "651x651",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
