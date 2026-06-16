@@ -27,7 +27,12 @@ export function exigirCargoView(...cargosPermitidos: UsuarioCargo[]) {
     }
 
     if (!cargosPermitidos.includes(req.usuario.cargo)) {
-      const destino = req.usuario.cargo === 'gerente' ? '/gerente/home' : '/supervisor/home'
+      const destinoPorCargo: Record<UsuarioCargo, string> = {
+        capataz: '/capataz/home',
+        supervisor: '/supervisor/home',
+        gerente: '/gerente/home',
+      }
+      const destino = destinoPorCargo[req.usuario.cargo]
       return res.redirect(destino)
     }
 

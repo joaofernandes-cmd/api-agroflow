@@ -7,6 +7,7 @@ import { mockCapataz, mockGerente, mockSupervisor } from '../helpers/fixtures'
 jest.mock('../../services/usuario.service', () => ({
   UsuarioService: {
     autenticar: jest.fn(),
+    autenticarCapatazPorToken: jest.fn(),
     estaAtivo: jest.fn(),
     listarTodos: jest.fn(),
     buscarPorId: jest.fn(),
@@ -22,6 +23,7 @@ const mockedService = UsuarioService as jest.Mocked<typeof UsuarioService>
 describe('Usuarios', () => {
   beforeEach(() => {
     mockedService.autenticar.mockResolvedValue(mockSupervisor as any)
+    mockedService.autenticarCapatazPorToken.mockResolvedValue(mockCapataz as any)
     mockedService.estaAtivo.mockReturnValue(true)
     mockedService.listarTodos.mockResolvedValue([mockSupervisor as any, mockGerente as any])
     mockedService.buscarPorId.mockResolvedValue(mockGerente as any)
@@ -74,6 +76,26 @@ describe('Usuarios', () => {
     const response = await request(app).post('/usuarios/logout')
 
     expect(response.status).toBe(204)
+  })
+
+  it('GET /capataz/acesso/:token deve autenticar capataz e redirecionar para home', async () => {
+    const response = await request(app).get('/capataz/acesso/token-valido')
+    const cookies = response.headers['set-cookie']
+    const setCookie = Array.isArray(cookies) ? cookies.join(';') : String(cookies ?? '')
+
+    expect(response.status).toBe(302)
+    expect(response.headers.location).toBe('/capataz/home')
+    expect(setCookie).toContain('agroflow_token=')
+    expect(mockedService.autenticarCapatazPorToken).toHaveBeenCalledWith('token-valido')
+  })
+
+  it('GET /capataz/acesso/:token deve rejeitar token invalido', async () => {
+    mockedService.autenticarCapatazPorToken.mockResolvedValueOnce(null)
+
+    const response = await request(app).get('/capataz/acesso/token-invalido')
+
+    expect(response.status).toBe(302)
+    expect(response.headers.location).toBe('/capataz')
   })
 
   it('RN12 deve bloquear rota administrativa para usuario que nao seja gerente', () => {

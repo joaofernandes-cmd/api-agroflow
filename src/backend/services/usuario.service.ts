@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt'
+import crypto from 'crypto'
 import { Usuario, UsuarioInput, UsuarioCargo } from '../models/usuario.model'
 import { UsuarioRepository } from '../repositories/usuario.repository'
 import { UUID } from '../models/uuid'
+import { AcessoCapatazRepository } from '../repositories/acesso-capataz.repository'
 
 const BCRYPT_SALT_ROUNDS = 12
 
@@ -22,6 +24,19 @@ export const UsuarioService = {
     }
 
     return usuario
+  },
+
+  async autenticarCapatazPorToken(token: string): Promise<Usuario | null> {
+    if (!token || token.trim().length === 0) {
+      return null
+    }
+
+    const tokenHash = crypto
+      .createHash('sha256')
+      .update(token.trim())
+      .digest('hex')
+
+    return AcessoCapatazRepository.buscarCapatazPorTokenHash(tokenHash)
   },
 
   // RN06: Verificar se usuário tem permissão para validar/aprovar registros

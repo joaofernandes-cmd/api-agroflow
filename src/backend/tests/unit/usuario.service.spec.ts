@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt'
 import { UsuarioService } from '../../services/usuario.service'
 import { UsuarioRepository } from '../../repositories/usuario.repository'
-import { mockGerente, mockSupervisor } from '../helpers/fixtures'
+import { AcessoCapatazRepository } from '../../repositories/acesso-capataz.repository'
+import { mockCapataz, mockGerente, mockSupervisor } from '../helpers/fixtures'
 
 jest.mock('bcrypt', () => ({
   __esModule: true,
@@ -22,7 +23,14 @@ jest.mock('../../repositories/usuario.repository', () => ({
   },
 }))
 
+jest.mock('../../repositories/acesso-capataz.repository', () => ({
+  AcessoCapatazRepository: {
+    buscarCapatazPorTokenHash: jest.fn(),
+  },
+}))
+
 const mockedRepository = UsuarioRepository as jest.Mocked<typeof UsuarioRepository>
+const mockedAcessoCapatazRepository = AcessoCapatazRepository as jest.Mocked<typeof AcessoCapatazRepository>
 const mockedBcrypt = bcrypt as jest.Mocked<typeof bcrypt>
 
 describe('UsuarioService', () => {
@@ -35,6 +43,7 @@ describe('UsuarioService', () => {
     mockedRepository.criar.mockResolvedValue(mockGerente as any)
     mockedRepository.atualizar.mockResolvedValue(mockGerente as any)
     mockedRepository.remover.mockResolvedValue(undefined)
+    mockedAcessoCapatazRepository.buscarCapatazPorTokenHash.mockResolvedValue(mockCapataz as any)
   })
 
   it('autenticar deve retornar usuario quando senha bate', async () => {
@@ -58,6 +67,22 @@ describe('UsuarioService', () => {
     const usuario = await UsuarioService.autenticar('inexistente@agroflow.com', 'senha')
 
     expect(usuario).toBeNull()
+  })
+
+  it('autenticarCapatazPorToken deve buscar capataz pelo hash do token', async () => {
+    const usuario = await UsuarioService.autenticarCapatazPorToken('qr-capataz-daniel-aroeira')
+
+    expect(usuario).toEqual(mockCapataz)
+    expect(mockedAcessoCapatazRepository.buscarCapatazPorTokenHash).toHaveBeenCalledWith(
+      'a858669b3c392f03e4b62383ad1118142a18ad745a5c9b7de0edb8e2453f39c2'
+    )
+  })
+
+  it('autenticarCapatazPorToken deve rejeitar token vazio', async () => {
+    const usuario = await UsuarioService.autenticarCapatazPorToken('   ')
+
+    expect(usuario).toBeNull()
+    expect(mockedAcessoCapatazRepository.buscarCapatazPorTokenHash).not.toHaveBeenCalled()
   })
 
   it('podeValidar deve aceitar apenas supervisor', () => {
