@@ -456,6 +456,44 @@ textarea.input { resize: none; }
 .prio-opcao--ativo.prio-opcao--baixa   { background: #22a855; color: #fff; border-color: #2f7d34; }
 .prio-opcao--ativo.prio-opcao--critica { background: #8a1c1c; color: #fff; border-color: #5e1010; }
 
+/* Atalhos grandes da home (Movimentação / Ticket / Tarefas) */
+.acoes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+.acao-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  text-decoration: none;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-card);
+  padding: 26px 14px;
+  min-height: 132px;
+  color: var(--texto);
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.35);
+}
+.acao-card:active { transform: scale(0.98); }
+.acao-card--larga { grid-column: 1 / -1; }
+.acao-card__icone {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: #fff;
+}
+.acao-card__texto { display: flex; flex-direction: column; gap: 4px; }
+.acao-card__titulo { font-size: 15px; font-weight: 700; }
+.acao-card__sub { font-size: 12px; color: var(--texto-sec); line-height: 1.3; }
+
 /* Detalhe da tarefa ----------------------------------------------------- */
 .detalhe-card {
   background: var(--superficie);
