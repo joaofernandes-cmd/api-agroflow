@@ -24,6 +24,7 @@
   --gap-md: 16px;
   --radius: 12px;
   --radius-lg: 16px;
+  --radius-card: 24px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -149,7 +150,7 @@ body {
 .perfil__versao { margin-top: auto; color: var(--texto-sec); font-size: 12px; }
 
 /* Home ------------------------------------------------------------------ */
-.saudacao { background: #eceae4; padding: 18px 18px 20px; flex-shrink: 0; }
+.saudacao { background: #eceae4; padding: 18px 18px 20px; flex-shrink: 0; border-radius: 0 0 var(--radius-card) var(--radius-card); }
 .saudacao__titulo { font-size: 23px; font-weight: 700; color: var(--texto); }
 .saudacao__data { color: var(--texto-sec); font-size: 14px; margin: 4px 0 10px; }
 .tag-sincronizado {
@@ -393,7 +394,7 @@ textarea.input { resize: none; }
   background-repeat: no-repeat;
   background-position: 12px center;
   border: 1px solid var(--borda);
-  border-radius: var(--radius-input);
+  border-radius: var(--radius-lg);
 }
 .busca-barra__input::placeholder { color: var(--texto-sec); }
 .busca-barra__input:focus {
@@ -423,7 +424,7 @@ textarea.input { resize: none; }
   color: var(--texto-sec);
   background: var(--superficie);
   border: 1px solid var(--borda);
-  border-radius: var(--radius-btn);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
