@@ -10,7 +10,7 @@
     { value: 'transferencia', label: 'Transferência' },
     { value: 'compra', label: 'Compra' },
     { value: 'venda', label: 'Venda' },
-    { value: 'outros', label: 'Outros' }
+    { value: 'outro', label: 'Outro' }
   ];
   var ESTAGIOS = [
     'BEZERRO 0 A 7 MESES',
@@ -51,6 +51,11 @@
       </select>
     </div>
 
+    <div class="campo" id="campoOutroMov" style="display: none;">
+      <label class="campo__rotulo" for="outroMov">Descreva a movimentação <span class="obrigatorio">*</span></label>
+      <input class="input" type="text" id="outroMov" placeholder="Diga o que foi movimentado" />
+    </div>
+
     <div class="campo">
       <label class="campo__rotulo" id="rotuloOrigem" for="origemMov">Retiro</label>
       <select class="select" id="origemMov" required>
@@ -69,7 +74,7 @@
 
     <div class="campo">
       <label class="campo__rotulo" for="quantidadeMov">Quantidade de animais</label>
-      <input class="input" id="quantidadeMov" type="number" min="1" step="1" placeholder="Ex: 12" />
+      <input class="input" id="quantidadeMov" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Ex: 12" />
     </div>
 
     <div class="campo">
@@ -110,9 +115,9 @@
       </div>
     </div>
 
-    <input type="hidden" id="tipoEvidencia" value="mensagem" />
+    <input type="hidden" id="tipoEvidencia" value="" />
 
-    <div class="campo" id="evidenciaMensagemCampo">
+    <div class="campo" id="evidenciaMensagemCampo" style="display: none;">
       <label class="campo__rotulo" for="conteudoEvidencia">Texto da evidência</label>
       <textarea class="input" id="conteudoEvidencia" rows="3" placeholder="Descreva a ocorrência com ao menos 10 caracteres"></textarea>
     </div>
@@ -184,6 +189,8 @@
   const quantidadeMov = document.getElementById('quantidadeMov');
   const estagioMov = document.getElementById('estagioMov');
   const causaObito = document.getElementById('causaObito');
+  const campoOutroMov = document.getElementById('campoOutroMov');
+  const outroMov = document.getElementById('outroMov');
   const tipoEvidencia = document.getElementById('tipoEvidencia');
   const evidenciaMensagemCampo = document.getElementById('evidenciaMensagemCampo');
   const evidenciaAudioCampo = document.getElementById('evidenciaAudioCampo');
@@ -711,6 +718,8 @@
     const tipo = tipoMov.value;
     const ehTransferencia = tipo === 'transferencia';
     const ehMorte = tipo === 'morte';
+    const ehNascimento = tipo === 'nascimento';
+    const ehOutro = tipo === 'outro';
 
     campoDestino.style.display = ehTransferencia ? 'block' : 'none';
     campoCausa.style.display = ehMorte ? 'block' : 'none';
@@ -723,6 +732,18 @@
     if (!ehMorte) {
       causaObito.value = '';
     }
+
+    // Nascimento: o animal é sempre bezerro de 0 a 7 meses — preenche e trava.
+    if (ehNascimento) {
+      estagioMov.value = 'BEZERRO 0 A 7 MESES';
+      estagioMov.disabled = true;
+    } else {
+      estagioMov.disabled = false;
+    }
+
+    // "Outro": revela o campo para descrever a movimentação.
+    campoOutroMov.style.display = ehOutro ? 'block' : 'none';
+    if (!ehOutro) outroMov.value = '';
   }
 
   function selecionarEvidencia(tipo) {
@@ -755,7 +776,29 @@
     return null;
   }
 
+  // Em transferência, o destino não pode ser igual à origem.
+  function sincronizarRetiros() {
+    Array.prototype.forEach.call(destinoMov.options, function (opt) {
+      if (!opt.value) return; // ignora o placeholder "Selecione o retiro"
+      opt.disabled = opt.value === origemMov.value;
+    });
+
+    // Se o destino acabou ficando igual à origem (ex.: trocar a origem depois),
+    // limpa e avisa na hora.
+    if (destinoMov.value && destinoMov.value === origemMov.value) {
+      destinoMov.value = '';
+      mostrarFeedback('O retiro de destino deve ser diferente do de origem.', 'error');
+    }
+  }
+
   tipoMov.addEventListener('change', atualizarCampos);
+  origemMov.addEventListener('change', sincronizarRetiros);
+  destinoMov.addEventListener('change', sincronizarRetiros);
+
+  // Quantidade: só dígitos 0-9 (qualquer tamanho), sem letras nem outros símbolos.
+  quantidadeMov.addEventListener('input', function () {
+    quantidadeMov.value = quantidadeMov.value.replace(/[^0-9]/g, '');
+  });
   document.querySelectorAll('.evidencia__btn').forEach(btn => {
     if (!btn.dataset.evidencia) {
       return;
@@ -771,7 +814,7 @@
   btnExcluirFoto.addEventListener('click', excluirFoto);
 
   atualizarCampos();
-  selecionarEvidencia('mensagem');
+  selecionarEvidencia('');
   carregarAudioSalvo().catch(() => atualizarControlesAudio());
   carregarFotoSalva().catch(() => atualizarControlesFoto());
 
@@ -791,8 +834,18 @@
       return;
     }
 
+    if (tipo === 'outro' && !outroMov.value.trim()) {
+      mostrarFeedback('Descreva qual foi a movimentação.', 'error');
+      return;
+    }
+
     if (tipo === 'transferencia' && !destino) {
       mostrarFeedback('Selecione o retiro de destino.', 'error');
+      return;
+    }
+
+    if (tipo === 'transferencia' && destino === origem) {
+      mostrarFeedback('O retiro de destino deve ser diferente do de origem.', 'error');
       return;
     }
 
@@ -858,6 +911,7 @@
         retiro_id: usuario.retiro_id ?? CAPATAZ_DEMO.retiro_id,
         capataz_id: usuario.id ?? CAPATAZ_DEMO.id,
         tipo,
+        tipo_outro: tipo === 'outro' ? outroMov.value.trim() : null,
         origem: origem || null,
         destino: tipo === 'transferencia' ? destino : null,
         quantidade,
@@ -895,7 +949,7 @@
       }
       form.reset();
       atualizarCampos();
-      selecionarEvidencia('mensagem');
+      selecionarEvidencia('');
     } catch (error) {
       mostrarFeedback(error instanceof Error ? error.message : 'Erro ao salvar movimentação.', 'error');
     } finally {

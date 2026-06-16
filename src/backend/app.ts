@@ -12,6 +12,7 @@ import { tratadorDeErros, ErroDeAplicacao } from './middlewares/erros.middleware
 import { middlewareDeLog } from './middlewares/log.middleware'
 import { autenticarViewPorCookie } from './middlewares/autenticacao.middleware'
 import { exigirCargoView } from './middlewares/cargo.middleware'
+import { tarefasCapataz, tarefasCapatazRecentes, buscarTarefaCapataz } from './data/tarefas-capataz'
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use(express.json())
 
 // Arquivos estáticos (CSS, imagens, etc.)
 app.use('/css', express.static(path.join(__dirname, '../views/css')))
+app.use('/js', express.static(path.join(__dirname, '../views/js')))
 app.use('/assets', express.static(path.join(__dirname, '../../assets')))
 
 // Documentação navegável da WebAPI disponível em /docs
@@ -58,15 +60,15 @@ app.get('/capataz', (_req, res) => {
 })
 
 app.get('/capataz/home', (_req, res) => {
-  res.render('capataz/home')
+  res.render('capataz/home', { tarefas: tarefasCapataz.filter((t) => t.status === 'pendente') })
 })
 
 app.get('/capataz/tarefas', (_req, res) => {
-  res.render('capataz/tarefas')
+  res.render('capataz/tarefas', { tarefas: tarefasCapatazRecentes })
 })
 
-app.get('/capataz/detalhe-tarefa', (_req, res) => {
-  res.render('capataz/detalhe-tarefa')
+app.get('/capataz/detalhe-tarefa', (req, res) => {
+  res.render('capataz/detalhe-tarefa', { tarefa: buscarTarefaCapataz(req.query.id) })
 })
 
 app.get('/capataz/movimentacao', (_req, res) => {

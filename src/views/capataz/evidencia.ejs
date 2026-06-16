@@ -1,8 +1,8 @@
 <%
-  /* Caixa de evidência com captura real.
-     - Foto: abre a câmera (input file image + capture).
-     - Áudio: abre o gravador nativo do celular (input file audio + capture).
-     - Texto: campo de observação que aparece ao clicar.
+  /* Caixa de evidência com captura REAL (padrão do app):
+     - Foto: abre a câmera ao vivo e captura a imagem (não anexa arquivo).
+     - Áudio: grava pelo microfone (não anexa arquivo).
+     - Texto: campo de observação.
      "ns" é um prefixo para tornar os IDs únicos caso o partial seja
      incluído mais de uma vez na mesma página. */
   var ns = typeof ns !== 'undefined' ? ns : 'ev';
@@ -10,21 +10,14 @@
 <div class="campo">
   <label class="campo__rotulo">Evidência (obrigatório)</label>
   <div class="evidencia">
-    <!-- Foto: abre a câmera no celular -->
-    <label class="evidencia__btn evidencia__btn--foto" for="<%= ns %>Foto">
+    <button type="button" class="evidencia__btn evidencia__btn--foto" id="<%= ns %>BtnFoto">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
       Foto
-    </label>
-    <input type="file" id="<%= ns %>Foto" accept="image/*" capture="environment" hidden />
-
-    <!-- Áudio: abre o gravador nativo do celular -->
-    <label class="evidencia__btn evidencia__btn--audio" for="<%= ns %>Audio">
+    </button>
+    <button type="button" class="evidencia__btn evidencia__btn--audio" id="<%= ns %>BtnAudio">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
       Áudio
-    </label>
-    <input type="file" id="<%= ns %>Audio" accept="audio/*" capture hidden />
-
-    <!-- Texto: revela um campo de observação -->
+    </button>
     <button type="button" class="evidencia__btn evidencia__btn--texto" id="<%= ns %>BtnTexto">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
       Texto
@@ -34,62 +27,212 @@
   <!-- Lista de evidências anexadas (preenchida via JS) -->
   <ul class="evidencia-lista" id="<%= ns %>Lista"></ul>
 
-  <!-- Bloco de escrita (oculto até clicar em "Texto") -->
-  <div class="evidencia-bloco-texto" id="<%= ns %>BlocoTexto" style="display: none;">
+  <!-- FOTO: câmera ao vivo -->
+  <div class="evidencia-painel" id="<%= ns %>PainelFoto" style="display: none;">
+    <div class="camera-stage">
+      <video id="<%= ns %>Video" class="camera-stage__view" autoplay playsinline muted></video>
+      <img id="<%= ns %>FotoPreview" class="camera-stage__preview" alt="Foto capturada" style="display: none;" />
+      <div class="camera-stage__toolbar">
+        <button type="button" class="evidencia__btn evidencia__btn--foto" id="<%= ns %>AbrirCamera">Abrir câmera</button>
+        <button type="button" class="evidencia__btn evidencia__btn--audio" id="<%= ns %>Capturar" disabled>Capturar</button>
+        <button type="button" class="evidencia__btn evidencia__btn--ghost" id="<%= ns %>Refazer" disabled>Refazer</button>
+      </div>
+      <p class="camera-stage__hint" id="<%= ns %>FotoStatus">Abra a câmera para tirar a foto.</p>
+    </div>
+  </div>
+
+  <!-- ÁUDIO: gravação pelo microfone -->
+  <div class="evidencia-painel" id="<%= ns %>PainelAudio" style="display: none;">
+    <div class="evidencia">
+      <button type="button" class="evidencia__btn evidencia__btn--audio" id="<%= ns %>Gravar">Gravar</button>
+      <button type="button" class="evidencia__btn evidencia__btn--stop" id="<%= ns %>Parar" disabled>Parar</button>
+      <button type="button" class="evidencia__btn evidencia__btn--danger" id="<%= ns %>Regravar" disabled>Regravar</button>
+    </div>
+    <p id="<%= ns %>AudioStatus" style="margin: 8px 0 0; font-size: 14px;"></p>
+    <audio id="<%= ns %>AudioPreview" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
+  </div>
+
+  <!-- TEXTO -->
+  <div class="evidencia-painel" id="<%= ns %>PainelTexto" style="display: none;">
     <label class="campo__rotulo" style="margin-top: 12px;">Observação por texto</label>
-    <textarea class="input" id="<%= ns %>Texto" rows="4"
-              placeholder="Descreva o que você observou..."></textarea>
+    <textarea class="input" id="<%= ns %>Texto" rows="4" placeholder="Descreva o que você observou..."></textarea>
   </div>
 </div>
 
 <script>
   (function () {
     var ns = "<%= ns %>";
-    var inputFoto = document.getElementById(ns + 'Foto');
-    var inputAudio = document.getElementById(ns + 'Audio');
-    var btnTexto = document.getElementById(ns + 'BtnTexto');
-    var campoTexto = document.getElementById(ns + 'Texto');
-    var lista = document.getElementById(ns + 'Lista');
+    var $ = function (sufixo) { return document.getElementById(ns + sufixo); };
 
-    // Ícone simples (check) para os itens anexados
+    var lista = $('Lista');
     var iconeCheck =
       '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22a855" ' +
       'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M20 6 9 17l-5-5"/></svg>';
 
-    // Adiciona (ou substitui) um item na lista de evidências
     function registrar(tipo, nome) {
       var existente = lista.querySelector('[data-tipo="' + tipo + '"]');
       if (existente) existente.remove();
-
       var li = document.createElement('li');
       li.className = 'evidencia-item';
       li.setAttribute('data-tipo', tipo);
       li.innerHTML = iconeCheck + '<span>' + tipo + ': ' + nome + '</span>';
       lista.appendChild(li);
     }
+    function remover(tipo) {
+      var item = lista.querySelector('[data-tipo="' + tipo + '"]');
+      if (item) item.remove();
+    }
 
-    inputFoto.addEventListener('change', function () {
-      if (inputFoto.files.length) registrar('Foto', inputFoto.files[0].name || 'imagem capturada');
+    // Dados das evidências capturadas (para persistir depois).
+    var evidencias = [];
+    function setEvid(tipo, dados) {
+      evidencias = evidencias.filter(function (e) { return e.tipo !== tipo; });
+      evidencias.push(Object.assign({ tipo: tipo }, dados));
+    }
+    function delEvid(tipo) {
+      evidencias = evidencias.filter(function (e) { return e.tipo !== tipo; });
+    }
+    window.__evidencias = window.__evidencias || {};
+    window.__evidencias[ns] = {
+      obter: function () { return evidencias.slice(); },
+      tem: function () { return evidencias.length > 0; }
+    };
+
+    // ---- alternância entre os 3 tipos ----
+    var btnFoto = $('BtnFoto'), btnAudio = $('BtnAudio'), btnTexto = $('BtnTexto');
+    var painelFoto = $('PainelFoto'), painelAudio = $('PainelAudio'), painelTexto = $('PainelTexto');
+
+    function mostrarPainel(qual) {
+      painelFoto.style.display = qual === 'foto' ? 'block' : 'none';
+      painelAudio.style.display = qual === 'audio' ? 'block' : 'none';
+      painelTexto.style.display = qual === 'texto' ? 'block' : 'none';
+      btnFoto.classList.toggle('evidencia__btn--ativo', qual === 'foto');
+      btnAudio.classList.toggle('evidencia__btn--ativo', qual === 'audio');
+      btnTexto.classList.toggle('evidencia__btn--ativo', qual === 'texto');
+    }
+    btnFoto.addEventListener('click', function () { mostrarPainel('foto'); });
+    btnAudio.addEventListener('click', function () { mostrarPainel('audio'); });
+    btnTexto.addEventListener('click', function () { mostrarPainel('texto'); $('Texto').focus(); });
+
+    // ---- FOTO: câmera ao vivo ----
+    var video = $('Video'), fotoPreview = $('FotoPreview'), fotoStatus = $('FotoStatus');
+    var abrirCamera = $('AbrirCamera'), capturar = $('Capturar'), refazer = $('Refazer');
+    var streamFoto = null;
+
+    function pararCamera() {
+      if (streamFoto) { streamFoto.getTracks().forEach(function (t) { t.stop(); }); streamFoto = null; }
+      video.srcObject = null;
+    }
+
+    abrirCamera.addEventListener('click', function () {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        fotoStatus.textContent = 'Câmera não disponível neste dispositivo.';
+        return;
+      }
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function (stream) {
+          streamFoto = stream;
+          video.srcObject = stream;
+          video.style.display = 'block';
+          fotoPreview.style.display = 'none';
+          capturar.disabled = false;
+          refazer.disabled = true;
+          fotoStatus.textContent = 'Enquadre e toque em Capturar.';
+        })
+        .catch(function () { fotoStatus.textContent = 'Não foi possível acessar a câmera.'; });
     });
 
-    inputAudio.addEventListener('change', function () {
-      if (inputAudio.files.length) registrar('Áudio', inputAudio.files[0].name || 'áudio gravado');
+    capturar.addEventListener('click', function () {
+      if (!streamFoto) return;
+      var vw = video.videoWidth || 640, vh = video.videoHeight || 480;
+      var escala = Math.min(1, 800 / vw);
+      var canvas = document.createElement('canvas');
+      canvas.width = Math.round(vw * escala);
+      canvas.height = Math.round(vh * escala);
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+      fotoPreview.src = dataUrl;
+      fotoPreview.style.display = 'block';
+      video.style.display = 'none';
+      pararCamera();
+      capturar.disabled = true;
+      refazer.disabled = false;
+      fotoStatus.textContent = 'Foto capturada.';
+      setEvid('foto', { dataUrl: dataUrl });
+      registrar('Foto', 'foto capturada');
     });
 
-    var blocoTexto = document.getElementById(ns + 'BlocoTexto');
-
-    btnTexto.addEventListener('click', function () {
-      var visivel = blocoTexto.style.display !== 'none';
-      blocoTexto.style.display = visivel ? 'none' : 'block';
-      if (!visivel) campoTexto.focus();
+    refazer.addEventListener('click', function () {
+      delEvid('foto');
+      remover('Foto');
+      fotoPreview.style.display = 'none';
+      abrirCamera.click();
     });
 
-    campoTexto.addEventListener('input', function () {
-      if (campoTexto.value.trim()) registrar('Texto', 'observação adicionada');
-      else {
-        var item = lista.querySelector('[data-tipo="Texto"]');
-        if (item) item.remove();
+    // ---- ÁUDIO: gravação ----
+    var gravar = $('Gravar'), parar = $('Parar'), regravar = $('Regravar');
+    var audioStatus = $('AudioStatus'), audioPreview = $('AudioPreview');
+    var mediaRecorder = null, chunks = [], streamAudio = null;
+
+    gravar.addEventListener('click', function () {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined') {
+        audioStatus.textContent = 'Gravação não disponível neste dispositivo.';
+        return;
+      }
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (stream) {
+          streamAudio = stream;
+          chunks = [];
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+          mediaRecorder.onstop = function () {
+            var blob = new Blob(chunks, { type: chunks[0] ? chunks[0].type : 'audio/webm' });
+            audioPreview.src = URL.createObjectURL(blob);
+            audioPreview.style.display = 'block';
+            audioStatus.textContent = 'Áudio gravado.';
+            var leitor = new FileReader();
+            leitor.onloadend = function () { setEvid('audio', { dataUrl: leitor.result }); };
+            leitor.readAsDataURL(blob);
+            registrar('Áudio', 'áudio gravado');
+          };
+          mediaRecorder.start();
+          gravar.disabled = true;
+          parar.disabled = false;
+          regravar.disabled = true;
+          audioStatus.textContent = 'Gravando...';
+        })
+        .catch(function () { audioStatus.textContent = 'Não foi possível acessar o microfone.'; });
+    });
+
+    parar.addEventListener('click', function () {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+      if (streamAudio) { streamAudio.getTracks().forEach(function (t) { t.stop(); }); streamAudio = null; }
+      gravar.disabled = false;
+      parar.disabled = true;
+      regravar.disabled = false;
+    });
+
+    regravar.addEventListener('click', function () {
+      delEvid('audio');
+      remover('Áudio');
+      audioPreview.style.display = 'none';
+      audioPreview.removeAttribute('src');
+      audioStatus.textContent = '';
+      gravar.disabled = false;
+      parar.disabled = true;
+      regravar.disabled = true;
+    });
+
+    // ---- TEXTO ----
+    var texto = $('Texto');
+    texto.addEventListener('input', function () {
+      if (texto.value.trim()) {
+        setEvid('texto', { conteudo: texto.value.trim() });
+        registrar('Texto', 'observação adicionada');
+      } else {
+        delEvid('texto');
+        remover('Texto');
       }
     });
   })();

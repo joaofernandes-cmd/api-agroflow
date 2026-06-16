@@ -51,6 +51,7 @@ export interface Movimentacao {
   capataz_id: UUID
   validado_por: UUID | null
   tipo: MovimentacaoTipo
+  tipo_outro?: string | null
   origem: RetiroNome | null
   destino: RetiroNome | null
   quantidade: number | null
@@ -68,6 +69,7 @@ export interface MovimentacaoInput {
   capataz_id: UUID
   validado_por: UUID | null
   tipo: MovimentacaoTipo
+  tipo_outro?: string | null
   origem?: RetiroNome | null
   destino?: RetiroNome | null
   quantidade?: number | null

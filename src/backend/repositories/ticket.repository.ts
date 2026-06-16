@@ -6,7 +6,7 @@ export const TicketRepository = {
 
     async buscarTodos(): Promise<Ticket[]> {
         return sql<Ticket[]>`
-            SELECT id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
+            SELECT id, retiro_id, aberto_por, categoria, categoria_outro, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
             FROM ticket
             ORDER BY data_criacao
         `
@@ -14,7 +14,7 @@ export const TicketRepository = {
 
     async buscarPorId(id: UUID): Promise<Ticket | null> {
         const ticket = await sql<Ticket[]>`
-            SELECT id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
+            SELECT id, retiro_id, aberto_por, categoria, categoria_outro, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
             FROM ticket
             WHERE id = ${id}
             LIMIT 1
@@ -25,12 +25,13 @@ export const TicketRepository = {
 
     async criar(input: TicketInput): Promise<Ticket> {
         const [created] = await sql<Ticket[]>`
-            INSERT INTO ticket (id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado)
+            INSERT INTO ticket (id, retiro_id, aberto_por, categoria, categoria_outro, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado)
             VALUES (
                 COALESCE(${input.id ?? null}::uuid, gen_random_uuid()),
                 ${input.retiro_id},
                 ${input.aberto_por},
                 ${input.categoria},
+                ${input.categoria_outro ?? null},
                 ${input.localizacao},
                 ${input.status},
                 ${input.atribuido_a},
@@ -45,6 +46,7 @@ export const TicketRepository = {
                 retiro_id = EXCLUDED.retiro_id,
                 aberto_por = EXCLUDED.aberto_por,
                 categoria = EXCLUDED.categoria,
+                categoria_outro = EXCLUDED.categoria_outro,
                 localizacao = EXCLUDED.localizacao,
                 status = EXCLUDED.status,
                 atribuido_a = EXCLUDED.atribuido_a,
@@ -54,7 +56,7 @@ export const TicketRepository = {
                 data_criacao = EXCLUDED.data_criacao,
                 data_realizado = EXCLUDED.data_realizado,
                 sincronizado = EXCLUDED.sincronizado
-            RETURNING id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
+            RETURNING id, retiro_id, aberto_por, categoria, categoria_outro, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
         `
         return created
     },
@@ -66,6 +68,7 @@ export const TicketRepository = {
             retiro_id = COALESCE(${input.retiro_id ?? null}, retiro_id),
             aberto_por = COALESCE(${input.aberto_por ?? null}, aberto_por),
             categoria = COALESCE(${input.categoria ?? null}, categoria),
+            categoria_outro = COALESCE(${input.categoria_outro ?? null}, categoria_outro),
             localizacao = COALESCE(${input.localizacao ?? null}, localizacao),
             status = COALESCE(${input.status ?? null}, status),
             atribuido_a = COALESCE(${input.atribuido_a ?? null}, atribuido_a),
@@ -76,7 +79,7 @@ export const TicketRepository = {
             data_realizado = COALESCE(${input.data_realizado ?? null}, data_realizado),
             sincronizado = COALESCE(${input.sincronizado ?? null}, sincronizado)
             WHERE id = ${id}
-            RETURNING id, retiro_id, aberto_por, categoria, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
+            RETURNING id, retiro_id, aberto_por, categoria, categoria_outro, localizacao, status, atribuido_a, aprovado_por, descricao, prioridade, data_criacao, data_realizado, sincronizado
         `
         return updated[0] ?? null
     }

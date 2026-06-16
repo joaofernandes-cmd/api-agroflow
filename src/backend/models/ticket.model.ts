@@ -11,6 +11,7 @@ export interface Ticket {
   retiro_id: UUID
   aberto_por: UUID
   categoria: TicketCategoria
+  categoria_outro?: string | null
   localizacao: string
   status: TicketStatus
   atribuido_a: UUID | null
@@ -27,6 +28,7 @@ export interface TicketInput {
   retiro_id: UUID
   aberto_por: UUID
   categoria: TicketCategoria
+  categoria_outro?: string | null
   localizacao: string
   status: TicketStatus
   atribuido_a: UUID | null

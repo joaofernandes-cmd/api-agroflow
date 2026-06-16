@@ -1,20 +1,5 @@
 <%- include('../partials/capataz-head', { titulo: 'Alow · Detalhe da Tarefa' }) %>
 
-<%
-  var tarefa = {
-    titulo: 'Transferência de gado lote B — Aroeira',
-    autor: 'Criada por Supervisor Luiz',
-    nivel: 'Alta',
-    prazo: 'Amanhã, 08:00',
-    categoria: 'Manejo de rebanho',
-    retiro: 'Fazenda Aroeira',
-    data: '30/05/2026 às 08:00',
-    status: 'Pendente',
-    supervisor: 'Luiz Ferreira',
-    descricao: 'Realizar a transferência do gado do lote B para o retiro de destino. Verificar documentação e condições dos animais.'
-  };
-%>
-
 <main class="celular">
   <header class="cabecalho">
     <div class="cabecalho__barra">
@@ -32,10 +17,10 @@
     <div class="detalhe-card">
       <span class="detalhe-card__barra"></span>
       <div class="detalhe-card__conteudo">
-        <div class="detalhe-card__titulo" id="tarefaTitulo"><%= tarefa.titulo %></div>
+        <div class="detalhe-card__titulo" id="tarefaTitulo"><%= tarefa.titulo %> — <%= tarefa.retiro %></div>
         <div class="detalhe-card__autor" id="tarefaAutor"><%= tarefa.autor %></div>
         <div class="detalhe-card__meta">
-          <span class="etiqueta etiqueta--alta" id="tarefaNivel"><%= tarefa.nivel %></span>
+          <span class="etiqueta etiqueta--<%= tarefa.classe %>" id="tarefaNivel"><%= tarefa.nivel %></span>
           <span id="tarefaPrazo"><%= tarefa.prazo %></span>
         </div>
         <div class="detalhe-card__cat" id="tarefaCategoria"><%= tarefa.categoria %></div>
@@ -52,7 +37,7 @@
     </div>
     <div class="detalhe-linha">
       <span class="detalhe-linha__rotulo">Status</span>
-      <span class="detalhe-linha__valor" id="statusTarefa"><%= tarefa.status %></span>
+      <span class="detalhe-linha__valor" id="statusTarefa"><%= tarefa.statusRotulo %></span>
     </div>
     <div class="detalhe-linha">
       <span class="detalhe-linha__rotulo">Supervisor</span>
@@ -62,81 +47,113 @@
     <label class="detalhe-descricao-rotulo">Descrição</label>
     <div class="detalhe-descricao" id="tarefaDescricao"><%= tarefa.descricao %></div>
 
-    <button type="button" class="btn-primario" id="btnConcluir" style="margin-bottom: 12px;">
-      Marcar como concluída
+    <!-- Evidências já registradas (aparece quando a tarefa está concluída) -->
+    <div id="evidenciasSalvas" hidden style="margin-bottom: 12px;"></div>
+
+    <button type="button" class="btn-secundario" id="btnEvidencia" style="margin-bottom: 12px;">Anexar evidência</button>
+
+    <div id="painelEvidencia" hidden style="margin-bottom: 12px;">
+      <%- include('evidencia', { ns: 'ev' }) %>
+    </div>
+
+    <p id="evidenciaErro" class="evidencia-erro" hidden>Anexe uma evidência (foto, áudio ou texto) para marcar como concluída.</p>
+    <button type="button" class="btn-primario" id="btnConcluir" <%= tarefa.status === 'concluida' ? 'disabled' : '' %>>
+      <%= tarefa.status === 'concluida' ? 'Concluída' : 'Marcar como concluída' %>
     </button>
-    <button type="button" class="btn-secundario">Anexar evidência</button>
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
 </main>
 
+<div id="dadosTarefa" hidden
+     data-titulo="<%= tarefa.titulo %>"
+     data-retiro="<%= tarefa.retiro %>"
+     data-supervisor="<%= tarefa.supervisor %>"
+     data-prioridade="<%= tarefa.classe %>"></div>
+<script src="/js/tarefas-store.js"></script>
 <script>
-  function formatarData(valor) {
-    if (!valor) return 'Sem data';
-    const data = new Date(valor);
-    if (Number.isNaN(data.getTime())) return 'Sem data';
+  var _el = document.getElementById('dadosTarefa');
+  var DADOS_TAREFA = {
+    id: new URLSearchParams(location.search).get('id') || '1',
+    titulo: _el.dataset.titulo,
+    retiro: _el.dataset.retiro,
+    supervisor: _el.dataset.supervisor,
+    prioridade: _el.dataset.prioridade
+  };
 
-    return data.toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  }
+  (function () {
+    var btnEvidencia = document.getElementById('btnEvidencia');
+    var painel = document.getElementById('painelEvidencia');
+    var evidenciaErro = document.getElementById('evidenciaErro');
+    var btnConcluir = document.getElementById('btnConcluir');
+    var status = document.getElementById('statusTarefa');
+    var listaEvidencia = document.getElementById('evLista');
+    var evidenciasSalvas = document.getElementById('evidenciasSalvas');
 
-  function prioridadeParaRotulo(prioridade) {
-    if (prioridade === 'alta') return 'Alta';
-    if (prioridade === 'media') return 'Média';
-    return 'Baixa';
-  }
-
-  async function carregarTarefa() {
-    const params = new URLSearchParams(window.location.search);
-    const tarefaId = params.get('id');
-
-    try {
-      const response = tarefaId
-        ? await fetch(`/tarefas/${tarefaId}`)
-        : await fetch('/tarefas');
-
-      const data = await response.json();
-      const tarefa = Array.isArray(data) ? data[0] : data;
-
-      if (!response.ok || !tarefa) {
-        return;
-      }
-
-      document.getElementById('tarefaTitulo').textContent = tarefa.descricao;
-      document.getElementById('tarefaAutor').textContent = `Criada por ${tarefa.criada_por}`;
-      document.getElementById('tarefaNivel').textContent = prioridadeParaRotulo(tarefa.prioridade);
-      document.getElementById('tarefaPrazo').textContent = tarefa.status === 'aprovado' ? 'Concluída' : 'Pendente';
-      document.getElementById('tarefaCategoria').textContent = tarefa.categoria;
-      document.getElementById('tarefaRetiro').textContent = `Retiro ${tarefa.retiro_id}`;
-      document.getElementById('tarefaData').textContent = formatarData(tarefa.data_criacao);
-      document.getElementById('statusTarefa').textContent = tarefa.status === 'aprovado' ? 'Concluída' : 'Pendente';
-      document.getElementById('tarefaSupervisor').textContent = `Usuário ${tarefa.criada_por}`;
-      document.getElementById('tarefaDescricao').textContent = tarefa.descricao;
-
-      const botao = document.getElementById('btnConcluir');
-      if (tarefa.status === 'aprovado' && botao) {
-        botao.textContent = 'Concluída';
-        botao.disabled = true;
-      }
-    } catch {
-      // Mantém o conteúdo estático se a API não responder.
+    function evidenciasCapturadas() {
+      var api = window.__evidencias && window.__evidencias['ev'];
+      return api ? api.obter() : [];
     }
-  }
 
-  document.getElementById('btnConcluir').addEventListener('click', function () {
-    const status = document.getElementById('statusTarefa');
-    if (status) status.textContent = 'Concluída';
-    this.textContent = 'Concluída';
-    this.disabled = true;
-  });
+    // Mostra a tarefa como concluída + evidências (read-only).
+    function mostrarConcluida(evidencias) {
+      if (status) status.textContent = 'Concluída';
+      if (btnConcluir) { btnConcluir.textContent = 'Concluída'; btnConcluir.disabled = true; }
+      if (btnEvidencia) btnEvidencia.style.display = 'none';
+      if (painel) painel.hidden = true;
+      if (evidenciaErro) evidenciaErro.hidden = true;
+      if (evidenciasSalvas && evidencias && evidencias.length && window.TarefasStore) {
+        TarefasStore.renderEvidencias(evidencias, evidenciasSalvas);
+        evidenciasSalvas.hidden = false;
+      }
+    }
 
-  carregarTarefa();
+    // Já estava concluída (salva antes)? Mostra o estado concluído.
+    var salva = window.TarefasStore ? TarefasStore.obter(DADOS_TAREFA.id) : null;
+    if (salva) {
+      mostrarConcluida(salva.evidencias);
+    }
+
+    // "Anexar evidência" mostra/esconde o painel com os 3 tipos.
+    if (btnEvidencia && painel) {
+      btnEvidencia.addEventListener('click', function () {
+        painel.hidden = !painel.hidden;
+      });
+    }
+
+    // Some com o erro assim que o capataz anexa qualquer evidência.
+    if (listaEvidencia) {
+      new MutationObserver(function () {
+        if (evidenciasCapturadas().length && evidenciaErro) evidenciaErro.hidden = true;
+      }).observe(listaEvidencia, { childList: true });
+    }
+
+    // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto).
+    if (btnConcluir && !salva) {
+      btnConcluir.addEventListener('click', function () {
+        var evid = evidenciasCapturadas();
+        if (!evid.length) {
+          if (evidenciaErro) evidenciaErro.hidden = false;
+          if (painel) painel.hidden = false;
+          return;
+        }
+        var dataConclusao = new Date().toLocaleString('pt-BR', {
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        if (window.TarefasStore) {
+          TarefasStore.concluir(DADOS_TAREFA.id, {
+            titulo: DADOS_TAREFA.titulo,
+            retiro: DADOS_TAREFA.retiro,
+            supervisor: DADOS_TAREFA.supervisor,
+            prioridade: DADOS_TAREFA.prioridade,
+            dataConclusao: dataConclusao,
+            evidencias: evid
+          });
+        }
+        mostrarConcluida(evid);
+      });
+    }
+  })();
 </script>
 
 </body>
