@@ -764,7 +764,24 @@
     return null;
   }
 
+  // Em transferência, o destino não pode ser igual à origem.
+  function sincronizarRetiros() {
+    Array.prototype.forEach.call(destinoMov.options, function (opt) {
+      if (!opt.value) return; // ignora o placeholder "Selecione o retiro"
+      opt.disabled = opt.value === origemMov.value;
+    });
+
+    // Se o destino acabou ficando igual à origem (ex.: trocar a origem depois),
+    // limpa e avisa na hora.
+    if (destinoMov.value && destinoMov.value === origemMov.value) {
+      destinoMov.value = '';
+      mostrarFeedback('O retiro de destino deve ser diferente do de origem.', 'error');
+    }
+  }
+
   tipoMov.addEventListener('change', atualizarCampos);
+  origemMov.addEventListener('change', sincronizarRetiros);
+  destinoMov.addEventListener('change', sincronizarRetiros);
   document.querySelectorAll('.evidencia__btn').forEach(btn => {
     if (!btn.dataset.evidencia) {
       return;
@@ -802,6 +819,11 @@
 
     if (tipo === 'transferencia' && !destino) {
       mostrarFeedback('Selecione o retiro de destino.', 'error');
+      return;
+    }
+
+    if (tipo === 'transferencia' && destino === origem) {
+      mostrarFeedback('O retiro de destino deve ser diferente do de origem.', 'error');
       return;
     }
 
