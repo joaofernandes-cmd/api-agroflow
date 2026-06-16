@@ -70,6 +70,12 @@ describe('Usuarios', () => {
     expect(response.status).toBe(403)
   })
 
+  it('POST /usuarios/logout deve encerrar sessao autenticada', async () => {
+    const response = await request(app).post('/usuarios/logout')
+
+    expect(response.status).toBe(204)
+  })
+
   it('RN12 deve bloquear rota administrativa para usuario que nao seja gerente', () => {
     const { exigirCargo } = jest.requireActual('../../middlewares/cargo.middleware')
     const req = { usuario: mockSupervisor } as any

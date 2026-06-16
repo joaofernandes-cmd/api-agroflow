@@ -41,6 +41,10 @@ export const UsuarioController = {
     }
   },
 
+  async logout(_req: Request, res: Response) {
+    return res.status(204).send()
+  },
+
   async listarTodos(req: Request, res: Response) {
     try {
       const usuarios = await UsuarioService.listarTodos()
