@@ -4108,7 +4108,11 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
-O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A escolha reduz a necessidade de consulta ao banco a cada requisição protegida, pois o token carrega `sub`, `login`, `cargo` e `retiro_id`. Como trade-off, o token é stateless e não possui revogação centralizada imediata; por isso, não deve carregar informações sensíveis além dos dados mínimos de autorização.
+&nbsp;&nbsp;&nbsp;&nbsp;O controle de sessão utiliza JWT com validade de 1 dia. Após autenticação bem-sucedida, o token é gravado no cookie `agroflow_token`, configurado como `httpOnly`, `sameSite: 'lax'` e `maxAge` de 24 horas. Esse cookie permite proteger as páginas renderizadas pelo servidor e reduz a exposição do token a scripts executados no navegador.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nas APIs, o middleware `autenticarUsuario` aceita o token tanto pelo header `Authorization: Bearer <token>` quanto pelo cookie `agroflow_token`. Quando o token é válido, os dados do usuário autenticado são adicionados a `req.usuario`. Quando o token está ausente ou inválido, a API retorna `401 Unauthorized`.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nas views protegidas, o middleware `autenticarViewPorCookie` valida a sessão antes de liberar as rotas de `/capataz`, `/supervisor` e `/gerente`. Se não houver sessão válida, ou se o cookie estiver expirado ou inválido, o usuário é redirecionado para `/auth/perfil`. O encerramento da sessão ocorre pelo endpoint `POST /usuarios/logout`, que remove o cookie e retorna `204 No Content`.
 
 ### <a name="c3.8.3"></a>3.8.3. Autorização
 
