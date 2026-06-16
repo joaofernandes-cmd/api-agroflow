@@ -360,23 +360,32 @@ textarea.input { resize: none; }
 /* Busca de tarefas ------------------------------------------------------ */
 .busca-barra {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
   margin-bottom: var(--gap-md);
 }
+.busca-barra .etiqueta { flex-shrink: 0; }
 .busca-barra__input {
-  flex: 1;
-  margin-right: 10px;
-  padding: 10px 12px;
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px 12px 10px 38px;
   font: inherit;
   font-size: 14px;
   color: var(--texto);
-  background: var(--superficie);
+  background-color: var(--superficie);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237c847c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 12px center;
   border: 1px solid var(--borda);
   border-radius: var(--radius-input);
 }
 .busca-barra__input::placeholder { color: var(--texto-sec); }
-.busca-barra__input:focus { outline: none; border-color: var(--primaria); }
+.busca-barra__input:focus {
+  outline: none;
+  border-color: var(--primaria);
+  box-shadow: 0 0 0 3px rgba(47, 108, 61, 0.12);
+}
 
 .busca-vazia {
   color: var(--texto-sec);
