@@ -40,12 +40,19 @@
       </select>
     </div>
 
+    <div class="campo" id="campoCategoriaOutro" style="display: none;">
+      <label class="campo__rotulo" for="categoriaOutro">Nome da categoria <span class="obrigatorio">*</span></label>
+      <input class="input" type="text" id="categoriaOutro" placeholder="Diga qual é o problema" required />
+    </div>
+
     <div class="campo">
-      <label class="campo__rotulo" for="prioridadeTicket">Prioridade</label>
-      <select class="select" id="prioridadeTicket" required>
-        <option value="" disabled selected>Selecione a prioridade</option>
-        <% PRIORIDADES.forEach(function (p) { %><option value="<%= p.value %>"><%= p.label %></option><% }) %>
-      </select>
+      <label class="campo__rotulo">Prioridade</label>
+      <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
+        <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
+        <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
+        <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
+        <input type="hidden" id="prioridadeTicket" value="" />
+      </div>
     </div>
 
     <div class="campo">
@@ -80,6 +87,7 @@
   <%- include('../partials/bottomnav-capataz', { ativa: 'tickets' }) %>
 </main>
 
+<script src="/js/prioridade-seletor.js"></script>
 <script>
   const CAPATAZ_DEMO = {
     id: '11111111-1111-1111-1111-111111111111',
@@ -90,6 +98,18 @@
 
   const feedback = document.getElementById('ticket-feedback');
   const botao = document.getElementById('btnEnviarTicket');
+
+  // Quando a categoria for "Outro", revela o campo para nomear a categoria.
+  const categoriaSelect = document.getElementById('categoriaTicket');
+  const campoCategoriaOutro = document.getElementById('campoCategoriaOutro');
+  const categoriaOutroInput = document.getElementById('categoriaOutro');
+
+  function atualizarCategoriaOutro() {
+    const ehOutro = categoriaSelect.value === 'outro';
+    campoCategoriaOutro.style.display = ehOutro ? 'block' : 'none';
+    if (!ehOutro) categoriaOutroInput.value = '';
+  }
+  categoriaSelect.addEventListener('change', atualizarCategoriaOutro);
 
   function getSession() {
     try {
@@ -117,7 +137,7 @@
 
   function montarPayload() {
     const session = getSession();
-    const categoria = document.getElementById('categoriaTicket').value;
+    let categoria = document.getElementById('categoriaTicket').value;
     const prioridade = document.getElementById('prioridadeTicket').value;
     const localizacao = document.getElementById('localizacaoTicket').value.trim();
     const descricao = document.getElementById('descricaoTicket').value.trim();
@@ -125,6 +145,15 @@
 
     if (!categoria || !prioridade || !localizacao || !descricao) {
       throw new Error('Preencha categoria, prioridade, localização e descrição.');
+    }
+
+    // "Outro": usa o nome digitado como categoria do chamado.
+    if (categoria === 'outro') {
+      const nomeOutro = document.getElementById('categoriaOutro').value.trim();
+      if (!nomeOutro) {
+        throw new Error('Diga o nome da categoria.');
+      }
+      categoria = nomeOutro;
     }
 
     return {
@@ -163,6 +192,8 @@
           el.selectedIndex = 0;
         }
       });
+      atualizarCategoriaOutro();
+      if (window.PrioSeletor) window.PrioSeletor.resetarTodos();
     } catch (error) {
       mostrarFeedback(error instanceof Error ? error.message : 'Erro ao criar chamado', 'error');
     } finally {

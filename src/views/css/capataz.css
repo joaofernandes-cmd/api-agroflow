@@ -433,6 +433,29 @@ textarea.input { resize: none; }
   border-color: var(--primaria);
 }
 
+/* Seletor visual de prioridade (botões coloridos) */
+.prio-seletor { display: flex; flex-wrap: wrap; gap: 8px; }
+.prio-opcao {
+  flex: 1;
+  min-width: 70px;
+  padding: 10px 8px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.prio-opcao--alta    { background: #ffe3e1; color: #c0392b; }
+.prio-opcao--media   { background: #fff3cf; color: #a9791c; }
+.prio-opcao--baixa   { background: #dcf3e1; color: #2f7d34; }
+.prio-opcao--critica { background: #f3d6d6; color: #8a1c1c; }
+.prio-opcao--ativo.prio-opcao--alta    { background: #ff3b30; color: #fff; border-color: #c0392b; }
+.prio-opcao--ativo.prio-opcao--media   { background: #f0ad00; color: #fff; border-color: #a9791c; }
+.prio-opcao--ativo.prio-opcao--baixa   { background: #22a855; color: #fff; border-color: #2f7d34; }
+.prio-opcao--ativo.prio-opcao--critica { background: #8a1c1c; color: #fff; border-color: #5e1010; }
+
 /* Detalhe da tarefa ----------------------------------------------------- */
 .detalhe-card {
   background: var(--superficie);

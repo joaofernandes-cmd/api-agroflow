@@ -59,15 +59,13 @@
       </div>
 
       <div class="dfield">
-        <label class="dfield__label" for="prioridade-mobile">Prioridade</label>
-        <div class="dfield__select-wrap">
-          <select class="dfield__select" id="prioridade-mobile" name="prioridade" required aria-required="true">
-            <option value="" disabled selected>Nível de prioridade</option>
-            <option value="alta">Alta</option>
-            <option value="media">Média</option>
-            <option value="baixa">Baixa</option>
-            <option value="critica">Crítica</option>
-          </select>
+        <label class="dfield__label">Prioridade</label>
+        <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
+          <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
+          <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
+          <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
+          <button type="button" class="prio-opcao prio-opcao--critica" data-valor="critica">Crítica</button>
+          <input type="hidden" id="prioridade-mobile" name="prioridade" />
         </div>
       </div>
 
@@ -148,15 +146,13 @@
           </div>
 
           <div class="dfield dfield--desktop">
-            <label class="dfield__label dfield__label--dark" for="prioridade-desktop">Prioridade</label>
-            <div class="dfield__select-wrap">
-              <select class="dfield__select dfield__select--desktop" id="prioridade-desktop" name="prioridade" required>
-                <option value="" disabled selected>Nível de prioridade</option>
-                <option value="alta">Alta</option>
-                <option value="media">Média</option>
-                <option value="baixa">Baixa</option>
-                <option value="critica">Crítica</option>
-              </select>
+            <label class="dfield__label dfield__label--dark">Prioridade</label>
+            <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
+              <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
+              <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
+              <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
+              <button type="button" class="prio-opcao prio-opcao--critica" data-valor="critica">Crítica</button>
+              <input type="hidden" id="prioridade-desktop" name="prioridade" />
             </div>
           </div>
 
@@ -216,6 +212,7 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/prioridade-seletor.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -324,7 +321,7 @@
 
     const capataz = form.querySelector('select[name="capatazRetiro"]');
     const atividade = form.querySelector('select[name="atividade"]');
-    const prioridade = form.querySelector('select[name="prioridade"]');
+    const prioridade = form.querySelector('[name="prioridade"]');
     const descricao = form.querySelector('textarea[name="descricao"]');
 
     if (!capataz || !atividade || !prioridade || !descricao) {
