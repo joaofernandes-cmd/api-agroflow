@@ -55,24 +55,31 @@
 
     function aplicarFiltros() {
       var termo = input ? input.value.trim().toLowerCase() : '';
+      var buscando = termo.length > 0;
       var visiveis = 0;
       cards.forEach(function (card) {
         var status = card.getAttribute('data-status');
         var combinaBusca = card.textContent.toLowerCase().indexOf(termo) !== -1;
-        var combinaFiltro = filtroAtivo === 'todas' || status === filtroAtivo;
+        // Ao pesquisar, procura em TODAS as tarefas (ignora o filtro de status).
+        var combinaFiltro = buscando || filtroAtivo === 'todas' || status === filtroAtivo;
         var mostra = combinaBusca && combinaFiltro;
         card.style.display = mostra ? '' : 'none';
         if (mostra) visiveis++;
       });
       if (vazia) vazia.hidden = visiveis !== 0;
+
+      // Enquanto pesquisa (mostra todas), nenhum filtro fica marcado como selecionado.
+      chips.forEach(function (c) {
+        var ativo = !buscando && c.getAttribute('data-filtro') === filtroAtivo;
+        c.classList.toggle('filtro-chip--ativo', ativo);
+      });
     }
 
     if (input) input.addEventListener('input', aplicarFiltros);
 
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
-        chips.forEach(function (c) { c.classList.remove('filtro-chip--ativo'); });
-        chip.classList.add('filtro-chip--ativo');
+        if (input) input.value = '';
         filtroAtivo = chip.getAttribute('data-filtro');
         aplicarFiltros();
       });
