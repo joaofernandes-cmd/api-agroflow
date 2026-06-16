@@ -194,8 +194,8 @@ body {
   color: #fff; white-space: nowrap;
 }
 .etiqueta--alta { background: var(--alerta); }
-.etiqueta--media { background: var(--info); }
-.etiqueta--baixa { background: var(--texto-sec); }
+.etiqueta--media { background: #f0ad00; color: #4d3800; }
+.etiqueta--baixa { background: var(--sucesso); }
 .etiqueta--critica { background: #8a1c1c; }
 .etiqueta--concluida { background: var(--primaria); }
 .etiqueta--pendente { background: #faf0d6; color: var(--atencao); }
