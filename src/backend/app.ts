@@ -87,10 +87,16 @@ app.get('/capataz/chamado', (_req, res) => {
 app.use('/supervisor', autenticarViewPorCookie, exigirCargoView('supervisor'))
 
 app.get('/supervisor/home', (req, res) => {
+  // Tarefas que o supervisor delegou e o capataz ainda não realizou
+  // (status 'pendente'). Diferente de "aguardando revisão" (já feitas,
+  // esperando a validação do supervisor).
+  const tarefasDelegadas = tarefasCapataz.filter((t) => t.status === 'pendente')
+
   res.render('supervisor/home', {
     title: 'Início',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' } // substituir pelo usuário da sessão
+    usuario: { nome: 'Luiz Felipe' }, // substituir pelo usuário da sessão
+    tarefasDelegadas,
   });
 });
 
