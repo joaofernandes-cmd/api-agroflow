@@ -4102,7 +4102,9 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
-O fluxo de autenticação implementado recebe `login` e `senha` pelo endpoint `POST /usuarios/login`, valida a existência do usuário e compara a senha informada com o valor armazenado em `senha_hash`. Quando as credenciais são válidas, o usuário está ativo e possui perfil Supervisor ou Gerente, o backend retorna os dados do usuário sem `senha_hash` e gera um token JWT para acesso às rotas protegidas. No estado atual do backend, a comparação de senha ainda é direta; a troca para bcrypt permanece registrada como melhoria necessária antes de produção.
+&nbsp;&nbsp;&nbsp;&nbsp;A autenticação do AgroFlow foi organizada conforme os três perfis de usuário da operação: Capataz, Supervisor e Gerente. Para Supervisores e Gerentes, o fluxo principal ocorre pelo endpoint `POST /usuarios/login`, que recebe `login` e `senha`, valida a existência do usuário, verifica se ele está ativo e compara a senha enviada com o valor armazenado em `senha_hash` por meio de `bcrypt.compare`. Quando as credenciais são válidas, o backend retorna os dados do usuário sem expor `senha_hash` e gera um token JWT para acesso às rotas protegidas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para Capatazes, o acesso não ocorre pelo formulário tradicional de login e senha. Esse perfil utiliza a rota `GET /capataz/acesso/:token`, preparada para ser acionada por QR Code. O token recebido pela URL é convertido em hash SHA-256, uma impressão digital irreversível do token original, e comparado com os hashes ativos armazenados na tabela `acesso_capataz`. Dessa forma, o banco não precisa guardar o token real do QR Code, apenas seu hash para comparação. Se o token estiver válido e vinculado a um usuário com cargo `capataz`, o sistema gera o JWT desse usuário e redireciona para `/capataz/home`.
 
 ### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
