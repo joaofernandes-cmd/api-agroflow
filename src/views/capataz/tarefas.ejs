@@ -42,6 +42,7 @@
   <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
 </main>
 
+<script src="/js/tarefas-store.js"></script>
 <script>
   (function () {
     var input = document.getElementById('busca-tarefas');
@@ -52,6 +53,18 @@
 
     var cards = Array.prototype.slice.call(lista.querySelectorAll('.card'));
     var filtroAtivo = 'pendente';
+
+    // Aplica o status salvo: tarefas concluídas pelo capataz viram "Concluída".
+    if (window.TarefasStore) {
+      cards.forEach(function (card) {
+        var m = (card.getAttribute('href') || '').match(/[?&]id=(\d+)/);
+        if (m && TarefasStore.estaConcluida(m[1])) {
+          card.setAttribute('data-status', 'concluida');
+          var et = card.querySelector('.etiqueta');
+          if (et) { et.textContent = 'Concluída'; et.className = 'etiqueta etiqueta--concluida'; }
+        }
+      });
+    }
 
     function aplicarFiltros() {
       var termo = input ? input.value.trim().toLowerCase() : '';

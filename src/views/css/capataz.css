@@ -302,6 +302,7 @@ textarea.input { resize: none; }
   font-size: 13px;
   color: var(--texto);
 }
+.evidencia-painel { margin-top: 12px; }
 .camera-stage {
   background: #0f1712;
   border-radius: 16px;

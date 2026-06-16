@@ -47,6 +47,9 @@
     <label class="detalhe-descricao-rotulo">Descrição</label>
     <div class="detalhe-descricao" id="tarefaDescricao"><%= tarefa.descricao %></div>
 
+    <!-- Evidências já registradas (aparece quando a tarefa está concluída) -->
+    <div id="evidenciasSalvas" hidden style="margin-bottom: 12px;"></div>
+
     <button type="button" class="btn-secundario" id="btnEvidencia" style="margin-bottom: 12px;">Anexar evidência</button>
 
     <div id="painelEvidencia" hidden style="margin-bottom: 12px;">
@@ -62,14 +65,54 @@
   <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
 </main>
 
+<div id="dadosTarefa" hidden
+     data-titulo="<%= tarefa.titulo %>"
+     data-retiro="<%= tarefa.retiro %>"
+     data-supervisor="<%= tarefa.supervisor %>"
+     data-prioridade="<%= tarefa.classe %>"></div>
+<script src="/js/tarefas-store.js"></script>
 <script>
+  var _el = document.getElementById('dadosTarefa');
+  var DADOS_TAREFA = {
+    id: new URLSearchParams(location.search).get('id') || '1',
+    titulo: _el.dataset.titulo,
+    retiro: _el.dataset.retiro,
+    supervisor: _el.dataset.supervisor,
+    prioridade: _el.dataset.prioridade
+  };
+
   (function () {
     var btnEvidencia = document.getElementById('btnEvidencia');
     var painel = document.getElementById('painelEvidencia');
     var evidenciaErro = document.getElementById('evidenciaErro');
     var btnConcluir = document.getElementById('btnConcluir');
     var status = document.getElementById('statusTarefa');
-    var listaEvidencia = document.getElementById('evLista'); // <ul> do partial (ns='ev')
+    var listaEvidencia = document.getElementById('evLista');
+    var evidenciasSalvas = document.getElementById('evidenciasSalvas');
+
+    function evidenciasCapturadas() {
+      var api = window.__evidencias && window.__evidencias['ev'];
+      return api ? api.obter() : [];
+    }
+
+    // Mostra a tarefa como concluída + evidências (read-only).
+    function mostrarConcluida(evidencias) {
+      if (status) status.textContent = 'Concluída';
+      if (btnConcluir) { btnConcluir.textContent = 'Concluída'; btnConcluir.disabled = true; }
+      if (btnEvidencia) btnEvidencia.style.display = 'none';
+      if (painel) painel.hidden = true;
+      if (evidenciaErro) evidenciaErro.hidden = true;
+      if (evidenciasSalvas && evidencias && evidencias.length && window.TarefasStore) {
+        TarefasStore.renderEvidencias(evidencias, evidenciasSalvas);
+        evidenciasSalvas.hidden = false;
+      }
+    }
+
+    // Já estava concluída (salva antes)? Mostra o estado concluído.
+    var salva = window.TarefasStore ? TarefasStore.obter(DADOS_TAREFA.id) : null;
+    if (salva) {
+      mostrarConcluida(salva.evidencias);
+    }
 
     // "Anexar evidência" mostra/esconde o painel com os 3 tipos.
     if (btnEvidencia && painel) {
@@ -78,29 +121,36 @@
       });
     }
 
-    function temEvidencia() {
-      return !!listaEvidencia && listaEvidencia.querySelectorAll('.evidencia-item').length > 0;
-    }
-
     // Some com o erro assim que o capataz anexa qualquer evidência.
     if (listaEvidencia) {
       new MutationObserver(function () {
-        if (temEvidencia() && evidenciaErro) evidenciaErro.hidden = true;
+        if (evidenciasCapturadas().length && evidenciaErro) evidenciaErro.hidden = true;
       }).observe(listaEvidencia, { childList: true });
     }
 
     // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto).
-    if (btnConcluir) {
+    if (btnConcluir && !salva) {
       btnConcluir.addEventListener('click', function () {
-        if (!temEvidencia()) {
+        var evid = evidenciasCapturadas();
+        if (!evid.length) {
           if (evidenciaErro) evidenciaErro.hidden = false;
           if (painel) painel.hidden = false;
           return;
         }
-        if (evidenciaErro) evidenciaErro.hidden = true;
-        if (status) status.textContent = 'Concluída';
-        btnConcluir.textContent = 'Concluída';
-        btnConcluir.disabled = true;
+        var dataConclusao = new Date().toLocaleString('pt-BR', {
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        if (window.TarefasStore) {
+          TarefasStore.concluir(DADOS_TAREFA.id, {
+            titulo: DADOS_TAREFA.titulo,
+            retiro: DADOS_TAREFA.retiro,
+            supervisor: DADOS_TAREFA.supervisor,
+            prioridade: DADOS_TAREFA.prioridade,
+            dataConclusao: dataConclusao,
+            evidencias: evid
+          });
+        }
+        mostrarConcluida(evid);
       });
     }
   })();

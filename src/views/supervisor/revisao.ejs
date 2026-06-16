@@ -48,6 +48,12 @@
   <!-- Lista de tarefas -->
   <main class="revisao-list" role="main">
 
+    <!-- Tarefas concluídas pelo capataz (com evidência) -->
+    <section style="margin: 16px;">
+      <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
+      <div class="concluidas-capataz"></div>
+    </section>
+
     <article class="rev-card rev-card--pendente" data-tarefa-id="11">
       <div class="rev-card__accent"></div>
       <div class="rev-card__body">
@@ -165,6 +171,11 @@
 
     <!-- Tabela de tarefas -->
     <main class="desktop-content revisao-desktop-content" role="main">
+      <!-- Tarefas concluídas pelo capataz (com evidência) -->
+      <section style="margin: 0 0 16px;">
+        <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
+        <div class="concluidas-capataz"></div>
+      </section>
       <div class="revisao-table-wrap">
         <table class="revisao-table" aria-label="Lista de tarefas para revisão">
           <thead>
@@ -240,6 +251,15 @@
   </div><!-- /desktop-main -->
 
 </div><!-- /layout-desktop -->
+
+<script src="/js/tarefas-store.js"></script>
+<script>
+  if (window.TarefasStore) {
+    document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
+      TarefasStore.renderListaConcluidas(el);
+    });
+  }
+</script>
 
 <script>
   const el = document.getElementById('data-hoje-desktop');

@@ -24,6 +24,7 @@ app.use(express.json())
 
 // Arquivos estáticos (CSS, imagens, etc.)
 app.use('/css', express.static(path.join(__dirname, '../views/css')))
+app.use('/js', express.static(path.join(__dirname, '../views/js')))
 app.use('/assets', express.static(path.join(__dirname, '../../assets')))
 
 // Documentação navegável da WebAPI disponível em /docs
@@ -59,7 +60,7 @@ app.get('/capataz', (_req, res) => {
 })
 
 app.get('/capataz/home', (_req, res) => {
-  res.render('capataz/home', { tarefas: tarefasCapataz.slice(0, 2) })
+  res.render('capataz/home', { tarefas: tarefasCapataz.filter((t) => t.status === 'pendente') })
 })
 
 app.get('/capataz/tarefas', (_req, res) => {

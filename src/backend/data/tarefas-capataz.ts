@@ -18,6 +18,7 @@ export interface TarefaBase {
 }
 
 export interface TarefaExibicao extends TarefaBase {
+  id: number // posição na lista (1-based), usada nos links e na persistência
   nivel: string // rótulo do selo (Alta/Média/Baixa/Concluída)
   classe: string // classe css do selo
   cor: string // cor da barra do card
@@ -100,10 +101,11 @@ const COR_PRIORIDADE: Record<Prioridade, string> = {
   baixa: 'var(--texto-sec)',
 }
 
-function decorar(t: TarefaBase): TarefaExibicao {
+function decorar(t: TarefaBase, id: number): TarefaExibicao {
   const concluida = t.status === 'concluida'
   return {
     ...t,
+    id,
     nivel: concluida ? 'Concluída' : ROTULO_PRIORIDADE[t.prioridade],
     classe: concluida ? 'concluida' : t.prioridade,
     cor: concluida ? 'var(--primaria)' : COR_PRIORIDADE[t.prioridade],
@@ -113,7 +115,7 @@ function decorar(t: TarefaBase): TarefaExibicao {
 }
 
 // Lista pronta para exibição (com selo, cor e autor já calculados).
-export const tarefasCapataz: TarefaExibicao[] = TAREFAS.map(decorar)
+export const tarefasCapataz: TarefaExibicao[] = TAREFAS.map((t, i) => decorar(t, i + 1))
 
 // Seleciona a tarefa pelo id da query (?id=N, 1-based). Faz fallback para a
 // primeira quando o id está ausente ou é inválido.
