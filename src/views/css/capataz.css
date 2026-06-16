@@ -364,7 +364,6 @@ textarea.input { resize: none; }
   gap: 10px;
   margin-bottom: var(--gap-md);
 }
-.busca-barra .etiqueta { flex-shrink: 0; }
 .busca-barra__input {
   flex: 1 1 auto;
   min-width: 0;
@@ -392,6 +391,30 @@ textarea.input { resize: none; }
   font-size: 14px;
   text-align: center;
   padding: 16px 0;
+}
+
+.filtro-tarefas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--gap-md);
+}
+.filtro-chip {
+  flex: 1;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto-sec);
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.filtro-chip--ativo {
+  color: #fff;
+  background: var(--primaria);
+  border-color: var(--primaria);
 }
 
 /* Detalhe da tarefa ----------------------------------------------------- */

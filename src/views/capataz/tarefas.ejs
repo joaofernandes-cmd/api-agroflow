@@ -11,12 +11,17 @@
     <div class="busca-barra">
       <input type="search" id="busca-tarefas" class="busca-barra__input"
              placeholder="Pesquisar tarefas" aria-label="Pesquisar tarefas" autocomplete="off">
-      <span class="etiqueta etiqueta--pendente">Pendente</span>
+    </div>
+
+    <div class="filtro-tarefas" role="tablist" aria-label="Filtrar tarefas">
+      <button type="button" class="filtro-chip" data-filtro="todas">Todas</button>
+      <button type="button" class="filtro-chip filtro-chip--ativo" data-filtro="pendente">Pendentes</button>
+      <button type="button" class="filtro-chip" data-filtro="concluida">Concluídas</button>
     </div>
 
     <div id="lista-tarefas">
       <% tarefas.forEach(function (t, index) { %>
-        <a href="/capataz/detalhe-tarefa?id=<%= index + 1 %>" class="card">
+        <a href="/capataz/detalhe-tarefa?id=<%= index + 1 %>" class="card" data-status="<%= t.status %>">
           <span class="card__barra" style="background: <%= t.cor %>;"></span>
           <div class="card__corpo">
             <div class="card__titulo"><%= t.titulo %> - <%= t.retiro %></div>
@@ -42,20 +47,39 @@
     var input = document.getElementById('busca-tarefas');
     var lista = document.getElementById('lista-tarefas');
     var vazia = document.getElementById('busca-vazia');
-    if (!input || !lista) return;
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.filtro-chip'));
+    if (!lista) return;
 
     var cards = Array.prototype.slice.call(lista.querySelectorAll('.card'));
+    var filtroAtivo = 'pendente';
 
-    input.addEventListener('input', function () {
-      var termo = input.value.trim().toLowerCase();
+    function aplicarFiltros() {
+      var termo = input ? input.value.trim().toLowerCase() : '';
       var visiveis = 0;
       cards.forEach(function (card) {
-        var combina = card.textContent.toLowerCase().indexOf(termo) !== -1;
-        card.style.display = combina ? '' : 'none';
-        if (combina) visiveis++;
+        var status = card.getAttribute('data-status');
+        var combinaBusca = card.textContent.toLowerCase().indexOf(termo) !== -1;
+        var combinaFiltro = filtroAtivo === 'todas' || status === filtroAtivo;
+        var mostra = combinaBusca && combinaFiltro;
+        card.style.display = mostra ? '' : 'none';
+        if (mostra) visiveis++;
       });
       if (vazia) vazia.hidden = visiveis !== 0;
+    }
+
+    if (input) input.addEventListener('input', aplicarFiltros);
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('filtro-chip--ativo'); });
+        chip.classList.add('filtro-chip--ativo');
+        filtroAtivo = chip.getAttribute('data-filtro');
+        aplicarFiltros();
+      });
     });
+
+    // Já abre filtrando pelas pendentes.
+    aplicarFiltros();
   })();
 </script>
 
