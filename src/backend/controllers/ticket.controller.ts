@@ -4,11 +4,22 @@ import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
 import { converterUUID } from '../models/uuid'
 
+function retiroDaConsulta(req: Request, valor?: string): string | undefined {
+  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+    return req.usuario.retiro_id
+  }
+
+  return valor
+}
+
 export const TicketController = {
   async listarTodos(req: Request, res: Response) {
     try {
       const tickets = await TicketService.listarTodos()
-      return res.status(200).json(tickets)
+      const ticketsFiltrados = req.usuario?.cargo === 'supervisor'
+        ? tickets.filter(ticket => ticket.retiro_id === req.usuario?.retiro_id)
+        : tickets
+      return res.status(200).json(ticketsFiltrados)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar tickets' })
     }
@@ -28,6 +39,13 @@ export const TicketController = {
         return res.status(404).json({ error: 'Ticket não encontrado' })
       }
 
+      if (
+        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
+        ticket.retiro_id !== req.usuario.retiro_id
+      ) {
+        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+      }
+
       return res.status(200).json(ticket)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar ticket' })
@@ -38,15 +56,15 @@ export const TicketController = {
     try {
       const {
         id,
-        retiro_id,
         categoria,
         categoria_outro,
         localizacao,
         descricao,
         prioridade,
-        usuarioAbridorTicket,
         temEvidenciaDescritiva,
       } = req.body
+      const retiro_id = req.usuario?.cargo === 'capataz' ? req.usuario.retiro_id : req.body.retiro_id
+      const usuarioAbridorTicket = req.usuario?.cargo === 'capataz' ? req.usuario : req.body.usuarioAbridorTicket
 
       if (!retiro_id || !categoria || !localizacao || !descricao || !prioridade || !usuarioAbridorTicket) {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
@@ -95,7 +113,8 @@ export const TicketController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.query.status ?? '')
-      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
+      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
+      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -117,7 +136,8 @@ export const TicketController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.query.prioridade ?? '')
-      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
+      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
+      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -139,7 +159,8 @@ export const TicketController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.query.categoria ?? '')
-      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
+      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
+      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -160,7 +181,8 @@ export const TicketController = {
 
   async listarPendentes(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
+      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
+      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -174,7 +196,8 @@ export const TicketController = {
 
   async contarPorPrioridade(req: Request, res: Response) {
     try {
-      const retiroId = req.query.retiroId ? converterUUID(req.query.retiroId) : undefined
+      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
+      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

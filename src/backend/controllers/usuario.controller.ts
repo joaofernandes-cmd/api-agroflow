@@ -49,6 +49,29 @@ export const UsuarioController = {
     }
   },
 
+  async autenticarCapatazPorToken(req: Request, res: Response) {
+    try {
+      const tokenAcesso = String(req.params.token ?? '')
+      const usuario = await UsuarioService.autenticarCapatazPorToken(tokenAcesso)
+
+      if (!usuario) {
+        return res.redirect('/capataz')
+      }
+
+      const token = gerarToken(usuario)
+
+      res.cookie(COOKIE_TOKEN_AUTENTICACAO, token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000,
+      })
+
+      return res.redirect('/capataz/home')
+    } catch (error) {
+      return res.redirect('/capataz')
+    }
+  },
+
   async logout(_req: Request, res: Response) {
     res.clearCookie(COOKIE_TOKEN_AUTENTICACAO)
     return res.status(204).send()

@@ -84,17 +84,20 @@ function obterCookie(req: Request, nome: string): string | null {
 // Verifica se existe token Bearer valido e, se existir, preenche req.usuario.
 export function autenticarUsuario(req: Request, res: Response, next: NextFunction) {
   const autorizacao = req.headers.authorization
+  const tokenCookie = obterCookie(req, COOKIE_TOKEN_AUTENTICACAO)
 
   // Sem token na cabeca Authorization nao ha autenticacao.
-  if (!autorizacao?.startsWith('Bearer ')) {
+  if (!autorizacao?.startsWith('Bearer ') && !tokenCookie) {
     return res.status(401).json({ error: 'Token nao informado' })
   }
 
-  const token = autorizacao.slice('Bearer '.length).trim()
+  const token = autorizacao?.startsWith('Bearer ')
+    ? autorizacao.slice('Bearer '.length).trim()
+    : tokenCookie
 
   try {
     // Valida e decodifica o JWT usando o segredo do servidor.
-    req.usuario = montarUsuarioAPartirDoToken(token)
+    req.usuario = montarUsuarioAPartirDoToken(String(token))
 
     return next()
   } catch {

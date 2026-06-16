@@ -13,6 +13,7 @@ import { middlewareDeLog } from './middlewares/log.middleware'
 import { autenticarViewPorCookie } from './middlewares/autenticacao.middleware'
 import { exigirCargoView } from './middlewares/cargo.middleware'
 import { tarefasCapataz, tarefasCapatazRecentes, buscarTarefaCapataz } from './data/tarefas-capataz'
+import { UsuarioController } from './controllers/usuario.controller'
 
 const app = express()
 
@@ -58,6 +59,10 @@ app.get('/auth/login', (req, res) => {
 app.get('/capataz', (_req, res) => {
   res.render('capataz/index')
 })
+
+app.get('/capataz/acesso/:token', UsuarioController.autenticarCapatazPorToken)
+
+app.use('/capataz', autenticarViewPorCookie, exigirCargoView('capataz'))
 
 app.get('/capataz/home', (_req, res) => {
   res.render('capataz/home', { tarefas: tarefasCapataz.filter((t) => t.status === 'pendente') })

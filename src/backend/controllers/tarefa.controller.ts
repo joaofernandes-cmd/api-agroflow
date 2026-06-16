@@ -8,10 +8,20 @@ function extrairTexto(valor: unknown): string | undefined {
   return typeof valor === 'string' ? valor : undefined
 }
 
+function retiroDaConsulta(req: Request, valor?: string): string | undefined {
+  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+    return req.usuario.retiro_id
+  }
+
+  return valor
+}
+
 export const TarefaController = {
   async criar(req: Request, res: Response) {
     try {
-      const { id, retiro_id, atribuida_a, descricao, categoria, prioridade, usuarioCriador } = req.body
+      const { id, atribuida_a, descricao, categoria, prioridade } = req.body
+      const retiro_id = req.usuario?.cargo === 'supervisor' ? req.usuario.retiro_id : req.body.retiro_id
+      const usuarioCriador = req.usuario?.cargo === 'supervisor' ? req.usuario : req.body.usuarioCriador
 
       if (!retiro_id || !atribuida_a || !descricao || !categoria || !prioridade || !usuarioCriador) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
@@ -58,7 +68,10 @@ export const TarefaController = {
   async listarTodas(req: Request, res: Response) {
     try {
       const tarefas = await TarefaService.listarTodas()
-      return res.status(200).json(tarefas)
+      const tarefasFiltradas = req.usuario?.cargo === 'supervisor'
+        ? tarefas.filter(tarefa => tarefa.retiro_id === req.usuario?.retiro_id)
+        : tarefas
+      return res.status(200).json(tarefasFiltradas)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar tarefas' })
     }
@@ -78,6 +91,13 @@ export const TarefaController = {
         return res.status(404).json({ error: 'Tarefa nao encontrada' })
       }
 
+      if (
+        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
+        tarefa.retiro_id !== req.usuario.retiro_id
+      ) {
+        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+      }
+
       return res.status(200).json(tarefa)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar tarefa' })
@@ -86,7 +106,7 @@ export const TarefaController = {
 
   async buscarParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -104,7 +124,7 @@ export const TarefaController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.params.status) as TarefaStatus
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -122,6 +142,11 @@ export const TarefaController = {
   async listarPorUsuario(req: Request, res: Response) {
     try {
       const usuarioId = String(req.params.usuarioId)
+
+      if (req.usuario?.cargo === 'capataz' && usuarioId !== req.usuario.id) {
+        return res.status(403).json({ error: 'Acesso negado: usuario diferente do autenticado' })
+      }
+
       const tarefas = await TarefaService.listarPorUsuario(usuarioId)
 
       return res.status(200).json(tarefas)
@@ -133,7 +158,7 @@ export const TarefaController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.params.prioridade) as TarefaPrioridade
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -151,7 +176,7 @@ export const TarefaController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.params.categoria)
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -215,7 +240,7 @@ export const TarefaController = {
 
   async contarPorStatus(req: Request, res: Response) {
     try {
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {

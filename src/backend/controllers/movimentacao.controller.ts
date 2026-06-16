@@ -58,13 +58,19 @@ function listaOuFallback<T extends string>(valor: unknown, fallback?: T[]): T[] 
   return fallback
 }
 
+function retiroDaConsulta(req: Request, valor?: string): string | undefined {
+  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+    return req.usuario.retiro_id
+  }
+
+  return valor
+}
+
 export const MovimentacaoController = {
   async criar(req: Request, res: Response) {
     try {
       const {
         id,
-        retiro_id,
-        capataz_id,
         tipo,
         tipo_outro,
         origem,
@@ -75,6 +81,8 @@ export const MovimentacaoController = {
         estagio_vida,
         evidencia,
       } = req.body
+      const retiro_id = req.usuario?.cargo === 'capataz' ? req.usuario.retiro_id : req.body.retiro_id
+      const capataz_id = req.usuario?.cargo === 'capataz' ? req.usuario.id : req.body.capataz_id
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
@@ -119,7 +127,9 @@ export const MovimentacaoController = {
   // O registro chega completo e ja deve ser gravado como sincronizado no servidor.
   async sincronizarRecebida(req: Request, res: Response) {
     try {
-      const { retiro_id, capataz_id, tipo, tipo_outro, origem, destino, quantidade, causa_obito, estagio_vida, evidencia } = req.body
+      const { tipo, tipo_outro, origem, destino, quantidade, causa_obito, estagio_vida, evidencia } = req.body
+      const retiro_id = req.usuario?.cargo === 'capataz' ? req.usuario.retiro_id : req.body.retiro_id
+      const capataz_id = req.usuario?.cargo === 'capataz' ? req.usuario.id : req.body.capataz_id
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
@@ -159,7 +169,9 @@ export const MovimentacaoController = {
 
   async listarTodas(req: Request, res: Response) {
     try {
-      const movimentacoes = await MovimentacaoService.listarTodas()
+      const movimentacoes = req.usuario?.cargo === 'supervisor'
+        ? await MovimentacaoService.filtrar(req.usuario.retiro_id)
+        : await MovimentacaoService.listarTodas()
       return res.status(200).json(movimentacoes)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar movimentacoes' })
@@ -180,6 +192,13 @@ export const MovimentacaoController = {
         return res.status(404).json({ error: 'Movimentacao nao encontrada' })
       }
 
+      if (
+        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
+        movimentacao.retiro_id !== req.usuario.retiro_id
+      ) {
+        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+      }
+
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar movimentacao' })
@@ -190,7 +209,7 @@ export const MovimentacaoController = {
     try {
       // O WAD documenta os filtros como retiro, tipo, status, dataInicio e dataFim.
       // Mantemos aliases antigos para nao quebrar chamadas ja existentes.
-      const retiro = extrairTexto(req.query.retiro) ?? extrairTexto(req.query.retiroId)
+      const retiro = retiroDaConsulta(req, extrairTexto(req.query.retiro) ?? extrairTexto(req.query.retiroId))
       const tipos = listaOuFallback<MovimentacaoTipo>(req.query.tipo ?? req.query.tipos)
       const statusBruto = req.query.status
       const status = listaOuFallback<MovimentacaoStatus>(statusBruto, undefined) ?? ['pendente']
@@ -231,7 +250,7 @@ export const MovimentacaoController = {
 
   async buscarParaRelatorio(req: Request, res: Response) {
     try {
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -247,7 +266,7 @@ export const MovimentacaoController = {
 
   async buscarParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -284,7 +303,7 @@ export const MovimentacaoController = {
 
   async listarPendentes(req: Request, res: Response) {
     try {
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
@@ -301,7 +320,7 @@ export const MovimentacaoController = {
 
   async contarPorTipo(req: Request, res: Response) {
     try {
-      const retiroId = extrairTexto(req.query.retiroId)
+      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
