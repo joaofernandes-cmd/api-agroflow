@@ -711,6 +711,7 @@
     const tipo = tipoMov.value;
     const ehTransferencia = tipo === 'transferencia';
     const ehMorte = tipo === 'morte';
+    const ehNascimento = tipo === 'nascimento';
 
     campoDestino.style.display = ehTransferencia ? 'block' : 'none';
     campoCausa.style.display = ehMorte ? 'block' : 'none';
@@ -722,6 +723,14 @@
 
     if (!ehMorte) {
       causaObito.value = '';
+    }
+
+    // Nascimento: o animal é sempre bezerro de 0 a 7 meses — preenche e trava.
+    if (ehNascimento) {
+      estagioMov.value = 'BEZERRO 0 A 7 MESES';
+      estagioMov.disabled = true;
+    } else {
+      estagioMov.disabled = false;
     }
   }
 
