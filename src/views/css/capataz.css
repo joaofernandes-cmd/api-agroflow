@@ -287,6 +287,21 @@ textarea.input { resize: none; }
   cursor: not-allowed;
   box-shadow: none;
 }
+.evidencia-lista {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.evidencia-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto);
+}
 .camera-stage {
   background: #0f1712;
   border-radius: 16px;
@@ -454,6 +469,8 @@ textarea.input { resize: none; }
   color: var(--texto-sec);
   margin-bottom: 18px;
 }
+.evidencia-info { color: var(--sucesso); font-size: 13px; margin: -4px 0 12px; }
+.evidencia-erro { color: var(--alerta); font-size: 13px; margin: 0 0 12px; }
 
 /* Barra inferior de navegação ------------------------------------------ */
 .bottomnav {

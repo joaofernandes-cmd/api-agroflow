@@ -47,22 +47,63 @@
     <label class="detalhe-descricao-rotulo">Descrição</label>
     <div class="detalhe-descricao" id="tarefaDescricao"><%= tarefa.descricao %></div>
 
-    <button type="button" class="btn-primario" id="btnConcluir" style="margin-bottom: 12px;" <%= tarefa.status === 'concluida' ? 'disabled' : '' %>>
+    <button type="button" class="btn-secundario" id="btnEvidencia" style="margin-bottom: 12px;">Anexar evidência</button>
+
+    <div id="painelEvidencia" hidden style="margin-bottom: 12px;">
+      <%- include('evidencia', { ns: 'ev' }) %>
+    </div>
+
+    <p id="evidenciaErro" class="evidencia-erro" hidden>Anexe uma evidência (foto, áudio ou texto) para marcar como concluída.</p>
+    <button type="button" class="btn-primario" id="btnConcluir" <%= tarefa.status === 'concluida' ? 'disabled' : '' %>>
       <%= tarefa.status === 'concluida' ? 'Concluída' : 'Marcar como concluída' %>
     </button>
-    <button type="button" class="btn-secundario">Anexar evidência</button>
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
 </main>
 
 <script>
-  document.getElementById('btnConcluir').addEventListener('click', function () {
-    const status = document.getElementById('statusTarefa');
-    if (status) status.textContent = 'Concluída';
-    this.textContent = 'Concluída';
-    this.disabled = true;
-  });
+  (function () {
+    var btnEvidencia = document.getElementById('btnEvidencia');
+    var painel = document.getElementById('painelEvidencia');
+    var evidenciaErro = document.getElementById('evidenciaErro');
+    var btnConcluir = document.getElementById('btnConcluir');
+    var status = document.getElementById('statusTarefa');
+    var listaEvidencia = document.getElementById('evLista'); // <ul> do partial (ns='ev')
+
+    // "Anexar evidência" mostra/esconde o painel com os 3 tipos.
+    if (btnEvidencia && painel) {
+      btnEvidencia.addEventListener('click', function () {
+        painel.hidden = !painel.hidden;
+      });
+    }
+
+    function temEvidencia() {
+      return !!listaEvidencia && listaEvidencia.querySelectorAll('.evidencia-item').length > 0;
+    }
+
+    // Some com o erro assim que o capataz anexa qualquer evidência.
+    if (listaEvidencia) {
+      new MutationObserver(function () {
+        if (temEvidencia() && evidenciaErro) evidenciaErro.hidden = true;
+      }).observe(listaEvidencia, { childList: true });
+    }
+
+    // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto).
+    if (btnConcluir) {
+      btnConcluir.addEventListener('click', function () {
+        if (!temEvidencia()) {
+          if (evidenciaErro) evidenciaErro.hidden = false;
+          if (painel) painel.hidden = false;
+          return;
+        }
+        if (evidenciaErro) evidenciaErro.hidden = true;
+        if (status) status.textContent = 'Concluída';
+        btnConcluir.textContent = 'Concluída';
+        btnConcluir.disabled = true;
+      });
+    }
+  })();
 </script>
 
 </body>
