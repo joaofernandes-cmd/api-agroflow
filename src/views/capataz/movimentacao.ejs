@@ -863,31 +863,32 @@
 
     try {
       evidencia = await (async () => {
-        const tipo = tipoEvidencia.value;
-        if (tipo === 'audio') {
+        const tipoSelecionado = tipoEvidencia.value;
+        if (tipoSelecionado === 'audio') {
           const draft = await lerAudioDoIndexedDb();
           if (!draft?.blob) {
             throw new Error('Grave um áudio antes de enviar.');
           }
 
-          const audioUpload = await uploadAudioParaSupabase(draft, usuario.id ?? CAPATAZ_DEMO.id);
           return {
             tipo: 'audio',
-            urlArquivo: audioUpload.urlArquivo,
+            blob: draft.blob,
+            mimeType: draft.mimeType,
             duracao: draft.durationSeconds,
+            durationSeconds: draft.durationSeconds,
           };
         }
 
-        if (tipo === 'foto') {
+        if (tipoSelecionado === 'foto') {
           const draft = await lerFotoDoIndexedDb();
           if (!draft?.blob) {
             throw new Error('Capture uma foto antes de enviar.');
           }
 
-          const fotoUpload = await uploadFotoParaSupabase(draft, usuario.id ?? CAPATAZ_DEMO.id);
           return {
             tipo: 'foto',
-            urlArquivo: fotoUpload.urlArquivo,
+            blob: draft.blob,
+            mimeType: draft.mimeType,
             latitude: draft.latitude ?? fotoLocalizacao?.latitude,
             longitude: draft.longitude ?? fotoLocalizacao?.longitude,
           };
@@ -915,27 +916,29 @@
         origem: origem || null,
         destino: tipo === 'transferencia' ? destino : null,
         quantidade,
+        status: 'pendente',
+        sincronizado: false,
         causa_obito: tipo === 'morte' ? causaObito.value : null,
         estagio_vida: estagio,
-        evidencia,
+        evidenciaDraft: evidencia,
       };
 
-      const response = await fetch('/movimentacoes', {
+      const resultado = await window.AgroFlowCapataz.fetchOrQueueOperation({
+        kind: 'movimentacao',
+        url: '/movimentacoes/sincronizar',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}),
         },
-        body: JSON.stringify(payload),
+        body: payload,
+        queueBody: payload,
       });
 
-      const data = await response.json().catch(() => ({}));
+      const mensagemSucesso = resultado.queued
+        ? 'Movimentacao salva offline. Ela sera sincronizada automaticamente quando houver conexao.'
+        : 'Movimentacao salva e sincronizada com sucesso.';
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Não foi possível salvar a movimentação.');
-      }
-
-      mostrarFeedback('Movimentação salva com sucesso.', 'success');
+      mostrarFeedback(mensagemSucesso, 'success');
       if (tipoEvidencia.value === 'audio') {
         await removerAudioDoIndexedDb();
         limparPreviewAudio();
