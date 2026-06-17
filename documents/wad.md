@@ -4102,15 +4102,42 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
-O fluxo de autenticação implementado recebe `login` e `senha` pelo endpoint `POST /usuarios/login`, valida a existência do usuário e compara a senha informada com o valor armazenado em `senha_hash`. Quando as credenciais são válidas, o usuário está ativo e possui perfil Supervisor ou Gerente, o backend retorna os dados do usuário sem `senha_hash` e gera um token JWT para acesso às rotas protegidas. No estado atual do backend, a comparação de senha ainda é direta; a troca para bcrypt permanece registrada como melhoria necessária antes de produção.
+&nbsp;&nbsp;&nbsp;&nbsp;A autenticação do AgroFlow foi organizada conforme os três perfis de usuário da operação: Capataz, Supervisor e Gerente. Para Supervisores e Gerentes, o fluxo principal ocorre pelo endpoint `POST /usuarios/login`, que recebe `login` e `senha`, valida a existência do usuário, verifica se ele está ativo e compara a senha enviada com o valor armazenado em `senha_hash` por meio de `bcrypt.compare`. Quando as credenciais são válidas, o backend retorna os dados do usuário sem expor `senha_hash` e gera um token JWT para acesso às rotas protegidas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para Capatazes, o acesso não ocorre pelo formulário tradicional de login e senha. Esse perfil utiliza a rota `GET /capataz/acesso/:token`, preparada para ser acionada por QR Code. O token recebido pela URL é convertido em hash SHA-256, uma impressão digital irreversível do token original, e comparado com os hashes ativos armazenados na tabela `acesso_capataz`. Dessa forma, o banco não precisa guardar o token real do QR Code, apenas seu hash para comparação. Se o token estiver válido e vinculado a um usuário com cargo `capataz`, o sistema gera o JWT desse usuário e redireciona para `/capataz/home`.
 
 ### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
-O controle de sessão usa JWT em vez de uma tabela de sessões persistidas. A escolha reduz a necessidade de consulta ao banco a cada requisição protegida, pois o token carrega `sub`, `login`, `cargo` e `retiro_id`. Como trade-off, o token é stateless e não possui revogação centralizada imediata; por isso, não deve carregar informações sensíveis além dos dados mínimos de autorização.
+&nbsp;&nbsp;&nbsp;&nbsp;O controle de sessão utiliza JWT com validade de 1 dia. Após autenticação bem-sucedida, o token é gravado no cookie `agroflow_token`, configurado como `httpOnly`, `sameSite: 'lax'` e `maxAge` de 24 horas. Esse cookie permite proteger as páginas renderizadas pelo servidor e reduz a exposição do token a scripts executados no navegador.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nas APIs, o middleware `autenticarUsuario` aceita o token tanto pelo header `Authorization: Bearer <token>` quanto pelo cookie `agroflow_token`. Quando o token é válido, os dados do usuário autenticado são adicionados a `req.usuario`. Quando o token está ausente ou inválido, a API retorna `401 Unauthorized`.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nas views protegidas, o middleware `autenticarViewPorCookie` valida a sessão antes de liberar as rotas de `/capataz`, `/supervisor` e `/gerente`. Se não houver sessão válida, ou se o cookie estiver expirado ou inválido, o usuário é redirecionado para `/auth/perfil`. O encerramento da sessão ocorre pelo endpoint `POST /usuarios/logout`, que remove o cookie e retorna `204 No Content`.
 
 ### <a name="c3.8.3"></a>3.8.3. Autorização
 
-*Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
+&nbsp;&nbsp;&nbsp;&nbsp;A autorização é aplicada no backend por meio do middleware `exigirCargo`, que verifica o cargo presente em `req.usuario` antes que a requisição chegue ao controller. Quando o usuário está autenticado, mas não possui o cargo exigido para a operação, o sistema retorna `403 Forbidden`. As rotas protegidas são organizadas por módulo e recebem explicitamente os cargos autorizados para cada operação.
+
+<p align="center">Quadro - Regras de autorização por módulo</p>
+
+| Módulo | Capataz | Supervisor | Gerente |
+|---|---|---|---|
+| Views internas de Capataz (`/capataz/home` e demais telas protegidas) | Acessa | Bloqueado | Bloqueado |
+| Views de Supervisor (`/supervisor/*`) | Bloqueado | Acessa | Bloqueado |
+| Views de Gerente (`/gerente/*`) | Bloqueado | Bloqueado | Acessa |
+| Movimentações | Cria e sincroniza | Lista, consulta, atualiza e remove | Lista e consulta |
+| Tarefas | Consulta atribuídas e atualiza status | Cria, lista, atualiza e remove | Lista e consulta |
+| Tickets | Cria e sincroniza | Lista, consulta, altera status, prioridade e atribuição | Lista e consulta |
+| Evidências | Cria e consulta | Cria, lista e consulta | Lista e consulta |
+| Sincronização | Executa e consulta status | Executa, consulta status e acessa dados consolidados | Consulta status e dados consolidados |
+| Validações | Bloqueado | Valida movimentações, tarefas e tickets | Bloqueado |
+| Relatórios | Bloqueado | Consulta e exporta | Consulta e exporta |
+| Consulta de capatazes ativos por retiro | Consulta autenticada | Consulta autenticada | Consulta autenticada |
+| Gestão de usuários | Bloqueado | Bloqueado | Cria, lista, atualiza e remove |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além do controle por cargo, os controllers usam os dados da sessão autenticada para reduzir risco de manipulação de autoria e escopo. Em criações feitas por Capataz, o backend usa o `id` e o `retiro_id` do usuário autenticado para preencher autor e retiro. Em consultas operacionais, Supervisores e Capatazes ficam restritos ao próprio retiro, enquanto Gerentes podem consultar dados consolidados por diferentes retiros quando a rota permite esse filtro.
 
 ### <a name="c3.8.4"></a>3.8.4. Estratégias de Resiliência
 

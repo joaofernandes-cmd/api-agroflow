@@ -160,6 +160,59 @@ body {
   font-size: 11px; font-weight: 600;
   padding: 5px 12px; border-radius: 20px;
 }
+.pwa-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pwa-status__pill--offline {
+  background: #faf0d6;
+  color: var(--atencao);
+}
+.pwa-status__pill--pending {
+  box-shadow: 0 0 0 2px rgba(217, 154, 0, 0.18);
+}
+.pwa-status__queue {
+  color: var(--texto-sec);
+  font-size: 11px;
+  font-weight: 600;
+}
+.pwa-install {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(15, 95, 54, 0.18);
+  border-radius: 14px;
+  background: var(--superficie);
+  color: var(--primaria);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -20px rgba(0, 0, 0, 0.3);
+}
+.pwa-install[hidden],
+.pwa-install__hint[hidden] {
+  display: none;
+}
+.pwa-install__icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #eef7f0;
+}
+.pwa-install__hint {
+  margin-top: 6px;
+  color: var(--texto-sec);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center;
+}
 .secao-titulo { font-size: 18px; font-weight: 600; color: var(--texto); margin: 6px 0 14px; }
 .secao-titulo--espaco { margin-top: 20px; }
 
@@ -482,6 +535,16 @@ textarea.input { resize: none; }
 }
 .acao-card:active { transform: scale(0.98); }
 .acao-card--larga { grid-column: 1 / -1; }
+.pwa-install-row {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 2px;
+  text-align: center;
+}
 .acao-card__icone {
   width: 60px;
   height: 60px;
@@ -494,6 +557,56 @@ textarea.input { resize: none; }
 .acao-card__texto { display: flex; flex-direction: column; gap: 4px; }
 .acao-card__titulo { font-size: 15px; font-weight: 700; }
 .acao-card__sub { font-size: 12px; color: var(--texto-sec); line-height: 1.3; }
+.pwa-install-icon {
+  min-width: 126px;
+  min-height: 74px;
+  padding: 10px 16px 12px;
+  border: 1px solid rgba(47, 108, 61, 0.24);
+  border-radius: 18px;
+  background: var(--superficie);
+  color: var(--primaria);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.35);
+}
+.pwa-install-icon[hidden] {
+  display: none;
+}
+.pwa-install-icon:disabled {
+  opacity: 1;
+  cursor: pointer;
+}
+.pwa-install-icon--waiting {
+  color: var(--texto-sec);
+  background: #f8faf7;
+}
+.pwa-install-icon:not(:disabled):active {
+  transform: scale(0.96);
+}
+.pwa-install-icon__glyph {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: #eef7f0;
+  color: var(--primaria);
+}
+.pwa-install-icon--waiting .pwa-install-icon__glyph {
+  color: var(--texto-sec);
+  background: #eef2ed;
+}
+.pwa-install-icon__label {
+  line-height: 1.1;
+  white-space: nowrap;
+}
 
 /* Detalhe da tarefa ----------------------------------------------------- */
 .detalhe-card {

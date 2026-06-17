@@ -41,14 +41,14 @@
         aria-label="Pesquisar chamados"
       />
     </div>
-    <span class="tickets-badge-ativos">3 ativos</span>
+    <span class="tickets-badge-ativos">6 Pendentes</span>
   </div>
 
   <!-- Lista de tickets -->
   <main class="tickets-list" role="main">
 
     <section class="lista-secao">
-      <h2 class="lista-secao__titulo">Chamados ativos</h2>
+      <h2 class="lista-secao__titulo">Chamados pendentes</h2>
       <p class="lista-secao__sub">Aguardando sua validação</p>
 
       <div id="tickets-ativos">
@@ -164,17 +164,17 @@
           aria-label="Buscar chamados"
         />
       </div>
-      <span class="tickets-badge-ativos tickets-badge-ativos--desktop">3 Ativos</span>
+      <span class="tickets-badge-ativos tickets-badge-ativos--desktop">6 Pendentes</span>
     </div>
 
     <!-- Tabela de tickets -->
     <main class="desktop-content revisao-desktop-content" role="main">
       <section class="lista-secao">
-        <h2 class="lista-secao__titulo">Chamados ativos</h2>
+        <h2 class="lista-secao__titulo">Chamados pendentes</h2>
         <p class="lista-secao__sub">Aguardando sua validação</p>
       </section>
       <div class="revisao-table-wrap">
-        <table class="revisao-table" aria-label="Chamados ativos">
+        <table class="revisao-table" aria-label="Chamados pendentes">
           <thead>
             <tr>
               <th class="td--accent"></th>
@@ -186,14 +186,14 @@
               <th>Ação</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tickets-ativos-tbody">
             <tr>
               <td class="td--accent td--accent-red"></td>
               <td class="td--bold">Cerca danificada no pasto</td>
               <td>Puga</td>
               <td>Hoje, 08:24</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
-              <td><span class="badge badge--red-soft">Ativo</span></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
@@ -202,7 +202,7 @@
               <td>Bodoquena 1</td>
               <td>Hoje, 10:45</td>
               <td><span class="badge badge--yellow">Média</span></td>
-              <td><span class="badge badge--red-soft">Ativo</span></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr>
@@ -238,7 +238,7 @@
               <td>Bodoquena 1</td>
               <td>em 4 dias</td>
               <td><span class="badge badge--yellow">Média</span></td>
-              <td><span class="badge badge--red-soft">Ativo</span></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
           </tbody>
@@ -280,6 +280,17 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
+  // Recalcula o contador "N Pendentes" ao lado da busca conforme os chamados
+  // vão sendo validados (some um de cima → o número cai).
+  function atualizarBadgePendentes() {
+    const nMobile = document.querySelectorAll('#tickets-ativos .ticket-card').length;
+    const nDesktop = document.querySelectorAll('#tickets-ativos-tbody tr').length;
+    const badgeMobile = document.querySelector('.layout-mobile .tickets-badge-ativos');
+    const badgeDesktop = document.querySelector('.layout-desktop .tickets-badge-ativos');
+    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
+    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
+  }
+
   // Validar (mobile): move o card para "Validados", mais recente no topo
   function validarCardMobile(card) {
     if (!card || card.dataset.validado) return;
@@ -295,6 +306,7 @@
     if (accent) accent.className = 'ticket-card__accent ticket-card__accent--green';
     const alvo = document.getElementById('tickets-validados');
     if (alvo) alvo.prepend(card);
+    atualizarBadgePendentes();
   }
 
   // Validar (desktop): move a linha para a tabela "Validados", no topo
@@ -309,6 +321,7 @@
     if (vazio) vazio.remove();
     const tbody = document.getElementById('tickets-validados-tbody');
     if (tbody) tbody.prepend(row);
+    atualizarBadgePendentes();
   }
 
   // Botão "Validar" (card mobile ou linha desktop)
@@ -319,6 +332,9 @@
       validarLinhaDesktop(btn.closest('tr'));
     });
   });
+
+  // Sincroniza o contador com a quantidade real de chamados pendentes ao abrir.
+  atualizarBadgePendentes();
 
   // Filtro de busca — mobile
   const searchMobile = document.querySelector('.tickets-search');

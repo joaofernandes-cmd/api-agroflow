@@ -28,6 +28,21 @@ app.use('/css', express.static(path.join(__dirname, '../views/css')))
 app.use('/js', express.static(path.join(__dirname, '../views/js')))
 app.use('/assets', express.static(path.join(__dirname, '../../assets')))
 
+app.get('/manifest-capataz.json', (_req, res) => {
+  res.type('application/manifest+json')
+  res.sendFile(path.join(__dirname, 'public/manifest-capataz.json'))
+})
+
+app.get('/sw-capataz.js', (_req, res) => {
+  res.type('application/javascript')
+  res.sendFile(path.join(__dirname, 'public/sw-capataz.js'))
+})
+
+app.get('/capataz-pwa.js', (_req, res) => {
+  res.type('application/javascript')
+  res.sendFile(path.join(__dirname, 'public/capataz-pwa.js'))
+})
+
 // Documentação navegável da WebAPI disponível em /docs
 app.use('/docs', express.static(path.join(__dirname, 'public/docs')))
 

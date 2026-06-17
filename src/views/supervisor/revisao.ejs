@@ -148,6 +148,7 @@
     <!-- Validadas -->
     <section class="lista-secao">
       <h2 class="lista-secao__titulo">Validadas</h2>
+      <p class="lista-secao__sub">Tarefas que você já validou</p>
       <div class="concluidas-capataz"></div>
     </section>
 
@@ -379,6 +380,7 @@
       <!-- Validadas -->
       <section class="lista-secao">
         <h2 class="lista-secao__titulo">Validadas</h2>
+        <p class="lista-secao__sub">Tarefas que você já validou</p>
         <div class="concluidas-capataz"></div>
       </section>
     </main>
@@ -445,6 +447,17 @@
     });
   }
 
+  // Recalcula o contador "N Pendentes" ao lado da busca conforme as tarefas
+  // vão sendo validadas (some uma de cima → o número cai).
+  function atualizarBadgePendentes() {
+    const nMobile = document.querySelectorAll('.layout-mobile .pend-item').length;
+    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table tbody tr[data-tarefa-id]').length;
+    const badgeMobile = document.querySelector('.layout-mobile .revisao-badge-pendentes');
+    const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
+    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
+    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
+  }
+
   // Valida a tarefa: grava como concluída e move o item para a
   // seção "Validadas" (some de cima e aparece embaixo).
   function aceitarTarefa(id, titulo, retiro) {
@@ -467,6 +480,7 @@
     const partes = nome.split(' — ');
     aceitarTarefa(item.dataset.tarefaId, partes[0].trim(), (partes[1] || '').trim());
     item.remove();
+    atualizarBadgePendentes();
   }
 
   // Aceitar linha desktop (tabela): remove a linha e sua linha de detalhe
@@ -479,6 +493,7 @@
     aceitarTarefa(row.dataset.tarefaId, titulo, retiro);
     row.remove();
     if (det && det.classList.contains('pend-detalhe')) det.remove();
+    atualizarBadgePendentes();
   }
 
   // Botão "Validar" (vara mobile ou linha desktop)
@@ -538,6 +553,9 @@
       });
     });
   }
+
+  // Sincroniza o contador com a quantidade real de tarefas pendentes ao abrir.
+  atualizarBadgePendentes();
 </script>
 
 </body>
