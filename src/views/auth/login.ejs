@@ -180,7 +180,7 @@
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        throw new Error(data.error || 'Falha no login');
+        throw new Error(data.error || 'Não foi possível entrar. Verifique seus dados e tente novamente.');
       }
 
       if (data.token && data.usuario) {
@@ -190,7 +190,7 @@
           ? '/gerente/home'
           : '/supervisor/home';
       } else {
-        throw new Error('Resposta de login incompleta');
+        throw new Error('Não foi possível iniciar a sessão. Tente novamente.');
       }
     })
     .catch((err) => {
@@ -199,7 +199,7 @@
       const isNetworkError = err instanceof TypeError;
       erroLogin.textContent = isNetworkError
         ? 'Não foi possível conectar ao servidor.'
-        : (err.message || 'Falha ao fazer login. Tente novamente.');
+        : (err.message || 'Não foi possível entrar. Verifique seus dados e tente novamente.');
       erroLogin.style.display = 'block';
     });
   }
