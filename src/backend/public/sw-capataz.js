@@ -1,26 +1,30 @@
-const VERSION = 'v1'
+const VERSION = 'v6'
 const STATIC_CACHE = `agroflow-capataz-static-${VERSION}`
 const RUNTIME_CACHE = `agroflow-capataz-runtime-${VERSION}`
 
 const PRECACHE_URLS = [
   '/manifest-capataz.json',
-  '/capataz-pwa.js',
-  '/capataz/index',
+  '/capataz-pwa.js?v=6',
+  '/capataz',
   '/capataz/home',
   '/capataz/tarefas',
-  '/capataz/detalhe-tarefa',
   '/capataz/movimentacao',
   '/capataz/chamado',
-  '/css/capataz.css',
+  '/css/capataz.css?v=6',
+  '/js/tarefas-store.js',
+  '/js/prioridade-seletor.js',
   '/assets/logo-agro-flow.svg',
+  '/assets/icons/audio.svg',
+  '/assets/icons/foto.svg',
   '/assets/icons/home.svg',
-  '/assets/icons/tarefas.svg',
   '/assets/icons/movimentacao.svg',
-  '/assets/icons/notificacao.svg',
-  '/assets/pwa/icon-192.png',
-  '/assets/pwa/icon-192-maskable.png',
-  '/assets/pwa/icon-512.png',
-  '/assets/pwa/icon-512-maskable.png',
+  '/assets/icons/tarefas.svg',
+  '/assets/icons/texto.svg',
+  '/assets/icons/tickets.svg',
+  '/assets/pwa/icon-agroflow-550.png',
+  '/assets/pwa/icon-agroflow-550-maskeable.png',
+  '/assets/pwa/icon-agroflow.png',
+  '/assets/pwa/icon-agroflow-maskeable.png',
 ]
 
 function isNavigationRequest(request) {
@@ -58,7 +62,7 @@ async function networkFirst(request) {
       return cached
     }
 
-    const fallback = await caches.match('/capataz/home') || await caches.match('/capataz/index')
+    const fallback = await caches.match('/capataz/home') || await caches.match('/capataz')
     if (fallback) {
       return fallback
     }
@@ -69,7 +73,10 @@ async function networkFirst(request) {
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(STATIC_CACHE).then(cache => cache.addAll(PRECACHE_URLS)).then(() => self.skipWaiting())
+    caches
+      .open(STATIC_CACHE)
+      .then(cache => Promise.all(PRECACHE_URLS.map(url => cache.add(url).catch(() => null))))
+      .then(() => self.skipWaiting())
   )
 })
 
@@ -92,6 +99,11 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const request = event.request
   const url = new URL(request.url)
+
+  if (url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com') {
+    event.respondWith(cacheFirst(request))
+    return
+  }
 
   if (url.origin !== self.location.origin) {
     return
