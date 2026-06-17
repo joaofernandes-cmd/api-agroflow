@@ -95,9 +95,9 @@
   pointer-events: none;
 }
 
-/* Período: dois seletores de data lado a lado */
-.rfield__daterange { display: flex; gap: 12px; }
-.rfield__date { flex: 1; min-width: 0; }
+/* Período: dois seletores de data lado a lado (empilham se faltar largura) */
+.rfield__daterange { display: flex; flex-wrap: wrap; gap: 12px; }
+.rfield__date { flex: 1 1 130px; min-width: 0; }
 .rfield__date-label {
   display: block;
   font-size: 11px;
@@ -105,7 +105,13 @@
   color: var(--color-muted);
   margin-bottom: 4px;
 }
-input[type="date"].rfield__input { appearance: auto; -webkit-appearance: none; }
+
+/* Datas: usa o controle nativo (alinhado e com o calendário) dentro da borda */
+input[type="date"].rfield__input,
+input[type="date"].tfilter__input {
+  appearance: auto;
+  -webkit-appearance: auto;
+}
 
 /* Seleção múltipla de retiros (Todos ou um/mais) */
 .multiselect { position: relative; }
@@ -180,6 +186,15 @@ input[type="date"].rfield__input { appearance: auto; -webkit-appearance: none; }
   border-radius: 0;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: 4px;
+}
+
+/* No mobile o conteúdo tem scroll próprio (overflow), o que cortaria um painel
+   absoluto. Aqui o painel fica no fluxo (empurra o conteúdo) e nunca é cortado. */
+.layout-mobile .multiselect__panel {
+  position: static;
+  margin-top: 8px;
+  box-shadow: none;
+  max-height: none;
 }
 
 /* Skeleton de prévia */
@@ -282,8 +297,7 @@ input[type="date"].rfield__input { appearance: auto; -webkit-appearance: none; }
 /* Período no desktop: duas datas lado a lado, ocupa mais largura */
 .tfilter--daterange { flex: 1.8; }
 .tfilter__daterange { display: flex; gap: 8px; }
-.tfilter__daterange .tfilter__input { padding: 0 8px; }
-input[type="date"].tfilter__input { appearance: auto; -webkit-appearance: none; }
+.tfilter__daterange .tfilter__input { padding: 0 8px; min-width: 0; }
 
 /* Multiselect de retiro no desktop: altura/raio menores */
 .tfilter .multiselect__toggle {
@@ -298,13 +312,26 @@ input[type="date"].tfilter__input { appearance: auto; -webkit-appearance: none; 
    ════════════════════════════════════════════════════════════ */
 .desktop-content--relatorio {
   display: grid;
-  grid-template-columns: 1fr 460px;
+  /* minmax(0, 1fr): deixa a coluna da prévia encolher mesmo com a tabela larga,
+     evitando overflow horizontal que cortava o resumo. */
+  grid-template-columns: minmax(0, 1fr) 400px;
   gap: 24px;
   padding: 24px 32px;
   align-items: start;
 }
 
-.relatorio-preview { display: flex; flex-direction: column; }
+/* Telas mais estreitas: empilha prévia e resumo (cada um na largura toda). */
+@media (max-width: 1080px) {
+  .desktop-content--relatorio { grid-template-columns: 1fr; }
+}
+
+/* A linha de feedback ocupa a largura toda. Sem isso ela rouba a 1ª célula do
+   grid e joga a prévia pra coluna estreita e o resumo pra linha de baixo
+   (layout torto). Quando vazia, some para não abrir buraco. */
+.desktop-content--relatorio > #relatorio-feedback { grid-column: 1 / -1; margin: 0; }
+.desktop-content--relatorio > #relatorio-feedback:empty { display: none; }
+
+.relatorio-preview { display: flex; flex-direction: column; min-width: 0; }
 
 .report-table-wrap {
   background: var(--color-white);

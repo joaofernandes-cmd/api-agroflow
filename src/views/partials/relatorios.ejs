@@ -268,6 +268,8 @@
 
 </div><!-- /layout-desktop -->
 
+<!-- Fonte única das tarefas validadas (mesma da tela de Revisão). -->
+<script src="/js/tarefas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -294,35 +296,14 @@
     });
   }
 
-  // Quando logado, o filtro de retiro passa a oferecer só "Todos" + "Meu retiro"
-  // (o backend filtra por UUID, e o usuário só enxerga o próprio retiro).
-  function configurarFiltroRetiro(session) {
-    if (!session?.usuario?.retiro_id) return;
-    ['retiro-mobile', 'retiro-desktop'].forEach(id => {
-      const container = document.getElementById(id);
-      const panel = container?.querySelector('.multiselect__panel');
-      if (!panel) return;
-      panel.innerHTML = `
-        <label class="multiselect__option multiselect__option--all">
-          <input type="checkbox" class="multiselect__all" checked /> Todos os retiros
-        </label>
-        <label class="multiselect__option">
-          <input type="checkbox" class="multiselect__item" value="${session.usuario.retiro_id}" data-rotulo="Meu retiro" /> Meu retiro
-        </label>`;
-    });
-  }
-
-  function mapearTitulo(tipo) {
-    if (tipo === 'movimentacoes') return 'Movimentação';
-    if (tipo === 'tarefas') return 'Tarefa';
-    if (tipo === 'tickets') return 'Ticket';
-    return 'Todos os relatórios';
-  }
+  // Aceita só UUID como retiroId do backend (os valores da lista são slugs de
+  // demonstração — quando vierem slugs, não enviamos filtro de retiro à API).
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
   function mapearColunas(tipo) {
     if (tipo === 'todos') return ['Data', 'Retiro', 'Registro', 'Detalhe', 'Status'];
-    if (tipo === 'tarefas') return ['Data', 'Retiro', 'Descrição', 'Prioridade', 'Status'];
-    if (tipo === 'tickets') return ['Data', 'Retiro', 'Categoria', 'Prioridade', 'Status'];
+    if (tipo === 'tarefas') return ['Data', 'Retiro', 'Tarefa', 'Prioridade', 'Status'];
+    if (tipo === 'tickets') return ['Quando', 'Retiro', 'Ticket', 'Severidade', 'Status'];
     return ['Data', 'Retiro', 'Tipo', 'Qtd.', 'Status'];
   }
 
@@ -333,29 +314,12 @@
     return data.toLocaleDateString('pt-BR');
   }
 
-  // Item bruto da API -> linha padronizada { celulas:[4], status }.
-  function montarLinha(item, tipo) {
-    if (tipo === 'tarefas') {
-      return {
-        celulas: [formatarData(item.data_criacao), `Retiro ${item.retiro_id}`, item.descricao || '-', item.prioridade || '-'],
-        status: item.status === 'aprovado' ? 'Validado' : 'Pendente',
-      };
-    }
-    if (tipo === 'tickets') {
-      return {
-        celulas: [formatarData(item.data_criacao), `Retiro ${item.retiro_id}`, item.categoria || '-', item.prioridade || '-'],
-        status: item.status === 'aprovado' ? 'Validado' : 'Pendente',
-      };
-    }
-    return {
-      celulas: [formatarData(item.data_criacao), `Retiro ${item.retiro_id}`, item.tipo || '-', item.quantidade ?? '-'],
-      status: item.sincronizado ? 'Validado' : 'Pendente',
-    };
+  const ROTULO_PRIORIDADE = { alta: 'Alta', media: 'Média', baixa: 'Baixa', critica: 'Crítica' };
+  function rotuloPrioridade(p) {
+    return ROTULO_PRIORIDADE[p] || (p ? p : '—');
   }
 
-  // Datasets de demonstração vindos do servidor — montados das MESMAS fontes
-  // únicas das telas de lista (Tarefas, Tickets, Movimentações). Garante que a
-  // prévia do relatório mostre exatamente os itens que aparecem nas páginas.
+  // Movimentações e tickets vêm do servidor (mesma fonte das telas de lista).
   const RELATORIO_DEMO = <%- JSON.stringify(typeof relatorioDemo !== 'undefined' ? relatorioDemo : {}) %>;
 
   function escaparRel(s) {
@@ -367,12 +331,29 @@
     return String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
 
-  // Tipo "Todos": junta as linhas das três fontes numa tabela única.
+  // FONTE ÚNICA das tarefas: o MESMO TarefasStore que a tela de Revisão usa.
+  // Toda tarefa que o supervisor valida fica guardada lá (status "Validada"),
+  // então passa a aparecer aqui no relatório automaticamente.
+  function datasetTarefas() {
+    if (!window.TarefasStore) return RELATORIO_DEMO.tarefas || { colunas: mapearColunas('tarefas'), linhas: [] };
+    const linhas = TarefasStore.listar().map(t => ({
+      celulas: [t.dataConclusao || '—', t.retiro || '—', t.titulo || 'Tarefa', rotuloPrioridade(t.prioridade)],
+      status: 'Validado',
+    }));
+    return { colunas: mapearColunas('tarefas'), linhas };
+  }
+
+  // Dataset de um tipo: tarefas vêm do TarefasStore; os demais, do servidor.
+  function datasetDe(tipo) {
+    if (tipo === 'tarefas') return datasetTarefas();
+    return RELATORIO_DEMO[tipo] || { colunas: mapearColunas(tipo), linhas: [] };
+  }
+
+  // Tipo "Todos": junta movimentações + tarefas validadas + tickets.
   function datasetCombinado() {
     const linhas = [];
-    ['movimentacoes', 'tarefas', 'tickets'].forEach(fonte => {
-      const ds = RELATORIO_DEMO[fonte];
-      if (ds) ds.linhas.forEach(l => linhas.push({ celulas: l.celulas, status: l.status }));
+    ['movimentacoes', 'tarefas', 'tickets'].forEach(tipo => {
+      datasetDe(tipo).linhas.forEach(l => linhas.push({ celulas: l.celulas, status: l.status }));
     });
     return { colunas: mapearColunas('todos'), linhas };
   }
@@ -454,57 +435,15 @@
     };
   }
 
-  // Prévia de demonstração (sem login) aplicando tipo + retiro + período.
-  function renderDemo(filtros) {
-    const base = filtros.tipo === 'todos'
-      ? datasetCombinado()
-      : (RELATORIO_DEMO[filtros.tipo] || RELATORIO_DEMO.movimentacoes);
-    if (!base) return;
-    const linhas = filtrarLinhas(base.linhas, filtros);
-    const fallback = base.resumo ? base.resumo.periodo : 'Todos os registros';
-    renderTabela(base.colunas, linhas, textoPeriodo(filtros, fallback));
-  }
-
-  async function buscarDados(tipo, filtros, session) {
-    const endpoint = tipo === 'tarefas'
-      ? '/relatorios/tarefas/dados'
-      : tipo === 'tickets'
-        ? '/relatorios/tickets/dados'
-        : '/relatorios/movimentacoes/dados';
-    const url = new URL(endpoint, window.location.origin);
-    if (filtros.dataInicio) url.searchParams.set('dataInicio', filtros.dataInicio);
-    if (filtros.dataFim) url.searchParams.set('dataFim', filtros.dataFim);
-    if (!filtros.retiro.todos && filtros.retiro.valores.length === 1) {
-      url.searchParams.set('retiroId', filtros.retiro.valores[0]);
-    }
-    const response = await fetch(url.toString(), { headers: { Authorization: `Bearer ${session.token}` } });
-    const dados = await response.json().catch(() => []);
-    if (!response.ok || !Array.isArray(dados)) {
-      throw new Error(dados?.error || 'Não foi possível carregar o relatório');
-    }
-    return dados.map(item => montarLinha(item, tipo));
-  }
-
-  async function carregarRelatorio() {
-    const session = getSession();
+  // Monta a prévia (tabela + resumo) SEMPRE a partir das fontes únicas do
+  // supervisor (TarefasStore + dados do servidor), aplicando tipo + retiro +
+  // período. Assim o que o supervisor valida aparece na hora no relatório.
+  function carregarRelatorio() {
     const filtros = lerFiltros('desktop');
-
-    // Sem login: prévia de demonstração com os MESMOS itens das telas de lista.
-    if (!session) {
-      renderDemo(filtros);
-      mostrarFeedback('Prévia de demonstração — faça login para dados reais e exportação.', 'success');
-      return;
-    }
-
-    try {
-      const tipos = filtros.tipo === 'todos' ? ['movimentacoes', 'tarefas', 'tickets'] : [filtros.tipo];
-      const resultados = await Promise.all(tipos.map(t => buscarDados(t, filtros, session)));
-      const linhas = resultados.flat();
-      renderTabela(mapearColunas(filtros.tipo), linhas, textoPeriodo(filtros, 'Período selecionado'));
-      mostrarFeedback(`Relatório de ${mapearTitulo(filtros.tipo).toLowerCase()} atualizado com sucesso.`, 'success');
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao carregar relatório', 'error');
-    }
+    const base = filtros.tipo === 'todos' ? datasetCombinado() : datasetDe(filtros.tipo);
+    const linhas = filtrarLinhas(base.linhas, filtros);
+    renderTabela(base.colunas, linhas, textoPeriodo(filtros, 'Registros do supervisor'));
+    mostrarFeedback('', 'success');
   }
 
   async function exportarRelatorio(contexto) {
@@ -529,7 +468,7 @@
     url.searchParams.set('formato', formato);
     if (filtros.dataInicio) url.searchParams.set('dataInicio', filtros.dataInicio);
     if (filtros.dataFim) url.searchParams.set('dataFim', filtros.dataFim);
-    if (!filtros.retiro.todos && filtros.retiro.valores.length === 1) {
+    if (!filtros.retiro.todos && filtros.retiro.valores.length === 1 && UUID_RE.test(filtros.retiro.valores[0])) {
       url.searchParams.set('retiroId', filtros.retiro.valores[0]);
     }
 
@@ -619,10 +558,6 @@
     document.addEventListener('click', e => { if (!container.contains(e.target)) abrir(false); });
     atualizarResumo();
   }
-
-  const session = getSession();
-  // Reconfigura as opções de retiro ANTES de ligar os multiselects.
-  configurarFiltroRetiro(session);
 
   ['tipo-desktop', 'data-inicio-desktop', 'data-fim-desktop'].forEach(id => {
     const campo = document.getElementById(id);
