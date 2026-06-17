@@ -633,7 +633,7 @@
 
   async function uploadAudioParaSupabase(draft, usuarioId) {
     if (!SUPABASE?.url || !SUPABASE?.anonKey || !SUPABASE?.bucket) {
-      throw new Error('Configuração do Supabase ausente. Defina `window.__SUPABASE__ = { url, anonKey, bucket }` na página.')
+      throw new Error('Não foi possível enviar a mídia. Tente novamente')
     }
 
     const extensao = draft.mimeType === 'audio/mp4' ? 'm4a' : 'webm';
@@ -654,8 +654,7 @@
     });
 
     if (!response.ok) {
-      const texto = await response.text().catch(() => '');
-      throw new Error(`Falha ao enviar áudio para o Supabase (${response.status}): ${texto || 'sem detalhes'}`);
+      throw new Error('Não foi possível enviar a mídia. Tente novamente');
     }
 
     return {
@@ -666,7 +665,7 @@
 
   async function uploadFotoParaSupabase(draft, usuarioId) {
     if (!SUPABASE?.url || !SUPABASE?.anonKey || !SUPABASE?.bucket) {
-      throw new Error('Configuração do Supabase ausente. Defina `window.__SUPABASE__ = { url, anonKey, bucket }` na página.')
+      throw new Error('Não foi possível enviar a mídia. Tente novamente')
     }
 
     const extensao = 'jpg';
@@ -687,8 +686,7 @@
     });
 
     if (!response.ok) {
-      const texto = await response.text().catch(() => '');
-      throw new Error(`Falha ao enviar foto para o Supabase (${response.status}): ${texto || 'sem detalhes'}`);
+      throw new Error('Não foi possível enviar a mídia. Tente novamente');
     }
 
     return {
