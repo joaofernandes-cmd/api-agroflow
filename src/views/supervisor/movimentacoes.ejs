@@ -44,7 +44,7 @@
         aria-label="Pesquisar movimentações"
       />
     </div>
-    <span class="revisao-badge-pendentes">6 Pendentes</span>
+    <span class="revisao-badge-pendentes"><%= movimentacoes.length %> Pendentes</span>
   </div>
 
   <!-- Lista de movimentações -->
@@ -55,9 +55,10 @@
       <h2 class="lista-secao__titulo">Pendentes de validação</h2>
       <p class="lista-secao__sub">Movimentações registradas pelos capatazes</p>
 
-      <div class="pend-item" data-mov-id="m1">
+      <% movimentacoes.forEach(function (m) { %>
+      <div class="pend-item" data-mov-id="<%= m.id %>">
         <div class="pend-head">
-          <span class="pend-title"><span class="badge badge--green">Nascimento</span> Aroeira</span>
+          <span class="pend-title"><span class="badge <%= m.badgeClasse %>"><%= m.tipo %></span> <%= m.local %></span>
           <button class="btn-revisar" data-action="validar">Validar</button>
           <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -65,85 +66,11 @@
         </div>
         <div class="pend-panel">
           <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> Lucas<br><strong>Retiro:</strong> Aroeira<br><strong>Quantidade:</strong> 3 animais<br><strong>Estágio:</strong> Bezerro 0 a 7 meses<br><strong>Evidência:</strong> Foto<br><strong>Enviado:</strong> há 1h</p>
+            <p class="pend-info"><strong>Capataz:</strong> <%= m.capataz %><br><% if (m.tipo === 'Transferência') { %><strong>Origem:</strong> <%= m.origem %><br><strong>Destino:</strong> <%= m.destino %><br><% } else { %><strong>Retiro:</strong> <%= m.retiro %><br><% } %><strong>Quantidade:</strong> <%= m.quantidadeRotulo %><br><strong>Estágio:</strong> <%= m.estagio %><br><% if (m.causaObito) { %><strong>Causa do óbito:</strong> <%= m.causaObito %><br><% } %><strong>Evidência:</strong> <%= m.evidencia %><br><strong>Enviado:</strong> <%= m.enviado %></p>
           </div>
         </div>
       </div>
-
-      <div class="pend-item" data-mov-id="m2">
-        <div class="pend-head">
-          <span class="pend-title"><span class="badge badge--blue">Transferência</span> Puga → CMB</span>
-          <button class="btn-revisar" data-action="validar">Validar</button>
-          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-        </div>
-        <div class="pend-panel">
-          <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> Manoel<br><strong>Origem:</strong> Puga<br><strong>Destino:</strong> CMB<br><strong>Quantidade:</strong> 40 animais<br><strong>Estágio:</strong> Boi 25 a 36 meses<br><strong>Evidência:</strong> Áudio<br><strong>Enviado:</strong> há 3h</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pend-item" data-mov-id="m3">
-        <div class="pend-head">
-          <span class="pend-title"><span class="badge badge--red-soft">Morte</span> Cristo</span>
-          <button class="btn-revisar" data-action="validar">Validar</button>
-          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-        </div>
-        <div class="pend-panel">
-          <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> José Carlos<br><strong>Retiro:</strong> Cristo<br><strong>Quantidade:</strong> 1 animal<br><strong>Estágio:</strong> Vaca acima de 36 meses<br><strong>Causa do óbito:</strong> Doença<br><strong>Evidência:</strong> Texto<br><strong>Enviado:</strong> há 1 dia</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pend-item" data-mov-id="m4">
-        <div class="pend-head">
-          <span class="pend-title"><span class="badge badge--green">Compra</span> Bodoquena 1</span>
-          <button class="btn-revisar" data-action="validar">Validar</button>
-          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-        </div>
-        <div class="pend-panel">
-          <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> Alberto<br><strong>Retiro:</strong> Bodoquena 1<br><strong>Quantidade:</strong> 25 animais<br><strong>Estágio:</strong> Garrote 13 a 24 meses<br><strong>Evidência:</strong> Foto<br><strong>Enviado:</strong> há 1 dia</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pend-item" data-mov-id="m5">
-        <div class="pend-head">
-          <span class="pend-title"><span class="badge badge--yellow">Venda</span> Caieira</span>
-          <button class="btn-revisar" data-action="validar">Validar</button>
-          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-        </div>
-        <div class="pend-panel">
-          <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> João Paulo<br><strong>Retiro:</strong> Caieira<br><strong>Quantidade:</strong> 18 animais<br><strong>Estágio:</strong> Boi acima de 36 meses<br><strong>Evidência:</strong> Texto<br><strong>Enviado:</strong> há 2 dias</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pend-item" data-mov-id="m6">
-        <div class="pend-head">
-          <span class="pend-title"><span class="badge badge--blue">Transferência</span> Morro Azul → Vista Alegre</span>
-          <button class="btn-revisar" data-action="validar">Validar</button>
-          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-        </div>
-        <div class="pend-panel">
-          <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> Daniel<br><strong>Origem:</strong> Morro Azul<br><strong>Destino:</strong> Vista Alegre<br><strong>Quantidade:</strong> 60 animais<br><strong>Estágio:</strong> Novilha 13 a 24 meses<br><strong>Evidência:</strong> Áudio<br><strong>Enviado:</strong> há 3 dias</p>
-          </div>
-        </div>
-      </div>
+      <% }) %>
 
     </section>
 
@@ -194,7 +121,7 @@
           aria-label="Pesquisar movimentações"
         />
       </div>
-      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop">6 Pendentes</span>
+      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop"><%= movimentacoes.length %> Pendentes</span>
     </div>
 
     <!-- Tabela de movimentações -->
@@ -219,11 +146,27 @@
             </tr>
           </thead>
           <tbody>
-            <tr data-mov-id="m1">
-              <td class="td--bold"><span class="badge badge--green">Nascimento</span></td>
-              <td>Aroeira</td>
-              <td>Capataz Lucas</td>
-              <td>3 animais</td>
+            <%
+              function escHtmlMov(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+              function evidenciaBlocoMov(m){
+                if (m.evidencia === 'Texto') {
+                  return '<p class="evidencia-texto">' + escHtmlMov(m.evidenciaTexto) + '</p>';
+                }
+                var isAudio = m.evidencia === 'Áudio';
+                var icone = isAudio
+                  ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
+                  : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
+                return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
+                  '<span class="evidencia__tipo">' + escHtmlMov(m.evidencia) + '</span></div>';
+              }
+            %>
+            <% movimentacoes.forEach(function (m, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-mov-id="<%= m.id %>">
+              <td class="td--bold"><span class="badge <%= m.badgeClasse %>"><%= m.tipo %></span></td>
+              <td><%= m.local %></td>
+              <td>Capataz <%= m.capataz %></td>
+              <td><%= m.quantidadeRotulo %></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
               <td><button class="btn-revisar" data-action="validar">Validar</button></td>
@@ -233,147 +176,16 @@
                 <div class="pend-detalhe__inner">
                   <div class="concl-bloco">
                     <span class="concl-bloco__label">Detalhes</span>
-                    <p class="concl-bloco__texto">Estágio: Bezerro 0 a 7 meses · Enviado há 1h.</p>
+                    <p class="concl-bloco__texto"><%= m.detalhes %></p>
                   </div>
                   <div class="concl-bloco">
                     <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--foto">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>
-                      <span class="evidencia__tipo">Foto</span>
-                    </div>
+                    <%- evidenciaBlocoMov(m) %>
                   </div>
                 </div>
               </td>
             </tr>
-
-            <tr class="tr--alt" data-mov-id="m2">
-              <td class="td--bold"><span class="badge badge--blue">Transferência</span></td>
-              <td>Puga → CMB</td>
-              <td>Capataz Manoel</td>
-              <td>40 animais</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Detalhes</span>
-                    <p class="concl-bloco__texto">Origem: Puga · Destino: CMB · Estágio: Boi 25 a 36 meses · Enviado há 3h.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--audio">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/></svg>
-                      <span class="evidencia__tipo">Áudio</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-mov-id="m3">
-              <td class="td--bold"><span class="badge badge--red-soft">Morte</span></td>
-              <td>Cristo</td>
-              <td>Capataz José Carlos</td>
-              <td>1 animal</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Detalhes</span>
-                    <p class="concl-bloco__texto">Estágio: Vaca acima de 36 meses · Causa do óbito: Doença · Enviado há 1 dia.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <p class="evidencia-texto">Animal encontrado sem vida no pasto leste; sinais de doença.</p>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr class="tr--alt" data-mov-id="m4">
-              <td class="td--bold"><span class="badge badge--green">Compra</span></td>
-              <td>Bodoquena 1</td>
-              <td>Capataz Alberto</td>
-              <td>25 animais</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Detalhes</span>
-                    <p class="concl-bloco__texto">Estágio: Garrote 13 a 24 meses · Enviado há 1 dia.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--foto">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>
-                      <span class="evidencia__tipo">Foto</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-mov-id="m5">
-              <td class="td--bold"><span class="badge badge--yellow">Venda</span></td>
-              <td>Caieira</td>
-              <td>Capataz João Paulo</td>
-              <td>18 animais</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Detalhes</span>
-                    <p class="concl-bloco__texto">Estágio: Boi acima de 36 meses · Enviado há 2 dias.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <p class="evidencia-texto">Lote vendido para o frigorífico regional; nota emitida.</p>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr class="tr--alt" data-mov-id="m6">
-              <td class="td--bold"><span class="badge badge--blue">Transferência</span></td>
-              <td>Morro Azul → Vista Alegre</td>
-              <td>Capataz Daniel</td>
-              <td>60 animais</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Detalhes</span>
-                    <p class="concl-bloco__texto">Origem: Morro Azul · Destino: Vista Alegre · Estágio: Novilha 13 a 24 meses · Enviado há 3 dias.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--audio">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/></svg>
-                      <span class="evidencia__tipo">Áudio</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>
@@ -389,6 +201,7 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/contadores-pendentes.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -425,15 +238,9 @@
       '<span class="evidencia__tipo">' + escaparHTML(tipo) + '</span></div>';
   }
 
-  // Detalhes + evidência de cada movimentação (fonte única, lida na validação).
-  const MOV_DADOS = {
-    'm1': { detalhes: 'Estágio: Bezerro 0 a 7 meses · Enviado há 1h.', evidencia: 'Foto' },
-    'm2': { detalhes: 'Origem: Puga · Destino: CMB · Estágio: Boi 25 a 36 meses · Enviado há 3h.', evidencia: 'Áudio' },
-    'm3': { detalhes: 'Estágio: Vaca acima de 36 meses · Causa do óbito: Doença · Enviado há 1 dia.', evidencia: 'Texto', evidenciaTexto: 'Animal encontrado sem vida no pasto leste; sinais de doença.' },
-    'm4': { detalhes: 'Estágio: Garrote 13 a 24 meses · Enviado há 1 dia.', evidencia: 'Foto' },
-    'm5': { detalhes: 'Estágio: Boi acima de 36 meses · Enviado há 2 dias.', evidencia: 'Texto', evidenciaTexto: 'Lote vendido para o frigorífico regional; nota emitida.' },
-    'm6': { detalhes: 'Origem: Morro Azul · Destino: Vista Alegre · Estágio: Novilha 13 a 24 meses · Enviado há 3 dias.', evidencia: 'Áudio' },
-  };
+  // Detalhes + evidência de cada movimentação (fonte única, vinda do servidor —
+  // o mesmo módulo que renderiza a lista acima).
+  const MOV_DADOS = <%- JSON.stringify(movimentacoesDados) %>;
 
   // Recalcula o contador "N Pendentes" ao lado da busca conforme as
   // movimentações vão sendo validadas (some uma de cima → o número cai).
@@ -444,6 +251,8 @@
     const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
     if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
     if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
+    // Espelha o total na home (bloco "Movimentações" do Acesso rápido).
+    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('movimentacoes', nMobile, nDesktop);
   }
 
   // Movimentações já validadas (em memória) — mais recente no topo.
@@ -549,6 +358,12 @@
     movimentacoesValidadas.unshift(dados);
     if (origem) origem.remove();
     validarMovimentacaoPorId(dados.id);
+    // Persiste no servidor (demo): remove a movimentação dos pendentes em
+    // memória, para o contador (tela + home) continuar certo após recarregar.
+    if (dados.id) {
+      fetch('/supervisor/movimentacoes/' + encodeURIComponent(dados.id) + '/validar', { method: 'POST' })
+        .catch(function () {});
+    }
     renderValidadas();
     atualizarBadgePendentes();
   }

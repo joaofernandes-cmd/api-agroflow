@@ -378,6 +378,23 @@
   min-height: 100px;
 }
 
+/* Campo de texto livre (ex.: "Outro" na atividade da delegação) */
+.dfield__input {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.dfield__input::placeholder { color: var(--color-muted); }
+.dfield__input:focus { border-color: var(--color-primary); }
+.dfield__input--desktop { border-radius: 10px; }
+
 /* Botão enviar mobile */
 .btn--enviar {
   height: 56px;

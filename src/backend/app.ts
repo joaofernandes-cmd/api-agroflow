@@ -12,7 +12,21 @@ import { tratadorDeErros, ErroDeAplicacao } from './middlewares/erros.middleware
 import { middlewareDeLog } from './middlewares/log.middleware'
 import { autenticarViewPorCookie } from './middlewares/autenticacao.middleware'
 import { exigirCargoView } from './middlewares/cargo.middleware'
-import { tarefasCapataz, tarefasCapatazRecentes, buscarTarefaCapataz } from './data/tarefas-capataz'
+import {
+  tarefasCapataz,
+  tarefasCapatazRecentes,
+  tarefasRevisao,
+  removerTarefaRevisao,
+  buscarTarefaCapataz,
+} from './data/tarefas-capataz'
+import { ticketsPendentes, ticketsDadosMap, removerTicketPendente } from './data/tickets'
+import {
+  movimentacoesPendentes,
+  movimentacoesDadosMap,
+  removerMovimentacaoPendente,
+} from './data/movimentacoes'
+import { relatorioDemo } from './data/relatorio-demo'
+import { OPCOES_RETIRO, RETIROS, CAPATAZES } from './data/referencia'
 import { UsuarioController } from './controllers/usuario.controller'
 
 const app = express()
@@ -119,6 +133,13 @@ app.get('/supervisor/home', (req, res) => {
     title: 'Início',
     css: 'supervisor',
     usuario: { nome: 'Luiz Felipe' }, // substituir pelo usuário da sessão
+    // Contadores derivados das MESMAS fontes das telas de lista, para os
+    // blocos de "Acesso rápido" baterem com cada página.
+    contadores: {
+      tarefas: tarefasRevisao.length,
+      tickets: ticketsPendentes.length,
+      movimentacoes: movimentacoesPendentes.length,
+    },
   });
 });
 
@@ -126,7 +147,14 @@ app.get('/supervisor/delegar', (req, res) => {
   res.render('supervisor/delegar', {
     title: 'Delegar tarefa',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' }
+    usuario: { nome: 'Luiz Felipe' },
+    // Selects vêm da fonte única de referência: todos os capatazes e todos
+    // os retiros da fazenda (o supervisor escolhe um de cada).
+    capatazes: CAPATAZES,
+    retiros: RETIROS,
+    // "Tarefas ativas" = tarefas já delegadas que o capataz ainda não realizou
+    // (status 'pendente'). Mesma fonte da home do capataz, para baterem.
+    tarefasAtivas: tarefasCapataz.filter((t) => t.status === 'pendente'),
   });
 });
 
@@ -145,7 +173,12 @@ app.get('/supervisor/revisao', (req, res) => {
   res.render('supervisor/revisao', {
     title: 'Revisão de Tarefas',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' }
+    usuario: { nome: 'Luiz Felipe' },
+    // Tarefas delegadas que o capataz ainda NÃO realizou (status 'pendente').
+    // Aparecem como "Não realizado" e ainda não podem ser validadas.
+    tarefasNaoRealizadas: tarefasCapataz.filter((t) => t.status === 'pendente'),
+    // Tarefas que o capataz concluiu e aguardam validação (status 'concluida').
+    tarefas: tarefasRevisao
   });
 });
 
@@ -153,7 +186,9 @@ app.get('/supervisor/tickets', (req, res) => {
   res.render('supervisor/tickets', {
     title: 'Tickets de infraestrutura',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' }
+    usuario: { nome: 'Luiz Felipe' },
+    tickets: ticketsPendentes,
+    ticketsDados: ticketsDadosMap
   });
 });
 
@@ -162,9 +197,29 @@ app.get('/supervisor/movimentacoes', (req, res) => {
   res.render('supervisor/movimentacoes', {
     title: 'Movimentações',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' }
+    usuario: { nome: 'Luiz Felipe' },
+    movimentacoes: movimentacoesPendentes,
+    movimentacoesDados: movimentacoesDadosMap
   });
 });
+
+// Validação (demo): ao validar na tela, removemos o item das listas em memória
+// — fonte única do badge de cada tela e do contador da home —, para a contagem
+// continuar correta depois de recarregar. Devolve o total de pendentes restante.
+app.post('/supervisor/tarefas/:id/validar', (req, res) => {
+  const ok = removerTarefaRevisao(Number(req.params.id))
+  return res.status(ok ? 200 : 404).json({ ok, pendentes: tarefasRevisao.length })
+})
+
+app.post('/supervisor/tickets/:id/validar', (req, res) => {
+  const ok = removerTicketPendente(String(req.params.id))
+  return res.status(ok ? 200 : 404).json({ ok, pendentes: ticketsPendentes.length })
+})
+
+app.post('/supervisor/movimentacoes/:id/validar', (req, res) => {
+  const ok = removerMovimentacaoPendente(String(req.params.id))
+  return res.status(ok ? 200 : 404).json({ ok, pendentes: movimentacoesPendentes.length })
+})
 
 // Supervisor acessa relatórios
 app.get('/supervisor/relatorios', (req, res) => {
@@ -172,7 +227,9 @@ app.get('/supervisor/relatorios', (req, res) => {
     title: 'Relatórios',
     css: ['supervisor', 'relatorios'],
     persona: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' }
+    usuario: { nome: 'Luiz Felipe' },
+    retiros: OPCOES_RETIRO,
+    relatorioDemo
   })
 })
 
@@ -192,7 +249,9 @@ app.get('/gerente/relatorios', (req, res) => {
     title: 'Relatórios',
     css: ['gerente', 'relatorios'],
     persona: 'gerente',
-    usuario: { nome: 'Marcos Ferreira' }
+    usuario: { nome: 'Marcos Ferreira' },
+    retiros: OPCOES_RETIRO,
+    relatorioDemo
   });
 });
 

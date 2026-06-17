@@ -41,7 +41,7 @@
         aria-label="Pesquisar tickets"
       />
     </div>
-    <span class="tickets-badge-ativos">6 Pendentes</span>
+    <span class="tickets-badge-ativos"><%= tickets.length %> Pendentes</span>
   </div>
 
   <!-- Lista de tickets -->
@@ -52,9 +52,10 @@
       <p class="lista-secao__sub">Aguardando sua validação</p>
 
       <div id="tickets-ativos">
-        <div class="pend-item" data-ticket="1" data-nome="Cerca danificada no pasto" data-retiro="Puga" data-quando="Hoje, 08:24" data-sev="Alta">
+        <% tickets.forEach(function (t) { %>
+        <div class="pend-item" data-ticket="<%= t.id %>" data-nome="<%= t.nome %>" data-retiro="<%= t.retiro %>" data-quando="<%= t.quando %>" data-sev="<%= t.severidade %>">
           <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--alta">Alta</span> Cerca danificada no pasto</span>
+            <span class="pend-title"><span class="sev-badge sev-badge--<%= t.sevClasse %>"><%= t.severidade %></span> <%= t.nome %></span>
             <button class="btn-revisar" data-action="validar">Validar</button>
             <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -62,85 +63,11 @@
           </div>
           <div class="pend-panel">
             <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> Puga<br><strong>Quando:</strong> Hoje, 08:24<br><strong>Severidade:</strong> Alta<br><strong>Evidência:</strong> Foto<br><strong>Descrição:</strong> Cerca rompida em cerca de 15 metros no pasto leste; risco de fuga do gado.</p>
+              <p class="pend-info"><strong>Retiro:</strong> <%= t.retiro %><br><strong>Quando:</strong> <%= t.quando %><br><strong>Severidade:</strong> <%= t.severidade %><br><strong>Evidência:</strong> <%= t.evidencia %><br><strong>Descrição:</strong> <%= t.descricao %></p>
             </div>
           </div>
         </div>
-
-        <div class="pend-item" data-ticket="2" data-nome="Estoque de ração abaixo do mínimo" data-retiro="Bodoquena 1" data-quando="Hoje, 10:45" data-sev="Média">
-          <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--media">Média</span> Estoque de ração abaixo do mínimo</span>
-            <button class="btn-revisar" data-action="validar">Validar</button>
-            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-          </div>
-          <div class="pend-panel">
-            <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> Bodoquena 1<br><strong>Quando:</strong> Hoje, 10:45<br><strong>Severidade:</strong> Média<br><strong>Evidência:</strong> Texto<br><strong>Descrição:</strong> Restam 2 sacos de ração; consumo previsto para menos de 1 dia.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="pend-item" data-ticket="3" data-nome="Bomba d'água com falha" data-retiro="Cristo" data-quando="Amanhã" data-sev="Alta">
-          <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--alta">Alta</span> Bomba d'água com falha</span>
-            <button class="btn-revisar" data-action="validar">Validar</button>
-            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-          </div>
-          <div class="pend-panel">
-            <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> Cristo<br><strong>Quando:</strong> Amanhã<br><strong>Severidade:</strong> Alta<br><strong>Evidência:</strong> Áudio<br><strong>Descrição:</strong> Bomba do poço não liga; bebedouros sem reposição de água.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="pend-item" data-ticket="4" data-nome="Bebedouro com defeito" data-retiro="CMB" data-quando="em 3 dias" data-sev="Alta">
-          <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--alta">Alta</span> Bebedouro com defeito</span>
-            <button class="btn-revisar" data-action="validar">Validar</button>
-            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-          </div>
-          <div class="pend-panel">
-            <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> CMB<br><strong>Quando:</strong> em 3 dias<br><strong>Severidade:</strong> Alta<br><strong>Evidência:</strong> Foto<br><strong>Descrição:</strong> Bebedouro com vazamento na base; água acumulando no entorno.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="pend-item" data-ticket="5" data-nome="Veículo do retiro sem manutenção" data-retiro="Bodoquena 2" data-quando="há 5 dias" data-sev="Baixa">
-          <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--baixa">Baixa</span> Veículo do retiro sem manutenção</span>
-            <button class="btn-revisar" data-action="validar">Validar</button>
-            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-          </div>
-          <div class="pend-panel">
-            <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> Bodoquena 2<br><strong>Quando:</strong> há 5 dias<br><strong>Severidade:</strong> Baixa<br><strong>Evidência:</strong> Texto<br><strong>Descrição:</strong> Caminhonete com revisão atrasada; freio com ruído ao frear.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="pend-item" data-ticket="6" data-nome="Gerador sem combustível" data-retiro="Bodoquena 1" data-quando="em 4 dias" data-sev="Média">
-          <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--media">Média</span> Gerador sem combustível</span>
-            <button class="btn-revisar" data-action="validar">Validar</button>
-            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-          </div>
-          <div class="pend-panel">
-            <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> Bodoquena 1<br><strong>Quando:</strong> em 4 dias<br><strong>Severidade:</strong> Média<br><strong>Evidência:</strong> Áudio<br><strong>Descrição:</strong> Gerador parou por falta de diesel; energia intermitente no retiro.</p>
-            </div>
-          </div>
-        </div>
+        <% }) %>
       </div>
     </section>
 
@@ -190,7 +117,7 @@
           aria-label="Buscar tickets"
         />
       </div>
-      <span class="tickets-badge-ativos tickets-badge-ativos--desktop">6 Pendentes</span>
+      <span class="tickets-badge-ativos tickets-badge-ativos--desktop"><%= tickets.length %> Pendentes</span>
     </div>
 
     <!-- Tabela de tickets -->
@@ -213,11 +140,27 @@
             </tr>
           </thead>
           <tbody id="tickets-ativos-tbody">
-            <tr data-ticket="1">
-              <td class="td--bold">Cerca danificada no pasto</td>
-              <td>Puga</td>
-              <td>Hoje, 08:24</td>
-              <td><span class="badge badge--red-soft">Alta</span></td>
+            <%
+              function escHtmlTk(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+              function evidenciaBlocoTicket(t){
+                if (t.evidencia === 'Texto') {
+                  return '<p class="evidencia-texto">' + escHtmlTk(t.evidenciaTexto) + '</p>';
+                }
+                var isAudio = t.evidencia === 'Áudio';
+                var icone = isAudio
+                  ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
+                  : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
+                return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
+                  '<span class="evidencia__tipo">' + escHtmlTk(t.evidencia) + '</span></div>';
+              }
+            %>
+            <% tickets.forEach(function (t, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-ticket="<%= t.id %>">
+              <td class="td--bold"><%= t.nome %></td>
+              <td><%= t.retiro %></td>
+              <td><%= t.quando %></td>
+              <td><span class="badge <%= t.badgeClasse %>"><%= t.severidade %></span></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
@@ -227,147 +170,16 @@
                 <div class="pend-detalhe__inner">
                   <div class="concl-bloco">
                     <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto">Cerca rompida em cerca de 15 metros no pasto leste; risco de fuga do gado.</p>
+                    <p class="concl-bloco__texto"><%= t.descricao %></p>
                   </div>
                   <div class="concl-bloco">
                     <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--foto">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>
-                      <span class="evidencia__tipo">Foto</span>
-                    </div>
+                    <%- evidenciaBlocoTicket(t) %>
                   </div>
                 </div>
               </td>
             </tr>
-
-            <tr class="tr--alt" data-ticket="2">
-              <td class="td--bold">Estoque de ração abaixo do mínimo</td>
-              <td>Bodoquena 1</td>
-              <td>Hoje, 10:45</td>
-              <td><span class="badge badge--yellow">Média</span></td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-validar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto">Restam 2 sacos de ração; consumo previsto para menos de 1 dia.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <p class="evidencia-texto">Apenas 2 sacos restantes no galpão.</p>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-ticket="3">
-              <td class="td--bold">Bomba d'água com falha</td>
-              <td>Cristo</td>
-              <td>Amanhã</td>
-              <td><span class="badge badge--red-soft">Alta</span></td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-validar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto">Bomba do poço não liga; bebedouros sem reposição de água.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--audio">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/></svg>
-                      <span class="evidencia__tipo">Áudio</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr class="tr--alt" data-ticket="4">
-              <td class="td--bold">Bebedouro com defeito</td>
-              <td>CMB</td>
-              <td>em 3 dias</td>
-              <td><span class="badge badge--red-soft">Alta</span></td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-validar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto">Bebedouro com vazamento na base; água acumulando no entorno.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--foto">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>
-                      <span class="evidencia__tipo">Foto</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-ticket="5">
-              <td class="td--bold">Veículo do retiro sem manutenção</td>
-              <td>Bodoquena 2</td>
-              <td>há 5 dias</td>
-              <td><span class="badge badge--blue">Baixa</span></td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-validar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto">Caminhonete com revisão atrasada; freio com ruído ao frear.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <p class="evidencia-texto">Última revisão há 8 meses; freio com folga.</p>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr class="tr--alt" data-ticket="6">
-              <td class="td--bold">Gerador sem combustível</td>
-              <td>Bodoquena 1</td>
-              <td>em 4 dias</td>
-              <td><span class="badge badge--yellow">Média</span></td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-validar" data-action="validar">Validar</button></td>
-            </tr>
-            <tr class="pend-detalhe" hidden>
-              <td colspan="7">
-                <div class="pend-detalhe__inner">
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto">Gerador parou por falta de diesel; energia intermitente no retiro.</p>
-                  </div>
-                  <div class="concl-bloco">
-                    <span class="concl-bloco__label">Evidência</span>
-                    <div class="evidencia evidencia--audio">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/></svg>
-                      <span class="evidencia__tipo">Áudio</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>
@@ -382,6 +194,7 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/contadores-pendentes.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -397,6 +210,8 @@
     const badgeDesktop = document.querySelector('.layout-desktop .tickets-badge-ativos');
     if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
     if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
+    // Espelha o total na home (bloco "Tickets" do Acesso rápido).
+    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('tickets', nMobile, nDesktop);
   }
 
   function escaparHTML(s) {
@@ -435,15 +250,9 @@
       '<span class="evidencia__tipo">' + escaparHTML(tipo) + '</span></div>';
   }
 
-  // Descrição + evidência de cada ticket (fonte única, lida na validação).
-  const TICKETS_DADOS = {
-    '1': { descricao: 'Cerca rompida em cerca de 15 metros no pasto leste; risco de fuga do gado.', evidencia: 'Foto' },
-    '2': { descricao: 'Restam 2 sacos de ração; consumo previsto para menos de 1 dia.', evidencia: 'Texto', evidenciaTexto: 'Apenas 2 sacos restantes no galpão.' },
-    '3': { descricao: 'Bomba do poço não liga; bebedouros sem reposição de água.', evidencia: 'Áudio' },
-    '4': { descricao: 'Bebedouro com vazamento na base; água acumulando no entorno.', evidencia: 'Foto' },
-    '5': { descricao: 'Caminhonete com revisão atrasada; freio com ruído ao frear.', evidencia: 'Texto', evidenciaTexto: 'Última revisão há 8 meses; freio com folga.' },
-    '6': { descricao: 'Gerador parou por falta de diesel; energia intermitente no retiro.', evidencia: 'Áudio' },
-  };
+  // Descrição + evidência de cada ticket (fonte única, vinda do servidor —
+  // o mesmo módulo que renderiza a lista acima).
+  const TICKETS_DADOS = <%- JSON.stringify(ticketsDados) %>;
 
   // Tickets já validados (em memória) — mais recente no topo.
   const ticketsValidados = [];
@@ -538,6 +347,12 @@
     if (origem) origem.remove();
     renderTicketsValidados();
     atualizarBadgePendentes();
+    // Persiste no servidor: remove o ticket dos pendentes em memória, para o
+    // contador (tela + home) continuar certo depois de recarregar.
+    if (dados.id) {
+      fetch('/supervisor/tickets/' + encodeURIComponent(dados.id) + '/validar', { method: 'POST' })
+        .catch(function () {});
+    }
   }
 
   // Validar (vara mobile): tira de pendentes e desce para Validados
@@ -546,6 +361,7 @@
     item.dataset.validado = '1';
     const extra = TICKETS_DADOS[item.dataset.ticket] || {};
     validarTicket({
+      id: item.dataset.ticket,
       nome: item.dataset.nome || (item.querySelector('.pend-title')?.textContent || 'Ticket').trim(),
       retiro: item.dataset.retiro || '',
       data: item.dataset.quando || '',
@@ -564,6 +380,7 @@
     const det = row.nextElementSibling;
     const extra = TICKETS_DADOS[row.dataset.ticket] || {};
     validarTicket({
+      id: row.dataset.ticket,
       nome: (row.querySelector('.td--bold')?.textContent || 'Ticket').trim(),
       retiro: (cells[1]?.textContent || '').trim(),
       data: (cells[2]?.textContent || '').trim(),
