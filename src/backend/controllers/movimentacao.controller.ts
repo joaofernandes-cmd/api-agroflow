@@ -92,7 +92,7 @@ export const MovimentacaoController = {
       const capataz_id = req.usuario?.cargo === 'capataz' ? req.usuario.id : req.body.capataz_id
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
-        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+        return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
       if (!TIPOS_MOVIMENTACAO_VALIDOS.includes(tipo)) {
@@ -104,11 +104,11 @@ export const MovimentacaoController = {
       const quantidadeNumerica = quantidade === undefined || quantidade === null ? null : converterNumero(quantidade)
 
       if (retiroId === null || movimentacaoId === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       if (quantidadeNumerica === null && quantidade !== undefined && quantidade !== null) {
-        return res.status(400).json({ error: 'Quantidade invalida' })
+        return res.status(400).json({ error: 'Quantidade inválida' })
       }
 
       const movimentacao = await MovimentacaoService.criar({
@@ -129,7 +129,7 @@ export const MovimentacaoController = {
       return res.status(201).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar movimentacao',
+        error: error instanceof Error ? error.message : 'Erro ao criar movimentação',
       })
     }
   },
@@ -143,7 +143,7 @@ export const MovimentacaoController = {
       const capataz_id = req.usuario?.cargo === 'capataz' ? req.usuario.id : req.body.capataz_id
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
-        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+        return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
       if (!TIPOS_MOVIMENTACAO_VALIDOS.includes(tipo)) {
@@ -154,11 +154,11 @@ export const MovimentacaoController = {
       const quantidadeNumerica = quantidade === undefined || quantidade === null ? null : converterNumero(quantidade)
 
       if (retiroId === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       if (quantidadeNumerica === null && quantidade !== undefined && quantidade !== null) {
-        return res.status(400).json({ error: 'Quantidade invalida' })
+        return res.status(400).json({ error: 'Quantidade inválida' })
       }
 
       const movimentacao = await MovimentacaoService.sincronizarRecebida({
@@ -177,7 +177,7 @@ export const MovimentacaoController = {
       return res.status(201).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao sincronizar movimentacao',
+        error: error instanceof Error ? error.message : 'Erro ao sincronizar movimentação',
       })
     }
   },
@@ -189,7 +189,7 @@ export const MovimentacaoController = {
         : await MovimentacaoService.listarTodas()
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar movimentacoes' })
+      return res.status(500).json({ error: 'Erro ao listar movimentações' })
     }
   },
 
@@ -198,25 +198,25 @@ export const MovimentacaoController = {
       const id = converterUUID(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID invalido' })
+        return res.status(400).json({ error: 'ID inválido' })
       }
 
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       if (
         (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
         movimentacao.retiro_id !== req.usuario.retiro_id
       ) {
-        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuário' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentacao' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentação' })
     }
   },
 
@@ -232,21 +232,21 @@ export const MovimentacaoController = {
       const dataFim = converterData(req.query.dataFim, true)
 
       if (!retiro) {
-        return res.status(400).json({ error: 'Retiro e obrigatorio' })
+        return res.status(400).json({ error: 'Retiro é obrigatório' })
       }
 
       const retiroId = converterUUID(retiro)
 
       if (retiroId === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       if (dataInicio === null) {
-        return res.status(400).json({ error: 'dataInicio invalida' })
+        return res.status(400).json({ error: 'dataInicio inválida' })
       }
 
       if (dataFim === null) {
-        return res.status(400).json({ error: 'dataFim invalida' })
+        return res.status(400).json({ error: 'dataFim inválida' })
       }
 
       if (contemValorInvalido(tipos, TIPOS_MOVIMENTACAO_VALIDOS)) {
@@ -267,7 +267,7 @@ export const MovimentacaoController = {
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao filtrar movimentacoes' })
+      return res.status(500).json({ error: 'Erro ao filtrar movimentações' })
     }
   },
 
@@ -277,13 +277,13 @@ export const MovimentacaoController = {
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
       const movimentacoes = await MovimentacaoService.buscarParaRelatorio(retiroUuid)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentacoes para relatorio' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentações para relatório' })
     }
   },
 
@@ -293,14 +293,14 @@ export const MovimentacaoController = {
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const movimentacoes = await MovimentacaoService.buscarParaDashboard(retiroUuid)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar movimentacoes para dashboard' })
+      return res.status(500).json({ error: 'Erro ao buscar movimentações para dashboard' })
     }
   },
 
@@ -309,18 +309,18 @@ export const MovimentacaoController = {
       const id = converterUUID(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID invalido' })
+        return res.status(400).json({ error: 'ID inválido' })
       }
 
       const movimentacao = await MovimentacaoService.sincronizar(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao sincronizar movimentacao' })
+      return res.status(500).json({ error: 'Erro ao sincronizar movimentação' })
     }
   },
 
@@ -330,14 +330,14 @@ export const MovimentacaoController = {
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const movimentacoes = await MovimentacaoService.listarPendentes(retiroUuid)
 
       return res.status(200).json(movimentacoes)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar movimentacoes pendentes' })
+      return res.status(500).json({ error: 'Erro ao listar movimentações pendentes' })
     }
   },
 
@@ -347,14 +347,14 @@ export const MovimentacaoController = {
       const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
 
       if (retiroUuid === null) {
-        return res.status(400).json({ error: 'Retiro invalido' })
+        return res.status(400).json({ error: 'Retiro inválido' })
       }
 
       const contagem = await MovimentacaoService.contarPorTipo(retiroUuid)
 
       return res.status(200).json(contagem)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao contar movimentacoes por tipo' })
+      return res.status(500).json({ error: 'Erro ao contar movimentações por tipo' })
     }
   },
 
@@ -363,19 +363,19 @@ export const MovimentacaoController = {
       const id = converterUUID(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID invalido' })
+        return res.status(400).json({ error: 'ID inválido' })
       }
 
       const movimentacao = await MovimentacaoService.atualizar(id, req.body)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentacao',
+        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentação',
       })
     }
   },
@@ -385,20 +385,20 @@ export const MovimentacaoController = {
       const id = converterUUID(req.params.id)
 
       if (id === null) {
-        return res.status(400).json({ error: 'ID invalido' })
+        return res.status(400).json({ error: 'ID inválido' })
       }
 
       const movimentacao = await MovimentacaoService.buscarPorId(id)
 
       if (!movimentacao) {
-        return res.status(404).json({ error: 'Movimentacao nao encontrada' })
+        return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
       await MovimentacaoService.remover(id)
 
       return res.status(204).send()
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao remover movimentacao' })
+      return res.status(500).json({ error: 'Erro ao remover movimentação' })
     }
   },
 }

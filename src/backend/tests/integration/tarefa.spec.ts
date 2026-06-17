@@ -70,7 +70,7 @@ describe('Tarefas', () => {
     })
 
     expect(response.status).toBe(400)
-    expect(response.body).toEqual({ error: 'Campos obrigatorios nao informados' })
+    expect(response.body).toEqual({ error: 'Campos obrigatórios não informados' })
     expect(mockedService.criar).not.toHaveBeenCalled()
   })
 
@@ -204,7 +204,7 @@ describe('Tarefas', () => {
     const response = await request(app).get('/tarefas/00000000-0000-4000-8000-999999999999')
 
     expect(response.status).toBe(404)
-    expect(response.body).toEqual({ error: 'Tarefa nao encontrada' })
+    expect(response.body).toEqual({ error: 'Tarefa não encontrada' })
   })
 
   it('PATCH /tarefas/:id deve atualizar tarefa', async () => {

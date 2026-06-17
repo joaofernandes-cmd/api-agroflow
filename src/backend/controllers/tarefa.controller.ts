@@ -27,7 +27,7 @@ export const TarefaController = {
       const usuarioCriador = req.usuario?.cargo === 'supervisor' ? req.usuario : req.body.usuarioCriador
 
       if (!retiro_id || !atribuida_a || !descricao || !categoria || !prioridade || !usuarioCriador) {
-        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+        return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
       if (!PRIORIDADES_TAREFA_VALIDAS.includes(prioridade)) {
@@ -103,14 +103,14 @@ export const TarefaController = {
       const tarefa = await TarefaService.buscarPorId(id)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
       if (
         (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
         tarefa.retiro_id !== req.usuario.retiro_id
       ) {
-        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuário' })
       }
 
       return res.status(200).json(tarefa)
@@ -163,14 +163,14 @@ export const TarefaController = {
       const usuarioId = String(req.params.usuarioId)
 
       if (req.usuario?.cargo === 'capataz' && usuarioId !== req.usuario.id) {
-        return res.status(403).json({ error: 'Acesso negado: usuario diferente do autenticado' })
+        return res.status(403).json({ error: 'Acesso negado: usuário diferente do autenticado' })
       }
 
       const tarefas = await TarefaService.listarPorUsuario(usuarioId)
 
       return res.status(200).json(tarefas)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar tarefas por usuario' })
+      return res.status(500).json({ error: 'Erro ao listar tarefas por usuário' })
     }
   },
 
@@ -224,7 +224,7 @@ export const TarefaController = {
       }
 
       if (!status) {
-        return res.status(400).json({ error: 'Status e obrigatorio' })
+        return res.status(400).json({ error: 'Status é obrigatório' })
       }
 
       if (!STATUS_TAREFA_VALIDOS.includes(status)) {
@@ -234,7 +234,7 @@ export const TarefaController = {
       const tarefa = await TarefaService.atualizarStatus(id, status)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
       return res.status(200).json(tarefa)
@@ -254,7 +254,7 @@ export const TarefaController = {
       const tarefa = await TarefaService.atualizar(id, req.body)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
       return res.status(200).json(tarefa)
@@ -293,7 +293,7 @@ export const TarefaController = {
       const tarefa = await TarefaService.buscarPorId(id)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
       await TarefaService.remover(id)

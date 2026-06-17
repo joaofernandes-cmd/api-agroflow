@@ -71,7 +71,7 @@ describe('Movimentacoes', () => {
     })
 
     expect(response.status).toBe(400)
-    expect(response.body).toEqual({ error: 'Campos obrigatorios nao informados' })
+    expect(response.body).toEqual({ error: 'Campos obrigatórios não informados' })
     expect(mockedService.criar).not.toHaveBeenCalled()
   })
 
@@ -201,7 +201,7 @@ describe('Movimentacoes', () => {
     const response = await request(app).get('/movimentacoes/00000000-0000-4000-8000-999999999999')
 
     expect(response.status).toBe(404)
-    expect(response.body).toEqual({ error: 'Movimentacao nao encontrada' })
+    expect(response.body).toEqual({ error: 'Movimentação não encontrada' })
   })
 
   it('PATCH /movimentacoes/:id deve atualizar uma movimentacao', async () => {

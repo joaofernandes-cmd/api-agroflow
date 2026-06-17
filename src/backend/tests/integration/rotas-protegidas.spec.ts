@@ -151,7 +151,7 @@ describe('Rotas protegidas', () => {
       .send({})
 
     expect(response.status).toBe(400)
-    expect(response.body).toEqual({ error: 'Campos obrigatorios nao informados' })
+    expect(response.body).toEqual({ error: 'Campos obrigatórios não informados' })
   })
 
   it('deve bloquear consulta de movimentacoes para capataz', async () => {

@@ -54,7 +54,7 @@ export const TicketController = {
         (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
         ticket.retiro_id !== req.usuario.retiro_id
       ) {
-        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuário' })
       }
 
       return res.status(200).json(ticket)
