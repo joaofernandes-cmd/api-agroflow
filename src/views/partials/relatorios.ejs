@@ -85,7 +85,7 @@
         <label class="rfield__label" for="formato-mobile">Formato</label>
         <div class="rfield__select-wrap">
           <select class="rfield__select" id="formato-mobile" name="formato">
-            <option value="xlsx">Excel (.xlsx)</option>
+            <option value="xlsx">Excel (.xls)</option>
             <option value="csv">CSV (.csv)</option>
           </select>
         </div>
@@ -192,7 +192,7 @@
           <label class="tfilter__label" for="formato-desktop">Formato</label>
           <div class="tfilter__select-wrap">
             <select class="tfilter__select" id="formato-desktop" name="formato">
-              <option value="xlsx">Excel (.xlsx)</option>
+              <option value="xlsx">Excel (.xls)</option>
               <option value="csv">CSV (.csv)</option>
             </select>
           </div>
@@ -257,9 +257,9 @@
         </button>
 
         <div class="formato-card">
-          <p class="formato-card__title">Formatos .xlsx e .csv</p>
+          <p class="formato-card__title">Formatos .xls e .csv</p>
           <p class="formato-card__desc">Compatível com Excel, Google Sheets e outros editores</p>
-          <p class="formato-card__desc">Apenas registros validados e sincronizados.</p>
+          <p class="formato-card__desc">Baixa exatamente os registros mostrados na prévia.</p>
         </div>
       </aside>
 
@@ -276,17 +276,6 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
-  function getSession() {
-    try {
-      const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-      if (!token || !usuarioRaw) return null;
-      return { token, usuario: JSON.parse(usuarioRaw) };
-    } catch {
-      return null;
-    }
-  }
-
   function mostrarFeedback(mensagem, tipo) {
     ['relatorio-feedback', 'relatorio-feedback-mobile'].forEach(id => {
       const feedback = document.getElementById(id);
@@ -295,10 +284,6 @@
       feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
     });
   }
-
-  // Aceita só UUID como retiroId do backend (os valores da lista são slugs de
-  // demonstração — quando vierem slugs, não enviamos filtro de retiro à API).
-  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
   function mapearColunas(tipo) {
     if (tipo === 'todos') return ['Data', 'Retiro', 'Registro', 'Detalhe', 'Status'];
@@ -446,62 +431,64 @@
     mostrarFeedback('', 'success');
   }
 
-  async function exportarRelatorio(contexto) {
-    const session = getSession();
-    if (!session) {
-      mostrarFeedback('Faça login para exportar os relatórios.', 'error');
-      return;
-    }
+  function csvEscapar(v) {
+    const s = String(v == null ? '' : v);
+    return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
 
+  // CSV com BOM (﻿) e separador ';' — abre com acentos certos no Excel pt-BR.
+  function gerarCSV(colunas, linhas) {
+    const linha = arr => arr.map(csvEscapar).join(';');
+    const corpo = linhas.map(l => linha([...l.celulas, l.status]));
+    return '﻿' + [linha(colunas), ...corpo].join('\r\n');
+  }
+
+  // .xls via tabela HTML — Excel e Google Sheets abrem sem biblioteca.
+  function gerarXLS(colunas, linhas) {
+    const th = colunas.map(c => '<th>' + escaparRel(c) + '</th>').join('');
+    const trs = linhas.map(l =>
+      '<tr>' + [...l.celulas, l.status].map(c => '<td>' + escaparRel(c) + '</td>').join('') + '</tr>').join('');
+    return '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head>'
+      + '<body><table border="1"><thead><tr>' + th + '</tr></thead><tbody>' + trs + '</tbody></table></body></html>';
+  }
+
+  function baixarArquivo(conteudo, nome, mime) {
+    const blob = new Blob([conteudo], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nome;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // Exporta EXATAMENTE as linhas que estão na prévia (mesmo tipo, retiro e
+  // período), gerando o arquivo no próprio navegador — bate 100% com a tela.
+  function exportarRelatorio(contexto) {
     const sufixo = contexto === 'mobile' ? 'mobile' : 'desktop';
     const filtros = lerFiltros(sufixo);
-    const formato = document.getElementById(`formato-${sufixo}`)?.value || 'xlsx';
+    const formato = document.getElementById(`formato-${sufixo}`)?.value || 'csv';
 
-    // O arquivo é por tipo (colunas diferentes); "Todos" não tem export único.
-    if (filtros.tipo === 'todos') {
-      mostrarFeedback('Para baixar, escolha um tipo específico: Movimentações, Tarefas ou Tickets.', 'error');
+    const base = filtros.tipo === 'todos' ? datasetCombinado() : datasetDe(filtros.tipo);
+    const linhas = filtrarLinhas(base.linhas, filtros);
+
+    if (!linhas.length) {
+      mostrarFeedback('Não há registros para exportar com os filtros atuais.', 'error');
       return;
     }
 
-    const url = new URL('/relatorios/exportar', window.location.origin);
-    url.searchParams.set('tipo', filtros.tipo);
-    url.searchParams.set('formato', formato);
-    if (filtros.dataInicio) url.searchParams.set('dataInicio', filtros.dataInicio);
-    if (filtros.dataFim) url.searchParams.set('dataFim', filtros.dataFim);
-    if (!filtros.retiro.todos && filtros.retiro.valores.length === 1 && UUID_RE.test(filtros.retiro.valores[0])) {
-      url.searchParams.set('retiroId', filtros.retiro.valores[0]);
+    const dataHoje = new Date().toISOString().slice(0, 10);
+    const nomeBase = `relatorio-${filtros.tipo}-${dataHoje}`;
+
+    if (formato === 'xlsx') {
+      baixarArquivo(gerarXLS(base.colunas, linhas), nomeBase + '.xls', 'application/vnd.ms-excel');
+    } else {
+      baixarArquivo(gerarCSV(base.colunas, linhas), nomeBase + '.csv', 'text/csv;charset=utf-8;');
     }
 
-    mostrarFeedback('Gerando arquivo...', 'success');
-
-    try {
-      const response = await fetch(url.toString(), {
-        headers: { Authorization: `Bearer ${session.token}` },
-      });
-
-      if (!response.ok) {
-        const erro = await response.json().catch(() => ({}));
-        throw new Error(erro.error || 'Não foi possível exportar o relatório');
-      }
-
-      const blob = await response.blob();
-      const disposicao = response.headers.get('Content-Disposition') || '';
-      const nome = disposicao.match(/filename="([^"]+)"/)?.[1]
-        || `relatorio-${tipo}.${formato}`;
-      const link = document.createElement('a');
-      const objetoUrl = URL.createObjectURL(blob);
-
-      link.href = objetoUrl;
-      link.download = nome;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(objetoUrl);
-
-      mostrarFeedback(`Arquivo ${nome} gerado com sucesso.`, 'success');
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao exportar relatório', 'error');
-    }
+    mostrarFeedback(`Arquivo gerado com ${linhas.length} registro(s).`, 'success');
   }
 
   const formRelatorio = document.getElementById('form-relatorio');
