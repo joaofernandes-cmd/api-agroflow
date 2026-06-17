@@ -20,6 +20,10 @@
       <img src="/assets/icons/tickets.svg" alt="" aria-hidden="true" width="27" height="27" />
       <span>Tickets</span>
     </a>
+    <a href="/supervisor/movimentacoes" class="sidebar__link <%= paginaAtiva === 'movimentacoes' ? 'sidebar__link--active' : '' %>" <%= paginaAtiva === 'movimentacoes' ? 'aria-current="page"' : '' %>>
+      <img src="/assets/icons/movimentacao.svg" alt="" aria-hidden="true" width="24" height="24" />
+      <span>Movimentações</span>
+    </a>
     <a href="/supervisor/delegar"   class="sidebar__link <%= paginaAtiva === 'delegar'   ? 'sidebar__link--active' : '' %>" <%= paginaAtiva === 'delegar'   ? 'aria-current="page"' : '' %>>
       <img src="/assets/icons/delegar.svg" alt="" aria-hidden="true" width="24" height="24" />
       <span>Delegar</span>

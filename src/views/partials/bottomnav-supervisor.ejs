@@ -1,7 +1,7 @@
 <%#
   Partial: bottomnav-supervisor.ejs
   Variáveis esperadas:
-  - paginaAtiva: 'home' | 'revisao' | 'tickets' | 'delegar' | 'relatorios'
+  - paginaAtiva: 'home' | 'revisao' | 'tickets' | 'movimentacoes' | 'delegar' | 'relatorios'
 %>
 
 <nav class="bottomnav" role="navigation" aria-label="Navegação principal">
@@ -25,6 +25,13 @@
      <%= paginaAtiva === 'tickets' ? 'aria-current="page"' : '' %>>
     <span class="bnav-icon bnav-icon--tickets" aria-hidden="true"></span>
     <span>Tickets</span>
+  </a>
+
+  <a href="/supervisor/movimentacoes"
+     class="bottomnav__item <%= paginaAtiva === 'movimentacoes' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'movimentacoes' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--movimentacoes" aria-hidden="true"></span>
+    <span>Movimentações</span>
   </a>
 
   <a href="/supervisor/delegar"

@@ -150,6 +150,15 @@ app.get('/supervisor/tickets', (req, res) => {
   });
 });
 
+// Movimentações do rebanho que o capataz registrou e o supervisor valida.
+app.get('/supervisor/movimentacoes', (req, res) => {
+  res.render('supervisor/movimentacoes', {
+    title: 'Movimentações',
+    css: 'supervisor',
+    usuario: { nome: 'Luiz Felipe' }
+  });
+});
+
 // Supervisor acessa relatórios
 app.get('/supervisor/relatorios', (req, res) => {
   res.render('partials/relatorios', {

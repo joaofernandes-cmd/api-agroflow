@@ -70,6 +70,7 @@
 .tile--red    .tile__icon { background: #ff3b30; }
 .tile--blue   .tile__icon { background: #3d7da6; }
 .tile--green  .tile__icon { background: var(--color-primary); }
+.tile--teal   .tile__icon { background: #0e7c86; }
 
 .tile__text { display: flex; flex-direction: column; gap: 4px; }
 .tile__name { font-size: 16px; font-weight: 700; line-height: 1.2; }
@@ -1080,5 +1081,17 @@
   cursor: pointer;
   white-space: nowrap;
   transition: opacity 0.15s;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BottomNav do supervisor — 6 itens (inclui Movimentações)
+   Aperta um pouco para os 6 caberem bem em telas estreitas.
+   ════════════════════════════════════════════════════════════ */
+.layout-mobile .bottomnav__item { min-width: 0; flex: 1 1 0; padding: 0 2px; }
+.layout-mobile .bottomnav__item > span:last-child {
+  font-size: 9px;
+  line-height: 1.15;
+  text-align: center;
+  word-break: break-word;
 }
 .btn-ver:hover { opacity: 0.85; }

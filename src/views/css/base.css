@@ -164,6 +164,7 @@
 .bnav-icon--home      { -webkit-mask-image: url('/assets/icons/home.svg');      mask-image: url('/assets/icons/home.svg'); }
 .bnav-icon--revisao   { -webkit-mask-image: url('/assets/icons/revisao.svg');   mask-image: url('/assets/icons/revisao.svg'); }
 .bnav-icon--tickets   { -webkit-mask-image: url('/assets/icons/tickets.svg'); mask-image: url('/assets/icons/tickets.svg'); }
+.bnav-icon--movimentacoes { -webkit-mask-image: url('/assets/icons/movimentacao.svg'); mask-image: url('/assets/icons/movimentacao.svg'); }
 .bnav-icon--delegar   { -webkit-mask-image: url('/assets/icons/delegar.svg');   mask-image: url('/assets/icons/delegar.svg'); }
 .bnav-icon--relatorios{ -webkit-mask-image: url('/assets/icons/relatorios.svg');mask-image: url('/assets/icons/relatorios.svg'); }
 
