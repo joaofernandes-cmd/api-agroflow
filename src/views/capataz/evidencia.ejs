@@ -143,6 +143,30 @@
         .catch(function () { fotoStatus.textContent = 'Não foi possível acessar a câmera.'; });
     });
 
+    // Pega a localização (GPS) e mescla na evidência de foto já capturada.
+    // O backend exige latitude/longitude para aceitar a foto (RN04).
+    function obterLocalizacaoFoto(dadosFoto) {
+      if (!navigator.geolocation) {
+        setEvid('foto', dadosFoto);
+        fotoStatus.textContent = 'Foto capturada (sem localização: GPS indisponível).';
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          setEvid('foto', Object.assign({}, dadosFoto, {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }));
+          fotoStatus.textContent = 'Foto e localização capturadas.';
+        },
+        function () {
+          setEvid('foto', dadosFoto);
+          fotoStatus.textContent = 'Foto capturada (sem localização: permissão negada).';
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    }
+
     capturar.addEventListener('click', function () {
       if (!streamFoto) return;
       var vw = video.videoWidth || 640, vh = video.videoHeight || 480;
@@ -159,8 +183,11 @@
       capturar.disabled = true;
       refazer.disabled = false;
       fotoStatus.textContent = 'Foto capturada.';
-      setEvid('foto', { dataUrl: dataUrl });
       registrar('Foto', 'foto capturada');
+      // Guarda o dataUrl (preview local) + o Blob (para enviar ao Supabase) e o GPS.
+      canvas.toBlob(function (blob) {
+        obterLocalizacaoFoto({ dataUrl: dataUrl, blob: blob, mimeType: 'image/jpeg' });
+      }, 'image/jpeg', 0.7);
     });
 
     refazer.addEventListener('click', function () {
@@ -173,7 +200,7 @@
     // ---- ÁUDIO: gravação ----
     var gravar = $('Gravar'), parar = $('Parar'), regravar = $('Regravar');
     var audioStatus = $('AudioStatus'), audioPreview = $('AudioPreview');
-    var mediaRecorder = null, chunks = [], streamAudio = null;
+    var mediaRecorder = null, chunks = [], streamAudio = null, inicioGravacao = 0;
 
     gravar.addEventListener('click', function () {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined') {
@@ -188,15 +215,20 @@
           mediaRecorder.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
           mediaRecorder.onstop = function () {
             var blob = new Blob(chunks, { type: chunks[0] ? chunks[0].type : 'audio/webm' });
+            // Duração medida pelo tempo de gravação (o backend exige no mínimo 3s — RN08).
+            var duracao = Math.max(1, Math.round((Date.now() - inicioGravacao) / 1000));
             audioPreview.src = URL.createObjectURL(blob);
             audioPreview.style.display = 'block';
-            audioStatus.textContent = 'Áudio gravado.';
+            audioStatus.textContent = 'Áudio gravado (' + duracao + 's).';
             var leitor = new FileReader();
-            leitor.onloadend = function () { setEvid('audio', { dataUrl: leitor.result }); };
+            leitor.onloadend = function () {
+              setEvid('audio', { dataUrl: leitor.result, blob: blob, mimeType: blob.type, duracao: duracao });
+            };
             leitor.readAsDataURL(blob);
             registrar('Áudio', 'áudio gravado');
           };
           mediaRecorder.start();
+          inicioGravacao = Date.now();
           gravar.disabled = true;
           parar.disabled = false;
           regravar.disabled = true;

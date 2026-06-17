@@ -1,0 +1,61 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  TELA: Preview de tarefa delegada (read-only)
+  Mostra o que o supervisor preencheu ao criar a tarefa.
+  Mobile  → TopNav com voltar + preview + BottomNav
+  Desktop → Sidebar + TopBar + preview (coluna central)
+%>
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Tarefa delegada</h1>
+  </header>
+
+  <main class="form-content" role="main">
+    <%- include('../partials/preview-tarefa', { tarefa }) %>
+  </main>
+
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'delegar' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'delegar' }) %>
+
+  <div class="desktop-main">
+
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Tarefa delegada</h1>
+    </header>
+
+    <main class="desktop-content" role="main">
+      <a href="/supervisor/home" class="preview-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        Voltar para o início
+      </a>
+      <div class="preview-wrap">
+        <%- include('../partials/preview-tarefa', { tarefa }) %>
+      </div>
+    </main>
+
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+</body>
+</html>
