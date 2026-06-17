@@ -9,10 +9,14 @@
   var CONNECTION_STATUS_SELECTOR = '#pwa-connection-status'
   var QUEUE_STATUS_SELECTOR = '#pwa-queue-status'
   var INSTALL_HINT_SELECTOR = '#pwa-install-hint'
+  var CONNECTIVITY_CHECK_URL = '/health'
+  var CONNECTIVITY_CHECK_TIMEOUT_MS = 2500
 
   var deferredInstallPrompt = null
   var bootstrapped = false
   var registeredServiceWorker = false
+  var lastKnownOnline = navigator.onLine
+  var connectivityIntervalId = null
 
   function isStandalone() {
     return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
@@ -32,6 +36,48 @@
     }
 
     return value
+  }
+
+  function setKnownOnline(online) {
+    lastKnownOnline = Boolean(online)
+    return lastKnownOnline
+  }
+
+  async function detectConnectivity() {
+    if (!navigator.onLine) {
+      return setKnownOnline(false)
+    }
+
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null
+    var timeoutId = controller
+      ? window.setTimeout(function () {
+          controller.abort()
+        }, CONNECTIVITY_CHECK_TIMEOUT_MS)
+      : null
+
+    try {
+      var separator = CONNECTIVITY_CHECK_URL.indexOf('?') >= 0 ? '&' : '?'
+      var response = await fetch(CONNECTIVITY_CHECK_URL + separator + 'pwa=' + Date.now(), {
+        method: 'GET',
+        cache: 'no-store',
+        headers: { Accept: 'application/json' },
+        signal: controller ? controller.signal : undefined,
+      })
+
+      return setKnownOnline(Boolean(response && response.ok))
+    } catch (error) {
+      return setKnownOnline(false)
+    } finally {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId)
+      }
+    }
+  }
+
+  async function refreshConnectivity() {
+    var online = await detectConnectivity()
+    notifyQueueChange(online)
+    return online
   }
 
   function openDb() {
@@ -271,10 +317,10 @@
     return response
   }
 
-  function notifyQueueChange() {
+  function notifyQueueChange(onlineOverride) {
     var detail = {
       queueCount: 0,
-      online: navigator.onLine,
+      online: typeof onlineOverride === 'boolean' ? onlineOverride : lastKnownOnline,
       standalone: isStandalone(),
     }
 
@@ -297,20 +343,24 @@
   function renderHomeWidgets(state) {
     var els = getElements()
     var queueCount = state && typeof state.queueCount === 'number' ? state.queueCount : 0
-    var online = state && typeof state.online === 'boolean' ? state.online : navigator.onLine
+    var online = state && typeof state.online === 'boolean' ? state.online : lastKnownOnline
     var standalone = state && typeof state.standalone === 'boolean' ? state.standalone : isStandalone()
     var installable = Boolean(deferredInstallPrompt) && !standalone
 
     if (els.installButton) {
-      els.installButton.hidden = !installable
-      els.installButton.disabled = !installable
+      els.installButton.hidden = false
+      els.installButton.disabled = false
+      els.installButton.classList.toggle('pwa-install-icon--waiting', !installable)
+      els.installButton.title = standalone
+        ? 'App instalado'
+        : installable
+          ? 'Instalar app'
+          : 'Toque para verificar a instalacao'
     }
 
     if (els.installHint) {
-      els.installHint.hidden = !installable
-      els.installHint.textContent = installable
-        ? 'Instale o app para abrir o Capataz em tela cheia e com acesso rápido.'
-        : 'Quando o navegador liberar a instalação, o botão aparecerá aqui.'
+      els.installHint.hidden = true
+      els.installHint.textContent = ''
     }
 
     if (els.connectionStatus) {
@@ -327,8 +377,10 @@
   }
 
   async function syncPendingOperations() {
-    if (!navigator.onLine) {
-      notifyQueueChange()
+    var online = await detectConnectivity()
+
+    if (!online) {
+      notifyQueueChange(false)
       return { sucesso: false, sincronizados: 0, erros: ['Sem conexão com a internet.'] }
     }
 
@@ -362,8 +414,9 @@
     var queueBody = config.queueBody || config.body
     var method = config.method || 'POST'
     var headers = config.headers || {}
+    var online = await detectConnectivity()
 
-    if (!navigator.onLine) {
+    if (!online) {
       await saveQueuedOperation({
         kind: config.kind,
         url: config.url,
@@ -372,16 +425,23 @@
         body: queueBody,
         meta: config.meta || {},
       })
-      notifyQueueChange()
+      notifyQueueChange(false)
 
       return { queued: true, online: false }
     }
 
     try {
+      var requestBody = deepClone(body || {})
+
+      if (config.kind === 'movimentacao') {
+        requestBody.evidencia = await buildMovimentacaoEvidencia(requestBody)
+        delete requestBody.evidenciaDraft
+      }
+
       var response = await fetch(config.url, {
         method: method,
         headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
-        body: JSON.stringify(body),
+        body: JSON.stringify(requestBody),
       })
 
       if (!response.ok) {
@@ -391,8 +451,14 @@
         throw new Error((data && data.error) || 'HTTP ' + response.status)
       }
 
+      notifyQueueChange()
+
       return { queued: false, online: true, response: response }
     } catch (error) {
+      if (error && (error.name === 'TypeError' || error.name === 'AbortError')) {
+        setKnownOnline(false)
+      }
+
       await saveQueuedOperation({
         kind: config.kind,
         url: config.url,
@@ -402,7 +468,7 @@
         meta: config.meta || {},
       })
       notifyQueueChange()
-      return { queued: true, online: navigator.onLine, error: error }
+      return { queued: true, online: lastKnownOnline, error: error }
     }
   }
 
@@ -437,7 +503,15 @@
 
     button.addEventListener('click', async function () {
       try {
-        await promptInstall()
+        var resultado = await promptInstall()
+        var els = getElements()
+
+        if (!resultado.available && els.installHint) {
+          els.installHint.hidden = false
+          els.installHint.textContent = isStandalone()
+            ? 'App já instalado neste dispositivo.'
+            : 'Se o navegador não abrir a instalação, use o menu e escolha Instalar app.'
+        }
       } catch (error) {
         console.error('Falha ao abrir instalação do PWA', error)
       }
@@ -474,14 +548,26 @@
     })
 
     window.addEventListener('online', function () {
-      notifyQueueChange()
-      syncPendingOperations().catch(function (error) {
-        console.warn('Falha ao sincronizar fila offline do Capataz.', error)
+      refreshConnectivity().then(function (online) {
+        if (online) {
+          syncPendingOperations().catch(function (error) {
+            console.warn('Falha ao sincronizar fila offline do Capataz.', error)
+          })
+        }
       })
     })
 
     window.addEventListener('offline', function () {
-      notifyQueueChange()
+      setKnownOnline(false)
+      notifyQueueChange(false)
+    })
+
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) {
+        refreshConnectivity().catch(function () {
+          notifyQueueChange(false)
+        })
+      }
     })
 
     window.addEventListener('agroflow:force-sync', function () {
@@ -490,7 +576,18 @@
       })
     })
 
-    notifyQueueChange()
+    notifyQueueChange(lastKnownOnline)
+    refreshConnectivity().catch(function () {
+      notifyQueueChange(false)
+    })
+
+    if (!connectivityIntervalId) {
+      connectivityIntervalId = window.setInterval(function () {
+        refreshConnectivity().catch(function () {
+          notifyQueueChange(false)
+        })
+      }, 15000)
+    }
 
     if (navigator.onLine) {
       syncPendingOperations().catch(function (error) {
