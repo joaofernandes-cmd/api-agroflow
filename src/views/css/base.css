@@ -488,3 +488,131 @@
   grid-template-columns: 1fr;
   max-width: 580px;
 }
+
+/* ════════════════════════════════════════════════════════════
+   SHARED — Tarefas concluídas pelo capataz (acordeão "varas")
+   Usado em supervisor/revisao e gerente/home via TarefasStore.
+   ════════════════════════════════════════════════════════════ */
+.concl-vazio { margin: 0; text-align: center; font-size: 14px; color: var(--color-muted); }
+
+.concl-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+/* A "vara": barra clicável (fechada por padrão) */
+.concl-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  text-align: left;
+  transition: background 0.15s;
+}
+.concl-head:hover { background: var(--color-bg); }
+
+.concl-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.concl-arrow {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-muted);
+  transition: transform 0.2s;
+}
+.concl-item.is-open .concl-arrow { transform: rotate(180deg); }
+
+/* Painel que abre */
+.concl-panel { display: none; }
+.concl-item.is-open .concl-panel { display: block; }
+.concl-panel__inner { padding: 0 14px 14px; border-top: 1px solid var(--color-border); text-align: center; }
+
+/* Selos em destaque (retângulos): Concluída + Prioridade */
+.concl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.concl-badge {
+  flex-shrink: 0;
+  background: #d1fae5;
+  color: #059669;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.concl-prio {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.concl-prio--alta    { background: #ffe6e5; color: #ff3b30; }
+.concl-prio--media   { background: #faf0d9; color: #d99a00; }
+.concl-prio--baixa   { background: #dcf3e1; color: #2f7d34; }
+.concl-prio--critica { background: #f3d6d6; color: #8a1c1c; }
+
+.concl-meta { margin: 10px 0 0; font-size: 12px; color: var(--color-muted); }
+
+.concl-bloco { margin-top: 14px; }
+.concl-bloco__label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-muted);
+}
+.concl-bloco__texto { margin: 0; font-size: 14px; line-height: 1.5; color: var(--color-text); }
+
+/* ── Evidência (uma por atividade): card centralizado por tipo ── */
+.evidencia-wrap { text-align: center; }
+.evidencia {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 200px;
+  max-width: 100%;
+  padding: 22px 16px;
+  border-radius: 14px;
+  color: #fff;
+}
+.evidencia svg { width: 34px; height: 34px; }
+.evidencia__tipo { font-size: 13px; font-weight: 700; }
+.evidencia--foto  { background: #2f7d34; }
+.evidencia--audio { background: #d99a00; }
+
+/* Mídia real (quando houver captura de verdade), centralizada */
+.evidencia-midia {
+  display: block;
+  margin: 0 auto;
+  max-width: 280px;
+  max-height: 200px;
+  border-radius: 10px;
+}
+.evidencia-audio { width: 100%; max-width: 320px; }
+.evidencia-texto { margin: 0; font-size: 14px; line-height: 1.5; color: var(--color-text); }

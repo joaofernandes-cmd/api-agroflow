@@ -8,8 +8,9 @@
 
 <!-- ============================================================
      TELA: Tickets de infraestrutura
-     Mobile  → TopNav com voltar + filtro com badge + lista de cards + BottomNav
-     Desktop → Sidebar + TopBar + barra de busca + tabela com botão Atender/Ver
+     Mobile  → TopNav com voltar + filtro + lista de chamados + BottomNav
+     Desktop → Sidebar + TopBar + busca + tabela com botão Validar
+     Validar move o chamado para a seção "Validados" (mais recente no topo).
      ============================================================ -->
 
 <!-- ════════════════════════════════════════════════════════
@@ -46,77 +47,78 @@
   <!-- Lista de tickets -->
   <main class="tickets-list" role="main">
 
-    <article class="ticket-card ticket-card--red">
-      <div class="ticket-card__accent ticket-card__accent--red"></div>
-      <div class="ticket-card__body">
-        <p class="ticket-card__name">Cerca danificada no pasto</p>
-        <p class="ticket-card__meta">Puga • Hoje, 08:24</p>
-      </div>
-      <span class="sev-badge sev-badge--alta">Alta</span>
-      <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Chamados ativos</h2>
+      <p class="lista-secao__sub">Aguardando sua validação</p>
 
-    <article class="ticket-card ticket-card--yellow">
-      <div class="ticket-card__accent ticket-card__accent--yellow"></div>
-      <div class="ticket-card__body">
-        <p class="ticket-card__name">Estoque de ração abaixo do mínimo</p>
-        <p class="ticket-card__meta">Bodoquena 1 • Hoje, 10:45</p>
-      </div>
-      <span class="sev-badge sev-badge--media">Média</span>
-      <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+      <div id="tickets-ativos">
+        <article class="ticket-card ticket-card--red" data-ticket="1">
+          <div class="ticket-card__accent ticket-card__accent--red"></div>
+          <div class="ticket-card__body">
+            <p class="ticket-card__name">Cerca danificada no pasto</p>
+            <p class="ticket-card__meta">Puga • Hoje, 08:24</p>
+          </div>
+          <span class="sev-badge sev-badge--alta">Alta</span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+        </article>
 
-    <article class="ticket-card ticket-card--red">
-      <div class="ticket-card__accent ticket-card__accent--red"></div>
-      <div class="ticket-card__body">
-        <p class="ticket-card__name">Bomba d'água com falha</p>
-        <p class="ticket-card__meta">Cristo • Amanhã</p>
-      </div>
-      <span class="sev-badge sev-badge--alta">Alta</span>
-      <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+        <article class="ticket-card ticket-card--yellow" data-ticket="2">
+          <div class="ticket-card__accent ticket-card__accent--yellow"></div>
+          <div class="ticket-card__body">
+            <p class="ticket-card__name">Estoque de ração abaixo do mínimo</p>
+            <p class="ticket-card__meta">Bodoquena 1 • Hoje, 10:45</p>
+          </div>
+          <span class="sev-badge sev-badge--media">Média</span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+        </article>
 
-    <article class="ticket-card ticket-card--red">
-      <div class="ticket-card__accent ticket-card__accent--red"></div>
-      <div class="ticket-card__body">
-        <p class="ticket-card__name">Bebedouro com defeito</p>
-        <p class="ticket-card__meta">CMB • em 3 dias</p>
-      </div>
-      <span class="sev-badge sev-badge--alta">Alta</span>
-      <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+        <article class="ticket-card ticket-card--red" data-ticket="3">
+          <div class="ticket-card__accent ticket-card__accent--red"></div>
+          <div class="ticket-card__body">
+            <p class="ticket-card__name">Bomba d'água com falha</p>
+            <p class="ticket-card__meta">Cristo • Amanhã</p>
+          </div>
+          <span class="sev-badge sev-badge--alta">Alta</span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+        </article>
 
-    <article class="ticket-card ticket-card--blue">
-      <div class="ticket-card__accent ticket-card__accent--blue"></div>
-      <div class="ticket-card__body">
-        <p class="ticket-card__name">Veículo do retiro sem manutenção</p>
-        <p class="ticket-card__meta">Bodoquena 2 • há 5 dias</p>
-      </div>
-      <span class="sev-badge sev-badge--baixa">Baixa</span>
-      <button class="ticket-card__check" aria-label="Resolvido">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+        <article class="ticket-card ticket-card--red" data-ticket="4">
+          <div class="ticket-card__accent ticket-card__accent--red"></div>
+          <div class="ticket-card__body">
+            <p class="ticket-card__name">Bebedouro com defeito</p>
+            <p class="ticket-card__meta">CMB • em 3 dias</p>
+          </div>
+          <span class="sev-badge sev-badge--alta">Alta</span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+        </article>
 
-    <article class="ticket-card ticket-card--yellow">
-      <div class="ticket-card__accent ticket-card__accent--yellow"></div>
-      <div class="ticket-card__body">
-        <p class="ticket-card__name">Gerador sem combustível</p>
-        <p class="ticket-card__meta">Bodoquena 1 • em 4 dias</p>
+        <article class="ticket-card ticket-card--blue" data-ticket="5">
+          <div class="ticket-card__accent ticket-card__accent--blue"></div>
+          <div class="ticket-card__body">
+            <p class="ticket-card__name">Veículo do retiro sem manutenção</p>
+            <p class="ticket-card__meta">Bodoquena 2 • há 5 dias</p>
+          </div>
+          <span class="sev-badge sev-badge--baixa">Baixa</span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+        </article>
+
+        <article class="ticket-card ticket-card--yellow" data-ticket="6">
+          <div class="ticket-card__accent ticket-card__accent--yellow"></div>
+          <div class="ticket-card__body">
+            <p class="ticket-card__name">Gerador sem combustível</p>
+            <p class="ticket-card__meta">Bodoquena 1 • em 4 dias</p>
+          </div>
+          <span class="sev-badge sev-badge--media">Média</span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+        </article>
       </div>
-      <span class="sev-badge sev-badge--media">Média</span>
-      <button class="ticket-card__check" aria-label="Marcar como resolvido">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+    </section>
+
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Validados</h2>
+      <p class="lista-secao__sub">Chamados que você já validou</p>
+      <div id="tickets-validados"></div>
+    </section>
 
   </main>
 
@@ -167,8 +169,12 @@
 
     <!-- Tabela de tickets -->
     <main class="desktop-content revisao-desktop-content" role="main">
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Chamados ativos</h2>
+        <p class="lista-secao__sub">Aguardando sua validação</p>
+      </section>
       <div class="revisao-table-wrap">
-        <table class="revisao-table" aria-label="Lista de tickets de infraestrutura">
+        <table class="revisao-table" aria-label="Chamados ativos">
           <thead>
             <tr>
               <th class="td--accent"></th>
@@ -188,7 +194,7 @@
               <td>Hoje, 08:24</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
               <td><span class="badge badge--red-soft">Ativo</span></td>
-              <td><button class="btn-validar">Validar</button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
               <td class="td--accent td--accent-yellow"></td>
@@ -197,7 +203,7 @@
               <td>Hoje, 10:45</td>
               <td><span class="badge badge--yellow">Média</span></td>
               <td><span class="badge badge--red-soft">Ativo</span></td>
-              <td><button class="btn-validar">Validar</button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr>
               <td class="td--accent td--accent-red"></td>
@@ -206,7 +212,7 @@
               <td>Amanhã</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="btn-validar">Validar</button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
               <td class="td--accent td--accent-red"></td>
@@ -215,7 +221,7 @@
               <td>em 3 dias</td>
               <td><span class="badge badge--red-soft">Alta</span></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="btn-validar">Validar</button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr>
               <td class="td--accent td--accent-blue"></td>
@@ -224,7 +230,7 @@
               <td>há 5 dias</td>
               <td><span class="badge badge--blue">Baixa</span></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><button class="btn-validar">Validar</button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
               <td class="td--accent td--accent-yellow"></td>
@@ -233,7 +239,32 @@
               <td>em 4 dias</td>
               <td><span class="badge badge--yellow">Média</span></td>
               <td><span class="badge badge--red-soft">Ativo</span></td>
-              <td><button class="btn-validar">Validar</button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Validados</h2>
+        <p class="lista-secao__sub">Chamados que você já validou</p>
+      </section>
+      <div class="revisao-table-wrap">
+        <table class="revisao-table" aria-label="Chamados validados">
+          <thead>
+            <tr>
+              <th class="td--accent"></th>
+              <th>Chamado</th>
+              <th>Retiro</th>
+              <th>Data/Hora</th>
+              <th>Severidade</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="tickets-validados-tbody">
+            <tr id="tickets-vazio-desktop">
+              <td colspan="7" class="td--vazio">Nenhum chamado validado ainda.</td>
             </tr>
           </tbody>
         </table>
@@ -249,29 +280,43 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
-  // Toggle check mobile
-  document.querySelectorAll('.ticket-card__check').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const img = btn.querySelector('img');
-      if (!img) return;
-      const checked = img.src.includes('checked.svg') && !img.src.includes('unchecked.svg');
-      img.src = checked ? '/assets/icons/unchecked.svg' : '/assets/icons/checked.svg';
-      btn.setAttribute('aria-label', checked ? 'Marcar como resolvido' : 'Resolvido');
-    });
-  });
+  // Validar (mobile): move o card para "Validados", mais recente no topo
+  function validarCardMobile(card) {
+    if (!card || card.dataset.validado) return;
+    card.dataset.validado = '1';
+    const btn = card.querySelector('.btn-revisar');
+    if (btn) {
+      const badge = document.createElement('span');
+      badge.className = 'rev-badge rev-badge--concluido';
+      badge.textContent = 'Validado';
+      btn.replaceWith(badge);
+    }
+    const accent = card.querySelector('.ticket-card__accent');
+    if (accent) accent.className = 'ticket-card__accent ticket-card__accent--green';
+    const alvo = document.getElementById('tickets-validados');
+    if (alvo) alvo.prepend(card);
+  }
 
-  // Toggle Validar → Confirmado
-  document.querySelectorAll('.btn-validar').forEach(btn => {
+  // Validar (desktop): move a linha para a tabela "Validados", no topo
+  function validarLinhaDesktop(row) {
+    if (!row || row.dataset.validado) return;
+    row.dataset.validado = '1';
+    const statusCell = row.querySelector('td:nth-child(6) .badge');
+    if (statusCell) { statusCell.className = 'badge badge--green'; statusCell.textContent = 'Validado'; }
+    const acao = row.querySelector('td:last-child');
+    if (acao) acao.innerHTML = '<span class="badge badge--green">Validado</span>';
+    const vazio = document.getElementById('tickets-vazio-desktop');
+    if (vazio) vazio.remove();
+    const tbody = document.getElementById('tickets-validados-tbody');
+    if (tbody) tbody.prepend(row);
+  }
+
+  // Botão "Validar" (card mobile ou linha desktop)
+  document.querySelectorAll('[data-action="validar"]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const row = btn.closest('tr');
-      if (!row) return;
-      const statusCell = row.querySelector('td:nth-child(6) .badge');
-      if (statusCell) {
-        statusCell.className = 'badge badge--green';
-        statusCell.textContent = 'Resolvido';
-      }
-      btn.className = 'btn-confirmado';
-      btn.textContent = 'Confirmado';
+      const card = btn.closest('.ticket-card');
+      if (card) { validarCardMobile(card); return; }
+      validarLinhaDesktop(btn.closest('tr'));
     });
   });
 
@@ -294,6 +339,7 @@
       const termo = this.value.toLowerCase().trim();
       document.querySelectorAll('.revisao-table tbody tr').forEach(row => {
         const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
+        if (!row.querySelector('.td--bold')) return;
         row.style.display = nome.includes(termo) ? '' : 'none';
       });
     });

@@ -69,7 +69,8 @@
      data-titulo="<%= tarefa.titulo %>"
      data-retiro="<%= tarefa.retiro %>"
      data-supervisor="<%= tarefa.supervisor %>"
-     data-prioridade="<%= tarefa.classe %>"></div>
+     data-prioridade="<%= tarefa.classe %>"
+     data-descricao="<%= tarefa.descricao %>"></div>
 <script src="/js/tarefas-store.js"></script>
 <script>
   var _el = document.getElementById('dadosTarefa');
@@ -78,7 +79,8 @@
     titulo: _el.dataset.titulo,
     retiro: _el.dataset.retiro,
     supervisor: _el.dataset.supervisor,
-    prioridade: _el.dataset.prioridade
+    prioridade: _el.dataset.prioridade,
+    descricao: _el.dataset.descricao
   };
 
   (function () {
@@ -146,6 +148,7 @@
             retiro: DADOS_TAREFA.retiro,
             supervisor: DADOS_TAREFA.supervisor,
             prioridade: DADOS_TAREFA.prioridade,
+            descricao: DADOS_TAREFA.descricao,
             dataConclusao: dataConclusao,
             evidencias: evid
           });

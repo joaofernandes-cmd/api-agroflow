@@ -42,89 +42,114 @@
         aria-label="Pesquisar tarefas"
       />
     </div>
-    <span class="revisao-badge-pendentes">Pendentes</span>
+    <span class="revisao-badge-pendentes">6 Pendentes</span>
   </div>
 
   <!-- Lista de tarefas -->
   <main class="revisao-list" role="main">
 
-    <!-- Tarefas concluídas pelo capataz (com evidência) -->
-    <section style="margin: 16px;">
-      <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
-      <div class="concluidas-capataz"></div>
+    <!-- Pendentes de revisão -->
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Pendentes de revisão</h2>
+      <p class="lista-secao__sub">Tarefas que ainda precisam ser conferidas</p>
+
+    <div class="pend-item" data-tarefa-id="11">
+      <div class="pend-head">
+        <span class="pend-title">Conferência do rebanho — Aroeira</span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> Lucas<br><strong>Retiro:</strong> Aroeira<br><strong>Enviado:</strong> há 1h</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pend-item" data-tarefa-id="12">
+      <div class="pend-head">
+        <span class="pend-title">Inspeção de cercas — CMB</span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> Alberto<br><strong>Retiro:</strong> CMB<br><strong>Enviado:</strong> há 1h</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pend-item" data-tarefa-id="13">
+      <div class="pend-head">
+        <span class="pend-title">Movimentação de animais — Puga</span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> Manoel<br><strong>Retiro:</strong> Puga<br><strong>Enviado:</strong> há 1 dia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pend-item" data-tarefa-id="14">
+      <div class="pend-head">
+        <span class="pend-title">Alimentação suplementar — Caieira</span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> João Paulo<br><strong>Retiro:</strong> Caieira<br><strong>Enviado:</strong> há 1 dia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pend-item" data-tarefa-id="15">
+      <div class="pend-head">
+        <span class="pend-title">Inspeção sanitária — Aroeira</span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> Lucas<br><strong>Retiro:</strong> Aroeira<br><strong>Enviado:</strong> há 2 dias</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pend-item" data-tarefa-id="16">
+      <div class="pend-head">
+        <span class="pend-title">Contagem geral — Cristo</span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> José Carlos<br><strong>Retiro:</strong> Cristo<br><strong>Enviado:</strong> há 3 dias</p>
+        </div>
+      </div>
+    </div>
+
     </section>
 
-    <article class="rev-card rev-card--pendente" data-tarefa-id="11">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Conferência do rebanho — Aroeira</p>
-        <p class="rev-card__meta">Capataz Lucas • há 1h</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="12">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Inspeção de cercas — CMB</p>
-        <p class="rev-card__meta">Capataz Alberto • há 1h</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="13">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Movimentação de animais — Puga</p>
-        <p class="rev-card__meta">Capataz Manoel • há 1 dia</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="14">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Alimentação suplementar — Caieira</p>
-        <p class="rev-card__meta">Capataz João Paulo • há 1 dia</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="15">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Inspeção sanitária — Aroeira</p>
-        <p class="rev-card__meta">Capataz Lucas • há 2 dias</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="16">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Contagem geral — Cristo</p>
-        <p class="rev-card__meta">Capataz José Carlos • há 3 dias</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+    <!-- Validadas -->
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Validadas</h2>
+      <div class="concluidas-capataz"></div>
+    </section>
 
   </main>
 
@@ -177,11 +202,12 @@
 
     <!-- Tabela de tarefas -->
     <main class="desktop-content revisao-desktop-content" role="main">
-      <!-- Tarefas concluídas pelo capataz (com evidência) -->
-      <section style="margin: 0 0 16px;">
-        <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
-        <div class="concluidas-capataz"></div>
+      <!-- Pendentes de revisão -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Pendentes de revisão</h2>
+        <p class="lista-secao__sub">Tarefas que ainda precisam ser conferidas</p>
       </section>
+
       <div class="revisao-table-wrap">
         <table class="revisao-table" aria-label="Lista de tarefas para revisão">
           <thead>
@@ -191,7 +217,7 @@
               <th>Capataz</th>
               <th>Há quanto tempo</th>
               <th>Status</th>
-              <th></th><!-- check -->
+              <th></th><!-- ver mais -->
               <th>Ação</th>
             </tr>
           </thead>
@@ -202,8 +228,25 @@
               <td>Capataz Lucas</td>
               <td>há 1h</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto">Conferir a quantidade de cabeças do retiro e comparar com o registro.</p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <div class="evidencia evidencia--foto">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                      <span class="evidencia__tipo">Foto</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr class="tr--alt" data-tarefa-id="12">
               <td class="td--bold">Inspeção de cercas</td>
@@ -211,8 +254,22 @@
               <td>Capataz Alberto</td>
               <td>há 1h</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto">Percorrer as cercas do retiro e registrar os trechos danificados.</p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <p class="evidencia-texto">Lado leste com 3 estacas soltas. Precisa de reparo.</p>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr data-tarefa-id="13">
               <td class="td--bold">Movimentação de animais</td>
@@ -220,8 +277,25 @@
               <td>Capataz Manoel</td>
               <td>há 1 dia</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto">Mover o lote do pasto 2 para o curral de manejo e registrar origem e destino.</p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <div class="evidencia evidencia--audio">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/></svg>
+                      <span class="evidencia__tipo">Áudio</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr class="tr--alt" data-tarefa-id="14">
               <td class="td--bold">Alimentação suplementar</td>
@@ -229,8 +303,25 @@
               <td>Capataz João Paulo</td>
               <td>há 1 dia</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto">Fornecer a ração suplementar ao gado conforme a orientação.</p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <div class="evidencia evidencia--foto">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                      <span class="evidencia__tipo">Foto</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr data-tarefa-id="15">
               <td class="td--bold">Inspeção sanitária</td>
@@ -238,8 +329,22 @@
               <td>Capataz Lucas</td>
               <td>há 2 dias</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto">Inspecionar a saúde dos animais e registrar sinais de doença.</p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <p class="evidencia-texto">Nenhum sinal de doença identificado.</p>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr class="tr--alt" data-tarefa-id="16">
               <td class="td--bold">Contagem geral</td>
@@ -247,22 +352,47 @@
               <td>Capataz José Carlos</td>
               <td>há 3 dias</td>
               <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto">Contar todas as cabeças do retiro e anotar o total.</p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <div class="evidencia evidencia--audio">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/></svg>
+                      <span class="evidencia__tipo">Áudio</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <!-- Validadas -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Validadas</h2>
+        <div class="concluidas-capataz"></div>
+      </section>
     </main>
   </div><!-- /desktop-main -->
 
 </div><!-- /layout-desktop -->
 
 <script src="/js/tarefas-store.js"></script>
+<!-- DEMO: tarefas concluídas de exemplo (remover em produção) -->
+<script src="/js/seed-demo.js"></script>
 <script>
   if (window.TarefasStore) {
     document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
-      TarefasStore.renderListaConcluidas(el);
+      TarefasStore.renderListaConcluidas(el, { selo: 'Validada', vazio: 'Nenhuma tarefa validada ainda.', dataPrefixo: 'Validada em' });
     });
   }
 </script>
@@ -291,102 +421,93 @@
     feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
   }
 
-  function atualizarCardMobile(card, aprovado) {
-    const badge = card.querySelector('.rev-badge');
-    const btn = card.querySelector('.rev-card__check');
-    const img = btn?.querySelector('img');
+  function agoraFormatado() {
+    return new Date().toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  }
 
-    if (!badge || !btn || !img) return;
-
-    if (aprovado) {
-      btn.classList.replace('rev-card__check--empty', 'rev-card__check--done');
-      btn.setAttribute('aria-label', 'Concluída');
-      img.src = IMG_MOBILE_FEITO;
-      badge.classList.replace('rev-badge--pendente', 'rev-badge--concluido');
-      badge.textContent = 'Concluído';
-      card.classList.replace('rev-card--pendente', 'rev-card--concluido');
-    } else {
-      btn.classList.replace('rev-card__check--done', 'rev-card__check--empty');
-      btn.setAttribute('aria-label', 'Marcar como concluída');
-      img.src = IMG_MOBILE_VAZIO;
-      badge.classList.replace('rev-badge--concluido', 'rev-badge--pendente');
-      badge.textContent = 'Pendente';
-      card.classList.replace('rev-card--concluido', 'rev-card--pendente');
+  // Valida no backend (não bloqueia a UI se falhar — é demo).
+  async function validarTarefaPorId(tarefaId) {
+    try {
+      const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, { method: 'PATCH' });
+      const data = await response.json().catch(() => ({}));
+      return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
+    } catch (e) {
+      return { ok: false, mensagem: 'Falha de conexão' };
     }
   }
 
-  function atualizarLinhaDesktop(row, aprovado) {
-    const badge = row.querySelector('.badge');
-    const btn = row.querySelector('.btn-revisar');
-    const img = row.querySelector('td img');
+  function reRenderConcluidas() {
+    if (!window.TarefasStore) return;
+    document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
+      TarefasStore.renderListaConcluidas(el, { selo: 'Validada', vazio: 'Nenhuma tarefa validada ainda.', dataPrefixo: 'Validada em' });
+    });
+  }
 
-    if (!badge || !btn || !img) return;
-
-    if (aprovado) {
-      img.src = IMG_DESK_CONCLUIDO;
-      img.alt = 'concluído';
-      badge.classList.replace('badge--yellow', 'badge--green');
-      badge.textContent = 'Concluído';
-      btn.textContent = 'Uncheck';
-    } else {
-      img.src = IMG_DESK_PENDENTE;
-      img.alt = 'pendente';
-      badge.classList.replace('badge--green', 'badge--yellow');
-      badge.textContent = 'Pendente';
-      btn.textContent = 'Check';
+  // Valida a tarefa: grava como concluída e move o item para a
+  // seção "Validadas" (some de cima e aparece embaixo).
+  function aceitarTarefa(id, titulo, retiro) {
+    if (window.TarefasStore) {
+      TarefasStore.concluir('rev-' + id, {
+        titulo: titulo,
+        retiro: retiro,
+        dataConclusao: agoraFormatado(),
+      });
+      reRenderConcluidas();
     }
+    validarTarefaPorId(id);
   }
 
-  async function aprovarTarefaPorId(tarefaId) {
-    const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, {
-      method: 'PATCH',
-    });
-
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      return { ok: false, mensagem: data.error || data.mensagem || 'Não foi possível aprovar a tarefa' };
-    }
-
-    return { ok: true, mensagem: data.mensagem || 'Tarefa aprovada com sucesso.' };
+  // Aceitar vara mobile (pend-item): some de cima e desce pra Concluídas
+  function aceitarPendItem(item) {
+    if (!item || item.dataset.aceito) return;
+    item.dataset.aceito = '1';
+    const nome = item.querySelector('.pend-title')?.textContent || 'Tarefa';
+    const partes = nome.split(' — ');
+    aceitarTarefa(item.dataset.tarefaId, partes[0].trim(), (partes[1] || '').trim());
+    item.remove();
   }
 
-  // ── Toggle check mobile ──
-  const IMG_MOBILE_VAZIO   = '/assets/icons/unchecked.svg';
-  const IMG_MOBILE_FEITO   = '/assets/icons/checked.svg';
-
-  document.querySelectorAll('.rev-card__check').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const card = btn.closest('.rev-card');
-      if (!card) return;
-      const concluido = btn.classList.contains('rev-card__check--done');
-      atualizarCardMobile(card, !concluido);
-      if (!concluido) await aprovarTarefaPorId(card.dataset.tarefaId);
-    });
-  });
-
-  // ── Toggle check desktop ──
-  const IMG_DESK_PENDENTE  = '/assets/icons/unchecked.svg';
-  const IMG_DESK_CONCLUIDO = '/assets/icons/checked.svg';
-
-  async function toggleLinhaDesktop(row) {
-    const btn = row.querySelector('.btn-revisar');
-    const concluido = btn?.textContent.trim() === 'Uncheck';
-    atualizarLinhaDesktop(row, !concluido);
-    if (!concluido) await aprovarTarefaPorId(row.dataset.tarefaId);
+  // Aceitar linha desktop (tabela): remove a linha e sua linha de detalhe
+  function aceitarLinhaDesktop(row) {
+    if (!row || row.dataset.aceito) return;
+    row.dataset.aceito = '1';
+    const titulo = (row.querySelector('.td--bold')?.textContent || 'Tarefa').trim();
+    const retiro = (row.children[1]?.textContent || '').trim();
+    const det = row.nextElementSibling;
+    aceitarTarefa(row.dataset.tarefaId, titulo, retiro);
+    row.remove();
+    if (det && det.classList.contains('pend-detalhe')) det.remove();
   }
 
-  document.querySelectorAll('.revisao-table td img').forEach(img => {
-    img.classList.add('check-img');
-    img.addEventListener('click', () => {
-      const row = img.closest('tr');
-      if (row) toggleLinhaDesktop(row);
-    });
-  });
-
+  // Botão "Validar" (vara mobile ou linha desktop)
   document.querySelectorAll('.btn-revisar').forEach(btn => {
     btn.addEventListener('click', () => {
-      const row = btn.closest('tr');
-      if (row) toggleLinhaDesktop(row);
+      const item = btn.closest('.pend-item');
+      if (item) { aceitarPendItem(item); return; }
+      aceitarLinhaDesktop(btn.closest('tr'));
+    });
+  });
+
+  // Setinha: abre/fecha as informações da tarefa pendente (mobile)
+  document.querySelectorAll('.pend-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.pend-item');
+      if (!item) return;
+      const aberto = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    });
+  });
+
+  // "Ver mais" (desktop): abre a linha de detalhe com descrição + evidência
+  document.querySelectorAll('.ver-mais').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const det = btn.closest('tr')?.nextElementSibling;
+      if (!det || !det.classList.contains('pend-detalhe')) return;
+      const abrindo = det.hasAttribute('hidden');
+      det.toggleAttribute('hidden');
+      btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
     });
   });
 
@@ -395,8 +516,8 @@
   if (searchMobile) {
     searchMobile.addEventListener('input', function () {
       const termo = this.value.toLowerCase().trim();
-      document.querySelectorAll('.revisao-list .rev-card').forEach(card => {
-        const nome = card.querySelector('.rev-card__name')?.textContent.toLowerCase() ?? '';
+      document.querySelectorAll('.revisao-list .pend-item').forEach(card => {
+        const nome = card.querySelector('.pend-title')?.textContent.toLowerCase() ?? '';
         card.style.display = nome.includes(termo) ? '' : 'none';
       });
     });
@@ -407,9 +528,13 @@
   if (searchDesktop) {
     searchDesktop.addEventListener('input', function () {
       const termo = this.value.toLowerCase().trim();
-      document.querySelectorAll('.revisao-table tbody tr').forEach(row => {
+      document.querySelectorAll('.revisao-table tbody tr[data-tarefa-id]').forEach(row => {
         const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
         row.style.display = nome.includes(termo) ? '' : 'none';
+        const det = row.nextElementSibling;
+        if (det && det.classList.contains('pend-detalhe')) det.setAttribute('hidden', '');
+        const vm = row.querySelector('.ver-mais');
+        if (vm) vm.setAttribute('aria-expanded', 'false');
       });
     });
   }

@@ -684,6 +684,102 @@
 /* Conteúdo sem padding extra */
 .revisao-desktop-content { padding: 0 !important; }
 
+/* ── Cabeçalho das listas (título + subtítulo centralizados) ── */
+.lista-secao { margin-bottom: 22px; }
+.lista-secao__titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+}
+.lista-secao__sub {
+  margin: 3px 0 14px;
+  font-size: 12.5px;
+  color: var(--color-muted);
+  text-align: center;
+}
+/* Mensagem de estado vazio centralizada */
+.concluidas-capataz > p { text-align: center; }
+
+/* No desktop a tabela vai de ponta a ponta; os cabeçalhos das seções
+   recebem respiro lateral para alinhar com a barra de busca. */
+.revisao-desktop-content .lista-secao { padding: 16px 32px 0; margin-bottom: 8px; }
+
+/* ════════════════════════════════════════════════════════════
+   PENDENTES DE REVISÃO — varas (mobile): nome + Validar + setinha
+   que abre as informações da tarefa.
+   ════════════════════════════════════════════════════════════ */
+.pend-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.pend-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px 11px 14px;
+}
+.pend-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pend-head .btn-revisar { flex-shrink: 0; min-width: 0; }
+.pend-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+}
+.pend-toggle svg { transition: transform 0.2s; }
+.pend-item.is-open .pend-toggle svg { transform: rotate(180deg); }
+
+.pend-panel { display: none; }
+.pend-item.is-open .pend-panel { display: block; }
+.pend-panel__inner { padding: 0 14px 14px; border-top: 1px solid var(--color-border); }
+.pend-info { margin: 12px 0 0; font-size: 13px; line-height: 1.7; color: var(--color-muted); text-align: center; }
+.pend-info strong { color: var(--color-text); font-weight: 600; }
+
+/* "Ver mais" na tabela do desktop + linha de detalhe (descrição + evidência) */
+.ver-mais {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+.ver-mais svg { transition: transform 0.2s; }
+.ver-mais[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.pend-detalhe td {
+  padding: 0 !important;
+  text-align: center;
+  background: #fafbf9;
+}
+.pend-detalhe__inner { padding: 6px 32px 18px; }
+
 /* Tabela */
 .revisao-table-wrap {
   background: var(--color-white);
@@ -705,18 +801,15 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--color-muted);
-  text-align: left;
+  text-align: center;
   padding: 10px 16px;
   white-space: nowrap;
 }
 
-.revisao-table thead th:nth-child(5),
-.revisao-table thead th:nth-child(6),
-.revisao-table thead th:nth-child(7) { text-align: center; }
-
+/* Colunas de check/ação um pouco mais estreitas */
 .revisao-table tbody td:nth-child(5),
 .revisao-table tbody td:nth-child(6),
-.revisao-table tbody td:nth-child(7) { text-align: center; padding: 0 8px; }
+.revisao-table tbody td:nth-child(7) { padding: 0 8px; }
 
 .revisao-table tbody tr {
   border-bottom: 1px solid var(--color-border);
@@ -728,6 +821,7 @@
 .revisao-table tbody td {
   padding: 0 16px;
   color: var(--color-muted);
+  text-align: center;
   vertical-align: middle;
 }
 
@@ -812,6 +906,7 @@
 .ticket-card__accent--red    { background: #ff3b30; }
 .ticket-card__accent--yellow { background: #d99a00; }
 .ticket-card__accent--blue   { background: #3d7da6; }
+.ticket-card__accent--green  { background: #059669; }
 
 .ticket-card__body {
   flex: 1;
@@ -842,6 +937,22 @@
 .sev-badge--alta   { background: rgba(255,59,48,0.15);  color: #ff3b30; }
 .sev-badge--media  { background: rgba(217,154,0,0.15);  color: #d99a00; }
 .sev-badge--baixa  { background: rgba(61,125,166,0.15); color: #3d7da6; }
+
+/* Espaçamento do botão Validar e do selo dentro do card de ticket */
+.ticket-card .sev-badge { margin-right: 10px; }
+.ticket-card .btn-revisar { flex-shrink: 0; margin-right: 12px; }
+.ticket-card .rev-badge { flex-shrink: 0; margin-right: 14px; }
+
+/* Estado vazio da seção "Validados" */
+#tickets-validados:empty::after {
+  content: 'Nenhum chamado validado ainda.';
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-muted);
+  padding: 4px 0 8px;
+}
+.td--vazio { text-align: center; color: var(--color-muted); font-size: 13px; padding: 16px !important; }
 
 .ticket-card__check {
   background: none;
