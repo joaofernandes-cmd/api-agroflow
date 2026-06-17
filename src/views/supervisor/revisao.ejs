@@ -440,7 +440,10 @@
     const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
     const resp = await fetch('/evidencias/tarefa/' + tarefaId, { headers });
     if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    if (!resp.ok) {
+      console.warn('Falha ao carregar evidências da revisão', { status: resp.status, tarefaId });
+      throw new Error('Não foi possível carregar os dados da revisão. Tente novamente.');
+    }
     return resp.json();
   }
 
@@ -560,7 +563,10 @@
   async function apiGet(url, token) {
     const resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
     if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    if (!resp.ok) {
+      console.warn('Falha ao carregar dados da revisão', { status: resp.status, url });
+      throw new Error('Não foi possível carregar os dados da revisão. Tente novamente.');
+    }
     return resp.json();
   }
 

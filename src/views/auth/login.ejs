@@ -180,6 +180,7 @@
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
+        console.warn('Falha ao autenticar usuário', { status: res.status });
         throw new Error(data.error || 'Não foi possível entrar. Verifique seus dados e tente novamente.');
       }
 
@@ -190,6 +191,7 @@
           ? '/gerente/home'
           : '/supervisor/home';
       } else {
+        console.warn('Resposta de login incompleta', { temToken: Boolean(data.token), temUsuario: Boolean(data.usuario) });
         throw new Error('Não foi possível iniciar a sessão. Tente novamente.');
       }
     })

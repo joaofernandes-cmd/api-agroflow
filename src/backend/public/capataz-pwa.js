@@ -240,9 +240,10 @@
     })
 
     if (!response.ok) {
-      await response.text().catch(function () {
+      var texto = await response.text().catch(function () {
         return ''
       })
+      console.warn('Falha ao enviar mídia no PWA do capataz', { status: response.status, detalhe: texto || null })
       throw new Error('Não foi possível enviar a mídia agora. O registro ficará salvo para nova tentativa.')
     }
 
@@ -317,6 +318,12 @@
     if (!response.ok) {
       var data = await response.json().catch(function () {
         return {}
+      })
+      console.warn('Falha ao executar operação enfileirada no PWA do capataz', {
+        status: response.status,
+        kind: operation.kind,
+        url: operation.url,
+        error: data && data.error ? data.error : null,
       })
       var erro = data && data.error ? data.error : erroSincronizacaoGenerico()
       throw new Error(erro)
@@ -459,6 +466,12 @@
       if (!response.ok) {
         var data = await response.json().catch(function () {
           return {}
+        })
+        console.warn('Falha ao executar operação online no PWA do capataz', {
+          status: response.status,
+          kind: config.kind,
+          url: config.url,
+          error: data && data.error ? data.error : null,
         })
         throw new Error((data && data.error) || erroSincronizacaoGenerico())
       }

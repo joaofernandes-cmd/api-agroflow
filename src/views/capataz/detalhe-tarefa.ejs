@@ -172,6 +172,7 @@
         }
         if (resp.ok) return resp.json().catch(function () { return {}; });
         return resp.json().catch(function () { return {}; }).then(function (d) {
+          console.warn('Falha ao enviar evidência da tarefa', { status: resp.status, url: url });
           throw new Error((d && d.error) || 'Não foi possível enviar a evidência. Tente novamente.');
         });
       });
@@ -208,6 +209,7 @@
             enviadas++;
           }
         } catch (e) {
+          console.warn('Falha ao sincronizar evidência da tarefa', e);
           aviso = (e && e.message) ? e.message : 'Não foi possível enviar a evidência.';
         }
       }
