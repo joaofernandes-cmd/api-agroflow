@@ -192,7 +192,7 @@ describe('TarefaService', () => {
 
     const contagem = await TarefaService.contarPorStatus('00000000-0000-4000-8000-000000000001')
 
-    expect(contagem).toEqual({ pendente: 1, aprovado: 1 })
+    expect(contagem).toEqual({ pendente: 1, concluido: 0, aprovado: 1 })
   })
 
   it('remover deve delegar para o repository', async () => {

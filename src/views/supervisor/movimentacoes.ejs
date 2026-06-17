@@ -7,10 +7,13 @@
 %>
 
 <!-- ============================================================
-     TELA: Tickets de infraestrutura
-     Mobile  → TopNav com voltar + filtro + lista de tickets + BottomNav
-     Desktop → Sidebar + TopBar + busca + tabela com botão Validar
-     Validar move o ticket para a seção "Validados" (mais recente no topo).
+     TELA: Movimentações do rebanho
+     O capataz registra/sobe as movimentações (nascimento, morte,
+     transferência, compra, venda…) e o supervisor as valida — mesmo
+     fluxo da tela de Tarefas (Revisão), só que para movimentações.
+     Mobile  → TopNav com voltar + busca com badge + lista com detalhe + BottomNav
+     Desktop → Sidebar + TopBar + busca + tabela com "Ver mais" e botão Validar
+     Validar move a movimentação para a seção "Validadas".
      ============================================================ -->
 
 <!-- ════════════════════════════════════════════════════════
@@ -25,62 +28,63 @@
         <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
-    <h1 class="topnav__title">Tickets de infraestrutura</h1>
+    <h1 class="topnav__title">Movimentações</h1>
   </header>
 
   <!-- Barra de busca + badge -->
-  <div class="tickets-filter-bar" role="search">
+  <div class="revisao-filter-bar" role="search">
     <div class="revisao-search-wrap">
       <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
       <input
-        class="tickets-search"
+        class="revisao-search"
         type="search"
-        placeholder="Pesquisar tickets"
-        aria-label="Pesquisar tickets"
+        placeholder="Pesquisar movimentações"
+        aria-label="Pesquisar movimentações"
       />
     </div>
-    <span class="tickets-badge-ativos"><%= tickets.length %> Pendentes</span>
+    <span class="revisao-badge-pendentes"><%= movimentacoes.length %> Pendentes</span>
   </div>
 
-  <!-- Lista de tickets -->
-  <main class="tickets-list" role="main">
+  <!-- Lista de movimentações -->
+  <main class="revisao-list" role="main">
 
+    <!-- Pendentes de validação -->
     <section class="lista-secao">
-      <h2 class="lista-secao__titulo">Tickets pendentes</h2>
-      <p class="lista-secao__sub">Aguardando sua validação</p>
+      <h2 class="lista-secao__titulo">Pendentes de validação</h2>
+      <p class="lista-secao__sub">Movimentações registradas pelos capatazes</p>
 
-      <div id="tickets-ativos">
-        <% tickets.forEach(function (t) { %>
-        <div class="pend-item" data-ticket="<%= t.id %>" data-nome="<%= t.nome %>" data-retiro="<%= t.retiro %>" data-quando="<%= t.quando %>" data-sev="<%= t.severidade %>">
-          <div class="pend-head">
-            <span class="pend-title"><span class="sev-badge sev-badge--<%= t.sevClasse %>"><%= t.severidade %></span> <%= t.nome %></span>
-            <button class="btn-revisar" data-action="validar">Validar</button>
-            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-          </div>
-          <div class="pend-panel">
-            <div class="pend-panel__inner">
-              <p class="pend-info"><strong>Retiro:</strong> <%= t.retiro %><br><strong>Quando:</strong> <%= t.quando %><br><strong>Severidade:</strong> <%= t.severidade %><br><strong>Evidência:</strong> <%= t.evidencia %><br><strong>Descrição:</strong> <%= t.descricao %></p>
-            </div>
+      <% movimentacoes.forEach(function (m) { %>
+      <div class="pend-item" data-mov-id="<%= m.id %>">
+        <div class="pend-head">
+          <span class="pend-title"><span class="badge <%= m.badgeClasse %>"><%= m.tipo %></span> <%= m.local %></span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="pend-panel">
+          <div class="pend-panel__inner">
+            <p class="pend-info"><strong>Capataz:</strong> <%= m.capataz %><br><% if (m.tipo === 'Transferência') { %><strong>Origem:</strong> <%= m.origem %><br><strong>Destino:</strong> <%= m.destino %><br><% } else { %><strong>Retiro:</strong> <%= m.retiro %><br><% } %><strong>Quantidade:</strong> <%= m.quantidadeRotulo %><br><strong>Estágio:</strong> <%= m.estagio %><br><% if (m.causaObito) { %><strong>Causa do óbito:</strong> <%= m.causaObito %><br><% } %><strong>Evidência:</strong> <%= m.evidencia %><br><strong>Enviado:</strong> <%= m.enviado %></p>
           </div>
         </div>
-        <% }) %>
       </div>
+      <% }) %>
+
     </section>
 
+    <!-- Validadas -->
     <section class="lista-secao">
-      <h2 class="lista-secao__titulo">Validados</h2>
-      <p class="lista-secao__sub">Tickets que você já validou</p>
-      <div class="tickets-concluidas"></div>
+      <h2 class="lista-secao__titulo">Validadas</h2>
+      <p class="lista-secao__sub">Movimentações que você já validou</p>
+      <div class="movimentacoes-validadas"></div>
     </section>
 
   </main>
 
   <!-- BottomNav -->
-  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'tickets' }) %>
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'movimentacoes' }) %>
 
 </div><!-- /layout-mobile -->
 
@@ -91,7 +95,7 @@
 <div class="layout-desktop">
 
   <!-- Sidebar -->
-  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'tickets' }) %>
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'movimentacoes' }) %>
 
   <!-- Área principal -->
   <div class="desktop-main">
@@ -99,13 +103,13 @@
     <!-- TopBar -->
     <header class="topbar" role="banner">
       <div class="topbar__lead">
-        <h1 class="topbar__title">Tickets de Infraestrutura</h1>
+        <h1 class="topbar__title">Movimentações</h1>
       </div>
       <p class="topbar__date" id="data-hoje-desktop"></p>
     </header>
 
     <!-- Barra de busca + badge desktop -->
-    <div class="tickets-filter-bar-desktop" role="search">
+    <div class="revisao-filter-bar-desktop" role="search">
       <div class="revisao-search-wrap-desktop">
         <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -113,68 +117,70 @@
         <input
           class="revisao-search-desktop"
           type="search"
-          placeholder="Buscar tickets..."
-          aria-label="Buscar tickets"
+          placeholder="Pesquisar movimentações"
+          aria-label="Pesquisar movimentações"
         />
       </div>
-      <span class="tickets-badge-ativos tickets-badge-ativos--desktop"><%= tickets.length %> Pendentes</span>
+      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop"><%= movimentacoes.length %> Pendentes</span>
     </div>
 
-    <!-- Tabela de tickets -->
+    <!-- Tabela de movimentações -->
     <main class="desktop-content revisao-desktop-content" role="main">
+      <!-- Pendentes de validação -->
       <section class="lista-secao">
-        <h2 class="lista-secao__titulo">Tickets pendentes</h2>
-        <p class="lista-secao__sub">Aguardando sua validação</p>
+        <h2 class="lista-secao__titulo">Pendentes de validação</h2>
+        <p class="lista-secao__sub">Movimentações registradas pelos capatazes</p>
       </section>
+
       <div class="revisao-table-wrap">
-        <table class="revisao-table" aria-label="Tickets pendentes">
+        <table class="revisao-table" aria-label="Movimentações pendentes de validação">
           <thead>
             <tr>
-              <th>Ticket</th>
-              <th>Retiro</th>
-              <th>Data/Hora</th>
-              <th>Severidade</th>
+              <th>Tipo</th>
+              <th>Retiro / Trajeto</th>
+              <th>Capataz</th>
+              <th>Quantidade</th>
               <th>Status</th>
               <th></th><!-- ver mais -->
               <th>Ação</th>
             </tr>
           </thead>
-          <tbody id="tickets-ativos-tbody">
+          <tbody>
             <%
-              function escHtmlTk(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-              function evidenciaBlocoTicket(t){
-                if (t.evidencia === 'Texto') {
-                  return '<p class="evidencia-texto">' + escHtmlTk(t.evidenciaTexto) + '</p>';
+              function escHtmlMov(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+              function evidenciaBlocoMov(m){
+                if (m.evidencia === 'Texto') {
+                  return '<p class="evidencia-texto">' + escHtmlMov(m.evidenciaTexto) + '</p>';
                 }
-                var isAudio = t.evidencia === 'Áudio';
+                var isAudio = m.evidencia === 'Áudio';
                 var icone = isAudio
                   ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
                   : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
                 return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
                   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
-                  '<span class="evidencia__tipo">' + escHtmlTk(t.evidencia) + '</span></div>';
+                  '<span class="evidencia__tipo">' + escHtmlMov(m.evidencia) + '</span></div>';
               }
             %>
-            <% tickets.forEach(function (t, i) { %>
-            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-ticket="<%= t.id %>">
-              <td class="td--bold"><%= t.nome %></td>
-              <td><%= t.retiro %></td>
-              <td><%= t.quando %></td>
-              <td><span class="badge <%= t.badgeClasse %>"><%= t.severidade %></span></td>
+            <% movimentacoes.forEach(function (m, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-mov-id="<%= m.id %>">
+              <td class="td--bold"><span class="badge <%= m.badgeClasse %>"><%= m.tipo %></span></td>
+              <td><%= m.local %></td>
+              <td>Capataz <%= m.capataz %></td>
+              <td><%= m.quantidadeRotulo %></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
-              <td><button class="btn-validar" data-action="validar">Validar</button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="pend-detalhe" hidden>
               <td colspan="7">
                 <div class="pend-detalhe__inner">
                   <div class="concl-bloco">
-                    <span class="concl-bloco__label">Descrição</span>
-                    <p class="concl-bloco__texto"><%= t.descricao %></p>
+                    <span class="concl-bloco__label">Detalhes</span>
+                    <p class="concl-bloco__texto"><%= m.detalhes %></p>
                   </div>
                   <div class="concl-bloco">
                     <span class="concl-bloco__label">Evidência</span>
-                    <%- evidenciaBlocoTicket(t) %>
+                    <%- evidenciaBlocoMov(m) %>
                   </div>
                 </div>
               </td>
@@ -184,10 +190,11 @@
         </table>
       </div>
 
+      <!-- Validadas -->
       <section class="lista-secao">
-        <h2 class="lista-secao__titulo">Validados</h2>
-        <p class="lista-secao__sub">Tickets que você já validou</p>
-        <div class="tickets-concluidas"></div>
+        <h2 class="lista-secao__titulo">Validadas</h2>
+        <p class="lista-secao__sub">Movimentações que você já validou</p>
+        <div class="movimentacoes-validadas"></div>
       </section>
     </main>
   </div><!-- /desktop-main -->
@@ -200,19 +207,6 @@
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
-
-  // Recalcula o contador "N Pendentes" ao lado da busca conforme os tickets
-  // vão sendo validados (some um de cima → o número cai).
-  function atualizarBadgePendentes() {
-    const nMobile = document.querySelectorAll('#tickets-ativos .pend-item').length;
-    const nDesktop = document.querySelectorAll('#tickets-ativos-tbody tr[data-ticket]').length;
-    const badgeMobile = document.querySelector('.layout-mobile .tickets-badge-ativos');
-    const badgeDesktop = document.querySelector('.layout-desktop .tickets-badge-ativos');
-    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
-    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
-    // Espelha o total na home (bloco "Tickets" do Acesso rápido).
-    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('tickets', nMobile, nDesktop);
-  }
 
   function escaparHTML(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -232,12 +226,6 @@
       return (u && u.nome) ? u.nome.split(' ')[0] : 'Luiz Felipe';
     } catch (e) { return 'Luiz Felipe'; }
   }
-  function sevClasse(sev) {
-    const s = (sev || '').toLowerCase();
-    if (s.indexOf('alta') >= 0) return 'alta';
-    if (s.indexOf('méd') >= 0 || s.indexOf('med') >= 0) return 'media';
-    return 'baixa';
-  }
   // Card de evidência (mesmo visual das tarefas): foto/áudio com ícone, texto com a nota.
   function evidenciaHTML(tipo, texto) {
     if (tipo === 'Texto') return '<p class="evidencia-texto">' + escaparHTML(texto || '') + '</p>';
@@ -250,24 +238,37 @@
       '<span class="evidencia__tipo">' + escaparHTML(tipo) + '</span></div>';
   }
 
-  // Descrição + evidência de cada ticket (fonte única, vinda do servidor —
+  // Detalhes + evidência de cada movimentação (fonte única, vinda do servidor —
   // o mesmo módulo que renderiza a lista acima).
-  const TICKETS_DADOS = <%- JSON.stringify(ticketsDados) %>;
+  const MOV_DADOS = <%- JSON.stringify(movimentacoesDados) %>;
 
-  // Tickets já validados (em memória) — mais recente no topo.
-  const ticketsValidados = [];
+  // Recalcula o contador "N Pendentes" ao lado da busca conforme as
+  // movimentações vão sendo validadas (some uma de cima → o número cai).
+  function atualizarBadgePendentes() {
+    const nMobile = document.querySelectorAll('.layout-mobile .pend-item').length;
+    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table tbody tr[data-mov-id]').length;
+    const badgeMobile = document.querySelector('.layout-mobile .revisao-badge-pendentes');
+    const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
+    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
+    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
+    // Espelha o total na home (bloco "Movimentações" do Acesso rápido).
+    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('movimentacoes', nMobile, nDesktop);
+  }
 
-  // Renderiza os tickets validados como "varas" que abrem na setinha,
-  // no mesmo padrão das tarefas validadas (nome + selo + ver mais; sem Ação).
-  function renderTicketsValidados() {
-    document.querySelectorAll('.tickets-concluidas').forEach(function (container) {
+  // Movimentações já validadas (em memória) — mais recente no topo.
+  const movimentacoesValidadas = [];
+
+  // Renderiza as validadas como "varas" que abrem na setinha, no mesmo
+  // padrão das tarefas/tickets validados (tipo + retiro + selo; sem Ação).
+  function renderValidadas() {
+    document.querySelectorAll('.movimentacoes-validadas').forEach(function (container) {
       container.innerHTML = '';
-      if (!ticketsValidados.length) {
-        container.innerHTML = '<p class="concl-vazio">Nenhum ticket validado ainda.</p>';
+      if (!movimentacoesValidadas.length) {
+        container.innerHTML = '<p class="concl-vazio">Nenhuma movimentação validada ainda.</p>';
         return;
       }
-      ticketsValidados.forEach(function (t) {
-        const titulo = escaparHTML(t.nome) + (t.retiro ? ' — ' + escaparHTML(t.retiro) : '');
+      movimentacoesValidadas.forEach(function (m) {
+        const titulo = escaparHTML(m.tipo) + (m.local ? ' — ' + escaparHTML(m.local) : '');
 
         const item = document.createElement('div');
         item.className = 'concl-item';
@@ -278,7 +279,7 @@
         head.setAttribute('aria-expanded', 'false');
         head.innerHTML =
           '<span class="concl-title">' + titulo + '</span>' +
-          '<span class="concl-badge">Validado</span>' +
+          '<span class="concl-badge">Validada</span>' +
           '<span class="concl-arrow" aria-hidden="true">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
           '</span>';
@@ -288,18 +289,10 @@
         const inner = document.createElement('div');
         inner.className = 'concl-panel__inner';
 
-        // Severidade em destaque (mesmo selo das prioridades das tarefas)
-        if (t.severidade) {
-          const tags = document.createElement('div');
-          tags.className = 'concl-tags';
-          tags.innerHTML = '<span class="concl-prio concl-prio--' + sevClasse(t.severidade) + '">' + escaparHTML(t.severidade) + '</span>';
-          inner.appendChild(tags);
-        }
-
-        // Quando foi validado + por quem
+        // Quando foi validada + por quem
         const metaParts = [];
-        if (t.dataValidacao) metaParts.push('Validado em ' + t.dataValidacao);
-        if (t.supervisor) metaParts.push('Supervisor ' + t.supervisor);
+        if (m.dataValidacao) metaParts.push('Validada em ' + m.dataValidacao);
+        if (m.supervisor) metaParts.push('Supervisor ' + m.supervisor);
         if (metaParts.length) {
           const meta = document.createElement('p');
           meta.className = 'concl-meta';
@@ -307,20 +300,24 @@
           inner.appendChild(meta);
         }
 
-        // Descrição
-        if (t.descricao) {
+        // Detalhes (capataz, quantidade, estágio…)
+        const detParts = [];
+        if (m.capataz) detParts.push('Capataz ' + m.capataz);
+        if (m.quantidade) detParts.push(m.quantidade);
+        const detTexto = [detParts.join(' • '), m.detalhes].filter(Boolean).join(' • ');
+        if (detTexto) {
           const desc = document.createElement('div');
           desc.className = 'concl-bloco';
-          desc.innerHTML = '<span class="concl-bloco__label">Descrição</span>' +
-            '<p class="concl-bloco__texto">' + escaparHTML(t.descricao) + '</p>';
+          desc.innerHTML = '<span class="concl-bloco__label">Detalhes</span>' +
+            '<p class="concl-bloco__texto">' + escaparHTML(detTexto) + '</p>';
           inner.appendChild(desc);
         }
 
         // Evidência
-        if (t.evidencia) {
+        if (m.evidencia) {
           const ev = document.createElement('div');
           ev.className = 'concl-bloco';
-          ev.innerHTML = '<span class="concl-bloco__label">Evidência</span>' + evidenciaHTML(t.evidencia, t.evidenciaTexto);
+          ev.innerHTML = '<span class="concl-bloco__label">Evidência</span>' + evidenciaHTML(m.evidencia, m.evidenciaTexto);
           inner.appendChild(ev);
         }
 
@@ -338,62 +335,76 @@
     });
   }
 
-  // Marca um ticket como validado: tira da lista de pendentes e mostra
-  // como "vara" na seção Validados.
-  function validarTicket(dados, origem) {
-    dados.dataValidacao = agoraFormatado();
-    dados.supervisor = nomeSupervisor();
-    ticketsValidados.unshift(dados);
-    if (origem) origem.remove();
-    renderTicketsValidados();
-    atualizarBadgePendentes();
-    // Persiste no servidor: remove o ticket dos pendentes em memória, para o
-    // contador (tela + home) continuar certo depois de recarregar.
-    if (dados.id) {
-      fetch('/supervisor/tickets/' + encodeURIComponent(dados.id) + '/validar', { method: 'POST' })
-        .catch(function () {});
+  // Valida no backend (não bloqueia a UI se falhar — é demo).
+  async function validarMovimentacaoPorId(movId) {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const response = await fetch(`/validacoes/movimentacoes/${movId}/validar`, {
+        method: 'PATCH',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      const data = await response.json().catch(() => ({}));
+      return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
+    } catch (e) {
+      return { ok: false, mensagem: 'Falha de conexão' };
     }
   }
 
-  // Validar (vara mobile): tira de pendentes e desce para Validados
+  // Marca uma movimentação como validada: tira de pendentes e mostra
+  // como "vara" na seção Validadas.
+  function validarMovimentacao(dados, origem) {
+    dados.dataValidacao = agoraFormatado();
+    dados.supervisor = nomeSupervisor();
+    movimentacoesValidadas.unshift(dados);
+    if (origem) origem.remove();
+    validarMovimentacaoPorId(dados.id);
+    // Persiste no servidor (demo): remove a movimentação dos pendentes em
+    // memória, para o contador (tela + home) continuar certo após recarregar.
+    if (dados.id) {
+      fetch('/supervisor/movimentacoes/' + encodeURIComponent(dados.id) + '/validar', { method: 'POST' })
+        .catch(function () {});
+    }
+    renderValidadas();
+    atualizarBadgePendentes();
+  }
+
+  // Validar (vara mobile): tira de pendentes e desce para Validadas
   function validarPendItem(item) {
     if (!item || item.dataset.validado) return;
     item.dataset.validado = '1';
-    const extra = TICKETS_DADOS[item.dataset.ticket] || {};
-    validarTicket({
-      id: item.dataset.ticket,
-      nome: item.dataset.nome || (item.querySelector('.pend-title')?.textContent || 'Ticket').trim(),
-      retiro: item.dataset.retiro || '',
-      data: item.dataset.quando || '',
-      severidade: item.dataset.sev || '',
-      descricao: extra.descricao || '',
-      evidencia: extra.evidencia || '',
-      evidenciaTexto: extra.evidenciaTexto || '',
+    const tipo = (item.querySelector('.pend-title .badge')?.textContent || '').trim();
+    const tituloCompleto = (item.querySelector('.pend-title')?.textContent || '').trim();
+    const local = tituloCompleto.replace(tipo, '').trim();
+    const info = item.querySelector('.pend-info')?.textContent || '';
+    const capataz = (info.match(/Capataz:\s*([^\n]+?)(?:Origem|Retiro|Quantidade|$)/)?.[1] || '').trim();
+    const quantidade = (info.match(/Quantidade:\s*([0-9]+\s*anima(?:l|is))/)?.[1] || '').trim();
+    const extra = MOV_DADOS[item.dataset.movId] || {};
+    validarMovimentacao({
+      id: item.dataset.movId, tipo, local, capataz, quantidade,
+      detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
     }, item);
   }
 
-  // Validar (linha desktop): remove a linha e a sua linha de detalhe
+  // Validar (linha desktop): remove a linha e sua linha de detalhe
   function validarLinhaDesktop(row) {
     if (!row || row.dataset.validado) return;
     row.dataset.validado = '1';
     const cells = row.querySelectorAll('td');
     const det = row.nextElementSibling;
-    const extra = TICKETS_DADOS[row.dataset.ticket] || {};
-    validarTicket({
-      id: row.dataset.ticket,
-      nome: (row.querySelector('.td--bold')?.textContent || 'Ticket').trim(),
-      retiro: (cells[1]?.textContent || '').trim(),
-      data: (cells[2]?.textContent || '').trim(),
-      severidade: (cells[3]?.querySelector('.badge')?.textContent || '').trim(),
-      descricao: extra.descricao || '',
-      evidencia: extra.evidencia || '',
-      evidenciaTexto: extra.evidenciaTexto || '',
+    const extra = MOV_DADOS[row.dataset.movId] || {};
+    validarMovimentacao({
+      id: row.dataset.movId,
+      tipo: (cells[0]?.textContent || 'Movimentação').trim(),
+      local: (cells[1]?.textContent || '').trim(),
+      capataz: (cells[2]?.textContent || '').replace(/^Capataz\s*/, '').trim(),
+      quantidade: (cells[3]?.textContent || '').trim(),
+      detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
     }, row);
     if (det && det.classList.contains('pend-detalhe')) det.remove();
   }
 
   // Botão "Validar" (vara mobile ou linha desktop)
-  document.querySelectorAll('[data-action="validar"]').forEach(btn => {
+  document.querySelectorAll('.btn-revisar').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.pend-item');
       if (item) { validarPendItem(item); return; }
@@ -401,7 +412,7 @@
     });
   });
 
-  // Setinha: abre/fecha as informações do ticket pendente (mobile)
+  // Setinha: abre/fecha as informações da movimentação pendente (mobile)
   document.querySelectorAll('.pend-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.pend-item');
@@ -411,7 +422,7 @@
     });
   });
 
-  // "Ver mais" (desktop): abre a linha de detalhe com a descrição + evidência
+  // "Ver mais" (desktop): abre a linha de detalhe com os dados + evidência
   document.querySelectorAll('.ver-mais').forEach(btn => {
     btn.addEventListener('click', () => {
       const det = btn.closest('tr')?.nextElementSibling;
@@ -422,16 +433,12 @@
     });
   });
 
-  // Estado inicial: contador e lista de validados (vazia) ao abrir.
-  atualizarBadgePendentes();
-  renderTicketsValidados();
-
   // Filtro de busca — mobile
-  const searchMobile = document.querySelector('.tickets-search');
+  const searchMobile = document.querySelector('.revisao-search');
   if (searchMobile) {
     searchMobile.addEventListener('input', function () {
       const termo = this.value.toLowerCase().trim();
-      document.querySelectorAll('.tickets-list .pend-item').forEach(card => {
+      document.querySelectorAll('.revisao-list .pend-item').forEach(card => {
         const nome = card.querySelector('.pend-title')?.textContent.toLowerCase() ?? '';
         card.style.display = nome.includes(termo) ? '' : 'none';
       });
@@ -443,9 +450,10 @@
   if (searchDesktop) {
     searchDesktop.addEventListener('input', function () {
       const termo = this.value.toLowerCase().trim();
-      document.querySelectorAll('.revisao-table tbody tr[data-ticket]').forEach(row => {
-        const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
-        row.style.display = nome.includes(termo) ? '' : 'none';
+      document.querySelectorAll('.revisao-table tbody tr[data-mov-id]').forEach(row => {
+        const tipo = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
+        const local = row.children[1]?.textContent.toLowerCase() ?? '';
+        row.style.display = (tipo.includes(termo) || local.includes(termo)) ? '' : 'none';
         const det = row.nextElementSibling;
         if (det && det.classList.contains('pend-detalhe')) det.setAttribute('hidden', '');
         const vm = row.querySelector('.ver-mais');
@@ -453,6 +461,10 @@
       });
     });
   }
+
+  // Estado inicial: contador e lista de validadas (vazia) ao abrir.
+  atualizarBadgePendentes();
+  renderValidadas();
 </script>
 
 </body>

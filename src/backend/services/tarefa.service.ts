@@ -233,6 +233,7 @@ export const TarefaService = {
     // Inicializa contador para cada status possível
     const contagem: Record<TarefaStatus, number> = {
       pendente: 0,
+      concluido: 0,
       aprovado: 0,
     }
 

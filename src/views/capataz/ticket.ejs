@@ -1,4 +1,4 @@
-<%- include('../partials/capataz-head', { titulo: 'Alow · Abrir Chamado' }) %>
+<%- include('../partials/capataz-head', { titulo: 'Alow · Abrir Ticket' }) %>
 
 <%
   var CATEGORIAS = [
@@ -64,7 +64,7 @@
 
     <%- include('evidencia', { ns: 'tk' }) %>
 
-    <button type="button" class="btn-primario" id="btnEnviarTicket">Enviar chamado</button>
+    <button type="button" class="btn-primario" id="btnEnviarTicket">Enviar ticket</button>
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tickets' }) %>
@@ -146,7 +146,7 @@
     // A descrição vem da evidência de texto; sem texto, usa a categoria como base.
     const textoEvid = evidencias.find(function (e) { return e.tipo === 'texto'; });
     const catLabel = categoriaOutro || categoriaSelect.options[categoriaSelect.selectedIndex].text;
-    const descricao = (textoEvid && textoEvid.conteudo) ? textoEvid.conteudo : ('Chamado de ' + catLabel);
+    const descricao = (textoEvid && textoEvid.conteudo) ? textoEvid.conteudo : ('Ticket de ' + catLabel);
 
     return {
       retiro_id: session?.usuario?.retiro_id ?? CAPATAZ_DEMO.retiro_id,
@@ -186,8 +186,8 @@
       });
 
       const mensagemSucesso = resultado.queued
-        ? 'Chamado salvo offline. Ele sera sincronizado automaticamente quando houver conexao.'
-        : 'Chamado criado e sincronizado com sucesso.';
+        ? 'Ticket salvo offline. Ele sera sincronizado automaticamente quando houver conexao.'
+        : 'Ticket criado e sincronizado com sucesso.';
       mostrarFeedback(mensagemSucesso, 'success');
       document.querySelectorAll('.select, .input').forEach(el => {
         if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
@@ -200,10 +200,10 @@
       if (window.PrioSeletor) window.PrioSeletor.resetarTodos();
       obterLocalizacao();
     } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao criar chamado', 'error');
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao criar ticket', 'error');
     } finally {
       botao.disabled = false;
-      botao.textContent = 'Enviar chamado';
+      botao.textContent = 'Enviar ticket';
     }
   }
 

@@ -22,4 +22,8 @@
       <link rel="stylesheet" href="/css/<%= file %>.css" />
     <% }) %>
   <% } %>
+
+  <% if (typeof supabase !== 'undefined' && supabase && supabase.url) { %>
+  <script>window.__SUPABASE__ = <%- JSON.stringify(supabase) %>;</script>
+  <% } %>
 </head>

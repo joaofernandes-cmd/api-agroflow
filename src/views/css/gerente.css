@@ -124,7 +124,7 @@
   flex-shrink: 0;
 }
 
-.act-tag--chamado  { background: rgba(217,154,0,0.15);  color: #d99a00; }
+.act-tag--ticket   { background: rgba(217,154,0,0.15);  color: #d99a00; }
 .act-tag--tarefa   { background: rgba(0,33,217,0.25);   color: #0021d9; }
 .act-tag--operacao { background: rgba(217,0,4,0.24);    color: #d90004; }
 

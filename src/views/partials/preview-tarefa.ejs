@@ -1,0 +1,51 @@
+<%#
+  Partial: preview-tarefa.ejs
+  Preview read-only de uma tarefa delegada (o que o supervisor preencheu).
+  Variáveis esperadas:
+  - tarefa: TarefaExibicao (titulo, retiro, prioridade, nivel, prazo,
+            categoria, data, supervisor, descricao, statusRotulo)
+%>
+<article class="preview">
+
+  <div class="preview__head">
+    <span class="preview__accent preview__accent--<%= tarefa.prioridade %>" aria-hidden="true"></span>
+    <div class="preview__head-body">
+      <h2 class="preview__title"><%= tarefa.titulo %></h2>
+      <p class="preview__sub">Retiro <%= tarefa.retiro %></p>
+      <div class="preview__badges">
+        <span class="prioridade-badge prioridade-badge--<%= tarefa.prioridade %>"><%= tarefa.nivel %></span>
+        <span class="rev-badge rev-badge--pendente"><%= tarefa.statusRotulo %></span>
+      </div>
+    </div>
+  </div>
+
+  <dl class="preview__info">
+    <div class="preview__row">
+      <dt class="preview__label">Categoria</dt>
+      <dd class="preview__value"><%= tarefa.categoria %></dd>
+    </div>
+    <div class="preview__row">
+      <dt class="preview__label">Prazo</dt>
+      <dd class="preview__value"><%= tarefa.prazo %></dd>
+    </div>
+    <div class="preview__row">
+      <dt class="preview__label">Criada em</dt>
+      <dd class="preview__value"><%= tarefa.data %></dd>
+    </div>
+    <div class="preview__row">
+      <dt class="preview__label">Delegada por</dt>
+      <dd class="preview__value"><%= tarefa.supervisor %></dd>
+    </div>
+  </dl>
+
+  <div class="preview__desc">
+    <h3 class="preview__desc-label">Descrição</h3>
+    <p class="preview__desc-text"><%= tarefa.descricao %></p>
+  </div>
+
+  <p class="preview__nota">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    <span>Aguardando o capataz realizar. As evidências aparecem aqui quando a tarefa for concluída.</span>
+  </p>
+
+</article>

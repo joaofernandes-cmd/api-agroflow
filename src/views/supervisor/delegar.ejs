@@ -4,6 +4,9 @@
   Variáveis esperadas pelo controller:
   - usuario: { nome: string }
   - css: ['supervisor']
+  - capatazes: string[]  (todos os capatazes da fazenda)
+  - retiros: string[]    (todos os retiros da fazenda)
+  - tarefasAtivas: tarefas delegadas e ainda não realizadas (status pendente)
 %>
 
 <!-- ============================================================
@@ -32,14 +35,25 @@
     <form class="delegate-form" id="form-delegar" novalidate>
 
       <div class="dfield">
-        <label class="dfield__label" for="capataz-mobile">Capataz | Retiro</label>
+        <label class="dfield__label" for="capataz-mobile">Capataz</label>
         <div class="dfield__select-wrap">
-          <select class="dfield__select" id="capataz-mobile" name="capatazRetiro" required aria-required="true">
-            <option value="" disabled selected>Nome do capataz e do retiro</option>
-            <option value="lucas-aroeira">Lucas • Aroeira</option>
-            <option value="alberto-cmb">Alberto • CMB</option>
-            <option value="jose-cristo">José Carlos • Cristo</option>
-            <option value="manoel-puga">Manoel • Puga</option>
+          <select class="dfield__select" id="capataz-mobile" name="capataz" required aria-required="true">
+            <option value="" disabled selected>Escolha o capataz</option>
+            <% capatazes.forEach(function (c) { %>
+            <option value="<%= c %>"><%= c %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label" for="retiro-mobile">Retiro</label>
+        <div class="dfield__select-wrap">
+          <select class="dfield__select" id="retiro-mobile" name="retiro" required aria-required="true">
+            <option value="" disabled selected>Escolha o retiro</option>
+            <% retiros.forEach(function (r) { %>
+            <option value="<%= r %>"><%= r %></option>
+            <% }) %>
           </select>
         </div>
       </div>
@@ -58,13 +72,24 @@
         </div>
       </div>
 
+      <!-- Aparece só quando a atividade for "Outro" (campo para descrever a tarefa) -->
+      <div class="dfield" id="campo-outro-mobile" style="display: none;">
+        <label class="dfield__label" for="outro-mobile">Qual é a tarefa?</label>
+        <input
+          class="dfield__input"
+          type="text"
+          id="outro-mobile"
+          name="outroAtividade"
+          placeholder="Escreva a tarefa a delegar"
+        />
+      </div>
+
       <div class="dfield">
         <label class="dfield__label">Prioridade</label>
         <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
           <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
           <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
           <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
-          <button type="button" class="prio-opcao prio-opcao--critica" data-valor="critica">Crítica</button>
           <input type="hidden" id="prioridade-mobile" name="prioridade" />
         </div>
       </div>
@@ -107,7 +132,9 @@
 
     <!-- TopBar -->
     <header class="topbar" role="banner">
-      <h1 class="topbar__title">Delegar tarefa</h1>
+      <div class="topbar__lead">
+        <h1 class="topbar__title">Delegar tarefa</h1>
+      </div>
       <p class="topbar__date" id="data-hoje-desktop"></p>
     </header>
 
@@ -119,14 +146,25 @@
         <form id="form-delegar-desktop" novalidate>
 
           <div class="dfield dfield--desktop">
-            <label class="dfield__label dfield__label--dark" for="capataz-desktop">Capataz | Retiro</label>
+            <label class="dfield__label dfield__label--dark" for="capataz-desktop">Capataz</label>
             <div class="dfield__select-wrap">
-              <select class="dfield__select dfield__select--desktop" id="capataz-desktop" name="capatazRetiro" required>
-                <option value="" disabled selected>Nome do capataz e do retiro</option>
-                <option value="lucas-aroeira">Lucas • Aroeira</option>
-                <option value="alberto-cmb">Alberto • CMB</option>
-                <option value="jose-cristo">José Carlos • Cristo</option>
-                <option value="manoel-puga">Manoel • Puga</option>
+              <select class="dfield__select dfield__select--desktop" id="capataz-desktop" name="capataz" required>
+                <option value="" disabled selected>Escolha o capataz</option>
+                <% capatazes.forEach(function (c) { %>
+                <option value="<%= c %>"><%= c %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="retiro-desktop">Retiro</label>
+            <div class="dfield__select-wrap">
+              <select class="dfield__select dfield__select--desktop" id="retiro-desktop" name="retiro" required>
+                <option value="" disabled selected>Escolha o retiro</option>
+                <% retiros.forEach(function (r) { %>
+                <option value="<%= r %>"><%= r %></option>
+                <% }) %>
               </select>
             </div>
           </div>
@@ -145,13 +183,24 @@
             </div>
           </div>
 
+          <!-- Aparece só quando a atividade for "Outro" (campo para descrever a tarefa) -->
+          <div class="dfield dfield--desktop" id="campo-outro-desktop" style="display: none;">
+            <label class="dfield__label dfield__label--dark" for="outro-desktop">Qual é a tarefa?</label>
+            <input
+              class="dfield__input dfield__input--desktop"
+              type="text"
+              id="outro-desktop"
+              name="outroAtividade"
+              placeholder="Escreva a tarefa a delegar"
+            />
+          </div>
+
           <div class="dfield dfield--desktop">
             <label class="dfield__label dfield__label--dark">Prioridade</label>
             <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
               <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
               <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
               <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
-              <button type="button" class="prio-opcao prio-opcao--critica" data-valor="critica">Crítica</button>
               <input type="hidden" id="prioridade-desktop" name="prioridade" />
             </div>
           </div>
@@ -174,36 +223,25 @@
         </form>
       </section>
 
-      <!-- Coluna direita: tarefas ativas -->
+      <!-- Coluna direita: tarefas já delegadas que o capataz ainda não realizou -->
       <aside class="delegar-tarefas-col" aria-labelledby="tarefas-ativas-title">
         <h2 class="section__title" id="tarefas-ativas-title">Tarefas ativas</h2>
 
+        <% var acentoPrioridade = { alta: 'red', media: 'yellow', baixa: 'blue' }; %>
+        <% if (!tarefasAtivas || tarefasAtivas.length === 0) { %>
+        <p class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</p>
+        <% } else { %>
+        <% tarefasAtivas.forEach(function (t) { %>
         <article class="tarefa-card">
-          <div class="tarefa-card__accent tarefa-card__accent--red"></div>
+          <div class="tarefa-card__accent tarefa-card__accent--<%= acentoPrioridade[t.prioridade] || 'blue' %>"></div>
           <div class="tarefa-card__body">
-            <p class="tarefa-card__name">Inspeção de cercas</p>
-            <p class="tarefa-card__meta">Alberto • CMB</p>
+            <p class="tarefa-card__name"><%= t.titulo %></p>
+            <p class="tarefa-card__meta"><%= t.capataz %> • <%= t.retiro %></p>
           </div>
-          <span class="prioridade-badge prioridade-badge--alta">Alta</span>
+          <span class="prioridade-badge prioridade-badge--<%= t.prioridade %>"><%= t.nivel %></span>
         </article>
-
-        <article class="tarefa-card">
-          <div class="tarefa-card__accent tarefa-card__accent--yellow"></div>
-          <div class="tarefa-card__body">
-            <p class="tarefa-card__name">Contagem geral</p>
-            <p class="tarefa-card__meta">José Carlos • Cristo</p>
-          </div>
-          <span class="prioridade-badge prioridade-badge--media">Média</span>
-        </article>
-
-        <article class="tarefa-card">
-          <div class="tarefa-card__accent tarefa-card__accent--blue"></div>
-          <div class="tarefa-card__body">
-            <p class="tarefa-card__name">Inspeção sanitária</p>
-            <p class="tarefa-card__meta">Lucas • Aroeira</p>
-          </div>
-          <span class="prioridade-badge prioridade-badge--baixa">Baixa</span>
-        </article>
+        <% }) %>
+        <% } %>
 
       </aside>
 
@@ -213,6 +251,7 @@
 </div><!-- /layout-desktop -->
 
 <script src="/js/prioridade-seletor.js"></script>
+<script src="/js/delegadas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -227,176 +266,146 @@
     });
   }
 
-  function getSession() {
+  function atualizarEstadoSelect(select) {
+    select.classList.toggle('dfield__select--has-value', select.value !== '');
+  }
+
+  // Mostra o campo "Qual é a tarefa?" só quando a atividade for "Outro".
+  // Esconde e limpa nos demais casos. Funciona por formulário (mobile/desktop).
+  function alternarCampoOutro(form) {
+    const atividade = form.querySelector('select[name="atividade"]');
+    const campo = form.querySelector('[id^="campo-outro"]');
+    const input = form.querySelector('input[name="outroAtividade"]');
+    if (!atividade || !campo) return;
+    const ehOutro = atividade.value === 'outro';
+    campo.style.display = ehOutro ? 'block' : 'none';
+    if (!ehOutro && input) input.value = '';
+  }
+
+  // Lê a sessão do supervisor (se houver login). Sem token → modo demo.
+  function carregarSessao() {
     try {
       const token = localStorage.getItem('agroflow.token');
       const usuarioRaw = localStorage.getItem('agroflow.usuario');
-
       if (!token || !usuarioRaw) return null;
-
-      return {
-        token,
-        usuario: JSON.parse(usuarioRaw),
-      };
+      return { token, usuario: JSON.parse(usuarioRaw) };
     } catch {
       return null;
     }
   }
 
-  function atualizarEstadoSelect(select) {
-    select.classList.toggle('dfield__select--has-value', select.value !== '');
-  }
-
-  function preencherCapatazes(selects, capatazes) {
-    selects.forEach(select => {
-      const placeholder = select.querySelector('option[value=""]')?.textContent || 'Selecione um capataz';
-
-      select.innerHTML = '';
-
-      const optionPadrao = document.createElement('option');
-      optionPadrao.value = '';
-      optionPadrao.disabled = true;
-      optionPadrao.selected = true;
-      optionPadrao.textContent = placeholder;
-      select.appendChild(optionPadrao);
-
-      capatazes.forEach(capataz => {
-        const option = document.createElement('option');
-        option.value = capataz.id;
-        option.textContent = `${capataz.nome} • Retiro ${capataz.retiro_id}`;
-        select.appendChild(option);
-      });
-
-      select.dataset.loaded = 'true';
-      atualizarEstadoSelect(select);
-      select.addEventListener('change', () => atualizarEstadoSelect(select));
+  // Resolve o id (UUID) do capataz pelo nome, dentro do retiro do supervisor.
+  async function idDoCapataz(sessao, nomeCapataz) {
+    const resp = await fetch('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, {
+      headers: { Authorization: 'Bearer ' + sessao.token },
     });
+    if (!resp.ok) throw new Error('Não foi possível carregar os capatazes do retiro.');
+    const caps = await resp.json();
+    const alvo = (caps || []).find((c) => (c.nome || c.login) === nomeCapataz);
+    if (!alvo) throw new Error('Esse capataz não pertence ao seu retiro.');
+    return alvo.id;
   }
 
-  async function carregarCapatazes() {
-    const session = getSession();
-    if (!session) {
-      return;
-    }
-
-    const selects = Array.from(document.querySelectorAll('select[name="capatazRetiro"]'));
-
-    try {
-      const response = await fetch(`/usuarios/capatazes/retiro/${session.usuario.retiro_id}`, {
-        headers: {
-          Authorization: `Bearer ${session.token}`,
-        },
-      });
-
-      const data = await response.json().catch(() => []);
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Não foi possível carregar os capatazes');
-      }
-
-      if (!Array.isArray(data) || data.length === 0) {
-        throw new Error('Nenhum capataz encontrado para este retiro');
-      }
-
-      preencherCapatazes(selects, data);
-      mostrarFeedback('Capatazes carregados com sucesso.', 'success');
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao carregar capatazes', 'error');
-      selects.forEach(select => {
-        select.dataset.loaded = 'false';
-        atualizarEstadoSelect(select);
-      });
-    }
+  // Modo real: cria a tarefa no backend (nasce com status 'pendente' = "não
+  // realizada"). Aparece em Tarefas → Não realizadas ao recarregar a tela.
+  async function delegarNoBackend(sessao, dados) {
+    const atribuida_a = await idDoCapataz(sessao, dados.capataz);
+    const resp = await fetch('/tarefas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sessao.token },
+      body: JSON.stringify({
+        atribuida_a,
+        descricao: dados.descricao,
+        categoria: dados.titulo,
+        prioridade: dados.prioridade,
+      }),
+    });
+    const corpo = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(corpo.error || 'Não foi possível delegar a tarefa.');
+    return corpo;
   }
 
+  // Delega a tarefa. Capataz e retiro são obrigatórios: o supervisor precisa
+  // escolher um de cada. Os capatazes e retiros vêm da fonte única de
+  // referência (renderizados no servidor), iguais às demais telas.
   async function enviarTarefa(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const session = getSession();
-
-    if (!session) {
-      return;
-    }
-
-    const capataz = form.querySelector('select[name="capatazRetiro"]');
+    const capataz = form.querySelector('select[name="capataz"]');
+    const retiro = form.querySelector('select[name="retiro"]');
     const atividade = form.querySelector('select[name="atividade"]');
+    const outro = form.querySelector('input[name="outroAtividade"]');
     const prioridade = form.querySelector('[name="prioridade"]');
     const descricao = form.querySelector('textarea[name="descricao"]');
 
-    if (!capataz || !atividade || !prioridade || !descricao) {
+    if (!capataz || !retiro || !atividade || !prioridade || !descricao) {
       mostrarFeedback('Formulário incompleto.', 'error');
       return;
     }
 
-    if (capataz.dataset.loaded !== 'true') {
-      mostrarFeedback('Os capatazes ainda não foram carregados.', 'error');
+    if (!capataz.value || !retiro.value) {
+      mostrarFeedback('Escolha um capataz e um retiro.', 'error');
       return;
     }
 
-    const payload = {
-      retiro_id: session.usuario.retiro_id,
-      atribuida_a: capataz.value,
-      descricao: descricao.value.trim(),
-      categoria: atividade.value,
-      prioridade: prioridade.value,
-      usuarioCriador: session.usuario,
-    };
-
-    if (!payload.atribuida_a || !payload.categoria || !payload.prioridade || !payload.descricao) {
+    if (!atividade.value || !prioridade.value || !descricao.value.trim()) {
       mostrarFeedback('Preencha todos os campos obrigatórios.', 'error');
       return;
     }
 
-    const botao = form.querySelector('button[type="submit"]');
-    if (botao) {
-      botao.disabled = true;
-      botao.textContent = 'Enviando...';
+    if (atividade.value === 'outro' && (!outro || !outro.value.trim())) {
+      mostrarFeedback('Escreva qual é a tarefa.', 'error');
+      return;
     }
 
-    try {
-      const response = await fetch('/tarefas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.token}`,
-        },
-        body: JSON.stringify(payload),
-      });
+    // Título da tarefa: o texto da atividade escolhida (ou o que o supervisor
+    // escreveu em "Outro").
+    const titulo =
+      atividade.value === 'outro'
+        ? outro.value.trim()
+        : (atividade.selectedOptions[0]?.textContent || 'Tarefa').trim();
 
-      const data = await response.json().catch(() => ({}));
+    const dados = {
+      titulo,
+      retiro: retiro.value,
+      capataz: capataz.value,
+      prioridade: prioridade.value,
+      descricao: descricao.value.trim(),
+    };
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Não foi possível enviar a tarefa');
+    const sessao = carregarSessao();
+    if (sessao) {
+      // Modo real: persiste no backend. Se falhar, mostra o motivo e não limpa.
+      try {
+        await delegarNoBackend(sessao, dados);
+      } catch (e) {
+        mostrarFeedback(e.message || 'Não foi possível delegar a tarefa.', 'error');
+        return;
       }
-
-      mostrarFeedback('Tarefa enviada com sucesso.', 'success');
-      form.reset();
-
-      document.querySelectorAll('.dfield__select').forEach(select => atualizarEstadoSelect(select));
-      document.querySelectorAll('textarea[name="descricao"]').forEach(textarea => {
-        textarea.value = '';
-      });
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao enviar tarefa', 'error');
-    } finally {
-      if (botao) {
-        botao.disabled = false;
-        botao.textContent = form.id === 'form-delegar-desktop' ? 'Enviar tarefa' : 'Enviar';
-      }
+    } else if (window.DelegadasStore) {
+      // Modo demo (sem login): guarda no navegador para a tela de Tarefas ler.
+      DelegadasStore.adicionar(dados);
     }
+
+    mostrarFeedback('Tarefa enviada. Já aparece em Tarefas → Não realizadas.', 'success');
+    form.reset();
+    if (window.PrioSeletor) PrioSeletor.resetarTodos();
+    form.querySelectorAll('.dfield__select').forEach(atualizarEstadoSelect);
+    alternarCampoOutro(form);
   }
 
   document.querySelectorAll('#form-delegar, #form-delegar-desktop').forEach(form => {
     form.addEventListener('submit', enviarTarefa);
+    const atividade = form.querySelector('select[name="atividade"]');
+    if (atividade) atividade.addEventListener('change', () => alternarCampoOutro(form));
+    alternarCampoOutro(form);
   });
 
   document.querySelectorAll('.dfield__select').forEach(select => {
     atualizarEstadoSelect(select);
     select.addEventListener('change', () => atualizarEstadoSelect(select));
   });
-
-  carregarCapatazes();
 </script>
 
 </body>

@@ -33,44 +33,47 @@
   <main class="relatorio-content" role="main">
     <form class="relatorio-form" id="form-relatorio">
 
-      <!-- Período -->
+      <!-- Período: escolha a data de início e a data final -->
       <div class="rfield">
-        <label class="rfield__label" for="periodo-mobile">Período</label>
-        <div class="rfield__input-wrap rfield__input-wrap--icon">
-          <input
-            class="rfield__input"
-            type="text"
-            id="periodo-mobile"
-            name="periodo"
-            value="01/06/2026  até  01/07/2026"
-            readonly
-            aria-label="Selecionar período"
-          />
-          <img src="/assets/icons/periodo.svg" alt="" aria-hidden="true" width="24" height="24" class="rfield__icon" />
+        <label class="rfield__label">Período</label>
+        <div class="rfield__daterange">
+          <div class="rfield__date">
+            <label class="rfield__date-label" for="data-inicio-mobile">De</label>
+            <input class="rfield__input" type="date" id="data-inicio-mobile" name="dataInicio" value="2026-06-01" aria-label="Data de início" />
+          </div>
+          <div class="rfield__date">
+            <label class="rfield__date-label" for="data-fim-mobile">Até</label>
+            <input class="rfield__input" type="date" id="data-fim-mobile" name="dataFim" value="2026-07-01" aria-label="Data final" />
+          </div>
         </div>
       </div>
 
-      <!-- Retiro -->
+      <!-- Retiro: Todos ou um/mais retiros (seleção múltipla) -->
       <div class="rfield">
-        <label class="rfield__label" for="retiro-mobile">Retiro</label>
-        <div class="rfield__select-wrap">
-            <select class="rfield__select" id="retiro-mobile" name="retiro">
-            <option value="">Todos</option>
-            <option value="aroeira">Aroeira</option>
-            <option value="puga">Puga</option>
-            <option value="cmb">CMB</option>
-            <option value="cristo">Cristo</option>
-            <option value="caieira">Caieira</option>
-            <option value="bodoquena">Bodoquena</option>
-          </select>
+        <label class="rfield__label" id="retiro-mobile-label">Retiro</label>
+        <div class="multiselect" id="retiro-mobile" aria-labelledby="retiro-mobile-label">
+          <button type="button" class="multiselect__toggle" aria-haspopup="listbox" aria-expanded="false">
+            <span class="multiselect__summary">Todos</span>
+          </button>
+          <div class="multiselect__panel" role="listbox" hidden>
+            <label class="multiselect__option multiselect__option--all">
+              <input type="checkbox" class="multiselect__all" checked /> Todos os retiros
+            </label>
+            <% (typeof retiros !== 'undefined' ? retiros : []).forEach(function (r) { %>
+            <label class="multiselect__option">
+              <input type="checkbox" class="multiselect__item" value="<%= r.valor %>" data-rotulo="<%= r.rotulo %>" /> <%= r.rotulo %>
+            </label>
+            <% }) %>
+          </div>
         </div>
       </div>
 
-      <!-- Tipo de relatório -->
+      <!-- Tipo de relatório (inclui a opção Todos) -->
       <div class="rfield">
         <label class="rfield__label" for="tipo-mobile">Tipo de relatório</label>
         <div class="rfield__select-wrap">
             <select class="rfield__select" id="tipo-mobile" name="tipo">
+            <option value="todos">Todos</option>
             <option value="movimentacoes">Movimentações do rebanho</option>
             <option value="tarefas">Tarefas</option>
             <option value="tickets">Tickets de infraestrutura</option>
@@ -82,7 +85,7 @@
         <label class="rfield__label" for="formato-mobile">Formato</label>
         <div class="rfield__select-wrap">
           <select class="rfield__select" id="formato-mobile" name="formato">
-            <option value="xlsx">Excel (.xlsx)</option>
+            <option value="xlsx">Excel (.xls)</option>
             <option value="csv">CSV (.csv)</option>
           </select>
         </div>
@@ -146,25 +149,30 @@
       </div>
       <div class="topbar__filters" role="search" aria-label="Filtros de relatório">
 
-        <div class="tfilter">
-          <label class="tfilter__label" for="periodo-desktop">Período</label>
-          <div class="tfilter__select-wrap">
-            <input class="tfilter__input" type="text" id="periodo-desktop" value="01/06/2026  –  01/07/2026" readonly />
+        <div class="tfilter tfilter--daterange">
+          <label class="tfilter__label">Período</label>
+          <div class="tfilter__daterange">
+            <input class="tfilter__input" type="date" id="data-inicio-desktop" value="2026-06-01" aria-label="Data de início" />
+            <input class="tfilter__input" type="date" id="data-fim-desktop" value="2026-07-01" aria-label="Data final" />
           </div>
         </div>
 
         <div class="tfilter">
-          <label class="tfilter__label" for="retiro-desktop">Retiro</label>
-          <div class="tfilter__select-wrap">
-            <select class="tfilter__select" id="retiro-desktop" name="retiro">
-              <option value="">Todos</option>
-              <option value="aroeira">Aroeira</option>
-              <option value="puga">Puga</option>
-              <option value="cmb">CMB</option>
-              <option value="cristo">Cristo</option>
-              <option value="caieira">Caieira</option>
-              <option value="bodoquena">Bodoquena</option>
-            </select>
+          <label class="tfilter__label" id="retiro-desktop-label">Retiro</label>
+          <div class="multiselect" id="retiro-desktop" aria-labelledby="retiro-desktop-label">
+            <button type="button" class="multiselect__toggle" aria-haspopup="listbox" aria-expanded="false">
+              <span class="multiselect__summary">Todos</span>
+            </button>
+            <div class="multiselect__panel" role="listbox" hidden>
+              <label class="multiselect__option multiselect__option--all">
+                <input type="checkbox" class="multiselect__all" checked /> Todos os retiros
+              </label>
+              <% (typeof retiros !== 'undefined' ? retiros : []).forEach(function (r) { %>
+              <label class="multiselect__option">
+                <input type="checkbox" class="multiselect__item" value="<%= r.valor %>" data-rotulo="<%= r.rotulo %>" /> <%= r.rotulo %>
+              </label>
+              <% }) %>
+            </div>
           </div>
         </div>
 
@@ -172,6 +180,7 @@
           <label class="tfilter__label" for="tipo-desktop">Tipo de relatório</label>
           <div class="tfilter__select-wrap">
             <select class="tfilter__select" id="tipo-desktop" name="tipo">
+              <option value="todos">Todos</option>
               <option value="movimentacoes">Movimentações do rebanho</option>
               <option value="tarefas">Tarefas</option>
               <option value="tickets">Tickets de infraestrutura</option>
@@ -183,7 +192,7 @@
           <label class="tfilter__label" for="formato-desktop">Formato</label>
           <div class="tfilter__select-wrap">
             <select class="tfilter__select" id="formato-desktop" name="formato">
-              <option value="xlsx">Excel (.xlsx)</option>
+              <option value="xlsx">Excel (.xls)</option>
               <option value="csv">CSV (.csv)</option>
             </select>
           </div>
@@ -201,56 +210,27 @@
         <h2 class="section__title" id="previa-title">Prévia do relatório</h2>
         <div class="report-table-wrap">
           <table class="report-table" aria-label="Prévia do relatório">
+            <%
+              // Prévia (modo demo) montada da MESMA fonte das telas de lista.
+              // Padrão: movimentações. O JS troca por tarefas/tickets ao mudar o filtro.
+              var _relDemo = (typeof relatorioDemo !== 'undefined' && relatorioDemo) ? relatorioDemo : null;
+              var _ds = _relDemo ? _relDemo.movimentacoes : null;
+            %>
             <thead id="relatorio-head">
               <tr>
-                <th>Data</th>
-                <th>Retiro</th>
-                <th>Tipo</th>
-                <th>Qtd.</th>
-                <th>Status</th>
+                <% (_ds ? _ds.colunas : ['Data','Retiro','Tipo','Qtd.','Status']).forEach(function (c) { %><th><%= c %></th><% }) %>
               </tr>
             </thead>
             <tbody id="relatorio-body">
-              <tr>
-            <td class="td--bold">15/06/2026</td><td>Aroeira</td><td>Nascimento</td><td>12</td>
-                <td><span class="badge badge--green">Validado</span></td>
+              <% (_ds ? _ds.linhas : []).forEach(function (linha, i) { %>
+              <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %>>
+                <td class="td--bold"><%= linha.celulas[0] %></td>
+                <td><%= linha.celulas[1] %></td>
+                <td><%= linha.celulas[2] %></td>
+                <td><%= linha.celulas[3] %></td>
+                <td><span class="badge <%= linha.status === 'Validado' ? 'badge--green' : 'badge--yellow' %>"><%= linha.status %></span></td>
               </tr>
-              <tr class="tr--alt">
-                <td class="td--bold">16/06/2026</td><td>Puga</td><td>Transferência</td><td>8</td>
-                <td><span class="badge badge--green">Validado</span></td>
-              </tr>
-              <tr>
-                <td class="td--bold">17/06/2026</td><td>CMB</td><td>Transferência</td><td>45</td>
-                <td><span class="badge badge--yellow">Pendente</span></td>
-              </tr>
-              <tr class="tr--alt">
-                <td class="td--bold">18/06/2026</td><td>Cristo</td><td>Morte</td><td>2</td>
-                <td><span class="badge badge--green">Validado</span></td>
-              </tr>
-              <tr>
-                <td class="td--bold">19/06/2026</td><td>Bodoquena 1</td><td>Compra</td><td>30</td>
-                <td><span class="badge badge--yellow">Pendente</span></td>
-              </tr>
-              <tr class="tr--alt">
-                <td class="td--bold">20/06/2026</td><td>Aroeira</td><td>Transferência</td><td>15</td>
-                <td><span class="badge badge--green">Validado</span></td>
-              </tr>
-              <tr>
-                <td class="td--bold">21/06/2026</td><td>Puga</td><td>Nascimento</td><td>7</td>
-                <td><span class="badge badge--green">Validado</span></td>
-              </tr>
-              <tr class="tr--alt">
-                <td class="td--bold">22/06/2026</td><td>CMB</td><td>Morte</td><td>1</td>
-                <td><span class="badge badge--yellow">Pendente</span></td>
-              </tr>
-              <tr>
-                <td class="td--bold">23/06/2026</td><td>Caieira</td><td>Transferência</td><td>20</td>
-                <td><span class="badge badge--green">Validado</span></td>
-              </tr>
-              <tr class="tr--alt">
-                <td class="td--bold">24/06/2026</td><td>Cristo</td><td>Transferência</td><td>9</td>
-                <td><span class="badge badge--yellow">Pendente</span></td>
-              </tr>
+              <% }) %>
             </tbody>
           </table>
         </div>
@@ -264,11 +244,11 @@
           <p class="resumo-card__title">Resumo do período</p>
           <hr class="resumo-card__divider" />
           <dl class="resumo-list">
-            <div class="resumo-list__row"><dt>Total de registros</dt><dd id="resumo-total">73</dd></div>
-            <div class="resumo-list__row"><dt>Registros validados</dt><dd id="resumo-validado">58</dd></div>
-            <div class="resumo-list__row"><dt>Pendentes</dt><dd id="resumo-pendente">15</dd></div>
-            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd id="resumo-retiros">6</dd></div>
-            <div class="resumo-list__row"><dt>Período</dt><dd id="resumo-periodo">30 dias</dd></div>
+            <div class="resumo-list__row"><dt>Total de registros</dt><dd id="resumo-total"><%= _ds ? _ds.resumo.total : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Registros validados</dt><dd id="resumo-validado"><%= _ds ? _ds.resumo.validados : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Pendentes</dt><dd id="resumo-pendente"><%= _ds ? _ds.resumo.pendentes : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd id="resumo-retiros"><%= _ds ? _ds.resumo.retiros : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Período</dt><dd id="resumo-periodo"><%= _ds ? _ds.resumo.periodo : '—' %></dd></div>
           </dl>
         </div>
 
@@ -277,9 +257,9 @@
         </button>
 
         <div class="formato-card">
-          <p class="formato-card__title">Formatos .xlsx e .csv</p>
+          <p class="formato-card__title">Formatos .xls e .csv</p>
           <p class="formato-card__desc">Compatível com Excel, Google Sheets e outros editores</p>
-          <p class="formato-card__desc">Apenas registros validados e sincronizados.</p>
+          <p class="formato-card__desc">Baixa exatamente os registros mostrados na prévia.</p>
         </div>
       </aside>
 
@@ -288,22 +268,13 @@
 
 </div><!-- /layout-desktop -->
 
+<!-- Fonte única das tarefas validadas (mesma da tela de Revisão). -->
+<script src="/js/tarefas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
-
-  function getSession() {
-    try {
-      const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-      if (!token || !usuarioRaw) return null;
-      return { token, usuario: JSON.parse(usuarioRaw) };
-    } catch {
-      return null;
-    }
-  }
 
   function mostrarFeedback(mensagem, tipo) {
     ['relatorio-feedback', 'relatorio-feedback-mobile'].forEach(id => {
@@ -314,32 +285,10 @@
     });
   }
 
-  function configurarFiltroRetiro(session) {
-    ['retiro-mobile', 'retiro-desktop'].forEach(id => {
-      const select = document.getElementById(id);
-      if (!select || !session?.usuario?.retiro_id) return;
-      select.innerHTML = `
-        <option value="">Todos</option>
-        <option value="${session.usuario.retiro_id}">Meu retiro</option>
-      `;
-    });
-  }
-
-  function mapearTitulo(tipo) {
-    if (tipo === 'movimentacoes') return 'Movimentação';
-    if (tipo === 'tarefas') return 'Tarefa';
-    return 'Ticket';
-  }
-
   function mapearColunas(tipo) {
-    if (tipo === 'tarefas') {
-      return ['Data', 'Retiro', 'Descrição', 'Prioridade', 'Status'];
-    }
-
-    if (tipo === 'tickets') {
-      return ['Data', 'Retiro', 'Categoria', 'Prioridade', 'Status'];
-    }
-
+    if (tipo === 'todos') return ['Data', 'Retiro', 'Registro', 'Detalhe', 'Status'];
+    if (tipo === 'tarefas') return ['Data', 'Retiro', 'Tarefa', 'Prioridade', 'Status'];
+    if (tipo === 'tickets') return ['Quando', 'Retiro', 'Ticket', 'Severidade', 'Status'];
     return ['Data', 'Retiro', 'Tipo', 'Qtd.', 'Status'];
   }
 
@@ -350,167 +299,196 @@
     return data.toLocaleDateString('pt-BR');
   }
 
-  function montarLinha(item, tipo) {
-    if (tipo === 'tarefas') {
-      return [
-        formatarData(item.data_criacao),
-        `Retiro ${item.retiro_id}`,
-        item.descricao || '-',
-        item.prioridade || '-',
-        item.status === 'aprovado' ? 'Validado' : 'Pendente',
-      ];
-    }
-
-    if (tipo === 'tickets') {
-      return [
-        formatarData(item.data_criacao),
-        `Retiro ${item.retiro_id}`,
-        item.categoria || '-',
-        item.prioridade || '-',
-        item.status === 'aprovado' ? 'Validado' : 'Pendente',
-      ];
-    }
-
-    return [
-      formatarData(item.data_criacao),
-      `Retiro ${item.retiro_id}`,
-      item.tipo || '-',
-      item.quantidade ?? '-',
-      item.sincronizado ? 'Sincronizado' : 'Pendente',
-    ];
+  const ROTULO_PRIORIDADE = { alta: 'Alta', media: 'Média', baixa: 'Baixa', critica: 'Crítica' };
+  function rotuloPrioridade(p) {
+    return ROTULO_PRIORIDADE[p] || (p ? p : '—');
   }
 
-  function renderizarTabela(dados, tipo) {
-    const tbody = document.getElementById('relatorio-body');
+  // Movimentações e tickets vêm do servidor (mesma fonte das telas de lista).
+  const RELATORIO_DEMO = <%- JSON.stringify(typeof relatorioDemo !== 'undefined' ? relatorioDemo : {}) %>;
+
+  function escaparRel(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function normalizarRel(s) {
+    return String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
+  // FONTE ÚNICA das tarefas: o MESMO TarefasStore que a tela de Revisão usa.
+  // Toda tarefa que o supervisor valida fica guardada lá (status "Validada"),
+  // então passa a aparecer aqui no relatório automaticamente.
+  function datasetTarefas() {
+    if (!window.TarefasStore) return RELATORIO_DEMO.tarefas || { colunas: mapearColunas('tarefas'), linhas: [] };
+    const linhas = TarefasStore.listar().map(t => ({
+      celulas: [t.dataConclusao || '—', t.retiro || '—', t.titulo || 'Tarefa', rotuloPrioridade(t.prioridade)],
+      status: 'Validado',
+    }));
+    return { colunas: mapearColunas('tarefas'), linhas };
+  }
+
+  // Dataset de um tipo: tarefas vêm do TarefasStore; os demais, do servidor.
+  function datasetDe(tipo) {
+    if (tipo === 'tarefas') return datasetTarefas();
+    return RELATORIO_DEMO[tipo] || { colunas: mapearColunas(tipo), linhas: [] };
+  }
+
+  // Tipo "Todos": junta movimentações + tarefas validadas + tickets.
+  function datasetCombinado() {
+    const linhas = [];
+    ['movimentacoes', 'tarefas', 'tickets'].forEach(tipo => {
+      datasetDe(tipo).linhas.forEach(l => linhas.push({ celulas: l.celulas, status: l.status }));
+    });
+    return { colunas: mapearColunas('todos'), linhas };
+  }
+
+  // Período: tenta achar uma data dd/mm/aaaa no texto da célula. Se não houver
+  // (ex.: "Hoje, 08:24"), a linha é mantida — o filtro é "melhor esforço".
+  function dentroDoPeriodo(texto, inicio, fim) {
+    const m = String(texto || '').match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    if (!m) return true;
+    const iso = `${m[3]}-${m[2]}-${m[1]}`;
+    if (inicio && iso < inicio) return false;
+    if (fim && iso > fim) return false;
+    return true;
+  }
+
+  function filtrarLinhas(linhas, filtros) {
+    return linhas.filter(l => {
+      if (!filtros.retiro.todos && filtros.retiro.rotulos.length) {
+        const alvo = normalizarRel(l.celulas[1]);
+        if (!filtros.retiro.rotulos.some(r => alvo.includes(normalizarRel(r)))) return false;
+      }
+      return dentroDoPeriodo(l.celulas[0], filtros.dataInicio, filtros.dataFim);
+    });
+  }
+
+  function textoPeriodo(filtros, fallback) {
+    if (filtros.dataInicio && filtros.dataFim) {
+      return `${formatarData(filtros.dataInicio)} – ${formatarData(filtros.dataFim)}`;
+    }
+    return fallback || '—';
+  }
+
+  // Renderiza a tabela + resumo a partir de linhas padronizadas.
+  function renderTabela(colunas, linhas, periodoTexto) {
     const thead = document.getElementById('relatorio-head');
-    if (!tbody || !thead) return;
-
-    const colunas = mapearColunas(tipo);
-    thead.innerHTML = `<tr>${colunas.map(coluna => `<th>${coluna}</th>`).join('')}</tr>`;
-
-    tbody.innerHTML = dados.map((item, index) => {
-      const linha = montarLinha(item, tipo);
-      const badge = linha[linha.length - 1] === 'Pendente'
-        ? '<span class="badge badge--yellow">Pendente</span>'
-        : '<span class="badge badge--green">Validado</span>';
-
-      return `
-        <tr class="${index % 2 === 1 ? 'tr--alt' : ''}">
-          <td class="td--bold">${linha[0]}</td>
-          <td>${linha[1]}</td>
-          <td>${linha[2]}</td>
-          <td>${linha[3]}</td>
-          <td>${badge}</td>
-        </tr>
-      `;
+    const tbody = document.getElementById('relatorio-body');
+    if (thead) thead.innerHTML = '<tr>' + colunas.map(c => `<th>${escaparRel(c)}</th>`).join('') + '</tr>';
+    if (tbody) tbody.innerHTML = linhas.map((l, i) => {
+      const badge = l.status === 'Validado'
+        ? '<span class="badge badge--green">Validado</span>'
+        : '<span class="badge badge--yellow">Pendente</span>';
+      return `<tr class="${i % 2 === 1 ? 'tr--alt' : ''}">`
+        + `<td class="td--bold">${escaparRel(l.celulas[0])}</td>`
+        + `<td>${escaparRel(l.celulas[1])}</td>`
+        + `<td>${escaparRel(l.celulas[2])}</td>`
+        + `<td>${escaparRel(l.celulas[3])}</td>`
+        + `<td>${badge}</td></tr>`;
     }).join('');
+
+    const validados = linhas.filter(l => l.status === 'Validado').length;
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = String(v); };
+    set('resumo-total', linhas.length);
+    set('resumo-validado', validados);
+    set('resumo-pendente', linhas.length - validados);
+    set('resumo-retiros', new Set(linhas.map(l => l.celulas[1])).size);
+    set('resumo-periodo', periodoTexto);
   }
 
-  function atualizarResumo(dados, tipo) {
-    const total = dados.length;
-    const validados = dados.filter(item => item.status === 'aprovado' || item.sincronizado === true).length;
-    const pendentes = Math.max(total - validados, 0);
-
-    const totalEl = document.getElementById('resumo-total');
-    const validadoEl = document.getElementById('resumo-validado');
-    const pendenteEl = document.getElementById('resumo-pendente');
-    const retirosEl = document.getElementById('resumo-retiros');
-    const periodoEl = document.getElementById('resumo-periodo');
-
-    if (totalEl) totalEl.textContent = String(total);
-    if (validadoEl) validadoEl.textContent = String(validados);
-    if (pendenteEl) pendenteEl.textContent = String(pendentes);
-    if (retirosEl) retirosEl.textContent = String(new Set(dados.map(item => item.retiro_id)).size);
-    if (periodoEl) periodoEl.textContent = tipo === 'tarefas' ? 'Tarefas sincronizadas' : 'Movimentações sincronizadas';
+  // Lê os retiros marcados num multiselect. todos=true => sem filtro.
+  function lerRetiros(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return { todos: true, valores: [], rotulos: [] };
+    const all = container.querySelector('.multiselect__all');
+    const itens = [...container.querySelectorAll('.multiselect__item')].filter(i => i.checked);
+    const todos = (all && all.checked) || itens.length === 0;
+    return {
+      todos,
+      valores: todos ? [] : itens.map(i => i.value),
+      rotulos: todos ? [] : itens.map(i => i.dataset.rotulo || i.value),
+    };
   }
 
-  async function carregarRelatorio() {
-    const session = getSession();
-    if (!session) {
-      mostrarFeedback('Faça login para visualizar os relatórios.', 'error');
-      return;
-    }
-
-    const tipoSelect = document.getElementById('tipo-desktop');
-    const retiroSelect = document.getElementById('retiro-desktop');
-
-    const tipo = tipoSelect?.value || 'movimentacoes';
-    const retiroId = retiroSelect?.value || '';
-
-    const endpoint = tipo === 'tarefas'
-      ? '/relatorios/tarefas/dados'
-      : tipo === 'tickets'
-        ? '/relatorios/tickets/dados'
-        : '/relatorios/movimentacoes/dados';
-
-    const url = new URL(endpoint, window.location.origin);
-    if (retiroId) url.searchParams.set('retiroId', retiroId);
-
-    try {
-      const response = await fetch(url.toString(), {
-        headers: { Authorization: `Bearer ${session.token}` },
-      });
-
-      const dados = await response.json().catch(() => []);
-      if (!response.ok || !Array.isArray(dados)) {
-        throw new Error(dados?.error || 'Não foi possível carregar o relatório');
-      }
-
-      renderizarTabela(dados, tipo);
-      atualizarResumo(dados, tipo);
-      mostrarFeedback(`Relatório de ${mapearTitulo(tipo).toLowerCase()} atualizado com sucesso.`, 'success');
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao carregar relatório', 'error');
-    }
+  function lerFiltros(sufixo) {
+    return {
+      tipo: document.getElementById(`tipo-${sufixo}`)?.value || 'todos',
+      dataInicio: document.getElementById(`data-inicio-${sufixo}`)?.value || '',
+      dataFim: document.getElementById(`data-fim-${sufixo}`)?.value || '',
+      retiro: lerRetiros(`retiro-${sufixo}`),
+    };
   }
 
-  async function exportarRelatorio(contexto) {
-    const session = getSession();
-    if (!session) {
-      mostrarFeedback('Faça login para exportar os relatórios.', 'error');
-      return;
-    }
+  // Monta a prévia (tabela + resumo) SEMPRE a partir das fontes únicas do
+  // supervisor (TarefasStore + dados do servidor), aplicando tipo + retiro +
+  // período. Assim o que o supervisor valida aparece na hora no relatório.
+  function carregarRelatorio() {
+    const filtros = lerFiltros('desktop');
+    const base = filtros.tipo === 'todos' ? datasetCombinado() : datasetDe(filtros.tipo);
+    const linhas = filtrarLinhas(base.linhas, filtros);
+    renderTabela(base.colunas, linhas, textoPeriodo(filtros, 'Registros do supervisor'));
+    mostrarFeedback('', 'success');
+  }
 
+  function csvEscapar(v) {
+    const s = String(v == null ? '' : v);
+    return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  // CSV com BOM (﻿) e separador ';' — abre com acentos certos no Excel pt-BR.
+  function gerarCSV(colunas, linhas) {
+    const linha = arr => arr.map(csvEscapar).join(';');
+    const corpo = linhas.map(l => linha([...l.celulas, l.status]));
+    return '﻿' + [linha(colunas), ...corpo].join('\r\n');
+  }
+
+  // .xls via tabela HTML — Excel e Google Sheets abrem sem biblioteca.
+  function gerarXLS(colunas, linhas) {
+    const th = colunas.map(c => '<th>' + escaparRel(c) + '</th>').join('');
+    const trs = linhas.map(l =>
+      '<tr>' + [...l.celulas, l.status].map(c => '<td>' + escaparRel(c) + '</td>').join('') + '</tr>').join('');
+    return '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head>'
+      + '<body><table border="1"><thead><tr>' + th + '</tr></thead><tbody>' + trs + '</tbody></table></body></html>';
+  }
+
+  function baixarArquivo(conteudo, nome, mime) {
+    const blob = new Blob([conteudo], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nome;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // Exporta EXATAMENTE as linhas que estão na prévia (mesmo tipo, retiro e
+  // período), gerando o arquivo no próprio navegador — bate 100% com a tela.
+  function exportarRelatorio(contexto) {
     const sufixo = contexto === 'mobile' ? 'mobile' : 'desktop';
-    const tipo = document.getElementById(`tipo-${sufixo}`)?.value || 'movimentacoes';
-    const formato = document.getElementById(`formato-${sufixo}`)?.value || 'xlsx';
-    const retiroId = document.getElementById(`retiro-${sufixo}`)?.value || '';
-    const url = new URL('/relatorios/exportar', window.location.origin);
+    const filtros = lerFiltros(sufixo);
+    const formato = document.getElementById(`formato-${sufixo}`)?.value || 'csv';
 
-    url.searchParams.set('tipo', tipo);
-    url.searchParams.set('formato', formato);
-    if (retiroId) url.searchParams.set('retiroId', retiroId);
+    const base = filtros.tipo === 'todos' ? datasetCombinado() : datasetDe(filtros.tipo);
+    const linhas = filtrarLinhas(base.linhas, filtros);
 
-    mostrarFeedback('Gerando arquivo...', 'success');
-
-    try {
-      const response = await fetch(url.toString(), {
-        headers: { Authorization: `Bearer ${session.token}` },
-      });
-
-      if (!response.ok) {
-        const erro = await response.json().catch(() => ({}));
-        throw new Error(erro.error || 'Não foi possível exportar o relatório');
-      }
-
-      const blob = await response.blob();
-      const disposicao = response.headers.get('Content-Disposition') || '';
-      const nome = disposicao.match(/filename="([^"]+)"/)?.[1]
-        || `relatorio-${tipo}.${formato}`;
-      const link = document.createElement('a');
-      const objetoUrl = URL.createObjectURL(blob);
-
-      link.href = objetoUrl;
-      link.download = nome;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(objetoUrl);
-
-      mostrarFeedback(`Arquivo ${nome} gerado com sucesso.`, 'success');
-    } catch (error) {
-      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao exportar relatório', 'error');
+    if (!linhas.length) {
+      mostrarFeedback('Não há registros para exportar com os filtros atuais.', 'error');
+      return;
     }
+
+    const dataHoje = new Date().toISOString().slice(0, 10);
+    const nomeBase = `relatorio-${filtros.tipo}-${dataHoje}`;
+
+    if (formato === 'xlsx') {
+      baixarArquivo(gerarXLS(base.colunas, linhas), nomeBase + '.xls', 'application/vnd.ms-excel');
+    } else {
+      baixarArquivo(gerarCSV(base.colunas, linhas), nomeBase + '.csv', 'text/csv;charset=utf-8;');
+    }
+
+    mostrarFeedback(`Arquivo gerado com ${linhas.length} registro(s).`, 'success');
   }
 
   const formRelatorio = document.getElementById('form-relatorio');
@@ -526,15 +504,57 @@
     botaoExportarDesktop.addEventListener('click', () => exportarRelatorio('desktop'));
   }
 
-  ['tipo-desktop', 'retiro-desktop'].forEach(id => {
-    const select = document.getElementById(id);
-    if (select) {
-      select.addEventListener('change', carregarRelatorio);
+  // Liga um multiselect de retiro: abrir/fechar, marcar "Todos", resumo e change.
+  function initMultiselect(containerId, onChange) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const toggle = container.querySelector('.multiselect__toggle');
+    const panel = container.querySelector('.multiselect__panel');
+    const summary = container.querySelector('.multiselect__summary');
+    const all = container.querySelector('.multiselect__all');
+    const itens = [...container.querySelectorAll('.multiselect__item')];
+
+    function atualizarResumo() {
+      const marcados = itens.filter(i => i.checked);
+      if (!all || all.checked || marcados.length === 0) summary.textContent = 'Todos';
+      else if (marcados.length === 1) summary.textContent = marcados[0].dataset.rotulo || marcados[0].value;
+      else summary.textContent = `${marcados.length} retiros`;
     }
+
+    function abrir(estado) {
+      panel.hidden = !estado;
+      toggle.setAttribute('aria-expanded', String(estado));
+    }
+
+    toggle.addEventListener('click', e => { e.stopPropagation(); abrir(panel.hidden); });
+
+    if (all) all.addEventListener('change', () => {
+      if (all.checked) itens.forEach(i => { i.checked = false; });
+      else if (!itens.some(i => i.checked)) all.checked = true;
+      atualizarResumo();
+      onChange();
+    });
+
+    itens.forEach(item => item.addEventListener('change', () => {
+      if (item.checked && all) all.checked = false;
+      if (all && !itens.some(i => i.checked)) all.checked = true;
+      atualizarResumo();
+      onChange();
+    }));
+
+    document.addEventListener('click', e => { if (!container.contains(e.target)) abrir(false); });
+    atualizarResumo();
+  }
+
+  ['tipo-desktop', 'data-inicio-desktop', 'data-fim-desktop'].forEach(id => {
+    const campo = document.getElementById(id);
+    if (campo) campo.addEventListener('change', carregarRelatorio);
   });
 
-  const session = getSession();
-  configurarFiltroRetiro(session);
+  // O multiselect mobile não atualiza a prévia (mobile só exporta); o desktop sim.
+  initMultiselect('retiro-mobile', () => {});
+  initMultiselect('retiro-desktop', carregarRelatorio);
+
   carregarRelatorio();
 </script>
 

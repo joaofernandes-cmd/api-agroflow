@@ -7,7 +7,7 @@
 %>
 
 <!-- ============================================================
-     TELA: Revisão de Tarefas
+     TELA: Tarefas
      Mobile  → TopNav com voltar + barra de busca com badge + lista de cards + BottomNav
      Desktop → Sidebar + TopBar + barra de busca + tabela com botão Revisar
      ============================================================ -->
@@ -24,7 +24,7 @@
         <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
-    <h1 class="topnav__title">Revisão de Tarefas</h1>
+    <h1 class="topnav__title">Tarefas</h1>
   </header>
 
   <p id="revisao-feedback-mobile" style="margin: 0 16px; font-size: 14px; line-height: 1.4;"></p>
@@ -42,89 +42,69 @@
         aria-label="Pesquisar tarefas"
       />
     </div>
-    <span class="revisao-badge-pendentes">Pendentes</span>
+    <span class="revisao-badge-pendentes"><%= tarefas.length %> Pendentes</span>
   </div>
 
   <!-- Lista de tarefas -->
   <main class="revisao-list" role="main">
 
-    <!-- Tarefas concluídas pelo capataz (com evidência) -->
-    <section style="margin: 16px;">
-      <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
-      <div class="concluidas-capataz"></div>
+    <!-- Não realizadas: delegadas que o capataz ainda não fez (não dá pra validar) -->
+    <section class="lista-secao lista-secao--naorealizadas">
+      <h2 class="lista-secao__titulo">Não realizadas</h2>
+      <p class="lista-secao__sub">O capataz ainda não fez — não dá para validar ainda</p>
+
+      <% if (!tarefasNaoRealizadas || tarefasNaoRealizadas.length === 0) { %>
+      <p class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</p>
+      <% } else { %>
+      <% tarefasNaoRealizadas.forEach(function (t) { %>
+      <div class="pend-item" data-tarefa-id="<%= t.id %>">
+        <div class="pend-head">
+          <span class="pend-title"><%= t.titulo %> — <%= t.retiro %></span>
+          <span class="badge badge--cinza">Não realizado</span>
+          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="pend-panel">
+          <div class="pend-panel__inner">
+            <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Prazo:</strong> <%= t.prazo %></p>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+      <% } %>
     </section>
 
-    <article class="rev-card rev-card--pendente" data-tarefa-id="11">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Conferência do rebanho — Aroeira</p>
-        <p class="rev-card__meta">Capataz Lucas • há 1h</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+    <!-- Realizadas: concluídas pelo capataz, aguardando validação -->
+    <section class="lista-secao lista-secao--validar">
+      <h2 class="lista-secao__titulo">Realizadas</h2>
+      <p class="lista-secao__sub">Concluídas pelo capataz — toque em Validar para aprovar</p>
 
-    <article class="rev-card rev-card--pendente" data-tarefa-id="12">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Inspeção de cercas — CMB</p>
-        <p class="rev-card__meta">Capataz Alberto • há 1h</p>
+    <% tarefas.forEach(function (t) { %>
+    <div class="pend-item" data-tarefa-id="<%= t.id %>">
+      <div class="pend-head">
+        <span class="pend-title"><%= t.titulo %> — <%= t.retiro %></span>
+        <button class="btn-revisar" data-action="validar">Validar</button>
+        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
       </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+      <div class="pend-panel">
+        <div class="pend-panel__inner">
+          <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Enviado:</strong> <%= t.enviado %></p>
+        </div>
+      </div>
+    </div>
+    <% }) %>
 
-    <article class="rev-card rev-card--pendente" data-tarefa-id="13">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Movimentação de animais — Puga</p>
-        <p class="rev-card__meta">Capataz Manoel • há 1 dia</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+    </section>
 
-    <article class="rev-card rev-card--pendente" data-tarefa-id="14">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Alimentação suplementar — Caieira</p>
-        <p class="rev-card__meta">Capataz João Paulo • há 1 dia</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="15">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Inspeção sanitária — Aroeira</p>
-        <p class="rev-card__meta">Capataz Lucas • há 2 dias</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
-
-    <article class="rev-card rev-card--pendente" data-tarefa-id="16">
-      <div class="rev-card__accent"></div>
-      <div class="rev-card__body">
-        <p class="rev-card__name">Contagem geral — Cristo</p>
-        <p class="rev-card__meta">Capataz José Carlos • há 3 dias</p>
-      </div>
-      <span class="rev-badge rev-badge--pendente">Pendente</span>
-      <button class="rev-card__check rev-card__check--empty" aria-label="Marcar como concluída" data-action="aprovar">
-        <img src="/assets/icons/unchecked.svg" alt="" width="24" height="24" />
-      </button>
-    </article>
+    <!-- Validadas -->
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Validadas</h2>
+      <p class="lista-secao__sub">Tarefas que você já validou</p>
+      <div class="concluidas-capataz"></div>
+    </section>
 
   </main>
 
@@ -147,7 +127,9 @@
 
     <!-- TopBar -->
     <header class="topbar" role="banner">
-      <h1 class="topbar__title">Revisão de Tarefas</h1>
+      <div class="topbar__lead">
+        <h1 class="topbar__title">Tarefas</h1>
+      </div>
       <p class="topbar__date" id="data-hoje-desktop"></p>
     </header>
 
@@ -166,18 +148,56 @@
           aria-label="Pesquisar tarefas"
         />
       </div>
-      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop">6 Pendentes</span>
+      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop"><%= tarefas.length %> Pendentes</span>
     </div>
 
     <!-- Tabela de tarefas -->
     <main class="desktop-content revisao-desktop-content" role="main">
-      <!-- Tarefas concluídas pelo capataz (com evidência) -->
-      <section style="margin: 0 0 16px;">
-        <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
-        <div class="concluidas-capataz"></div>
+      <!-- Não realizadas: delegadas que o capataz ainda não fez -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Não realizadas</h2>
+        <p class="lista-secao__sub">O capataz ainda não fez — não dá para validar ainda</p>
       </section>
+
       <div class="revisao-table-wrap">
-        <table class="revisao-table" aria-label="Lista de tarefas para revisão">
+        <table class="revisao-table revisao-table--naorealizadas" aria-label="Tarefas delegadas ainda não realizadas">
+          <thead>
+            <tr>
+              <th>Tarefa</th>
+              <th>Retiro</th>
+              <th>Capataz</th>
+              <th>Prazo</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (!tarefasNaoRealizadas || tarefasNaoRealizadas.length === 0) { %>
+            <tr><td colspan="6" class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</td></tr>
+            <% } else { %>
+            <% tarefasNaoRealizadas.forEach(function (t, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-tarefa-id="<%= t.id %>">
+              <td class="td--bold"><%= t.titulo %></td>
+              <td><%= t.retiro %></td>
+              <td>Capataz <%= t.capataz %></td>
+              <td><%= t.prazo %></td>
+              <td><span class="badge badge--cinza">Não realizado</span></td>
+              <td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>
+            </tr>
+            <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Realizadas: concluídas pelo capataz, aguardando validação -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Realizadas</h2>
+        <p class="lista-secao__sub">Concluídas pelo capataz — clique em Validar para aprovar</p>
+      </section>
+
+      <div class="revisao-table-wrap">
+        <table class="revisao-table revisao-table--validar" aria-label="Lista de tarefas para revisão">
           <thead>
             <tr>
               <th>Tarefa</th>
@@ -185,78 +205,75 @@
               <th>Capataz</th>
               <th>Há quanto tempo</th>
               <th>Status</th>
-              <th></th><!-- check -->
+              <th></th><!-- ver mais -->
               <th>Ação</th>
             </tr>
           </thead>
           <tbody>
-            <tr data-tarefa-id="11">
-              <td class="td--bold">Conferência do rebanho</td>
-              <td>Aroeira</td>
-              <td>Capataz Lucas</td>
-              <td>há 1h</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+            <%
+              function escHtmlRev(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+              function evidenciaBlocoRevisao(t){
+                if (t.evidencia === 'texto') {
+                  return '<p class="evidencia-texto">' + escHtmlRev(t.evidenciaTexto) + '</p>';
+                }
+                var isAudio = t.evidencia === 'audio';
+                var icone = isAudio
+                  ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
+                  : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
+                return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
+                  '<span class="evidencia__tipo">' + (isAudio ? 'Áudio' : 'Foto') + '</span></div>';
+              }
+            %>
+            <% tarefas.forEach(function (t, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-tarefa-id="<%= t.id %>">
+              <td class="td--bold"><%= t.titulo %></td>
+              <td><%= t.retiro %></td>
+              <td>Capataz <%= t.capataz %></td>
+              <td><%= t.enviado %></td>
+              <td><span class="badge badge--yellow">Realizada</span></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
             </tr>
-            <tr class="tr--alt" data-tarefa-id="12">
-              <td class="td--bold">Inspeção de cercas</td>
-              <td>CMB</td>
-              <td>Capataz Alberto</td>
-              <td>há 1h</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto"><%= t.descricao %></p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <%- evidenciaBlocoRevisao(t) %>
+                  </div>
+                </div>
+              </td>
             </tr>
-            <tr data-tarefa-id="13">
-              <td class="td--bold">Movimentação de animais</td>
-              <td>Puga</td>
-              <td>Capataz Manoel</td>
-              <td>há 1 dia</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
-            </tr>
-            <tr class="tr--alt" data-tarefa-id="14">
-              <td class="td--bold">Alimentação suplementar</td>
-              <td>Caieira</td>
-              <td>Capataz João Paulo</td>
-              <td>há 1 dia</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
-            </tr>
-            <tr data-tarefa-id="15">
-              <td class="td--bold">Inspeção sanitária</td>
-              <td>Aroeira</td>
-              <td>Capataz Lucas</td>
-              <td>há 2 dias</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
-            </tr>
-            <tr class="tr--alt" data-tarefa-id="16">
-              <td class="td--bold">Contagem geral</td>
-              <td>Cristo</td>
-              <td>Capataz José Carlos</td>
-              <td>há 3 dias</td>
-              <td><span class="badge badge--yellow">Pendente</span></td>
-              <td><img src="/assets/icons/unchecked.svg" alt="pendente" width="24" height="24" /></td>
-              <td><button class="btn-revisar" data-action="aprovar">Check</button></td>
-            </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>
+
+      <!-- Validadas -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Validadas</h2>
+        <p class="lista-secao__sub">Tarefas que você já validou</p>
+        <div class="concluidas-capataz"></div>
+      </section>
     </main>
   </div><!-- /desktop-main -->
 
 </div><!-- /layout-desktop -->
 
 <script src="/js/tarefas-store.js"></script>
+<script src="/js/delegadas-store.js"></script>
+<script src="/js/contadores-pendentes.js"></script>
+<!-- DEMO: tarefas concluídas de exemplo (remover em produção) -->
+<script src="/js/seed-demo.js"></script>
 <script>
   if (window.TarefasStore) {
     document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
-      TarefasStore.renderListaConcluidas(el);
+      TarefasStore.renderListaConcluidas(el, { selo: 'Validada', vazio: 'Nenhuma tarefa validada ainda.', dataPrefixo: 'Validada em' });
     });
   }
 </script>
@@ -266,6 +283,11 @@
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
+
+  // Quando o supervisor está logado, as listas vêm do backend (modoReal = true).
+  // Sem login, mantém o exemplo estático/localStorage.
+  let modoReal = false;
+  const nomesCapatazes = {};
 
   function carregarSessao() {
     try {
@@ -285,103 +307,214 @@
     feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
   }
 
-  function atualizarCardMobile(card, aprovado) {
-    const badge = card.querySelector('.rev-badge');
-    const btn = card.querySelector('.rev-card__check');
-    const img = btn?.querySelector('img');
-
-    if (!badge || !btn || !img) return;
-
-    if (aprovado) {
-      btn.classList.replace('rev-card__check--empty', 'rev-card__check--done');
-      btn.setAttribute('aria-label', 'Concluída');
-      img.src = IMG_MOBILE_FEITO;
-      badge.classList.replace('rev-badge--pendente', 'rev-badge--concluido');
-      badge.textContent = 'Concluído';
-      card.classList.replace('rev-card--pendente', 'rev-card--concluido');
-    } else {
-      btn.classList.replace('rev-card__check--done', 'rev-card__check--empty');
-      btn.setAttribute('aria-label', 'Marcar como concluída');
-      img.src = IMG_MOBILE_VAZIO;
-      badge.classList.replace('rev-badge--concluido', 'rev-badge--pendente');
-      badge.textContent = 'Pendente';
-      card.classList.replace('rev-card--concluido', 'rev-card--pendente');
-    }
-  }
-
-  function atualizarLinhaDesktop(row, aprovado) {
-    const badge = row.querySelector('.badge');
-    const btn = row.querySelector('.btn-revisar');
-    const img = row.querySelector('td img');
-
-    if (!badge || !btn || !img) return;
-
-    if (aprovado) {
-      img.src = IMG_DESK_CONCLUIDO;
-      img.alt = 'concluído';
-      badge.classList.replace('badge--yellow', 'badge--green');
-      badge.textContent = 'Concluído';
-      btn.textContent = 'Uncheck';
-    } else {
-      img.src = IMG_DESK_PENDENTE;
-      img.alt = 'pendente';
-      badge.classList.replace('badge--green', 'badge--yellow');
-      badge.textContent = 'Pendente';
-      btn.textContent = 'Check';
-    }
-  }
-
-  async function aprovarTarefaPorId(tarefaId) {
-    const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, {
-      method: 'PATCH',
+  function agoraFormatado() {
+    return new Date().toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
     });
-
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      return { ok: false, mensagem: data.error || data.mensagem || 'Não foi possível aprovar a tarefa' };
-    }
-
-    return { ok: true, mensagem: data.mensagem || 'Tarefa aprovada com sucesso.' };
   }
 
-  // ── Toggle check mobile ──
-  const IMG_MOBILE_VAZIO   = '/assets/icons/unchecked.svg';
-  const IMG_MOBILE_FEITO   = '/assets/icons/checked.svg';
+  // Aprova a tarefa no backend (concluido → aprovado). Usa o token do supervisor.
+  async function validarTarefaPorId(tarefaId) {
+    try {
+      const sessao = carregarSessao();
+      const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
+      const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, { method: 'PATCH', headers });
+      const data = await response.json().catch(() => ({}));
+      return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
+    } catch (e) {
+      return { ok: false, mensagem: 'Falha de conexão' };
+    }
+  }
 
-  document.querySelectorAll('.rev-card__check').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const card = btn.closest('.rev-card');
-      if (!card) return;
-      const concluido = btn.classList.contains('rev-card__check--done');
-      atualizarCardMobile(card, !concluido);
-      if (!concluido) await aprovarTarefaPorId(card.dataset.tarefaId);
+  function reRenderConcluidas() {
+    if (!window.TarefasStore) return;
+    document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
+      TarefasStore.renderListaConcluidas(el, { selo: 'Validada', vazio: 'Nenhuma tarefa validada ainda.', dataPrefixo: 'Validada em' });
     });
+  }
+
+  // Recalcula o contador "N Pendentes" ao lado da busca conforme as tarefas
+  // vão sendo validadas (some uma de cima → o número cai).
+  function atualizarBadgePendentes() {
+    // Conta apenas as "Realizadas" (aguardando validação) — são as pendentes de
+    // ação do supervisor. As "Não realizadas" não entram no contador.
+    const nMobile = document.querySelectorAll('.layout-mobile .lista-secao--validar .pend-item').length;
+    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table--validar tbody tr[data-tarefa-id]').length;
+    const badgeMobile = document.querySelector('.layout-mobile .revisao-badge-pendentes');
+    const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
+    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
+    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
+    // Espelha o total na home (bloco "Tarefas pendentes" do Acesso rápido).
+    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('tarefas', nMobile, nDesktop);
+  }
+
+  // Valida a tarefa: aprova no backend e move o item para a seção "Validadas".
+  function aceitarTarefa(id, titulo, retiro) {
+    // Modo real: aprova no backend e recarrega as Validadas de lá (cross-device).
+    if (modoReal) {
+      validarTarefaPorId(id).then(function (r) {
+        if (r.ok) {
+          recarregarValidadas();
+        } else {
+          mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+          mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+        }
+      });
+      return;
+    }
+    // Modo demo (sem login): persiste no localStorage e re-renderiza de lá.
+    if (window.TarefasStore) {
+      TarefasStore.concluir('rev-' + id, {
+        titulo: titulo,
+        retiro: retiro,
+        dataConclusao: agoraFormatado(),
+      });
+      reRenderConcluidas();
+    }
+    validarTarefaPorId(id);
+    // Persiste no servidor (demo): remove a tarefa dos pendentes de revisão em
+    // memória, para o contador (tela + home) continuar certo após recarregar.
+    fetch('/supervisor/tarefas/' + encodeURIComponent(id) + '/validar', { method: 'POST' })
+      .catch(function () {});
+  }
+
+  // Aceitar vara mobile (pend-item): some de cima e desce pra Concluídas
+  function aceitarPendItem(item) {
+    if (!item || item.dataset.aceito) return;
+    item.dataset.aceito = '1';
+    const nome = item.querySelector('.pend-title')?.textContent || 'Tarefa';
+    const partes = nome.split(' — ');
+    aceitarTarefa(item.dataset.tarefaId, partes[0].trim(), (partes[1] || '').trim());
+    item.remove();
+    atualizarBadgePendentes();
+  }
+
+  // Aceitar linha desktop (tabela): remove a linha e sua linha de detalhe
+  function aceitarLinhaDesktop(row) {
+    if (!row || row.dataset.aceito) return;
+    row.dataset.aceito = '1';
+    const titulo = (row.querySelector('.td--bold')?.textContent || 'Tarefa').trim();
+    const retiro = (row.children[1]?.textContent || '').trim();
+    const det = row.nextElementSibling;
+    aceitarTarefa(row.dataset.tarefaId, titulo, retiro);
+    row.remove();
+    if (det && det.classList.contains('pend-detalhe')) det.remove();
+    atualizarBadgePendentes();
+  }
+
+  // Botão "Validar" (delegado — vale para itens de exemplo e os vindos do backend)
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-revisar');
+    if (!btn) return;
+    const item = btn.closest('.pend-item');
+    if (item) { aceitarPendItem(item); return; }
+    const row = btn.closest('tr');
+    if (row) aceitarLinhaDesktop(row);
   });
 
-  // ── Toggle check desktop ──
-  const IMG_DESK_PENDENTE  = '/assets/icons/unchecked.svg';
-  const IMG_DESK_CONCLUIDO = '/assets/icons/checked.svg';
-
-  async function toggleLinhaDesktop(row) {
-    const btn = row.querySelector('.btn-revisar');
-    const concluido = btn?.textContent.trim() === 'Uncheck';
-    atualizarLinhaDesktop(row, !concluido);
-    if (!concluido) await aprovarTarefaPorId(row.dataset.tarefaId);
-  }
-
-  document.querySelectorAll('.revisao-table td img').forEach(img => {
-    img.classList.add('check-img');
-    img.addEventListener('click', () => {
-      const row = img.closest('tr');
-      if (row) toggleLinhaDesktop(row);
-    });
+  // Setinha (mobile): abre/fecha as informações + carrega a evidência real
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.pend-toggle');
+    if (!btn) return;
+    const item = btn.closest('.pend-item');
+    if (!item) return;
+    const aberto = item.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    const id = item.dataset.tarefaId;
+    const painel = item.querySelector('.pend-panel__inner');
+    if (aberto && painel && ehUuid(id)) carregarEvidenciaReal(painel, id);
   });
 
-  document.querySelectorAll('.btn-revisar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const row = btn.closest('tr');
-      if (row) toggleLinhaDesktop(row);
+  // ── Evidência real vinda do backend (foto/áudio do Supabase, texto) ──────────
+  // Só dispara para linhas com id de tarefa real (UUID). As linhas de exemplo
+  // (ids 11..16) continuam mostrando o placeholder estático.
+  function ehUuid(v) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(v || ''));
+  }
+
+  async function buscarEvidenciasDaTarefa(tarefaId) {
+    const sessao = carregarSessao();
+    const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
+    const resp = await fetch('/evidencias/tarefa/' + tarefaId, { headers });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
+  }
+
+  function elementoEvidencia(ev) {
+    if (ev.tipo === 'foto' && ev.url_arquivo) {
+      const img = document.createElement('img');
+      img.className = 'evidencia-midia';
+      img.src = ev.url_arquivo;
+      img.alt = 'Foto da evidência';
+      return img;
+    }
+    if (ev.tipo === 'audio' && ev.url_arquivo) {
+      const audio = document.createElement('audio');
+      audio.className = 'evidencia-audio';
+      audio.controls = true;
+      audio.src = ev.url_arquivo;
+      return audio;
+    }
+    if (ev.tipo === 'mensagem') {
+      const p = document.createElement('p');
+      p.className = 'evidencia-texto';
+      p.textContent = ev.conteudo || '';
+      return p;
+    }
+    return null;
+  }
+
+  function renderEvidenciasSupervisor(container, evidencias) {
+    container.innerHTML = '';
+    if (!evidencias || !evidencias.length) {
+      container.innerHTML = '<p class="evidencia-texto">Nenhuma evidência enviada.</p>';
+      return;
+    }
+    evidencias.forEach(ev => {
+      const el = elementoEvidencia(ev);
+      if (el) container.appendChild(el);
     });
+  }
+
+  // Localiza o bloco "Evidência" dentro de um detalhe (desktop).
+  function blocoEvidencia(det) {
+    return Array.from(det.querySelectorAll('.concl-bloco')).find(b => {
+      const label = b.querySelector('.concl-bloco__label');
+      return label && label.textContent.trim() === 'Evidência';
+    }) || null;
+  }
+
+  async function carregarEvidenciaReal(det, tarefaId) {
+    if (det.dataset.evidLoaded === '1') return;
+    const bloco = blocoEvidencia(det);
+    if (!bloco) return;
+    det.dataset.evidLoaded = '1';
+    // Troca o placeholder estático por um container de mídia real (mantém o label).
+    bloco.querySelectorAll('.evidencia, .evidencia-texto, .evid-real').forEach(n => n.remove());
+    const alvo = document.createElement('div');
+    alvo.className = 'evid-real';
+    alvo.textContent = 'Carregando evidência...';
+    bloco.appendChild(alvo);
+    try {
+      renderEvidenciasSupervisor(alvo, await buscarEvidenciasDaTarefa(tarefaId));
+    } catch (e) {
+      det.dataset.evidLoaded = '';
+      alvo.textContent = 'Não foi possível carregar a evidência.';
+    }
+  }
+
+  // "Ver mais" (desktop, delegado): abre a linha de detalhe + carrega a evidência real
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.ver-mais');
+    if (!btn) return;
+    const row = btn.closest('tr');
+    const det = row?.nextElementSibling;
+    if (!det || !det.classList.contains('pend-detalhe')) return;
+    const abrindo = det.hasAttribute('hidden');
+    det.toggleAttribute('hidden');
+    btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
+    const id = row?.dataset.tarefaId;
+    if (abrindo && ehUuid(id)) carregarEvidenciaReal(det, id);
   });
 
   // Filtro de busca — mobile
@@ -389,8 +522,8 @@
   if (searchMobile) {
     searchMobile.addEventListener('input', function () {
       const termo = this.value.toLowerCase().trim();
-      document.querySelectorAll('.revisao-list .rev-card').forEach(card => {
-        const nome = card.querySelector('.rev-card__name')?.textContent.toLowerCase() ?? '';
+      document.querySelectorAll('.revisao-list .pend-item').forEach(card => {
+        const nome = card.querySelector('.pend-title')?.textContent.toLowerCase() ?? '';
         card.style.display = nome.includes(termo) ? '' : 'none';
       });
     });
@@ -401,12 +534,403 @@
   if (searchDesktop) {
     searchDesktop.addEventListener('input', function () {
       const termo = this.value.toLowerCase().trim();
-      document.querySelectorAll('.revisao-table tbody tr').forEach(row => {
+      document.querySelectorAll('.revisao-table tbody tr[data-tarefa-id]').forEach(row => {
         const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
         row.style.display = nome.includes(termo) ? '' : 'none';
+        const det = row.nextElementSibling;
+        if (det && det.classList.contains('pend-detalhe')) det.setAttribute('hidden', '');
+        const vm = row.querySelector('.ver-mais');
+        if (vm) vm.setAttribute('aria-expanded', 'false');
       });
     });
   }
+
+  // ── Lista de revisão vinda do backend ───────────────────────────────────────
+  // Pendentes = tarefas que o capataz concluiu (status 'concluido'), aguardando
+  // aprovação. Se o supervisor não estiver logado (sem token), mantém o exemplo.
+  function escaparTexto(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  async function apiGet(url, token) {
+    const resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
+  }
+
+  function tempoRelativo(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    const min = Math.floor((Date.now() - d.getTime()) / 60000);
+    if (min < 1) return 'agora';
+    if (min < 60) return 'há ' + min + ' min';
+    const h = Math.floor(min / 60);
+    if (h < 24) return 'há ' + h + 'h';
+    const dias = Math.floor(h / 24);
+    return 'há ' + dias + (dias === 1 ? ' dia' : ' dias');
+  }
+
+  // O capataz grava a descrição como: Conclusao da tarefa "TITULO" no retiro RETIRO. ...
+  function extrairTituloRetiro(descricao) {
+    const m = /tarefa "([^"]+)" no retiro ([^.]+)/i.exec(descricao || '');
+    if (m) return { titulo: m[1].trim(), retiro: m[2].trim() };
+    return { titulo: (descricao || 'Tarefa').slice(0, 60), retiro: '' };
+  }
+
+  const SETA_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+
+  function cardMobile(t, nomes) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const item = document.createElement('div');
+    item.className = 'pend-item';
+    item.dataset.tarefaId = t.id;
+    item.dataset.real = '1';
+    item.innerHTML =
+      '<div class="pend-head">' +
+        '<span class="pend-title"></span>' +
+        '<button class="btn-revisar" data-action="validar">Validar</button>' +
+        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
+      '</div>' +
+      '<div class="pend-panel"><div class="pend-panel__inner">' +
+        '<p class="pend-info"></p>' +
+        '<div class="concl-bloco"><span class="concl-bloco__label">Evidência</span></div>' +
+      '</div></div>';
+    item.querySelector('.pend-title').textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
+    item.querySelector('.pend-info').innerHTML =
+      '<strong>Capataz:</strong> ' + escaparTexto(capataz) +
+      (retiro ? '<br><strong>Retiro:</strong> ' + escaparTexto(retiro) : '') +
+      '<br><strong>Enviado:</strong> ' + escaparTexto(tempoRelativo(t.data_criacao));
+    return item;
+  }
+
+  function linhasDesktop(t, nomes, alt) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const tr = document.createElement('tr');
+    tr.dataset.tarefaId = t.id;
+    tr.dataset.real = '1';
+    if (alt) tr.className = 'tr--alt';
+    tr.innerHTML =
+      '<td class="td--bold"></td><td></td><td></td><td></td>' +
+      '<td><span class="badge badge--yellow">Realizada</span></td>' +
+      '<td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>' +
+      '<td><button class="btn-revisar" data-action="validar">Validar</button></td>';
+    const tds = tr.querySelectorAll('td');
+    tds[0].textContent = titulo;
+    tds[1].textContent = retiro;
+    tds[2].textContent = capataz;
+    tds[3].textContent = tempoRelativo(t.data_criacao);
+
+    const det = document.createElement('tr');
+    det.className = 'pend-detalhe';
+    det.setAttribute('hidden', '');
+    det.innerHTML =
+      '<td colspan="7"><div class="pend-detalhe__inner">' +
+        '<div class="concl-bloco"><span class="concl-bloco__label">Descrição</span><p class="concl-bloco__texto"></p></div>' +
+        '<div class="concl-bloco"><span class="concl-bloco__label">Evidência</span></div>' +
+      '</div></td>';
+    det.querySelector('.concl-bloco__texto').textContent = t.descricao || '';
+    return [tr, det];
+  }
+
+  function renderPendentes(tarefas, nomes) {
+    const secMobile = document.querySelector('.layout-mobile .lista-secao--validar');
+    if (secMobile) {
+      secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
+      if (!tarefas.length) {
+        const vazio = document.createElement('p');
+        vazio.className = 'concl-vazio';
+        vazio.textContent = 'Nenhuma tarefa pendente de revisão.';
+        secMobile.appendChild(vazio);
+      } else {
+        tarefas.forEach(t => secMobile.appendChild(cardMobile(t, nomes)));
+      }
+    }
+
+    const tbody = document.querySelector('.layout-desktop .revisao-table--validar tbody');
+    if (tbody) {
+      tbody.innerHTML = '';
+      if (!tarefas.length) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="7" class="concl-vazio">Nenhuma tarefa pendente de revisão.</td>';
+        tbody.appendChild(tr);
+      } else {
+        tarefas.forEach((t, i) => {
+          const [tr, det] = linhasDesktop(t, nomes, i % 2 === 1);
+          tbody.appendChild(tr);
+          tbody.appendChild(det);
+        });
+      }
+    }
+  }
+
+  // ── Não realizadas (status 'pendente' no backend) ────────────────────────
+  // Tarefas que o capataz ainda não concluiu. Aparecem só para informar —
+  // sem botão Validar ativo (não dá pra validar o que ainda não foi feito).
+  function cardMobileNaoRealizada(t, nomes) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const item = document.createElement('div');
+    item.className = 'pend-item';
+    item.dataset.tarefaId = t.id;
+    item.innerHTML =
+      '<div class="pend-head">' +
+        '<span class="pend-title"></span>' +
+        '<span class="badge badge--cinza">Não realizado</span>' +
+        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
+      '</div>' +
+      '<div class="pend-panel"><div class="pend-panel__inner"><p class="pend-info"></p></div></div>';
+    item.querySelector('.pend-title').textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
+    item.querySelector('.pend-info').innerHTML =
+      '<strong>Capataz:</strong> ' + escaparTexto(capataz) +
+      (retiro ? '<br><strong>Retiro:</strong> ' + escaparTexto(retiro) : '') +
+      '<br><strong>Delegada:</strong> ' + escaparTexto(tempoRelativo(t.data_criacao));
+    return item;
+  }
+
+  function linhaDesktopNaoRealizada(t, nomes, alt) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const tr = document.createElement('tr');
+    tr.dataset.tarefaId = t.id;
+    if (alt) tr.className = 'tr--alt';
+    tr.innerHTML =
+      '<td class="td--bold"></td><td></td><td></td><td></td>' +
+      '<td><span class="badge badge--cinza">Não realizado</span></td>' +
+      '<td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>';
+    const tds = tr.querySelectorAll('td');
+    tds[0].textContent = titulo;
+    tds[1].textContent = retiro;
+    tds[2].textContent = capataz;
+    tds[3].textContent = tempoRelativo(t.data_criacao);
+    return tr;
+  }
+
+  function renderNaoRealizadas(tarefas, nomes) {
+    const secMobile = document.querySelector('.layout-mobile .lista-secao--naorealizadas');
+    if (secMobile) {
+      secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
+      if (!tarefas.length) {
+        const vazio = document.createElement('p');
+        vazio.className = 'concl-vazio';
+        vazio.textContent = 'Nenhuma tarefa delegada pendente no momento.';
+        secMobile.appendChild(vazio);
+      } else {
+        tarefas.forEach(t => secMobile.appendChild(cardMobileNaoRealizada(t, nomes)));
+      }
+    }
+
+    const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
+    if (tbody) {
+      tbody.innerHTML = '';
+      if (!tarefas.length) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="6" class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</td>';
+        tbody.appendChild(tr);
+      } else {
+        tarefas.forEach((t, i) => tbody.appendChild(linhaDesktopNaoRealizada(t, nomes, i % 2 === 1)));
+      }
+    }
+  }
+
+  // ── Demo (sem login): tarefas recém-delegadas guardadas no navegador ──────
+  // Entram no TOPO de "Não realizadas", acima dos exemplos estáticos.
+  function cardMobileDelegadaDemo(t) {
+    const item = document.createElement('div');
+    item.className = 'pend-item';
+    item.dataset.tarefaId = t.id;
+    item.innerHTML =
+      '<div class="pend-head">' +
+        '<span class="pend-title"></span>' +
+        '<span class="badge badge--cinza">Não realizado</span>' +
+        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
+      '</div>' +
+      '<div class="pend-panel"><div class="pend-panel__inner"><p class="pend-info"></p></div></div>';
+    item.querySelector('.pend-title').textContent = t.retiro ? (t.titulo + ' — ' + t.retiro) : t.titulo;
+    item.querySelector('.pend-info').innerHTML =
+      '<strong>Capataz:</strong> ' + escaparTexto(t.capataz || 'Capataz') +
+      (t.retiro ? '<br><strong>Retiro:</strong> ' + escaparTexto(t.retiro) : '') +
+      '<br><strong>Delegada:</strong> ' + escaparTexto(t.dataDelegacao || '');
+    return item;
+  }
+
+  function linhaDesktopDelegadaDemo(t, alt) {
+    const tr = document.createElement('tr');
+    tr.dataset.tarefaId = t.id;
+    if (alt) tr.className = 'tr--alt';
+    tr.innerHTML =
+      '<td class="td--bold"></td><td></td><td></td><td></td>' +
+      '<td><span class="badge badge--cinza">Não realizado</span></td>' +
+      '<td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>';
+    const tds = tr.querySelectorAll('td');
+    tds[0].textContent = t.titulo;
+    tds[1].textContent = t.retiro || '';
+    tds[2].textContent = t.capataz ? ('Capataz ' + t.capataz) : 'Capataz';
+    tds[3].textContent = t.dataDelegacao || '';
+    return tr;
+  }
+
+  function renderDelegadasDemo() {
+    if (!window.DelegadasStore) return;
+    const itens = DelegadasStore.listar();
+    if (!itens.length) return;
+
+    // Mobile: insere no topo da seção, antes do primeiro exemplo estático.
+    const secMobile = document.querySelector('.layout-mobile .lista-secao--naorealizadas');
+    if (secMobile) {
+      secMobile.querySelectorAll('.concl-vazio').forEach(n => n.remove());
+      const ancora = secMobile.querySelector('.pend-item');
+      const frag = document.createDocumentFragment();
+      itens.forEach(t => frag.appendChild(cardMobileDelegadaDemo(t)));
+      if (ancora) secMobile.insertBefore(frag, ancora);
+      else secMobile.appendChild(frag);
+    }
+
+    // Desktop: insere no topo do corpo da tabela "Não realizadas".
+    const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
+    if (tbody) {
+      const vazio = tbody.querySelector('.concl-vazio');
+      if (vazio) { const tr = vazio.closest('tr'); if (tr) tr.remove(); }
+      const frag = document.createDocumentFragment();
+      itens.forEach((t, i) => frag.appendChild(linhaDesktopDelegadaDemo(t, i % 2 === 1)));
+      tbody.insertBefore(frag, tbody.firstChild);
+    }
+  }
+
+  function dataFormatada(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  const ROTULO_PRIO = { alta: 'Alta', media: 'Média', baixa: 'Baixa', critica: 'Crítica' };
+
+  // Monta uma "vara" (acordeão) de tarefa validada, no mesmo formato do TarefasStore.
+  function itemValidada(t, nomes) {
+    const dados = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+
+    const item = document.createElement('div');
+    item.className = 'concl-item';
+
+    const head = document.createElement('button');
+    head.type = 'button';
+    head.className = 'concl-head';
+    head.setAttribute('aria-expanded', 'false');
+    head.innerHTML =
+      '<span class="concl-title"></span>' +
+      '<span class="concl-badge">Validada</span>' +
+      '<span class="concl-arrow" aria-hidden="true">' + SETA_SVG + '</span>';
+    head.querySelector('.concl-title').textContent = dados.retiro ? (dados.titulo + ' — ' + dados.retiro) : dados.titulo;
+
+    const panel = document.createElement('div');
+    panel.className = 'concl-panel';
+    const inner = document.createElement('div');
+    inner.className = 'concl-panel__inner';
+
+    if (t.prioridade) {
+      const tags = document.createElement('div');
+      tags.className = 'concl-tags';
+      const prio = document.createElement('span');
+      prio.className = 'concl-prio concl-prio--' + t.prioridade;
+      prio.textContent = ROTULO_PRIO[t.prioridade] || t.prioridade;
+      tags.appendChild(prio);
+      inner.appendChild(tags);
+    }
+
+    const meta = document.createElement('p');
+    meta.className = 'concl-meta';
+    meta.textContent = 'Validada em ' + dataFormatada(t.data_criacao) + ' • Capataz ' + capataz;
+    inner.appendChild(meta);
+
+    if (t.descricao) {
+      const desc = document.createElement('div');
+      desc.className = 'concl-bloco';
+      const lbl = document.createElement('span'); lbl.className = 'concl-bloco__label'; lbl.textContent = 'Descrição';
+      const tx = document.createElement('p'); tx.className = 'concl-bloco__texto'; tx.textContent = t.descricao;
+      desc.appendChild(lbl); desc.appendChild(tx);
+      inner.appendChild(desc);
+    }
+
+    const evBloco = document.createElement('div');
+    evBloco.className = 'concl-bloco';
+    const evLbl = document.createElement('span'); evLbl.className = 'concl-bloco__label'; evLbl.textContent = 'Evidência';
+    evBloco.appendChild(evLbl);
+    inner.appendChild(evBloco);
+
+    panel.appendChild(inner);
+    item.appendChild(head);
+    item.appendChild(panel);
+
+    head.addEventListener('click', function () {
+      const aberto = item.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if (aberto && ehUuid(t.id)) carregarEvidenciaReal(inner, t.id);
+    });
+
+    return item;
+  }
+
+  function renderValidadas(tarefas, nomes) {
+    document.querySelectorAll('.concluidas-capataz').forEach(function (cont) {
+      cont.innerHTML = '';
+      if (!tarefas.length) {
+        cont.innerHTML = '<p class="concl-vazio">Nenhuma tarefa validada ainda.</p>';
+        return;
+      }
+      tarefas.forEach(function (t) { cont.appendChild(itemValidada(t, nomes)); });
+    });
+  }
+
+  async function recarregarValidadas() {
+    const sessao = carregarSessao();
+    if (!sessao || !sessao.token) return;
+    try {
+      const aprovadas = await apiGet('/tarefas/status/aprovado', sessao.token);
+      renderValidadas(aprovadas || [], nomesCapatazes);
+    } catch (e) { /* mantém o que já está na tela */ }
+  }
+
+  async function carregarListasReais() {
+    const sessao = carregarSessao();
+    if (!sessao || !sessao.token) return; // sem login → mantém o exemplo estático
+
+    let naoRealizadas, pendentes, validadas;
+    try {
+      [naoRealizadas, pendentes, validadas] = await Promise.all([
+        apiGet('/tarefas/status/pendente', sessao.token),
+        apiGet('/tarefas/status/concluido', sessao.token),
+        apiGet('/tarefas/status/aprovado', sessao.token),
+      ]);
+    } catch (e) {
+      mostrarFeedback('revisao-feedback-mobile', 'Não foi possível carregar as tarefas do servidor.', 'error');
+      mostrarFeedback('revisao-feedback-desktop', 'Não foi possível carregar as tarefas do servidor.', 'error');
+      return; // mantém o exemplo
+    }
+
+    // Mapa id→nome dos capatazes do retiro (1 requisição) para mostrar o nome.
+    try {
+      const caps = await apiGet('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, sessao.token);
+      (caps || []).forEach(c => { nomesCapatazes[c.id] = c.nome || c.login || 'Capataz'; });
+    } catch (e) { /* sem nomes: cai no rótulo genérico */ }
+
+    modoReal = true;
+    renderNaoRealizadas(naoRealizadas || [], nomesCapatazes);
+    renderPendentes(pendentes || [], nomesCapatazes);
+    renderValidadas(validadas || [], nomesCapatazes);
+    atualizarBadgePendentes();
+  }
+
+  // Sincroniza o contador com a quantidade real de tarefas pendentes ao abrir.
+  atualizarBadgePendentes();
+  // Sem login (demo): mostra as tarefas recém-delegadas guardadas no navegador.
+  // Com login: o carregarListasReais busca as 'pendente' direto do backend.
+  if (!carregarSessao()) renderDelegadasDemo();
+  carregarListasReais();
 </script>
 
 </body>

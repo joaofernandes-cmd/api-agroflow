@@ -607,6 +607,7 @@
     queueOperation: saveQueuedOperation,
     renderHomeWidgets: renderHomeWidgets,
     syncPendingOperations: syncPendingOperations,
+    uploadBinary: uploadBinaryToSupabase,
   }
 
   if (document.readyState === 'loading') {

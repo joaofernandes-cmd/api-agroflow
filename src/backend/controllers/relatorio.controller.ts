@@ -5,6 +5,8 @@ import {
   RelatorioService,
   TipoRelatorioExportacao,
 } from '../services/relatorio.service'
+import { relatorioDemo } from '../data/relatorio-demo'
+import { OPCOES_RETIRO } from '../data/referencia'
 
 // Converte uma string de query em Date.
 // Se o valor vier vazio, retorna undefined.
@@ -55,6 +57,8 @@ export const RelatorioController = {
       css: ['supervisor', 'relatorios'],
       persona: 'supervisor',
       usuario: (req as any).usuario ?? { nome: 'Luiz Felipe' },
+      retiros: OPCOES_RETIRO,
+      relatorioDemo,
     })
   },
 
@@ -65,6 +69,8 @@ export const RelatorioController = {
       css: ['gerente', 'relatorios'],
       persona: 'gerente',
       usuario: (req as any).usuario ?? { nome: 'Marcos Ferreira' },
+      retiros: OPCOES_RETIRO,
+      relatorioDemo,
     })
   },
 
