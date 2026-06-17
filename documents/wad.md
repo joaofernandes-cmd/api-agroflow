@@ -829,7 +829,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
+| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra, venda e outros), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
 | RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Implementado    |
 | RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Parcialmente implementado |
 | RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Implementado |
@@ -4180,7 +4180,7 @@ VALUES (?, ?, ?, ?);
 | US | Resumo | RF associado(s) | Status de cobertura |
 | :--: | -------- | :---: | ---------------------- |
 | US01 | Uso do sistema offline | RF003 | Parcial — endpoints de sincronização implementados e testados no backend; armazenamento local e disparo automático no cliente permanecem planejados, conforme já registrado no status do RF003 e nas Seções 4.1 e 4.2. |
-| US02 | Registrar movimentações do rebanho | RF001 | Atendida — implementada e testada (CT-RF001). |
+| US02 | Registrar movimentações do rebanho | RF001 | Atendida — implementada e testada (CT-RF001). O critério CA3 ("salvo localmente") permanece pendente junto com RF003 (parcialmente implementado). |
 | US03 | Criar tarefas para capatazes | RF002 | Atendida — implementada e testada (CT-RF002). |
 | US04 | Validar registros enviados | RF006 | Atendida — implementada e testada (CT-RF006). |
 | US05 | Receber alertas de problemas | — | **Não atendida.** Não há RF, RN, endpoint ou teste associados. A funcionalidade aparece apenas nos wireframes e no protótipo de alta fidelidade do Supervisor (Seções 3.3 e 3.5), sem tela correspondente entregue nem rota de alerta/notificação no backend. Ver observação abaixo. |
