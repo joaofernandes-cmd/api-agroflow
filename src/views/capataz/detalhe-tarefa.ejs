@@ -57,6 +57,7 @@
     </div>
 
     <p id="evidenciaErro" class="evidencia-erro" hidden>Anexe uma evidência (foto, áudio ou texto) para marcar como concluída.</p>
+    <p id="tarefaSyncFeedback" class="evidencia-info" hidden></p>
     <button type="button" class="btn-primario" id="btnConcluir" <%= tarefa.status === 'concluida' ? 'disabled' : '' %>>
       <%= tarefa.status === 'concluida' ? 'Concluída' : 'Marcar como concluída' %>
     </button>
@@ -69,6 +70,7 @@
      data-titulo="<%= tarefa.titulo %>"
      data-retiro="<%= tarefa.retiro %>"
      data-supervisor="<%= tarefa.supervisor %>"
+     data-categoria="<%= tarefa.categoria %>"
      data-prioridade="<%= tarefa.classe %>"></div>
 <script src="/js/tarefas-store.js"></script>
 <script>
@@ -78,7 +80,13 @@
     titulo: _el.dataset.titulo,
     retiro: _el.dataset.retiro,
     supervisor: _el.dataset.supervisor,
+    categoria: _el.dataset.categoria,
     prioridade: _el.dataset.prioridade
+  };
+
+  var CAPATAZ_DEMO = {
+    id: '11111111-1111-1111-1111-111111111111',
+    retiro_id: '00000000-0000-4000-8000-000000000001'
   };
 
   (function () {
@@ -89,6 +97,7 @@
     var status = document.getElementById('statusTarefa');
     var listaEvidencia = document.getElementById('evLista');
     var evidenciasSalvas = document.getElementById('evidenciasSalvas');
+    var syncFeedback = document.getElementById('tarefaSyncFeedback');
 
     function evidenciasCapturadas() {
       var api = window.__evidencias && window.__evidencias['ev'];
@@ -128,6 +137,53 @@
       }).observe(listaEvidencia, { childList: true });
     }
 
+    function gerarUuidLocal() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+      return '00000000-0000-4000-8000-' + String(Date.now()).slice(-12).padStart(12, '0');
+    }
+
+    function prioridadeApi(valor) {
+      return ['alta', 'media', 'baixa'].indexOf(valor) >= 0 ? valor : 'baixa';
+    }
+
+    function sincronizarConclusao(dataConclusao, evidencias) {
+      if (!window.AgroFlowCapataz) return;
+
+      var payload = {
+        id: gerarUuidLocal(),
+        retiro_id: CAPATAZ_DEMO.retiro_id,
+        criada_por: CAPATAZ_DEMO.id,
+        atribuida_a: CAPATAZ_DEMO.id,
+        descricao: 'Conclusao da tarefa "' + DADOS_TAREFA.titulo + '" no retiro ' + DADOS_TAREFA.retiro + '. Evidencias anexadas: ' + evidencias.length + '.',
+        categoria: DADOS_TAREFA.categoria || 'Operacional',
+        prioridade: prioridadeApi(DADOS_TAREFA.prioridade),
+        data_criacao: new Date().toISOString(),
+        status: 'aprovado',
+        aprovado_por: null,
+        sincronizado: false
+      };
+
+      window.AgroFlowCapataz.fetchOrQueueOperation({
+        kind: 'tarefa',
+        url: '/tarefas/sincronizar',
+        method: 'POST',
+        body: payload,
+        queueBody: payload
+      }).then(function (resultado) {
+        if (!syncFeedback) return;
+        syncFeedback.textContent = resultado.queued
+          ? 'Tarefa salva offline. Ela sera sincronizada automaticamente quando houver conexao.'
+          : 'Tarefa concluida e sincronizada com sucesso.';
+        syncFeedback.hidden = false;
+      }).catch(function () {
+        if (!syncFeedback) return;
+        syncFeedback.textContent = 'Tarefa concluida localmente. A sincronizacao sera tentada novamente quando houver conexao.';
+        syncFeedback.hidden = false;
+      });
+    }
+
     // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto).
     if (btnConcluir && !salva) {
       btnConcluir.addEventListener('click', function () {
@@ -151,6 +207,7 @@
           });
         }
         mostrarConcluida(evid);
+        sincronizarConclusao(dataConclusao, evid);
       });
     }
   })();
