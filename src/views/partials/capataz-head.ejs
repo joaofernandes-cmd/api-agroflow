@@ -16,6 +16,7 @@
   <% if (typeof supabase !== 'undefined' && supabase && supabase.url) { %>
   <script>window.__SUPABASE__ = <%- JSON.stringify(supabase) %>;</script>
   <% } %>
+  <script src="/js/session.js"></script>
   <script src="/capataz-pwa.js?v=6" defer></script>
 </head>
 <body>

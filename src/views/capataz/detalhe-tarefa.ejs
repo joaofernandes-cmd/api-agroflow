@@ -167,6 +167,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       }).then(function (resp) {
+        if (window.AgroFlowSession?.tratarResposta(resp)) {
+          throw new Error('Sessão expirada');
+        }
         if (resp.ok) return resp.json().catch(function () { return {}; });
         return resp.json().catch(function () { return {}; }).then(function (d) {
           throw new Error((d && d.error) || ('HTTP ' + resp.status));

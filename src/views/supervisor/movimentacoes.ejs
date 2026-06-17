@@ -343,6 +343,9 @@
         method: 'PATCH',
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
+      if (window.AgroFlowSession?.tratarResposta(response)) {
+        return { ok: false, mensagem: 'Sessão expirada' };
+      }
       const data = await response.json().catch(() => ({}));
       return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
     } catch (e) {

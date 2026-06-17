@@ -306,6 +306,10 @@
       body: JSON.stringify(body),
     })
 
+    if (window.AgroFlowSession && window.AgroFlowSession.tratarResposta(response)) {
+      throw new Error('Sessão expirada.')
+    }
+
     if (!response.ok) {
       var data = await response.json().catch(function () {
         return {}
@@ -443,6 +447,10 @@
         headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
         body: JSON.stringify(requestBody),
       })
+
+      if (window.AgroFlowSession && window.AgroFlowSession.tratarResposta(response)) {
+        return { queued: false, online: true, response: response }
+      }
 
       if (!response.ok) {
         var data = await response.json().catch(function () {

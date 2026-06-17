@@ -319,6 +319,9 @@
       const sessao = carregarSessao();
       const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
       const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, { method: 'PATCH', headers });
+      if (window.AgroFlowSession?.tratarResposta(response)) {
+        return { ok: false, mensagem: 'Sessão expirada' };
+      }
       const data = await response.json().catch(() => ({}));
       return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
     } catch (e) {
@@ -436,6 +439,7 @@
     const sessao = carregarSessao();
     const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
     const resp = await fetch('/evidencias/tarefa/' + tarefaId, { headers });
+    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     return resp.json();
   }
@@ -555,6 +559,7 @@
 
   async function apiGet(url, token) {
     const resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     return resp.json();
   }

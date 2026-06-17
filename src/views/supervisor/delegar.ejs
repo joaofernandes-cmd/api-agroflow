@@ -299,6 +299,7 @@
     const resp = await fetch('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, {
       headers: { Authorization: 'Bearer ' + sessao.token },
     });
+    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada.');
     if (!resp.ok) throw new Error('Não foi possível carregar os capatazes do retiro.');
     const caps = await resp.json();
     const alvo = (caps || []).find((c) => (c.nome || c.login) === nomeCapataz);
@@ -320,6 +321,7 @@
         prioridade: dados.prioridade,
       }),
     });
+    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada.');
     const corpo = await resp.json().catch(() => ({}));
     if (!resp.ok) throw new Error(corpo.error || 'Não foi possível delegar a tarefa.');
     return corpo;
