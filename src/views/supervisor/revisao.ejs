@@ -401,6 +401,11 @@
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
+  // Quando o supervisor está logado, as listas vêm do backend (modoReal = true).
+  // Sem login, mantém o exemplo estático/localStorage.
+  let modoReal = false;
+  const nomesCapatazes = {};
+
   function carregarSessao() {
     try {
       const token = localStorage.getItem('agroflow.token');
@@ -425,10 +430,12 @@
     });
   }
 
-  // Valida no backend (não bloqueia a UI se falhar — é demo).
+  // Aprova a tarefa no backend (concluido → aprovado). Usa o token do supervisor.
   async function validarTarefaPorId(tarefaId) {
     try {
-      const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, { method: 'PATCH' });
+      const sessao = carregarSessao();
+      const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
+      const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, { method: 'PATCH', headers });
       const data = await response.json().catch(() => ({}));
       return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
     } catch (e) {
@@ -454,9 +461,21 @@
     if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
   }
 
-  // Valida a tarefa: grava como concluída e move o item para a
-  // seção "Validadas" (some de cima e aparece embaixo).
+  // Valida a tarefa: aprova no backend e move o item para a seção "Validadas".
   function aceitarTarefa(id, titulo, retiro) {
+    // Modo real: aprova no backend e recarrega as Validadas de lá (cross-device).
+    if (modoReal) {
+      validarTarefaPorId(id).then(function (r) {
+        if (r.ok) {
+          recarregarValidadas();
+        } else {
+          mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+          mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+        }
+      });
+      return;
+    }
+    // Modo demo (sem login): persiste no localStorage e re-renderiza de lá.
     if (window.TarefasStore) {
       TarefasStore.concluir('rev-' + id, {
         titulo: titulo,
@@ -492,34 +511,119 @@
     atualizarBadgePendentes();
   }
 
-  // Botão "Validar" (vara mobile ou linha desktop)
-  document.querySelectorAll('.btn-revisar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.pend-item');
-      if (item) { aceitarPendItem(item); return; }
-      aceitarLinhaDesktop(btn.closest('tr'));
-    });
+  // Botão "Validar" (delegado — vale para itens de exemplo e os vindos do backend)
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-revisar');
+    if (!btn) return;
+    const item = btn.closest('.pend-item');
+    if (item) { aceitarPendItem(item); return; }
+    const row = btn.closest('tr');
+    if (row) aceitarLinhaDesktop(row);
   });
 
-  // Setinha: abre/fecha as informações da tarefa pendente (mobile)
-  document.querySelectorAll('.pend-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.pend-item');
-      if (!item) return;
-      const aberto = item.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-    });
+  // Setinha (mobile): abre/fecha as informações + carrega a evidência real
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.pend-toggle');
+    if (!btn) return;
+    const item = btn.closest('.pend-item');
+    if (!item) return;
+    const aberto = item.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    const id = item.dataset.tarefaId;
+    const painel = item.querySelector('.pend-panel__inner');
+    if (aberto && painel && ehUuid(id)) carregarEvidenciaReal(painel, id);
   });
 
-  // "Ver mais" (desktop): abre a linha de detalhe com descrição + evidência
-  document.querySelectorAll('.ver-mais').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const det = btn.closest('tr')?.nextElementSibling;
-      if (!det || !det.classList.contains('pend-detalhe')) return;
-      const abrindo = det.hasAttribute('hidden');
-      det.toggleAttribute('hidden');
-      btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
+  // ── Evidência real vinda do backend (foto/áudio do Supabase, texto) ──────────
+  // Só dispara para linhas com id de tarefa real (UUID). As linhas de exemplo
+  // (ids 11..16) continuam mostrando o placeholder estático.
+  function ehUuid(v) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(v || ''));
+  }
+
+  async function buscarEvidenciasDaTarefa(tarefaId) {
+    const sessao = carregarSessao();
+    const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
+    const resp = await fetch('/evidencias/tarefa/' + tarefaId, { headers });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
+  }
+
+  function elementoEvidencia(ev) {
+    if (ev.tipo === 'foto' && ev.url_arquivo) {
+      const img = document.createElement('img');
+      img.className = 'evidencia-midia';
+      img.src = ev.url_arquivo;
+      img.alt = 'Foto da evidência';
+      return img;
+    }
+    if (ev.tipo === 'audio' && ev.url_arquivo) {
+      const audio = document.createElement('audio');
+      audio.className = 'evidencia-audio';
+      audio.controls = true;
+      audio.src = ev.url_arquivo;
+      return audio;
+    }
+    if (ev.tipo === 'mensagem') {
+      const p = document.createElement('p');
+      p.className = 'evidencia-texto';
+      p.textContent = ev.conteudo || '';
+      return p;
+    }
+    return null;
+  }
+
+  function renderEvidenciasSupervisor(container, evidencias) {
+    container.innerHTML = '';
+    if (!evidencias || !evidencias.length) {
+      container.innerHTML = '<p class="evidencia-texto">Nenhuma evidência enviada.</p>';
+      return;
+    }
+    evidencias.forEach(ev => {
+      const el = elementoEvidencia(ev);
+      if (el) container.appendChild(el);
     });
+  }
+
+  // Localiza o bloco "Evidência" dentro de um detalhe (desktop).
+  function blocoEvidencia(det) {
+    return Array.from(det.querySelectorAll('.concl-bloco')).find(b => {
+      const label = b.querySelector('.concl-bloco__label');
+      return label && label.textContent.trim() === 'Evidência';
+    }) || null;
+  }
+
+  async function carregarEvidenciaReal(det, tarefaId) {
+    if (det.dataset.evidLoaded === '1') return;
+    const bloco = blocoEvidencia(det);
+    if (!bloco) return;
+    det.dataset.evidLoaded = '1';
+    // Troca o placeholder estático por um container de mídia real (mantém o label).
+    bloco.querySelectorAll('.evidencia, .evidencia-texto, .evid-real').forEach(n => n.remove());
+    const alvo = document.createElement('div');
+    alvo.className = 'evid-real';
+    alvo.textContent = 'Carregando evidência...';
+    bloco.appendChild(alvo);
+    try {
+      renderEvidenciasSupervisor(alvo, await buscarEvidenciasDaTarefa(tarefaId));
+    } catch (e) {
+      det.dataset.evidLoaded = '';
+      alvo.textContent = 'Não foi possível carregar a evidência.';
+    }
+  }
+
+  // "Ver mais" (desktop, delegado): abre a linha de detalhe + carrega a evidência real
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.ver-mais');
+    if (!btn) return;
+    const row = btn.closest('tr');
+    const det = row?.nextElementSibling;
+    if (!det || !det.classList.contains('pend-detalhe')) return;
+    const abrindo = det.hasAttribute('hidden');
+    det.toggleAttribute('hidden');
+    btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
+    const id = row?.dataset.tarefaId;
+    if (abrindo && ehUuid(id)) carregarEvidenciaReal(det, id);
   });
 
   // Filtro de busca — mobile
@@ -550,8 +654,254 @@
     });
   }
 
+  // ── Lista de revisão vinda do backend ───────────────────────────────────────
+  // Pendentes = tarefas que o capataz concluiu (status 'concluido'), aguardando
+  // aprovação. Se o supervisor não estiver logado (sem token), mantém o exemplo.
+  function escaparTexto(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  async function apiGet(url, token) {
+    const resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
+  }
+
+  function tempoRelativo(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    const min = Math.floor((Date.now() - d.getTime()) / 60000);
+    if (min < 1) return 'agora';
+    if (min < 60) return 'há ' + min + ' min';
+    const h = Math.floor(min / 60);
+    if (h < 24) return 'há ' + h + 'h';
+    const dias = Math.floor(h / 24);
+    return 'há ' + dias + (dias === 1 ? ' dia' : ' dias');
+  }
+
+  // O capataz grava a descrição como: Conclusao da tarefa "TITULO" no retiro RETIRO. ...
+  function extrairTituloRetiro(descricao) {
+    const m = /tarefa "([^"]+)" no retiro ([^.]+)/i.exec(descricao || '');
+    if (m) return { titulo: m[1].trim(), retiro: m[2].trim() };
+    return { titulo: (descricao || 'Tarefa').slice(0, 60), retiro: '' };
+  }
+
+  const SETA_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+
+  function cardMobile(t, nomes) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const item = document.createElement('div');
+    item.className = 'pend-item';
+    item.dataset.tarefaId = t.id;
+    item.dataset.real = '1';
+    item.innerHTML =
+      '<div class="pend-head">' +
+        '<span class="pend-title"></span>' +
+        '<button class="btn-revisar" data-action="validar">Validar</button>' +
+        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
+      '</div>' +
+      '<div class="pend-panel"><div class="pend-panel__inner">' +
+        '<p class="pend-info"></p>' +
+        '<div class="concl-bloco"><span class="concl-bloco__label">Evidência</span></div>' +
+      '</div></div>';
+    item.querySelector('.pend-title').textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
+    item.querySelector('.pend-info').innerHTML =
+      '<strong>Capataz:</strong> ' + escaparTexto(capataz) +
+      (retiro ? '<br><strong>Retiro:</strong> ' + escaparTexto(retiro) : '') +
+      '<br><strong>Enviado:</strong> ' + escaparTexto(tempoRelativo(t.data_criacao));
+    return item;
+  }
+
+  function linhasDesktop(t, nomes, alt) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const tr = document.createElement('tr');
+    tr.dataset.tarefaId = t.id;
+    tr.dataset.real = '1';
+    if (alt) tr.className = 'tr--alt';
+    tr.innerHTML =
+      '<td class="td--bold"></td><td></td><td></td><td></td>' +
+      '<td><span class="badge badge--yellow">Pendente</span></td>' +
+      '<td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>' +
+      '<td><button class="btn-revisar" data-action="validar">Validar</button></td>';
+    const tds = tr.querySelectorAll('td');
+    tds[0].textContent = titulo;
+    tds[1].textContent = retiro;
+    tds[2].textContent = capataz;
+    tds[3].textContent = tempoRelativo(t.data_criacao);
+
+    const det = document.createElement('tr');
+    det.className = 'pend-detalhe';
+    det.setAttribute('hidden', '');
+    det.innerHTML =
+      '<td colspan="7"><div class="pend-detalhe__inner">' +
+        '<div class="concl-bloco"><span class="concl-bloco__label">Descrição</span><p class="concl-bloco__texto"></p></div>' +
+        '<div class="concl-bloco"><span class="concl-bloco__label">Evidência</span></div>' +
+      '</div></td>';
+    det.querySelector('.concl-bloco__texto').textContent = t.descricao || '';
+    return [tr, det];
+  }
+
+  function renderPendentes(tarefas, nomes) {
+    const secMobile = document.querySelector('.layout-mobile .revisao-list .lista-secao');
+    if (secMobile) {
+      secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
+      if (!tarefas.length) {
+        const vazio = document.createElement('p');
+        vazio.className = 'concl-vazio';
+        vazio.textContent = 'Nenhuma tarefa pendente de revisão.';
+        secMobile.appendChild(vazio);
+      } else {
+        tarefas.forEach(t => secMobile.appendChild(cardMobile(t, nomes)));
+      }
+    }
+
+    const tbody = document.querySelector('.layout-desktop .revisao-table tbody');
+    if (tbody) {
+      tbody.innerHTML = '';
+      if (!tarefas.length) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="7" class="concl-vazio">Nenhuma tarefa pendente de revisão.</td>';
+        tbody.appendChild(tr);
+      } else {
+        tarefas.forEach((t, i) => {
+          const [tr, det] = linhasDesktop(t, nomes, i % 2 === 1);
+          tbody.appendChild(tr);
+          tbody.appendChild(det);
+        });
+      }
+    }
+  }
+
+  function dataFormatada(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  const ROTULO_PRIO = { alta: 'Alta', media: 'Média', baixa: 'Baixa', critica: 'Crítica' };
+
+  // Monta uma "vara" (acordeão) de tarefa validada, no mesmo formato do TarefasStore.
+  function itemValidada(t, nomes) {
+    const dados = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+
+    const item = document.createElement('div');
+    item.className = 'concl-item';
+
+    const head = document.createElement('button');
+    head.type = 'button';
+    head.className = 'concl-head';
+    head.setAttribute('aria-expanded', 'false');
+    head.innerHTML =
+      '<span class="concl-title"></span>' +
+      '<span class="concl-badge">Validada</span>' +
+      '<span class="concl-arrow" aria-hidden="true">' + SETA_SVG + '</span>';
+    head.querySelector('.concl-title').textContent = dados.retiro ? (dados.titulo + ' — ' + dados.retiro) : dados.titulo;
+
+    const panel = document.createElement('div');
+    panel.className = 'concl-panel';
+    const inner = document.createElement('div');
+    inner.className = 'concl-panel__inner';
+
+    if (t.prioridade) {
+      const tags = document.createElement('div');
+      tags.className = 'concl-tags';
+      const prio = document.createElement('span');
+      prio.className = 'concl-prio concl-prio--' + t.prioridade;
+      prio.textContent = ROTULO_PRIO[t.prioridade] || t.prioridade;
+      tags.appendChild(prio);
+      inner.appendChild(tags);
+    }
+
+    const meta = document.createElement('p');
+    meta.className = 'concl-meta';
+    meta.textContent = 'Validada em ' + dataFormatada(t.data_criacao) + ' • Capataz ' + capataz;
+    inner.appendChild(meta);
+
+    if (t.descricao) {
+      const desc = document.createElement('div');
+      desc.className = 'concl-bloco';
+      const lbl = document.createElement('span'); lbl.className = 'concl-bloco__label'; lbl.textContent = 'Descrição';
+      const tx = document.createElement('p'); tx.className = 'concl-bloco__texto'; tx.textContent = t.descricao;
+      desc.appendChild(lbl); desc.appendChild(tx);
+      inner.appendChild(desc);
+    }
+
+    const evBloco = document.createElement('div');
+    evBloco.className = 'concl-bloco';
+    const evLbl = document.createElement('span'); evLbl.className = 'concl-bloco__label'; evLbl.textContent = 'Evidência';
+    evBloco.appendChild(evLbl);
+    inner.appendChild(evBloco);
+
+    panel.appendChild(inner);
+    item.appendChild(head);
+    item.appendChild(panel);
+
+    head.addEventListener('click', function () {
+      const aberto = item.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if (aberto && ehUuid(t.id)) carregarEvidenciaReal(inner, t.id);
+    });
+
+    return item;
+  }
+
+  function renderValidadas(tarefas, nomes) {
+    document.querySelectorAll('.concluidas-capataz').forEach(function (cont) {
+      cont.innerHTML = '';
+      if (!tarefas.length) {
+        cont.innerHTML = '<p class="concl-vazio">Nenhuma tarefa validada ainda.</p>';
+        return;
+      }
+      tarefas.forEach(function (t) { cont.appendChild(itemValidada(t, nomes)); });
+    });
+  }
+
+  async function recarregarValidadas() {
+    const sessao = carregarSessao();
+    if (!sessao || !sessao.token) return;
+    try {
+      const aprovadas = await apiGet('/tarefas/status/aprovado', sessao.token);
+      renderValidadas(aprovadas || [], nomesCapatazes);
+    } catch (e) { /* mantém o que já está na tela */ }
+  }
+
+  async function carregarListasReais() {
+    const sessao = carregarSessao();
+    if (!sessao || !sessao.token) return; // sem login → mantém o exemplo estático
+
+    let pendentes, validadas;
+    try {
+      [pendentes, validadas] = await Promise.all([
+        apiGet('/tarefas/status/concluido', sessao.token),
+        apiGet('/tarefas/status/aprovado', sessao.token),
+      ]);
+    } catch (e) {
+      mostrarFeedback('revisao-feedback-mobile', 'Não foi possível carregar as tarefas do servidor.', 'error');
+      mostrarFeedback('revisao-feedback-desktop', 'Não foi possível carregar as tarefas do servidor.', 'error');
+      return; // mantém o exemplo
+    }
+
+    // Mapa id→nome dos capatazes do retiro (1 requisição) para mostrar o nome.
+    try {
+      const caps = await apiGet('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, sessao.token);
+      (caps || []).forEach(c => { nomesCapatazes[c.id] = c.nome || c.login || 'Capataz'; });
+    } catch (e) { /* sem nomes: cai no rótulo genérico */ }
+
+    modoReal = true;
+    renderPendentes(pendentes || [], nomesCapatazes);
+    renderValidadas(validadas || [], nomesCapatazes);
+    atualizarBadgePendentes();
+  }
+
   // Sincroniza o contador com a quantidade real de tarefas pendentes ao abrir.
   atualizarBadgePendentes();
+  carregarListasReais();
 </script>
 
 </body>

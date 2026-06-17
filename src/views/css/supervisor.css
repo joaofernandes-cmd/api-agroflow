@@ -943,6 +943,8 @@
 
 /* Badges de severidade */
 .sev-badge {
+  display: inline-block;
+  vertical-align: middle;
   font-size: 10px;
   font-weight: 600;
   padding: 3px 10px;
@@ -961,7 +963,7 @@
 
 /* Estado vazio da seção "Validados" */
 #tickets-validados:empty::after {
-  content: 'Nenhum chamado validado ainda.';
+  content: 'Nenhum ticket validado ainda.';
   display: block;
   text-align: center;
   font-size: 13px;

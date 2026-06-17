@@ -151,7 +151,20 @@ describe('ValidacaoService', () => {
     })
   })
 
-  it('aprovarTarefa deve aprovar tarefa pendente', async () => {
+  it('aprovarTarefa deve bloquear tarefa ainda pendente (não concluída pelo capataz)', async () => {
+    mockedTarefaRepo.buscarPorId.mockResolvedValueOnce({ ...mockTarefa, status: 'pendente' } as any)
+
+    const resultado = await ValidacaoService.aprovarTarefa('00000000-0000-4000-8000-000000000301', mockSupervisor.id, 'supervisor')
+
+    expect(resultado).toEqual({
+      sucesso: false,
+      mensagem: 'Tarefa ainda não foi concluída pelo capataz. Não pode ser aprovada.',
+    })
+  })
+
+  it('aprovarTarefa deve aprovar tarefa concluida', async () => {
+    mockedTarefaRepo.buscarPorId.mockResolvedValueOnce({ ...mockTarefa, status: 'concluido' } as any)
+
     const resultado = await ValidacaoService.aprovarTarefa('00000000-0000-4000-8000-000000000301', mockSupervisor.id, 'supervisor')
 
     expect(resultado.sucesso).toBe(true)

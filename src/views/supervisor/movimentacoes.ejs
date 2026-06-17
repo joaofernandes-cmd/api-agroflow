@@ -401,6 +401,40 @@
     });
   }
 
+  // Momento da validação (DD/MM/AAAA HH:MM) e nome do supervisor logado.
+  function agoraFormatado() {
+    return new Date().toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  }
+  function nomeSupervisor() {
+    try {
+      const u = JSON.parse(localStorage.getItem('agroflow.usuario') || '{}');
+      return (u && u.nome) ? u.nome.split(' ')[0] : 'Luiz Felipe';
+    } catch (e) { return 'Luiz Felipe'; }
+  }
+  // Card de evidência (mesmo visual das tarefas): foto/áudio com ícone, texto com a nota.
+  function evidenciaHTML(tipo, texto) {
+    if (tipo === 'Texto') return '<p class="evidencia-texto">' + escaparHTML(texto || '') + '</p>';
+    const isAudio = tipo === 'Áudio';
+    const icone = isAudio
+      ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
+      : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
+    return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
+      '<span class="evidencia__tipo">' + escaparHTML(tipo) + '</span></div>';
+  }
+
+  // Detalhes + evidência de cada movimentação (fonte única, lida na validação).
+  const MOV_DADOS = {
+    'm1': { detalhes: 'Estágio: Bezerro 0 a 7 meses · Enviado há 1h.', evidencia: 'Foto' },
+    'm2': { detalhes: 'Origem: Puga · Destino: CMB · Estágio: Boi 25 a 36 meses · Enviado há 3h.', evidencia: 'Áudio' },
+    'm3': { detalhes: 'Estágio: Vaca acima de 36 meses · Causa do óbito: Doença · Enviado há 1 dia.', evidencia: 'Texto', evidenciaTexto: 'Animal encontrado sem vida no pasto leste; sinais de doença.' },
+    'm4': { detalhes: 'Estágio: Garrote 13 a 24 meses · Enviado há 1 dia.', evidencia: 'Foto' },
+    'm5': { detalhes: 'Estágio: Boi acima de 36 meses · Enviado há 2 dias.', evidencia: 'Texto', evidenciaTexto: 'Lote vendido para o frigorífico regional; nota emitida.' },
+    'm6': { detalhes: 'Origem: Morro Azul · Destino: Vista Alegre · Estágio: Novilha 13 a 24 meses · Enviado há 3 dias.', evidencia: 'Áudio' },
+  };
+
   // Recalcula o contador "N Pendentes" ao lado da busca conforme as
   // movimentações vão sendo validadas (some uma de cima → o número cai).
   function atualizarBadgePendentes() {
@@ -445,15 +479,39 @@
         panel.className = 'concl-panel';
         const inner = document.createElement('div');
         inner.className = 'concl-panel__inner';
+
+        // Quando foi validada + por quem
         const metaParts = [];
-        if (m.capataz) metaParts.push('Capataz ' + m.capataz);
-        if (m.quantidade) metaParts.push(m.quantidade);
+        if (m.dataValidacao) metaParts.push('Validada em ' + m.dataValidacao);
+        if (m.supervisor) metaParts.push('Supervisor ' + m.supervisor);
         if (metaParts.length) {
           const meta = document.createElement('p');
           meta.className = 'concl-meta';
           meta.textContent = metaParts.join(' • ');
           inner.appendChild(meta);
         }
+
+        // Detalhes (capataz, quantidade, estágio…)
+        const detParts = [];
+        if (m.capataz) detParts.push('Capataz ' + m.capataz);
+        if (m.quantidade) detParts.push(m.quantidade);
+        const detTexto = [detParts.join(' • '), m.detalhes].filter(Boolean).join(' • ');
+        if (detTexto) {
+          const desc = document.createElement('div');
+          desc.className = 'concl-bloco';
+          desc.innerHTML = '<span class="concl-bloco__label">Detalhes</span>' +
+            '<p class="concl-bloco__texto">' + escaparHTML(detTexto) + '</p>';
+          inner.appendChild(desc);
+        }
+
+        // Evidência
+        if (m.evidencia) {
+          const ev = document.createElement('div');
+          ev.className = 'concl-bloco';
+          ev.innerHTML = '<span class="concl-bloco__label">Evidência</span>' + evidenciaHTML(m.evidencia, m.evidenciaTexto);
+          inner.appendChild(ev);
+        }
+
         panel.appendChild(inner);
 
         item.appendChild(head);
@@ -486,6 +544,8 @@
   // Marca uma movimentação como validada: tira de pendentes e mostra
   // como "vara" na seção Validadas.
   function validarMovimentacao(dados, origem) {
+    dados.dataValidacao = agoraFormatado();
+    dados.supervisor = nomeSupervisor();
     movimentacoesValidadas.unshift(dados);
     if (origem) origem.remove();
     validarMovimentacaoPorId(dados.id);
@@ -503,7 +563,11 @@
     const info = item.querySelector('.pend-info')?.textContent || '';
     const capataz = (info.match(/Capataz:\s*([^\n]+?)(?:Origem|Retiro|Quantidade|$)/)?.[1] || '').trim();
     const quantidade = (info.match(/Quantidade:\s*([0-9]+\s*anima(?:l|is))/)?.[1] || '').trim();
-    validarMovimentacao({ id: item.dataset.movId, tipo, local, capataz, quantidade }, item);
+    const extra = MOV_DADOS[item.dataset.movId] || {};
+    validarMovimentacao({
+      id: item.dataset.movId, tipo, local, capataz, quantidade,
+      detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
+    }, item);
   }
 
   // Validar (linha desktop): remove a linha e sua linha de detalhe
@@ -512,12 +576,14 @@
     row.dataset.validado = '1';
     const cells = row.querySelectorAll('td');
     const det = row.nextElementSibling;
+    const extra = MOV_DADOS[row.dataset.movId] || {};
     validarMovimentacao({
       id: row.dataset.movId,
       tipo: (cells[0]?.textContent || 'Movimentação').trim(),
       local: (cells[1]?.textContent || '').trim(),
       capataz: (cells[2]?.textContent || '').replace(/^Capataz\s*/, '').trim(),
       quantidade: (cells[3]?.textContent || '').trim(),
+      detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
     }, row);
     if (det && det.classList.contains('pend-detalhe')) det.remove();
   }

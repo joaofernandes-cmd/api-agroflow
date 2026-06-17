@@ -36,7 +36,7 @@ describe('Tarefas', () => {
     mockedService.listarPorCategoria.mockResolvedValue([mockTarefa as any])
     mockedService.atualizarStatus.mockResolvedValue(mockTarefa as any)
     mockedService.atualizar.mockResolvedValue(mockTarefa as any)
-    mockedService.contarPorStatus.mockResolvedValue({ pendente: 1, aprovado: 0 })
+    mockedService.contarPorStatus.mockResolvedValue({ pendente: 1, concluido: 0, aprovado: 0 })
     mockedService.remover.mockResolvedValue(undefined)
   })
 
@@ -154,7 +154,7 @@ describe('Tarefas', () => {
     const response = await request(app).get('/tarefas/contagem/status').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
-    expect(response.body).toEqual({ pendente: 1, aprovado: 0 })
+    expect(response.body).toEqual({ pendente: 1, concluido: 0, aprovado: 0 })
   })
 
   it('GET /tarefas/:id deve buscar uma tarefa', async () => {

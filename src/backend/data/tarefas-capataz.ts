@@ -39,7 +39,7 @@ const TAREFAS: TarefaBase[] = [
     data: '16/06/2026 às 08:00',
     criadaEm: '2026-06-15T14:00:00',
     descricao:
-      'Percorrer as cercas do retiro e verificar se há partes danificadas. Registrar o que precisar de conserto e abrir chamado de infraestrutura.',
+      'Percorrer as cercas do retiro e verificar se há partes danificadas. Registrar o que precisar de conserto e abrir ticket de infraestrutura.',
   },
   {
     titulo: 'Conferência do gado',

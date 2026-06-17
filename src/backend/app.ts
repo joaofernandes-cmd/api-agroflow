@@ -23,6 +23,19 @@ app.set('views', path.join(__dirname, '../views'))
 // Habilita leitura de JSON em todas as requests.
 app.use(express.json())
 
+// Disponibiliza a config PÚBLICA do Supabase para as views (upload de evidências
+// do capataz). A anon key é uma chave pública por design do Supabase. Definida
+// via .env: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_BUCKET, SUPABASE_FOLDER.
+app.use((_req, res, next) => {
+  res.locals.supabase = {
+    url: process.env.SUPABASE_URL || '',
+    anonKey: process.env.SUPABASE_ANON_KEY || '',
+    bucket: process.env.SUPABASE_BUCKET || '',
+    folder: process.env.SUPABASE_FOLDER || '',
+  }
+  next()
+})
+
 // Arquivos estáticos (CSS, imagens, etc.)
 app.use('/css', express.static(path.join(__dirname, '../views/css')))
 app.use('/js', express.static(path.join(__dirname, '../views/js')))
@@ -95,23 +108,17 @@ app.get('/capataz/movimentacao', (_req, res) => {
   res.render('capataz/movimentacao')
 })
 
-app.get('/capataz/chamado', (_req, res) => {
-  res.render('capataz/chamado')
+app.get('/capataz/ticket', (_req, res) => {
+  res.render('capataz/ticket')
 })
 
 app.use('/supervisor', autenticarViewPorCookie, exigirCargoView('supervisor'))
 
 app.get('/supervisor/home', (req, res) => {
-  // Tarefas que o supervisor delegou e o capataz ainda não realizou
-  // (status 'pendente'). Diferente de "aguardando revisão" (já feitas,
-  // esperando a validação do supervisor).
-  const tarefasDelegadas = tarefasCapataz.filter((t) => t.status === 'pendente')
-
   res.render('supervisor/home', {
     title: 'Início',
     css: 'supervisor',
     usuario: { nome: 'Luiz Felipe' }, // substituir pelo usuário da sessão
-    tarefasDelegadas,
   });
 });
 
