@@ -4,7 +4,7 @@ const RUNTIME_CACHE = `agroflow-capataz-runtime-${VERSION}`
 
 const PRECACHE_URLS = [
   '/manifest-capataz.json',
-  '/capataz-pwa.js?v=6',
+  '/capataz-pwa.js?v=7',
   '/capataz',
   '/capataz/home',
   '/capataz/tarefas',

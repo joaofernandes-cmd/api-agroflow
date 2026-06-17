@@ -205,15 +205,19 @@
     return fallback
   }
 
+  function erroSincronizacaoGenerico() {
+    return 'Não foi possível sincronizar o registro. Ele ficará salvo para nova tentativa.'
+  }
+
   async function uploadBinaryToSupabase(draft, usuarioId, destinoPadrao) {
     var config = getSupabaseConfig()
 
     if (!config || !config.url || !config.anonKey || !config.bucket) {
-      throw new Error('Configuração do Supabase ausente. O registro offline será mantido até o app conseguir enviar.')
+      throw new Error('Não foi possível enviar a mídia agora. O registro ficará salvo para nova tentativa.')
     }
 
     if (!draft || !draft.blob) {
-      throw new Error('Draft de mídia ausente.')
+      throw new Error('Não foi possível preparar a mídia. Capture a evidência novamente.')
     }
 
     var blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'application/octet-stream' })
@@ -236,10 +240,10 @@
     })
 
     if (!response.ok) {
-      var texto = await response.text().catch(function () {
+      await response.text().catch(function () {
         return ''
       })
-      throw new Error('Falha ao enviar mídia para o Supabase (' + response.status + '): ' + (texto || 'sem detalhes'))
+      throw new Error('Não foi possível enviar a mídia agora. O registro ficará salvo para nova tentativa.')
     }
 
     return {
@@ -314,7 +318,7 @@
       var data = await response.json().catch(function () {
         return {}
       })
-      var erro = data && data.error ? data.error : 'HTTP ' + response.status
+      var erro = data && data.error ? data.error : erroSincronizacaoGenerico()
       throw new Error(erro)
     }
 
@@ -456,7 +460,7 @@
         var data = await response.json().catch(function () {
           return {}
         })
-        throw new Error((data && data.error) || 'HTTP ' + response.status)
+        throw new Error((data && data.error) || erroSincronizacaoGenerico())
       }
 
       notifyQueueChange()
