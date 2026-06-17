@@ -780,21 +780,22 @@
 }
 .pend-detalhe__inner { padding: 6px 32px 18px; }
 
-/* Tabela */
+/* Tabela — cada linha é um card arredondado (mesmo padrão das varas) */
 .revisao-table-wrap {
-  background: var(--color-white);
+  background: transparent;
   overflow-x: auto;
 }
 
 .revisao-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 8px;   /* respiro vertical → cada linha vira um card */
   font-size: 13px;
 }
 
+/* Cabeçalho: só os rótulos das colunas, sem bloco */
 .revisao-table thead tr {
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  background: transparent;
 }
 
 .revisao-table thead th {
@@ -802,7 +803,7 @@
   font-weight: 600;
   color: var(--color-muted);
   text-align: center;
-  padding: 10px 16px;
+  padding: 4px 16px;
   white-space: nowrap;
 }
 
@@ -811,18 +812,32 @@
 .revisao-table tbody td:nth-child(6),
 .revisao-table tbody td:nth-child(7) { padding: 0 8px; }
 
+/* Altura compacta — igual às varas de validados */
 .revisao-table tbody tr {
-  border-bottom: 1px solid var(--color-border);
-  height: 56px;
+  height: 48px;
 }
 
-.revisao-table tbody tr.tr--alt { background: #fefefd; }
-
+/* Cada célula compõe o card branco arredondado da linha */
 .revisao-table tbody td {
   padding: 0 16px;
   color: var(--color-muted);
   text-align: center;
   vertical-align: middle;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Pontas arredondadas da linha */
+.revisao-table tbody td:first-child {
+  border-left: 1px solid var(--color-border);
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+.revisao-table tbody td:last-child {
+  border-right: 1px solid var(--color-border);
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
 }
 
 .revisao-table tbody td.td--bold {

@@ -117,7 +117,7 @@
     <section class="lista-secao">
       <h2 class="lista-secao__titulo">Validados</h2>
       <p class="lista-secao__sub">Chamados que você já validou</p>
-      <div id="tickets-validados"></div>
+      <div class="tickets-concluidas"></div>
     </section>
 
   </main>
@@ -142,10 +142,6 @@
     <!-- TopBar -->
     <header class="topbar" role="banner">
       <div class="topbar__lead">
-        <a href="/supervisor/home" class="topbar__back">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          Voltar para o início
-        </a>
         <h1 class="topbar__title">Tickets de Infraestrutura</h1>
       </div>
       <p class="topbar__date" id="data-hoje-desktop"></p>
@@ -177,7 +173,6 @@
         <table class="revisao-table" aria-label="Chamados pendentes">
           <thead>
             <tr>
-              <th class="td--accent"></th>
               <th>Chamado</th>
               <th>Retiro</th>
               <th>Data/Hora</th>
@@ -188,7 +183,6 @@
           </thead>
           <tbody id="tickets-ativos-tbody">
             <tr>
-              <td class="td--accent td--accent-red"></td>
               <td class="td--bold">Cerca danificada no pasto</td>
               <td>Puga</td>
               <td>Hoje, 08:24</td>
@@ -197,7 +191,6 @@
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
-              <td class="td--accent td--accent-yellow"></td>
               <td class="td--bold">Estoque de ração abaixo do mínimo</td>
               <td>Bodoquena 1</td>
               <td>Hoje, 10:45</td>
@@ -206,7 +199,6 @@
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr>
-              <td class="td--accent td--accent-red"></td>
               <td class="td--bold">Bomba d'água com falha</td>
               <td>Cristo</td>
               <td>Amanhã</td>
@@ -215,7 +207,6 @@
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
-              <td class="td--accent td--accent-red"></td>
               <td class="td--bold">Bebedouro com defeito</td>
               <td>CMB</td>
               <td>em 3 dias</td>
@@ -224,7 +215,6 @@
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr>
-              <td class="td--accent td--accent-blue"></td>
               <td class="td--bold">Veículo do retiro sem manutenção</td>
               <td>Bodoquena 2</td>
               <td>há 5 dias</td>
@@ -233,7 +223,6 @@
               <td><button class="btn-validar" data-action="validar">Validar</button></td>
             </tr>
             <tr class="tr--alt">
-              <td class="td--accent td--accent-yellow"></td>
               <td class="td--bold">Gerador sem combustível</td>
               <td>Bodoquena 1</td>
               <td>em 4 dias</td>
@@ -248,27 +237,8 @@
       <section class="lista-secao">
         <h2 class="lista-secao__titulo">Validados</h2>
         <p class="lista-secao__sub">Chamados que você já validou</p>
+        <div class="tickets-concluidas"></div>
       </section>
-      <div class="revisao-table-wrap">
-        <table class="revisao-table" aria-label="Chamados validados">
-          <thead>
-            <tr>
-              <th class="td--accent"></th>
-              <th>Chamado</th>
-              <th>Retiro</th>
-              <th>Data/Hora</th>
-              <th>Severidade</th>
-              <th>Status</th>
-              <th>Ação</th>
-            </tr>
-          </thead>
-          <tbody id="tickets-validados-tbody">
-            <tr id="tickets-vazio-desktop">
-              <td colspan="7" class="td--vazio">Nenhum chamado validado ainda.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </main>
   </div><!-- /desktop-main -->
 
@@ -291,37 +261,101 @@
     if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
   }
 
-  // Validar (mobile): move o card para "Validados", mais recente no topo
-  function validarCardMobile(card) {
-    if (!card || card.dataset.validado) return;
-    card.dataset.validado = '1';
-    const btn = card.querySelector('.btn-revisar');
-    if (btn) {
-      const badge = document.createElement('span');
-      badge.className = 'rev-badge rev-badge--concluido';
-      badge.textContent = 'Validado';
-      btn.replaceWith(badge);
-    }
-    const accent = card.querySelector('.ticket-card__accent');
-    if (accent) accent.className = 'ticket-card__accent ticket-card__accent--green';
-    const alvo = document.getElementById('tickets-validados');
-    if (alvo) alvo.prepend(card);
+  function escaparHTML(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // Chamados já validados (em memória) — mais recente no topo.
+  const ticketsValidados = [];
+
+  // Renderiza os chamados validados como "varas" que abrem na setinha,
+  // no mesmo padrão das tarefas validadas (nome + selo + ver mais; sem Ação).
+  function renderTicketsValidados() {
+    document.querySelectorAll('.tickets-concluidas').forEach(function (container) {
+      container.innerHTML = '';
+      if (!ticketsValidados.length) {
+        container.innerHTML = '<p class="concl-vazio">Nenhum chamado validado ainda.</p>';
+        return;
+      }
+      ticketsValidados.forEach(function (t) {
+        const titulo = escaparHTML(t.nome) + (t.retiro ? ' — ' + escaparHTML(t.retiro) : '');
+
+        const item = document.createElement('div');
+        item.className = 'concl-item';
+
+        const head = document.createElement('button');
+        head.type = 'button';
+        head.className = 'concl-head';
+        head.setAttribute('aria-expanded', 'false');
+        head.innerHTML =
+          '<span class="concl-title">' + titulo + '</span>' +
+          '<span class="concl-badge">Validado</span>' +
+          '<span class="concl-arrow" aria-hidden="true">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
+          '</span>';
+
+        const panel = document.createElement('div');
+        panel.className = 'concl-panel';
+        const inner = document.createElement('div');
+        inner.className = 'concl-panel__inner';
+        const metaParts = [];
+        if (t.severidade) metaParts.push('Severidade ' + t.severidade);
+        if (t.data) metaParts.push(t.data);
+        if (metaParts.length) {
+          const meta = document.createElement('p');
+          meta.className = 'concl-meta';
+          meta.textContent = metaParts.join(' • ');
+          inner.appendChild(meta);
+        }
+        panel.appendChild(inner);
+
+        item.appendChild(head);
+        item.appendChild(panel);
+        container.appendChild(item);
+
+        head.addEventListener('click', function () {
+          const aberto = item.classList.toggle('is-open');
+          head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+        });
+      });
+    });
+  }
+
+  // Marca um chamado como validado: tira da lista de pendentes e mostra
+  // como "vara" na seção Validados.
+  function validarTicket(dados, origem) {
+    ticketsValidados.unshift(dados);
+    if (origem) origem.remove();
+    renderTicketsValidados();
     atualizarBadgePendentes();
   }
 
-  // Validar (desktop): move a linha para a tabela "Validados", no topo
+  // Validar (mobile): tira o card de pendentes e some pra Validados
+  function validarCardMobile(card) {
+    if (!card || card.dataset.validado) return;
+    card.dataset.validado = '1';
+    const meta = (card.querySelector('.ticket-card__meta')?.textContent || '').split('•');
+    validarTicket({
+      nome: (card.querySelector('.ticket-card__name')?.textContent || 'Chamado').trim(),
+      retiro: (meta[0] || '').trim(),
+      data: (meta[1] || '').trim(),
+      severidade: (card.querySelector('.sev-badge')?.textContent || '').trim(),
+    }, card);
+  }
+
+  // Validar (desktop): tira a linha de pendentes e some pra Validados
   function validarLinhaDesktop(row) {
     if (!row || row.dataset.validado) return;
     row.dataset.validado = '1';
-    const statusCell = row.querySelector('td:nth-child(6) .badge');
-    if (statusCell) { statusCell.className = 'badge badge--green'; statusCell.textContent = 'Validado'; }
-    const acao = row.querySelector('td:last-child');
-    if (acao) acao.innerHTML = '<span class="badge badge--green">Validado</span>';
-    const vazio = document.getElementById('tickets-vazio-desktop');
-    if (vazio) vazio.remove();
-    const tbody = document.getElementById('tickets-validados-tbody');
-    if (tbody) tbody.prepend(row);
-    atualizarBadgePendentes();
+    const cells = row.querySelectorAll('td');
+    validarTicket({
+      nome: (row.querySelector('.td--bold')?.textContent || 'Chamado').trim(),
+      retiro: (cells[1]?.textContent || '').trim(),
+      data: (cells[2]?.textContent || '').trim(),
+      severidade: (cells[3]?.querySelector('.badge')?.textContent || '').trim(),
+    }, row);
   }
 
   // Botão "Validar" (card mobile ou linha desktop)
@@ -333,8 +367,9 @@
     });
   });
 
-  // Sincroniza o contador com a quantidade real de chamados pendentes ao abrir.
+  // Estado inicial: contador e lista de validados (vazia) ao abrir.
   atualizarBadgePendentes();
+  renderTicketsValidados();
 
   // Filtro de busca — mobile
   const searchMobile = document.querySelector('.tickets-search');
