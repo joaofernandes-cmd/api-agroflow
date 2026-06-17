@@ -251,6 +251,7 @@
 </div><!-- /layout-desktop -->
 
 <script src="/js/prioridade-seletor.js"></script>
+<script src="/js/delegadas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -281,10 +282,53 @@
     if (!ehOutro && input) input.value = '';
   }
 
+  // Lê a sessão do supervisor (se houver login). Sem token → modo demo.
+  function carregarSessao() {
+    try {
+      const token = localStorage.getItem('agroflow.token');
+      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+      if (!token || !usuarioRaw) return null;
+      return { token, usuario: JSON.parse(usuarioRaw) };
+    } catch {
+      return null;
+    }
+  }
+
+  // Resolve o id (UUID) do capataz pelo nome, dentro do retiro do supervisor.
+  async function idDoCapataz(sessao, nomeCapataz) {
+    const resp = await fetch('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, {
+      headers: { Authorization: 'Bearer ' + sessao.token },
+    });
+    if (!resp.ok) throw new Error('Não foi possível carregar os capatazes do retiro.');
+    const caps = await resp.json();
+    const alvo = (caps || []).find((c) => (c.nome || c.login) === nomeCapataz);
+    if (!alvo) throw new Error('Esse capataz não pertence ao seu retiro.');
+    return alvo.id;
+  }
+
+  // Modo real: cria a tarefa no backend (nasce com status 'pendente' = "não
+  // realizada"). Aparece em Tarefas → Não realizadas ao recarregar a tela.
+  async function delegarNoBackend(sessao, dados) {
+    const atribuida_a = await idDoCapataz(sessao, dados.capataz);
+    const resp = await fetch('/tarefas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sessao.token },
+      body: JSON.stringify({
+        atribuida_a,
+        descricao: dados.descricao,
+        categoria: dados.titulo,
+        prioridade: dados.prioridade,
+      }),
+    });
+    const corpo = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(corpo.error || 'Não foi possível delegar a tarefa.');
+    return corpo;
+  }
+
   // Delega a tarefa. Capataz e retiro são obrigatórios: o supervisor precisa
   // escolher um de cada. Os capatazes e retiros vêm da fonte única de
   // referência (renderizados no servidor), iguais às demais telas.
-  function enviarTarefa(event) {
+  async function enviarTarefa(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -315,7 +359,36 @@
       return;
     }
 
-    mostrarFeedback('Tarefa enviada com sucesso.', 'success');
+    // Título da tarefa: o texto da atividade escolhida (ou o que o supervisor
+    // escreveu em "Outro").
+    const titulo =
+      atividade.value === 'outro'
+        ? outro.value.trim()
+        : (atividade.selectedOptions[0]?.textContent || 'Tarefa').trim();
+
+    const dados = {
+      titulo,
+      retiro: retiro.value,
+      capataz: capataz.value,
+      prioridade: prioridade.value,
+      descricao: descricao.value.trim(),
+    };
+
+    const sessao = carregarSessao();
+    if (sessao) {
+      // Modo real: persiste no backend. Se falhar, mostra o motivo e não limpa.
+      try {
+        await delegarNoBackend(sessao, dados);
+      } catch (e) {
+        mostrarFeedback(e.message || 'Não foi possível delegar a tarefa.', 'error');
+        return;
+      }
+    } else if (window.DelegadasStore) {
+      // Modo demo (sem login): guarda no navegador para a tela de Tarefas ler.
+      DelegadasStore.adicionar(dados);
+    }
+
+    mostrarFeedback('Tarefa enviada. Já aparece em Tarefas → Não realizadas.', 'success');
     form.reset();
     if (window.PrioSeletor) PrioSeletor.resetarTodos();
     form.querySelectorAll('.dfield__select').forEach(atualizarEstadoSelect);

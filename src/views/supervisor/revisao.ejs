@@ -266,6 +266,7 @@
 </div><!-- /layout-desktop -->
 
 <script src="/js/tarefas-store.js"></script>
+<script src="/js/delegadas-store.js"></script>
 <script src="/js/contadores-pendentes.js"></script>
 <!-- DEMO: tarefas concluídas de exemplo (remover em produção) -->
 <script src="/js/seed-demo.js"></script>
@@ -335,8 +336,10 @@
   // Recalcula o contador "N Pendentes" ao lado da busca conforme as tarefas
   // vão sendo validadas (some uma de cima → o número cai).
   function atualizarBadgePendentes() {
-    const nMobile = document.querySelectorAll('.layout-mobile .pend-item').length;
-    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table tbody tr[data-tarefa-id]').length;
+    // Conta apenas as "Realizadas" (aguardando validação) — são as pendentes de
+    // ação do supervisor. As "Não realizadas" não entram no contador.
+    const nMobile = document.querySelectorAll('.layout-mobile .lista-secao--validar .pend-item').length;
+    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table--validar tbody tr[data-tarefa-id]').length;
     const badgeMobile = document.querySelector('.layout-mobile .revisao-badge-pendentes');
     const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
     if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
@@ -611,7 +614,7 @@
     if (alt) tr.className = 'tr--alt';
     tr.innerHTML =
       '<td class="td--bold"></td><td></td><td></td><td></td>' +
-      '<td><span class="badge badge--yellow">Pendente</span></td>' +
+      '<td><span class="badge badge--yellow">Realizada</span></td>' +
       '<td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>' +
       '<td><button class="btn-revisar" data-action="validar">Validar</button></td>';
     const tds = tr.querySelectorAll('td');
@@ -633,7 +636,7 @@
   }
 
   function renderPendentes(tarefas, nomes) {
-    const secMobile = document.querySelector('.layout-mobile .revisao-list .lista-secao');
+    const secMobile = document.querySelector('.layout-mobile .lista-secao--validar');
     if (secMobile) {
       secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
       if (!tarefas.length) {
@@ -646,7 +649,7 @@
       }
     }
 
-    const tbody = document.querySelector('.layout-desktop .revisao-table tbody');
+    const tbody = document.querySelector('.layout-desktop .revisao-table--validar tbody');
     if (tbody) {
       tbody.innerHTML = '';
       if (!tarefas.length) {
@@ -660,6 +663,139 @@
           tbody.appendChild(det);
         });
       }
+    }
+  }
+
+  // ── Não realizadas (status 'pendente' no backend) ────────────────────────
+  // Tarefas que o capataz ainda não concluiu. Aparecem só para informar —
+  // sem botão Validar ativo (não dá pra validar o que ainda não foi feito).
+  function cardMobileNaoRealizada(t, nomes) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const item = document.createElement('div');
+    item.className = 'pend-item';
+    item.dataset.tarefaId = t.id;
+    item.innerHTML =
+      '<div class="pend-head">' +
+        '<span class="pend-title"></span>' +
+        '<span class="badge badge--cinza">Não realizado</span>' +
+        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
+      '</div>' +
+      '<div class="pend-panel"><div class="pend-panel__inner"><p class="pend-info"></p></div></div>';
+    item.querySelector('.pend-title').textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
+    item.querySelector('.pend-info').innerHTML =
+      '<strong>Capataz:</strong> ' + escaparTexto(capataz) +
+      (retiro ? '<br><strong>Retiro:</strong> ' + escaparTexto(retiro) : '') +
+      '<br><strong>Delegada:</strong> ' + escaparTexto(tempoRelativo(t.data_criacao));
+    return item;
+  }
+
+  function linhaDesktopNaoRealizada(t, nomes, alt) {
+    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
+    const capataz = nomes[t.atribuida_a] || 'Capataz';
+    const tr = document.createElement('tr');
+    tr.dataset.tarefaId = t.id;
+    if (alt) tr.className = 'tr--alt';
+    tr.innerHTML =
+      '<td class="td--bold"></td><td></td><td></td><td></td>' +
+      '<td><span class="badge badge--cinza">Não realizado</span></td>' +
+      '<td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>';
+    const tds = tr.querySelectorAll('td');
+    tds[0].textContent = titulo;
+    tds[1].textContent = retiro;
+    tds[2].textContent = capataz;
+    tds[3].textContent = tempoRelativo(t.data_criacao);
+    return tr;
+  }
+
+  function renderNaoRealizadas(tarefas, nomes) {
+    const secMobile = document.querySelector('.layout-mobile .lista-secao--naorealizadas');
+    if (secMobile) {
+      secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
+      if (!tarefas.length) {
+        const vazio = document.createElement('p');
+        vazio.className = 'concl-vazio';
+        vazio.textContent = 'Nenhuma tarefa delegada pendente no momento.';
+        secMobile.appendChild(vazio);
+      } else {
+        tarefas.forEach(t => secMobile.appendChild(cardMobileNaoRealizada(t, nomes)));
+      }
+    }
+
+    const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
+    if (tbody) {
+      tbody.innerHTML = '';
+      if (!tarefas.length) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="6" class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</td>';
+        tbody.appendChild(tr);
+      } else {
+        tarefas.forEach((t, i) => tbody.appendChild(linhaDesktopNaoRealizada(t, nomes, i % 2 === 1)));
+      }
+    }
+  }
+
+  // ── Demo (sem login): tarefas recém-delegadas guardadas no navegador ──────
+  // Entram no TOPO de "Não realizadas", acima dos exemplos estáticos.
+  function cardMobileDelegadaDemo(t) {
+    const item = document.createElement('div');
+    item.className = 'pend-item';
+    item.dataset.tarefaId = t.id;
+    item.innerHTML =
+      '<div class="pend-head">' +
+        '<span class="pend-title"></span>' +
+        '<span class="badge badge--cinza">Não realizado</span>' +
+        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
+      '</div>' +
+      '<div class="pend-panel"><div class="pend-panel__inner"><p class="pend-info"></p></div></div>';
+    item.querySelector('.pend-title').textContent = t.retiro ? (t.titulo + ' — ' + t.retiro) : t.titulo;
+    item.querySelector('.pend-info').innerHTML =
+      '<strong>Capataz:</strong> ' + escaparTexto(t.capataz || 'Capataz') +
+      (t.retiro ? '<br><strong>Retiro:</strong> ' + escaparTexto(t.retiro) : '') +
+      '<br><strong>Delegada:</strong> ' + escaparTexto(t.dataDelegacao || '');
+    return item;
+  }
+
+  function linhaDesktopDelegadaDemo(t, alt) {
+    const tr = document.createElement('tr');
+    tr.dataset.tarefaId = t.id;
+    if (alt) tr.className = 'tr--alt';
+    tr.innerHTML =
+      '<td class="td--bold"></td><td></td><td></td><td></td>' +
+      '<td><span class="badge badge--cinza">Não realizado</span></td>' +
+      '<td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>';
+    const tds = tr.querySelectorAll('td');
+    tds[0].textContent = t.titulo;
+    tds[1].textContent = t.retiro || '';
+    tds[2].textContent = t.capataz ? ('Capataz ' + t.capataz) : 'Capataz';
+    tds[3].textContent = t.dataDelegacao || '';
+    return tr;
+  }
+
+  function renderDelegadasDemo() {
+    if (!window.DelegadasStore) return;
+    const itens = DelegadasStore.listar();
+    if (!itens.length) return;
+
+    // Mobile: insere no topo da seção, antes do primeiro exemplo estático.
+    const secMobile = document.querySelector('.layout-mobile .lista-secao--naorealizadas');
+    if (secMobile) {
+      secMobile.querySelectorAll('.concl-vazio').forEach(n => n.remove());
+      const ancora = secMobile.querySelector('.pend-item');
+      const frag = document.createDocumentFragment();
+      itens.forEach(t => frag.appendChild(cardMobileDelegadaDemo(t)));
+      if (ancora) secMobile.insertBefore(frag, ancora);
+      else secMobile.appendChild(frag);
+    }
+
+    // Desktop: insere no topo do corpo da tabela "Não realizadas".
+    const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
+    if (tbody) {
+      const vazio = tbody.querySelector('.concl-vazio');
+      if (vazio) { const tr = vazio.closest('tr'); if (tr) tr.remove(); }
+      const frag = document.createDocumentFragment();
+      itens.forEach((t, i) => frag.appendChild(linhaDesktopDelegadaDemo(t, i % 2 === 1)));
+      tbody.insertBefore(frag, tbody.firstChild);
     }
   }
 
@@ -763,9 +899,10 @@
     const sessao = carregarSessao();
     if (!sessao || !sessao.token) return; // sem login → mantém o exemplo estático
 
-    let pendentes, validadas;
+    let naoRealizadas, pendentes, validadas;
     try {
-      [pendentes, validadas] = await Promise.all([
+      [naoRealizadas, pendentes, validadas] = await Promise.all([
+        apiGet('/tarefas/status/pendente', sessao.token),
         apiGet('/tarefas/status/concluido', sessao.token),
         apiGet('/tarefas/status/aprovado', sessao.token),
       ]);
@@ -782,6 +919,7 @@
     } catch (e) { /* sem nomes: cai no rótulo genérico */ }
 
     modoReal = true;
+    renderNaoRealizadas(naoRealizadas || [], nomesCapatazes);
     renderPendentes(pendentes || [], nomesCapatazes);
     renderValidadas(validadas || [], nomesCapatazes);
     atualizarBadgePendentes();
@@ -789,6 +927,9 @@
 
   // Sincroniza o contador com a quantidade real de tarefas pendentes ao abrir.
   atualizarBadgePendentes();
+  // Sem login (demo): mostra as tarefas recém-delegadas guardadas no navegador.
+  // Com login: o carregarListasReais busca as 'pendente' direto do backend.
+  if (!carregarSessao()) renderDelegadasDemo();
   carregarListasReais();
 </script>
 
