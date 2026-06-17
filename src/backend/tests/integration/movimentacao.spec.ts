@@ -1,4 +1,4 @@
-import request from 'supertest'
+﻿import request from 'supertest'
 import app from '../../app'
 import { MovimentacaoService } from '../../services/movimentacao.service'
 import { mockMovimentacao, mockMovimentacaoValidada } from '../helpers/fixtures'
@@ -113,6 +113,32 @@ describe('Movimentacoes', () => {
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacao])
     expect(mockedService.filtrar).toHaveBeenCalledTimes(1)
+  })
+
+  it('GET /movimentacoes/filtrar deve rejeitar tipo invalido', async () => {
+    const response = await request(app)
+      .get('/movimentacoes/filtrar')
+      .query({
+        retiro: '00000000-0000-4000-8000-000000000001',
+        tipo: 'invalido',
+      })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Tipo de movimentação inválido' })
+    expect(mockedService.filtrar).not.toHaveBeenCalled()
+  })
+
+  it('GET /movimentacoes/filtrar deve rejeitar Status inválido', async () => {
+    const response = await request(app)
+      .get('/movimentacoes/filtrar')
+      .query({
+        retiro: '00000000-0000-4000-8000-000000000001',
+        status: 'invalido',
+      })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status de movimentação inválido' })
+    expect(mockedService.filtrar).not.toHaveBeenCalled()
   })
 
   it('POST /movimentacoes/sincronizar deve receber uma movimentacao sincronizada', async () => {

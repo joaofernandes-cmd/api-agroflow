@@ -4,6 +4,9 @@ import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 import { converterUUID } from '../models/uuid'
 
+const STATUS_TAREFA_VALIDOS: TarefaStatus[] = ['pendente', 'concluido', 'aprovado']
+const PRIORIDADES_TAREFA_VALIDAS: TarefaPrioridade[] = ['alta', 'media', 'baixa']
+
 function extrairTexto(valor: unknown): string | undefined {
   return typeof valor === 'string' ? valor : undefined
 }
@@ -25,6 +28,10 @@ export const TarefaController = {
 
       if (!retiro_id || !atribuida_a || !descricao || !categoria || !prioridade || !usuarioCriador) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+      }
+
+      if (!PRIORIDADES_TAREFA_VALIDAS.includes(prioridade)) {
+        return res.status(400).json({ error: 'Prioridade inválida' })
       }
 
       const retiroId = converterUUID(retiro_id)
@@ -56,6 +63,14 @@ export const TarefaController = {
 
   async sincronizarRecebida(req: Request, res: Response) {
     try {
+      if (req.body.status && !STATUS_TAREFA_VALIDOS.includes(req.body.status)) {
+        return res.status(400).json({ error: 'Status inválido' })
+      }
+
+      if (req.body.prioridade && !PRIORIDADES_TAREFA_VALIDAS.includes(req.body.prioridade)) {
+        return res.status(400).json({ error: 'Prioridade inválida' })
+      }
+
       const tarefa = await TarefaService.sincronizarRecebida(req.body)
       return res.status(201).json(tarefa)
     } catch (error) {
@@ -131,6 +146,10 @@ export const TarefaController = {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
+      if (!STATUS_TAREFA_VALIDOS.includes(status)) {
+        return res.status(400).json({ error: 'Status inválido' })
+      }
+
       const tarefas = await TarefaService.listarPorStatus(status, retiroUuid)
 
       return res.status(200).json(tarefas)
@@ -163,6 +182,10 @@ export const TarefaController = {
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      if (!PRIORIDADES_TAREFA_VALIDAS.includes(prioridade)) {
+        return res.status(400).json({ error: 'Prioridade inválida' })
       }
 
       const tarefas = await TarefaService.listarPorPrioridade(prioridade, retiroUuid)
@@ -202,6 +225,10 @@ export const TarefaController = {
 
       if (!status) {
         return res.status(400).json({ error: 'Status e obrigatorio' })
+      }
+
+      if (!STATUS_TAREFA_VALIDOS.includes(status)) {
+        return res.status(400).json({ error: 'Status inválido' })
       }
 
       const tarefa = await TarefaService.atualizarStatus(id, status)

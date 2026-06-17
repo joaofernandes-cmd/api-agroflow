@@ -3,6 +3,9 @@ import { MovimentacaoService } from '../services/movimentacao.service'
 import { MovimentacaoStatus, MovimentacaoTipo } from '../models/movimentacao.model'
 import { converterUUID } from '../models/uuid'
 
+const TIPOS_MOVIMENTACAO_VALIDOS: MovimentacaoTipo[] = ['nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros']
+const STATUS_MOVIMENTACAO_VALIDOS: MovimentacaoStatus[] = ['pendente', 'validado']
+
 function extrairTexto(valor: unknown): string | undefined {
   return typeof valor === 'string' ? valor : undefined
 }
@@ -58,6 +61,10 @@ function listaOuFallback<T extends string>(valor: unknown, fallback?: T[]): T[] 
   return fallback
 }
 
+function contemValorInvalido<T extends string>(valores: T[] | undefined, permitidos: readonly T[]): boolean {
+  return Boolean(valores?.some(valor => !permitidos.includes(valor)))
+}
+
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {
   if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
     return req.usuario.retiro_id
@@ -86,6 +93,10 @@ export const MovimentacaoController = {
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+      }
+
+      if (!TIPOS_MOVIMENTACAO_VALIDOS.includes(tipo)) {
+        return res.status(400).json({ error: 'Tipo de movimentação inválido' })
       }
 
       const retiroId = converterUUID(retiro_id)
@@ -133,6 +144,10 @@ export const MovimentacaoController = {
 
       if (!retiro_id || !capataz_id || !tipo || !estagio_vida) {
         return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+      }
+
+      if (!TIPOS_MOVIMENTACAO_VALIDOS.includes(tipo)) {
+        return res.status(400).json({ error: 'Tipo de movimentação inválido' })
       }
 
       const retiroId = converterUUID(retiro_id)
@@ -232,6 +247,14 @@ export const MovimentacaoController = {
 
       if (dataFim === null) {
         return res.status(400).json({ error: 'dataFim invalida' })
+      }
+
+      if (contemValorInvalido(tipos, TIPOS_MOVIMENTACAO_VALIDOS)) {
+        return res.status(400).json({ error: 'Tipo de movimentação inválido' })
+      }
+
+      if (contemValorInvalido(status, STATUS_MOVIMENTACAO_VALIDOS)) {
+        return res.status(400).json({ error: 'Status de movimentação inválido' })
       }
 
       const movimentacoes = await MovimentacaoService.filtrar(

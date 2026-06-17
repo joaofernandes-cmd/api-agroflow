@@ -1,4 +1,4 @@
-import request from 'supertest'
+﻿import request from 'supertest'
 import app from '../../app'
 import { TicketService } from '../../services/ticket.service'
 import { mockCapataz, mockTicket } from '../helpers/fixtures'
@@ -70,6 +70,38 @@ describe('Tickets', () => {
     expect(mockedService.criar).not.toHaveBeenCalled()
   })
 
+  it('POST /tickets deve rejeitar Categoria inválida', async () => {
+    const response = await request(app).post('/tickets').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      categoria: 'invalida',
+      localizacao: mockTicket.localizacao,
+      descricao: mockTicket.descricao,
+      prioridade: mockTicket.prioridade,
+      usuarioAbridorTicket: mockCapataz,
+      temEvidenciaDescritiva: true,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Categoria inválida' })
+    expect(mockedService.criar).not.toHaveBeenCalled()
+  })
+
+  it('POST /tickets deve rejeitar Prioridade inválida', async () => {
+    const response = await request(app).post('/tickets').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      categoria: 'cerca',
+      localizacao: mockTicket.localizacao,
+      descricao: mockTicket.descricao,
+      prioridade: 'urgente',
+      usuarioAbridorTicket: mockCapataz,
+      temEvidenciaDescritiva: true,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Prioridade inválida' })
+    expect(mockedService.criar).not.toHaveBeenCalled()
+  })
+
   it('POST /tickets deve rejeitar violacao de regra de negocio', async () => {
     mockedService.criar.mockRejectedValueOnce(
       new Error('Ticket rejeitado: ao menos uma evidência descritiva é obrigatória')
@@ -109,6 +141,24 @@ describe('Tickets', () => {
     expect(mockedService.sincronizarRecebida).toHaveBeenCalledTimes(1)
   })
 
+  it('POST /tickets/sincronizar deve rejeitar Status inválido', async () => {
+    const response = await request(app).post('/tickets/sincronizar').send({
+      id: mockTicket.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      aberto_por: mockCapataz.id,
+      categoria: mockTicket.categoria,
+      localizacao: mockTicket.localizacao,
+      descricao: mockTicket.descricao,
+      prioridade: mockTicket.prioridade,
+      status: 'invalido',
+      sincronizado: false,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status inválido' })
+    expect(mockedService.sincronizarRecebida).not.toHaveBeenCalled()
+  })
+
   it('GET /tickets deve listar todos os tickets', async () => {
     const response = await request(app).get('/tickets')
 
@@ -130,6 +180,14 @@ describe('Tickets', () => {
     expect(response.body).toEqual([mockTicket])
   })
 
+  it('GET /tickets/status deve rejeitar Status inválido', async () => {
+    const response = await request(app).get('/tickets/status').query({ status: 'invalido', retiroId: '00000000-0000-4000-8000-000000000001' })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status inválido' })
+    expect(mockedService.listarPorStatus).not.toHaveBeenCalled()
+  })
+
   it('GET /tickets/prioridade deve filtrar por prioridade', async () => {
     const response = await request(app).get('/tickets/prioridade').query({ prioridade: 'media', retiroId: '00000000-0000-4000-8000-000000000001' })
 
@@ -137,11 +195,27 @@ describe('Tickets', () => {
     expect(response.body).toEqual([mockTicket])
   })
 
+  it('GET /tickets/prioridade deve rejeitar Prioridade inválida', async () => {
+    const response = await request(app).get('/tickets/prioridade').query({ prioridade: 'urgente', retiroId: '00000000-0000-4000-8000-000000000001' })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Prioridade inválida' })
+    expect(mockedService.listarPorPrioridade).not.toHaveBeenCalled()
+  })
+
   it('GET /tickets/categoria deve filtrar por categoria', async () => {
     const response = await request(app).get('/tickets/categoria').query({ categoria: 'cerca', retiroId: '00000000-0000-4000-8000-000000000001' })
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTicket])
+  })
+
+  it('GET /tickets/categoria deve rejeitar Categoria inválida', async () => {
+    const response = await request(app).get('/tickets/categoria').query({ categoria: 'invalida', retiroId: '00000000-0000-4000-8000-000000000001' })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Categoria inválida' })
+    expect(mockedService.listarPorCategoria).not.toHaveBeenCalled()
   })
 
   it('GET /tickets/contagem/prioridade deve retornar contagem por prioridade', async () => {
@@ -176,6 +250,16 @@ describe('Tickets', () => {
     expect(response.body).toEqual(mockTicket)
   })
 
+  it('PATCH /tickets/:id/status deve rejeitar Status inválido', async () => {
+    const response = await request(app).patch('/tickets/00000000-0000-4000-8000-000000000401/status').send({
+      novoStatus: 'invalido',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status inválido' })
+    expect(mockedService.atualizarStatus).not.toHaveBeenCalled()
+  })
+
   it('PATCH /tickets/:id/prioridade deve alterar prioridade', async () => {
     const response = await request(app).patch('/tickets/00000000-0000-4000-8000-000000000401/prioridade').send({
       novaPrioridade: 'alta',
@@ -183,6 +267,16 @@ describe('Tickets', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockTicket)
+  })
+
+  it('PATCH /tickets/:id/prioridade deve rejeitar Prioridade inválida', async () => {
+    const response = await request(app).patch('/tickets/00000000-0000-4000-8000-000000000401/prioridade').send({
+      novaPrioridade: 'urgente',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Prioridade inválida' })
+    expect(mockedService.alterarPrioridade).not.toHaveBeenCalled()
   })
 
   it('PATCH /tickets/:id/atribuicao deve atribuir ticket', async () => {
