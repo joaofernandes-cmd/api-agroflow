@@ -166,18 +166,29 @@
       botao.textContent = 'Enviando...';
 
       const payload = montarPayload();
-      const response = await fetch('/tickets', {
+      const usuario = payload.usuarioAbridorTicket || CAPATAZ_DEMO;
+      const syncPayload = Object.assign({}, payload, {
+        aberto_por: usuario.id ?? CAPATAZ_DEMO.id,
+        status: 'pendente',
+        atribuido_a: null,
+        aprovado_por: null,
+        sincronizado: false,
+      });
+      delete syncPayload.usuarioAbridorTicket;
+      delete syncPayload.temEvidenciaDescritiva;
+
+      const resultado = await window.AgroFlowCapataz.fetchOrQueueOperation({
+        kind: 'ticket',
+        url: '/tickets/sincronizar',
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: syncPayload,
+        queueBody: syncPayload,
       });
 
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(data.error || 'Não foi possível criar o chamado');
-      }
-
-      mostrarFeedback('Chamado criado com sucesso.', 'success');
+      const mensagemSucesso = resultado.queued
+        ? 'Chamado salvo offline. Ele sera sincronizado automaticamente quando houver conexao.'
+        : 'Chamado criado e sincronizado com sucesso.';
+      mostrarFeedback(mensagemSucesso, 'success');
       document.querySelectorAll('.select, .input').forEach(el => {
         if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
           el.value = '';

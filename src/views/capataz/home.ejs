@@ -10,7 +10,10 @@
   <div class="saudacao">
     <h2 class="saudacao__titulo">Bom dia, Daniel Carvalho!</h2>
     <p class="saudacao__data" id="data-hoje"></p>
-    <span class="tag-sincronizado">✓ Sincronizado</span>
+    <div class="pwa-status" aria-live="polite">
+      <span class="tag-sincronizado pwa-status__pill" id="pwa-connection-status">Online</span>
+      <span class="pwa-status__queue" id="pwa-queue-status">Nenhum registro pendente</span>
+    </div>
   </div>
 
   <div class="conteudo">
@@ -50,6 +53,19 @@
           <span class="acao-card__sub">Veja suas tarefas a fazer</span>
         </span>
       </a>
+
+      <div class="pwa-install-row" aria-label="Instalação do aplicativo">
+        <button type="button" class="pwa-install-icon" id="btn-instalar-pwa" aria-label="Instalar app" title="Instalar app">
+          <span class="pwa-install-icon__glyph" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
+            </svg>
+          </span>
+          <span class="pwa-install-icon__label">Instalar app</span>
+        </button>
+        <p class="pwa-install__hint" id="pwa-install-hint" hidden></p>
+      </div>
     </div>
   </div>
 
