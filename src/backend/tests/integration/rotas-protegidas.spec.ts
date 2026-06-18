@@ -20,7 +20,7 @@ describe('Rotas protegidas', () => {
     const response = await request(app).get('/relatorios/movimentacoes')
 
     expect(response.status).toBe(401)
-    expect(response.body).toEqual({ error: 'Token nao informado' })
+    expect(response.body).toEqual({ error: 'Token não informado' })
   })
 
   it('deve bloquear rota de validacao para usuario autenticado sem cargo supervisor', async () => {
@@ -127,7 +127,7 @@ describe('Rotas protegidas', () => {
     const response = await request(app).get('/movimentacoes')
 
     expect(response.status).toBe(401)
-    expect(response.body).toEqual({ error: 'Token nao informado' })
+    expect(response.body).toEqual({ error: 'Token não informado' })
   })
 
   it('deve bloquear criacao de movimentacao para cargo diferente de capataz', async () => {
@@ -169,7 +169,7 @@ describe('Rotas protegidas', () => {
     const response = await request(app).get('/tarefas')
 
     expect(response.status).toBe(401)
-    expect(response.body).toEqual({ error: 'Token nao informado' })
+    expect(response.body).toEqual({ error: 'Token não informado' })
   })
 
   it('deve bloquear criacao de tarefa para capataz', async () => {
@@ -188,7 +188,7 @@ describe('Rotas protegidas', () => {
     const response = await request(app).get('/tickets')
 
     expect(response.status).toBe(401)
-    expect(response.body).toEqual({ error: 'Token nao informado' })
+    expect(response.body).toEqual({ error: 'Token não informado' })
   })
 
   it('deve bloquear criacao de ticket para supervisor', async () => {
@@ -219,7 +219,7 @@ describe('Rotas protegidas', () => {
     const response = await request(app).get('/evidencias')
 
     expect(response.status).toBe(401)
-    expect(response.body).toEqual({ error: 'Token nao informado' })
+    expect(response.body).toEqual({ error: 'Token não informado' })
   })
 
   it('deve bloquear criacao de evidencia para gerente', async () => {
@@ -238,7 +238,7 @@ describe('Rotas protegidas', () => {
     const response = await request(app).get('/sincronizacao/status')
 
     expect(response.status).toBe(401)
-    expect(response.body).toEqual({ error: 'Token nao informado' })
+    expect(response.body).toEqual({ error: 'Token não informado' })
   })
 
   it('deve bloquear relatorios de sincronizacao para capataz', async () => {
