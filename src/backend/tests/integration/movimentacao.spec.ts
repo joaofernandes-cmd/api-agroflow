@@ -64,6 +64,26 @@ describe('Movimentacoes', () => {
     expect(mockedService.criar).toHaveBeenCalledTimes(1)
   })
 
+  it('POST /movimentacoes deve aceitar tipo outro e normalizar para outros', async () => {
+    const response = await request(app).post('/movimentacoes').send({
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      capataz_id: 'user-003',
+      tipo: 'outro',
+      tipo_outro: 'Ajuste manual',
+      origem: 'Acurizal',
+      quantidade: 1,
+      estagio_vida: 'BEZERRO 0 A 7 MESES',
+    })
+
+    expect(response.status).toBe(201)
+    expect(mockedService.criar).toHaveBeenCalledWith(
+      expect.objectContaining({
+        tipo: 'outros',
+        tipo_outro: 'Ajuste manual',
+      })
+    )
+  })
+
   it('POST /movimentacoes deve rejeitar payload incompleto', async () => {
     const response = await request(app).post('/movimentacoes').send({
       retiro_id: '00000000-0000-4000-8000-000000000001',
@@ -113,6 +133,24 @@ describe('Movimentacoes', () => {
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacao])
     expect(mockedService.filtrar).toHaveBeenCalledTimes(1)
+  })
+
+  it('GET /movimentacoes/filtrar deve aceitar tipo outro e normalizar para outros', async () => {
+    const response = await request(app)
+      .get('/movimentacoes/filtrar')
+      .query({
+        retiro: '00000000-0000-4000-8000-000000000001',
+        tipo: 'outro',
+      })
+
+    expect(response.status).toBe(200)
+    expect(mockedService.filtrar).toHaveBeenCalledWith(
+      '00000000-0000-4000-8000-000000000001',
+      ['outros'],
+      ['pendente'],
+      undefined,
+      undefined
+    )
   })
 
   it('GET /movimentacoes/filtrar deve rejeitar tipo invalido', async () => {

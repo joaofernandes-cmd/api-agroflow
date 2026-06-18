@@ -5,6 +5,7 @@ import { converterUUID } from '../models/uuid'
 
 const TIPOS_MOVIMENTACAO_VALIDOS: MovimentacaoTipo[] = ['nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros']
 const STATUS_MOVIMENTACAO_VALIDOS: MovimentacaoStatus[] = ['pendente', 'validado']
+const TIPOS_MOVIMENTACAO_ACEITOS = [...TIPOS_MOVIMENTACAO_VALIDOS, 'outro'] as const
 
 function extrairTexto(valor: unknown): string | undefined {
   return typeof valor === 'string' ? valor : undefined
@@ -65,6 +66,26 @@ function contemValorInvalido<T extends string>(valores: T[] | undefined, permiti
   return Boolean(valores?.some(valor => !permitidos.includes(valor)))
 }
 
+function normalizarTipoMovimentacao(valor: unknown): MovimentacaoTipo | null {
+  if (valor === 'outro') {
+    return 'outros'
+  }
+
+  if (typeof valor === 'string' && TIPOS_MOVIMENTACAO_VALIDOS.includes(valor as MovimentacaoTipo)) {
+    return valor as MovimentacaoTipo
+  }
+
+  return null
+}
+
+function normalizarTiposMovimentacao(valores: string[] | undefined): MovimentacaoTipo[] | undefined {
+  if (!valores) {
+    return undefined
+  }
+
+  return valores.map(valor => normalizarTipoMovimentacao(valor)).filter((valor): valor is MovimentacaoTipo => valor !== null)
+}
+
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {
   if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
     return req.usuario.retiro_id
@@ -95,7 +116,9 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
-      if (!TIPOS_MOVIMENTACAO_VALIDOS.includes(tipo)) {
+      const tipoNormalizado = normalizarTipoMovimentacao(tipo)
+
+      if (!tipoNormalizado) {
         return res.status(400).json({ error: 'Tipo de movimentação inválido' })
       }
 
@@ -115,7 +138,7 @@ export const MovimentacaoController = {
         id: movimentacaoId,
         retiro_id: retiroId,
         capataz_id,
-        tipo,
+        tipo: tipoNormalizado,
         tipo_outro,
         origem,
         destino,
@@ -146,7 +169,9 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })
       }
 
-      if (!TIPOS_MOVIMENTACAO_VALIDOS.includes(tipo)) {
+      const tipoNormalizado = normalizarTipoMovimentacao(tipo)
+
+      if (!tipoNormalizado) {
         return res.status(400).json({ error: 'Tipo de movimentação inválido' })
       }
 
@@ -164,7 +189,7 @@ export const MovimentacaoController = {
       const movimentacao = await MovimentacaoService.sincronizarRecebida({
         retiro_id: retiroId,
         capataz_id,
-        tipo,
+        tipo: tipoNormalizado,
         tipo_outro,
         origem,
         destino,
@@ -225,7 +250,8 @@ export const MovimentacaoController = {
       // O WAD documenta os filtros como retiro, tipo, status, dataInicio e dataFim.
       // Mantemos aliases antigos para nao quebrar chamadas ja existentes.
       const retiro = retiroDaConsulta(req, extrairTexto(req.query.retiro) ?? extrairTexto(req.query.retiroId))
-      const tipos = listaOuFallback<MovimentacaoTipo>(req.query.tipo ?? req.query.tipos)
+      const tiposBrutos = listaOuFallback<string>(req.query.tipo ?? req.query.tipos)
+      const tipos = normalizarTiposMovimentacao(tiposBrutos)
       const statusBruto = req.query.status
       const status = listaOuFallback<MovimentacaoStatus>(statusBruto, undefined) ?? ['pendente']
       const dataInicio = converterData(req.query.dataInicio)
@@ -249,7 +275,7 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'dataFim inválida' })
       }
 
-      if (contemValorInvalido(tipos, TIPOS_MOVIMENTACAO_VALIDOS)) {
+      if (contemValorInvalido(tiposBrutos, TIPOS_MOVIMENTACAO_ACEITOS)) {
         return res.status(400).json({ error: 'Tipo de movimentação inválido' })
       }
 
