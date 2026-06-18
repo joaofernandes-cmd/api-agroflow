@@ -11,6 +11,10 @@
   var INSTALL_HINT_SELECTOR = '#pwa-install-hint'
   var CONNECTIVITY_CHECK_URL = '/health'
   var CONNECTIVITY_CHECK_TIMEOUT_MS = 2500
+  var MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024
+  var MAX_AUDIO_SIZE_BYTES = 10 * 1024 * 1024
+  var ALLOWED_PHOTO_MIME_TYPES = ['image/jpeg', 'image/png']
+  var ALLOWED_AUDIO_MIME_TYPES = ['audio/webm', 'audio/mp4', 'audio/ogg']
 
   var deferredInstallPrompt = null
   var bootstrapped = false
@@ -205,6 +209,37 @@
     return fallback
   }
 
+  function normalizeMimeType(mimeType) {
+    return String(mimeType || '').split(';')[0].trim().toLowerCase()
+  }
+
+  function criarErroValidacaoMidia(mensagem) {
+    var erro = new Error(mensagem)
+    erro.name = 'AgroFlowMediaValidationError'
+    return erro
+  }
+
+  function isErroValidacaoMidia(error) {
+    return error && error.name === 'AgroFlowMediaValidationError'
+  }
+
+  function validarMidia(blob, mimeType, destinoPadrao) {
+    var tipoNormalizado = normalizeMimeType(mimeType || (blob && blob.type))
+    var ehAudio = destinoPadrao === 'evidencias/audio'
+    var permitidos = ehAudio ? ALLOWED_AUDIO_MIME_TYPES : ALLOWED_PHOTO_MIME_TYPES
+    var tamanhoMaximo = ehAudio ? MAX_AUDIO_SIZE_BYTES : MAX_PHOTO_SIZE_BYTES
+
+    if (!tipoNormalizado || permitidos.indexOf(tipoNormalizado) === -1) {
+      throw criarErroValidacaoMidia('A mídia selecionada não é compatível. Use foto JPG/PNG ou áudio WebM/MP4/OGG.')
+    }
+
+    if (blob && blob.size > tamanhoMaximo) {
+      throw criarErroValidacaoMidia('A mídia selecionada é muito grande. Envie foto de até 5 MB ou áudio de até 10 MB.')
+    }
+
+    return tipoNormalizado
+  }
+
   function erroSincronizacaoGenerico() {
     return 'Não foi possível sincronizar o registro. Ele ficará salvo para nova tentativa.'
   }
@@ -221,8 +256,9 @@
     }
 
     var blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'application/octet-stream' })
+    var mimeType = validarMidia(blob, draft.mimeType, destinoPadrao)
     var pasta = config.folder || destinoPadrao
-    var extensao = inferExtension(draft.mimeType, destinoPadrao === 'evidencias/audio' ? 'webm' : 'jpg')
+    var extensao = inferExtension(mimeType, destinoPadrao === 'evidencias/audio' ? 'webm' : 'jpg')
     var nomeArquivo = [usuarioId || 'capataz', Date.now() + '.' + extensao].join('/')
     var caminho = (pasta + '/' + nomeArquivo).replace(/^\/+/, '')
     var baseUrl = config.url.replace(/\/+$/, '')
@@ -233,7 +269,7 @@
       headers: {
         apikey: config.anonKey,
         Authorization: 'Bearer ' + config.anonKey,
-        'Content-Type': draft.mimeType || 'application/octet-stream',
+        'Content-Type': mimeType,
         'x-upsert': 'true',
       },
       body: blob,
@@ -289,6 +325,20 @@
     }
 
     throw new Error('Tipo de evidência inválido.')
+  }
+
+  function validarMovimentacaoParaFila(body) {
+    if (!body || !body.evidenciaDraft) {
+      return
+    }
+
+    var draft = body.evidenciaDraft
+
+    if (draft.tipo === 'audio' || draft.tipo === 'foto') {
+      var destinoPadrao = draft.tipo === 'audio' ? 'evidencias/audio' : 'evidencias/foto'
+      var blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'application/octet-stream' })
+      validarMidia(blob, draft.mimeType, destinoPadrao)
+    }
   }
 
   async function executeQueuedOperation(operation) {
@@ -429,6 +479,11 @@
     var queueBody = config.queueBody || config.body
     var method = config.method || 'POST'
     var headers = config.headers || {}
+
+    if (config.kind === 'movimentacao') {
+      validarMovimentacaoParaFila(queueBody)
+    }
+
     var online = await detectConnectivity()
 
     if (!online) {
@@ -480,6 +535,10 @@
 
       return { queued: false, online: true, response: response }
     } catch (error) {
+      if (isErroValidacaoMidia(error)) {
+        throw error
+      }
+
       if (error && (error.name === 'TypeError' || error.name === 'AbortError')) {
         setKnownOnline(false)
       }

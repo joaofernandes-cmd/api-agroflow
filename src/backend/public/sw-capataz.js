@@ -1,10 +1,10 @@
-const VERSION = 'v7'
+const VERSION = 'v8'
 const STATIC_CACHE = `agroflow-capataz-static-${VERSION}`
 const RUNTIME_CACHE = `agroflow-capataz-runtime-${VERSION}`
 
 const PRECACHE_URLS = [
   '/manifest-capataz.json',
-  '/capataz-pwa.js?v=7',
+  '/capataz-pwa.js?v=8',
   '/capataz',
   '/capataz/home',
   '/capataz/tarefas',
