@@ -98,6 +98,18 @@ describe('Evidencias', () => {
     })
   })
 
+  it('POST /evidencias/audios deve rejeitar duracao invalida', async () => {
+    const response = await request(app).post('/evidencias/audios').send({
+      usuarioId: 'user-003',
+      urlArquivo: 'audio.mp3',
+      duracao: 'abc',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Duração inválida' })
+    expect(mockedService.criarAudio).not.toHaveBeenCalled()
+  })
+
   it('POST /evidencias/fotos deve rejeitar payload incompleto', async () => {
     const response = await request(app).post('/evidencias/fotos').send({
       usuarioId: 'user-003',
@@ -108,6 +120,19 @@ describe('Evidencias', () => {
     expect(response.body).toEqual({
       error: 'Usuário, arquivo, latitude e longitude são obrigatórios',
     })
+    expect(mockedService.criarFoto).not.toHaveBeenCalled()
+  })
+
+  it('POST /evidencias/fotos deve rejeitar coordenadas invalidas', async () => {
+    const response = await request(app).post('/evidencias/fotos').send({
+      usuarioId: 'user-003',
+      urlArquivo: 'foto.jpg',
+      latitude: 'abc',
+      longitude: -57.6,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Latitude ou longitude inválida' })
     expect(mockedService.criarFoto).not.toHaveBeenCalled()
   })
 

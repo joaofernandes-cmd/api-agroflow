@@ -14,6 +14,11 @@ function lerTarefaId(req: Request): UUID | null | undefined {
   return converterUUID(valor)
 }
 
+function numeroValido(valor: unknown): number | null {
+  const numero = Number(valor)
+  return Number.isFinite(numero) ? numero : null
+}
+
 export const EvidenciaController = {
   async listar(req: Request, res: Response) {
     try {
@@ -99,7 +104,13 @@ export const EvidenciaController = {
         return res.status(400).json({ error: 'Tarefa inválida' })
       }
 
-      const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo, Number(duracao), tarefaId ?? undefined)
+      const duracaoNumerica = numeroValido(duracao)
+
+      if (duracaoNumerica === null) {
+        return res.status(400).json({ error: 'Duração inválida' })
+      }
+
+      const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo, duracaoNumerica, tarefaId ?? undefined)
 
       return res.status(201).json(resultado)
     } catch (error) {
@@ -123,7 +134,20 @@ export const EvidenciaController = {
         return res.status(400).json({ error: 'Tarefa inválida' })
       }
 
-      const resultado = await EvidenciaService.criarFoto(usuarioId, urlArquivo, Number(latitude), Number(longitude), tarefaId ?? undefined)
+      const latitudeNumerica = numeroValido(latitude)
+      const longitudeNumerica = numeroValido(longitude)
+
+      if (latitudeNumerica === null || longitudeNumerica === null) {
+        return res.status(400).json({ error: 'Latitude ou longitude inválida' })
+      }
+
+      const resultado = await EvidenciaService.criarFoto(
+        usuarioId,
+        urlArquivo,
+        latitudeNumerica,
+        longitudeNumerica,
+        tarefaId ?? undefined
+      )
 
       return res.status(201).json(resultado)
     } catch (error) {
