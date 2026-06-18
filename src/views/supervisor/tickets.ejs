@@ -261,13 +261,16 @@
   // no mesmo padrão das tarefas validadas (nome + selo + ver mais; sem Ação).
   function renderTicketsValidados() {
     document.querySelectorAll('.tickets-concluidas').forEach(function (container) {
-      container.innerHTML = '';
+      container.replaceChildren();
       if (!ticketsValidados.length) {
-        container.innerHTML = '<p class="concl-vazio">Nenhum ticket validado ainda.</p>';
+        const vazio = document.createElement('p');
+        vazio.className = 'concl-vazio';
+        vazio.textContent = 'Nenhum ticket validado ainda.';
+        container.appendChild(vazio);
         return;
       }
       ticketsValidados.forEach(function (t) {
-        const titulo = escaparHTML(t.nome) + (t.retiro ? ' — ' + escaparHTML(t.retiro) : '');
+        const titulo = t.nome + (t.retiro ? ' — ' + t.retiro : '');
 
         const item = document.createElement('div');
         item.className = 'concl-item';
@@ -277,11 +280,12 @@
         head.className = 'concl-head';
         head.setAttribute('aria-expanded', 'false');
         head.innerHTML =
-          '<span class="concl-title">' + titulo + '</span>' +
+          '<span class="concl-title"></span>' +
           '<span class="concl-badge">Validado</span>' +
           '<span class="concl-arrow" aria-hidden="true">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
           '</span>';
+        head.querySelector('.concl-title').textContent = titulo;
 
         const panel = document.createElement('div');
         panel.className = 'concl-panel';
@@ -292,7 +296,10 @@
         if (t.severidade) {
           const tags = document.createElement('div');
           tags.className = 'concl-tags';
-          tags.innerHTML = '<span class="concl-prio concl-prio--' + sevClasse(t.severidade) + '">' + escaparHTML(t.severidade) + '</span>';
+          const prio = document.createElement('span');
+          prio.className = 'concl-prio concl-prio--' + sevClasse(t.severidade);
+          prio.textContent = t.severidade;
+          tags.appendChild(prio);
           inner.appendChild(tags);
         }
 
@@ -311,8 +318,14 @@
         if (t.descricao) {
           const desc = document.createElement('div');
           desc.className = 'concl-bloco';
-          desc.innerHTML = '<span class="concl-bloco__label">Descrição</span>' +
-            '<p class="concl-bloco__texto">' + escaparHTML(t.descricao) + '</p>';
+          const label = document.createElement('span');
+          label.className = 'concl-bloco__label';
+          label.textContent = 'Descrição';
+          const texto = document.createElement('p');
+          texto.className = 'concl-bloco__texto';
+          texto.textContent = t.descricao;
+          desc.appendChild(label);
+          desc.appendChild(texto);
           inner.appendChild(desc);
         }
 

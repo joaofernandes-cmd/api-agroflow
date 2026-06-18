@@ -262,13 +262,16 @@
   // padrão das tarefas/tickets validados (tipo + retiro + selo; sem Ação).
   function renderValidadas() {
     document.querySelectorAll('.movimentacoes-validadas').forEach(function (container) {
-      container.innerHTML = '';
+      container.replaceChildren();
       if (!movimentacoesValidadas.length) {
-        container.innerHTML = '<p class="concl-vazio">Nenhuma movimentação validada ainda.</p>';
+        const vazio = document.createElement('p');
+        vazio.className = 'concl-vazio';
+        vazio.textContent = 'Nenhuma movimentação validada ainda.';
+        container.appendChild(vazio);
         return;
       }
       movimentacoesValidadas.forEach(function (m) {
-        const titulo = escaparHTML(m.tipo) + (m.local ? ' — ' + escaparHTML(m.local) : '');
+        const titulo = m.tipo + (m.local ? ' — ' + m.local : '');
 
         const item = document.createElement('div');
         item.className = 'concl-item';
@@ -278,11 +281,12 @@
         head.className = 'concl-head';
         head.setAttribute('aria-expanded', 'false');
         head.innerHTML =
-          '<span class="concl-title">' + titulo + '</span>' +
+          '<span class="concl-title"></span>' +
           '<span class="concl-badge">Validada</span>' +
           '<span class="concl-arrow" aria-hidden="true">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
           '</span>';
+        head.querySelector('.concl-title').textContent = titulo;
 
         const panel = document.createElement('div');
         panel.className = 'concl-panel';
@@ -308,8 +312,14 @@
         if (detTexto) {
           const desc = document.createElement('div');
           desc.className = 'concl-bloco';
-          desc.innerHTML = '<span class="concl-bloco__label">Detalhes</span>' +
-            '<p class="concl-bloco__texto">' + escaparHTML(detTexto) + '</p>';
+          const label = document.createElement('span');
+          label.className = 'concl-bloco__label';
+          label.textContent = 'Detalhes';
+          const texto = document.createElement('p');
+          texto.className = 'concl-bloco__texto';
+          texto.textContent = detTexto;
+          desc.appendChild(label);
+          desc.appendChild(texto);
           inner.appendChild(desc);
         }
 
