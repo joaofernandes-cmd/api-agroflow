@@ -1,24 +1,35 @@
 import request from 'supertest'
 import app from '../../app'
 import { EvidenciaService } from '../../services/evidencia.service'
-import { mockEvidencia } from '../helpers/fixtures'
+import { TarefaService } from '../../services/tarefa.service'
+import { mockEvidencia, mockTarefa } from '../helpers/fixtures'
 
 jest.mock('../../services/evidencia.service', () => ({
   EvidenciaService: {
     listarTodas: jest.fn(),
     buscarPorId: jest.fn(),
+    buscarPorTarefa: jest.fn(),
     criarMensagem: jest.fn(),
     criarAudio: jest.fn(),
     criarFoto: jest.fn(),
   },
 }))
 
+jest.mock('../../services/tarefa.service', () => ({
+  TarefaService: {
+    buscarPorId: jest.fn(),
+  },
+}))
+
 const mockedService = EvidenciaService as jest.Mocked<typeof EvidenciaService>
+const mockedTarefaService = TarefaService as jest.Mocked<typeof TarefaService>
 
 describe('Evidencias', () => {
   beforeEach(() => {
     mockedService.listarTodas.mockResolvedValue([mockEvidencia as any])
     mockedService.buscarPorId.mockResolvedValue(mockEvidencia as any)
+    mockedService.buscarPorTarefa.mockResolvedValue([mockEvidencia as any])
+    mockedTarefaService.buscarPorId.mockResolvedValue(mockTarefa as any)
     mockedService.criarMensagem.mockResolvedValue({
       evidencia: mockEvidencia,
       mensagem: { evidencia_id: '00000000-0000-4000-8000-000000000501', conteudo: 'Mensagem descritiva valida' },
@@ -54,6 +65,15 @@ describe('Evidencias', () => {
 
     expect(response.status).toBe(404)
     expect(response.body).toEqual({ error: 'Evidência não encontrada' })
+  })
+
+  it('GET /evidencias/tarefa/:tarefaId deve buscar evidencias da tarefa', async () => {
+    const response = await request(app).get('/evidencias/tarefa/00000000-0000-4000-8000-000000000301')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual([mockEvidencia])
+    expect(mockedTarefaService.buscarPorId).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000301')
+    expect(mockedService.buscarPorTarefa).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000301')
   })
 
   it('POST /evidencias/mensagens deve criar evidenca de mensagem', async () => {

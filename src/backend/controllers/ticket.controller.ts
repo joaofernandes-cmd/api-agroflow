@@ -16,7 +16,7 @@ const CATEGORIAS_TICKET_VALIDAS: TicketCategoria[] = [
 ]
 
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+  if (req.usuario?.cargo === 'capataz') {
     return req.usuario.retiro_id
   }
 
@@ -27,10 +27,7 @@ export const TicketController = {
   async listarTodos(req: Request, res: Response) {
     try {
       const tickets = await TicketService.listarTodos()
-      const ticketsFiltrados = req.usuario?.cargo === 'supervisor'
-        ? tickets.filter(ticket => ticket.retiro_id === req.usuario?.retiro_id)
-        : tickets
-      return res.status(200).json(ticketsFiltrados)
+      return res.status(200).json(tickets)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar tickets' })
     }
@@ -50,10 +47,7 @@ export const TicketController = {
         return res.status(404).json({ error: 'Ticket não encontrado' })
       }
 
-      if (
-        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
-        ticket.retiro_id !== req.usuario.retiro_id
-      ) {
+      if (req.usuario?.cargo === 'capataz' && ticket.retiro_id !== req.usuario.retiro_id) {
         return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuário' })
       }
 

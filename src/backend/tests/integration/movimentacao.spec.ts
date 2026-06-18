@@ -116,7 +116,7 @@ describe('Movimentacoes', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockMovimentacao])
-    expect(mockedService.filtrar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000001')
+    expect(mockedService.listarTodas).toHaveBeenCalledTimes(1)
   })
 
   it('GET /movimentacoes/filtrar deve aplicar filtros', async () => {
@@ -249,6 +249,7 @@ describe('Movimentacoes', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockMovimentacao)
+    expect(mockedService.buscarPorId).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
     expect(mockedService.atualizar).toHaveBeenCalledTimes(1)
   })
 
@@ -257,6 +258,7 @@ describe('Movimentacoes', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockMovimentacaoValidada)
+    expect(mockedService.buscarPorId).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
     expect(mockedService.sincronizar).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000201')
   })
 

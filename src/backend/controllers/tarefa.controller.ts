@@ -12,11 +12,15 @@ function extrairTexto(valor: unknown): string | undefined {
 }
 
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+  if (req.usuario?.cargo === 'capataz') {
     return req.usuario.retiro_id
   }
 
   return valor
+}
+
+function capatazNaoEDonoDaTarefa(req: Request, atribuidaA: string): boolean {
+  return req.usuario?.cargo === 'capataz' && atribuidaA !== req.usuario.id
 }
 
 export const TarefaController = {
@@ -83,10 +87,7 @@ export const TarefaController = {
   async listarTodas(req: Request, res: Response) {
     try {
       const tarefas = await TarefaService.listarTodas()
-      const tarefasFiltradas = req.usuario?.cargo === 'supervisor'
-        ? tarefas.filter(tarefa => tarefa.retiro_id === req.usuario?.retiro_id)
-        : tarefas
-      return res.status(200).json(tarefasFiltradas)
+      return res.status(200).json(tarefas)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar tarefas' })
     }
@@ -106,11 +107,8 @@ export const TarefaController = {
         return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
-      if (
-        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
-        tarefa.retiro_id !== req.usuario.retiro_id
-      ) {
-        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuário' })
+      if (capatazNaoEDonoDaTarefa(req, tarefa.atribuida_a)) {
+        return res.status(403).json({ error: 'Acesso negado: tarefa de outro capataz' })
       }
 
       return res.status(200).json(tarefa)
@@ -231,11 +229,17 @@ export const TarefaController = {
         return res.status(400).json({ error: 'Status inválido' })
       }
 
-      const tarefa = await TarefaService.atualizarStatus(id, status)
+      const tarefaAtual = await TarefaService.buscarPorId(id)
 
-      if (!tarefa) {
+      if (!tarefaAtual) {
         return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
+
+      if (capatazNaoEDonoDaTarefa(req, tarefaAtual.atribuida_a)) {
+        return res.status(403).json({ error: 'Acesso negado: tarefa de outro capataz' })
+      }
+
+      const tarefa = await TarefaService.atualizarStatus(id, status)
 
       return res.status(200).json(tarefa)
     } catch (error) {

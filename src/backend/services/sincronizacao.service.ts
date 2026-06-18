@@ -20,6 +20,17 @@ function montarUrlApi(caminho: string): string {
   return `${obterBaseApi()}${caminho.startsWith('/') ? caminho : `/${caminho}`}`
 }
 
+const MENSAGEM_ERRO_SINCRONIZACAO = 'Não foi possível sincronizar os dados. Tente novamente.'
+
+function erroSincronizacao(categoria: string, response: Response): Error {
+  console.warn(`Falha ao sincronizar ${categoria}`, {
+    status: response.status,
+    statusText: response.statusText,
+  })
+
+  return new Error(MENSAGEM_ERRO_SINCRONIZACAO)
+}
+
 // RN03: Sincronização offline com detecção automática de conexão
 // RN07: Apenas dados com sincronizado=true entram em relatórios
 export const SincronizacaoService = {
@@ -179,7 +190,7 @@ export const SincronizacaoService = {
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar movimentação: HTTP ${response.status}`)
+      throw erroSincronizacao('movimentação', response)
     }
   },
 
@@ -192,7 +203,7 @@ export const SincronizacaoService = {
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar tarefa: HTTP ${response.status}`)
+      throw erroSincronizacao('tarefa', response)
     }
   },
 
@@ -205,7 +216,7 @@ export const SincronizacaoService = {
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar ticket: HTTP ${response.status}`)
+      throw erroSincronizacao('ticket', response)
     }
   },
 

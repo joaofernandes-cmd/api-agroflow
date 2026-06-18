@@ -87,11 +87,15 @@ function normalizarTiposMovimentacao(valores: string[] | undefined): Movimentaca
 }
 
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+  if (req.usuario?.cargo === 'capataz') {
     return req.usuario.retiro_id
   }
 
   return valor
+}
+
+function capatazNaoEDonoDaMovimentacao(req: Request, capatazId: string): boolean {
+  return req.usuario?.cargo === 'capataz' && capatazId !== req.usuario.id
 }
 
 export const MovimentacaoController = {
@@ -209,9 +213,7 @@ export const MovimentacaoController = {
 
   async listarTodas(req: Request, res: Response) {
     try {
-      const movimentacoes = req.usuario?.cargo === 'supervisor'
-        ? await MovimentacaoService.filtrar(req.usuario.retiro_id)
-        : await MovimentacaoService.listarTodas()
+      const movimentacoes = await MovimentacaoService.listarTodas()
       return res.status(200).json(movimentacoes)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar movimentações' })
@@ -232,11 +234,8 @@ export const MovimentacaoController = {
         return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
 
-      if (
-        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
-        movimentacao.retiro_id !== req.usuario.retiro_id
-      ) {
-        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuário' })
+      if (capatazNaoEDonoDaMovimentacao(req, movimentacao.capataz_id)) {
+        return res.status(403).json({ error: 'Acesso negado: movimentação de outro capataz' })
       }
 
       return res.status(200).json(movimentacao)
@@ -338,11 +337,17 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
-      const movimentacao = await MovimentacaoService.sincronizar(id)
+      const movimentacaoAtual = await MovimentacaoService.buscarPorId(id)
 
-      if (!movimentacao) {
+      if (!movimentacaoAtual) {
         return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
+
+      if (capatazNaoEDonoDaMovimentacao(req, movimentacaoAtual.capataz_id)) {
+        return res.status(403).json({ error: 'Acesso negado: movimentação de outro capataz' })
+      }
+
+      const movimentacao = await MovimentacaoService.sincronizar(id)
 
       return res.status(200).json(movimentacao)
     } catch (error) {
@@ -392,11 +397,17 @@ export const MovimentacaoController = {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
-      const movimentacao = await MovimentacaoService.atualizar(id, req.body)
+      const movimentacaoAtual = await MovimentacaoService.buscarPorId(id)
 
-      if (!movimentacao) {
+      if (!movimentacaoAtual) {
         return res.status(404).json({ error: 'Movimentação não encontrada' })
       }
+
+      if (capatazNaoEDonoDaMovimentacao(req, movimentacaoAtual.capataz_id)) {
+        return res.status(403).json({ error: 'Acesso negado: movimentação de outro capataz' })
+      }
+
+      const movimentacao = await MovimentacaoService.atualizar(id, req.body)
 
       return res.status(200).json(movimentacao)
     } catch (error) {

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { EvidenciaService } from '../services/evidencia.service'
+import { TarefaService } from '../services/tarefa.service'
 import { converterUUID, UUID } from '../models/uuid'
 
 // Lê o tarefa_id (opcional) do corpo da requisição.
@@ -17,6 +18,10 @@ function lerTarefaId(req: Request): UUID | null | undefined {
 function numeroValido(valor: unknown): number | null {
   const numero = Number(valor)
   return Number.isFinite(numero) ? numero : null
+}
+
+function capatazNaoEDonoDaTarefa(req: Request, atribuidaA: string): boolean {
+  return req.usuario?.cargo === 'capataz' && atribuidaA !== req.usuario.id
 }
 
 export const EvidenciaController = {
@@ -56,6 +61,16 @@ export const EvidenciaController = {
 
       if (tarefaId === null) {
         return res.status(400).json({ error: 'ID inválido' })
+      }
+
+      const tarefa = await TarefaService.buscarPorId(tarefaId)
+
+      if (!tarefa) {
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
+      }
+
+      if (capatazNaoEDonoDaTarefa(req, tarefa.atribuida_a)) {
+        return res.status(403).json({ error: 'Acesso negado: tarefa de outro capataz' })
       }
 
       const evidencias = await EvidenciaService.buscarPorTarefa(tarefaId)
