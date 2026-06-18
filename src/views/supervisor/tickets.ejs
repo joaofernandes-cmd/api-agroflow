@@ -250,6 +250,29 @@
       '<span class="evidencia__tipo">' + escaparHTML(tipo) + '</span></div>';
   }
 
+  function anexarEvidenciaSegura(container, tipo, texto) {
+    const label = document.createElement('span');
+    label.className = 'concl-bloco__label';
+    label.textContent = 'Evidência';
+    container.appendChild(label);
+
+    if (tipo === 'Texto') {
+      const p = document.createElement('p');
+      p.className = 'evidencia-texto';
+      p.textContent = texto || '';
+      container.appendChild(p);
+      return;
+    }
+
+    const box = document.createElement('div');
+    box.className = 'evidencia ' + (tipo === 'Áudio' ? 'evidencia--audio' : 'evidencia--foto');
+    const span = document.createElement('span');
+    span.className = 'evidencia__tipo';
+    span.textContent = tipo;
+    box.appendChild(span);
+    container.appendChild(box);
+  }
+
   // Descrição + evidência de cada ticket (fonte única, vinda do servidor —
   // o mesmo módulo que renderiza a lista acima).
   const TICKETS_DADOS = <%- JSON.stringify(ticketsDados) %>;
@@ -279,13 +302,31 @@
         head.type = 'button';
         head.className = 'concl-head';
         head.setAttribute('aria-expanded', 'false');
-        head.innerHTML =
-          '<span class="concl-title"></span>' +
-          '<span class="concl-badge">Validado</span>' +
-          '<span class="concl-arrow" aria-hidden="true">' +
-            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
-          '</span>';
-        head.querySelector('.concl-title').textContent = titulo;
+        const title = document.createElement('span');
+        title.className = 'concl-title';
+        title.textContent = titulo;
+        const badge = document.createElement('span');
+        badge.className = 'concl-badge';
+        badge.textContent = 'Validado';
+        const arrow = document.createElement('span');
+        arrow.className = 'concl-arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        const arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        arrowSvg.setAttribute('width', '18');
+        arrowSvg.setAttribute('height', '18');
+        arrowSvg.setAttribute('viewBox', '0 0 24 24');
+        arrowSvg.setAttribute('fill', 'none');
+        arrowSvg.setAttribute('stroke', 'currentColor');
+        arrowSvg.setAttribute('stroke-width', '2');
+        arrowSvg.setAttribute('stroke-linecap', 'round');
+        arrowSvg.setAttribute('stroke-linejoin', 'round');
+        const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        arrowPath.setAttribute('d', 'm6 9 6 6 6-6');
+        arrowSvg.appendChild(arrowPath);
+        arrow.appendChild(arrowSvg);
+        head.appendChild(title);
+        head.appendChild(badge);
+        head.appendChild(arrow);
 
         const panel = document.createElement('div');
         panel.className = 'concl-panel';
@@ -333,7 +374,7 @@
         if (t.evidencia) {
           const ev = document.createElement('div');
           ev.className = 'concl-bloco';
-          ev.innerHTML = '<span class="concl-bloco__label">Evidência</span>' + evidenciaHTML(t.evidencia, t.evidenciaTexto);
+          anexarEvidenciaSegura(ev, t.evidencia, t.evidenciaTexto);
           inner.appendChild(ev);
         }
 

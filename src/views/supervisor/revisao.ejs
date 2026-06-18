@@ -472,7 +472,7 @@
   }
 
   function renderEvidenciasSupervisor(container, evidencias) {
-    container.innerHTML = '';
+    container.replaceChildren();
     if (!evidencias || !evidencias.length) {
       const vazio = document.createElement('p');
       vazio.className = 'evidencia-texto';
@@ -592,7 +592,60 @@
     return { titulo: (descricao || 'Tarefa').slice(0, 60), retiro: '' };
   }
 
-  const SETA_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  function criarSetaSvg(tamanho, strokeWidth) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', String(tamanho || 18));
+    svg.setAttribute('height', String(tamanho || 18));
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', String(strokeWidth || 2));
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'm6 9 6 6 6-6');
+    svg.appendChild(path);
+    return svg;
+  }
+
+  function criarBotaoToggle() {
+    const button = document.createElement('button');
+    button.className = 'pend-toggle';
+    button.type = 'button';
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'Ver informações');
+    button.appendChild(criarSetaSvg(18, 2));
+    return button;
+  }
+
+  function criarBotaoValidar(desabilitado) {
+    const button = document.createElement('button');
+    button.className = 'btn-revisar';
+    button.dataset.action = 'validar';
+    button.textContent = 'Validar';
+    if (desabilitado) {
+      button.disabled = true;
+      button.title = 'Aguardando o capataz realizar';
+    }
+    return button;
+  }
+
+  function criarBadge(texto, classe) {
+    const span = document.createElement('span');
+    span.className = 'badge ' + classe;
+    span.textContent = texto;
+    return span;
+  }
+
+  function criarLinhaVazia(colspan, texto) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = colspan;
+    td.className = 'concl-vazio';
+    td.textContent = texto;
+    tr.appendChild(td);
+    return tr;
+  }
 
   function preencherInfoPendencia(el, linhas) {
     el.replaceChildren();
@@ -612,18 +665,35 @@
     item.className = 'pend-item';
     item.dataset.tarefaId = t.id;
     item.dataset.real = '1';
-    item.innerHTML =
-      '<div class="pend-head">' +
-        '<span class="pend-title"></span>' +
-        '<button class="btn-revisar" data-action="validar">Validar</button>' +
-        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
-      '</div>' +
-      '<div class="pend-panel"><div class="pend-panel__inner">' +
-        '<p class="pend-info"></p>' +
-        '<div class="concl-bloco"><span class="concl-bloco__label">Evidência</span></div>' +
-      '</div></div>';
-    item.querySelector('.pend-title').textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
-    preencherInfoPendencia(item.querySelector('.pend-info'), [
+
+    const head = document.createElement('div');
+    head.className = 'pend-head';
+    const title = document.createElement('span');
+    title.className = 'pend-title';
+    title.textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
+    head.appendChild(title);
+    head.appendChild(criarBotaoValidar(false));
+    head.appendChild(criarBotaoToggle());
+
+    const panel = document.createElement('div');
+    panel.className = 'pend-panel';
+    const inner = document.createElement('div');
+    inner.className = 'pend-panel__inner';
+    const info = document.createElement('p');
+    info.className = 'pend-info';
+    const bloco = document.createElement('div');
+    bloco.className = 'concl-bloco';
+    const label = document.createElement('span');
+    label.className = 'concl-bloco__label';
+    label.textContent = 'Evidência';
+    bloco.appendChild(label);
+    inner.appendChild(info);
+    inner.appendChild(bloco);
+    panel.appendChild(inner);
+    item.appendChild(head);
+    item.appendChild(panel);
+
+    preencherInfoPendencia(info, [
       { label: 'Capataz', valor: capataz },
       { label: 'Retiro', valor: retiro },
       { label: 'Enviado', valor: tempoRelativo(t.data_criacao) },
@@ -638,26 +708,55 @@
     tr.dataset.tarefaId = t.id;
     tr.dataset.real = '1';
     if (alt) tr.className = 'tr--alt';
-    tr.innerHTML =
-      '<td class="td--bold"></td><td></td><td></td><td></td>' +
-      '<td><span class="badge badge--yellow">Realizada</span></td>' +
-      '<td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>' +
-      '<td><button class="btn-revisar" data-action="validar">Validar</button></td>';
-    const tds = tr.querySelectorAll('td');
-    tds[0].textContent = titulo;
-    tds[1].textContent = retiro;
-    tds[2].textContent = capataz;
-    tds[3].textContent = tempoRelativo(t.data_criacao);
+    [titulo, retiro, capataz, tempoRelativo(t.data_criacao)].forEach((texto, index) => {
+      const td = document.createElement('td');
+      if (index === 0) td.className = 'td--bold';
+      td.textContent = texto;
+      tr.appendChild(td);
+    });
+    const statusTd = document.createElement('td');
+    statusTd.appendChild(criarBadge('Realizada', 'badge--yellow'));
+    tr.appendChild(statusTd);
+    const verMaisTd = document.createElement('td');
+    const verMais = document.createElement('button');
+    verMais.className = 'ver-mais';
+    verMais.type = 'button';
+    verMais.setAttribute('aria-expanded', 'false');
+    verMais.appendChild(document.createTextNode('Ver mais '));
+    verMais.appendChild(criarSetaSvg(14, 2.5));
+    verMaisTd.appendChild(verMais);
+    tr.appendChild(verMaisTd);
+    const acaoTd = document.createElement('td');
+    acaoTd.appendChild(criarBotaoValidar(false));
+    tr.appendChild(acaoTd);
 
     const det = document.createElement('tr');
     det.className = 'pend-detalhe';
     det.setAttribute('hidden', '');
-    det.innerHTML =
-      '<td colspan="7"><div class="pend-detalhe__inner">' +
-        '<div class="concl-bloco"><span class="concl-bloco__label">Descrição</span><p class="concl-bloco__texto"></p></div>' +
-        '<div class="concl-bloco"><span class="concl-bloco__label">Evidência</span></div>' +
-      '</div></td>';
-    det.querySelector('.concl-bloco__texto').textContent = t.descricao || '';
+    const tdDetalhe = document.createElement('td');
+    tdDetalhe.colSpan = 7;
+    const detalheInner = document.createElement('div');
+    detalheInner.className = 'pend-detalhe__inner';
+    const desc = document.createElement('div');
+    desc.className = 'concl-bloco';
+    const descLabel = document.createElement('span');
+    descLabel.className = 'concl-bloco__label';
+    descLabel.textContent = 'Descrição';
+    const descTexto = document.createElement('p');
+    descTexto.className = 'concl-bloco__texto';
+    descTexto.textContent = t.descricao || '';
+    desc.appendChild(descLabel);
+    desc.appendChild(descTexto);
+    const ev = document.createElement('div');
+    ev.className = 'concl-bloco';
+    const evLabel = document.createElement('span');
+    evLabel.className = 'concl-bloco__label';
+    evLabel.textContent = 'Evidência';
+    ev.appendChild(evLabel);
+    detalheInner.appendChild(desc);
+    detalheInner.appendChild(ev);
+    tdDetalhe.appendChild(detalheInner);
+    det.appendChild(tdDetalhe);
     return [tr, det];
   }
 
@@ -677,11 +776,9 @@
 
     const tbody = document.querySelector('.layout-desktop .revisao-table--validar tbody');
     if (tbody) {
-      tbody.innerHTML = '';
+      tbody.replaceChildren();
       if (!tarefas.length) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td colspan="7" class="concl-vazio">Nenhuma tarefa pendente de revisão.</td>';
-        tbody.appendChild(tr);
+        tbody.appendChild(criarLinhaVazia(7, 'Nenhuma tarefa pendente de revisão.'));
       } else {
         tarefas.forEach((t, i) => {
           const [tr, det] = linhasDesktop(t, nomes, i % 2 === 1);
@@ -701,15 +798,25 @@
     const item = document.createElement('div');
     item.className = 'pend-item';
     item.dataset.tarefaId = t.id;
-    item.innerHTML =
-      '<div class="pend-head">' +
-        '<span class="pend-title"></span>' +
-        '<span class="badge badge--cinza">Não realizado</span>' +
-        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
-      '</div>' +
-      '<div class="pend-panel"><div class="pend-panel__inner"><p class="pend-info"></p></div></div>';
-    item.querySelector('.pend-title').textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
-    preencherInfoPendencia(item.querySelector('.pend-info'), [
+    const head = document.createElement('div');
+    head.className = 'pend-head';
+    const title = document.createElement('span');
+    title.className = 'pend-title';
+    title.textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
+    head.appendChild(title);
+    head.appendChild(criarBadge('Não realizado', 'badge--cinza'));
+    head.appendChild(criarBotaoToggle());
+    const panel = document.createElement('div');
+    panel.className = 'pend-panel';
+    const inner = document.createElement('div');
+    inner.className = 'pend-panel__inner';
+    const info = document.createElement('p');
+    info.className = 'pend-info';
+    inner.appendChild(info);
+    panel.appendChild(inner);
+    item.appendChild(head);
+    item.appendChild(panel);
+    preencherInfoPendencia(info, [
       { label: 'Capataz', valor: capataz },
       { label: 'Retiro', valor: retiro },
       { label: 'Delegada', valor: tempoRelativo(t.data_criacao) },
@@ -723,15 +830,18 @@
     const tr = document.createElement('tr');
     tr.dataset.tarefaId = t.id;
     if (alt) tr.className = 'tr--alt';
-    tr.innerHTML =
-      '<td class="td--bold"></td><td></td><td></td><td></td>' +
-      '<td><span class="badge badge--cinza">Não realizado</span></td>' +
-      '<td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>';
-    const tds = tr.querySelectorAll('td');
-    tds[0].textContent = titulo;
-    tds[1].textContent = retiro;
-    tds[2].textContent = capataz;
-    tds[3].textContent = tempoRelativo(t.data_criacao);
+    [titulo, retiro, capataz, tempoRelativo(t.data_criacao)].forEach((texto, index) => {
+      const td = document.createElement('td');
+      if (index === 0) td.className = 'td--bold';
+      td.textContent = texto;
+      tr.appendChild(td);
+    });
+    const statusTd = document.createElement('td');
+    statusTd.appendChild(criarBadge('Não realizado', 'badge--cinza'));
+    tr.appendChild(statusTd);
+    const acaoTd = document.createElement('td');
+    acaoTd.appendChild(criarBotaoValidar(true));
+    tr.appendChild(acaoTd);
     return tr;
   }
 
@@ -751,11 +861,9 @@
 
     const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
     if (tbody) {
-      tbody.innerHTML = '';
+      tbody.replaceChildren();
       if (!tarefas.length) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td colspan="6" class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</td>';
-        tbody.appendChild(tr);
+        tbody.appendChild(criarLinhaVazia(6, 'Nenhuma tarefa delegada pendente no momento.'));
       } else {
         tarefas.forEach((t, i) => tbody.appendChild(linhaDesktopNaoRealizada(t, nomes, i % 2 === 1)));
       }
@@ -768,15 +876,25 @@
     const item = document.createElement('div');
     item.className = 'pend-item';
     item.dataset.tarefaId = t.id;
-    item.innerHTML =
-      '<div class="pend-head">' +
-        '<span class="pend-title"></span>' +
-        '<span class="badge badge--cinza">Não realizado</span>' +
-        '<button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">' + SETA_SVG + '</button>' +
-      '</div>' +
-      '<div class="pend-panel"><div class="pend-panel__inner"><p class="pend-info"></p></div></div>';
-    item.querySelector('.pend-title').textContent = t.retiro ? (t.titulo + ' — ' + t.retiro) : t.titulo;
-    preencherInfoPendencia(item.querySelector('.pend-info'), [
+    const head = document.createElement('div');
+    head.className = 'pend-head';
+    const title = document.createElement('span');
+    title.className = 'pend-title';
+    title.textContent = t.retiro ? (t.titulo + ' — ' + t.retiro) : t.titulo;
+    head.appendChild(title);
+    head.appendChild(criarBadge('Não realizado', 'badge--cinza'));
+    head.appendChild(criarBotaoToggle());
+    const panel = document.createElement('div');
+    panel.className = 'pend-panel';
+    const inner = document.createElement('div');
+    inner.className = 'pend-panel__inner';
+    const info = document.createElement('p');
+    info.className = 'pend-info';
+    inner.appendChild(info);
+    panel.appendChild(inner);
+    item.appendChild(head);
+    item.appendChild(panel);
+    preencherInfoPendencia(info, [
       { label: 'Capataz', valor: t.capataz || 'Capataz' },
       { label: 'Retiro', valor: t.retiro },
       { label: 'Delegada', valor: t.dataDelegacao || '' },
@@ -788,15 +906,23 @@
     const tr = document.createElement('tr');
     tr.dataset.tarefaId = t.id;
     if (alt) tr.className = 'tr--alt';
-    tr.innerHTML =
-      '<td class="td--bold"></td><td></td><td></td><td></td>' +
-      '<td><span class="badge badge--cinza">Não realizado</span></td>' +
-      '<td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>';
-    const tds = tr.querySelectorAll('td');
-    tds[0].textContent = t.titulo;
-    tds[1].textContent = t.retiro || '';
-    tds[2].textContent = t.capataz ? ('Capataz ' + t.capataz) : 'Capataz';
-    tds[3].textContent = t.dataDelegacao || '';
+    [
+      t.titulo,
+      t.retiro || '',
+      t.capataz ? ('Capataz ' + t.capataz) : 'Capataz',
+      t.dataDelegacao || '',
+    ].forEach((texto, index) => {
+      const td = document.createElement('td');
+      if (index === 0) td.className = 'td--bold';
+      td.textContent = texto;
+      tr.appendChild(td);
+    });
+    const statusTd = document.createElement('td');
+    statusTd.appendChild(criarBadge('Não realizado', 'badge--cinza'));
+    tr.appendChild(statusTd);
+    const acaoTd = document.createElement('td');
+    acaoTd.appendChild(criarBotaoValidar(true));
+    tr.appendChild(acaoTd);
     return tr;
   }
 
@@ -849,11 +975,19 @@
     head.type = 'button';
     head.className = 'concl-head';
     head.setAttribute('aria-expanded', 'false');
-    head.innerHTML =
-      '<span class="concl-title"></span>' +
-      '<span class="concl-badge">Validada</span>' +
-      '<span class="concl-arrow" aria-hidden="true">' + SETA_SVG + '</span>';
-    head.querySelector('.concl-title').textContent = dados.retiro ? (dados.titulo + ' — ' + dados.retiro) : dados.titulo;
+    const title = document.createElement('span');
+    title.className = 'concl-title';
+    title.textContent = dados.retiro ? (dados.titulo + ' — ' + dados.retiro) : dados.titulo;
+    const badge = document.createElement('span');
+    badge.className = 'concl-badge';
+    badge.textContent = 'Validada';
+    const arrow = document.createElement('span');
+    arrow.className = 'concl-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.appendChild(criarSetaSvg(18, 2));
+    head.appendChild(title);
+    head.appendChild(badge);
+    head.appendChild(arrow);
 
     const panel = document.createElement('div');
     panel.className = 'concl-panel';
@@ -905,7 +1039,7 @@
 
   function renderValidadas(tarefas, nomes) {
     document.querySelectorAll('.concluidas-capataz').forEach(function (cont) {
-      cont.innerHTML = '';
+      cont.replaceChildren();
       if (!tarefas.length) {
         const vazio = document.createElement('p');
         vazio.className = 'concl-vazio';
