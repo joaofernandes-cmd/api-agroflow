@@ -226,6 +226,18 @@
       return (u && u.nome) ? u.nome.split(' ')[0] : 'Luiz Felipe';
     } catch (e) { return 'Luiz Felipe'; }
   }
+
+  function mostrarFeedbackValidacao(mensagem, tipo) {
+    document.querySelectorAll('.movimentacoes-feedback').forEach(el => el.remove());
+    const alvo = document.querySelector('.revisao-filter-bar') || document.querySelector('.revisao-list');
+    if (!alvo) return;
+    const feedback = document.createElement('p');
+    feedback.className = 'movimentacoes-feedback';
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    feedback.style.margin = '8px 0 0';
+    alvo.insertAdjacentElement('afterend', feedback);
+  }
   // Card de evidência (mesmo visual das tarefas): foto/áudio com ícone, texto com a nota.
   function evidenciaHTML(tipo, texto) {
     if (tipo === 'Texto') return '<p class="evidencia-texto">' + escaparHTML(texto || '') + '</p>';
@@ -386,13 +398,15 @@
     });
   }
 
-  // Valida no backend (não bloqueia a UI se falhar — é demo).
+  // Valida no backend. Sem sessão, mantém o comportamento demo/local.
   async function validarMovimentacaoPorId(movId) {
+    const token = localStorage.getItem('agroflow.token');
+    if (!token) return { ok: true, demo: true };
+
     try {
-      const token = localStorage.getItem('agroflow.token');
       const response = await fetch(`/validacoes/movimentacoes/${movId}/validar`, {
         method: 'PATCH',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (window.AgroFlowSession?.tratarResposta(response)) {
         return { ok: false, mensagem: 'Sessão expirada' };
@@ -404,14 +418,13 @@
     }
   }
 
-  // Marca uma movimentação como validada: tira de pendentes e mostra
-  // como "vara" na seção Validadas.
-  function validarMovimentacao(dados, origem) {
+  function finalizarValidacaoMovimentacao(dados, origem, detalhe) {
     dados.dataValidacao = agoraFormatado();
     dados.supervisor = nomeSupervisor();
     movimentacoesValidadas.unshift(dados);
     if (origem) origem.remove();
-    validarMovimentacaoPorId(dados.id);
+    if (detalhe && detalhe.classList.contains('pend-detalhe')) detalhe.remove();
+
     // Persiste no servidor (demo): remove a movimentação dos pendentes em
     // memória, para o contador (tela + home) continuar certo após recarregar.
     if (dados.id) {
@@ -420,6 +433,17 @@
     }
     renderValidadas();
     atualizarBadgePendentes();
+  }
+
+  // Marca uma movimentação como validada somente depois da confirmação do backend.
+  async function validarMovimentacao(dados, origem, detalhe) {
+    const resultado = await validarMovimentacaoPorId(dados.id);
+    if (!resultado.ok) {
+      if (origem) origem.dataset.validado = '';
+      mostrarFeedbackValidacao(resultado.mensagem || 'Não foi possível validar a movimentação.', 'error');
+      return;
+    }
+    finalizarValidacaoMovimentacao(dados, origem, detalhe);
   }
 
   // Validar (vara mobile): tira de pendentes e desce para Validadas
@@ -453,8 +477,7 @@
       capataz: (cells[2]?.textContent || '').replace(/^Capataz\s*/, '').trim(),
       quantidade: (cells[3]?.textContent || '').trim(),
       detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
-    }, row);
-    if (det && det.classList.contains('pend-detalhe')) det.remove();
+    }, row, det);
   }
 
   // Botão "Validar" (vara mobile ou linha desktop)

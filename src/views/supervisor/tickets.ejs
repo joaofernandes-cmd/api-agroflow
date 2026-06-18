@@ -232,6 +232,36 @@
       return (u && u.nome) ? u.nome.split(' ')[0] : 'Luiz Felipe';
     } catch (e) { return 'Luiz Felipe'; }
   }
+
+  function mostrarFeedbackValidacao(mensagem, tipo) {
+    document.querySelectorAll('.tickets-feedback').forEach(el => el.remove());
+    const alvo = document.querySelector('.tickets-filter-bar') || document.querySelector('.tickets-list');
+    if (!alvo) return;
+    const feedback = document.createElement('p');
+    feedback.className = 'tickets-feedback';
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    feedback.style.margin = '8px 0 0';
+    alvo.insertAdjacentElement('afterend', feedback);
+  }
+
+  async function validarTicketPorId(ticketId) {
+    const token = localStorage.getItem('agroflow.token');
+    if (!token) return { ok: true, demo: true };
+    try {
+      const response = await fetch(`/validacoes/tickets/${ticketId}/aprovar`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (window.AgroFlowSession?.tratarResposta(response)) {
+        return { ok: false, mensagem: 'Sessão expirada' };
+      }
+      const data = await response.json().catch(() => ({}));
+      return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
+    } catch (e) {
+      return { ok: false, mensagem: 'Falha de conexão' };
+    }
+  }
   function sevClasse(sev) {
     const s = (sev || '').toLowerCase();
     if (s.indexOf('alta') >= 0) return 'alta';
@@ -392,13 +422,12 @@
     });
   }
 
-  // Marca um ticket como validado: tira da lista de pendentes e mostra
-  // como "vara" na seção Validados.
-  function validarTicket(dados, origem) {
+  function finalizarValidacaoTicket(dados, origem, detalhe) {
     dados.dataValidacao = agoraFormatado();
     dados.supervisor = nomeSupervisor();
     ticketsValidados.unshift(dados);
     if (origem) origem.remove();
+    if (detalhe && detalhe.classList.contains('pend-detalhe')) detalhe.remove();
     renderTicketsValidados();
     atualizarBadgePendentes();
     // Persiste no servidor: remove o ticket dos pendentes em memória, para o
@@ -407,6 +436,17 @@
       fetch('/supervisor/tickets/' + encodeURIComponent(dados.id) + '/validar', { method: 'POST' })
         .catch(function () {});
     }
+  }
+
+  // Marca um ticket como validado somente depois da confirmação do backend.
+  async function validarTicket(dados, origem, detalhe) {
+    const resultado = await validarTicketPorId(dados.id);
+    if (!resultado.ok) {
+      if (origem) origem.dataset.validado = '';
+      mostrarFeedbackValidacao(resultado.mensagem || 'Não foi possível validar o ticket.', 'error');
+      return;
+    }
+    finalizarValidacaoTicket(dados, origem, detalhe);
   }
 
   // Validar (vara mobile): tira de pendentes e desce para Validados
@@ -442,8 +482,7 @@
       descricao: extra.descricao || '',
       evidencia: extra.evidencia || '',
       evidenciaTexto: extra.evidenciaTexto || '',
-    }, row);
-    if (det && det.classList.contains('pend-detalhe')) det.remove();
+    }, row, det);
   }
 
   // Botão "Validar" (vara mobile ou linha desktop)

@@ -381,28 +381,64 @@
       .catch(function () {});
   }
 
-  // Aceitar vara mobile (pend-item): some de cima e desce pra Concluídas
-  function aceitarPendItem(item) {
-    if (!item || item.dataset.aceito) return;
-    item.dataset.aceito = '1';
-    const nome = item.querySelector('.pend-title')?.textContent || 'Tarefa';
-    const partes = nome.split(' — ');
-    aceitarTarefa(item.dataset.tarefaId, partes[0].trim(), (partes[1] || '').trim());
+  function finalizarAceitePendItem(item) {
     item.remove();
     atualizarBadgePendentes();
   }
 
+  function finalizarAceiteLinhaDesktop(row) {
+    const det = row.nextElementSibling;
+    row.remove();
+    if (det && det.classList.contains('pend-detalhe')) det.remove();
+    atualizarBadgePendentes();
+  }
+
+  // Aceitar vara mobile (pend-item): some de cima e desce pra Concluídas
+  async function aceitarPendItem(item) {
+    if (!item || item.dataset.aceito) return;
+    item.dataset.aceito = '1';
+    const nome = item.querySelector('.pend-title')?.textContent || 'Tarefa';
+    const partes = nome.split(' — ');
+
+    if (modoReal) {
+      const r = await validarTarefaPorId(item.dataset.tarefaId);
+      if (r.ok) {
+        finalizarAceitePendItem(item);
+        recarregarValidadas();
+      } else {
+        item.dataset.aceito = '';
+        mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+        mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+      }
+      return;
+    }
+
+    aceitarTarefa(item.dataset.tarefaId, partes[0].trim(), (partes[1] || '').trim());
+    finalizarAceitePendItem(item);
+  }
+
   // Aceitar linha desktop (tabela): remove a linha e sua linha de detalhe
-  function aceitarLinhaDesktop(row) {
+  async function aceitarLinhaDesktop(row) {
     if (!row || row.dataset.aceito) return;
     row.dataset.aceito = '1';
     const titulo = (row.querySelector('.td--bold')?.textContent || 'Tarefa').trim();
     const retiro = (row.children[1]?.textContent || '').trim();
-    const det = row.nextElementSibling;
+
+    if (modoReal) {
+      const r = await validarTarefaPorId(row.dataset.tarefaId);
+      if (r.ok) {
+        finalizarAceiteLinhaDesktop(row);
+        recarregarValidadas();
+      } else {
+        row.dataset.aceito = '';
+        mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+        mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
+      }
+      return;
+    }
+
     aceitarTarefa(row.dataset.tarefaId, titulo, retiro);
-    row.remove();
-    if (det && det.classList.contains('pend-detalhe')) det.remove();
-    atualizarBadgePendentes();
+    finalizarAceiteLinhaDesktop(row);
   }
 
   // Botão "Validar" (delegado — vale para itens de exemplo e os vindos do backend)
