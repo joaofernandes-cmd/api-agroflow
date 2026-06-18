@@ -3,6 +3,7 @@ import { TicketService } from '../services/ticket.service'
 import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
 import { converterUUID } from '../models/uuid'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 const STATUS_TICKET_VALIDOS: TicketStatus[] = ['pendente', 'aprovado']
 const PRIORIDADES_TICKET_VALIDAS: TicketPrioridade[] = ['alta', 'media', 'baixa']
@@ -107,7 +108,7 @@ export const TicketController = {
       return res.status(201).json(ticket)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar ticket',
+        error: mensagemErroCliente(error, 'Erro ao criar ticket'),
       })
     }
   },
@@ -130,7 +131,7 @@ export const TicketController = {
       return res.status(201).json(ticket)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao sincronizar ticket',
+        error: mensagemErroCliente(error, 'Erro ao sincronizar ticket'),
       })
     }
   },
@@ -157,7 +158,7 @@ export const TicketController = {
       return res.status(200).json(tickets)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao listar tickets por status',
+        error: mensagemErroCliente(error, 'Erro ao listar tickets por status'),
       })
     }
   },
@@ -184,7 +185,7 @@ export const TicketController = {
       return res.status(200).json(tickets)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao listar tickets por prioridade',
+        error: mensagemErroCliente(error, 'Erro ao listar tickets por prioridade'),
       })
     }
   },
@@ -211,7 +212,7 @@ export const TicketController = {
       return res.status(200).json(tickets)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao listar tickets por categoria',
+        error: mensagemErroCliente(error, 'Erro ao listar tickets por categoria'),
       })
     }
   },
@@ -272,7 +273,7 @@ export const TicketController = {
       return res.status(200).json(ticket)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar status do ticket',
+        error: mensagemErroCliente(error, 'Erro ao atualizar status do ticket'),
       })
     }
   },
@@ -306,7 +307,7 @@ export const TicketController = {
       return res.status(200).json(ticket)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao alterar prioridade do ticket',
+        error: mensagemErroCliente(error, 'Erro ao alterar prioridade do ticket'),
       })
     }
   },
@@ -333,7 +334,7 @@ export const TicketController = {
       return res.status(200).json(ticket)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atribuir ticket',
+        error: mensagemErroCliente(error, 'Erro ao atribuir ticket'),
       })
     }
   },

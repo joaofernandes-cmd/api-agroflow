@@ -32,7 +32,7 @@ movimentacaoRoutes.get('/', exigirCargo('supervisor', 'gerente'), listarOuFiltra
 movimentacaoRoutes.get('/filtrar', exigirCargo('supervisor', 'gerente'), MovimentacaoController.filtrar)
 
 // Recebe movimentacoes sincronizadas vindas do cliente offline.
-// Esse endpoint cobre o contrato usado pelo fluxo de sincronizacao.
+// Esse endpoint cobre o contrato usado pelo fluxo de sincronização.
 movimentacaoRoutes.post('/sincronizar', exigirCargo('capataz'), MovimentacaoController.sincronizarRecebida)
 
 // Consulta movimentacoes ainda aguardando validacao.
@@ -42,7 +42,7 @@ movimentacaoRoutes.get('/pendentes', exigirCargo('supervisor', 'gerente'), Movim
 movimentacaoRoutes.get('/dashboard', exigirCargo('supervisor', 'gerente'), MovimentacaoController.buscarParaDashboard)
 movimentacaoRoutes.get('/contagem/tipo', exigirCargo('supervisor', 'gerente'), MovimentacaoController.contarPorTipo)
 
-// Rotas por ID ficam por ultimo para nao capturar rotas especificas.
+// Rotas por ID ficam por último para não capturar rotas específicas.
 movimentacaoRoutes.get('/:id', exigirCargo('supervisor', 'gerente'), MovimentacaoController.buscarPorId)
 movimentacaoRoutes.patch('/:id', exigirCargo('capataz', 'supervisor'), MovimentacaoController.atualizar)
 movimentacaoRoutes.patch('/:id/sincronizar', exigirCargo('capataz'), MovimentacaoController.sincronizar)

@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { MovimentacaoService } from '../services/movimentacao.service'
 import { MovimentacaoStatus, MovimentacaoTipo } from '../models/movimentacao.model'
 import { converterUUID } from '../models/uuid'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 const TIPOS_MOVIMENTACAO_VALIDOS: MovimentacaoTipo[] = ['nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros']
 const STATUS_MOVIMENTACAO_VALIDOS: MovimentacaoStatus[] = ['pendente', 'validado']
@@ -156,13 +157,13 @@ export const MovimentacaoController = {
       return res.status(201).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar movimentação',
+        error: mensagemErroCliente(error, 'Erro ao criar movimentação'),
       })
     }
   },
 
-  // Endpoint usado pelo cliente offline quando o backend recebe a sincronizacao.
-  // O registro chega completo e ja deve ser gravado como sincronizado no servidor.
+  // Endpoint usado pelo cliente offline quando o backend recebe a sincronização.
+  // O registro chega completo e já deve ser gravado como sincronizado no servidor.
   async sincronizarRecebida(req: Request, res: Response) {
     try {
       const { tipo, tipo_outro, origem, destino, quantidade, causa_obito, estagio_vida, evidencia } = req.body
@@ -206,7 +207,7 @@ export const MovimentacaoController = {
       return res.status(201).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao sincronizar movimentação',
+        error: mensagemErroCliente(error, 'Erro ao sincronizar movimentação'),
       })
     }
   },
@@ -247,7 +248,7 @@ export const MovimentacaoController = {
   async filtrar(req: Request, res: Response) {
     try {
       // O WAD documenta os filtros como retiro, tipo, status, dataInicio e dataFim.
-      // Mantemos aliases antigos para nao quebrar chamadas ja existentes.
+      // Mantemos aliases antigos para não quebrar chamadas já existentes.
       const retiro = retiroDaConsulta(req, extrairTexto(req.query.retiro) ?? extrairTexto(req.query.retiroId))
       const tiposBrutos = listaOuFallback<string>(req.query.tipo ?? req.query.tipos)
       const tipos = normalizarTiposMovimentacao(tiposBrutos)
@@ -412,7 +413,7 @@ export const MovimentacaoController = {
       return res.status(200).json(movimentacao)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar movimentação',
+        error: mensagemErroCliente(error, 'Erro ao atualizar movimentação'),
       })
     }
   },

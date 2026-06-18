@@ -221,7 +221,7 @@ export const MovimentacaoService = {
     })
   },
 
-  // RN07: relatorio usa apenas dados sincronizados e validados.
+  // RN07: relatório usa apenas dados sincronizados e validados.
   async buscarParaRelatorio(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 

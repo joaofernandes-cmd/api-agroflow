@@ -7,6 +7,7 @@ import {
 } from '../services/relatorio.service'
 import { relatorioDemo } from '../data/relatorio-demo'
 import { OPCOES_RETIRO } from '../data/referencia'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 // Converte uma string de query em Date.
 // Se o valor vier vazio, retorna undefined.
@@ -97,7 +98,7 @@ export const RelatorioController = {
       return res.status(200).json(dados)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao buscar dados de movimentações',
+        error: mensagemErroCliente(error, 'Erro ao buscar dados de movimentações'),
       })
     }
   },
@@ -123,7 +124,7 @@ export const RelatorioController = {
       return res.status(200).json(dados)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao buscar dados de tarefas',
+        error: mensagemErroCliente(error, 'Erro ao buscar dados de tarefas'),
       })
     }
   },
@@ -148,7 +149,7 @@ export const RelatorioController = {
       return res.status(200).json(relatorio)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao formatar relatório de movimentações',
+        error: mensagemErroCliente(error, 'Erro ao formatar relatório de movimentações'),
       })
     }
   },
@@ -171,7 +172,7 @@ export const RelatorioController = {
       return res.status(200).json(dados)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao buscar dados de tickets',
+        error: mensagemErroCliente(error, 'Erro ao buscar dados de tickets'),
       })
     }
   },
@@ -217,7 +218,7 @@ export const RelatorioController = {
       return res.status(200).send(arquivo)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao exportar relatório',
+        error: mensagemErroCliente(error, 'Erro ao exportar relatório'),
       })
     }
   },
@@ -236,7 +237,7 @@ export const RelatorioController = {
       return res.status(200).json(relatorio)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao gerar relatório semanal',
+        error: mensagemErroCliente(error, 'Erro ao gerar relatório semanal'),
       })
     }
   },
@@ -255,7 +256,7 @@ export const RelatorioController = {
       return res.status(200).json(relatorio)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao gerar relatório mensal',
+        error: mensagemErroCliente(error, 'Erro ao gerar relatório mensal'),
       })
     }
   },

@@ -2,10 +2,10 @@ import sql from '../database/connection'
 import { EvidenciaAudio, EvidenciaAudioInput } from '../models/evidencia-audio.model'
 import { UUID } from '../models/uuid'
 
-// Retorna todas as evidencias de audio cadastradas
+// Retorna todas as evidências de áudio cadastradas
 export const EvidenciaAudioRepository = {
 
-    // Ordena evidencias de audio por evidencia
+    // Ordena evidências de áudio por evidência
     async buscarTodos(): Promise<EvidenciaAudio[]> {
         return sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo

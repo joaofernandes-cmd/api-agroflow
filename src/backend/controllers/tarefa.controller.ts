@@ -3,6 +3,7 @@ import { TarefaService } from '../services/tarefa.service'
 import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 import { converterUUID } from '../models/uuid'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 const STATUS_TAREFA_VALIDOS: TarefaStatus[] = ['pendente', 'concluido', 'aprovado']
 const PRIORIDADES_TAREFA_VALIDAS: TarefaPrioridade[] = ['alta', 'media', 'baixa']
@@ -60,7 +61,7 @@ export const TarefaController = {
       return res.status(201).json(tarefa)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao criar tarefa'),
       })
     }
   },
@@ -79,7 +80,7 @@ export const TarefaController = {
       return res.status(201).json(tarefa)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao sincronizar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao sincronizar tarefa'),
       })
     }
   },
@@ -264,7 +265,7 @@ export const TarefaController = {
       return res.status(200).json(tarefa)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao atualizar tarefa'),
       })
     }
   },

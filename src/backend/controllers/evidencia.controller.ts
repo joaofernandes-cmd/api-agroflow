@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { EvidenciaService } from '../services/evidencia.service'
 import { TarefaService } from '../services/tarefa.service'
 import { converterUUID, UUID } from '../models/uuid'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 // Lê o tarefa_id (opcional) do corpo da requisição.
 // - ausente  → undefined (evidência criada sem vínculo com tarefa)
@@ -100,7 +101,7 @@ export const EvidenciaController = {
       return res.status(201).json(resultado)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar mensagem',
+        error: mensagemErroCliente(error, 'Erro ao criar mensagem'),
       })
     }
   },
@@ -130,7 +131,7 @@ export const EvidenciaController = {
       return res.status(201).json(resultado)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar áudio',
+        error: mensagemErroCliente(error, 'Erro ao criar áudio'),
       })
     }
   },
@@ -167,7 +168,7 @@ export const EvidenciaController = {
       return res.status(201).json(resultado)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar foto',
+        error: mensagemErroCliente(error, 'Erro ao criar foto'),
       })
     }
   },

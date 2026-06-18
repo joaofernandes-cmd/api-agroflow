@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { converterUUID } from '../models/uuid'
 import { SincronizacaoService } from '../services/sincronizacao.service'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 function converterUuidQuery(valor: unknown): string | undefined | null {
   if (valor === undefined || valor === null || valor === '') {
@@ -18,7 +19,7 @@ export const SincronizacaoController = {
       return res.status(200).json({ temConexao })
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao detectar conexão',
+        error: mensagemErroCliente(error, 'Erro ao detectar conexão'),
       })
     }
   },
@@ -30,7 +31,7 @@ export const SincronizacaoController = {
       return res.status(resultado.sucesso ? 200 : 400).json(resultado)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao sincronizar dados',
+        error: mensagemErroCliente(error, 'Erro ao sincronizar dados'),
       })
     }
   },
@@ -49,7 +50,7 @@ export const SincronizacaoController = {
       return res.status(200).json(dados)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao buscar movimentações para relatório',
+        error: mensagemErroCliente(error, 'Erro ao buscar movimentações para relatório'),
       })
     }
   },
@@ -68,7 +69,7 @@ export const SincronizacaoController = {
       return res.status(200).json(dados)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao buscar tarefas para relatório',
+        error: mensagemErroCliente(error, 'Erro ao buscar tarefas para relatório'),
       })
     }
   },
@@ -87,7 +88,7 @@ export const SincronizacaoController = {
       return res.status(200).json(dados)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao buscar tickets para dashboard',
+        error: mensagemErroCliente(error, 'Erro ao buscar tickets para dashboard'),
       })
     }
   },
@@ -99,7 +100,7 @@ export const SincronizacaoController = {
       return res.status(200).json(status)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao obter status de sincronização',
+        error: mensagemErroCliente(error, 'Erro ao obter status de sincronização'),
       })
     }
   },
@@ -111,7 +112,7 @@ export const SincronizacaoController = {
       return res.status(200).json({ mensagem })
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao obter mensagem de sincronização',
+        error: mensagemErroCliente(error, 'Erro ao obter mensagem de sincronização'),
       })
     }
   },

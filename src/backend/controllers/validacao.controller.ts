@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { converterUUID } from '../models/uuid'
 import { ValidacaoService } from '../services/validacao.service'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 function statusDoResultado(mensagem: string): number {
   const texto = mensagem.toLowerCase()
@@ -30,7 +31,7 @@ export const ValidacaoController = {
       return res.status(200).json({ podeValidar })
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao verificar permissão de validação',
+        error: mensagemErroCliente(error, 'Erro ao verificar permissão de validação'),
       })
     }
   },
@@ -58,7 +59,7 @@ export const ValidacaoController = {
       return res.status(resultado.sucesso ? 200 : statusDoResultado(resultado.mensagem)).json(resultado)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao validar movimentação',
+        error: mensagemErroCliente(error, 'Erro ao validar movimentação'),
       })
     }
   },
@@ -86,7 +87,7 @@ export const ValidacaoController = {
       return res.status(resultado.sucesso ? 200 : statusDoResultado(resultado.mensagem)).json(resultado)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao aprovar ticket',
+        error: mensagemErroCliente(error, 'Erro ao aprovar ticket'),
       })
     }
   },
@@ -114,7 +115,7 @@ export const ValidacaoController = {
       return res.status(resultado.sucesso ? 200 : statusDoResultado(resultado.mensagem)).json(resultado)
     } catch (error) {
       return res.status(500).json({
-        error: error instanceof Error ? error.message : 'Erro ao aprovar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao aprovar tarefa'),
       })
     }
   },
