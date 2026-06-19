@@ -461,7 +461,13 @@
         await removeQueuedOperation(item.id)
         sincronizados += 1
       } catch (error) {
-        erros.push('Erro ao sincronizar ' + item.kind + ': ' + (error instanceof Error ? error.message : 'erro desconhecido'))
+        console.warn('Falha ao sincronizar registro pendente no PWA do capataz', {
+          id: item.id,
+          kind: item.kind,
+          url: item.url,
+          error: error instanceof Error ? error.message : error,
+        })
+        erros.push(erroSincronizacaoGenerico())
       }
     }
 
