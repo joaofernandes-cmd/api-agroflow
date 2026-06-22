@@ -10,6 +10,11 @@
   overflow-y: auto;
 }
 
+/* Seção fora do grid desktop (entre greeting e main) — alinha com o restante */
+.section--inset {
+  padding: 0 32px;
+}
+
 /* BottomNav do gerente tem apenas 2 abas — distribui com mais espaço */
 .bottomnav--gerente { justify-content: space-evenly; }
 
