@@ -4188,7 +4188,7 @@ VALUES (?, ?, ?, ?);
 | US07 | Abrir chamados de infraestrutura | RF004, RF008 | Atendida — implementada e testada (CT-RF004, CT-RF008). |
 | US08 | Dashboard com indicadores da fazenda | RF010 | Atendida — implementada e testada (CT-RF010). |
 | US09 | Gerar relatórios semanais | RF007 | Atendida — implementada e testada (CT-RF007). |
-| US10 | Histórico de chamados | RF008 | Atendida — implementada e testada (CT-RF008). |
+| US10 | Histórico de chamados | RF008, RF010 | Atendida — Gerente visualiza histórico de chamados via dashboard (RF010/CT-RF010); gestão de tickets coberta pelo RF008 (CT-RF008). |
 | US11 | Filtrar dados por retiro | RF010, RF007 | Atendida — indicadores e relatórios segmentados por retiro, conforme RN10. |
 | US12 | Anexar fotos como evidência | RF004 | Atendida — implementada e testada (CT-RF004), incluindo validação de georreferenciamento (RN04). |
 
