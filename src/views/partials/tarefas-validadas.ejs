@@ -1,0 +1,42 @@
+<%# Lista de tarefas já validadas (status 'aprovado' no banco). Renderizada
+    server-side a partir de `tarefasValidadas`. Usada nas seções "Validadas"
+    mobile e desktop da tela de Revisão do supervisor. A evidência é carregada
+    sob demanda (GET /evidencias/tarefa/:id) quando a vara é aberta. %>
+<% if (!tarefasValidadas || !tarefasValidadas.length) { %>
+  <p class="concl-vazio">Nenhuma tarefa validada ainda.</p>
+<% } else { %>
+  <% tarefasValidadas.forEach(function (t) { %>
+    <div class="concl-item" data-tarefa-id="<%= t.id %>">
+      <button type="button" class="concl-head" aria-expanded="false">
+        <span class="concl-title"><%= t.titulo %><%= t.retiro ? ' — ' + t.retiro : '' %></span>
+        <span class="concl-badge">Validada</span>
+        <span class="concl-arrow" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </button>
+      <div class="concl-panel">
+        <div class="concl-panel__inner">
+          <div class="concl-tags">
+            <span class="concl-prio concl-prio--<%= t.prioridade %>"><%= t.nivel %></span>
+          </div>
+          <%
+            var partes = [];
+            if (t.data) partes.push('Validada em ' + t.data);
+            if (t.capataz) partes.push('Capataz ' + t.capataz);
+          %>
+          <% if (partes.length) { %>
+          <p class="concl-meta"><%= partes.join(' • ') %></p>
+          <% } %>
+          <div class="concl-bloco">
+            <span class="concl-bloco__label">Descrição</span>
+            <p class="concl-bloco__texto"><%= t.descricao %></p>
+          </div>
+          <div class="concl-bloco">
+            <span class="concl-bloco__label">Evidência</span>
+            <div class="js-evid-tarefa">Abra para ver a evidência.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+<% } %>

@@ -213,6 +213,76 @@ function montarDetalhesMov(m: Movimentacao, estagio: string): string {
   return partes.join(' · ')
 }
 
+// ── Tarefa ───────────────────────────────────────────────────────────────
+
+const COR_PRIORIDADE: Record<TarefaPrioridade, string> = {
+  alta: 'var(--alerta)',
+  media: '#f0ad00',
+  baixa: 'var(--sucesso)',
+}
+
+export interface TarefaExibicao {
+  id: UUID
+  titulo: string
+  retiro: string
+  capataz: string
+  supervisor: string
+  prioridade: TarefaPrioridade
+  status: TarefaStatus
+  statusFiltro: 'pendente' | 'concluida'
+  statusRotulo: string
+  nivel: string
+  classe: string
+  cor: string
+  prazo: string
+  categoria: string
+  data: string
+  descricao: string
+  autor: string
+  enviado: string
+}
+
+export function tarefaParaExibicao(t: Tarefa, ctx: ContextoApresentacao): TarefaExibicao {
+  // O título da atividade é guardado em `categoria` (o delegar envia o título
+  // ali); `descricao` guarda os detalhes. Ciclo: pendente → concluido → aprovado.
+  const concluida = t.status === 'concluido' || t.status === 'aprovado'
+  const supervisor = nomeUsuarioPorId(ctx, t.criada_por)
+  const dataCurta = t.data_criacao
+    ? new Date(t.data_criacao).toLocaleDateString('pt-BR')
+    : ''
+
+  let nivel: string
+  if (t.status === 'aprovado') nivel = 'Validada'
+  else if (t.status === 'concluido') nivel = 'Concluída'
+  else nivel = rotuloPrioridade(t.prioridade)
+
+  let statusRotulo: string
+  if (t.status === 'aprovado') statusRotulo = 'Validada'
+  else if (t.status === 'concluido') statusRotulo = 'Concluída'
+  else statusRotulo = 'Pendente'
+
+  return {
+    id: t.id,
+    titulo: t.categoria,
+    retiro: nomeRetiro(ctx, t.retiro_id),
+    capataz: nomeUsuarioPorId(ctx, t.atribuida_a),
+    supervisor,
+    prioridade: t.prioridade,
+    status: t.status,
+    statusFiltro: t.status === 'pendente' ? 'pendente' : 'concluida',
+    statusRotulo,
+    nivel,
+    classe: concluida ? 'concluida' : t.prioridade,
+    cor: concluida ? 'var(--primaria)' : (COR_PRIORIDADE[t.prioridade] ?? '#f0ad00'),
+    prazo: dataCurta,
+    categoria: t.categoria,
+    data: dataCurta,
+    descricao: t.descricao,
+    autor: `Criada por ${supervisor || 'Supervisor'}`,
+    enviado: tempoRelativo(t.data_criacao),
+  }
+}
+
 export function movimentacaoParaExibicao(m: Movimentacao, ctx: ContextoApresentacao): MovimentacaoExibicao {
   const tipo = TIPO_MOV_LABEL[m.tipo] ?? 'Movimentação'
   const retiro = nomeRetiro(ctx, m.retiro_id)
@@ -241,5 +311,73 @@ export function movimentacaoParaExibicao(m: Movimentacao, ctx: ContextoApresenta
     capataz: nomeUsuarioPorId(ctx, m.capataz_id),
     supervisor: nomeUsuarioPorId(ctx, m.validado_por),
     dataValidacao: m.status === 'validado' ? dataHora(m.data_validacao) : '',
+  }
+}
+
+// ── Relatório ──────────────────────────────────────────────────────────────
+// Monta os datasets prontos para a tela de relatórios a partir dos registros
+// já validados/aprovados do banco (a mesma fonte das telas). Como tudo aqui já
+// passou pela validação do supervisor, o status na planilha é sempre "Validado".
+
+export interface LinhaRelatorio {
+  celulas: string[]
+  status: 'Pendente' | 'Validado'
+}
+
+export interface DatasetRelatorio {
+  colunas: string[]
+  linhas: LinhaRelatorio[]
+  resumo: { total: number; validados: number; pendentes: number; retiros: number; periodo: string }
+}
+
+function resumirRelatorio(linhas: LinhaRelatorio[], retiros: string[], periodo: string) {
+  const validados = linhas.filter((l) => l.status === 'Validado').length
+  return {
+    total: linhas.length,
+    validados,
+    pendentes: linhas.length - validados,
+    retiros: new Set(retiros.filter(Boolean)).size,
+    periodo,
+  }
+}
+
+export function montarRelatorio(
+  ctx: ContextoApresentacao,
+  tickets: Ticket[],
+  tarefas: Tarefa[],
+  movimentacoes: Movimentacao[]
+): Record<'tarefas' | 'tickets' | 'movimentacoes', DatasetRelatorio> {
+  const linhasTarefas: LinhaRelatorio[] = tarefas.map((t) => {
+    const e = tarefaParaExibicao(t, ctx)
+    return { celulas: [e.data, e.retiro, e.titulo, rotuloPrioridade(t.prioridade)], status: 'Validado' }
+  })
+  const linhasTickets: LinhaRelatorio[] = tickets.map((t) => {
+    const e = ticketParaExibicao(t, ctx)
+    return { celulas: [e.dataValidacao || e.quando, e.retiro, e.nome, e.severidade], status: 'Validado' }
+  })
+  const linhasMov: LinhaRelatorio[] = movimentacoes.map((m) => {
+    const e = movimentacaoParaExibicao(m, ctx)
+    return {
+      celulas: [e.dataValidacao || '—', e.local, e.tipo, e.quantidade === null ? '—' : String(e.quantidade)],
+      status: 'Validado',
+    }
+  })
+
+  return {
+    tarefas: {
+      colunas: ['Data', 'Retiro', 'Tarefa', 'Prioridade', 'Status'],
+      linhas: linhasTarefas,
+      resumo: resumirRelatorio(linhasTarefas, tarefas.map((t) => nomeRetiro(ctx, t.retiro_id)), 'Tarefas validadas'),
+    },
+    tickets: {
+      colunas: ['Quando', 'Retiro', 'Ticket', 'Severidade', 'Status'],
+      linhas: linhasTickets,
+      resumo: resumirRelatorio(linhasTickets, tickets.map((t) => nomeRetiro(ctx, t.retiro_id)), 'Tickets aprovados'),
+    },
+    movimentacoes: {
+      colunas: ['Data', 'Retiro / Trajeto', 'Tipo', 'Qtd.', 'Status'],
+      linhas: linhasMov,
+      resumo: resumirRelatorio(linhasMov, movimentacoes.map((m) => nomeRetiro(ctx, m.retiro_id)), 'Movimentações validadas'),
+    },
   }
 }

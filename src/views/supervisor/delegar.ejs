@@ -4,10 +4,10 @@
   Variáveis esperadas pelo controller:
   - usuario: { nome: string }
   - css: ['supervisor']
-  - paresRetiroCapataz: { retiro: string, capataz: string }[]
-      Roster da fazenda: cada retiro já vem com o seu capataz responsável.
-      Vira um único campo combinado "Retiro — Capataz" (escolhe o retiro e o
-      capataz vem junto, sem risco de parear errado).
+  - capatazes: { id: UUID, nome: string, retiro: string }[]
+      Capatazes REAIS do banco (do retiro do supervisor). Vira um campo
+      combinado "Retiro — Capataz": o value é o UUID do capataz, usado direto
+      em atribuida_a, então a tarefa chega ao capataz certo.
   - tarefasAtivas: tarefas delegadas e ainda não realizadas (status pendente)
 %>
 
@@ -40,9 +40,9 @@
         <label class="dfield__label" for="retiro-capataz-mobile">Retiro / Capataz responsável</label>
         <div class="dfield__select-wrap">
           <select class="dfield__select" id="retiro-capataz-mobile" name="retiroCapataz" required aria-required="true">
-            <option value="" disabled selected>Escolha o retiro</option>
-            <% paresRetiroCapataz.forEach(function (p) { %>
-            <option value="<%= p.retiro %>" data-capataz="<%= p.capataz %>"><%= p.retiro %> — <%= p.capataz %></option>
+            <option value="" disabled selected>Escolha o capataz</option>
+            <% capatazes.forEach(function (c) { %>
+            <option value="<%= c.id %>" data-capataz="<%= c.nome %>"><%= c.retiro %> — <%= c.nome %></option>
             <% }) %>
           </select>
         </div>
@@ -139,9 +139,9 @@
             <label class="dfield__label dfield__label--dark" for="retiro-capataz-desktop">Retiro / Capataz responsável</label>
             <div class="dfield__select-wrap">
               <select class="dfield__select dfield__select--desktop" id="retiro-capataz-desktop" name="retiroCapataz" required>
-                <option value="" disabled selected>Escolha o retiro</option>
-                <% paresRetiroCapataz.forEach(function (p) { %>
-                <option value="<%= p.retiro %>" data-capataz="<%= p.capataz %>"><%= p.retiro %> — <%= p.capataz %></option>
+                <option value="" disabled selected>Escolha o capataz</option>
+                <% capatazes.forEach(function (c) { %>
+                <option value="<%= c.id %>" data-capataz="<%= c.nome %>"><%= c.retiro %> — <%= c.nome %></option>
                 <% }) %>
               </select>
             </div>
@@ -229,7 +229,6 @@
 </div><!-- /layout-desktop -->
 
 <script src="/js/prioridade-seletor.js"></script>
-<script src="/js/delegadas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -260,60 +259,32 @@
     if (!ehOutro && input) input.value = '';
   }
 
-  // Lê a sessão do supervisor (se houver login). Sem token → modo demo.
-  function carregarSessao() {
-    try {
-      const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-      if (!token || !usuarioRaw) return null;
-      return { token, usuario: JSON.parse(usuarioRaw) };
-    } catch {
-      return null;
-    }
-  }
-
-  // Resolve o id (UUID) do capataz pelo nome, dentro do retiro do supervisor.
-  async function idDoCapataz(sessao, nomeCapataz) {
-    const resp = await fetch('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, {
-      headers: { Authorization: 'Bearer ' + sessao.token },
-    });
-    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada.');
-    if (!resp.ok) throw new Error('Não foi possível carregar os capatazes do retiro.');
-    const caps = await resp.json();
-    const alvo = (caps || []).find((c) => (c.nome || c.login) === nomeCapataz);
-    if (!alvo) throw new Error('Esse capataz não pertence ao seu retiro.');
-    return alvo.id;
-  }
-
-  // Modo real: cria a tarefa no backend (nasce com status 'pendente' = "não
-  // realizada"). Aparece em Tarefas → Não realizadas ao recarregar a tela.
-  async function delegarNoBackend(sessao, dados) {
-    const atribuida_a = await idDoCapataz(sessao, dados.capataz);
+  // Cria a tarefa no BACKEND (o cookie de sessão autentica). Nasce com status
+  // 'pendente' e é atribuída ao capataz escolhido (atribuida_a = UUID), então
+  // aparece nas tarefas do capataz e em Revisão → Não realizadas.
+  async function delegarNoBackend(dados) {
     const resp = await fetch('/tarefas', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + sessao.token },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        atribuida_a,
+        atribuida_a: dados.capatazId,
         descricao: dados.descricao,
         categoria: dados.titulo,
         prioridade: dados.prioridade,
       }),
     });
-    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada.');
+    if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) throw new Error('Sessão expirada.');
     const corpo = await resp.json().catch(() => ({}));
     if (!resp.ok) throw new Error(corpo.error || 'Não foi possível delegar a tarefa.');
     return corpo;
   }
 
-  // Delega a tarefa. O supervisor escolhe um único campo combinado
-  // "Retiro — Capataz"; o capataz responsável vem pareado com o retiro na fonte
-  // única de referência (renderizada no servidor), evitando pares inconsistentes.
+  // Delega a tarefa ao capataz escolhido. O campo combinado "Retiro — Capataz"
+  // já traz o UUID do capataz real do banco como value.
   async function enviarTarefa(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    // Campo combinado: o value é o retiro e o capataz responsável vem no
-    // data-capataz da opção escolhida (pareados na fonte única de referência).
     const retiroCapataz = form.querySelector('select[name="retiroCapataz"]');
     const atividade = form.querySelector('select[name="atividade"]');
     const outro = form.querySelector('input[name="outroAtividade"]');
@@ -326,12 +297,9 @@
     }
 
     if (!retiroCapataz.value) {
-      mostrarFeedback('Escolha o retiro.', 'error');
+      mostrarFeedback('Escolha o capataz.', 'error');
       return;
     }
-
-    const retiro = retiroCapataz.value;
-    const capataz = retiroCapataz.selectedOptions[0]?.dataset.capataz || '';
 
     if (!atividade.value || !prioridade.value || !descricao.value.trim()) {
       mostrarFeedback('Preencha todos os campos obrigatórios.', 'error');
@@ -352,27 +320,19 @@
 
     const dados = {
       titulo,
-      retiro,
-      capataz,
+      capatazId: retiroCapataz.value, // UUID do capataz (value da opção)
       prioridade: prioridade.value,
       descricao: descricao.value.trim(),
     };
 
-    const sessao = carregarSessao();
-    if (sessao) {
-      // Modo real: persiste no backend. Se falhar, mostra o motivo e não limpa.
-      try {
-        await delegarNoBackend(sessao, dados);
-      } catch (e) {
-        mostrarFeedback(e.message || 'Não foi possível delegar a tarefa.', 'error');
-        return;
-      }
-    } else if (window.DelegadasStore) {
-      // Modo demo (sem login): guarda no navegador para a tela de Tarefas ler.
-      DelegadasStore.adicionar(dados);
+    try {
+      await delegarNoBackend(dados);
+    } catch (e) {
+      mostrarFeedback(e.message || 'Não foi possível delegar a tarefa.', 'error');
+      return;
     }
 
-    mostrarFeedback('Tarefa enviada. Já aparece em Tarefas → Não realizadas.', 'success');
+    mostrarFeedback('Tarefa enviada. Já aparece para o capataz e em Revisão → Não realizadas.', 'success');
     form.reset();
     if (window.PrioSeletor) PrioSeletor.resetarTodos();
     form.querySelectorAll('.dfield__select').forEach(atualizarEstadoSelect);

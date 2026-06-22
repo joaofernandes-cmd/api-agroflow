@@ -8,7 +8,7 @@
   </header>
 
   <div class="saudacao">
-    <h2 class="saudacao__titulo">Bom dia, Daniel Carvalho!</h2>
+    <h2 class="saudacao__titulo">Bom dia, <%= (typeof usuario !== 'undefined' && usuario.nome) ? usuario.nome : 'capataz' %>!</h2>
     <p class="saudacao__data" id="data-hoje"></p>
   </div>
 

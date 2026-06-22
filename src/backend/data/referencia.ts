@@ -42,26 +42,6 @@ export function slugRetiro(retiro: string): string {
 // Opções de retiro prontas para o filtro do relatório (rótulo + slug).
 export const OPCOES_RETIRO = RETIROS.map((r) => ({ rotulo: r, valor: slugRetiro(r) }))
 
-// Roster oficial da fazenda: cada retiro e o seu capataz responsável, na ordem
-// da planilha de referência (Plan_Inteli_ProjetoBRPEC). É a fonte do campo
-// combinado "Retiro — Capataz" da tela de Delegar: o supervisor escolhe o
-// retiro e o capataz responsável vem junto, sem risco de parear errado.
-// Os RETIROS/CAPATAZ_POR_RETIRO acima são o subconjunto de demonstração usado
-// pelos dados semente (tarefas/tickets/movimentações) e batem com este roster.
-export const PARES_RETIRO_CAPATAZ: { retiro: string; capataz: string }[] = [
-  { retiro: 'Acurizal', capataz: 'Rogério' },
-  { retiro: 'Aroeira', capataz: 'Lucas' },
-  { retiro: 'Baia Bonita', capataz: 'Marcelo' },
-  { retiro: 'Bodoquena 1', capataz: 'Fabiano' },
-  { retiro: 'Bodoquena 2', capataz: 'Valdineis' },
-  { retiro: 'Boqueirão', capataz: 'Daniel' },
-  { retiro: 'Caieira', capataz: 'João Paulo' },
-  { retiro: 'CMB', capataz: 'Alberto' },
-  { retiro: 'Confinamento', capataz: 'Valdineis' },
-  { retiro: 'Cristo', capataz: 'José Carlos' },
-  { retiro: 'Morada Nova', capataz: 'Valdeci' },
-  { retiro: 'Morro Azul', capataz: 'Daniel' },
-  { retiro: 'Puga', capataz: 'Manoel' },
-  { retiro: 'São Miguel', capataz: 'Wilson' },
-  { retiro: 'Vista Alegre', capataz: 'Ariovaldo' },
-]
+// Obs.: o roster oficial da fazenda (retiro → capataz responsável, conforme a
+// planilha Plan_Inteli_ProjetoBRPEC) vive no BANCO — semeado pela migração
+// 026-seed-roster-fazenda.sql e lido pela tela de Delegar. Não duplicar aqui.

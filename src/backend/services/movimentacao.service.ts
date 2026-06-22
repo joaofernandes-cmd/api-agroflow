@@ -9,6 +9,7 @@ import { MovimentacaoRepository } from '../repositories/movimentacao.repository'
 import { EvidenciaService } from './evidencia.service'
 import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movimentacao.repository'
 import { UUID } from '../models/uuid'
+import { correspondeRetiro } from '../utils/retiro-filtro'
 
 export const MovimentacaoService = {
   // RN01: valida os campos obrigatórios antes de persistir.
@@ -186,7 +187,7 @@ export const MovimentacaoService = {
   // RN09: filtra por retiro, tipo, status e periodo.
   // O período é aplicado sobre data_criacao para refletir a janela do registro.
   async filtrar(
-    retiroId: UUID,
+    retiroId: UUID | UUID[],
     tipos?: MovimentacaoTipo[],
     status?: MovimentacaoStatus[],
     dataInicio?: Date,
@@ -195,7 +196,7 @@ export const MovimentacaoService = {
     const todasMovimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return todasMovimentacoes.filter(m => {
-      if (m.retiro_id !== retiroId) {
+      if (!correspondeRetiro(m.retiro_id, retiroId)) {
         return false
       }
 
@@ -222,7 +223,7 @@ export const MovimentacaoService = {
   },
 
   // RN07: relatório usa apenas dados sincronizados e validados.
-  async buscarParaRelatorio(retiroId?: UUID): Promise<Movimentacao[]> {
+  async buscarParaRelatorio(retiroId?: UUID | UUID[]): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -234,7 +235,7 @@ export const MovimentacaoService = {
         return false
       }
 
-      if (retiroId && m.retiro_id !== retiroId) {
+      if (!correspondeRetiro(m.retiro_id, retiroId)) {
         return false
       }
 
@@ -243,7 +244,7 @@ export const MovimentacaoService = {
   },
 
   // RN10: dashboard tambem opera apenas com registros validados e sincronizados.
-  async buscarParaDashboard(retiroId?: UUID): Promise<Movimentacao[]> {
+  async buscarParaDashboard(retiroId?: UUID | UUID[]): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -255,7 +256,7 @@ export const MovimentacaoService = {
         return false
       }
 
-      if (retiroId && m.retiro_id !== retiroId) {
+      if (!correspondeRetiro(m.retiro_id, retiroId)) {
         return false
       }
 
@@ -284,7 +285,7 @@ export const MovimentacaoService = {
     return MovimentacaoRepository.buscarTodos()
   },
 
-  async listarPendentes(retiroId?: UUID): Promise<Movimentacao[]> {
+  async listarPendentes(retiroId?: UUID | UUID[]): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -292,7 +293,7 @@ export const MovimentacaoService = {
         return false
       }
 
-      if (retiroId && m.retiro_id !== retiroId) {
+      if (!correspondeRetiro(m.retiro_id, retiroId)) {
         return false
       }
 
@@ -300,7 +301,7 @@ export const MovimentacaoService = {
     })
   },
 
-  async contarPorTipo(retiroId?: UUID): Promise<Record<MovimentacaoTipo, number>> {
+  async contarPorTipo(retiroId?: UUID | UUID[]): Promise<Record<MovimentacaoTipo, number>> {
     const movimentacoes = await this.buscarParaDashboard(retiroId)
 
     const contagem: Record<MovimentacaoTipo, number> = {

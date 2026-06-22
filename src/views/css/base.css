@@ -492,7 +492,7 @@
 
 /* ════════════════════════════════════════════════════════════
    SHARED — Tarefas concluídas pelo capataz (acordeão "varas")
-   Usado em supervisor/revisao e gerente/home via TarefasStore.
+   Usado em supervisor/revisao e gerente/home (dados do banco).
    ════════════════════════════════════════════════════════════ */
 .concl-vazio { margin: 0; text-align: center; font-size: 14px; color: var(--color-muted); }
 

@@ -74,13 +74,6 @@
 <script src="/js/prioridade-seletor.js"></script>
 <script src="/js/aviso-sucesso.js"></script>
 <script>
-  const CAPATAZ_DEMO = {
-    id: '11111111-1111-1111-1111-111111111111',
-    nome: 'Capataz Daniel',
-    cargo: 'capataz',
-    retiro_id: '00000000-0000-4000-8000-000000000001',
-  };
-
   const feedback = document.getElementById('ticket-feedback');
   const botao = document.getElementById('btnEnviarTicket');
 
@@ -96,24 +89,6 @@
   }
   categoriaSelect.addEventListener('change', atualizarCategoriaOutro);
 
-  function getSession() {
-    try {
-      const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-
-      if (!usuarioRaw) {
-        return null;
-      }
-
-      return {
-        token,
-        usuario: JSON.parse(usuarioRaw),
-      };
-    } catch {
-      return null;
-    }
-  }
-
   function mostrarFeedback(mensagem, tipo) {
     if (!feedback) return;
     feedback.textContent = mensagem;
@@ -121,7 +96,6 @@
   }
 
   function montarPayload() {
-    const session = getSession();
     let categoria = document.getElementById('categoriaTicket').value;
     const prioridade = document.getElementById('prioridadeTicket').value;
     const localizacao = document.getElementById('localizacaoTicket').value.trim();
@@ -150,14 +124,14 @@
     const catLabel = categoriaOutro || categoriaSelect.options[categoriaSelect.selectedIndex].text;
     const descricao = (textoEvid && textoEvid.conteudo) ? textoEvid.conteudo : ('Ticket de ' + catLabel);
 
+    // Identidade (aberto_por) e retiro são preenchidos pelo SERVIDOR a partir do
+    // capataz autenticado (cookie) — não enviamos identidade pelo corpo.
     return {
-      retiro_id: session?.usuario?.retiro_id ?? CAPATAZ_DEMO.retiro_id,
       categoria,
       categoria_outro: categoriaOutro,
       localizacao,
       descricao,
       prioridade,
-      usuarioAbridorTicket: session?.usuario ?? CAPATAZ_DEMO,
       temEvidenciaDescritiva: true,
     };
   }
@@ -168,15 +142,12 @@
       botao.textContent = 'Enviando...';
 
       const payload = montarPayload();
-      const usuario = payload.usuarioAbridorTicket || CAPATAZ_DEMO;
       const syncPayload = Object.assign({}, payload, {
-        aberto_por: usuario.id ?? CAPATAZ_DEMO.id,
         status: 'pendente',
         atribuido_a: null,
         aprovado_por: null,
         sincronizado: false,
       });
-      delete syncPayload.usuarioAbridorTicket;
       delete syncPayload.temEvidenciaDescritiva;
 
       const resultado = await window.AgroFlowCapataz.fetchOrQueueOperation({

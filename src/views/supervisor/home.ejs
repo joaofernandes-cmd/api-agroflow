@@ -184,36 +184,6 @@
 
 </div><!-- /layout-desktop -->
 
-<script src="/js/contadores-pendentes.js"></script>
-<script>
-  /* Mantém os contadores dos blocos de "Acesso rápido" em sincronia com o
-     "retângulo" de pendentes de cada tela. Cada lista (Tarefas, Tickets,
-     Movimentações) grava o seu total ao validar um item; aqui só lemos.
-     Sem valor salvo ainda, cai no padrão (o total inicial de cada tela). */
-  (function () {
-    if (!window.ContadoresPendentes) return;
-    // Rótulo de cada bloco. O número BASE já vem do servidor (contadores),
-    // renderizado no próprio texto; o localStorage só sobrepõe para refletir,
-    // sem recarregar, validações feitas em outra tela na mesma sessão.
-    var CONFIG = {
-      tarefas:       { prefixoAria: 'Tarefas pendentes: ',         texto: function (n) { return n + ' aguardando revisão'; } },
-      tickets:       { prefixoAria: 'Tickets de infraestrutura: ', texto: function (n) { return n + (n === 1 ? ' pendente' : ' pendentes'); } },
-      movimentacoes: { prefixoAria: 'Movimentações: ',             texto: function (n) { return n + ' aguardando validação'; } },
-    };
-    document.querySelectorAll('.tile__sub[data-contador]').forEach(function (sub) {
-      var chave = sub.getAttribute('data-contador');
-      var cfg = CONFIG[chave];
-      if (!cfg) return;
-      var base = parseInt((sub.textContent.match(/\d+/) || ['0'])[0], 10) || 0;
-      var n = ContadoresPendentes.obter(chave, base);
-      var texto = cfg.texto(n);
-      sub.textContent = texto;
-      var tile = sub.closest('.tile');
-      if (tile) tile.setAttribute('aria-label', cfg.prefixoAria + texto);
-    });
-  })();
-</script>
-
 <script>
   /* Preenche a data atual dinamicamente */
   function formatarData() {
