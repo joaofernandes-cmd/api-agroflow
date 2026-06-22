@@ -168,15 +168,11 @@
   </form>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'movimentacao' }) %>
+  <%- include('../partials/aviso-sucesso') %>
 </main>
 
+<script src="/js/aviso-sucesso.js"></script>
 <script>
-  const CAPATAZ_DEMO = {
-    id: '11111111-1111-1111-1111-111111111111',
-    nome: 'Capataz Daniel',
-    cargo: 'capataz',
-    retiro_id: '00000000-0000-4000-8000-000000000001',
-  };
 
   const form = document.getElementById('form-movimentacao');
   const feedback = document.getElementById('mov-feedback');
@@ -771,12 +767,27 @@
     if (!ehOutro) outroMov.value = '';
   }
 
+  // Rola suavemente até o campo da evidência escolhida. Em telas pequenas a
+  // área revelada (sobretudo a câmera) nasce abaixo da dobra; o
+  // requestAnimationFrame garante que o display já foi aplicado antes de rolar.
+  function rolarParaEvidencia(tipo) {
+    const campo = tipo === 'foto' ? evidenciaFotoCampo
+      : tipo === 'audio' ? evidenciaAudioCampo
+      : tipo === 'mensagem' ? evidenciaMensagemCampo
+      : null;
+    if (!campo) return;
+    requestAnimationFrame(() => {
+      campo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   function selecionarEvidencia(tipo) {
     tipoEvidencia.value = tipo;
     document.querySelectorAll('.evidencia__btn').forEach(btn => {
       btn.classList.toggle('evidencia__btn--ativo', btn.dataset.evidencia === tipo);
     });
     atualizarEstadoEvidencia();
+    rolarParaEvidencia(tipo);
   }
 
   function obterEvidencia() {
@@ -847,7 +858,6 @@
     event.preventDefault();
 
     const session = getSession();
-    const usuario = session?.usuario ?? CAPATAZ_DEMO;
     const tipo = tipoMov.value;
     const origem = origemMov.value;
     const destino = destinoMov.value;
@@ -933,9 +943,9 @@
     }
 
     try {
+      // retiro_id e capataz_id são preenchidos pelo SERVIDOR a partir do capataz
+      // autenticado (cookie) — não enviamos identidade pelo corpo.
       const payload = {
-        retiro_id: usuario.retiro_id ?? CAPATAZ_DEMO.retiro_id,
-        capataz_id: usuario.id ?? CAPATAZ_DEMO.id,
         tipo,
         tipo_outro: tipo === 'outro' ? outroMov.value.trim() : null,
         origem: origem || null,
@@ -959,11 +969,6 @@
         queueBody: payload,
       });
 
-      const mensagemSucesso = resultado.queued
-        ? 'Movimentação salva offline. Ela será sincronizada automaticamente quando houver conexão.'
-        : 'Movimentação salva e sincronizada com sucesso.';
-
-      mostrarFeedback(mensagemSucesso, 'success');
       if (tipoEvidencia.value === 'audio') {
         await removerAudioDoIndexedDb();
         limparPreviewAudio();
@@ -978,6 +983,17 @@
       form.reset();
       atualizarCampos();
       selecionarEvidencia('');
+
+      // Confirmação em tela cheia (o capataz precisa ver claramente que deu certo).
+      window.AvisoSucesso.mostrar(
+        resultado.queued
+          ? 'Sua Movimentação foi salva no aparelho. Ela será enviada sozinha quando a internet voltar.'
+          : 'Sua Movimentação foi enviada para o supervisor.',
+        {
+          titulo: resultado.queued ? 'Movimentação salva!' : 'Movimentação enviada!',
+          aoFechar: function () { window.location.href = '/capataz/home'; },
+        }
+      );
     } catch (error) {
       mostrarFeedback(error instanceof Error ? error.message : 'Erro ao salvar movimentação.', 'error');
     } finally {

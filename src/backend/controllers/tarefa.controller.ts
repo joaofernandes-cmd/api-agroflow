@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { TarefaService } from '../services/tarefa.service'
+import { UsuarioService } from '../services/usuario.service'
 import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 import { converterUUID } from '../models/uuid'
@@ -28,8 +29,17 @@ export const TarefaController = {
   async criar(req: Request, res: Response) {
     try {
       const { id, atribuida_a, descricao, categoria, prioridade } = req.body
-      const retiro_id = req.usuario?.cargo === 'supervisor' ? req.usuario.retiro_id : req.body.retiro_id
       const usuarioCriador = req.usuario?.cargo === 'supervisor' ? req.usuario : req.body.usuarioCriador
+
+      // A tarefa nasce no retiro do CAPATAZ que vai executá-la (atribuida_a).
+      // Assim um supervisor que cobre vários retiros delega para qualquer um e a
+      // tarefa cai no retiro certo. Fora do fluxo do supervisor (ex.: testes/
+      // sincronização) usamos o retiro_id enviado no corpo.
+      let retiro_id = req.body.retiro_id
+      if (req.usuario?.cargo === 'supervisor') {
+        const capataz = atribuida_a ? await UsuarioService.buscarPorId(atribuida_a) : null
+        retiro_id = capataz?.retiro_id ?? null
+      }
 
       if (!retiro_id || !atribuida_a || !descricao || !categoria || !prioridade || !usuarioCriador) {
         return res.status(400).json({ error: 'Campos obrigatórios não informados' })

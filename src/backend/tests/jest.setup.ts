@@ -33,7 +33,10 @@ jest.mock('../middlewares/cargo.middleware', () => ({
 }))
 
 jest.mock('../database/connection', () => {
-  const sqlMock = jest.fn(() => undefined) as jest.Mock & { begin: jest.Mock }
+  // Retorna [] (e não undefined) para que repositórios que fazem
+  // `(await sql`...`).map/filter/[0]` não quebrem nas telas que leem do banco
+  // (ex.: carregarContexto). Quem precisa de linhas específicas mocka o serviço.
+  const sqlMock = jest.fn(() => []) as jest.Mock & { begin: jest.Mock }
   sqlMock.begin = jest.fn(async (callback: any) => callback(jest.fn()))
 
   return {

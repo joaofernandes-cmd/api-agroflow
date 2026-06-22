@@ -4,6 +4,7 @@ import { Usuario, UsuarioInput, UsuarioCargo } from '../models/usuario.model'
 import { UsuarioRepository } from '../repositories/usuario.repository'
 import { UUID } from '../models/uuid'
 import { AcessoCapatazRepository } from '../repositories/acesso-capataz.repository'
+import { SupervisorRetiroRepository } from '../repositories/supervisor-retiro.repository'
 
 const BCRYPT_SALT_ROUNDS = 12
 
@@ -59,6 +60,22 @@ export const UsuarioService = {
   async listarPorRetiro(retiroId: UUID): Promise<Usuario[]> {
     const usuarios = await UsuarioRepository.buscarTodos()
     return usuarios.filter(u => u.retiro_id === retiroId)
+  },
+
+  // Listar usuários de um conjunto de retiros (supervisor que cobre vários).
+  async listarPorRetiros(retiroIds: UUID[]): Promise<Usuario[]> {
+    const conjunto = new Set(retiroIds.map(String))
+    const usuarios = await UsuarioRepository.buscarTodos()
+    return usuarios.filter(u => conjunto.has(String(u.retiro_id)))
+  },
+
+  // Retiros que um supervisor cobre: o retiro sede (usuario.retiro_id) mais os
+  // retiros adicionais da tabela supervisor_retiro. Um supervisor pode cobrir 1
+  // ou vários retiros — esta é a fonte única dessa lista.
+  async retirosDoSupervisor(supervisor: { id: UUID; retiro_id: UUID }): Promise<UUID[]> {
+    const adicionais = await SupervisorRetiroRepository.buscarRetirosPorSupervisor(supervisor.id)
+    const conjunto = new Set<UUID>([supervisor.retiro_id, ...adicionais])
+    return [...conjunto]
   },
 
   // Criar novo usuário

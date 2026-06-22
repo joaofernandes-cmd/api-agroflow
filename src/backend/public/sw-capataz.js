@@ -1,4 +1,4 @@
-const VERSION = 'v8'
+const VERSION = 'v9'
 const STATIC_CACHE = `agroflow-capataz-static-${VERSION}`
 const RUNTIME_CACHE = `agroflow-capataz-runtime-${VERSION}`
 
@@ -11,7 +11,6 @@ const PRECACHE_URLS = [
   '/capataz/movimentacao',
   '/capataz/ticket',
   '/css/capataz.css?v=6',
-  '/js/tarefas-store.js',
   '/js/prioridade-seletor.js',
   '/assets/logo-agro-flow.svg',
   '/assets/icons/audio.svg',

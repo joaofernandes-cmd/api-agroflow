@@ -1,7 +1,8 @@
 ﻿import request from 'supertest'
 import app from '../../app'
 import { TarefaService } from '../../services/tarefa.service'
-import { mockSupervisor, mockTarefa } from '../helpers/fixtures'
+import { UsuarioService } from '../../services/usuario.service'
+import { mockSupervisor, mockTarefa, RETIRO_ID } from '../helpers/fixtures'
 
 jest.mock('../../services/tarefa.service', () => ({
   TarefaService: {
@@ -21,7 +22,17 @@ jest.mock('../../services/tarefa.service', () => ({
   },
 }))
 
+// A criação de tarefa pelo supervisor resolve o retiro a partir do capataz
+// (atribuida_a). Mockamos UsuarioService.buscarPorId para devolver um capataz
+// com retiro válido.
+jest.mock('../../services/usuario.service', () => ({
+  UsuarioService: {
+    buscarPorId: jest.fn(),
+  },
+}))
+
 const mockedService = TarefaService as jest.Mocked<typeof TarefaService>
+const mockedUsuario = UsuarioService as jest.Mocked<typeof UsuarioService>
 
 describe('Tarefas', () => {
   beforeEach(() => {
@@ -38,6 +49,7 @@ describe('Tarefas', () => {
     mockedService.atualizar.mockResolvedValue(mockTarefa as any)
     mockedService.contarPorStatus.mockResolvedValue({ pendente: 1, concluido: 0, aprovado: 0 })
     mockedService.remover.mockResolvedValue(undefined)
+    mockedUsuario.buscarPorId.mockResolvedValue({ id: mockSupervisor.id, retiro_id: RETIRO_ID } as any)
   })
 
   it('POST /tarefas deve criar tarefa', async () => {

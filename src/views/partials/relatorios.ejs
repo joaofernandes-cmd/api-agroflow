@@ -268,8 +268,6 @@
 
 </div><!-- /layout-desktop -->
 
-<!-- Fonte única das tarefas validadas (mesma da tela de Revisão). -->
-<script src="/js/tarefas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -316,21 +314,10 @@
     return String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
 
-  // FONTE ÚNICA das tarefas: o MESMO TarefasStore que a tela de Revisão usa.
-  // Toda tarefa que o supervisor valida fica guardada lá (status "Validada"),
-  // então passa a aparecer aqui no relatório automaticamente.
-  function datasetTarefas() {
-    if (!window.TarefasStore) return RELATORIO_DEMO.tarefas || { colunas: mapearColunas('tarefas'), linhas: [] };
-    const linhas = TarefasStore.listar().map(t => ({
-      celulas: [t.dataConclusao || '—', t.retiro || '—', t.titulo || 'Tarefa', rotuloPrioridade(t.prioridade)],
-      status: 'Validado',
-    }));
-    return { colunas: mapearColunas('tarefas'), linhas };
-  }
-
-  // Dataset de um tipo: tarefas vêm do TarefasStore; os demais, do servidor.
+  // Dataset de um tipo: tudo vem do SERVIDOR (banco), já com os registros
+  // validados/aprovados do retiro. Toda tarefa/ticket/movimentação que o
+  // supervisor valida aparece aqui automaticamente.
   function datasetDe(tipo) {
-    if (tipo === 'tarefas') return datasetTarefas();
     return RELATORIO_DEMO[tipo] || { colunas: mapearColunas(tipo), linhas: [] };
   }
 
@@ -438,9 +425,9 @@
     };
   }
 
-  // Monta a prévia (tabela + resumo) SEMPRE a partir das fontes únicas do
-  // supervisor (TarefasStore + dados do servidor), aplicando tipo + retiro +
-  // período. Assim o que o supervisor valida aparece na hora no relatório.
+  // Monta a prévia (tabela + resumo) SEMPRE a partir dos dados do servidor
+  // (banco) — RELATORIO_DEMO —, aplicando tipo + retiro + período. Assim o que
+  // o supervisor valida aparece na hora no relatório.
   function carregarRelatorio() {
     const filtros = lerFiltros('desktop');
     const base = filtros.tipo === 'todos' ? datasetCombinado() : datasetDe(filtros.tipo);

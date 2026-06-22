@@ -1,0 +1,40 @@
+<%# Lista de movimentações já validadas (status 'validado' no banco). Renderizada
+    server-side a partir de `movimentacoesValidadas`. Usada nas seções "Validadas"
+    mobile e desktop da tela de Movimentações do supervisor. %>
+<% if (!movimentacoesValidadas || !movimentacoesValidadas.length) { %>
+  <p class="concl-vazio">Nenhuma movimentação validada ainda.</p>
+<% } else { %>
+  <% movimentacoesValidadas.forEach(function (m) { %>
+    <div class="concl-item">
+      <button type="button" class="concl-head" aria-expanded="false">
+        <span class="concl-title"><%= m.tipo %><%= m.local ? ' — ' + m.local : '' %></span>
+        <span class="concl-badge">Validada</span>
+        <span class="concl-arrow" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </button>
+      <div class="concl-panel">
+        <div class="concl-panel__inner">
+          <%
+            var metaParts = [];
+            if (m.dataValidacao) metaParts.push('Validada em ' + m.dataValidacao);
+            if (m.supervisor) metaParts.push('Supervisor ' + m.supervisor);
+            var detParts = [];
+            if (m.capataz) detParts.push('Capataz ' + m.capataz);
+            if (m.quantidadeRotulo && m.quantidadeRotulo !== '—') detParts.push(m.quantidadeRotulo);
+            var detTexto = [detParts.join(' • '), m.detalhes].filter(Boolean).join(' • ');
+          %>
+          <% if (metaParts.length) { %>
+          <p class="concl-meta"><%= metaParts.join(' • ') %></p>
+          <% } %>
+          <% if (detTexto) { %>
+          <div class="concl-bloco">
+            <span class="concl-bloco__label">Detalhes</span>
+            <p class="concl-bloco__texto"><%= detTexto %></p>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+<% } %>

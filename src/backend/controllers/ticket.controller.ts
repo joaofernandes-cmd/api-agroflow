@@ -127,7 +127,14 @@ export const TicketController = {
         return res.status(400).json({ error: 'Categoria inválida' })
       }
 
-      const ticket = await TicketService.sincronizarRecebida(req.body)
+      // Para o capataz, a identidade (quem abriu o ticket e o retiro) vem SEMPRE
+      // do token autenticado (cookie), nunca do corpo — assim o ticket é
+      // atribuído ao capataz real, não a um id enviado pelo cliente.
+      const corpo = req.usuario?.cargo === 'capataz'
+        ? { ...req.body, aberto_por: req.usuario.id, retiro_id: req.usuario.retiro_id }
+        : req.body
+
+      const ticket = await TicketService.sincronizarRecebida(corpo)
       return res.status(201).json(ticket)
     } catch (error) {
       return res.status(400).json({

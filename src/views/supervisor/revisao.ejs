@@ -1,16 +1,17 @@
 <%- include('../partials/head', { title: title, css: css }) %>
 
 <%#
-  Variáveis esperadas pelo controller:
+  Variáveis esperadas pelo controller (tudo do BANCO, fonte única — mesmo
+  padrão das telas de Tickets e Movimentações):
   - usuario: { nome: string }
   - css: ['supervisor']
+  - tarefasNaoRealizadas: tarefas delegadas que o capataz ainda não fez (pendente)
+  - tarefas: concluídas pelo capataz aguardando validação (concluido)
+  - tarefasValidadas: já aprovadas pelo supervisor (aprovado)
+  Validar = PATCH /validacoes/tarefas/:id/aprovar (autenticado pelo cookie) +
+  reload: o servidor re-renderiza a lista a partir do banco, então a tarefa sai
+  de "Realizadas" e entra em "Validadas" — e o mesmo dado aparece no relatório.
 %>
-
-<!-- ============================================================
-     TELA: Tarefas
-     Mobile  → TopNav com voltar + barra de busca com badge + lista de cards + BottomNav
-     Desktop → Sidebar + TopBar + barra de busca + tabela com botão Revisar
-     ============================================================ -->
 
 <!-- ════════════════════════════════════════════════════════
      LAYOUT MOBILE
@@ -26,8 +27,6 @@
     </a>
     <h1 class="topnav__title">Tarefas</h1>
   </header>
-
-  <p id="revisao-feedback-mobile" style="margin: 0 16px; font-size: 14px; line-height: 1.4;"></p>
 
   <!-- Barra de busca + badge -->
   <div class="revisao-filter-bar" role="search">
@@ -67,7 +66,7 @@
         </div>
         <div class="pend-panel">
           <div class="pend-panel__inner">
-            <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Prazo:</strong> <%= t.prazo %></p>
+            <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Delegada:</strong> <%= t.enviado %></p>
           </div>
         </div>
       </div>
@@ -80,30 +79,41 @@
       <h2 class="lista-secao__titulo">Realizadas</h2>
       <p class="lista-secao__sub">Concluídas pelo capataz — toque em Validar para aprovar</p>
 
-    <% tarefas.forEach(function (t) { %>
-    <div class="pend-item" data-tarefa-id="<%= t.id %>">
-      <div class="pend-head">
-        <span class="pend-title"><%= t.titulo %> — <%= t.retiro %></span>
-        <button class="btn-revisar" data-action="validar">Validar</button>
-        <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-      </div>
-      <div class="pend-panel">
-        <div class="pend-panel__inner">
-          <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Enviado:</strong> <%= t.enviado %></p>
+      <% if (!tarefas || tarefas.length === 0) { %>
+      <p class="concl-vazio">Nenhuma tarefa pendente de revisão.</p>
+      <% } else { %>
+      <% tarefas.forEach(function (t) { %>
+      <div class="pend-item" data-tarefa-id="<%= t.id %>">
+        <div class="pend-head">
+          <span class="pend-title"><%= t.titulo %> — <%= t.retiro %></span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="pend-panel">
+          <div class="pend-panel__inner">
+            <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Enviado:</strong> <%= t.enviado %></p>
+            <div class="concl-bloco">
+              <span class="concl-bloco__label">Descrição</span>
+              <p class="concl-bloco__texto"><%= t.descricao %></p>
+            </div>
+            <div class="concl-bloco">
+              <span class="concl-bloco__label">Evidência</span>
+              <div class="js-evid-tarefa">Abra para ver a evidência.</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <% }) %>
-
+      <% }) %>
+      <% } %>
     </section>
 
     <!-- Validadas -->
     <section class="lista-secao">
       <h2 class="lista-secao__titulo">Validadas</h2>
       <p class="lista-secao__sub">Tarefas que você já validou</p>
-      <div class="concluidas-capataz"></div>
+      <div class="concluidas-capataz"><%- include('../partials/tarefas-validadas', { tarefasValidadas }) %></div>
     </section>
 
   </main>
@@ -132,8 +142,6 @@
       </div>
       <p class="topbar__date" id="data-hoje-desktop"></p>
     </header>
-
-    <p id="revisao-feedback-desktop" style="margin: 0 0 16px; font-size: 14px; line-height: 1.4;"></p>
 
     <!-- Barra de busca + badge desktop -->
     <div class="revisao-filter-bar-desktop" role="search">
@@ -166,7 +174,7 @@
               <th>Tarefa</th>
               <th>Retiro</th>
               <th>Capataz</th>
-              <th>Prazo</th>
+              <th>Delegada</th>
               <th>Status</th>
               <th>Ação</th>
             </tr>
@@ -180,7 +188,7 @@
               <td class="td--bold"><%= t.titulo %></td>
               <td><%= t.retiro %></td>
               <td>Capataz <%= t.capataz %></td>
-              <td><%= t.prazo %></td>
+              <td><%= t.enviado %></td>
               <td><span class="badge badge--cinza">Não realizado</span></td>
               <td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>
             </tr>
@@ -210,21 +218,9 @@
             </tr>
           </thead>
           <tbody>
-            <%
-              function escHtmlRev(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-              function evidenciaBlocoRevisao(t){
-                if (t.evidencia === 'texto') {
-                  return '<p class="evidencia-texto">' + escHtmlRev(t.evidenciaTexto) + '</p>';
-                }
-                var isAudio = t.evidencia === 'audio';
-                var icone = isAudio
-                  ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
-                  : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
-                return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
-                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
-                  '<span class="evidencia__tipo">' + (isAudio ? 'Áudio' : 'Foto') + '</span></div>';
-              }
-            %>
+            <% if (!tarefas || tarefas.length === 0) { %>
+            <tr><td colspan="7" class="concl-vazio">Nenhuma tarefa pendente de revisão.</td></tr>
+            <% } else { %>
             <% tarefas.forEach(function (t, i) { %>
             <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-tarefa-id="<%= t.id %>">
               <td class="td--bold"><%= t.titulo %></td>
@@ -244,12 +240,13 @@
                   </div>
                   <div class="concl-bloco">
                     <span class="concl-bloco__label">Evidência</span>
-                    <%- evidenciaBlocoRevisao(t) %>
+                    <div class="js-evid-tarefa">Abra para ver a evidência.</div>
                   </div>
                 </div>
               </td>
             </tr>
             <% }) %>
+            <% } %>
           </tbody>
         </table>
       </div>
@@ -258,231 +255,70 @@
       <section class="lista-secao">
         <h2 class="lista-secao__titulo">Validadas</h2>
         <p class="lista-secao__sub">Tarefas que você já validou</p>
-        <div class="concluidas-capataz"></div>
+        <div class="concluidas-capataz"><%- include('../partials/tarefas-validadas', { tarefasValidadas }) %></div>
       </section>
     </main>
   </div><!-- /desktop-main -->
 
 </div><!-- /layout-desktop -->
 
-<script src="/js/tarefas-store.js"></script>
-<script src="/js/delegadas-store.js"></script>
-<script src="/js/contadores-pendentes.js"></script>
-<!-- DEMO: tarefas concluídas de exemplo (remover em produção) -->
-<script src="/js/seed-demo.js"></script>
 <script>
-  if (window.TarefasStore) {
-    document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
-      TarefasStore.renderListaConcluidas(el, { selo: 'Validada', vazio: 'Nenhuma tarefa validada ainda.', dataPrefixo: 'Validada em' });
-    });
-  }
-</script>
-
-<script>
-  const el = document.getElementById('data-hoje-desktop');
-  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
+  const elData = document.getElementById('data-hoje-desktop');
+  if (elData) elData.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
 
-  // Quando o supervisor está logado, as listas vêm do backend (modoReal = true).
-  // Sem login, mantém o exemplo estático/localStorage.
-  let modoReal = false;
-  const nomesCapatazes = {};
-
-  function carregarSessao() {
-    try {
-      const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-      if (!token || !usuarioRaw) return null;
-      return { token, usuario: JSON.parse(usuarioRaw) };
-    } catch {
-      return null;
-    }
-  }
-
-  function mostrarFeedback(id, mensagem, tipo) {
-    const feedback = document.getElementById(id);
-    if (!feedback) return;
+  function mostrarFeedbackValidacao(mensagem, tipo) {
+    document.querySelectorAll('.revisao-feedback').forEach(el => el.remove());
+    const alvo = document.querySelector('.revisao-filter-bar') || document.querySelector('.revisao-list');
+    if (!alvo) return;
+    const feedback = document.createElement('p');
+    feedback.className = 'revisao-feedback';
     feedback.textContent = mensagem;
     feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+    feedback.style.margin = '8px 0 0';
+    alvo.insertAdjacentElement('afterend', feedback);
   }
 
-  function agoraFormatado() {
-    return new Date().toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    });
-  }
-
-  // Aprova a tarefa no backend (concluido → aprovado). Usa o token do supervisor.
-  async function validarTarefaPorId(tarefaId) {
+  // Aprova a tarefa no BACKEND (concluido → aprovado, PATCH autenticado pelo
+  // cookie de sessão). Em caso de sucesso recarrega: o servidor re-renderiza as
+  // listas do banco, então a tarefa sai de "Realizadas" e entra em "Validadas"
+  // — e o mesmo dado passa a aparecer no relatório e para o gerente.
+  async function validarTarefa(tarefaId, btn) {
+    if (!tarefaId) return;
+    if (btn) btn.disabled = true;
     try {
-      const sessao = carregarSessao();
-      const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
-      const response = await fetch(`/validacoes/tarefas/${tarefaId}/aprovar`, { method: 'PATCH', headers });
-      if (window.AgroFlowSession?.tratarResposta(response)) {
-        return { ok: false, mensagem: 'Sessão expirada' };
+      const resp = await fetch('/validacoes/tarefas/' + encodeURIComponent(tarefaId) + '/aprovar', {
+        method: 'PATCH',
+      });
+      if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) return;
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        mostrarFeedbackValidacao(data.mensagem || data.error || 'Não foi possível validar a tarefa.', 'error');
+        if (btn) btn.disabled = false;
+        return;
       }
-      const data = await response.json().catch(() => ({}));
-      return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
+      window.location.reload();
     } catch (e) {
-      return { ok: false, mensagem: 'Falha de conexão' };
+      mostrarFeedbackValidacao('Falha de conexão. Tente novamente.', 'error');
+      if (btn) btn.disabled = false;
     }
   }
 
-  function reRenderConcluidas() {
-    if (!window.TarefasStore) return;
-    document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
-      TarefasStore.renderListaConcluidas(el, { selo: 'Validada', vazio: 'Nenhuma tarefa validada ainda.', dataPrefixo: 'Validada em' });
+  // Botão "Validar" (vara mobile ou linha desktop) — pega o id do elemento que
+  // carrega data-tarefa-id (o card mobile ou a linha da tabela).
+  document.querySelectorAll('[data-action="validar"]').forEach(btn => {
+    if (btn.disabled) return;
+    btn.addEventListener('click', () => {
+      const host = btn.closest('[data-tarefa-id]');
+      validarTarefa(host && host.dataset.tarefaId, btn);
     });
-  }
-
-  // Recalcula o contador "N Pendentes" ao lado da busca conforme as tarefas
-  // vão sendo validadas (some uma de cima → o número cai).
-  function atualizarBadgePendentes() {
-    // Conta apenas as "Realizadas" (aguardando validação) — são as pendentes de
-    // ação do supervisor. As "Não realizadas" não entram no contador.
-    const nMobile = document.querySelectorAll('.layout-mobile .lista-secao--validar .pend-item').length;
-    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table--validar tbody tr[data-tarefa-id]').length;
-    const badgeMobile = document.querySelector('.layout-mobile .revisao-badge-pendentes');
-    const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
-    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
-    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
-    // Espelha o total na home (bloco "Tarefas pendentes" do Acesso rápido).
-    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('tarefas', nMobile, nDesktop);
-  }
-
-  // Valida a tarefa: aprova no backend e move o item para a seção "Validadas".
-  function aceitarTarefa(id, titulo, retiro) {
-    // Modo real: aprova no backend e recarrega as Validadas de lá (cross-device).
-    if (modoReal) {
-      validarTarefaPorId(id).then(function (r) {
-        if (r.ok) {
-          recarregarValidadas();
-        } else {
-          mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
-          mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
-        }
-      });
-      return;
-    }
-    // Modo demo (sem login): persiste no localStorage e re-renderiza de lá.
-    if (window.TarefasStore) {
-      TarefasStore.concluir('rev-' + id, {
-        titulo: titulo,
-        retiro: retiro,
-        dataConclusao: agoraFormatado(),
-      });
-      reRenderConcluidas();
-    }
-    validarTarefaPorId(id);
-    // Persiste no servidor (demo): remove a tarefa dos pendentes de revisão em
-    // memória, para o contador (tela + home) continuar certo após recarregar.
-    fetch('/supervisor/tarefas/' + encodeURIComponent(id) + '/validar', { method: 'POST' })
-      .catch(function () {});
-  }
-
-  function finalizarAceitePendItem(item) {
-    item.remove();
-    atualizarBadgePendentes();
-  }
-
-  function finalizarAceiteLinhaDesktop(row) {
-    const det = row.nextElementSibling;
-    row.remove();
-    if (det && det.classList.contains('pend-detalhe')) det.remove();
-    atualizarBadgePendentes();
-  }
-
-  // Aceitar vara mobile (pend-item): some de cima e desce pra Concluídas
-  async function aceitarPendItem(item) {
-    if (!item || item.dataset.aceito) return;
-    item.dataset.aceito = '1';
-    const nome = item.querySelector('.pend-title')?.textContent || 'Tarefa';
-    const partes = nome.split(' — ');
-
-    if (modoReal) {
-      const r = await validarTarefaPorId(item.dataset.tarefaId);
-      if (r.ok) {
-        finalizarAceitePendItem(item);
-        recarregarValidadas();
-      } else {
-        item.dataset.aceito = '';
-        mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
-        mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
-      }
-      return;
-    }
-
-    aceitarTarefa(item.dataset.tarefaId, partes[0].trim(), (partes[1] || '').trim());
-    finalizarAceitePendItem(item);
-  }
-
-  // Aceitar linha desktop (tabela): remove a linha e sua linha de detalhe
-  async function aceitarLinhaDesktop(row) {
-    if (!row || row.dataset.aceito) return;
-    row.dataset.aceito = '1';
-    const titulo = (row.querySelector('.td--bold')?.textContent || 'Tarefa').trim();
-    const retiro = (row.children[1]?.textContent || '').trim();
-
-    if (modoReal) {
-      const r = await validarTarefaPorId(row.dataset.tarefaId);
-      if (r.ok) {
-        finalizarAceiteLinhaDesktop(row);
-        recarregarValidadas();
-      } else {
-        row.dataset.aceito = '';
-        mostrarFeedback('revisao-feedback-mobile', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
-        mostrarFeedback('revisao-feedback-desktop', r.mensagem || 'Não foi possível validar a tarefa.', 'error');
-      }
-      return;
-    }
-
-    aceitarTarefa(row.dataset.tarefaId, titulo, retiro);
-    finalizarAceiteLinhaDesktop(row);
-  }
-
-  // Botão "Validar" (delegado — vale para itens de exemplo e os vindos do backend)
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.btn-revisar');
-    if (!btn) return;
-    const item = btn.closest('.pend-item');
-    if (item) { aceitarPendItem(item); return; }
-    const row = btn.closest('tr');
-    if (row) aceitarLinhaDesktop(row);
-  });
-
-  // Setinha (mobile): abre/fecha as informações + carrega a evidência real
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.pend-toggle');
-    if (!btn) return;
-    const item = btn.closest('.pend-item');
-    if (!item) return;
-    const aberto = item.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-    const id = item.dataset.tarefaId;
-    const painel = item.querySelector('.pend-panel__inner');
-    if (aberto && painel && ehUuid(id)) carregarEvidenciaReal(painel, id);
   });
 
   // ── Evidência real vinda do backend (foto/áudio do Supabase, texto) ──────────
-  // Só dispara para linhas com id de tarefa real (UUID). As linhas de exemplo
-  // (ids 11..16) continuam mostrando o placeholder estático.
-  function ehUuid(v) {
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(v || ''));
-  }
-
-  async function buscarEvidenciasDaTarefa(tarefaId) {
-    const sessao = carregarSessao();
-    const headers = sessao && sessao.token ? { Authorization: 'Bearer ' + sessao.token } : {};
-    const resp = await fetch('/evidencias/tarefa/' + tarefaId, { headers });
-    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
-    if (!resp.ok) {
-      console.warn('Falha ao carregar evidências da revisão', { status: resp.status, tarefaId });
-      throw new Error('Não foi possível carregar os dados da revisão. Tente novamente.');
-    }
-    return resp.json();
-  }
-
+  // Carregada sob demanda quando o supervisor abre a tarefa, por GET
+  // /evidencias/tarefa/:id (autenticado pelo cookie). Cada container .js-evid-tarefa
+  // pertence a um elemento com data-tarefa-id (card, linha de detalhe ou vara).
   function elementoEvidencia(ev) {
     if (ev.tipo === 'foto' && ev.url_arquivo) {
       const img = document.createElement('img');
@@ -507,7 +343,7 @@
     return null;
   }
 
-  function renderEvidenciasSupervisor(container, evidencias) {
+  function renderEvidencias(container, evidencias) {
     container.replaceChildren();
     if (!evidencias || !evidencias.length) {
       const vazio = document.createElement('p');
@@ -522,45 +358,62 @@
     });
   }
 
-  // Localiza o bloco "Evidência" dentro de um detalhe (desktop).
-  function blocoEvidencia(det) {
-    return Array.from(det.querySelectorAll('.concl-bloco')).find(b => {
-      const label = b.querySelector('.concl-bloco__label');
-      return label && label.textContent.trim() === 'Evidência';
-    }) || null;
-  }
-
-  async function carregarEvidenciaReal(det, tarefaId) {
-    if (det.dataset.evidLoaded === '1') return;
-    const bloco = blocoEvidencia(det);
-    if (!bloco) return;
-    det.dataset.evidLoaded = '1';
-    // Troca o placeholder estático por um container de mídia real (mantém o label).
-    bloco.querySelectorAll('.evidencia, .evidencia-texto, .evid-real').forEach(n => n.remove());
-    const alvo = document.createElement('div');
-    alvo.className = 'evid-real';
-    alvo.textContent = 'Carregando evidência...';
-    bloco.appendChild(alvo);
+  async function carregarEvidencia(container, tarefaId) {
+    if (!container || container.dataset.loaded === '1') return;
+    container.dataset.loaded = '1';
+    container.textContent = 'Carregando evidência...';
     try {
-      renderEvidenciasSupervisor(alvo, await buscarEvidenciasDaTarefa(tarefaId));
+      const resp = await fetch('/evidencias/tarefa/' + encodeURIComponent(tarefaId));
+      if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) return;
+      if (!resp.ok) throw new Error('falha');
+      renderEvidencias(container, await resp.json());
     } catch (e) {
-      det.dataset.evidLoaded = '';
-      alvo.textContent = 'Não foi possível carregar a evidência.';
+      container.dataset.loaded = '';
+      container.textContent = 'Não foi possível carregar a evidência.';
     }
   }
 
-  // "Ver mais" (desktop, delegado): abre a linha de detalhe + carrega a evidência real
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.ver-mais');
-    if (!btn) return;
-    const row = btn.closest('tr');
-    const det = row?.nextElementSibling;
-    if (!det || !det.classList.contains('pend-detalhe')) return;
-    const abrindo = det.hasAttribute('hidden');
-    det.toggleAttribute('hidden');
-    btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
-    const id = row?.dataset.tarefaId;
-    if (abrindo && ehUuid(id)) carregarEvidenciaReal(det, id);
+  // Carrega a evidência de todos os containers dentro de um host (card/linha/vara).
+  function carregarEvidenciasDe(host) {
+    if (!host) return;
+    const id = host.dataset.tarefaId;
+    if (!id) return;
+    host.querySelectorAll('.js-evid-tarefa').forEach(c => carregarEvidencia(c, id));
+  }
+
+  // Setinha (mobile): abre/fecha as informações + carrega a evidência real
+  document.querySelectorAll('.pend-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.pend-item');
+      if (!item) return;
+      const aberto = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if (aberto) carregarEvidenciasDe(item);
+    });
+  });
+
+  // "Ver mais" (desktop): abre a linha de detalhe + carrega a evidência real
+  document.querySelectorAll('.ver-mais').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.closest('tr');
+      const det = row && row.nextElementSibling;
+      if (!det || !det.classList.contains('pend-detalhe')) return;
+      const abrindo = det.hasAttribute('hidden');
+      det.toggleAttribute('hidden');
+      btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
+      if (abrindo) carregarEvidenciasDe(row);
+    });
+  });
+
+  // Varas de "Validadas" (acordeão): abre/fecha + carrega a evidência real
+  document.querySelectorAll('.concluidas-capataz .concl-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const item = head.closest('.concl-item');
+      if (!item) return;
+      const aberto = item.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if (aberto) carregarEvidenciasDe(item);
+    });
   });
 
   // Filtro de busca — mobile
@@ -590,548 +443,6 @@
       });
     });
   }
-
-  // ── Lista de revisão vinda do backend ───────────────────────────────────────
-  // Pendentes = tarefas que o capataz concluiu (status 'concluido'), aguardando
-  // aprovação. Se o supervisor não estiver logado (sem token), mantém o exemplo.
-  function escaparTexto(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
-      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  }
-
-  async function apiGet(url, token) {
-    const resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
-    if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
-    if (!resp.ok) {
-      console.warn('Falha ao carregar dados da revisão', { status: resp.status, url });
-      throw new Error('Não foi possível carregar os dados da revisão. Tente novamente.');
-    }
-    return resp.json();
-  }
-
-  function tempoRelativo(iso) {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return '';
-    const min = Math.floor((Date.now() - d.getTime()) / 60000);
-    if (min < 1) return 'agora';
-    if (min < 60) return 'há ' + min + ' min';
-    const h = Math.floor(min / 60);
-    if (h < 24) return 'há ' + h + 'h';
-    const dias = Math.floor(h / 24);
-    return 'há ' + dias + (dias === 1 ? ' dia' : ' dias');
-  }
-
-  // O capataz grava a descrição como: Conclusao da tarefa "TITULO" no retiro RETIRO. ...
-  function extrairTituloRetiro(descricao) {
-    const m = /tarefa "([^"]+)" no retiro ([^.]+)/i.exec(descricao || '');
-    if (m) return { titulo: m[1].trim(), retiro: m[2].trim() };
-    return { titulo: (descricao || 'Tarefa').slice(0, 60), retiro: '' };
-  }
-
-  function criarSetaSvg(tamanho, strokeWidth) {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', String(tamanho || 18));
-    svg.setAttribute('height', String(tamanho || 18));
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('fill', 'none');
-    svg.setAttribute('stroke', 'currentColor');
-    svg.setAttribute('stroke-width', String(strokeWidth || 2));
-    svg.setAttribute('stroke-linecap', 'round');
-    svg.setAttribute('stroke-linejoin', 'round');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', 'm6 9 6 6 6-6');
-    svg.appendChild(path);
-    return svg;
-  }
-
-  function criarBotaoToggle() {
-    const button = document.createElement('button');
-    button.className = 'pend-toggle';
-    button.type = 'button';
-    button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-label', 'Ver informações');
-    button.appendChild(criarSetaSvg(18, 2));
-    return button;
-  }
-
-  function criarBotaoValidar(desabilitado) {
-    const button = document.createElement('button');
-    button.className = 'btn-revisar';
-    button.dataset.action = 'validar';
-    button.textContent = 'Validar';
-    if (desabilitado) {
-      button.disabled = true;
-      button.title = 'Aguardando o capataz realizar';
-    }
-    return button;
-  }
-
-  function criarBadge(texto, classe) {
-    const span = document.createElement('span');
-    span.className = 'badge ' + classe;
-    span.textContent = texto;
-    return span;
-  }
-
-  function criarLinhaVazia(colspan, texto) {
-    const tr = document.createElement('tr');
-    const td = document.createElement('td');
-    td.colSpan = colspan;
-    td.className = 'concl-vazio';
-    td.textContent = texto;
-    tr.appendChild(td);
-    return tr;
-  }
-
-  function preencherInfoPendencia(el, linhas) {
-    el.replaceChildren();
-    linhas.filter(l => l.valor).forEach((linha, index) => {
-      if (index > 0) el.appendChild(document.createElement('br'));
-      const label = document.createElement('strong');
-      label.textContent = linha.label + ':';
-      el.appendChild(label);
-      el.appendChild(document.createTextNode(' ' + linha.valor));
-    });
-  }
-
-  function cardMobile(t, nomes) {
-    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
-    const capataz = nomes[t.atribuida_a] || 'Capataz';
-    const item = document.createElement('div');
-    item.className = 'pend-item';
-    item.dataset.tarefaId = t.id;
-    item.dataset.real = '1';
-
-    const head = document.createElement('div');
-    head.className = 'pend-head';
-    const title = document.createElement('span');
-    title.className = 'pend-title';
-    title.textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
-    head.appendChild(title);
-    head.appendChild(criarBotaoValidar(false));
-    head.appendChild(criarBotaoToggle());
-
-    const panel = document.createElement('div');
-    panel.className = 'pend-panel';
-    const inner = document.createElement('div');
-    inner.className = 'pend-panel__inner';
-    const info = document.createElement('p');
-    info.className = 'pend-info';
-    const bloco = document.createElement('div');
-    bloco.className = 'concl-bloco';
-    const label = document.createElement('span');
-    label.className = 'concl-bloco__label';
-    label.textContent = 'Evidência';
-    bloco.appendChild(label);
-    inner.appendChild(info);
-    inner.appendChild(bloco);
-    panel.appendChild(inner);
-    item.appendChild(head);
-    item.appendChild(panel);
-
-    preencherInfoPendencia(info, [
-      { label: 'Capataz', valor: capataz },
-      { label: 'Retiro', valor: retiro },
-      { label: 'Enviado', valor: tempoRelativo(t.data_criacao) },
-    ]);
-    return item;
-  }
-
-  function linhasDesktop(t, nomes, alt) {
-    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
-    const capataz = nomes[t.atribuida_a] || 'Capataz';
-    const tr = document.createElement('tr');
-    tr.dataset.tarefaId = t.id;
-    tr.dataset.real = '1';
-    if (alt) tr.className = 'tr--alt';
-    [titulo, retiro, capataz, tempoRelativo(t.data_criacao)].forEach((texto, index) => {
-      const td = document.createElement('td');
-      if (index === 0) td.className = 'td--bold';
-      td.textContent = texto;
-      tr.appendChild(td);
-    });
-    const statusTd = document.createElement('td');
-    statusTd.appendChild(criarBadge('Realizada', 'badge--yellow'));
-    tr.appendChild(statusTd);
-    const verMaisTd = document.createElement('td');
-    const verMais = document.createElement('button');
-    verMais.className = 'ver-mais';
-    verMais.type = 'button';
-    verMais.setAttribute('aria-expanded', 'false');
-    verMais.appendChild(document.createTextNode('Ver mais '));
-    verMais.appendChild(criarSetaSvg(14, 2.5));
-    verMaisTd.appendChild(verMais);
-    tr.appendChild(verMaisTd);
-    const acaoTd = document.createElement('td');
-    acaoTd.appendChild(criarBotaoValidar(false));
-    tr.appendChild(acaoTd);
-
-    const det = document.createElement('tr');
-    det.className = 'pend-detalhe';
-    det.setAttribute('hidden', '');
-    const tdDetalhe = document.createElement('td');
-    tdDetalhe.colSpan = 7;
-    const detalheInner = document.createElement('div');
-    detalheInner.className = 'pend-detalhe__inner';
-    const desc = document.createElement('div');
-    desc.className = 'concl-bloco';
-    const descLabel = document.createElement('span');
-    descLabel.className = 'concl-bloco__label';
-    descLabel.textContent = 'Descrição';
-    const descTexto = document.createElement('p');
-    descTexto.className = 'concl-bloco__texto';
-    descTexto.textContent = t.descricao || '';
-    desc.appendChild(descLabel);
-    desc.appendChild(descTexto);
-    const ev = document.createElement('div');
-    ev.className = 'concl-bloco';
-    const evLabel = document.createElement('span');
-    evLabel.className = 'concl-bloco__label';
-    evLabel.textContent = 'Evidência';
-    ev.appendChild(evLabel);
-    detalheInner.appendChild(desc);
-    detalheInner.appendChild(ev);
-    tdDetalhe.appendChild(detalheInner);
-    det.appendChild(tdDetalhe);
-    return [tr, det];
-  }
-
-  function renderPendentes(tarefas, nomes) {
-    const secMobile = document.querySelector('.layout-mobile .lista-secao--validar');
-    if (secMobile) {
-      secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
-      if (!tarefas.length) {
-        const vazio = document.createElement('p');
-        vazio.className = 'concl-vazio';
-        vazio.textContent = 'Nenhuma tarefa pendente de revisão.';
-        secMobile.appendChild(vazio);
-      } else {
-        tarefas.forEach(t => secMobile.appendChild(cardMobile(t, nomes)));
-      }
-    }
-
-    const tbody = document.querySelector('.layout-desktop .revisao-table--validar tbody');
-    if (tbody) {
-      tbody.replaceChildren();
-      if (!tarefas.length) {
-        tbody.appendChild(criarLinhaVazia(7, 'Nenhuma tarefa pendente de revisão.'));
-      } else {
-        tarefas.forEach((t, i) => {
-          const [tr, det] = linhasDesktop(t, nomes, i % 2 === 1);
-          tbody.appendChild(tr);
-          tbody.appendChild(det);
-        });
-      }
-    }
-  }
-
-  // ── Não realizadas (status 'pendente' no backend) ────────────────────────
-  // Tarefas que o capataz ainda não concluiu. Aparecem só para informar —
-  // sem botão Validar ativo (não dá pra validar o que ainda não foi feito).
-  function cardMobileNaoRealizada(t, nomes) {
-    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
-    const capataz = nomes[t.atribuida_a] || 'Capataz';
-    const item = document.createElement('div');
-    item.className = 'pend-item';
-    item.dataset.tarefaId = t.id;
-    const head = document.createElement('div');
-    head.className = 'pend-head';
-    const title = document.createElement('span');
-    title.className = 'pend-title';
-    title.textContent = retiro ? (titulo + ' — ' + retiro) : titulo;
-    head.appendChild(title);
-    head.appendChild(criarBadge('Não realizado', 'badge--cinza'));
-    head.appendChild(criarBotaoToggle());
-    const panel = document.createElement('div');
-    panel.className = 'pend-panel';
-    const inner = document.createElement('div');
-    inner.className = 'pend-panel__inner';
-    const info = document.createElement('p');
-    info.className = 'pend-info';
-    inner.appendChild(info);
-    panel.appendChild(inner);
-    item.appendChild(head);
-    item.appendChild(panel);
-    preencherInfoPendencia(info, [
-      { label: 'Capataz', valor: capataz },
-      { label: 'Retiro', valor: retiro },
-      { label: 'Delegada', valor: tempoRelativo(t.data_criacao) },
-    ]);
-    return item;
-  }
-
-  function linhaDesktopNaoRealizada(t, nomes, alt) {
-    const { titulo, retiro } = extrairTituloRetiro(t.descricao);
-    const capataz = nomes[t.atribuida_a] || 'Capataz';
-    const tr = document.createElement('tr');
-    tr.dataset.tarefaId = t.id;
-    if (alt) tr.className = 'tr--alt';
-    [titulo, retiro, capataz, tempoRelativo(t.data_criacao)].forEach((texto, index) => {
-      const td = document.createElement('td');
-      if (index === 0) td.className = 'td--bold';
-      td.textContent = texto;
-      tr.appendChild(td);
-    });
-    const statusTd = document.createElement('td');
-    statusTd.appendChild(criarBadge('Não realizado', 'badge--cinza'));
-    tr.appendChild(statusTd);
-    const acaoTd = document.createElement('td');
-    acaoTd.appendChild(criarBotaoValidar(true));
-    tr.appendChild(acaoTd);
-    return tr;
-  }
-
-  function renderNaoRealizadas(tarefas, nomes) {
-    const secMobile = document.querySelector('.layout-mobile .lista-secao--naorealizadas');
-    if (secMobile) {
-      secMobile.querySelectorAll('.pend-item, .concl-vazio').forEach(n => n.remove());
-      if (!tarefas.length) {
-        const vazio = document.createElement('p');
-        vazio.className = 'concl-vazio';
-        vazio.textContent = 'Nenhuma tarefa delegada pendente no momento.';
-        secMobile.appendChild(vazio);
-      } else {
-        tarefas.forEach(t => secMobile.appendChild(cardMobileNaoRealizada(t, nomes)));
-      }
-    }
-
-    const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
-    if (tbody) {
-      tbody.replaceChildren();
-      if (!tarefas.length) {
-        tbody.appendChild(criarLinhaVazia(6, 'Nenhuma tarefa delegada pendente no momento.'));
-      } else {
-        tarefas.forEach((t, i) => tbody.appendChild(linhaDesktopNaoRealizada(t, nomes, i % 2 === 1)));
-      }
-    }
-  }
-
-  // ── Demo (sem login): tarefas recém-delegadas guardadas no navegador ──────
-  // Entram no TOPO de "Não realizadas", acima dos exemplos estáticos.
-  function cardMobileDelegadaDemo(t) {
-    const item = document.createElement('div');
-    item.className = 'pend-item';
-    item.dataset.tarefaId = t.id;
-    const head = document.createElement('div');
-    head.className = 'pend-head';
-    const title = document.createElement('span');
-    title.className = 'pend-title';
-    title.textContent = t.retiro ? (t.titulo + ' — ' + t.retiro) : t.titulo;
-    head.appendChild(title);
-    head.appendChild(criarBadge('Não realizado', 'badge--cinza'));
-    head.appendChild(criarBotaoToggle());
-    const panel = document.createElement('div');
-    panel.className = 'pend-panel';
-    const inner = document.createElement('div');
-    inner.className = 'pend-panel__inner';
-    const info = document.createElement('p');
-    info.className = 'pend-info';
-    inner.appendChild(info);
-    panel.appendChild(inner);
-    item.appendChild(head);
-    item.appendChild(panel);
-    preencherInfoPendencia(info, [
-      { label: 'Capataz', valor: t.capataz || 'Capataz' },
-      { label: 'Retiro', valor: t.retiro },
-      { label: 'Delegada', valor: t.dataDelegacao || '' },
-    ]);
-    return item;
-  }
-
-  function linhaDesktopDelegadaDemo(t, alt) {
-    const tr = document.createElement('tr');
-    tr.dataset.tarefaId = t.id;
-    if (alt) tr.className = 'tr--alt';
-    [
-      t.titulo,
-      t.retiro || '',
-      t.capataz ? ('Capataz ' + t.capataz) : 'Capataz',
-      t.dataDelegacao || '',
-    ].forEach((texto, index) => {
-      const td = document.createElement('td');
-      if (index === 0) td.className = 'td--bold';
-      td.textContent = texto;
-      tr.appendChild(td);
-    });
-    const statusTd = document.createElement('td');
-    statusTd.appendChild(criarBadge('Não realizado', 'badge--cinza'));
-    tr.appendChild(statusTd);
-    const acaoTd = document.createElement('td');
-    acaoTd.appendChild(criarBotaoValidar(true));
-    tr.appendChild(acaoTd);
-    return tr;
-  }
-
-  function renderDelegadasDemo() {
-    if (!window.DelegadasStore) return;
-    const itens = DelegadasStore.listar();
-    if (!itens.length) return;
-
-    // Mobile: insere no topo da seção, antes do primeiro exemplo estático.
-    const secMobile = document.querySelector('.layout-mobile .lista-secao--naorealizadas');
-    if (secMobile) {
-      secMobile.querySelectorAll('.concl-vazio').forEach(n => n.remove());
-      const ancora = secMobile.querySelector('.pend-item');
-      const frag = document.createDocumentFragment();
-      itens.forEach(t => frag.appendChild(cardMobileDelegadaDemo(t)));
-      if (ancora) secMobile.insertBefore(frag, ancora);
-      else secMobile.appendChild(frag);
-    }
-
-    // Desktop: insere no topo do corpo da tabela "Não realizadas".
-    const tbody = document.querySelector('.layout-desktop .revisao-table--naorealizadas tbody');
-    if (tbody) {
-      const vazio = tbody.querySelector('.concl-vazio');
-      if (vazio) { const tr = vazio.closest('tr'); if (tr) tr.remove(); }
-      const frag = document.createDocumentFragment();
-      itens.forEach((t, i) => frag.appendChild(linhaDesktopDelegadaDemo(t, i % 2 === 1)));
-      tbody.insertBefore(frag, tbody.firstChild);
-    }
-  }
-
-  function dataFormatada(iso) {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return '';
-    return d.toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    });
-  }
-
-  const ROTULO_PRIO = { alta: 'Alta', media: 'Média', baixa: 'Baixa', critica: 'Crítica' };
-
-  // Monta uma "vara" (acordeão) de tarefa validada, no mesmo formato do TarefasStore.
-  function itemValidada(t, nomes) {
-    const dados = extrairTituloRetiro(t.descricao);
-    const capataz = nomes[t.atribuida_a] || 'Capataz';
-
-    const item = document.createElement('div');
-    item.className = 'concl-item';
-
-    const head = document.createElement('button');
-    head.type = 'button';
-    head.className = 'concl-head';
-    head.setAttribute('aria-expanded', 'false');
-    const title = document.createElement('span');
-    title.className = 'concl-title';
-    title.textContent = dados.retiro ? (dados.titulo + ' — ' + dados.retiro) : dados.titulo;
-    const badge = document.createElement('span');
-    badge.className = 'concl-badge';
-    badge.textContent = 'Validada';
-    const arrow = document.createElement('span');
-    arrow.className = 'concl-arrow';
-    arrow.setAttribute('aria-hidden', 'true');
-    arrow.appendChild(criarSetaSvg(18, 2));
-    head.appendChild(title);
-    head.appendChild(badge);
-    head.appendChild(arrow);
-
-    const panel = document.createElement('div');
-    panel.className = 'concl-panel';
-    const inner = document.createElement('div');
-    inner.className = 'concl-panel__inner';
-
-    if (t.prioridade) {
-      const tags = document.createElement('div');
-      tags.className = 'concl-tags';
-      const prio = document.createElement('span');
-      prio.className = 'concl-prio concl-prio--' + t.prioridade;
-      prio.textContent = ROTULO_PRIO[t.prioridade] || t.prioridade;
-      tags.appendChild(prio);
-      inner.appendChild(tags);
-    }
-
-    const meta = document.createElement('p');
-    meta.className = 'concl-meta';
-    meta.textContent = 'Validada em ' + dataFormatada(t.data_criacao) + ' • Capataz ' + capataz;
-    inner.appendChild(meta);
-
-    if (t.descricao) {
-      const desc = document.createElement('div');
-      desc.className = 'concl-bloco';
-      const lbl = document.createElement('span'); lbl.className = 'concl-bloco__label'; lbl.textContent = 'Descrição';
-      const tx = document.createElement('p'); tx.className = 'concl-bloco__texto'; tx.textContent = t.descricao;
-      desc.appendChild(lbl); desc.appendChild(tx);
-      inner.appendChild(desc);
-    }
-
-    const evBloco = document.createElement('div');
-    evBloco.className = 'concl-bloco';
-    const evLbl = document.createElement('span'); evLbl.className = 'concl-bloco__label'; evLbl.textContent = 'Evidência';
-    evBloco.appendChild(evLbl);
-    inner.appendChild(evBloco);
-
-    panel.appendChild(inner);
-    item.appendChild(head);
-    item.appendChild(panel);
-
-    head.addEventListener('click', function () {
-      const aberto = item.classList.toggle('is-open');
-      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-      if (aberto && ehUuid(t.id)) carregarEvidenciaReal(inner, t.id);
-    });
-
-    return item;
-  }
-
-  function renderValidadas(tarefas, nomes) {
-    document.querySelectorAll('.concluidas-capataz').forEach(function (cont) {
-      cont.replaceChildren();
-      if (!tarefas.length) {
-        const vazio = document.createElement('p');
-        vazio.className = 'concl-vazio';
-        vazio.textContent = 'Nenhuma tarefa validada ainda.';
-        cont.appendChild(vazio);
-        return;
-      }
-      tarefas.forEach(function (t) { cont.appendChild(itemValidada(t, nomes)); });
-    });
-  }
-
-  async function recarregarValidadas() {
-    const sessao = carregarSessao();
-    if (!sessao || !sessao.token) return;
-    try {
-      const aprovadas = await apiGet('/tarefas/status/aprovado', sessao.token);
-      renderValidadas(aprovadas || [], nomesCapatazes);
-    } catch (e) { /* mantém o que já está na tela */ }
-  }
-
-  async function carregarListasReais() {
-    const sessao = carregarSessao();
-    if (!sessao || !sessao.token) return; // sem login → mantém o exemplo estático
-
-    let naoRealizadas, pendentes, validadas;
-    try {
-      [naoRealizadas, pendentes, validadas] = await Promise.all([
-        apiGet('/tarefas/status/pendente', sessao.token),
-        apiGet('/tarefas/status/concluido', sessao.token),
-        apiGet('/tarefas/status/aprovado', sessao.token),
-      ]);
-    } catch (e) {
-      mostrarFeedback('revisao-feedback-mobile', 'Não foi possível carregar as tarefas do servidor.', 'error');
-      mostrarFeedback('revisao-feedback-desktop', 'Não foi possível carregar as tarefas do servidor.', 'error');
-      return; // mantém o exemplo
-    }
-
-    // Mapa id→nome dos capatazes do retiro (1 requisição) para mostrar o nome.
-    try {
-      const caps = await apiGet('/usuarios/capatazes/retiro/' + sessao.usuario.retiro_id, sessao.token);
-      (caps || []).forEach(c => { nomesCapatazes[c.id] = c.nome || c.login || 'Capataz'; });
-    } catch (e) { /* sem nomes: cai no rótulo genérico */ }
-
-    modoReal = true;
-    renderNaoRealizadas(naoRealizadas || [], nomesCapatazes);
-    renderPendentes(pendentes || [], nomesCapatazes);
-    renderValidadas(validadas || [], nomesCapatazes);
-    atualizarBadgePendentes();
-  }
-
-  // Sincroniza o contador com a quantidade real de tarefas pendentes ao abrir.
-  atualizarBadgePendentes();
-  // Sem login (demo): mostra as tarefas recém-delegadas guardadas no navegador.
-  // Com login: o carregarListasReais busca as 'pendente' direto do backend.
-  if (!carregarSessao()) renderDelegadasDemo();
-  carregarListasReais();
 </script>
 
 </body>

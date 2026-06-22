@@ -36,7 +36,7 @@
     <!-- Tarefas concluídas pelo capataz (com evidência) -->
     <section style="margin: 0 0 16px;">
       <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
-      <div class="concluidas-capataz"></div>
+      <div class="concluidas-capataz"><%- include('../partials/concluidas-capataz', { concluidas }) %></div>
     </section>
 
     <!-- Indicadores gerais — grid 2×2 -->
@@ -48,15 +48,15 @@
           <p class="kpi-card__label">Total de animais</p>
         </div>
         <div class="kpi-card kpi-card--red">
-          <p class="kpi-card__value">14</p>
+          <p class="kpi-card__value"><%= typeof kpis !== 'undefined' ? kpis.tickets : 0 %></p>
           <p class="kpi-card__label">Tickets<br>Abertos</p>
         </div>
         <div class="kpi-card kpi-card--yellow">
-          <p class="kpi-card__value">14</p>
+          <p class="kpi-card__value"><%= typeof kpis !== 'undefined' ? kpis.tarefas : 0 %></p>
           <p class="kpi-card__label">Tarefas<br>pendentes</p>
         </div>
         <div class="kpi-card kpi-card--green">
-          <p class="kpi-card__value">12</p>
+          <p class="kpi-card__value"><%= typeof kpis !== 'undefined' ? kpis.movimentacoes : 0 %></p>
           <p class="kpi-card__label">Movimentações<br>no mês</p>
         </div>
       </div>
@@ -77,20 +77,17 @@
     <section class="section" aria-labelledby="atividades-title">
       <h2 class="section__title" id="atividades-title">Atividades recentes</h2>
 
+      <% var _recentes = (typeof recentes !== 'undefined' ? recentes : []); %>
+      <% if (!_recentes.length) { %>
+      <p class="concl-vazio">Nenhuma atividade recente.</p>
+      <% } else { %>
+      <% _recentes.forEach(function (a) { %>
       <article class="act-card">
-        <p class="act-card__name">Conferência do rebanho — Aroeira</p>
-        <span class="act-tag act-tag--ticket">Ticket</span>
+        <p class="act-card__name"><%= a.nome %></p>
+        <span class="act-tag act-tag--<%= a.tagClasse %>"><%= a.tag %></span>
       </article>
-
-      <article class="act-card">
-        <p class="act-card__name">Substituir Capataz João - Cristo</p>
-        <span class="act-tag act-tag--tarefa">Tarefa</span>
-      </article>
-
-      <article class="act-card">
-        <p class="act-card__name">Registrar morte - Puga</p>
-        <span class="act-tag act-tag--operacao">Operação em campo</span>
-      </article>
+      <% }) %>
+      <% } %>
 
     </section>
 
@@ -128,7 +125,7 @@
     <!-- Tarefas concluídas pelo capataz (com evidência) -->
     <section style="margin: 0 0 16px;">
       <h2 style="font-size:15px;font-weight:700;color:#1f1f1f;margin:0 0 10px;">Concluídas pelo capataz</h2>
-      <div class="concluidas-capataz"></div>
+      <div class="concluidas-capataz"><%- include('../partials/concluidas-capataz', { concluidas }) %></div>
     </section>
 
     <!-- Conteúdo desktop: dois painéis lado a lado -->
@@ -146,15 +143,15 @@
               <p class="kpi-item__label">Total de animais</p>
             </div>
             <div class="kpi-item kpi-item--red">
-              <p class="kpi-item__value">14</p>
+              <p class="kpi-item__value"><%= typeof kpis !== 'undefined' ? kpis.tickets : 0 %></p>
               <p class="kpi-item__label">Tickets abertos</p>
             </div>
             <div class="kpi-item kpi-item--yellow">
-              <p class="kpi-item__value">14</p>
+              <p class="kpi-item__value"><%= typeof kpis !== 'undefined' ? kpis.tarefas : 0 %></p>
               <p class="kpi-item__label">Tarefas pendentes</p>
             </div>
             <div class="kpi-item kpi-item--green">
-              <p class="kpi-item__value">12</p>
+              <p class="kpi-item__value"><%= typeof kpis !== 'undefined' ? kpis.movimentacoes : 0 %></p>
               <p class="kpi-item__label">Movimentações no mês</p>
             </div>
           </div>
@@ -164,50 +161,21 @@
         <section class="section" aria-labelledby="atividades-desktop">
           <h2 class="section__title" id="atividades-desktop">Atividades recentes</h2>
 
+          <% var _recentesD = (typeof recentes !== 'undefined' ? recentes : []); %>
+          <% if (!_recentesD.length) { %>
+          <p class="concl-vazio">Nenhuma atividade recente.</p>
+          <% } else { %>
+          <% _recentesD.forEach(function (a) { %>
           <article class="act-card-desktop">
             <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
             <div class="act-card-desktop__body">
-              <p class="act-card-desktop__name">Conferência do rebanho — Aroeira</p>
-              <p class="act-card-desktop__meta">Capataz Lucas • há 1h</p>
+              <p class="act-card-desktop__name"><%= a.nome %></p>
+              <p class="act-card-desktop__meta"><%= a.meta %></p>
             </div>
-            <span class="act-tag act-tag--ticket">Ticket</span>
+            <span class="act-tag act-tag--<%= a.tagClasse %>"><%= a.tag %></span>
           </article>
-
-          <article class="act-card-desktop">
-            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
-            <div class="act-card-desktop__body">
-              <p class="act-card-desktop__name">Substituir Capataz João — Cristo</p>
-              <p class="act-card-desktop__meta">Supervisor Pedro • há 2h</p>
-            </div>
-            <span class="act-tag act-tag--tarefa">Tarefa</span>
-          </article>
-
-          <article class="act-card-desktop">
-            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
-            <div class="act-card-desktop__body">
-              <p class="act-card-desktop__name">Registrar morte — Puga</p>
-              <p class="act-card-desktop__meta">Capataz Alberto • há 3h</p>
-            </div>
-            <span class="act-tag act-tag--operacao">Operação em campo</span>
-          </article>
-
-          <article class="act-card-desktop">
-            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
-            <div class="act-card-desktop__body">
-              <p class="act-card-desktop__name">Inspeção de cercas — CMB</p>
-              <p class="act-card-desktop__meta">Capataz Robson • há 4h</p>
-            </div>
-            <span class="act-tag act-tag--ticket">Ticket</span>
-          </article>
-
-          <article class="act-card-desktop">
-            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
-            <div class="act-card-desktop__body">
-              <p class="act-card-desktop__name">Nascimento registrado — Aroeira</p>
-              <p class="act-card-desktop__meta">Capataz Lucas • há 5h</p>
-            </div>
-            <span class="act-tag act-tag--operacao">Operação em campo</span>
-          </article>
+          <% }) %>
+          <% } %>
 
         </section>
       </div><!-- /col-left -->
@@ -233,10 +201,9 @@
           <p class="resumo-card__title">Resumo do período</p>
           <hr class="resumo-card__divider" />
           <dl class="resumo-list">
-            <div class="resumo-list__row"><dt>Total de animais (UA)</dt><dd>1.900</dd></div>
-            <div class="resumo-list__row"><dt>Registros validados</dt><dd>58</dd></div>
-            <div class="resumo-list__row"><dt>Pendentes</dt><dd>15</dd></div>
-            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd>6</dd></div>
+            <div class="resumo-list__row"><dt>Registros validados</dt><dd><%= typeof resumo !== 'undefined' ? resumo.validados : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Pendentes</dt><dd><%= typeof resumo !== 'undefined' ? resumo.pendentes : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd><%= typeof resumo !== 'undefined' ? resumo.retiros : 0 %></dd></div>
           </dl>
         </div>
 
@@ -246,15 +213,6 @@
   </div><!-- /desktop-main -->
 
 </div><!-- /layout-desktop -->
-
-<script src="/js/tarefas-store.js"></script>
-<script>
-  if (window.TarefasStore) {
-    document.querySelectorAll('.concluidas-capataz').forEach(function (el) {
-      TarefasStore.renderListaConcluidas(el);
-    });
-  }
-</script>
 
 <script>
   function formatarData() {
