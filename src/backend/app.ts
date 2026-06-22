@@ -18,6 +18,7 @@ import { TicketService } from './services/ticket.service'
 import { MovimentacaoService } from './services/movimentacao.service'
 import { TarefaService } from './services/tarefa.service'
 import { UsuarioService } from './services/usuario.service'
+import { EvidenciaService } from './services/evidencia.service'
 import {
   carregarContexto,
   nomeRetiro,
@@ -27,6 +28,29 @@ import {
   montarRelatorio,
 } from './utils/apresentacao'
 import { UUID } from './models/uuid'
+import { Movimentacao } from './models/movimentacao.model'
+
+async function movimentacaoParaExibicaoComEvidencia(movimentacao: Movimentacao, ctx: Awaited<ReturnType<typeof carregarContexto>>) {
+  const exibicao = movimentacaoParaExibicao(movimentacao, ctx)
+  const evidencias = await EvidenciaService.buscarPorMovimentacao(movimentacao.id)
+  const evidencia = evidencias[0]
+
+  if (!evidencia) {
+    return exibicao
+  }
+
+  const rotulos = {
+    mensagem: 'Texto',
+    foto: 'Foto',
+    audio: 'Áudio',
+  } as const
+
+  exibicao.evidencia = rotulos[evidencia.tipo] ?? ''
+  exibicao.evidenciaTexto = evidencia.conteudo ?? ''
+  exibicao.evidenciaUrl = evidencia.url_arquivo ?? ''
+
+  return exibicao
+}
 
 // Monta os datasets do relatório a partir dos registros já validados/aprovados
 // do banco. retiroId = retiro do supervisor; undefined = todos (gerente).
@@ -279,8 +303,8 @@ app.get('/supervisor/movimentacoes', async (req, res) => {
     css: 'supervisor',
     usuario: { nome: ctx.nomeUsuario },
     // Pendentes de validação e já validadas — ambas do BANCO (fonte única).
-    movimentacoes: pendentes.map((m) => movimentacaoParaExibicao(m, ctx)),
-    movimentacoesValidadas: validadas.map((m) => movimentacaoParaExibicao(m, ctx)),
+    movimentacoes: await Promise.all(pendentes.map((m) => movimentacaoParaExibicaoComEvidencia(m, ctx))),
+    movimentacoesValidadas: await Promise.all(validadas.map((m) => movimentacaoParaExibicaoComEvidencia(m, ctx))),
   });
 });
 

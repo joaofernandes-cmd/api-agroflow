@@ -14,16 +14,17 @@
   ];
   var ESTAGIOS = [
     'BEZERRO 0 A 7 MESES',
+    'BEZERRA 0 A 7 MESES',
     'GARROTE 8 A 12 MESES',
-    'NOVILHA 8 A 12 MESES',
     'GARROTE 13 A 24 MESES',
+    'NOVILHA 8 A 12 MESES',
     'NOVILHA 13 A 24 MESES',
     'BOI 25 A 36 MESES',
-    'NOVILHA 25 A 36 MESES',
-    'TOURO 25 A 36 MESES',
-    'VACA ACIMA 36 MESES',
     'BOI ACIMA 36 MESES',
-    'TOURO ACIMA 36 MESES'
+    'TOURO 25 A 36 MESES',
+    'TOURO ACIMA 36 MESES',
+    'VACA 25 A 36 MESES',
+    'VACA ACIMA 36 MESES'
   ];
 %>
 
@@ -93,6 +94,7 @@
         <option value="Acidente">Acidente</option>
         <option value="Predador">Predador</option>
         <option value="Causa natural">Causa natural</option>
+        <option value="Abate interno">Abate interno</option>
         <option value="Desconhecida">Desconhecida</option>
       </select>
     </div>
@@ -754,12 +756,9 @@
       causaObito.value = '';
     }
 
-    // Nascimento: o animal é sempre bezerro de 0 a 7 meses — preenche e trava.
+    // Nascimento: o animal é sempre um bezerro de 0 a 7 meses.
     if (ehNascimento) {
       estagioMov.value = 'BEZERRO 0 A 7 MESES';
-      estagioMov.disabled = true;
-    } else {
-      estagioMov.disabled = false;
     }
 
     // "Outro": revela o campo para descrever a movimentação.
@@ -987,7 +986,7 @@
       // Confirmação em tela cheia (o capataz precisa ver claramente que deu certo).
       window.AvisoSucesso.mostrar(
         resultado.queued
-          ? 'Sua Movimentação foi salva no aparelho. Ela será enviada sozinha quando a internet voltar.'
+          ? 'Sua movimentação foi salva no aparelho e será enviada automaticamente quando houver conexão com a internet.'
           : 'Sua Movimentação foi enviada para o supervisor.',
         {
           titulo: resultado.queued ? 'Movimentação salva!' : 'Movimentação enviada!',

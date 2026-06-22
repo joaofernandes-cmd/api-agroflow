@@ -187,6 +187,7 @@ export interface MovimentacaoExibicao {
   causaObito: string
   evidencia: string
   evidenciaTexto: string
+  evidenciaUrl: string
   enviado: string
   badgeClasse: string
   detalhes: string
@@ -305,6 +306,7 @@ export function movimentacaoParaExibicao(m: Movimentacao, ctx: ContextoApresenta
     causaObito: m.causa_obito ?? '',
     evidencia: '',
     evidenciaTexto: '',
+    evidenciaUrl: '',
     enviado: tempoRelativo(m.data_criacao),
     badgeClasse: TIPO_MOV_BADGE[m.tipo] ?? 'badge--blue',
     detalhes: montarDetalhesMov(m, estagio),

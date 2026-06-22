@@ -8,6 +8,7 @@ import { EvidenciaFotoRepository } from '../repositories/evidencia-foto.reposito
 import { EvidenciaAudioRepository } from '../repositories/evidencia-audio.repository'
 import { EvidenciaMensagemRepository } from '../repositories/evidencia-mensagem.repository'
 import { EvidenciaTarefaRepository } from '../repositories/evidencia-tarefa.repository'
+import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movimentacao.repository'
 
 export const EvidenciaService = {
   // RN04: Validar georreferenciamento de foto (latitude e longitude obrigatórias e válidas)
@@ -150,5 +151,9 @@ export const EvidenciaService = {
   // para o supervisor revisar (foto/áudio com url_arquivo, mensagem com conteudo).
   async buscarPorTarefa(tarefaId: UUID): Promise<EvidenciaDetalhada[]> {
     return EvidenciaTarefaRepository.buscarEvidenciasDaTarefa(tarefaId)
+  },
+
+  async buscarPorMovimentacao(movimentacaoId: UUID): Promise<EvidenciaDetalhada[]> {
+    return EvidenciaMovimentacaoRepository.buscarEvidenciasDaMovimentacao(movimentacaoId)
   },
 }

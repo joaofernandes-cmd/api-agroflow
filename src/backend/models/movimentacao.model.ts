@@ -23,6 +23,7 @@ export type RetiroNome =
 
 export type EstagioVida =
   | 'BEZERRO 0 A 7 MESES'
+  | 'BEZERRA 0 A 7 MESES'
   | 'GARROTE 8 A 12 MESES'
   | 'NOVILHA 8 A 12 MESES'
   | 'GARROTE 13 A 24 MESES'
@@ -30,6 +31,7 @@ export type EstagioVida =
   | 'BOI 25 A 36 MESES'
   | 'NOVILHA 25 A 36 MESES'
   | 'TOURO 25 A 36 MESES'
+  | 'VACA 25 A 36 MESES'
   | 'VACA ACIMA 36 MESES'
   | 'BOI ACIMA 36 MESES'
   | 'TOURO ACIMA 36 MESES'

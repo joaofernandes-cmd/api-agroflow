@@ -156,6 +156,12 @@
                   return '<p class="evidencia-texto">' + escHtmlMov(m.evidenciaTexto) + '</p>';
                 }
                 var isAudio = m.evidencia === 'Áudio';
+                if (m.evidenciaUrl && isAudio) {
+                  return '<audio class="evidencia-audio" controls src="' + escHtmlMov(m.evidenciaUrl) + '"></audio>';
+                }
+                if (m.evidenciaUrl) {
+                  return '<img class="evidencia-midia" src="' + escHtmlMov(m.evidenciaUrl) + '" alt="Foto da evidência">';
+                }
                 var icone = isAudio
                   ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
                   : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
@@ -168,7 +174,7 @@
             <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-mov-id="<%= m.id %>">
               <td class="td--bold"><span class="badge <%= m.badgeClasse %>"><%= m.tipo %></span></td>
               <td><%= m.local %></td>
-              <td>Capataz <%= m.capataz %></td>
+              <td><%= m.capataz %></td>
               <td><%= m.quantidadeRotulo %></td>
               <td><span class="badge badge--yellow">Pendente</span></td>
               <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
