@@ -65,10 +65,21 @@
     var $ = function (sufixo) { return document.getElementById(ns + sufixo); };
 
     var lista = $('Lista');
-    var iconeCheck =
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22a855" ' +
-      'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
-      '<path d="M20 6 9 17l-5-5"/></svg>';
+    function criarIconeCheck() {
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      svg.setAttribute('width', '15');
+      svg.setAttribute('height', '15');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', '#22a855');
+      svg.setAttribute('stroke-width', '2.5');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      path.setAttribute('d', 'M20 6 9 17l-5-5');
+      svg.appendChild(path);
+      return svg;
+    }
 
     function registrar(tipo, nome) {
       var existente = lista.querySelector('[data-tipo="' + tipo + '"]');
@@ -76,7 +87,10 @@
       var li = document.createElement('li');
       li.className = 'evidencia-item';
       li.setAttribute('data-tipo', tipo);
-      li.innerHTML = iconeCheck + '<span>' + tipo + ': ' + nome + '</span>';
+      var texto = document.createElement('span');
+      texto.textContent = tipo + ': ' + nome;
+      li.appendChild(criarIconeCheck());
+      li.appendChild(texto);
       lista.appendChild(li);
     }
     function remover(tipo) {

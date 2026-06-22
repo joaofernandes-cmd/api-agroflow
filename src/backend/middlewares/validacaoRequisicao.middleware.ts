@@ -1,32 +1,32 @@
 import { NextFunction, Request, Response } from 'express'
 
-// Estrutura padrao de um erro de validacao.
+// Estrutura padrão de um erro de validação.
 export type ErroDeValidacao = {
   campo: string
   mensagem: string
 }
 
-// Resultado esperado de qualquer validacao.
+// Resultado esperado de qualquer validação.
 export type ResultadoDeValidacao = {
   valido: boolean
   erros: ErroDeValidacao[]
 }
 
-// Assinatura da funcao que valida uma request.
+// Assinatura da função que valida uma request.
 export type ValidadorDeRequisicao = (req: Request) => ResultadoDeValidacao | Promise<ResultadoDeValidacao>
 
 // Factory de middleware.
-// Recebe uma funcao de validacao e devolve um middleware Express pronto para uso.
+// Recebe uma função de validação e devolve um middleware Express pronto para uso.
 export function validarRequisicao(validador: ValidadorDeRequisicao) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Executa a validacao especifica da rota.
+      // Executa a validação específica da rota.
       const resultado = await validador(req)
 
-      // Se a validacao falhar, interrompe aqui e responde 400.
+      // Se a validação falhar, interrompe aqui e responde 400.
       if (!resultado.valido) {
         return res.status(400).json({
-          error: 'Dados invalidos',
+          error: 'Dados inválidos',
           details: resultado.erros,
         })
       }
@@ -34,19 +34,19 @@ export function validarRequisicao(validador: ValidadorDeRequisicao) {
       // Se estiver tudo certo, segue para o controller.
       return next()
     } catch (error) {
-      // Erros inesperados de validacao tambem viram 400.
+      // Erros inesperados de validação também viram 400.
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Falha na validacao da requisicao',
+        error: error instanceof Error ? error.message : 'Falha na validação da requisição',
       })
     }
   }
 }
 
-// Helper para campos texto obrigatorios.
+// Helper para campos texto obrigatórios.
 export function textoObrigatorio(
   valor: unknown,
   campo: string,
-  mensagem = `Campo "${campo}" e obrigatorio`
+  mensagem = `Campo "${campo}" é obrigatório`
 ): ErroDeValidacao | null {
   if (typeof valor !== 'string' || valor.trim().length === 0) {
     return { campo, mensagem }
@@ -55,11 +55,11 @@ export function textoObrigatorio(
   return null
 }
 
-// Helper para campos numericos obrigatorios.
+// Helper para campos numéricos obrigatórios.
 export function numeroObrigatorio(
   valor: unknown,
   campo: string,
-  mensagem = `Campo "${campo}" deve ser um numero valido`
+  mensagem = `Campo "${campo}" deve ser um número válido`
 ): ErroDeValidacao | null {
   const numero = Number(valor)
 
@@ -74,7 +74,7 @@ export function numeroObrigatorio(
 export function dataObrigatoria(
   valor: unknown,
   campo: string,
-  mensagem = `Campo "${campo}" deve ser uma data valida`
+  mensagem = `Campo "${campo}" deve ser uma data válida`
 ): ErroDeValidacao | null {
   if (valor === undefined || valor === null || valor === '') {
     return { campo, mensagem }

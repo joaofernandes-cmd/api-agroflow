@@ -167,9 +167,13 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       }).then(function (resp) {
+        if (window.AgroFlowSession?.tratarResposta(resp)) {
+          throw new Error('Sessão expirada');
+        }
         if (resp.ok) return resp.json().catch(function () { return {}; });
         return resp.json().catch(function () { return {}; }).then(function (d) {
-          throw new Error((d && d.error) || ('HTTP ' + resp.status));
+          console.warn('Falha ao enviar evidência da tarefa', { status: resp.status, url: url });
+          throw new Error((d && d.error) || 'Não foi possível enviar a evidência. Tente novamente.');
         });
       });
     }
@@ -189,15 +193,15 @@
             });
             enviadas++;
           } else if (ev.tipo === 'foto') {
-            if (!temSupabase) { aviso = 'Supabase nao configurado: foto/audio nao enviados.'; continue; }
-            if (ev.latitude == null || ev.longitude == null) { aviso = 'Foto sem localizacao (GPS) nao pode ser enviada.'; continue; }
+            if (!temSupabase) { aviso = 'Não foi possível enviar foto ou áudio agora.'; continue; }
+            if (ev.latitude == null || ev.longitude == null) { aviso = 'A foto precisa ter localização para ser enviada.'; continue; }
             var up = await window.AgroFlowCapataz.uploadBinary({ blob: ev.blob, mimeType: ev.mimeType || 'image/jpeg' }, CAPATAZ_DEMO.id, 'evidencias/foto');
             await postEvidencia('/evidencias/fotos', {
               urlArquivo: up.urlArquivo, latitude: ev.latitude, longitude: ev.longitude, tarefa_id: tarefaId, usuarioId: CAPATAZ_DEMO.id
             });
             enviadas++;
           } else if (ev.tipo === 'audio') {
-            if (!temSupabase) { aviso = 'Supabase nao configurado: foto/audio nao enviados.'; continue; }
+            if (!temSupabase) { aviso = 'Não foi possível enviar foto ou áudio agora.'; continue; }
             var upA = await window.AgroFlowCapataz.uploadBinary({ blob: ev.blob, mimeType: ev.mimeType || 'audio/webm' }, CAPATAZ_DEMO.id, 'evidencias/audio');
             await postEvidencia('/evidencias/audios', {
               urlArquivo: upA.urlArquivo, duracao: ev.duracao || 3, tarefa_id: tarefaId, usuarioId: CAPATAZ_DEMO.id
@@ -205,7 +209,8 @@
             enviadas++;
           }
         } catch (e) {
-          aviso = (e && e.message) ? e.message : 'Falha ao enviar evidencia.';
+          console.warn('Falha ao sincronizar evidência da tarefa', e);
+          aviso = (e && e.message) ? e.message : 'Não foi possível enviar a evidência.';
         }
       }
       return { total: total, enviadas: enviadas, aviso: aviso };
@@ -238,23 +243,23 @@
         // Offline: a tarefa foi enfileirada e ainda não existe no servidor,
         // então não dá para ligar as evidências a ela agora.
         if (resultado.queued) {
-          mostrarSync('Tarefa salva offline. Ela sera sincronizada automaticamente quando houver conexao.');
+          mostrarSync('Tarefa salva offline. Ela será sincronizada automaticamente quando houver conexão.');
           return;
         }
         // Online: a tarefa foi criada → envia as evidências ligadas a ela.
         return enviarEvidenciasBackend(tarefaId, evidencias).then(function (r) {
           if (r.total === 0) {
-            mostrarSync('Tarefa concluida e sincronizada com sucesso.');
+            mostrarSync('Tarefa concluída e sincronizada com sucesso.');
           } else if (r.enviadas === r.total) {
-            mostrarSync('Tarefa e ' + r.enviadas + ' evidencia(s) sincronizadas com sucesso.');
+            mostrarSync('Tarefa e ' + r.enviadas + ' evidência(s) sincronizadas com sucesso.');
           } else if (r.enviadas > 0) {
-            mostrarSync(r.enviadas + ' de ' + r.total + ' evidencia(s) enviadas. ' + r.aviso);
+            mostrarSync(r.enviadas + ' de ' + r.total + ' evidência(s) enviadas. ' + r.aviso);
           } else {
-            mostrarSync('Tarefa sincronizada, mas as evidencias nao puderam ser enviadas. ' + r.aviso);
+            mostrarSync('Tarefa sincronizada, mas as evidências não puderam ser enviadas. ' + r.aviso);
           }
         });
       }).catch(function () {
-        mostrarSync('Tarefa concluida localmente. A sincronizacao sera tentada novamente quando houver conexao.');
+        mostrarSync('Tarefa concluída localmente. A sincronização será tentada novamente quando houver conexão.');
       });
     }
 

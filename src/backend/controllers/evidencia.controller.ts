@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { EvidenciaService } from '../services/evidencia.service'
+import { TarefaService } from '../services/tarefa.service'
 import { converterUUID, UUID } from '../models/uuid'
+import { mensagemErroCliente } from '../utils/erro-api'
 
 // Lê o tarefa_id (opcional) do corpo da requisição.
 // - ausente  → undefined (evidência criada sem vínculo com tarefa)
@@ -12,6 +14,15 @@ function lerTarefaId(req: Request): UUID | null | undefined {
     return undefined
   }
   return converterUUID(valor)
+}
+
+function numeroValido(valor: unknown): number | null {
+  const numero = Number(valor)
+  return Number.isFinite(numero) ? numero : null
+}
+
+function capatazNaoEDonoDaTarefa(req: Request, atribuidaA: string): boolean {
+  return req.usuario?.cargo === 'capataz' && atribuidaA !== req.usuario.id
 }
 
 export const EvidenciaController = {
@@ -53,6 +64,16 @@ export const EvidenciaController = {
         return res.status(400).json({ error: 'ID inválido' })
       }
 
+      const tarefa = await TarefaService.buscarPorId(tarefaId)
+
+      if (!tarefa) {
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
+      }
+
+      if (capatazNaoEDonoDaTarefa(req, tarefa.atribuida_a)) {
+        return res.status(403).json({ error: 'Acesso negado: tarefa de outro capataz' })
+      }
+
       const evidencias = await EvidenciaService.buscarPorTarefa(tarefaId)
 
       return res.status(200).json(evidencias)
@@ -80,7 +101,7 @@ export const EvidenciaController = {
       return res.status(201).json(resultado)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar mensagem',
+        error: mensagemErroCliente(error, 'Erro ao criar mensagem'),
       })
     }
   },
@@ -99,12 +120,18 @@ export const EvidenciaController = {
         return res.status(400).json({ error: 'Tarefa inválida' })
       }
 
-      const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo, Number(duracao), tarefaId ?? undefined)
+      const duracaoNumerica = numeroValido(duracao)
+
+      if (duracaoNumerica === null) {
+        return res.status(400).json({ error: 'Duração inválida' })
+      }
+
+      const resultado = await EvidenciaService.criarAudio(usuarioId, urlArquivo, duracaoNumerica, tarefaId ?? undefined)
 
       return res.status(201).json(resultado)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar áudio',
+        error: mensagemErroCliente(error, 'Erro ao criar áudio'),
       })
     }
   },
@@ -123,12 +150,25 @@ export const EvidenciaController = {
         return res.status(400).json({ error: 'Tarefa inválida' })
       }
 
-      const resultado = await EvidenciaService.criarFoto(usuarioId, urlArquivo, Number(latitude), Number(longitude), tarefaId ?? undefined)
+      const latitudeNumerica = numeroValido(latitude)
+      const longitudeNumerica = numeroValido(longitude)
+
+      if (latitudeNumerica === null || longitudeNumerica === null) {
+        return res.status(400).json({ error: 'Latitude ou longitude inválida' })
+      }
+
+      const resultado = await EvidenciaService.criarFoto(
+        usuarioId,
+        urlArquivo,
+        latitudeNumerica,
+        longitudeNumerica,
+        tarefaId ?? undefined
+      )
 
       return res.status(201).json(resultado)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar foto',
+        error: mensagemErroCliente(error, 'Erro ao criar foto'),
       })
     }
   },

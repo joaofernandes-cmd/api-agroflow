@@ -1,4 +1,4 @@
-import request from 'supertest'
+﻿import request from 'supertest'
 import app from '../../app'
 import { TarefaService } from '../../services/tarefa.service'
 import { mockSupervisor, mockTarefa } from '../helpers/fixtures'
@@ -70,7 +70,7 @@ describe('Tarefas', () => {
     })
 
     expect(response.status).toBe(400)
-    expect(response.body).toEqual({ error: 'Campos obrigatorios nao informados' })
+    expect(response.body).toEqual({ error: 'Campos obrigatórios não informados' })
     expect(mockedService.criar).not.toHaveBeenCalled()
   })
 
@@ -108,6 +108,24 @@ describe('Tarefas', () => {
     expect(mockedService.sincronizarRecebida).toHaveBeenCalledTimes(1)
   })
 
+  it('POST /tarefas/sincronizar deve rejeitar Status inválido', async () => {
+    const response = await request(app).post('/tarefas/sincronizar').send({
+      id: mockTarefa.id,
+      retiro_id: '00000000-0000-4000-8000-000000000001',
+      criada_por: mockSupervisor.id,
+      atribuida_a: mockSupervisor.id,
+      descricao: mockTarefa.descricao,
+      categoria: mockTarefa.categoria,
+      prioridade: mockTarefa.prioridade,
+      status: 'invalido',
+      sincronizado: false,
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status inválido' })
+    expect(mockedService.sincronizarRecebida).not.toHaveBeenCalled()
+  })
+
   it('GET /tarefas deve listar todas as tarefas', async () => {
     const response = await request(app).get('/tarefas')
 
@@ -129,6 +147,14 @@ describe('Tarefas', () => {
     expect(response.body).toEqual([mockTarefa])
   })
 
+  it('GET /tarefas/status/:status deve rejeitar Status inválido', async () => {
+    const response = await request(app).get('/tarefas/status/invalido').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status inválido' })
+    expect(mockedService.listarPorStatus).not.toHaveBeenCalled()
+  })
+
   it('GET /tarefas/usuario/:usuarioId deve filtrar por usuario', async () => {
     const response = await request(app).get(`/tarefas/usuario/${mockSupervisor.id}`)
 
@@ -141,6 +167,14 @@ describe('Tarefas', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([mockTarefa])
+  })
+
+  it('GET /tarefas/prioridade/:prioridade deve rejeitar Prioridade inválida', async () => {
+    const response = await request(app).get('/tarefas/prioridade/urgente').query({ retiroId: '00000000-0000-4000-8000-000000000001' })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Prioridade inválida' })
+    expect(mockedService.listarPorPrioridade).not.toHaveBeenCalled()
   })
 
   it('GET /tarefas/categoria/:categoria deve filtrar por categoria', async () => {
@@ -170,7 +204,7 @@ describe('Tarefas', () => {
     const response = await request(app).get('/tarefas/00000000-0000-4000-8000-999999999999')
 
     expect(response.status).toBe(404)
-    expect(response.body).toEqual({ error: 'Tarefa nao encontrada' })
+    expect(response.body).toEqual({ error: 'Tarefa não encontrada' })
   })
 
   it('PATCH /tarefas/:id deve atualizar tarefa', async () => {
@@ -189,6 +223,16 @@ describe('Tarefas', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockTarefa)
+  })
+
+  it('PATCH /tarefas/:id/status deve rejeitar Status inválido', async () => {
+    const response = await request(app).patch('/tarefas/00000000-0000-4000-8000-000000000301/status').send({
+      status: 'invalido',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'Status inválido' })
+    expect(mockedService.atualizarStatus).not.toHaveBeenCalled()
   })
 
   it('DELETE /tarefas/:id deve remover tarefa', async () => {

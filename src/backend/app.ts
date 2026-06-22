@@ -266,7 +266,7 @@ app.use('/validacoes', validacaoRoutes)
 
 // Se nenhuma rota bateu, geramos um erro 404 padronizado.
 app.use((_req, _res, next) => {
-  next(new ErroDeAplicacao('Rota nao encontrada', 404))
+  next(new ErroDeAplicacao('Rota não encontrada', 404))
 })
 
 // Handler global de erro.

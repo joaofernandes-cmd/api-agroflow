@@ -11,14 +11,14 @@ import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movim
 import { UUID } from '../models/uuid'
 
 export const MovimentacaoService = {
-  // RN01: valida os campos obrigatorios antes de persistir.
+  // RN01: valida os campos obrigatórios antes de persistir.
   validarCamposObrigatorios(dados: MovimentacaoInput): void {
     if (!dados.capataz_id) {
-      throw new Error('Campo "capataz_id" e obrigatorio')
+      throw new Error('Campo "capataz_id" é obrigatório')
     }
 
     if (!dados.estagio_vida) {
-      throw new Error('Campo "estagio_vida" e obrigatorio')
+      throw new Error('Campo "estagio_vida" é obrigatório')
     }
 
     if (dados.tipo === 'compra') {
@@ -46,26 +46,26 @@ export const MovimentacaoService = {
       this.validarOrigem(dados.origem)
 
       if (!dados.causa_obito) {
-        throw new Error('Campo "causa_obito" e obrigatorio para movimentacoes do tipo "morte"')
+        throw new Error('Campo "causa_obito" é obrigatório para movimentações do tipo "morte"')
       }
     }
   },
 
   validarOrigem(origem: MovimentacaoInput['origem']): void {
     if (!origem) {
-      throw new Error('Campo "origem" e obrigatorio')
+      throw new Error('Campo "origem" é obrigatório')
     }
   },
 
   validarDestino(destino: MovimentacaoInput['destino']): void {
     if (!destino) {
-      throw new Error('Campo "destino" e obrigatorio')
+      throw new Error('Campo "destino" é obrigatório')
     }
   },
 
   validarQuantidade(quantidade: MovimentacaoInput['quantidade']): void {
     if (!quantidade || quantidade <= 0) {
-      throw new Error('Campo "quantidade" e obrigatorio e deve ser maior que zero')
+      throw new Error('Campo "quantidade" é obrigatório e deve ser maior que zero')
     }
   },
 
@@ -81,7 +81,7 @@ export const MovimentacaoService = {
 
     if (dados.tipo === 'audio') {
       if (!dados.urlArquivo) {
-        throw new Error('Campo "urlArquivo" e obrigatorio para evidencias de audio')
+        throw new Error('Campo "urlArquivo" é obrigatório para evidências de áudio')
       }
 
       EvidenciaService.validarEvidenciaDescritiva('audio', { duracao: dados.duracao })
@@ -90,11 +90,11 @@ export const MovimentacaoService = {
 
     if (dados.tipo === 'foto') {
       if (!dados.urlArquivo) {
-        throw new Error('Campo "urlArquivo" e obrigatorio para evidencias de foto')
+        throw new Error('Campo "urlArquivo" é obrigatório para evidências de foto')
       }
 
       if (dados.latitude === undefined || dados.longitude === undefined) {
-        throw new Error('Foto rejeitada: georreferenciamento invÃ¡lido ou ausente. A imagem deve ter coordenadas GPS nos metadados EXIF')
+        throw new Error('Foto rejeitada: georreferenciamento inválido ou ausente. A imagem deve ter coordenadas GPS nos metadados EXIF')
       }
 
       EvidenciaService.validarGeorreferenciamento(dados.latitude, dados.longitude)
@@ -142,8 +142,8 @@ export const MovimentacaoService = {
     }
   },
 
-  // RN03: cria movimentacao no modo offline ou online.
-  // O valor de sincronizado segue o dado recebido, mas padrao continua false.
+  // RN03: cria movimentação no modo offline ou online.
+  // O valor de sincronizado segue o dado recebido, mas padrão continua false.
   async criar(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por'>): Promise<Movimentacao> {
     this.validarCamposObrigatorios(dados as MovimentacaoInput)
     this.validarEvidencia(dados.evidencia)
@@ -160,8 +160,8 @@ export const MovimentacaoService = {
     return movimentacao
   },
 
-  // Recebe uma movimentacao que veio do fluxo de sincronizacao.
-  // Nesse caso o registro ja chega pronto e deve ser gravado como sincronizado.
+  // Recebe uma movimentação que veio do fluxo de sincronização.
+  // Nesse caso o registro já chega pronto e deve ser gravado como sincronizado.
   async sincronizarRecebida(dados: Omit<MovimentacaoInput, 'data_criacao' | 'status' | 'validado_por' | 'sincronizado'>): Promise<Movimentacao> {
     this.validarCamposObrigatorios({
       ...dados,
@@ -184,7 +184,7 @@ export const MovimentacaoService = {
   },
 
   // RN09: filtra por retiro, tipo, status e periodo.
-  // O periodo eh aplicado sobre data_criacao para refletir a janela do registro.
+  // O período é aplicado sobre data_criacao para refletir a janela do registro.
   async filtrar(
     retiroId: UUID,
     tipos?: MovimentacaoTipo[],
@@ -221,7 +221,7 @@ export const MovimentacaoService = {
     })
   },
 
-  // RN07: relatorio usa apenas dados sincronizados e validados.
+  // RN07: relatório usa apenas dados sincronizados e validados.
   async buscarParaRelatorio(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
@@ -320,7 +320,7 @@ export const MovimentacaoService = {
   },
 
   async atualizar(id: UUID, dados: Partial<MovimentacaoInput>): Promise<Movimentacao | null> {
-    // Quando algum campo estrutural muda, os detalhes da movimentacao tambem precisam ser refeitos.
+    // Quando algum campo estrutural muda, os detalhes da movimentação também precisam ser refeitos.
     if (
       dados.tipo ||
       dados.origem !== undefined ||

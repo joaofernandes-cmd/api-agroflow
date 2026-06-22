@@ -3,17 +3,25 @@ import { TarefaService } from '../services/tarefa.service'
 import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 import { converterUUID } from '../models/uuid'
+import { mensagemErroCliente } from '../utils/erro-api'
+
+const STATUS_TAREFA_VALIDOS: TarefaStatus[] = ['pendente', 'concluido', 'aprovado']
+const PRIORIDADES_TAREFA_VALIDAS: TarefaPrioridade[] = ['alta', 'media', 'baixa']
 
 function extrairTexto(valor: unknown): string | undefined {
   return typeof valor === 'string' ? valor : undefined
 }
 
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') {
+  if (req.usuario?.cargo === 'capataz') {
     return req.usuario.retiro_id
   }
 
   return valor
+}
+
+function capatazNaoEDonoDaTarefa(req: Request, atribuidaA: string): boolean {
+  return req.usuario?.cargo === 'capataz' && atribuidaA !== req.usuario.id
 }
 
 export const TarefaController = {
@@ -24,7 +32,11 @@ export const TarefaController = {
       const usuarioCriador = req.usuario?.cargo === 'supervisor' ? req.usuario : req.body.usuarioCriador
 
       if (!retiro_id || !atribuida_a || !descricao || !categoria || !prioridade || !usuarioCriador) {
-        return res.status(400).json({ error: 'Campos obrigatorios nao informados' })
+        return res.status(400).json({ error: 'Campos obrigatórios não informados' })
+      }
+
+      if (!PRIORIDADES_TAREFA_VALIDAS.includes(prioridade)) {
+        return res.status(400).json({ error: 'Prioridade inválida' })
       }
 
       const retiroId = converterUUID(retiro_id)
@@ -49,18 +61,26 @@ export const TarefaController = {
       return res.status(201).json(tarefa)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao criar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao criar tarefa'),
       })
     }
   },
 
   async sincronizarRecebida(req: Request, res: Response) {
     try {
+      if (req.body.status && !STATUS_TAREFA_VALIDOS.includes(req.body.status)) {
+        return res.status(400).json({ error: 'Status inválido' })
+      }
+
+      if (req.body.prioridade && !PRIORIDADES_TAREFA_VALIDAS.includes(req.body.prioridade)) {
+        return res.status(400).json({ error: 'Prioridade inválida' })
+      }
+
       const tarefa = await TarefaService.sincronizarRecebida(req.body)
       return res.status(201).json(tarefa)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao sincronizar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao sincronizar tarefa'),
       })
     }
   },
@@ -68,10 +88,7 @@ export const TarefaController = {
   async listarTodas(req: Request, res: Response) {
     try {
       const tarefas = await TarefaService.listarTodas()
-      const tarefasFiltradas = req.usuario?.cargo === 'supervisor'
-        ? tarefas.filter(tarefa => tarefa.retiro_id === req.usuario?.retiro_id)
-        : tarefas
-      return res.status(200).json(tarefasFiltradas)
+      return res.status(200).json(tarefas)
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar tarefas' })
     }
@@ -88,14 +105,11 @@ export const TarefaController = {
       const tarefa = await TarefaService.buscarPorId(id)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
-      if (
-        (req.usuario?.cargo === 'supervisor' || req.usuario?.cargo === 'capataz') &&
-        tarefa.retiro_id !== req.usuario.retiro_id
-      ) {
-        return res.status(403).json({ error: 'Acesso negado: retiro diferente do usuario' })
+      if (capatazNaoEDonoDaTarefa(req, tarefa.atribuida_a)) {
+        return res.status(403).json({ error: 'Acesso negado: tarefa de outro capataz' })
       }
 
       return res.status(200).json(tarefa)
@@ -131,6 +145,10 @@ export const TarefaController = {
         return res.status(400).json({ error: 'Retiro inválido' })
       }
 
+      if (!STATUS_TAREFA_VALIDOS.includes(status)) {
+        return res.status(400).json({ error: 'Status inválido' })
+      }
+
       const tarefas = await TarefaService.listarPorStatus(status, retiroUuid)
 
       return res.status(200).json(tarefas)
@@ -144,14 +162,14 @@ export const TarefaController = {
       const usuarioId = String(req.params.usuarioId)
 
       if (req.usuario?.cargo === 'capataz' && usuarioId !== req.usuario.id) {
-        return res.status(403).json({ error: 'Acesso negado: usuario diferente do autenticado' })
+        return res.status(403).json({ error: 'Acesso negado: usuário diferente do autenticado' })
       }
 
       const tarefas = await TarefaService.listarPorUsuario(usuarioId)
 
       return res.status(200).json(tarefas)
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar tarefas por usuario' })
+      return res.status(500).json({ error: 'Erro ao listar tarefas por usuário' })
     }
   },
 
@@ -163,6 +181,10 @@ export const TarefaController = {
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
+      }
+
+      if (!PRIORIDADES_TAREFA_VALIDAS.includes(prioridade)) {
+        return res.status(400).json({ error: 'Prioridade inválida' })
       }
 
       const tarefas = await TarefaService.listarPorPrioridade(prioridade, retiroUuid)
@@ -201,14 +223,24 @@ export const TarefaController = {
       }
 
       if (!status) {
-        return res.status(400).json({ error: 'Status e obrigatorio' })
+        return res.status(400).json({ error: 'Status é obrigatório' })
+      }
+
+      if (!STATUS_TAREFA_VALIDOS.includes(status)) {
+        return res.status(400).json({ error: 'Status inválido' })
+      }
+
+      const tarefaAtual = await TarefaService.buscarPorId(id)
+
+      if (!tarefaAtual) {
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
+      }
+
+      if (capatazNaoEDonoDaTarefa(req, tarefaAtual.atribuida_a)) {
+        return res.status(403).json({ error: 'Acesso negado: tarefa de outro capataz' })
       }
 
       const tarefa = await TarefaService.atualizarStatus(id, status)
-
-      if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
-      }
 
       return res.status(200).json(tarefa)
     } catch (error) {
@@ -227,13 +259,13 @@ export const TarefaController = {
       const tarefa = await TarefaService.atualizar(id, req.body)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
       return res.status(200).json(tarefa)
     } catch (error) {
       return res.status(400).json({
-        error: error instanceof Error ? error.message : 'Erro ao atualizar tarefa',
+        error: mensagemErroCliente(error, 'Erro ao atualizar tarefa'),
       })
     }
   },
@@ -266,7 +298,7 @@ export const TarefaController = {
       const tarefa = await TarefaService.buscarPorId(id)
 
       if (!tarefa) {
-        return res.status(404).json({ error: 'Tarefa nao encontrada' })
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
       }
 
       await TarefaService.remover(id)

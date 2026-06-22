@@ -11,6 +11,10 @@
   var INSTALL_HINT_SELECTOR = '#pwa-install-hint'
   var CONNECTIVITY_CHECK_URL = '/health'
   var CONNECTIVITY_CHECK_TIMEOUT_MS = 2500
+  var MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024
+  var MAX_AUDIO_SIZE_BYTES = 10 * 1024 * 1024
+  var ALLOWED_PHOTO_MIME_TYPES = ['image/jpeg', 'image/png']
+  var ALLOWED_AUDIO_MIME_TYPES = ['audio/webm', 'audio/mp4', 'audio/ogg']
 
   var deferredInstallPrompt = null
   var bootstrapped = false
@@ -205,20 +209,56 @@
     return fallback
   }
 
+  function normalizeMimeType(mimeType) {
+    return String(mimeType || '').split(';')[0].trim().toLowerCase()
+  }
+
+  function criarErroValidacaoMidia(mensagem) {
+    var erro = new Error(mensagem)
+    erro.name = 'AgroFlowMediaValidationError'
+    return erro
+  }
+
+  function isErroValidacaoMidia(error) {
+    return error && error.name === 'AgroFlowMediaValidationError'
+  }
+
+  function validarMidia(blob, mimeType, destinoPadrao) {
+    var tipoNormalizado = normalizeMimeType(mimeType || (blob && blob.type))
+    var ehAudio = destinoPadrao === 'evidencias/audio'
+    var permitidos = ehAudio ? ALLOWED_AUDIO_MIME_TYPES : ALLOWED_PHOTO_MIME_TYPES
+    var tamanhoMaximo = ehAudio ? MAX_AUDIO_SIZE_BYTES : MAX_PHOTO_SIZE_BYTES
+
+    if (!tipoNormalizado || permitidos.indexOf(tipoNormalizado) === -1) {
+      throw criarErroValidacaoMidia('A mídia selecionada não é compatível. Use foto JPG/PNG ou áudio WebM/MP4/OGG.')
+    }
+
+    if (blob && blob.size > tamanhoMaximo) {
+      throw criarErroValidacaoMidia('A mídia selecionada é muito grande. Envie foto de até 5 MB ou áudio de até 10 MB.')
+    }
+
+    return tipoNormalizado
+  }
+
+  function erroSincronizacaoGenerico() {
+    return 'Não foi possível sincronizar o registro. Ele ficará salvo para nova tentativa.'
+  }
+
   async function uploadBinaryToSupabase(draft, usuarioId, destinoPadrao) {
     var config = getSupabaseConfig()
 
     if (!config || !config.url || !config.anonKey || !config.bucket) {
-      throw new Error('Configuração do Supabase ausente. O registro offline será mantido até o app conseguir enviar.')
+      throw new Error('Não foi possível enviar a mídia agora. O registro ficará salvo para nova tentativa.')
     }
 
     if (!draft || !draft.blob) {
-      throw new Error('Draft de mídia ausente.')
+      throw new Error('Não foi possível preparar a mídia. Capture a evidência novamente.')
     }
 
     var blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'application/octet-stream' })
+    var mimeType = validarMidia(blob, draft.mimeType, destinoPadrao)
     var pasta = config.folder || destinoPadrao
-    var extensao = inferExtension(draft.mimeType, destinoPadrao === 'evidencias/audio' ? 'webm' : 'jpg')
+    var extensao = inferExtension(mimeType, destinoPadrao === 'evidencias/audio' ? 'webm' : 'jpg')
     var nomeArquivo = [usuarioId || 'capataz', Date.now() + '.' + extensao].join('/')
     var caminho = (pasta + '/' + nomeArquivo).replace(/^\/+/, '')
     var baseUrl = config.url.replace(/\/+$/, '')
@@ -229,7 +269,7 @@
       headers: {
         apikey: config.anonKey,
         Authorization: 'Bearer ' + config.anonKey,
-        'Content-Type': draft.mimeType || 'application/octet-stream',
+        'Content-Type': mimeType,
         'x-upsert': 'true',
       },
       body: blob,
@@ -239,7 +279,8 @@
       var texto = await response.text().catch(function () {
         return ''
       })
-      throw new Error('Falha ao enviar mídia para o Supabase (' + response.status + '): ' + (texto || 'sem detalhes'))
+      console.warn('Falha ao enviar mídia no PWA do capataz', { status: response.status, detalhe: texto || null })
+      throw new Error('Não foi possível enviar a mídia agora. O registro ficará salvo para nova tentativa.')
     }
 
     return {
@@ -286,6 +327,20 @@
     throw new Error('Tipo de evidência inválido.')
   }
 
+  function validarMovimentacaoParaFila(body) {
+    if (!body || !body.evidenciaDraft) {
+      return
+    }
+
+    var draft = body.evidenciaDraft
+
+    if (draft.tipo === 'audio' || draft.tipo === 'foto') {
+      var destinoPadrao = draft.tipo === 'audio' ? 'evidencias/audio' : 'evidencias/foto'
+      var blob = draft.blob instanceof Blob ? draft.blob : new Blob([draft.blob], { type: draft.mimeType || 'application/octet-stream' })
+      validarMidia(blob, draft.mimeType, destinoPadrao)
+    }
+  }
+
   async function executeQueuedOperation(operation) {
     var body = deepClone(operation.body || {})
 
@@ -306,11 +361,21 @@
       body: JSON.stringify(body),
     })
 
+    if (window.AgroFlowSession && window.AgroFlowSession.tratarResposta(response)) {
+      throw new Error('Sessão expirada.')
+    }
+
     if (!response.ok) {
       var data = await response.json().catch(function () {
         return {}
       })
-      var erro = data && data.error ? data.error : 'HTTP ' + response.status
+      console.warn('Falha ao executar operação enfileirada no PWA do capataz', {
+        status: response.status,
+        kind: operation.kind,
+        url: operation.url,
+        error: data && data.error ? data.error : null,
+      })
+      var erro = data && data.error ? data.error : erroSincronizacaoGenerico()
       throw new Error(erro)
     }
 
@@ -396,7 +461,13 @@
         await removeQueuedOperation(item.id)
         sincronizados += 1
       } catch (error) {
-        erros.push('Erro ao sincronizar ' + item.kind + ': ' + (error instanceof Error ? error.message : 'erro desconhecido'))
+        console.warn('Falha ao sincronizar registro pendente no PWA do capataz', {
+          id: item.id,
+          kind: item.kind,
+          url: item.url,
+          error: error instanceof Error ? error.message : error,
+        })
+        erros.push(erroSincronizacaoGenerico())
       }
     }
 
@@ -414,6 +485,11 @@
     var queueBody = config.queueBody || config.body
     var method = config.method || 'POST'
     var headers = config.headers || {}
+
+    if (config.kind === 'movimentacao') {
+      validarMovimentacaoParaFila(queueBody)
+    }
+
     var online = await detectConnectivity()
 
     if (!online) {
@@ -444,17 +520,31 @@
         body: JSON.stringify(requestBody),
       })
 
+      if (window.AgroFlowSession && window.AgroFlowSession.tratarResposta(response)) {
+        return { queued: false, online: true, response: response }
+      }
+
       if (!response.ok) {
         var data = await response.json().catch(function () {
           return {}
         })
-        throw new Error((data && data.error) || 'HTTP ' + response.status)
+        console.warn('Falha ao executar operação online no PWA do capataz', {
+          status: response.status,
+          kind: config.kind,
+          url: config.url,
+          error: data && data.error ? data.error : null,
+        })
+        throw new Error((data && data.error) || erroSincronizacaoGenerico())
       }
 
       notifyQueueChange()
 
       return { queued: false, online: true, response: response }
     } catch (error) {
+      if (isErroValidacaoMidia(error)) {
+        throw error
+      }
+
       if (error && (error.name === 'TypeError' || error.name === 'AbortError')) {
         setKnownOnline(false)
       }

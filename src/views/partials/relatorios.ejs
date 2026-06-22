@@ -375,18 +375,36 @@
   function renderTabela(colunas, linhas, periodoTexto) {
     const thead = document.getElementById('relatorio-head');
     const tbody = document.getElementById('relatorio-body');
-    if (thead) thead.innerHTML = '<tr>' + colunas.map(c => `<th>${escaparRel(c)}</th>`).join('') + '</tr>';
-    if (tbody) tbody.innerHTML = linhas.map((l, i) => {
-      const badge = l.status === 'Validado'
-        ? '<span class="badge badge--green">Validado</span>'
-        : '<span class="badge badge--yellow">Pendente</span>';
-      return `<tr class="${i % 2 === 1 ? 'tr--alt' : ''}">`
-        + `<td class="td--bold">${escaparRel(l.celulas[0])}</td>`
-        + `<td>${escaparRel(l.celulas[1])}</td>`
-        + `<td>${escaparRel(l.celulas[2])}</td>`
-        + `<td>${escaparRel(l.celulas[3])}</td>`
-        + `<td>${badge}</td></tr>`;
-    }).join('');
+    if (thead) {
+      thead.replaceChildren();
+      const tr = document.createElement('tr');
+      colunas.forEach(c => {
+        const th = document.createElement('th');
+        th.textContent = c;
+        tr.appendChild(th);
+      });
+      thead.appendChild(tr);
+    }
+    if (tbody) {
+      tbody.replaceChildren();
+      linhas.forEach((l, i) => {
+        const tr = document.createElement('tr');
+        if (i % 2 === 1) tr.className = 'tr--alt';
+        l.celulas.slice(0, 4).forEach((celula, indice) => {
+          const td = document.createElement('td');
+          if (indice === 0) td.className = 'td--bold';
+          td.textContent = celula;
+          tr.appendChild(td);
+        });
+        const status = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = l.status === 'Validado' ? 'badge badge--green' : 'badge badge--yellow';
+        badge.textContent = l.status === 'Validado' ? 'Validado' : 'Pendente';
+        status.appendChild(badge);
+        tr.appendChild(status);
+        tbody.appendChild(tr);
+      });
+    }
 
     const validados = linhas.filter(l => l.status === 'Validado').length;
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = String(v); };
