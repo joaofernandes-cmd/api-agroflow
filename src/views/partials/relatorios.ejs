@@ -39,11 +39,11 @@
         <div class="rfield__daterange">
           <div class="rfield__date">
             <label class="rfield__date-label" for="data-inicio-mobile">De</label>
-            <input class="rfield__input" type="date" id="data-inicio-mobile" name="dataInicio" value="2026-06-01" aria-label="Data de início" />
+            <input class="rfield__input" type="date" id="data-inicio-mobile" name="dataInicio" aria-label="Data de início" />
           </div>
           <div class="rfield__date">
             <label class="rfield__date-label" for="data-fim-mobile">Até</label>
-            <input class="rfield__input" type="date" id="data-fim-mobile" name="dataFim" value="2026-07-01" aria-label="Data final" />
+            <input class="rfield__input" type="date" id="data-fim-mobile" name="dataFim" aria-label="Data final" />
           </div>
         </div>
       </div>
@@ -107,7 +107,7 @@
 
       <!-- Botão exportar -->
       <button type="submit" class="btn btn--primary btn--exportar">
-        Baixar arquivo
+        Gerar relatório
       </button>
       <p id="relatorio-feedback-mobile" style="margin: 8px 0 0; font-size: 14px; line-height: 1.4;"></p>
 
@@ -152,8 +152,8 @@
         <div class="tfilter tfilter--daterange">
           <label class="tfilter__label">Período</label>
           <div class="tfilter__daterange">
-            <input class="tfilter__input" type="date" id="data-inicio-desktop" value="2026-06-01" aria-label="Data de início" />
-            <input class="tfilter__input" type="date" id="data-fim-desktop" value="2026-07-01" aria-label="Data final" />
+            <input class="tfilter__input" type="date" id="data-inicio-desktop" aria-label="Data de início" />
+            <input class="tfilter__input" type="date" id="data-fim-desktop" aria-label="Data final" />
           </div>
         </div>
 
@@ -253,7 +253,7 @@
         </div>
 
         <button class="btn btn--primary btn--exportar-desktop" type="button">
-          Baixar arquivo
+          Gerar relatório
         </button>
 
         <div class="formato-card">
@@ -555,6 +555,22 @@
     const campo = document.getElementById(id);
     if (campo) campo.addEventListener('change', carregarRelatorio);
   });
+
+  // Inicializa datas com o mês corrente (1º dia do mês até hoje).
+  (function inicializarDatas() {
+    const hoje = new Date();
+    const anoMes = hoje.toISOString().slice(0, 7);
+    const inicio = anoMes + '-01';
+    const fim = hoje.toISOString().slice(0, 10);
+    ['data-inicio-mobile', 'data-inicio-desktop'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = inicio;
+    });
+    ['data-fim-mobile', 'data-fim-desktop'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = fim;
+    });
+  })();
 
   // O multiselect mobile não atualiza a prévia (mobile só exporta); o desktop sim.
   initMultiselect('retiro-mobile', () => {});
