@@ -6,8 +6,9 @@ import { UUID } from '../models/uuid'
 export interface UsuarioAutenticado {
   // Id do usuário autenticado no sistema.
   id: UUID
+  identificador: string
   // Login usado na autenticação.
-  login: string
+  login: string | null
   // Cargo carregado do token para liberar ou bloquear rotas.
   cargo: UsuarioCargo
   // Retiro ao qual o usuário pertence.
@@ -35,6 +36,7 @@ export function gerarToken(usuario: UsuarioAutenticado): string {
   return jwt.sign(
     {
       login: usuario.login,
+      identificador: usuario.identificador,
       cargo: usuario.cargo,
       retiro_id: usuario.retiro_id,
     },
@@ -49,13 +51,14 @@ export function gerarToken(usuario: UsuarioAutenticado): string {
 function montarUsuarioAPartirDoToken(token: string): UsuarioAutenticado {
   const payload = jwt.verify(token, JWT_SECRET) as JwtPayloadUsuario
 
-  if (!payload.sub || !payload.login || !payload.cargo) {
+  if (!payload.sub || !payload.cargo || (!payload.identificador && !payload.login)) {
     throw new Error('Token inválido')
   }
 
   return {
     id: payload.sub,
-    login: payload.login,
+    identificador: payload.identificador ?? payload.login,
+    login: payload.login ?? null,
     cargo: payload.cargo,
     retiro_id: payload.retiro_id,
   }
