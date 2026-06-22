@@ -26,8 +26,11 @@ import {
   removerMovimentacaoPendente,
 } from './data/movimentacoes'
 import { relatorioDemo } from './data/relatorio-demo'
-import { OPCOES_RETIRO, RETIROS, CAPATAZES } from './data/referencia'
+import { OPCOES_RETIRO, PARES_RETIRO_CAPATAZ } from './data/referencia'
 import { UsuarioController } from './controllers/usuario.controller'
+import { TicketService } from './services/ticket.service'
+import { MovimentacaoService } from './services/movimentacao.service'
+import { carregarContexto, ticketParaExibicao, movimentacaoParaExibicao } from './utils/apresentacao'
 
 const app = express()
 
@@ -148,10 +151,10 @@ app.get('/supervisor/delegar', (req, res) => {
     title: 'Delegar tarefa',
     css: 'supervisor',
     usuario: { nome: 'Luiz Felipe' },
-    // Selects vêm da fonte única de referência: todos os capatazes e todos
-    // os retiros da fazenda (o supervisor escolhe um de cada).
-    capatazes: CAPATAZES,
-    retiros: RETIROS,
+    // Campo combinado vem da fonte única de referência: cada retiro já traz o
+    // seu capataz responsável (o supervisor escolhe o retiro e o capataz vem
+    // junto), evitando pares inconsistentes.
+    paresRetiroCapataz: PARES_RETIRO_CAPATAZ,
     // "Tarefas ativas" = tarefas já delegadas que o capataz ainda não realizou
     // (status 'pendente'). Mesma fonte da home do capataz, para baterem.
     tarefasAtivas: tarefasCapataz.filter((t) => t.status === 'pendente'),
@@ -182,24 +185,40 @@ app.get('/supervisor/revisao', (req, res) => {
   });
 });
 
-app.get('/supervisor/tickets', (req, res) => {
+app.get('/supervisor/tickets', async (req, res) => {
+  const retiroId = req.usuario!.retiro_id
+  const ctx = await carregarContexto(req)
+  const [pendentes, aprovados] = await Promise.all([
+    TicketService.listarPorStatus('pendente', retiroId),
+    TicketService.listarPorStatus('aprovado', retiroId),
+  ])
+
   res.render('supervisor/tickets', {
     title: 'Tickets de infraestrutura',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' },
-    tickets: ticketsPendentes,
-    ticketsDados: ticketsDadosMap
+    usuario: { nome: ctx.nomeUsuario },
+    // Pendentes de validação e já validados — ambos do BANCO (fonte única).
+    tickets: pendentes.map((t) => ticketParaExibicao(t, ctx)),
+    ticketsValidados: aprovados.map((t) => ticketParaExibicao(t, ctx)),
   });
 });
 
 // Movimentações do rebanho que o capataz registrou e o supervisor valida.
-app.get('/supervisor/movimentacoes', (req, res) => {
+app.get('/supervisor/movimentacoes', async (req, res) => {
+  const retiroId = req.usuario!.retiro_id
+  const ctx = await carregarContexto(req)
+  const [pendentes, validadas] = await Promise.all([
+    MovimentacaoService.listarPendentes(retiroId),
+    MovimentacaoService.filtrar(retiroId, undefined, ['validado']),
+  ])
+
   res.render('supervisor/movimentacoes', {
     title: 'Movimentações',
     css: 'supervisor',
-    usuario: { nome: 'Luiz Felipe' },
-    movimentacoes: movimentacoesPendentes,
-    movimentacoesDados: movimentacoesDadosMap
+    usuario: { nome: ctx.nomeUsuario },
+    // Pendentes de validação e já validadas — ambas do BANCO (fonte única).
+    movimentacoes: pendentes.map((m) => movimentacaoParaExibicao(m, ctx)),
+    movimentacoesValidadas: validadas.map((m) => movimentacaoParaExibicao(m, ctx)),
   });
 });
 
@@ -209,16 +228,6 @@ app.get('/supervisor/movimentacoes', (req, res) => {
 app.post('/supervisor/tarefas/:id/validar', (req, res) => {
   const ok = removerTarefaRevisao(Number(req.params.id))
   return res.status(ok ? 200 : 404).json({ ok, pendentes: tarefasRevisao.length })
-})
-
-app.post('/supervisor/tickets/:id/validar', (req, res) => {
-  const ok = removerTicketPendente(String(req.params.id))
-  return res.status(ok ? 200 : 404).json({ ok, pendentes: ticketsPendentes.length })
-})
-
-app.post('/supervisor/movimentacoes/:id/validar', (req, res) => {
-  const ok = removerMovimentacaoPendente(String(req.params.id))
-  return res.status(ok ? 200 : 404).json({ ok, pendentes: movimentacoesPendentes.length })
 })
 
 // Supervisor acessa relatórios

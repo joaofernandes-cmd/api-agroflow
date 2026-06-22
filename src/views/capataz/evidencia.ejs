@@ -117,6 +117,16 @@
     var btnFoto = $('BtnFoto'), btnAudio = $('BtnAudio'), btnTexto = $('BtnTexto');
     var painelFoto = $('PainelFoto'), painelAudio = $('PainelAudio'), painelTexto = $('PainelTexto');
 
+    // Rola suavemente até o painel recém-aberto. Em telas pequenas a área
+    // (sobretudo a câmera) costuma nascer abaixo da dobra; o requestAnimationFrame
+    // garante que o display: block já foi aplicado antes de rolar.
+    function rolarPara(painel) {
+      if (!painel) return;
+      requestAnimationFrame(function () {
+        painel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
     function mostrarPainel(qual) {
       painelFoto.style.display = qual === 'foto' ? 'block' : 'none';
       painelAudio.style.display = qual === 'audio' ? 'block' : 'none';
@@ -124,6 +134,7 @@
       btnFoto.classList.toggle('evidencia__btn--ativo', qual === 'foto');
       btnAudio.classList.toggle('evidencia__btn--ativo', qual === 'audio');
       btnTexto.classList.toggle('evidencia__btn--ativo', qual === 'texto');
+      rolarPara(qual === 'foto' ? painelFoto : qual === 'audio' ? painelAudio : painelTexto);
     }
     btnFoto.addEventListener('click', function () { mostrarPainel('foto'); });
     btnAudio.addEventListener('click', function () { mostrarPainel('audio'); });

@@ -64,8 +64,10 @@
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
+  <%- include('../partials/aviso-sucesso') %>
 </main>
 
+<script src="/js/aviso-sucesso.js"></script>
 <div id="dadosTarefa" hidden
      data-titulo="<%= tarefa.titulo %>"
      data-retiro="<%= tarefa.retiro %>"
@@ -155,6 +157,16 @@
       syncFeedback.hidden = false;
     }
 
+    // Confirmação em tela cheia (o capataz precisa ver claramente que deu certo).
+    function mostrarSucessoTela(titulo, msg) {
+      if (!window.AvisoSucesso) { mostrarSync(msg); return; }
+      window.AvisoSucesso.mostrar(msg, {
+        titulo: titulo,
+        botaoTexto: 'Voltar para tarefas',
+        aoFechar: function () { window.location.href = '/capataz/tarefas'; },
+      });
+    }
+
     // Versão da evidência para o localStorage: sem o Blob (não serializa em JSON).
     function toEvidLocal(e) {
       return { tipo: e.tipo, dataUrl: e.dataUrl, conteudo: e.conteudo, latitude: e.latitude, longitude: e.longitude };
@@ -216,15 +228,59 @@
       return { total: total, enviadas: enviadas, aviso: aviso };
     }
 
-    function sincronizarConclusao(tarefaId, dataConclusao, evidencias) {
-      if (!window.AgroFlowCapataz) return;
+    // Texto da descrição que o supervisor lê (a contagem reflete o que foi
+    // REALMENTE enviado ao backend, não só o que o capataz capturou).
+    function descricaoConclusao(qtdEvidencias) {
+      return 'Conclusao da tarefa "' + DADOS_TAREFA.titulo + '" no retiro ' +
+        DADOS_TAREFA.retiro + '. Evidencias anexadas: ' + qtdEvidencias + '.';
+    }
+
+    // Reverte a conclusão: a tarefa volta a ser 'pendente' (sem ficar como
+    // concluída sem evidência). Usa o endpoint de status (permitido ao capataz).
+    function reverterParaPendente(tarefaId) {
+      return fetch('/tarefas/' + encodeURIComponent(tarefaId) + '/status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'pendente' })
+      }).then(function (resp) {
+        if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
+        return resp.ok;
+      }).catch(function () { return false; });
+    }
+
+    // Re-sincroniza a mesma tarefa (upsert por id) só para corrigir a descrição
+    // quando parte das evidências não pôde ser enviada.
+    function corrigirContagem(payload, qtdEnviada) {
+      var corpo = Object.assign({}, payload, { descricao: descricaoConclusao(qtdEnviada) });
+      return window.AgroFlowCapataz.fetchOrQueueOperation({
+        kind: 'tarefa', url: '/tarefas/sincronizar', method: 'POST', body: corpo, queueBody: corpo
+      }).catch(function () {});
+    }
+
+    // Conclui a tarefa GARANTINDO que a evidência obrigatória chegue ao supervisor.
+    // A evidência precisa da tarefa já existente (FK), então a ordem é:
+    //   1) cria a tarefa como 'concluido';
+    //   2) envia a evidência ligada a ela;
+    //   3) se NENHUMA evidência foi salva no backend, reverte a tarefa para
+    //      'pendente' e avisa o capataz — assim o supervisor nunca vê tarefa
+    //      concluída sem evidência.
+    // Retorna true se concluiu de fato; false se não concluiu (offline/falha).
+    async function sincronizarConclusao(tarefaId, dataConclusao, evidencias, evidLocais) {
+      if (!window.AgroFlowCapataz) return false;
+
+      // Sem internet não dá para enviar foto/áudio; como a evidência é obrigatória
+      // e tem que ir junto, não concluímos agora (e não enfileiramos nada).
+      if (!navigator.onLine) {
+        mostrarSync('Você está sem internet. A evidência precisa ser enviada junto com a tarefa. Conecte-se à internet e conclua de novo.');
+        return false;
+      }
 
       var payload = {
         id: tarefaId,
         retiro_id: CAPATAZ_DEMO.retiro_id,
         criada_por: CAPATAZ_DEMO.id,
         atribuida_a: CAPATAZ_DEMO.id,
-        descricao: 'Conclusao da tarefa "' + DADOS_TAREFA.titulo + '" no retiro ' + DADOS_TAREFA.retiro + '. Evidencias anexadas: ' + evidencias.length + '.',
+        descricao: descricaoConclusao(evidencias.length),
         categoria: DADOS_TAREFA.categoria || 'Operacional',
         prioridade: prioridadeApi(DADOS_TAREFA.prioridade),
         data_criacao: new Date().toISOString(),
@@ -232,38 +288,66 @@
         aprovado_por: null,
         sincronizado: false
       };
+      // Se a rede cair na hora do envio, a tarefa vai pra fila como PENDENTE
+      // (nunca como concluída sem evidência).
+      var payloadFila = Object.assign({}, payload, { status: 'pendente', descricao: DADOS_TAREFA.descricao });
 
-      window.AgroFlowCapataz.fetchOrQueueOperation({
-        kind: 'tarefa',
-        url: '/tarefas/sincronizar',
-        method: 'POST',
-        body: payload,
-        queueBody: payload
-      }).then(function (resultado) {
-        // Offline: a tarefa foi enfileirada e ainda não existe no servidor,
-        // então não dá para ligar as evidências a ela agora.
-        if (resultado.queued) {
-          mostrarSync('Tarefa salva offline. Ela será sincronizada automaticamente quando houver conexão.');
-          return;
-        }
-        // Online: a tarefa foi criada → envia as evidências ligadas a ela.
-        return enviarEvidenciasBackend(tarefaId, evidencias).then(function (r) {
-          if (r.total === 0) {
-            mostrarSync('Tarefa concluída e sincronizada com sucesso.');
-          } else if (r.enviadas === r.total) {
-            mostrarSync('Tarefa e ' + r.enviadas + ' evidência(s) sincronizadas com sucesso.');
-          } else if (r.enviadas > 0) {
-            mostrarSync(r.enviadas + ' de ' + r.total + ' evidência(s) enviadas. ' + r.aviso);
-          } else {
-            mostrarSync('Tarefa sincronizada, mas as evidências não puderam ser enviadas. ' + r.aviso);
-          }
+      var resultado;
+      try {
+        resultado = await window.AgroFlowCapataz.fetchOrQueueOperation({
+          kind: 'tarefa', url: '/tarefas/sincronizar', method: 'POST', body: payload, queueBody: payloadFila
         });
-      }).catch(function () {
-        mostrarSync('Tarefa concluída localmente. A sincronização será tentada novamente quando houver conexão.');
-      });
+      } catch (e) {
+        mostrarSync('Não foi possível concluir a tarefa agora. Verifique a internet e tente de novo.');
+        return false;
+      }
+
+      if (resultado.queued) {
+        mostrarSync('Você está sem internet. A evidência precisa ser enviada junto com a tarefa. Conecte-se à internet e conclua de novo.');
+        return false;
+      }
+
+      // Online: a tarefa existe no servidor → envia as evidências ligadas a ela.
+      var r = await enviarEvidenciasBackend(tarefaId, evidencias);
+
+      if (r.enviadas === 0) {
+        // Nenhuma evidência salva → desfaz a conclusão para não deixar tarefa
+        // concluída sem evidência. Volta a pendente para o capataz tentar de novo.
+        await reverterParaPendente(tarefaId);
+        mostrarSync((r.aviso || 'Não foi possível enviar a evidência.') + ' A tarefa continua pendente — tente concluir de novo.');
+        return false;
+      }
+
+      // Pelo menos uma evidência foi salva → conclusão válida.
+      if (r.enviadas < r.total) {
+        await corrigirContagem(payload, r.enviadas);
+      }
+
+      // Confirma localmente e mostra o sucesso em tela cheia.
+      if (window.TarefasStore) {
+        TarefasStore.concluir(DADOS_TAREFA.id, {
+          titulo: DADOS_TAREFA.titulo,
+          retiro: DADOS_TAREFA.retiro,
+          supervisor: DADOS_TAREFA.supervisor,
+          prioridade: DADOS_TAREFA.prioridade,
+          descricao: DADOS_TAREFA.descricao,
+          dataConclusao: dataConclusao,
+          evidencias: evidLocais
+        });
+      }
+      mostrarConcluida(evidLocais);
+      var msg = 'Sua Tarefa foi concluída e enviada para o supervisor.';
+      if (r.enviadas < r.total) msg += ' (' + r.enviadas + ' de ' + r.total + ' evidências enviadas.)';
+      mostrarSucessoTela('Tarefa concluída!', msg);
+      return true;
     }
 
-    // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto).
+    // Mesmo id em todas as tentativas desta página: se reverter e o capataz
+    // tentar de novo, o upsert atualiza a MESMA tarefa (não cria duplicada).
+    var tarefaIdConclusao = null;
+
+    // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto) E
+    // ela for de fato salva no backend.
     if (btnConcluir && !salva) {
       btnConcluir.addEventListener('click', function () {
         var evid = evidenciasCapturadas();
@@ -272,25 +356,31 @@
           if (painel) painel.hidden = false;
           return;
         }
+        if (btnConcluir.dataset.processando === '1') return;
+        btnConcluir.dataset.processando = '1';
+        btnConcluir.disabled = true;
+        var textoOriginal = btnConcluir.textContent;
+        btnConcluir.textContent = 'Enviando...';
+
         var dataConclusao = new Date().toLocaleString('pt-BR', {
           day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
-        // Mesmo id usado na sincronização da tarefa e no vínculo das evidências.
-        var tarefaId = gerarUuidLocal();
+        if (!tarefaIdConclusao) tarefaIdConclusao = gerarUuidLocal();
         var evidLocais = evid.map(toEvidLocal);
-        if (window.TarefasStore) {
-          TarefasStore.concluir(DADOS_TAREFA.id, {
-            titulo: DADOS_TAREFA.titulo,
-            retiro: DADOS_TAREFA.retiro,
-            supervisor: DADOS_TAREFA.supervisor,
-            prioridade: DADOS_TAREFA.prioridade,
-            descricao: DADOS_TAREFA.descricao,
-            dataConclusao: dataConclusao,
-            evidencias: evidLocais
+
+        // A conclusão local + tela de sucesso só acontecem DENTRO de
+        // sincronizarConclusao, e apenas quando a evidência foi mesmo salva.
+        Promise.resolve(sincronizarConclusao(tarefaIdConclusao, dataConclusao, evid, evidLocais))
+          .then(function (concluiu) {
+            if (!concluiu) {
+              // Não concluiu (sem evidência no backend / offline): reabilita o
+              // botão para o capataz tentar de novo.
+              btnConcluir.dataset.processando = '';
+              btnConcluir.disabled = false;
+              btnConcluir.textContent = textoOriginal;
+              if (painel) painel.hidden = false;
+            }
           });
-        }
-        mostrarConcluida(evidLocais);
-        sincronizarConclusao(tarefaId, dataConclusao, evid);
       });
     }
   })();

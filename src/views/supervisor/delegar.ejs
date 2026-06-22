@@ -4,8 +4,10 @@
   Variáveis esperadas pelo controller:
   - usuario: { nome: string }
   - css: ['supervisor']
-  - capatazes: string[]  (todos os capatazes da fazenda)
-  - retiros: string[]    (todos os retiros da fazenda)
+  - paresRetiroCapataz: { retiro: string, capataz: string }[]
+      Roster da fazenda: cada retiro já vem com o seu capataz responsável.
+      Vira um único campo combinado "Retiro — Capataz" (escolhe o retiro e o
+      capataz vem junto, sem risco de parear errado).
   - tarefasAtivas: tarefas delegadas e ainda não realizadas (status pendente)
 %>
 
@@ -35,24 +37,12 @@
     <form class="delegate-form" id="form-delegar" novalidate>
 
       <div class="dfield">
-        <label class="dfield__label" for="capataz-mobile">Capataz</label>
+        <label class="dfield__label" for="retiro-capataz-mobile">Retiro / Capataz responsável</label>
         <div class="dfield__select-wrap">
-          <select class="dfield__select" id="capataz-mobile" name="capataz" required aria-required="true">
-            <option value="" disabled selected>Escolha o capataz</option>
-            <% capatazes.forEach(function (c) { %>
-            <option value="<%= c %>"><%= c %></option>
-            <% }) %>
-          </select>
-        </div>
-      </div>
-
-      <div class="dfield">
-        <label class="dfield__label" for="retiro-mobile">Retiro</label>
-        <div class="dfield__select-wrap">
-          <select class="dfield__select" id="retiro-mobile" name="retiro" required aria-required="true">
+          <select class="dfield__select" id="retiro-capataz-mobile" name="retiroCapataz" required aria-required="true">
             <option value="" disabled selected>Escolha o retiro</option>
-            <% retiros.forEach(function (r) { %>
-            <option value="<%= r %>"><%= r %></option>
+            <% paresRetiroCapataz.forEach(function (p) { %>
+            <option value="<%= p.retiro %>" data-capataz="<%= p.capataz %>"><%= p.retiro %> — <%= p.capataz %></option>
             <% }) %>
           </select>
         </div>
@@ -146,24 +136,12 @@
         <form id="form-delegar-desktop" novalidate>
 
           <div class="dfield dfield--desktop">
-            <label class="dfield__label dfield__label--dark" for="capataz-desktop">Capataz</label>
+            <label class="dfield__label dfield__label--dark" for="retiro-capataz-desktop">Retiro / Capataz responsável</label>
             <div class="dfield__select-wrap">
-              <select class="dfield__select dfield__select--desktop" id="capataz-desktop" name="capataz" required>
-                <option value="" disabled selected>Escolha o capataz</option>
-                <% capatazes.forEach(function (c) { %>
-                <option value="<%= c %>"><%= c %></option>
-                <% }) %>
-              </select>
-            </div>
-          </div>
-
-          <div class="dfield dfield--desktop">
-            <label class="dfield__label dfield__label--dark" for="retiro-desktop">Retiro</label>
-            <div class="dfield__select-wrap">
-              <select class="dfield__select dfield__select--desktop" id="retiro-desktop" name="retiro" required>
+              <select class="dfield__select dfield__select--desktop" id="retiro-capataz-desktop" name="retiroCapataz" required>
                 <option value="" disabled selected>Escolha o retiro</option>
-                <% retiros.forEach(function (r) { %>
-                <option value="<%= r %>"><%= r %></option>
+                <% paresRetiroCapataz.forEach(function (p) { %>
+                <option value="<%= p.retiro %>" data-capataz="<%= p.capataz %>"><%= p.retiro %> — <%= p.capataz %></option>
                 <% }) %>
               </select>
             </div>
@@ -327,29 +305,33 @@
     return corpo;
   }
 
-  // Delega a tarefa. Capataz e retiro são obrigatórios: o supervisor precisa
-  // escolher um de cada. Os capatazes e retiros vêm da fonte única de
-  // referência (renderizados no servidor), iguais às demais telas.
+  // Delega a tarefa. O supervisor escolhe um único campo combinado
+  // "Retiro — Capataz"; o capataz responsável vem pareado com o retiro na fonte
+  // única de referência (renderizada no servidor), evitando pares inconsistentes.
   async function enviarTarefa(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const capataz = form.querySelector('select[name="capataz"]');
-    const retiro = form.querySelector('select[name="retiro"]');
+    // Campo combinado: o value é o retiro e o capataz responsável vem no
+    // data-capataz da opção escolhida (pareados na fonte única de referência).
+    const retiroCapataz = form.querySelector('select[name="retiroCapataz"]');
     const atividade = form.querySelector('select[name="atividade"]');
     const outro = form.querySelector('input[name="outroAtividade"]');
     const prioridade = form.querySelector('[name="prioridade"]');
     const descricao = form.querySelector('textarea[name="descricao"]');
 
-    if (!capataz || !retiro || !atividade || !prioridade || !descricao) {
+    if (!retiroCapataz || !atividade || !prioridade || !descricao) {
       mostrarFeedback('Formulário incompleto.', 'error');
       return;
     }
 
-    if (!capataz.value || !retiro.value) {
-      mostrarFeedback('Escolha um capataz e um retiro.', 'error');
+    if (!retiroCapataz.value) {
+      mostrarFeedback('Escolha o retiro.', 'error');
       return;
     }
+
+    const retiro = retiroCapataz.value;
+    const capataz = retiroCapataz.selectedOptions[0]?.dataset.capataz || '';
 
     if (!atividade.value || !prioridade.value || !descricao.value.trim()) {
       mostrarFeedback('Preencha todos os campos obrigatórios.', 'error');
@@ -370,8 +352,8 @@
 
     const dados = {
       titulo,
-      retiro: retiro.value,
-      capataz: capataz.value,
+      retiro,
+      capataz,
       prioridade: prioridade.value,
       descricao: descricao.value.trim(),
     };

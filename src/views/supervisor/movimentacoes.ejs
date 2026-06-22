@@ -78,7 +78,7 @@
     <section class="lista-secao">
       <h2 class="lista-secao__titulo">Validadas</h2>
       <p class="lista-secao__sub">Movimentações que você já validou</p>
-      <div class="movimentacoes-validadas"></div>
+      <div class="movimentacoes-validadas"><%- include('../partials/movimentacoes-validadas', { movimentacoesValidadas }) %></div>
     </section>
 
   </main>
@@ -149,6 +149,9 @@
             <%
               function escHtmlMov(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
               function evidenciaBlocoMov(m){
+                if (!m.evidencia) {
+                  return '<p class="evidencia-texto">Sem evidência registrada.</p>';
+                }
                 if (m.evidencia === 'Texto') {
                   return '<p class="evidencia-texto">' + escHtmlMov(m.evidenciaTexto) + '</p>';
                 }
@@ -194,38 +197,18 @@
       <section class="lista-secao">
         <h2 class="lista-secao__titulo">Validadas</h2>
         <p class="lista-secao__sub">Movimentações que você já validou</p>
-        <div class="movimentacoes-validadas"></div>
+        <div class="movimentacoes-validadas"><%- include('../partials/movimentacoes-validadas', { movimentacoesValidadas }) %></div>
       </section>
     </main>
   </div><!-- /desktop-main -->
 
 </div><!-- /layout-desktop -->
 
-<script src="/js/contadores-pendentes.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
   }).replace(/^\w/, c => c.toUpperCase());
-
-  function escaparHTML(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-
-  // Momento da validação (DD/MM/AAAA HH:MM) e nome do supervisor logado.
-  function agoraFormatado() {
-    return new Date().toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    });
-  }
-  function nomeSupervisor() {
-    try {
-      const u = JSON.parse(localStorage.getItem('agroflow.usuario') || '{}');
-      return (u && u.nome) ? u.nome.split(' ')[0] : 'Luiz Felipe';
-    } catch (e) { return 'Luiz Felipe'; }
-  }
 
   function mostrarFeedbackValidacao(mensagem, tipo) {
     document.querySelectorAll('.movimentacoes-feedback').forEach(el => el.remove());
@@ -238,254 +221,48 @@
     feedback.style.margin = '8px 0 0';
     alvo.insertAdjacentElement('afterend', feedback);
   }
-  // Card de evidência (mesmo visual das tarefas): foto/áudio com ícone, texto com a nota.
-  function evidenciaHTML(tipo, texto) {
-    if (tipo === 'Texto') return '<p class="evidencia-texto">' + escaparHTML(texto || '') + '</p>';
-    const isAudio = tipo === 'Áudio';
-    const icone = isAudio
-      ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
-      : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
-    return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
-      '<span class="evidencia__tipo">' + escaparHTML(tipo) + '</span></div>';
-  }
 
-  function anexarEvidenciaSegura(container, tipo, texto) {
-    const label = document.createElement('span');
-    label.className = 'concl-bloco__label';
-    label.textContent = 'Evidência';
-    container.appendChild(label);
-
-    if (tipo === 'Texto') {
-      const p = document.createElement('p');
-      p.className = 'evidencia-texto';
-      p.textContent = texto || '';
-      container.appendChild(p);
-      return;
-    }
-
-    const box = document.createElement('div');
-    box.className = 'evidencia ' + (tipo === 'Áudio' ? 'evidencia--audio' : 'evidencia--foto');
-    const span = document.createElement('span');
-    span.className = 'evidencia__tipo';
-    span.textContent = tipo;
-    box.appendChild(span);
-    container.appendChild(box);
-  }
-
-  // Detalhes + evidência de cada movimentação (fonte única, vinda do servidor —
-  // o mesmo módulo que renderiza a lista acima).
-  const MOV_DADOS = <%- JSON.stringify(movimentacoesDados) %>;
-
-  // Recalcula o contador "N Pendentes" ao lado da busca conforme as
-  // movimentações vão sendo validadas (some uma de cima → o número cai).
-  function atualizarBadgePendentes() {
-    const nMobile = document.querySelectorAll('.layout-mobile .pend-item').length;
-    const nDesktop = document.querySelectorAll('.layout-desktop .revisao-table tbody tr[data-mov-id]').length;
-    const badgeMobile = document.querySelector('.layout-mobile .revisao-badge-pendentes');
-    const badgeDesktop = document.querySelector('.layout-desktop .revisao-badge-pendentes');
-    if (badgeMobile) badgeMobile.textContent = nMobile + (nMobile === 1 ? ' Pendente' : ' Pendentes');
-    if (badgeDesktop) badgeDesktop.textContent = nDesktop + (nDesktop === 1 ? ' Pendente' : ' Pendentes');
-    // Espelha o total na home (bloco "Movimentações" do Acesso rápido).
-    if (window.ContadoresPendentes) ContadoresPendentes.definirDoLayout('movimentacoes', nMobile, nDesktop);
-  }
-
-  // Movimentações já validadas (em memória) — mais recente no topo.
-  const movimentacoesValidadas = [];
-
-  // Renderiza as validadas como "varas" que abrem na setinha, no mesmo
-  // padrão das tarefas/tickets validados (tipo + retiro + selo; sem Ação).
-  function renderValidadas() {
-    document.querySelectorAll('.movimentacoes-validadas').forEach(function (container) {
-      container.replaceChildren();
-      if (!movimentacoesValidadas.length) {
-        const vazio = document.createElement('p');
-        vazio.className = 'concl-vazio';
-        vazio.textContent = 'Nenhuma movimentação validada ainda.';
-        container.appendChild(vazio);
+  // Valida a movimentação no BACKEND (PATCH real, autenticado pelo cookie de
+  // sessão). Em caso de sucesso recarrega: o servidor re-renderiza as listas a
+  // partir do banco, então a movimentação sai de "Pendentes" e entra em
+  // "Validadas" — e o mesmo dado passa a aparecer no relatório e para o gerente.
+  async function validarMovimentacao(movId, btn) {
+    if (!movId) return;
+    if (btn) btn.disabled = true;
+    try {
+      const resp = await fetch('/validacoes/movimentacoes/' + encodeURIComponent(movId) + '/validar', {
+        method: 'PATCH',
+      });
+      if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) return;
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        mostrarFeedbackValidacao(data.mensagem || data.error || 'Não foi possível validar a movimentação.', 'error');
+        if (btn) btn.disabled = false;
         return;
       }
-      movimentacoesValidadas.forEach(function (m) {
-        const titulo = m.tipo + (m.local ? ' — ' + m.local : '');
-
-        const item = document.createElement('div');
-        item.className = 'concl-item';
-
-        const head = document.createElement('button');
-        head.type = 'button';
-        head.className = 'concl-head';
-        head.setAttribute('aria-expanded', 'false');
-        const title = document.createElement('span');
-        title.className = 'concl-title';
-        title.textContent = titulo;
-        const badge = document.createElement('span');
-        badge.className = 'concl-badge';
-        badge.textContent = 'Validada';
-        const arrow = document.createElement('span');
-        arrow.className = 'concl-arrow';
-        arrow.setAttribute('aria-hidden', 'true');
-        const arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        arrowSvg.setAttribute('width', '18');
-        arrowSvg.setAttribute('height', '18');
-        arrowSvg.setAttribute('viewBox', '0 0 24 24');
-        arrowSvg.setAttribute('fill', 'none');
-        arrowSvg.setAttribute('stroke', 'currentColor');
-        arrowSvg.setAttribute('stroke-width', '2');
-        arrowSvg.setAttribute('stroke-linecap', 'round');
-        arrowSvg.setAttribute('stroke-linejoin', 'round');
-        const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        arrowPath.setAttribute('d', 'm6 9 6 6 6-6');
-        arrowSvg.appendChild(arrowPath);
-        arrow.appendChild(arrowSvg);
-        head.appendChild(title);
-        head.appendChild(badge);
-        head.appendChild(arrow);
-
-        const panel = document.createElement('div');
-        panel.className = 'concl-panel';
-        const inner = document.createElement('div');
-        inner.className = 'concl-panel__inner';
-
-        // Quando foi validada + por quem
-        const metaParts = [];
-        if (m.dataValidacao) metaParts.push('Validada em ' + m.dataValidacao);
-        if (m.supervisor) metaParts.push('Supervisor ' + m.supervisor);
-        if (metaParts.length) {
-          const meta = document.createElement('p');
-          meta.className = 'concl-meta';
-          meta.textContent = metaParts.join(' • ');
-          inner.appendChild(meta);
-        }
-
-        // Detalhes (capataz, quantidade, estágio…)
-        const detParts = [];
-        if (m.capataz) detParts.push('Capataz ' + m.capataz);
-        if (m.quantidade) detParts.push(m.quantidade);
-        const detTexto = [detParts.join(' • '), m.detalhes].filter(Boolean).join(' • ');
-        if (detTexto) {
-          const desc = document.createElement('div');
-          desc.className = 'concl-bloco';
-          const label = document.createElement('span');
-          label.className = 'concl-bloco__label';
-          label.textContent = 'Detalhes';
-          const texto = document.createElement('p');
-          texto.className = 'concl-bloco__texto';
-          texto.textContent = detTexto;
-          desc.appendChild(label);
-          desc.appendChild(texto);
-          inner.appendChild(desc);
-        }
-
-        // Evidência
-        if (m.evidencia) {
-          const ev = document.createElement('div');
-          ev.className = 'concl-bloco';
-          anexarEvidenciaSegura(ev, m.evidencia, m.evidenciaTexto);
-          inner.appendChild(ev);
-        }
-
-        panel.appendChild(inner);
-
-        item.appendChild(head);
-        item.appendChild(panel);
-        container.appendChild(item);
-
-        head.addEventListener('click', function () {
-          const aberto = item.classList.toggle('is-open');
-          head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-        });
-      });
-    });
-  }
-
-  // Valida no backend. Sem sessão, mantém o comportamento demo/local.
-  async function validarMovimentacaoPorId(movId) {
-    const token = localStorage.getItem('agroflow.token');
-    if (!token) return { ok: true, demo: true };
-
-    try {
-      const response = await fetch(`/validacoes/movimentacoes/${movId}/validar`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (window.AgroFlowSession?.tratarResposta(response)) {
-        return { ok: false, mensagem: 'Sessão expirada' };
-      }
-      const data = await response.json().catch(() => ({}));
-      return { ok: response.ok, mensagem: data.mensagem || data.error || '' };
+      window.location.reload();
     } catch (e) {
-      return { ok: false, mensagem: 'Falha de conexão' };
+      mostrarFeedbackValidacao('Falha de conexão. Tente novamente.', 'error');
+      if (btn) btn.disabled = false;
     }
   }
 
-  function finalizarValidacaoMovimentacao(dados, origem, detalhe) {
-    dados.dataValidacao = agoraFormatado();
-    dados.supervisor = nomeSupervisor();
-    movimentacoesValidadas.unshift(dados);
-    if (origem) origem.remove();
-    if (detalhe && detalhe.classList.contains('pend-detalhe')) detalhe.remove();
-
-    // Persiste no servidor (demo): remove a movimentação dos pendentes em
-    // memória, para o contador (tela + home) continuar certo após recarregar.
-    if (dados.id) {
-      fetch('/supervisor/movimentacoes/' + encodeURIComponent(dados.id) + '/validar', { method: 'POST' })
-        .catch(function () {});
-    }
-    renderValidadas();
-    atualizarBadgePendentes();
-  }
-
-  // Marca uma movimentação como validada somente depois da confirmação do backend.
-  async function validarMovimentacao(dados, origem, detalhe) {
-    const resultado = await validarMovimentacaoPorId(dados.id);
-    if (!resultado.ok) {
-      if (origem) origem.dataset.validado = '';
-      mostrarFeedbackValidacao(resultado.mensagem || 'Não foi possível validar a movimentação.', 'error');
-      return;
-    }
-    finalizarValidacaoMovimentacao(dados, origem, detalhe);
-  }
-
-  // Validar (vara mobile): tira de pendentes e desce para Validadas
-  function validarPendItem(item) {
-    if (!item || item.dataset.validado) return;
-    item.dataset.validado = '1';
-    const tipo = (item.querySelector('.pend-title .badge')?.textContent || '').trim();
-    const tituloCompleto = (item.querySelector('.pend-title')?.textContent || '').trim();
-    const local = tituloCompleto.replace(tipo, '').trim();
-    const info = item.querySelector('.pend-info')?.textContent || '';
-    const capataz = (info.match(/Capataz:\s*([^\n]+?)(?:Origem|Retiro|Quantidade|$)/)?.[1] || '').trim();
-    const quantidade = (info.match(/Quantidade:\s*([0-9]+\s*anima(?:l|is))/)?.[1] || '').trim();
-    const extra = MOV_DADOS[item.dataset.movId] || {};
-    validarMovimentacao({
-      id: item.dataset.movId, tipo, local, capataz, quantidade,
-      detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
-    }, item);
-  }
-
-  // Validar (linha desktop): remove a linha e sua linha de detalhe
-  function validarLinhaDesktop(row) {
-    if (!row || row.dataset.validado) return;
-    row.dataset.validado = '1';
-    const cells = row.querySelectorAll('td');
-    const det = row.nextElementSibling;
-    const extra = MOV_DADOS[row.dataset.movId] || {};
-    validarMovimentacao({
-      id: row.dataset.movId,
-      tipo: (cells[0]?.textContent || 'Movimentação').trim(),
-      local: (cells[1]?.textContent || '').trim(),
-      capataz: (cells[2]?.textContent || '').replace(/^Capataz\s*/, '').trim(),
-      quantidade: (cells[3]?.textContent || '').trim(),
-      detalhes: extra.detalhes || '', evidencia: extra.evidencia || '', evidenciaTexto: extra.evidenciaTexto || '',
-    }, row, det);
-  }
-
-  // Botão "Validar" (vara mobile ou linha desktop)
-  document.querySelectorAll('.btn-revisar').forEach(btn => {
+  // Botão "Validar" (vara mobile ou linha desktop) — pega o id do elemento que
+  // carrega data-mov-id (o card mobile ou a linha da tabela).
+  document.querySelectorAll('[data-action="validar"]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const item = btn.closest('.pend-item');
-      if (item) { validarPendItem(item); return; }
-      validarLinhaDesktop(btn.closest('tr'));
+      const host = btn.closest('[data-mov-id]');
+      validarMovimentacao(host && host.dataset.movId, btn);
+    });
+  });
+
+  // Abrir/fechar as "varas" de movimentações já validadas.
+  document.querySelectorAll('.movimentacoes-validadas .concl-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const item = head.closest('.concl-item');
+      if (!item) return;
+      const aberto = item.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
     });
   });
 
@@ -538,10 +315,6 @@
       });
     });
   }
-
-  // Estado inicial: contador e lista de validadas (vazia) ao abrir.
-  atualizarBadgePendentes();
-  renderValidadas();
 </script>
 
 </body>
