@@ -177,6 +177,54 @@ Descrição dos principais diretórios:
 | [PostgreSQL](https://www.postgresql.org/) | **13** ou superior | Necessário pela extensão `pgcrypto` e por `gen_random_uuid()` usados nas migrations. |
 | [Git](https://git-scm.com/) | **2.30** ou superior | Para clonar e versionar o repositório. |
 
+### Tutoriais de instalação dos softwares
+
+#### Tutorial de instalação do Git
+
+1. Acesse https://git-scm.com/install/windows
+
+2. Clique em Instalar a versão para Windows/x64
+
+<div align="center">
+  <p align="center">Figura 1 README - Passo 2 para a instalação do Git</p>
+  <p>
+    <img src="documents/others/assets/passo-1-instalacao-git.png" alt="Passo 2 para a instalação do Git" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+3. Abra o instalador
+
+<div align="center">
+  <p align="center">Figura 2 README - Passo 3 para a instalação do Git</p>
+  <p>
+    <img src="documents/others/assets/passo-2-instalacao-git.png" alt="Passo 3 para a instalação do Git" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+4. Permita que o Git realize alterações no dispositivo (nesse momento você provavelmente receberá um pop-up)
+
+5. Confirme a instalação
+
+<div align="center">
+  <p align="center">Figura 3 README - Passo 5 para a instalação do Git</p>
+  <p>
+    <img src="documents/others/assets/passo-3-instalacao-git.png" alt="Passo 5 para a instalação do Git" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+6. Finalize fechando o instalador. Pronto, o Git foi instalado!
+
+<div align="center">
+  <p align="center">Figura 4 README - Passo 6 para a instalação do Git</p>
+  <p>
+    <img src="documents/others/assets/passo-4-instalacao-git.png" alt="Passo 6 para a instalação do Git" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 ### Passo a passo
  
 1. Clone o repositório e acesse a pasta raiz do projeto:
