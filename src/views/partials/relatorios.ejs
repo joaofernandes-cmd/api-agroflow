@@ -39,11 +39,11 @@
         <div class="rfield__daterange">
           <div class="rfield__date">
             <label class="rfield__date-label" for="data-inicio-mobile">De</label>
-            <input class="rfield__input" type="date" id="data-inicio-mobile" name="dataInicio" value="2026-06-01" aria-label="Data de início" />
+            <input class="rfield__input" type="date" id="data-inicio-mobile" name="dataInicio" aria-label="Data de início" />
           </div>
           <div class="rfield__date">
             <label class="rfield__date-label" for="data-fim-mobile">Até</label>
-            <input class="rfield__input" type="date" id="data-fim-mobile" name="dataFim" value="2026-07-01" aria-label="Data final" />
+            <input class="rfield__input" type="date" id="data-fim-mobile" name="dataFim" aria-label="Data final" />
           </div>
         </div>
       </div>
@@ -107,7 +107,7 @@
 
       <!-- Botão exportar -->
       <button type="submit" class="btn btn--primary btn--exportar">
-        Baixar arquivo
+        Gerar relatório
       </button>
       <p id="relatorio-feedback-mobile" style="margin: 8px 0 0; font-size: 14px; line-height: 1.4;"></p>
 
@@ -152,8 +152,8 @@
         <div class="tfilter tfilter--daterange">
           <label class="tfilter__label">Período</label>
           <div class="tfilter__daterange">
-            <input class="tfilter__input" type="date" id="data-inicio-desktop" value="2026-06-01" aria-label="Data de início" />
-            <input class="tfilter__input" type="date" id="data-fim-desktop" value="2026-07-01" aria-label="Data final" />
+            <input class="tfilter__input" type="date" id="data-inicio-desktop" aria-label="Data de início" />
+            <input class="tfilter__input" type="date" id="data-fim-desktop" aria-label="Data final" />
           </div>
         </div>
 
@@ -253,7 +253,7 @@
         </div>
 
         <button class="btn btn--primary btn--exportar-desktop" type="button">
-          Baixar arquivo
+          Gerar relatório
         </button>
 
         <div class="formato-card">
@@ -268,8 +268,6 @@
 
 </div><!-- /layout-desktop -->
 
-<!-- Fonte única das tarefas validadas (mesma da tela de Revisão). -->
-<script src="/js/tarefas-store.js"></script>
 <script>
   const el = document.getElementById('data-hoje-desktop');
   if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
@@ -294,6 +292,10 @@
 
   function formatarData(valor) {
     if (!valor) return '-';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      const [ano, mes, dia] = valor.split('-');
+      return `${dia}/${mes}/${ano}`;
+    }
     const data = new Date(valor);
     if (Number.isNaN(data.getTime())) return '-';
     return data.toLocaleDateString('pt-BR');
@@ -316,21 +318,10 @@
     return String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
 
-  // FONTE ÚNICA das tarefas: o MESMO TarefasStore que a tela de Revisão usa.
-  // Toda tarefa que o supervisor valida fica guardada lá (status "Validada"),
-  // então passa a aparecer aqui no relatório automaticamente.
-  function datasetTarefas() {
-    if (!window.TarefasStore) return RELATORIO_DEMO.tarefas || { colunas: mapearColunas('tarefas'), linhas: [] };
-    const linhas = TarefasStore.listar().map(t => ({
-      celulas: [t.dataConclusao || '—', t.retiro || '—', t.titulo || 'Tarefa', rotuloPrioridade(t.prioridade)],
-      status: 'Validado',
-    }));
-    return { colunas: mapearColunas('tarefas'), linhas };
-  }
-
-  // Dataset de um tipo: tarefas vêm do TarefasStore; os demais, do servidor.
+  // Dataset de um tipo: tudo vem do SERVIDOR (banco), já com os registros
+  // validados/aprovados do retiro. Toda tarefa/ticket/movimentação que o
+  // supervisor valida aparece aqui automaticamente.
   function datasetDe(tipo) {
-    if (tipo === 'tarefas') return datasetTarefas();
     return RELATORIO_DEMO[tipo] || { colunas: mapearColunas(tipo), linhas: [] };
   }
 
@@ -375,18 +366,36 @@
   function renderTabela(colunas, linhas, periodoTexto) {
     const thead = document.getElementById('relatorio-head');
     const tbody = document.getElementById('relatorio-body');
-    if (thead) thead.innerHTML = '<tr>' + colunas.map(c => `<th>${escaparRel(c)}</th>`).join('') + '</tr>';
-    if (tbody) tbody.innerHTML = linhas.map((l, i) => {
-      const badge = l.status === 'Validado'
-        ? '<span class="badge badge--green">Validado</span>'
-        : '<span class="badge badge--yellow">Pendente</span>';
-      return `<tr class="${i % 2 === 1 ? 'tr--alt' : ''}">`
-        + `<td class="td--bold">${escaparRel(l.celulas[0])}</td>`
-        + `<td>${escaparRel(l.celulas[1])}</td>`
-        + `<td>${escaparRel(l.celulas[2])}</td>`
-        + `<td>${escaparRel(l.celulas[3])}</td>`
-        + `<td>${badge}</td></tr>`;
-    }).join('');
+    if (thead) {
+      thead.replaceChildren();
+      const tr = document.createElement('tr');
+      colunas.forEach(c => {
+        const th = document.createElement('th');
+        th.textContent = c;
+        tr.appendChild(th);
+      });
+      thead.appendChild(tr);
+    }
+    if (tbody) {
+      tbody.replaceChildren();
+      linhas.forEach((l, i) => {
+        const tr = document.createElement('tr');
+        if (i % 2 === 1) tr.className = 'tr--alt';
+        l.celulas.slice(0, 4).forEach((celula, indice) => {
+          const td = document.createElement('td');
+          if (indice === 0) td.className = 'td--bold';
+          td.textContent = celula;
+          tr.appendChild(td);
+        });
+        const status = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = l.status === 'Validado' ? 'badge badge--green' : 'badge badge--yellow';
+        badge.textContent = l.status === 'Validado' ? 'Validado' : 'Pendente';
+        status.appendChild(badge);
+        tr.appendChild(status);
+        tbody.appendChild(tr);
+      });
+    }
 
     const validados = linhas.filter(l => l.status === 'Validado').length;
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = String(v); };
@@ -420,9 +429,9 @@
     };
   }
 
-  // Monta a prévia (tabela + resumo) SEMPRE a partir das fontes únicas do
-  // supervisor (TarefasStore + dados do servidor), aplicando tipo + retiro +
-  // período. Assim o que o supervisor valida aparece na hora no relatório.
+  // Monta a prévia (tabela + resumo) SEMPRE a partir dos dados do servidor
+  // (banco) — RELATORIO_DEMO —, aplicando tipo + retiro + período. Assim o que
+  // o supervisor valida aparece na hora no relatório.
   function carregarRelatorio() {
     const filtros = lerFiltros('desktop');
     const base = filtros.tipo === 'todos' ? datasetCombinado() : datasetDe(filtros.tipo);
@@ -550,6 +559,22 @@
     const campo = document.getElementById(id);
     if (campo) campo.addEventListener('change', carregarRelatorio);
   });
+
+  // Inicializa datas com o mês corrente (1º dia do mês até hoje).
+  (function inicializarDatas() {
+    const hoje = new Date();
+    const anoMes = hoje.toISOString().slice(0, 7);
+    const inicio = anoMes + '-01';
+    const fim = hoje.toISOString().slice(0, 10);
+    ['data-inicio-mobile', 'data-inicio-desktop'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = inicio;
+    });
+    ['data-fim-mobile', 'data-fim-desktop'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = fim;
+    });
+  })();
 
   // O multiselect mobile não atualiza a prévia (mobile só exporta); o desktop sim.
   initMultiselect('retiro-mobile', () => {});

@@ -1,21 +1,21 @@
 import { NextFunction, Request, Response } from 'express'
 import { UsuarioCargo } from '../models/usuario.model'
 
-// Middleware de autorizacao por cargo.
+// Middleware de autorização por cargo.
 // Recebe os cargos permitidos e devolve um middleware pronto para a rota.
 export function exigirCargo(...cargosPermitidos: UsuarioCargo[]) {
   return (req: Request, res: Response, next: NextFunction) => {
-    // Primeiro confirma se a autenticacao ja aconteceu.
+    // Primeiro confirma se a autenticação já aconteceu.
     if (!req.usuario) {
-      return res.status(401).json({ error: 'Usuario nao autenticado' })
+      return res.status(401).json({ error: 'Usuário não autenticado' })
     }
 
-    // Depois verifica se o cargo do usuario esta entre os cargos aceitos.
+    // Depois verifica se o cargo do usuário está entre os cargos aceitos.
     if (!cargosPermitidos.includes(req.usuario.cargo)) {
       return res.status(403).json({ error: 'Acesso negado: cargo insuficiente' })
     }
 
-    // Passou nas regras de autorizacao.
+    // Passou nas regras de autorização.
     return next()
   }
 }

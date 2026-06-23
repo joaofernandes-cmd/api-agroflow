@@ -13,5 +13,5 @@ CREATE INDEX IF NOT EXISTS acesso_capataz_usuario_id_idx
 INSERT INTO acesso_capataz (usuario_id, token_hash, ativo)
 SELECT id, 'a858669b3c392f03e4b62383ad1118142a18ad745a5c9b7de0edb8e2453f39c2', true
 FROM usuario
-WHERE login = 'capataz@agroflow.com'
+WHERE identificador = 'capataz-capataz'
 ON CONFLICT (token_hash) DO NOTHING;

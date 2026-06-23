@@ -8,7 +8,7 @@
   var ns = typeof ns !== 'undefined' ? ns : 'ev';
 %>
 <div class="campo">
-  <label class="campo__rotulo">Evidência (obrigatório)</label>
+  <label class="campo__rotulo">Evidência (Obrigatório)</label>
   <div class="evidencia">
     <button type="button" class="evidencia__btn evidencia__btn--foto" id="<%= ns %>BtnFoto">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
@@ -65,10 +65,21 @@
     var $ = function (sufixo) { return document.getElementById(ns + sufixo); };
 
     var lista = $('Lista');
-    var iconeCheck =
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22a855" ' +
-      'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
-      '<path d="M20 6 9 17l-5-5"/></svg>';
+    function criarIconeCheck() {
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      svg.setAttribute('width', '15');
+      svg.setAttribute('height', '15');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', '#22a855');
+      svg.setAttribute('stroke-width', '2.5');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      path.setAttribute('d', 'M20 6 9 17l-5-5');
+      svg.appendChild(path);
+      return svg;
+    }
 
     function registrar(tipo, nome) {
       var existente = lista.querySelector('[data-tipo="' + tipo + '"]');
@@ -76,7 +87,10 @@
       var li = document.createElement('li');
       li.className = 'evidencia-item';
       li.setAttribute('data-tipo', tipo);
-      li.innerHTML = iconeCheck + '<span>' + tipo + ': ' + nome + '</span>';
+      var texto = document.createElement('span');
+      texto.textContent = nome;
+      li.appendChild(criarIconeCheck());
+      li.appendChild(texto);
       lista.appendChild(li);
     }
     function remover(tipo) {
@@ -103,6 +117,16 @@
     var btnFoto = $('BtnFoto'), btnAudio = $('BtnAudio'), btnTexto = $('BtnTexto');
     var painelFoto = $('PainelFoto'), painelAudio = $('PainelAudio'), painelTexto = $('PainelTexto');
 
+    // Rola suavemente até o painel recém-aberto. Em telas pequenas a área
+    // (sobretudo a câmera) costuma nascer abaixo da dobra; o requestAnimationFrame
+    // garante que o display: block já foi aplicado antes de rolar.
+    function rolarPara(painel) {
+      if (!painel) return;
+      requestAnimationFrame(function () {
+        painel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
     function mostrarPainel(qual) {
       painelFoto.style.display = qual === 'foto' ? 'block' : 'none';
       painelAudio.style.display = qual === 'audio' ? 'block' : 'none';
@@ -110,6 +134,7 @@
       btnFoto.classList.toggle('evidencia__btn--ativo', qual === 'foto');
       btnAudio.classList.toggle('evidencia__btn--ativo', qual === 'audio');
       btnTexto.classList.toggle('evidencia__btn--ativo', qual === 'texto');
+      rolarPara(qual === 'foto' ? painelFoto : qual === 'audio' ? painelAudio : painelTexto);
     }
     btnFoto.addEventListener('click', function () { mostrarPainel('foto'); });
     btnAudio.addEventListener('click', function () { mostrarPainel('audio'); });
@@ -183,7 +208,7 @@
       capturar.disabled = true;
       refazer.disabled = false;
       fotoStatus.textContent = 'Foto capturada.';
-      registrar('Foto', 'foto capturada');
+      registrar('Foto', 'Foto capturada');
       // Guarda o dataUrl (preview local) + o Blob (para enviar ao Supabase) e o GPS.
       canvas.toBlob(function (blob) {
         obterLocalizacaoFoto({ dataUrl: dataUrl, blob: blob, mimeType: 'image/jpeg' });
@@ -225,7 +250,7 @@
               setEvid('audio', { dataUrl: leitor.result, blob: blob, mimeType: blob.type, duracao: duracao });
             };
             leitor.readAsDataURL(blob);
-            registrar('Áudio', 'áudio gravado');
+            registrar('Áudio', 'Áudio gravado');
           };
           mediaRecorder.start();
           inicioGravacao = Date.now();
@@ -261,7 +286,7 @@
     texto.addEventListener('input', function () {
       if (texto.value.trim()) {
         setEvid('texto', { conteudo: texto.value.trim() });
-        registrar('Texto', 'observação adicionada');
+        registrar('Texto', 'Observação adicionada');
       } else {
         delEvid('texto');
         remover('Texto');

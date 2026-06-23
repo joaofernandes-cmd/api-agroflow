@@ -7,6 +7,7 @@ jest.mock('../middlewares/autenticacao.middleware', () => ({
     // percorrer rotas protegidas sem depender de JWT real.
     req.usuario = {
       id: '00000000-0000-4000-8000-000000000101',
+      identificador: 'supervisor-teste',
       login: 'supervisor@agroflow.com',
       cargo: 'supervisor',
       retiro_id: '00000000-0000-4000-8000-000000000001',
@@ -17,6 +18,7 @@ jest.mock('../middlewares/autenticacao.middleware', () => ({
   autenticarViewPorCookie: (req: any, _res: any, next: any) => {
     req.usuario = {
       id: '00000000-0000-4000-8000-000000000101',
+      identificador: 'supervisor-teste',
       login: 'supervisor@agroflow.com',
       cargo: 'supervisor',
       retiro_id: '00000000-0000-4000-8000-000000000001',
@@ -33,7 +35,10 @@ jest.mock('../middlewares/cargo.middleware', () => ({
 }))
 
 jest.mock('../database/connection', () => {
-  const sqlMock = jest.fn(() => undefined) as jest.Mock & { begin: jest.Mock }
+  // Retorna [] (e não undefined) para que repositórios que fazem
+  // `(await sql`...`).map/filter/[0]` não quebrem nas telas que leem do banco
+  // (ex.: carregarContexto). Quem precisa de linhas específicas mocka o serviço.
+  const sqlMock = jest.fn(() => []) as jest.Mock & { begin: jest.Mock }
   sqlMock.begin = jest.fn(async (callback: any) => callback(jest.fn()))
 
   return {

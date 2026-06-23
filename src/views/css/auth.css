@@ -262,22 +262,11 @@
 }
 .field__input[aria-invalid="true"] ~ .field__error { display: block; }
 
-/* ── Link esqueci senha ───────────────────────────────────── */
-.login__forgot {
-  display: block;
-  text-align: right;
-  font-size: 13px;
-  color: var(--color-accent);
-  margin-top: 10px;
-  margin-bottom: 20px;
-  transition: opacity 0.15s;
-}
-.login__forgot:hover { opacity: 0.8; }
-
 /* ── Botão entrar ─────────────────────────────────────────── */
 .btn--entrar {
   width: 100%;
   height: 56px;
+  margin-top: 16px;
   background: var(--color-primary);
   color: var(--color-white);
   border: none;
@@ -354,7 +343,4 @@
 
   /* Labels no desktop são mais escuras (Figma: #1f1f1f) */
   .field__label { color: var(--color-text); }
-
-  /* Link esqueci senha no desktop é verde primário */
-  .login__forgot { color: var(--color-primary); }
 }

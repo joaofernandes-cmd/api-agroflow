@@ -36,6 +36,7 @@ describe('Autenticacao e autorizacao', () => {
     expect(next).toHaveBeenCalled()
     expect(req.usuario).toEqual({
       id: mockSupervisor.id,
+      identificador: mockSupervisor.identificador,
       login: mockSupervisor.login,
       cargo: mockSupervisor.cargo,
       retiro_id: mockSupervisor.retiro_id,
@@ -54,7 +55,7 @@ describe('Autenticacao e autorizacao', () => {
     autenticarUsuario(req, response, next)
 
     expect(status).toHaveBeenCalledWith(401)
-    expect(json).toHaveBeenCalledWith({ error: 'Token nao informado' })
+    expect(json).toHaveBeenCalledWith({ error: 'Token não informado' })
     expect(next).not.toHaveBeenCalled()
   })
 
@@ -82,7 +83,7 @@ describe('Autenticacao e autorizacao', () => {
     autenticarUsuario(req, response, next)
 
     expect(status).toHaveBeenCalledWith(401)
-    expect(json).toHaveBeenCalledWith({ error: 'Token invalido ou expirado' })
+    expect(json).toHaveBeenCalledWith({ error: 'Token inválido ou expirado' })
     expect(next).not.toHaveBeenCalled()
   })
 

@@ -3,12 +3,8 @@
 <%
   var CATEGORIAS = [
     { value: 'cerca', label: 'Cerca' },
-    { value: 'hidraulica', label: 'Água / Hidráulica' },
     { value: 'eletrica', label: 'Elétrica' },
-    { value: 'edificacao', label: 'Edificação' },
-    { value: 'abastecimento_agua', label: 'Abastecimento de água' },
-    { value: 'outro', label: 'Outro' }
-
+    { value: 'hidraulica', label: 'Hidráulica' }
   ];
   var PRIORIDADES = [
     { value: 'alta', label: 'Alta' },
@@ -41,11 +37,6 @@
       </select>
     </div>
 
-    <div class="campo" id="campoCategoriaOutro" style="display: none;">
-      <label class="campo__rotulo" for="categoriaOutro">Nome da categoria <span class="obrigatorio">*</span></label>
-      <input class="input" type="text" id="categoriaOutro" placeholder="Diga qual é o problema" required />
-    </div>
-
     <div class="campo">
       <label class="campo__rotulo">Prioridade</label>
       <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
@@ -57,7 +48,7 @@
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo" for="localizacaoTicket">Localização (automática)</label>
+      <label class="campo__rotulo" for="localizacaoTicket">Localização (Automática)</label>
       <input class="input" type="text" id="localizacaoTicket" placeholder="Detectando sua localização..." readonly />
       <p id="localizacaoStatus" style="margin: 6px 0 0; font-size: 13px; color: var(--texto-sec);"></p>
     </div>
@@ -68,49 +59,16 @@
   </div>
 
   <%- include('../partials/bottomnav-capataz', { ativa: 'tickets' }) %>
+  <%- include('../partials/aviso-sucesso') %>
 </main>
 
 <script src="/js/prioridade-seletor.js"></script>
+<script src="/js/aviso-sucesso.js"></script>
 <script>
-  const CAPATAZ_DEMO = {
-    id: '11111111-1111-1111-1111-111111111111',
-    nome: 'Capataz Daniel',
-    cargo: 'capataz',
-    retiro_id: '00000000-0000-4000-8000-000000000001',
-  };
-
   const feedback = document.getElementById('ticket-feedback');
   const botao = document.getElementById('btnEnviarTicket');
 
-  // Quando a categoria for "Outro", revela o campo para nomear a categoria.
   const categoriaSelect = document.getElementById('categoriaTicket');
-  const campoCategoriaOutro = document.getElementById('campoCategoriaOutro');
-  const categoriaOutroInput = document.getElementById('categoriaOutro');
-
-  function atualizarCategoriaOutro() {
-    const ehOutro = categoriaSelect.value === 'outro';
-    campoCategoriaOutro.style.display = ehOutro ? 'block' : 'none';
-    if (!ehOutro) categoriaOutroInput.value = '';
-  }
-  categoriaSelect.addEventListener('change', atualizarCategoriaOutro);
-
-  function getSession() {
-    try {
-      const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-
-      if (!usuarioRaw) {
-        return null;
-      }
-
-      return {
-        token,
-        usuario: JSON.parse(usuarioRaw),
-      };
-    } catch {
-      return null;
-    }
-  }
 
   function mostrarFeedback(mensagem, tipo) {
     if (!feedback) return;
@@ -119,7 +77,6 @@
   }
 
   function montarPayload() {
-    const session = getSession();
     let categoria = document.getElementById('categoriaTicket').value;
     const prioridade = document.getElementById('prioridadeTicket').value;
     const localizacao = document.getElementById('localizacaoTicket').value.trim();
@@ -134,28 +91,19 @@
       throw new Error('Anexe uma evidência (foto, áudio ou texto).');
     }
 
-    // "Outro": mantém categoria='outro' (enum do banco) e guarda o nome digitado à parte.
-    let categoriaOutro = null;
-    if (categoria === 'outro') {
-      categoriaOutro = document.getElementById('categoriaOutro').value.trim();
-      if (!categoriaOutro) {
-        throw new Error('Diga o nome da categoria.');
-      }
-    }
-
     // A descrição vem da evidência de texto; sem texto, usa a categoria como base.
     const textoEvid = evidencias.find(function (e) { return e.tipo === 'texto'; });
-    const catLabel = categoriaOutro || categoriaSelect.options[categoriaSelect.selectedIndex].text;
+    const catLabel = categoriaSelect.options[categoriaSelect.selectedIndex].text;
     const descricao = (textoEvid && textoEvid.conteudo) ? textoEvid.conteudo : ('Ticket de ' + catLabel);
 
+    // Identidade (aberto_por) e retiro são preenchidos pelo SERVIDOR a partir do
+    // capataz autenticado (cookie) — não enviamos identidade pelo corpo.
     return {
-      retiro_id: session?.usuario?.retiro_id ?? CAPATAZ_DEMO.retiro_id,
       categoria,
-      categoria_outro: categoriaOutro,
+      categoria_outro: null,
       localizacao,
       descricao,
       prioridade,
-      usuarioAbridorTicket: session?.usuario ?? CAPATAZ_DEMO,
       temEvidenciaDescritiva: true,
     };
   }
@@ -166,15 +114,12 @@
       botao.textContent = 'Enviando...';
 
       const payload = montarPayload();
-      const usuario = payload.usuarioAbridorTicket || CAPATAZ_DEMO;
       const syncPayload = Object.assign({}, payload, {
-        aberto_por: usuario.id ?? CAPATAZ_DEMO.id,
         status: 'pendente',
         atribuido_a: null,
         aprovado_por: null,
         sincronizado: false,
       });
-      delete syncPayload.usuarioAbridorTicket;
       delete syncPayload.temEvidenciaDescritiva;
 
       const resultado = await window.AgroFlowCapataz.fetchOrQueueOperation({
@@ -185,10 +130,6 @@
         queueBody: syncPayload,
       });
 
-      const mensagemSucesso = resultado.queued
-        ? 'Ticket salvo offline. Ele sera sincronizado automaticamente quando houver conexao.'
-        : 'Ticket criado e sincronizado com sucesso.';
-      mostrarFeedback(mensagemSucesso, 'success');
       document.querySelectorAll('.select, .input').forEach(el => {
         if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
           el.value = '';
@@ -196,9 +137,19 @@
           el.selectedIndex = 0;
         }
       });
-      atualizarCategoriaOutro();
       if (window.PrioSeletor) window.PrioSeletor.resetarTodos();
       obterLocalizacao();
+
+      // Confirmação em tela cheia (o capataz precisa ver claramente que deu certo).
+      window.AvisoSucesso.mostrar(
+        resultado.queued
+          ? 'Seu Ticket foi salvo no aparelho. Ele será enviado sozinho quando a internet voltar.'
+          : 'Seu Ticket foi enviado para o supervisor.',
+        {
+          titulo: resultado.queued ? 'Ticket salvo!' : 'Ticket enviado!',
+          aoFechar: function () { window.location.href = '/capataz/home'; },
+        }
+      );
     } catch (error) {
       mostrarFeedback(error instanceof Error ? error.message : 'Erro ao criar ticket', 'error');
     } finally {
@@ -221,7 +172,7 @@
     navigator.geolocation.getCurrentPosition(
       function (pos) {
         campo.value = pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
-        if (status) status.textContent = '📍 Localização capturada automaticamente.';
+        if (status) status.textContent = 'Localização capturada com sucesso.';
       },
       function () {
         campo.readOnly = false;

@@ -32,10 +32,12 @@ const mockedTicketRepo = TicketRepository as jest.Mocked<typeof TicketRepository
 
 describe('SincronizacaoService', () => {
   const fetchMock = jest.fn()
+  const warnMock = jest.spyOn(console, 'warn').mockImplementation(() => undefined)
 
   beforeEach(() => {
     ;(global as any).fetch = fetchMock
     fetchMock.mockReset()
+    warnMock.mockClear()
 
     mockedMovRepo.buscarTodos.mockResolvedValue([mockMovimentacao as any])
     mockedMovRepo.buscarPorId.mockResolvedValue(mockMovimentacao as any)
@@ -59,23 +61,39 @@ describe('SincronizacaoService', () => {
   })
 
   it('enviarMovimentacao deve lancar erro quando resposta nao for ok', async () => {
-    fetchMock.mockResolvedValueOnce({ ok: false, status: 500 })
+    fetchMock.mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Internal Server Error' })
 
     await expect(SincronizacaoService.enviarMovimentacao(mockMovimentacao as any)).rejects.toThrow(
-      'Erro ao enviar movimentação: HTTP 500'
+      'Não foi possível sincronizar os dados. Tente novamente.'
     )
+    expect(warnMock).toHaveBeenCalledWith('Falha ao sincronizar movimentação', {
+      status: 500,
+      statusText: 'Internal Server Error',
+    })
   })
 
   it('enviarTarefa deve lancar erro quando resposta nao for ok', async () => {
-    fetchMock.mockResolvedValueOnce({ ok: false, status: 500 })
+    fetchMock.mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Internal Server Error' })
 
-    await expect(SincronizacaoService.enviarTarefa(mockTarefa as any)).rejects.toThrow('Erro ao enviar tarefa: HTTP 500')
+    await expect(SincronizacaoService.enviarTarefa(mockTarefa as any)).rejects.toThrow(
+      'Não foi possível sincronizar os dados. Tente novamente.'
+    )
+    expect(warnMock).toHaveBeenCalledWith('Falha ao sincronizar tarefa', {
+      status: 500,
+      statusText: 'Internal Server Error',
+    })
   })
 
   it('enviarTicket deve lancar erro quando resposta nao for ok', async () => {
-    fetchMock.mockResolvedValueOnce({ ok: false, status: 500 })
+    fetchMock.mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Internal Server Error' })
 
-    await expect(SincronizacaoService.enviarTicket(mockTicket as any)).rejects.toThrow('Erro ao enviar ticket: HTTP 500')
+    await expect(SincronizacaoService.enviarTicket(mockTicket as any)).rejects.toThrow(
+      'Não foi possível sincronizar os dados. Tente novamente.'
+    )
+    expect(warnMock).toHaveBeenCalledWith('Falha ao sincronizar ticket', {
+      status: 500,
+      statusText: 'Internal Server Error',
+    })
   })
 
   it('buscarMovimentacoesParaRelatrio deve retornar apenas sincronizadas e validadas', async () => {

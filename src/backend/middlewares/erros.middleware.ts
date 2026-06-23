@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 
-// Erro padronizado da aplicacao.
+// Erro padronizado da aplicação.
 // Ele permite definir status HTTP e detalhes extras.
 export class ErroDeAplicacao extends Error {
-  // Status HTTP que sera devolvido ao cliente.
+  // Status HTTP que será devolvido ao cliente.
   codigoStatus: number
   // Dados extras opcionais para debug ou resposta mais rica.
   detalhes?: unknown
@@ -16,7 +16,7 @@ export class ErroDeAplicacao extends Error {
   }
 }
 
-// Identifica erros criados pela propria aplicacao.
+// Identifica erros criados pela própria aplicação.
 function ehErroDeAplicacao(error: unknown): error is ErroDeAplicacao {
   return error instanceof ErroDeAplicacao
 }
@@ -29,12 +29,12 @@ export function tratadorDeErros(
   res: Response,
   _next: NextFunction
 ) {
-  // Se a resposta ja foi iniciada, nao tentamos enviar outra.
+  // Se a resposta já foi iniciada, não tentamos enviar outra.
   if (res.headersSent) {
     return
   }
 
-  // Erros da aplicacao respeitam o status definido na classe.
+  // Erros da aplicação respeitam o status definido na classe.
   if (ehErroDeAplicacao(error)) {
     return res.status(error.codigoStatus).json({
       error: error.message,

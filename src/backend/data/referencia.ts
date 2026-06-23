@@ -41,3 +41,7 @@ export function slugRetiro(retiro: string): string {
 
 // Opções de retiro prontas para o filtro do relatório (rótulo + slug).
 export const OPCOES_RETIRO = RETIROS.map((r) => ({ rotulo: r, valor: slugRetiro(r) }))
+
+// Obs.: o roster oficial da fazenda (retiro → capataz responsável, conforme a
+// planilha Plan_Inteli_ProjetoBRPEC) vive no BANCO — semeado pela migração
+// 022-seed-roster-fazenda.sql e lido pela tela de Delegar. Não duplicar aqui.

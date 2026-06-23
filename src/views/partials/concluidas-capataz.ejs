@@ -1,0 +1,12 @@
+<%# Tarefas que o capataz concluiu e aguardam o supervisor (status 'concluido'),
+    do banco. Usada na home do gerente (mobile e desktop). %>
+<% if (!concluidas || !concluidas.length) { %>
+  <p class="concl-vazio">Nenhuma tarefa concluída pelo capataz ainda.</p>
+<% } else { %>
+  <% concluidas.forEach(function (t) { %>
+    <article class="act-card">
+      <p class="act-card__name"><%= t.titulo %> — <%= t.retiro %></p>
+      <span class="act-tag act-tag--tarefa">Capataz <%= t.capataz %></span>
+    </article>
+  <% }) %>
+<% } %>

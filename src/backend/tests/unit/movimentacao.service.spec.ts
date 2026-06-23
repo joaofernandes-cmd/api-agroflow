@@ -66,7 +66,7 @@ describe('MovimentacaoService', () => {
         status: 'pendente',
         sincronizado: false,
       } as any)
-    ).toThrow('Campo "capataz_id" e obrigatorio')
+    ).toThrow('Campo "capataz_id" é obrigatório')
   })
 
   it('validarCamposObrigatorios deve exigir estagio_vida', () => {
@@ -80,7 +80,7 @@ describe('MovimentacaoService', () => {
         status: 'pendente',
         sincronizado: false,
       } as any)
-    ).toThrow('Campo "estagio_vida" e obrigatorio')
+    ).toThrow('Campo "estagio_vida" é obrigatório')
   })
 
   it('validarCamposObrigatorios deve exigir destino para compra', () => {
@@ -92,7 +92,7 @@ describe('MovimentacaoService', () => {
         status: 'pendente',
         sincronizado: false,
       } as any)
-    ).toThrow('Campo "destino" e obrigatorio')
+    ).toThrow('Campo "destino" é obrigatório')
   })
 
   it('validarCamposObrigatorios deve exigir origem para venda', () => {
@@ -104,7 +104,7 @@ describe('MovimentacaoService', () => {
         status: 'pendente',
         sincronizado: false,
       } as any)
-    ).toThrow('Campo "origem" e obrigatorio')
+    ).toThrow('Campo "origem" é obrigatório')
   })
 
   it('validarCamposObrigatorios deve exigir causa de obito para morte', () => {
@@ -116,13 +116,27 @@ describe('MovimentacaoService', () => {
         status: 'pendente',
         sincronizado: false,
       } as any)
-    ).toThrow('Campo "causa_obito" e obrigatorio para movimentacoes do tipo "morte"')
+    ).toThrow('Campo "causa_obito" é obrigatório para movimentações do tipo "morte"')
   })
 
   it('validarQuantidade deve rejeitar zero', () => {
     expect(() => MovimentacaoService.validarQuantidade(0)).toThrow(
-      'Campo "quantidade" e obrigatorio e deve ser maior que zero'
+      'Campo "quantidade" é obrigatório e deve ser maior que zero'
     )
+  })
+
+  it('validarCamposObrigatorios deve rejeitar nascimento com estagio diferente de bezerro ou bezerra', () => {
+    expect(() =>
+      MovimentacaoService.validarCamposObrigatorios({
+        ...baseMovimentacao,
+        tipo: 'nascimento',
+        origem: 'Acurizal',
+        quantidade: 1,
+        estagio_vida: 'GARROTE 8 A 12 MESES',
+        status: 'pendente',
+        sincronizado: false,
+      } as any)
+    ).toThrow('Campo "estagio_vida" inválido para movimentações do tipo "nascimento"')
   })
 
   it('criar deve aceitar compra com destino e quantidade', async () => {

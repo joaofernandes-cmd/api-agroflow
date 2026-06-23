@@ -20,6 +20,23 @@ function montarUrlApi(caminho: string): string {
   return `${obterBaseApi()}${caminho.startsWith('/') ? caminho : `/${caminho}`}`
 }
 
+const MENSAGEM_ERRO_SINCRONIZACAO = 'Não foi possível sincronizar os dados. Tente novamente.'
+
+function registrarFalhaSincronizacao(contexto: string, error: unknown) {
+  console.warn(`Falha na sincronização: ${contexto}`, {
+    erro: error instanceof Error ? error.message : error,
+  })
+}
+
+function erroSincronizacao(categoria: string, response: Response): Error {
+  console.warn(`Falha ao sincronizar ${categoria}`, {
+    status: response.status,
+    statusText: response.statusText,
+  })
+
+  return new Error(MENSAGEM_ERRO_SINCRONIZACAO)
+}
+
 // RN03: Sincronização offline com detecção automática de conexão
 // RN07: Apenas dados com sincronizado=true entram em relatórios
 export const SincronizacaoService = {
@@ -68,7 +85,8 @@ export const SincronizacaoService = {
           } as any)
           registrosSincronizados++
         } catch (error) {
-          erros.push(`Erro ao sincronizar movimentação ${mov.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+          registrarFalhaSincronizacao(`movimentação ${mov.id}`, error)
+          erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
         }
       }
 
@@ -87,7 +105,8 @@ export const SincronizacaoService = {
           } as any)
           registrosSincronizados++
         } catch (error) {
-          erros.push(`Erro ao sincronizar tarefa ${tarefa.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+          registrarFalhaSincronizacao(`tarefa ${tarefa.id}`, error)
+          erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
         }
       }
 
@@ -106,14 +125,16 @@ export const SincronizacaoService = {
           } as any)
           registrosSincronizados++
         } catch (error) {
-          erros.push(`Erro ao sincronizar ticket ${ticket.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+          registrarFalhaSincronizacao(`ticket ${ticket.id}`, error)
+          erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
         }
       }
 
       const sucesso = registrosSincronizados > 0 || erros.length === 0
       return { sucesso, registrosSincronizados, erros }
     } catch (error) {
-      erros.push(`Erro geral na sincronização: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+      registrarFalhaSincronizacao('fluxo geral', error)
+      erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
       return { sucesso: false, registrosSincronizados, erros }
     }
   },
@@ -179,7 +200,7 @@ export const SincronizacaoService = {
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar movimentação: HTTP ${response.status}`)
+      throw erroSincronizacao('movimentação', response)
     }
   },
 
@@ -192,7 +213,7 @@ export const SincronizacaoService = {
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar tarefa: HTTP ${response.status}`)
+      throw erroSincronizacao('tarefa', response)
     }
   },
 
@@ -205,7 +226,7 @@ export const SincronizacaoService = {
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar ticket: HTTP ${response.status}`)
+      throw erroSincronizacao('ticket', response)
     }
   },
 
