@@ -4663,6 +4663,8 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 ### <a name="c5.2.1"></a>5.2.1. Relatório de testes de guerrilha
 
+O teste de guerrilha é uma modalidade de teste de usabilidade caracterizada pela sua aplicação rápida e informal, realizada com usuários recrutados de forma oportunista, sem agendamento prévio ou ambiente controlado de laboratório. Proposto como alternativa ágil aos testes tradicionais, o método consiste em apresentar o sistema a participantes reais e observar, sem intervenção direta, como eles executam tarefas previamente definidas, registrando dificuldades, erros e comportamentos inesperados. Sua principal vantagem é a capacidade de identificar problemas críticos de usabilidade com um número reduzido de participantes e em curto prazo, tornando-o especialmente adequado ao ciclo de desenvolvimento iterativo adotado pelo grupo.
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
