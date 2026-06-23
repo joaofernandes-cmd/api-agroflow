@@ -4592,11 +4592,11 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 ### 5.1.4 Relatório de cobertura Jest
-Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
+Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que os fluxos críticos permaneceram estáveis após a inclusão de novos cenários de validação, erro, persistência mockada e exportação de relatórios.
  
-Complementarmente, foi executado o comando `npm run test:coverage -- --runInBand`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80% em todas as métricas.
+Complementarmente, foi executado o comando `npm run test:coverage -- --runInBand`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares, repositories e demais módulos do backend. Na execução atual, as camadas de services, middlewares, routes e repositories apresentaram cobertura consistente para os fluxos mais relevantes do sistema.
  
-Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
+Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes. A cobertura também foi ampliada para pontos de apoio técnico, como repositories com banco mockado, tratamento de erros em controllers, validação estática das migrations, comportamento de exportação de relatórios e JavaScript inline da tela de relatórios.
  
 ---
  
@@ -4617,25 +4617,25 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
  
 - `npm test` executado com sucesso.
 - `npm run test:coverage -- --runInBand` executado com sucesso.
-- Suíte atual: **26 test suites aprovadas**.
-- Casos de teste aprovados na execução de cobertura: **338**.
+- Suíte atual: **29 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **360**.
 - Testes de integração aprovados: **147** em **11 test suites**.
-- Testes unitários aprovados: **191** em **15 test suites**.
-- Cobertura global: **77,47% de statements**, **67,48% de branches**, **76,11% de functions** e **78,17% de lines**.
-- Cobertura da camada de repositories: **53,14% de statements**, **52,91% de branches**, **40,57% de functions** e **53,44% de lines**.
+- Testes unitários aprovados: **213** em **18 test suites**.
+- Cobertura global: **79,62% de statements**, **70,01% de branches**, **81,47% de functions** e **80,38% de lines**.
+- Cobertura da camada de repositories: **78,28% de statements**, **65,75% de branches**, **75,36% de functions** e **78,73% de lines**.
 - Cobertura da camada de middlewares: **92,92% de statements**, **82,05% de branches**, **100% de functions** e **92,92% de lines**.
 - Cobertura da camada de utils: **79,38% de statements**, **50,87% de branches**, **90% de functions** e **90,74% de lines**.
-- Cobertura da camada de services: **88,7% de statements**, **81,72% de branches**, **93,52% de functions** e **88,6% de lines**.
+- Cobertura da camada de services: **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**.
 
 <div align="center">
   <p align="center">Figura 63 - Execução atual dos testes de integração</p>
-  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das nove suítes de integração, com 97 testes aprovados." />
+  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das suítes de integração, com 147 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
   <p align="center">Figura 64 - Execução atual da suíte completa</p>
-  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 17 suítes, com 238 testes aprovados." />
+  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 29 suítes, com 360 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 ---
