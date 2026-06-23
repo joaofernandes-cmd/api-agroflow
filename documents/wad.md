@@ -4143,8 +4143,9 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;As estratégias de resiliência do AgroFlow foram definidas para reduzir perda de dados, inconsistências de estado e exposição de erros técnicos ao usuário final. Como parte da operação ocorre em campo, com possibilidade de conexão instável, a aplicação combina validação preventiva, mensagens padronizadas, armazenamento temporário local, reprocessamento de pendências e confirmação do backend antes de alterar estados críticos na interface.
 
-
 &nbsp;&nbsp;&nbsp;&nbsp;No backend, movimentações, tarefas, tickets e evidências passam por validações de campos obrigatórios, tipos aceitos, status permitidos, permissões por cargo e vínculo com o usuário autenticado quando aplicável. Os controllers utilizam uma camada centralizada de tratamento de erros para separar mensagens públicas de detalhes técnicos. Assim, regras de negócio seguras podem ser apresentadas ao usuário, enquanto erros internos, falhas de conexão, variáveis de ambiente e exceções de infraestrutura são tratados com respostas genéricas e registrados em log para diagnóstico.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No fluxo do Capataz, a aplicação utiliza recursos de PWA (Progressive Web App), modelo em que uma aplicação web pode oferecer funcionalidades próximas às de um aplicativo instalado, como operação offline, cache local e sincronização posterior. Esse mecanismo verifica conectividade pelo endpoint /health com tempo limite de resposta. Quando a conexão não está disponível, os registros são mantidos em uma fila local no IndexedDB e reenviados quando a rede retorna. Esse comportamento permite continuidade operacional em campo e evita que falhas temporárias de internet resultem em perda imediata de dados. O envio de mídias também possui validações de tipo, tamanho e regras de domínio, como georreferenciamento em fotos e duração mínima para áudios.
 
 ## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
