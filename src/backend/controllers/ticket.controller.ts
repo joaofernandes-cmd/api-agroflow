@@ -11,9 +11,6 @@ const CATEGORIAS_TICKET_VALIDAS: TicketCategoria[] = [
   'cerca',
   'hidraulica',
   'eletrica',
-  'edificacao',
-  'abastecimento_agua',
-  'outro',
 ]
 
 function retiroDaConsulta(req: Request, valor?: string): string | undefined {

@@ -6,7 +6,8 @@ declare global {
     interface Request {
       usuario?: {
         id: UUID
-        login: string
+        identificador: string
+        login: string | null
         cargo: UsuarioCargo
         retiro_id: UUID
       }

@@ -36,6 +36,7 @@ describe('Autenticacao e autorizacao', () => {
     expect(next).toHaveBeenCalled()
     expect(req.usuario).toEqual({
       id: mockSupervisor.id,
+      identificador: mockSupervisor.identificador,
       login: mockSupervisor.login,
       cargo: mockSupervisor.cargo,
       retiro_id: mockSupervisor.retiro_id,

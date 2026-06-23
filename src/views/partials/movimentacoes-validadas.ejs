@@ -20,7 +20,7 @@
             if (m.dataValidacao) metaParts.push('Validada em ' + m.dataValidacao);
             if (m.supervisor) metaParts.push('Supervisor ' + m.supervisor);
             var detParts = [];
-            if (m.capataz) detParts.push('Capataz ' + m.capataz);
+            if (m.capataz) detParts.push(m.capataz);
             if (m.quantidadeRotulo && m.quantidadeRotulo !== '—') detParts.push(m.quantidadeRotulo);
             var detTexto = [detParts.join(' • '), m.detalhes].filter(Boolean).join(' • ');
           %>

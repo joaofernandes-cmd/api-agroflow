@@ -44,6 +44,7 @@ describe('Usuarios', () => {
       usuario: {
         id: mockSupervisor.id,
         nome: mockSupervisor.nome,
+        identificador: mockSupervisor.identificador,
         login: mockSupervisor.login,
         status: mockSupervisor.status,
         cargo: mockSupervisor.cargo,
@@ -129,6 +130,7 @@ describe('Usuarios', () => {
       {
         id: mockSupervisor.id,
         nome: mockSupervisor.nome,
+        identificador: mockSupervisor.identificador,
         login: mockSupervisor.login,
         status: mockSupervisor.status,
         cargo: mockSupervisor.cargo,
