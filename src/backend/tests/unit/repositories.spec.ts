@@ -3,12 +3,21 @@ import { MovimentacaoRepository } from '../../repositories/movimentacao.reposito
 import { TarefaRepository } from '../../repositories/tarefa.repository'
 import { TicketRepository } from '../../repositories/ticket.repository'
 import { UsuarioRepository } from '../../repositories/usuario.repository'
+import { EvidenciaRepository } from '../../repositories/evidencia.repository'
+import { EvidenciaAudioRepository } from '../../repositories/evidencia-audio.repository'
+import { EvidenciaFotoRepository } from '../../repositories/evidencia-foto.repository'
+import { EvidenciaMensagemRepository } from '../../repositories/evidencia-mensagem.repository'
+import { EvidenciaMovimentacaoRepository } from '../../repositories/evidencia-movimentacao.repository'
+import { EvidenciaTarefaRepository } from '../../repositories/evidencia-tarefa.repository'
+import { EvidenciaTicketRepository } from '../../repositories/evidencia-ticket.repository'
 import {
   mockCapataz,
+  mockEvidencia,
   mockMovimentacao,
   mockTarefa,
   mockTicket,
   mockSupervisor,
+  EVIDENCIA_ID,
   MOVIMENTACAO_ID,
   TAREFA_ID,
   TICKET_ID,
@@ -191,6 +200,151 @@ describe('Repositories com banco mockado', () => {
       await expect(MovimentacaoRepository.remover(MOVIMENTACAO_ID)).resolves.toBeUndefined()
       expect(mockedSql.begin).toHaveBeenCalledTimes(1)
       expect(transaction).toHaveBeenCalledTimes(6)
+    })
+  })
+
+  describe('EvidenciaRepository', () => {
+    it('buscarPorId deve retornar evidencia ou null', async () => {
+      mockedSql.mockResolvedValueOnce([mockEvidencia])
+      await expect(EvidenciaRepository.buscarPorId(EVIDENCIA_ID)).resolves.toEqual(mockEvidencia)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaRepository.buscarPorId(EVIDENCIA_ID)).resolves.toBeNull()
+    })
+
+    it('criar e atualizar devem retornar evidencia persistida', async () => {
+      mockedSql.mockResolvedValueOnce([mockEvidencia])
+      await expect(EvidenciaRepository.criar(mockEvidencia as any)).resolves.toEqual(mockEvidencia)
+
+      mockedSql.mockResolvedValueOnce([mockEvidencia])
+      await expect(EvidenciaRepository.atualizar(EVIDENCIA_ID, { tipo: 'foto' } as any)).resolves.toEqual(mockEvidencia)
+    })
+
+    it('atualizar deve retornar null e remover deve executar delete', async () => {
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaRepository.atualizar(EVIDENCIA_ID, { tipo: 'audio' } as any)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaRepository.remover(EVIDENCIA_ID)).resolves.toBeUndefined()
+    })
+  })
+
+  describe('Repositories de tipos de evidencia', () => {
+    it('foto deve buscar, criar, atualizar e remover registro', async () => {
+      const foto = {
+        evidencia_id: EVIDENCIA_ID,
+        url_arquivo: 'https://storage.test/foto.jpg',
+        latitude: -20.1,
+        longitude: -54.2,
+      }
+
+      mockedSql.mockResolvedValueOnce([foto])
+      await expect(EvidenciaFotoRepository.buscarPorId(EVIDENCIA_ID)).resolves.toEqual(foto)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaFotoRepository.buscarPorId(EVIDENCIA_ID)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([foto])
+      await expect(EvidenciaFotoRepository.criar(foto)).resolves.toEqual(foto)
+
+      mockedSql.mockResolvedValueOnce([foto])
+      await expect(EvidenciaFotoRepository.atualizar(EVIDENCIA_ID, { latitude: -20.2 })).resolves.toEqual(foto)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaFotoRepository.remover(EVIDENCIA_ID)).resolves.toBeUndefined()
+    })
+
+    it('audio deve buscar, criar, atualizar e remover registro', async () => {
+      const audio = {
+        evidencia_id: EVIDENCIA_ID,
+        url_arquivo: 'https://storage.test/audio.webm',
+      }
+
+      mockedSql.mockResolvedValueOnce([audio])
+      await expect(EvidenciaAudioRepository.buscarPorId(EVIDENCIA_ID)).resolves.toEqual(audio)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaAudioRepository.buscarPorId(EVIDENCIA_ID)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([audio])
+      await expect(EvidenciaAudioRepository.criar(audio)).resolves.toEqual(audio)
+
+      mockedSql.mockResolvedValueOnce([audio])
+      await expect(EvidenciaAudioRepository.atualizar(EVIDENCIA_ID, { url_arquivo: audio.url_arquivo })).resolves.toEqual(audio)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaAudioRepository.remover(EVIDENCIA_ID)).resolves.toBeUndefined()
+    })
+
+    it('mensagem deve buscar, criar, atualizar e remover registro', async () => {
+      const mensagem = {
+        evidencia_id: EVIDENCIA_ID,
+        conteudo: 'Registro observado em campo.',
+      }
+
+      mockedSql.mockResolvedValueOnce([mensagem])
+      await expect(EvidenciaMensagemRepository.buscarPorId(EVIDENCIA_ID)).resolves.toEqual(mensagem)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaMensagemRepository.buscarPorId(EVIDENCIA_ID)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([mensagem])
+      await expect(EvidenciaMensagemRepository.criar(mensagem)).resolves.toEqual(mensagem)
+
+      mockedSql.mockResolvedValueOnce([mensagem])
+      await expect(EvidenciaMensagemRepository.atualizar(EVIDENCIA_ID, { conteudo: mensagem.conteudo })).resolves.toEqual(mensagem)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaMensagemRepository.remover(EVIDENCIA_ID)).resolves.toBeUndefined()
+    })
+  })
+
+  describe('Repositories de vinculos de evidencia', () => {
+    it('movimentacao deve buscar, criar e listar evidencias detalhadas', async () => {
+      const vinculo = { evidencia_id: EVIDENCIA_ID, movimentacao_id: MOVIMENTACAO_ID }
+      const detalhe = { ...mockEvidencia, url_arquivo: 'https://storage.test/foto.jpg' }
+
+      mockedSql.mockResolvedValueOnce([vinculo])
+      await expect(EvidenciaMovimentacaoRepository.buscarPorId(EVIDENCIA_ID, MOVIMENTACAO_ID)).resolves.toEqual(vinculo)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaMovimentacaoRepository.buscarPorId(EVIDENCIA_ID, MOVIMENTACAO_ID)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([vinculo])
+      await expect(EvidenciaMovimentacaoRepository.criar(vinculo)).resolves.toEqual(vinculo)
+
+      mockedSql.mockResolvedValueOnce([detalhe])
+      await expect(EvidenciaMovimentacaoRepository.buscarEvidenciasDaMovimentacao(MOVIMENTACAO_ID)).resolves.toEqual([detalhe])
+    })
+
+    it('tarefa deve buscar, criar e listar evidencias detalhadas', async () => {
+      const vinculo = { evidencia_id: EVIDENCIA_ID, tarefa_id: TAREFA_ID }
+      const detalhe = { ...mockEvidencia, conteudo: 'Tarefa concluida.' }
+
+      mockedSql.mockResolvedValueOnce([vinculo])
+      await expect(EvidenciaTarefaRepository.buscarPorId(EVIDENCIA_ID, TAREFA_ID)).resolves.toEqual(vinculo)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaTarefaRepository.buscarPorId(EVIDENCIA_ID, TAREFA_ID)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([vinculo])
+      await expect(EvidenciaTarefaRepository.criar(vinculo)).resolves.toEqual(vinculo)
+
+      mockedSql.mockResolvedValueOnce([detalhe])
+      await expect(EvidenciaTarefaRepository.buscarEvidenciasDaTarefa(TAREFA_ID)).resolves.toEqual([detalhe])
+    })
+
+    it('ticket deve buscar e criar vinculo', async () => {
+      const vinculo = { evidencia_id: EVIDENCIA_ID, ticket_id: TICKET_ID }
+
+      mockedSql.mockResolvedValueOnce([vinculo])
+      await expect(EvidenciaTicketRepository.buscarPorId(EVIDENCIA_ID, TICKET_ID)).resolves.toEqual(vinculo)
+
+      mockedSql.mockResolvedValueOnce([])
+      await expect(EvidenciaTicketRepository.buscarPorId(EVIDENCIA_ID, TICKET_ID)).resolves.toBeNull()
+
+      mockedSql.mockResolvedValueOnce([vinculo])
+      await expect(EvidenciaTicketRepository.criar(vinculo)).resolves.toEqual(vinculo)
     })
   })
 })
