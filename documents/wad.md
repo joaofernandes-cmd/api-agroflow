@@ -4118,7 +4118,7 @@ VALUES (?, ?, ?, ?);
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Além do controle por cargo, os controllers usam os dados da sessão autenticada para reduzir risco de manipulação de autoria e escopo. Em criações feitas por Capataz, o backend usa o `id` e o `retiro_id` do usuário autenticado para preencher autor e retiro. Em consultas operacionais, Supervisores e Capatazes ficam restritos ao próprio retiro, enquanto Gerentes podem consultar dados consolidados por diferentes retiros quando a rota permite esse filtro.
+&nbsp;&nbsp;&nbsp;&nbsp;Além do controle por cargo, os controllers usam os dados da sessão autenticada para reduzir risco de manipulação de autoria e escopo. Em criações feitas por Capataz, o backend usa o `id` e o `retiro_id` do usuário autenticado para preencher autor e retiro. Em consultas e alterações operacionais, Capatazes ficam restritos aos registros vinculados ao próprio usuário e retiro, enquanto Supervisores podem acompanhar e validar registros dos retiros disponíveis no sistema. Gerentes, por sua vez, acessam dados consolidados e relatórios, com possibilidade de filtro por retiro quando a rota oferece essa segmentação.
 
 ### <a name="c3.8.4"></a>3.8.4. Estratégias de Resiliência
 
