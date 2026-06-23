@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { EvidenciaMovimentacao, EvidenciaMovimentacaoInput } from '../models/evidencia-movimentacao.model'
+import { EvidenciaDetalhada } from '../models/evidencia.model'
 import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências de movimentações cadastradas
@@ -35,5 +36,22 @@ export const EvidenciaMovimentacaoRepository = {
         `
 
         return created
-    }
+    },
+
+    async buscarEvidenciasDaMovimentacao(movimentacao_id: UUID): Promise<EvidenciaDetalhada[]> {
+        return sql<EvidenciaDetalhada[]>`
+            SELECT
+                e.id, e.usuario_id, e.tipo, e.data_criacao,
+                COALESCE(f.url_arquivo, a.url_arquivo) AS url_arquivo,
+                f.latitude, f.longitude,
+                m.conteudo
+            FROM evidencia_movimentacao em
+            JOIN evidencia e ON e.id = em.evidencia_id
+            LEFT JOIN evidencia_foto f ON f.evidencia_id = e.id
+            LEFT JOIN evidencia_audio a ON a.evidencia_id = e.id
+            LEFT JOIN evidencia_mensagem m ON m.evidencia_id = e.id
+            WHERE em.movimentacao_id = ${movimentacao_id}
+            ORDER BY e.data_criacao
+        `
+    },
 }

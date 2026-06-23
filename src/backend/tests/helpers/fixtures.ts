@@ -10,6 +10,7 @@ export const EVIDENCIA_ID = '00000000-0000-4000-8000-000000000501'
 export const mockSupervisor = {
   id: SUPERVISOR_ID,
   nome: 'Supervisor Teste',
+  identificador: 'supervisor-teste',
   login: 'supervisor@agroflow.com',
   senha_hash: 'hashed-password',
   status: 'ativo',
@@ -20,6 +21,7 @@ export const mockSupervisor = {
 export const mockGerente = {
   id: GERENTE_ID,
   nome: 'Gerente Teste',
+  identificador: 'gerente-teste',
   login: 'gerente@agroflow.com',
   senha_hash: 'hashed-password',
   status: 'ativo',
@@ -30,6 +32,7 @@ export const mockGerente = {
 export const mockCapataz = {
   id: CAPATAZ_ID,
   nome: 'Capataz Teste',
+  identificador: 'capataz-teste',
   login: 'capataz@agroflow.com',
   senha_hash: 'hashed-password',
   status: 'ativo',

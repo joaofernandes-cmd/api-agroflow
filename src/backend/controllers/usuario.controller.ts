@@ -136,20 +136,25 @@ export const UsuarioController = {
 
   async criar(req: Request, res: Response) {
     try {
-      const { retiro_id, nome, login, senha_hash, status, cargo } = req.body
+      const { retiro_id, nome, identificador, login, senha_hash, status, cargo } = req.body
 
-      if (!retiro_id || !nome || !login || !senha_hash || !status || !cargo) {
+      if (!retiro_id || !nome || !status || !cargo) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios' })
       }
 
+      if (cargo !== 'capataz' && (!login || !senha_hash)) {
+        return res.status(400).json({ error: 'Login e senha são obrigatórios para este perfil' })
+      }
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(login)) {
+      if (login && !emailRegex.test(login)) {
         return res.status(400).json({ error: 'Login deve ser um email válido' })
       }
 
       const usuario = await UsuarioService.criar({
         retiro_id,
         nome,
+        identificador,
         login,
         senha_hash,
         status,

@@ -1,6 +1,6 @@
 import { UUID } from './uuid'
 
-export type TicketCategoria = 'cerca' | 'hidraulica' | 'eletrica' | 'edificacao' | 'abastecimento_agua' | 'outro'
+export type TicketCategoria = 'cerca' | 'hidraulica' | 'eletrica'
 
 export type TicketStatus = 'pendente' | 'aprovado'
 

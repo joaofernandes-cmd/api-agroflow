@@ -125,6 +125,20 @@ describe('MovimentacaoService', () => {
     )
   })
 
+  it('validarCamposObrigatorios deve rejeitar nascimento com estagio diferente de bezerro ou bezerra', () => {
+    expect(() =>
+      MovimentacaoService.validarCamposObrigatorios({
+        ...baseMovimentacao,
+        tipo: 'nascimento',
+        origem: 'Acurizal',
+        quantidade: 1,
+        estagio_vida: 'GARROTE 8 A 12 MESES',
+        status: 'pendente',
+        sincronizado: false,
+      } as any)
+    ).toThrow('Campo "estagio_vida" inválido para movimentações do tipo "nascimento"')
+  })
+
   it('criar deve aceitar compra com destino e quantidade', async () => {
     await MovimentacaoService.criar({
       ...baseMovimentacao,

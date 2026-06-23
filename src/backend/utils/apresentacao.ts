@@ -31,7 +31,7 @@ export async function carregarContexto(req: Request): Promise<ContextoApresentac
   ])
 
   const mapaRetiro = new Map(retiros.map(r => [String(r.id), r.nome]))
-  const mapaUsuario = new Map(usuarios.map(u => [String(u.id), u.nome]))
+  const mapaUsuario = new Map(usuarios.map(u => [String(u.id), limparPrefixoCargo(u.nome)]))
 
   const nomeUsuario = mapaUsuario.get(String(req.usuario?.id ?? '')) ?? 'Usuário'
   const primeiroNomeUsuario = nomeUsuario.split(' ')[0]
@@ -42,6 +42,10 @@ export async function carregarContexto(req: Request): Promise<ContextoApresentac
 export function nomeRetiro(ctx: ContextoApresentacao, retiroId: UUID | null): string {
   if (!retiroId) return ''
   return ctx.mapaRetiro.get(String(retiroId)) ?? ''
+}
+
+export function limparPrefixoCargo(nome: string): string {
+  return nome.replace(/^(capataz|supervisor|gerente)\s+/i, '').trim()
 }
 
 export function nomeUsuarioPorId(ctx: ContextoApresentacao, usuarioId: UUID | null): string {
@@ -105,9 +109,6 @@ const CATEGORIA_TICKET_LABEL: Record<TicketCategoria, string> = {
   cerca: 'Cerca',
   hidraulica: 'Hidráulica',
   eletrica: 'Elétrica',
-  edificacao: 'Edificação',
-  abastecimento_agua: 'Abastecimento de água',
-  outro: 'Outro',
 }
 
 export interface TicketExibicao {
@@ -128,9 +129,6 @@ export interface TicketExibicao {
 
 // Título amigável do ticket a partir da categoria (o banco não guarda "nome").
 function tituloTicket(t: Ticket): string {
-  if (t.categoria === 'outro') {
-    return t.categoria_outro?.trim() || 'Outro'
-  }
   return CATEGORIA_TICKET_LABEL[t.categoria] ?? 'Ticket'
 }
 
@@ -187,6 +185,7 @@ export interface MovimentacaoExibicao {
   causaObito: string
   evidencia: string
   evidenciaTexto: string
+  evidenciaUrl: string
   enviado: string
   badgeClasse: string
   detalhes: string
@@ -221,6 +220,13 @@ const COR_PRIORIDADE: Record<TarefaPrioridade, string> = {
   baixa: 'var(--sucesso)',
 }
 
+const TITULO_TAREFA_LABEL: Record<string, string> = {
+  conferencia: 'Conferência do rebanho',
+  'transferencia-gado': 'Transferência de gado',
+  contagem: 'Contagem geral',
+  inspecao: 'Inspeção sanitária',
+}
+
 export interface TarefaExibicao {
   id: UUID
   titulo: string
@@ -247,6 +253,7 @@ export function tarefaParaExibicao(t: Tarefa, ctx: ContextoApresentacao): Tarefa
   // ali); `descricao` guarda os detalhes. Ciclo: pendente → concluido → aprovado.
   const concluida = t.status === 'concluido' || t.status === 'aprovado'
   const supervisor = nomeUsuarioPorId(ctx, t.criada_por)
+  const titulo = TITULO_TAREFA_LABEL[t.categoria] ?? t.categoria
   const dataCurta = t.data_criacao
     ? new Date(t.data_criacao).toLocaleDateString('pt-BR')
     : ''
@@ -263,7 +270,7 @@ export function tarefaParaExibicao(t: Tarefa, ctx: ContextoApresentacao): Tarefa
 
   return {
     id: t.id,
-    titulo: t.categoria,
+    titulo,
     retiro: nomeRetiro(ctx, t.retiro_id),
     capataz: nomeUsuarioPorId(ctx, t.atribuida_a),
     supervisor,
@@ -305,6 +312,7 @@ export function movimentacaoParaExibicao(m: Movimentacao, ctx: ContextoApresenta
     causaObito: m.causa_obito ?? '',
     evidencia: '',
     evidenciaTexto: '',
+    evidenciaUrl: '',
     enviado: tempoRelativo(m.data_criacao),
     badgeClasse: TIPO_MOV_BADGE[m.tipo] ?? 'badge--blue',
     detalhes: montarDetalhesMov(m, estagio),
