@@ -30,11 +30,8 @@ DO $$
 BEGIN
   CREATE TYPE ticket_categoria AS ENUM (
     'cerca',
-    'hidraulica',
     'eletrica',
-    'edificacao',
-    'abastecimento_agua',
-    'outro'
+    'hidraulica'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
@@ -76,16 +73,15 @@ BEGIN
     'BEZERRO 0 A 7 MESES',
     'BEZERRA 0 A 7 MESES',
     'GARROTE 8 A 12 MESES',
-    'NOVILHA 8 A 12 MESES',
     'GARROTE 13 A 24 MESES',
+    'NOVILHA 8 A 12 MESES',
     'NOVILHA 13 A 24 MESES',
     'BOI 25 A 36 MESES',
-    'NOVILHA 25 A 36 MESES',
-    'TOURO 25 A 36 MESES',
-    'VACA ACIMA 36 MESES',
     'BOI ACIMA 36 MESES',
+    'TOURO 25 A 36 MESES',
     'TOURO ACIMA 36 MESES',
-    'VACA 25 A 36 MESES'
+    'VACA 25 A 36 MESES',
+    'VACA ACIMA 36 MESES'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;

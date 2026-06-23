@@ -9,8 +9,8 @@ export type RetiroNome =
   | 'Aroeira'
   | 'Baia Bonita'
   | 'Bodoquena 1'
-  | 'Bonoquena 2'
-  | 'BoqueirÃ£o'
+  | 'Bodoquena 2'
+  | 'Boqueirão'
   | 'Caieira'
   | 'CMB'
   | 'Confinamento'
@@ -18,7 +18,7 @@ export type RetiroNome =
   | 'Morada Nova'
   | 'Morro Azul'
   | 'Puga'
-  | 'SÃ£o Miguel'
+  | 'São Miguel'
   | 'Vista Alegre'
 
 export type EstagioVida =
