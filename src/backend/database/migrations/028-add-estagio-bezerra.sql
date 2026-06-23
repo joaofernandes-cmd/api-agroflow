@@ -1,9 +1,0 @@
--- 028 - Adiciona estagios de vida usados nas movimentacoes.
-
-ALTER TYPE movimentacao_estagio_vida
-  ADD VALUE IF NOT EXISTS 'BEZERRA 0 A 7 MESES'
-  AFTER 'BEZERRO 0 A 7 MESES';
-
-ALTER TYPE movimentacao_estagio_vida
-  ADD VALUE IF NOT EXISTS 'VACA 25 A 36 MESES'
-  AFTER 'TOURO ACIMA 36 MESES';

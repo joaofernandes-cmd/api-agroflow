@@ -44,4 +44,4 @@ export const OPCOES_RETIRO = RETIROS.map((r) => ({ rotulo: r, valor: slugRetiro(
 
 // Obs.: o roster oficial da fazenda (retiro → capataz responsável, conforme a
 // planilha Plan_Inteli_ProjetoBRPEC) vive no BANCO — semeado pela migração
-// 026-seed-roster-fazenda.sql e lido pela tela de Delegar. Não duplicar aqui.
+// 022-seed-roster-fazenda.sql e lido pela tela de Delegar. Não duplicar aqui.

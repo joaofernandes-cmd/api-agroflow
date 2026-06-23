@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS ticket (
   prioridade ticket_prioridade NOT NULL,
   sincronizado BOOLEAN NOT NULL DEFAULT false,
   data_criacao DATE NOT NULL DEFAULT CURRENT_DATE,
-  data_realizado DATE NOT NULL DEFAULT CURRENT_DATE
+  data_realizado DATE NOT NULL DEFAULT CURRENT_DATE,
+  categoria_outro TEXT,
+  CONSTRAINT ticket_categoria_restrita_check CHECK (categoria IN ('cerca', 'eletrica', 'hidraulica'))
 );
 
 DO $$

@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS movimentacao (
   sincronizado BOOLEAN NOT NULL DEFAULT false,
   data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
   estagio_vida movimentacao_estagio_vida NOT NULL,
-  data_validacao TIMESTAMP NULL
+  data_validacao TIMESTAMP NULL,
+  tipo_outro TEXT
 );
 
 DO $$

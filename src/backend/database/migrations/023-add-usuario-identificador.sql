@@ -1,4 +1,4 @@
--- 027 - Separa identificador operacional de login/senha.
+-- 023 - Separa identificador operacional de login/senha.
 
 ALTER TABLE usuario
   ADD COLUMN IF NOT EXISTS identificador VARCHAR(255);

@@ -22,7 +22,7 @@ END $$;
 
 DO $$
 BEGIN
-  CREATE TYPE tarefa_status AS ENUM ('pendente', 'aprovado');
+  CREATE TYPE tarefa_status AS ENUM ('pendente', 'concluido', 'aprovado');
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 
