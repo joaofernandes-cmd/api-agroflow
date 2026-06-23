@@ -4141,7 +4141,10 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.4"></a>3.8.4. Estratégias de Resiliência
 
-*Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
+&nbsp;&nbsp;&nbsp;&nbsp;As estratégias de resiliência do AgroFlow foram definidas para reduzir perda de dados, inconsistências de estado e exposição de erros técnicos ao usuário final. Como parte da operação ocorre em campo, com possibilidade de conexão instável, a aplicação combina validação preventiva, mensagens padronizadas, armazenamento temporário local, reprocessamento de pendências e confirmação do backend antes de alterar estados críticos na interface.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;No backend, movimentações, tarefas, tickets e evidências passam por validações de campos obrigatórios, tipos aceitos, status permitidos, permissões por cargo e vínculo com o usuário autenticado quando aplicável. Os controllers utilizam uma camada centralizada de tratamento de erros para separar mensagens públicas de detalhes técnicos. Assim, regras de negócio seguras podem ser apresentadas ao usuário, enquanto erros internos, falhas de conexão, variáveis de ambiente e exceções de infraestrutura são tratados com respostas genéricas e registrados em log para diagnóstico.
 
 ## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
