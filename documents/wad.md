@@ -829,13 +829,13 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
+| RF001 | O sistema deve permitir o registro de movimentações do rebanho (nascimento, morte, transferência, compra, venda e outros), com estágio de vida obrigatório e campos específicos conforme o tipo da movimentação.  | Alta       | Implementado |
 | RF002 | O sistema deve permitir a criação e atribuição de tarefas a usuários específicos, com descrição, prioridade e categoria.  | Alta      | Implementado    |
-| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Planejado para implementação futura |
+| RF003 | O sistema deve funcionar de forma off-line e on-line, armazenando os dados localmente e sincronizando automaticamente com o servidor ao restabelecer conexão com a internet.  | Alta  | Parcialmente implementado |
 | RF004 | O sistema deve permitir o anexo de evidências às tarefas, movimentações e tickets, incluindo foto georreferenciada, áudios e mensagens escritas. | Alta  | Implementado |
 | RF005 | O sistema deve identificar o usuário por meio de um processo simples, intuitivo e de fácil compreensão. | Alta  | Implementado |
 | RF006 | O sistema deve permitir que o Supervisor visualize e valide movimentações registradas pelos Capatazes, além de aprovar tarefas e tickets pendentes.  | Média | Implementado |
-| RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho e de tarefas, com exportação em formato de planilha.  | Média | Implementado |
+| RF007 | O sistema deve gerar relatórios semanais e mensais de movimentação do rebanho, de tarefas e de chamados de infraestrutura, com exportação em formato de planilha.  | Média | Implementado |
 | RF008 | O sistema deve disponibilizar tickets de infraestrutura, permitindo que Capatazes abram chamados pendentes e que Supervisores aprovem e atribuam chamados conforme necessário.  | Média | Implementado |
 | RF009 | O sistema deve permitir que o Supervisor filtre movimentações por retiro, tipo de movimentação, período e status (pendente/validado) na interface de validação. | Média | Implementado |
 | RF010 | O sistema deve exibir um dashboard ao Gerente com indicadores-chave consolidados: total de nascimentos, mortes, transferências, tickets aprovados e tarefas aprovadas, segmentados por retiro. | Média | Implementado |
@@ -4176,6 +4176,33 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
+### <a name="c3.9.1"></a>3.9.1. Validação de Cobertura das User Stories (sprint 5)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Complementando a RTM da [Seção 3.9](#c3.9), o Quadro 49 confronta cada uma das 12 User Stories da [Seção 2.3](#c2.3) com os Requisitos Funcionais que as implementam, registrando o status de cobertura observado nesta revisão.
+
+<p align="center">Quadro 49 - Validação de Cobertura das User Stories</p>
+
+| US | Resumo | RF associado(s) | Status de cobertura |
+| :--: | -------- | :---: | ---------------------- |
+| US01 | Uso do sistema offline | RF003 | Parcial — endpoints de sincronização implementados e testados no backend; armazenamento local e disparo automático no cliente permanecem planejados, conforme já registrado no status do RF003 e nas Seções 4.1 e 4.2. |
+| US02 | Registrar movimentações do rebanho | RF001 | Atendida — implementada e testada (CT-RF001). O critério CA3 ("salvo localmente") permanece pendente junto com RF003 (parcialmente implementado). |
+| US03 | Criar tarefas para capatazes | RF002 | Atendida — implementada e testada (CT-RF002). |
+| US04 | Validar registros enviados | RF006 | Atendida — implementada e testada (CT-RF006). |
+| US05 | Receber alertas de problemas | — | **Não atendida.** Não há RF, RN, endpoint ou teste associados. A funcionalidade aparece apenas nos wireframes e no protótipo de alta fidelidade do Supervisor (Seções 3.3 e 3.5), sem tela correspondente entregue nem rota de alerta/notificação no backend. Ver observação abaixo. |
+| US06 | Visualizar chamados de infraestrutura | RF008 | Atendida — implementada e testada (CT-RF008). |
+| US07 | Abrir chamados de infraestrutura | RF004, RF008 | Atendida — implementada e testada (CT-RF004, CT-RF008). |
+| US08 | Dashboard com indicadores da fazenda | RF010 | Atendida — implementada e testada (CT-RF010). |
+| US09 | Gerar relatórios semanais | RF007 | Atendida — implementada e testada (CT-RF007). |
+| US10 | Histórico de chamados | RF008, RF010 | Atendida — Gerente visualiza histórico de chamados via dashboard (RF010/CT-RF010); gestão de tickets coberta pelo RF008 (CT-RF008). |
+| US11 | Filtrar dados por retiro | RF010, RF007 | Atendida — indicadores e relatórios segmentados por retiro, conforme RN10. |
+| US12 | Anexar fotos como evidência | RF004 | Atendida — implementada e testada (CT-RF004), incluindo validação de georreferenciamento (RN04). |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Inconsistência identificada:** a US05 não possui Requisito Funcional, Regra de Negócio, endpoint ou teste associados, ao contrário das demais 11 User Stories. Diferentemente da US01 — cujo status pendente está explicitamente declarado no RF003 e nas Seções 4.1 e 4.2 —, a US05 não possui nenhuma nota equivalente registrada até esta revisão. Recomenda-se que a equipe decida formalmente entre: (a) registrar a US05 como funcionalidade não implementada e planejada para trabalho futuro, com a devida justificativa na [Seção 7](#c7), ou (b) elaborar um RF e uma RN correspondentes, caso a funcionalidade deva ser priorizada antes da entrega final.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os demais Requisitos Funcionais, Regras de Negócio e Requisitos Não Funcionais das Seções 3.1.1 a 3.1.3 foram conferidos nesta revisão e permanecem consistentes com as evidências de implementação e teste já documentadas, sem outras lacunas identificadas.
+
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ## <a name="c4.1"></a>4.1. Primeira versão da aplicação web (sprint 3)
@@ -4266,9 +4293,9 @@ VALUES (?, ?, ?, ?);
 
 ### Tecnologias Utilizadas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 49 resume as tecnologias utilizadas em cada camada da aplicação.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 50 resume as tecnologias utilizadas em cada camada da aplicação.
 
-<p align="center">Quadro 49 - Tecnologias utilizadas na aplicação</p>
+<p align="center">Quadro 50 - Tecnologias utilizadas na aplicação</p>
 
 | Camada | Tecnologia |
 |--------|-----------|
@@ -4413,9 +4440,9 @@ Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma
 - **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
 - **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
 
-Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 50 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 51 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
 
-<p align="center">Quadro 50 - Estrutura AAA adotada nos testes</p>
+<p align="center">Quadro 51 - Estrutura AAA adotada nos testes</p>
 
 | Fase | Responsável | Descrição |
 |---|---|---|
@@ -4427,9 +4454,9 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura 
 
 #### Endpoints Mapeados
 
-Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 51:
+Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 52:
 
-<p align="center">Quadro 51 - Endpoints mapeados pelos testes</p>
+<p align="center">Quadro 52 - Endpoints mapeados pelos testes</p>
 
 | Domínio | Endpoint |
 |---|---|
@@ -4511,9 +4538,9 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 
 ### Tabela Complementar de Testes White-Box
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 52 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e service exercitado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 53 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e service exercitado.
 
-<p align="center">Quadro 52 - Testes complementares White-Box</p>
+<p align="center">Quadro 53 - Testes complementares White-Box</p>
 
 | CT | RN | RF | Service(s) | Arquivo(s) | Cenário validado | Resultado esperado |
 |---|---|---|---|---|---|---|
@@ -4543,9 +4570,9 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 
 ### Tabela Complementar de Testes Black-Box
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 53 apresenta os testes black-box organizados por módulo, arquivo, cenário, endpoints e resultado esperado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 apresenta os testes black-box organizados por módulo, arquivo, cenário, endpoints e resultado esperado.
 
-<p align="center">Quadro 53 - Testes complementares Black-Box</p>
+<p align="center">Quadro 54 - Testes complementares Black-Box</p>
 
 | Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
 |---|---|---|---|---|
@@ -4578,9 +4605,9 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 
 ### Matriz de conformidade por cenário
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 sintetiza a cobertura atual dos cenários de sucesso, validação, regra de negócio e recurso não encontrado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 55 sintetiza a cobertura atual dos cenários de sucesso, validação, regra de negócio e recurso não encontrado.
 
-<p align="center">Quadro 54 - Matriz de conformidade dos testes por cenário</p>
+<p align="center">Quadro 55 - Matriz de conformidade dos testes por cenário</p>
 
 | Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
 |---|---|---|---|---|---|
@@ -4643,9 +4670,9 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
  
 #### Mapeamento de Rastreabilidade
  
-A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 55:
+A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 56:
 
-<p align="center">Quadro 55 - Mapeamento de rastreabilidade dos testes</p>
+<p align="center">Quadro 56 - Mapeamento de rastreabilidade dos testes</p>
 
 | Caso de Teste | Regra de Negócio | Requisito Funcional |
 |---|---|---|
