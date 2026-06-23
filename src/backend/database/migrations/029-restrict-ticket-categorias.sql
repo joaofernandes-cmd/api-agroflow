@@ -1,3 +1,5 @@
+-- 029 - Restringe tickets aos tipos de estrutura usados pelo capataz.
+
 UPDATE ticket
 SET categoria = 'hidraulica',
     categoria_outro = NULL

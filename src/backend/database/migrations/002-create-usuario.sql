@@ -1,6 +1,8 @@
+-- 002 - Cria tabela de usuarios.
+
 CREATE TABLE IF NOT EXISTS usuario (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  retiro_id BIGINT NOT NULL,
+  retiro_id UUID NOT NULL,
   nome VARCHAR(255) NOT NULL,
   login VARCHAR(255) NOT NULL UNIQUE,
   senha_hash VARCHAR(255) NOT NULL,
