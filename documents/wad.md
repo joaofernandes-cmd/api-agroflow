@@ -192,7 +192,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização** de dados assim que a conexão for restabelecida, eliminando a dependência de processos manuais e reduzindo a janela de inconsistência entre campo e escritório.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos** da operação: gerentes definem e distribuem as tarefas calendarizadas, o que impacta diretamente a previsibilidade e o controle dos ciclos produtivos; capatazes registram a execução mediante envio de evidências digitais, como fotos e áudios; e coordenadores validam as informações antes da consolidação final. Os dados aprovados são exportados em formatos Excel ou CSV, suportando a tomada de decisão administrativa. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
+&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos** da operação: gerentes definem e distribuem as tarefas calendarizadas, o que impacta diretamente a previsibilidade e o controle dos ciclos produtivos; capatazes registram a execução mediante envio de evidências digitais, como fotos e áudios; e supervisores validam as informações antes da consolidação final. Os dados aprovados são exportados em formatos Excel ou CSV, suportando a tomada de decisão administrativa. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
@@ -239,7 +239,7 @@
 
 **5. Rivalidade entre Concorrentes Existentes:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui um dos maiores rebanhos comercias do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
+&nbsp;&nbsp;&nbsp;&nbsp;A rivalidade entre concorrentes é elevada, marcada pela baixa diferenciação da carne bovina como produto e pela forte competição por eficiência operacional, escala e logística. O Brasil possui um dos maiores rebanhos comerciais do mundo, distribuído entre milhares de produtores, fazendo com que fatores como custo de produção, capacidade logística e produtividade sejam determinantes para competitividade no setor.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Além disso, a presença crescente de grupos agropecuários corporativos vinculados ao mercado financeiro amplia a concorrência por terras, tecnologia, mão de obra qualificada e acesso a capital. Nesse contexto, empresas com maior capacidade operacional e financeira conseguem suportar oscilações de mercado com maior estabilidade. O modelo “flex” da BrPec representa uma resposta estratégica à intensidade competitiva do setor, permitindo maior adaptação às variações de margem ao longo da cadeia produtiva.
 
@@ -270,7 +270,7 @@
 
 **4. Ameaças:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a continuidade de processos manuais e descentralizados pode ampliar riscos de falhas na comunicação, perda de informações e atrasos na consolidação dos dados operacionais. Soma-se isso a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo.
+&nbsp;&nbsp;&nbsp;&nbsp;Em contrapartida, a BRPec está inserida em um ambiente de crescente rigor regulatório, especialmente no que se refere às questões ambientais (BRASIL, 2012). A volatilidade climática, particularmente em regiões como o Pantanal, pode impactar diretamente a produtividade. Adicionalmente, a continuidade de processos manuais e descentralizados pode ampliar riscos de falhas na comunicação, perda de informações e atrasos na consolidação dos dados operacionais. Soma-se a isso a oscilação nos preços de commodities e o aumento dos custos operacionais representam riscos à rentabilidade, exigindo estratégias robustas de gestão de risco e eficiência operacional para garantir sustentabilidade no longo prazo.
 
 
 ### <a name="c2.1.3"></a>2.1.3. Solução
