@@ -285,11 +285,11 @@
 
 **3. Solução proposta**
 
- &nbsp;&nbsp;&nbsp;&nbsp;A solução proposta é uma aplicação web para registrar informações operacionais em campo. A versão atual permite registrar eventos, anexar evidências multimodais, organizar dados por retiro e tipo de ocorrência, exportar informações e acompanhar a operação por diferentes perfis de usuário. A operação offline-first, com armazenamento local e sincronização automática, permanece planejada para uma versão futura.
+ &nbsp;&nbsp;&nbsp;&nbsp;A solução proposta é uma aplicação web para registrar informações operacionais em campo. A versão atual permite registrar eventos, anexar evidências multimodais, organizar dados por retiro e tipo de ocorrência, exportar informações e acompanhar a operação por diferentes perfis de usuário. O fluxo do Capataz também contempla operação offline-first, com armazenamento local no navegador e sincronização posterior quando houver conexão.
 
 **4. Forma de utilização da solução**
 
-&nbsp;&nbsp;&nbsp;&nbsp; Os capatazes utilizarão a aplicação em dispositivos móveis durante as atividades no campo, com conexão ao servidor. Supervisores e gerentes poderão acessar os registros consolidados, acompanhar ocorrências, validar informações e exportar relatórios para apoio à gestão operacional. O uso sem internet, com salvamento local e sincronização posterior, será incorporado em uma evolução futura.
+&nbsp;&nbsp;&nbsp;&nbsp; Os capatazes utilizarão a aplicação em dispositivos móveis durante as atividades no campo, com suporte a registros locais quando não houver conexão. Supervisores e gerentes poderão acessar os registros consolidados, acompanhar ocorrências, validar informações e exportar relatórios para apoio à gestão operacional.
 
 **5. Benefícios esperados**
 
@@ -369,7 +369,7 @@
 
 - Minimiza falhas de transcrição ao padronizar a entrada de dados na aplicação;
 - Reduz retrabalho operacional ao eliminar a necessidade de transcrição manual entre papel e planilha;
-- Prevê, como evolução futura, operação contínua em campo mesmo sem conexão com a internet;
+- Apoia a operação em campo mesmo sem conexão estável, com armazenamento local e sincronização posterior;
 - Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
 
 
@@ -606,7 +606,7 @@
 
 ## <a name="c2.3"></a>2.3. User Stories (sprints 1 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BrPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17.
+&nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BrPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6 a 16.
 
 <p align="center">Quadro 6 - User Story 01.</p>
 
@@ -670,22 +670,7 @@
 
 <p align="center">Quadro 10 - User Story 05.</p>
 
-| Identificação | [US05](graduacao/2026-1b/t26/g02#42) |
-| - | - |
-| Persona | Luiz Felipe |
-| User Story | Como supervisor, posso receber alertas de problemas, para agir rapidamente. |
-| Critério de aceite 1 | Dado que ocorre um problema, quando identificado, então o sistema gera um alerta. |
-| Critério de aceite 2 | Dado que há alerta, quando acessa o painel, então o supervisor visualiza a notificação. |
-| Critério de aceite 3 | Dado que clica no alerta, quando acessa, então é redirecionado ao detalhe correspondente. |
-| Critérios INVEST | <p>Independente: Depende apenas da geração de eventos no sistema.</p> <p>Negociável: Tipos de alerta podem ser ajustados.</p> <p>Valorosa: Permite resposta rápida a problemas.</p> <p>Estimável: Escopo claro de notificação.</p> <p>Pequena: Restrita à exibição de alertas.</p> <p>Testável: Validada pela geração e visualização de alertas.</p> |
-
-<p align="center">Fonte: Próprios autores (2026).</p>
-
----
-
-<p align="center">Quadro 11 - User Story 06.</p>
-
-| Identificação        | [US06](graduacao/2026-1b/t26/g02#40) |
+| Identificação        | [US05](graduacao/2026-1b/t26/g02#40) |
 | -------------------- | - |
 | Persona              | Luiz Felipe   |
 | User Story           | Como supervisor, posso visualizar chamados de infraestrutura, para gerenciar problemas. |
@@ -698,9 +683,9 @@
 
 ---
 
-<p align="center">Quadro 12 - User Story 07.</p>
+<p align="center">Quadro 11 - User Story 06.</p>
 
-| Identificação | [US07](graduacao/2026-1b/t26/g02#38) |
+| Identificação | [US06](graduacao/2026-1b/t26/g02#38) |
 | - | - |
 | Persona | Daniel Carvalho |
 | User Story | Como capataz, posso abrir chamados de infraestrutura, para reportar problemas. |
@@ -713,9 +698,9 @@
 
 ---
 
-<p align="center">Quadro 13 - User Story 08.</p>
+<p align="center">Quadro 12 - User Story 07.</p>
 
-| Identificação        | [US08](graduacao/2026-1b/t26/g02#44) |
+| Identificação        | [US07](graduacao/2026-1b/t26/g02#44) |
 | -------- | ---- |
 | Persona              | Marcos Ferreira   |
 | User Story           | Como gerente, posso visualizar um dashboard com indicadores da fazenda, para acompanhar a operação.   |
@@ -729,9 +714,9 @@
 
 ---
 
-<p align="center">Quadro 14 - User Story 09.</p>
+<p align="center">Quadro 13 - User Story 08.</p>
 
-| Identificação        | [US09](graduacao/2026-1b/t26/g02#43)   |
+| Identificação        | [US08](graduacao/2026-1b/t26/g02#43)   |
 | -------------------- | -- |
 | Persona              | Luiz Felipe   |
 | User Story           | Como supervisor, posso gerar relatórios semanais, para acompanhar a operação. |
@@ -744,9 +729,9 @@
 
 ---
 
-<p align="center">Quadro 15 - User Story 10.</p>
+<p align="center">Quadro 14 - User Story 09.</p>
 
-| Identificação        | [US10](graduacao/2026-1b/t26/g02#46) |
+| Identificação        | [US09](graduacao/2026-1b/t26/g02#46) |
 | ---- | -- |
 | Persona              | Marcos Ferreira    |
 | User Story           | Como gerente, posso visualizar histórico de chamados, para acompanhar problemas recorrentes. |
@@ -759,9 +744,9 @@
 
 ---
 
-<p align="center">Quadro 16 - User Story 11.</p>
+<p align="center">Quadro 15 - User Story 10.</p>
 
-| Identificação        | [US11](graduacao/2026-1b/t26/g02#47) |
+| Identificação        | [US10](graduacao/2026-1b/t26/g02#47) |
 | -------------------- | --- |
 | Persona              | Marcos Ferreira                                               |
 | User Story           | Como gerente, posso filtrar dados por retiro, para analisar o desempenho de cada unidade da fazenda.  |
@@ -774,9 +759,9 @@
 
 ---
 
-<p align="center">Quadro 17 - User Story 12.</p>
+<p align="center">Quadro 16 - User Story 11.</p>
 
-| Identificação | [US12](graduacao/2026-1b/t26/g02#37) |
+| Identificação | [US11](graduacao/2026-1b/t26/g02#37) |
 | - | - |
 | Persona | Daniel Carvalho |
 | User Story | Como capataz, posso anexar fotos como evidência, para comprovar ações realizadas. |
@@ -804,7 +789,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os Capatazes atuam no campo e registram movimentações do rebanho (nascimentos, mortes, transferências, compras e vendas), informando o estágio de vida e os dados específicos de cada tipo de movimentação, como origem, destino, quantidade ou causa do óbito quando aplicáveis. Também abrem tickets de infraestrutura para reportar problemas como cercas danificadas, falta de água ou equipamentos avariados, devendo anexar ao menos uma evidência descritiva.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os Supervisores coordenam os Capatazes, criando e atribuindo tarefas com prioridade, categoria e descrição. Validam movimentações como conferência operacional e podem aprovar tarefas e tickets. Recebem notificações de tickets pendentes e podem atribuí-los conforme necessário.
+&nbsp;&nbsp;&nbsp;&nbsp;Os Supervisores coordenam os Capatazes, criando e atribuindo tarefas com prioridade, categoria e descrição. Validam movimentações como conferência operacional, acompanham tickets pendentes e podem aprovar ou atribuir chamados conforme necessário.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Gerente acessa o painel de consolidação, visualizando todas as movimentações validadas e tarefas e tickets aprovados pelo Supervisor, com rastreabilidade completa de quem registrou, quem validou ou aprovou e quando. Gera relatórios semanais e mensais em formato de planilha (.xlsx ou .csv), contendo exclusivamente dados sincronizados e conferidos.
 
@@ -924,7 +909,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | **Métrica / Critério de Aceite** | **Quantitativa:** p95 (percentil 95) < 3000ms para carregamento inicial das telas principais em conexão Starlink real (ambiente de produção nos retiros). Operações offline (registro de movimentação sem conexão) com latência < 200ms (imperceptível ao usuário). **Protocolo de teste:** Testes de carga com monitoramento via Lighthouse e Web Vitals. Medições em ambiente real com dispositivos de campo (celulares Android utilizados pelos capatazes). Testes de regressão a cada sprint. |
 | **Derivação do Contexto do Parceiro** | Derivado da infraestrutura de conectividade limitada dos retiros (Starlink com latência variável e períodos de instabilidade) e do contexto operacional em que capatazes registram dados durante atividades no campo (impossibilidade de esperar carregamentos longos). O RF003 exige operação offline fluida, e o RF001 (registro de movimentações) precisa ser ágil para não interromper o trabalho de campo. |
 | **RF/RN Associados** | RF001, RF002, RF003, RF004 |
-| **Como será atendido** | **(a) Impacto na arquitetura/dados:** As Views EJS e os arquivos estáticos são servidos pelo Express, com folhas de estilo separadas por perfil e layouts responsivos. A operação offline e o cache de recursos ainda não foram implementados nesta versão. **(b) Implementação no código:** `app.ts` configura a renderização EJS e a disponibilização de CSS e imagens estáticas; os endpoints de sincronização e a flag `sincronizado` constituem a base backend para uma implementação offline futura. **(c) Validação:** O carregamento das telas poderá ser medido com Lighthouse e Chrome DevTools. Os critérios específicos de desempenho offline somente poderão ser validados após a implementação da PWA e do armazenamento local. |
+| **Como será atendido** | **(a) Impacto na arquitetura/dados:** As Views EJS e os arquivos estáticos são servidos pelo Express, com folhas de estilo separadas por perfil e layouts responsivos. O fluxo do Capataz utiliza PWA, armazenamento local e fila de sincronização para reduzir impacto de conexão instável. **(b) Implementação no código:** `app.ts` configura a renderização EJS e a disponibilização de CSS e imagens estáticas; os endpoints de sincronização e a flag `sincronizado` sustentam o reenvio de registros pendentes. **(c) Validação:** O carregamento das telas pode ser medido com Lighthouse e Chrome DevTools. A fila local e o reenvio posterior são cobertos por teste unitário em sandbox, enquanto a validação E2E em navegador real permanece como evolução futura. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
@@ -1035,10 +1020,10 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 | RF001 | RN01 | `/movimentacoes`<br>`/movimentacoes/{id}` | POST<br>GET/PATCH/DELETE |
 | RF002 | RN02 | `/tarefas`<br>`/tarefas/{id}`<br>`/tarefas/status/{status}`<br>`/tarefas/usuario/{usuarioId}`<br>`/tarefas/prioridade/{prioridade}`<br>`/tarefas/categoria/{categoria}`<br>`/tarefas/{id}/status` | POST/GET<br>GET/PATCH/DELETE<br>GET<br>GET<br>GET<br>GET<br>PATCH |
 | RF003 | RN03 | `/sincronizacao/conexao`<br>`/sincronizacao`<br>`/sincronizacao/status`<br>`/sincronizacao/mensagem`<br>`/movimentacoes/sincronizar`<br>`/movimentacoes/{id}/sincronizar` | GET<br>POST<br>GET<br>GET<br>POST<br>PATCH |
-| RF004 | RN04 | `/evidencias`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>POST<br>POST<br>POST |
-| RF005 | RN05 | `/usuarios/login` | POST |
+| RF004 | RN04 | `/evidencias`<br>`/evidencias/tarefa/{tarefaId}`<br>`/evidencias/{id}`<br>`/evidencias/fotos`<br>`/evidencias/audios`<br>`/evidencias/mensagens` | GET<br>GET<br>GET<br>POST<br>POST<br>POST |
+| RF005 | RN05 | `/usuarios/login`<br>`/usuarios/logout`<br>`/capataz/acesso/{token}` | POST<br>POST<br>GET |
 | RF006 | RN06 | `/validacoes/permissao`<br>`/validacoes/movimentacoes/{id}/validar`<br>`/validacoes/tarefas/{id}/aprovar`<br>`/validacoes/tickets/{id}/aprovar` | POST<br>PATCH<br>PATCH<br>PATCH |
-| RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
+| RF007 | RN07 | `/relatorios/movimentacoes/dados`<br>`/relatorios/tarefas/dados`<br>`/relatorios/tickets/dados`<br>`/relatorios/movimentacoes`<br>`/relatorios/semanal`<br>`/relatorios/mensal`<br>`/relatorios/exportar`<br>`/sincronizacao/relatorios/movimentacoes`<br>`/sincronizacao/relatorios/tarefas` | GET |
 | RF008 | RN08 | `/tickets`<br>`/tickets/pendentes`<br>`/tickets/status`<br>`/tickets/categoria`<br>`/tickets/{id}`<br>`/tickets/{id}/status`<br>`/tickets/{id}/atribuicao`<br>`/validacoes/tickets/{id}/aprovar` | POST/GET<br>GET<br>GET<br>GET<br>GET<br>PATCH<br>PATCH<br>PATCH |
 | RF009 | RN09 | `/movimentacoes/filtrar`<br>`/movimentacoes`<br>`/movimentacoes/pendentes` | GET |
 | RF010 | RN10 | `/movimentacoes/dashboard`<br>`/movimentacoes/contagem/tipo`<br>`/tarefas/dashboard`<br>`/tarefas/contagem/status`<br>`/sincronizacao/dashboard/tickets`<br>`/tickets/contagem/prioridade` | GET |
@@ -1051,7 +1036,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;Três grupos de endpoints fogem desse padrão de criação simples. O grupo `/sincronizacao` (RF003) consulta conexão, processa dados pendentes e informa o estado da sincronização, atendendo à RN03 e ao eixo de Confiabilidade dos requisitos não funcionais. O grupo `/validacoes` (RF006) usa middlewares de autenticação e autorização por cargo, restringindo as ações ao perfil Supervisor conforme RN06. Já o grupo `/relatorios` (RF007) é protegido pelos mesmos mecanismos de autenticação, permitindo acesso a Gerente e Supervisor, e filtra a resposta para conter apenas dados sincronizados e válidos para consolidação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O endpoint `/usuarios/login` (RF005) representa um caso à parte: embora não persista uma entidade de domínio, valida a identificação do usuário e emite o token utilizado pelos middlewares de autenticação das rotas protegidas.
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints `/usuarios/login`, `/usuarios/logout` e `/capataz/acesso/{token}` (RF005) representam casos à parte: embora não persistam uma entidade de domínio, validam a identificação do usuário, emitem ou encerram a sessão autenticada e sustentam o acesso às rotas protegidas.
 
 ## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
 
@@ -1156,7 +1141,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 - **E1** (no passo 6): se a foto anexada não possuir metadados de georreferenciamento válidos, o sistema rejeita o anexo, exibe mensagem clara e visual ao Capataz solicitando nova foto e mantém os demais campos preenchidos (RN04).
 - **E2** (no passo 7): se algum campo obrigatório (origem, destino, quantidade, estágio da vida ou causa do óbito quando aplicável) estiver em branco, o sistema bloqueia o envio, destaca visualmente os campos faltantes com linguagem simples e exibe mensagem de erro de validação (RN01).
-- **E3** (no passo 8): se houver falha no armazenamento local, o sistema exibe alerta claro ao Capataz, mantém os dados preenchidos em memória e solicita nova tentativa.
+- **E3** (no passo 8): se houver falha no armazenamento local, o sistema exibe mensagem clara ao Capataz, mantém os dados preenchidos em memória e solicita nova tentativa.
 
 **Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
 
@@ -1169,7 +1154,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 |---|---|
 | **UC-ID + Nome** | UC-02 — Sincronizar Dados Offline com o Servidor |
 | **Ator primário** | Sistema (disparado automaticamente por evento de conexão) |
-| **Atores secundários** | Servidor de Sincronização; Capataz e Supervisor (notificados do resultado) |
+| **Atores secundários** | Servidor de Sincronização; Capataz e Supervisor (informados pelo status do resultado) |
 | **RFs relacionados** | RF003 |
 | **RNs relacionadas** | RN03 |
 | **RNFs relacionados** | CONF, DES |
@@ -1190,17 +1175,17 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 4. O sistema envia cada registro ao endpoint correspondente no servidor.
 5. O servidor processa cada registro, persiste no banco central e retorna confirmação de recebimento.
 6. O sistema marca cada registro local como "sincronizado" após confirmação do servidor.
-7. O sistema exibe ao Capataz uma notificação não intrusiva indicando o número de registros sincronizados com sucesso.
+7. O sistema exibe ao Capataz uma mensagem não intrusiva indicando o número de registros sincronizados com sucesso.
 
 **Fluxos Alternativos:**
 
 - **A1** (no passo 3): se houver muitos registros pendentes, o sistema processa a fila em lotes para evitar sobrecarga na conexão Starlink (DES — p95 < 3000ms), mantendo a ordem cronológica.
-- **A2** (no passo 7): se a sincronização ocorre em segundo plano sem o aplicativo aberto, o sistema apenas atualiza os indicadores visuais sem notificação explícita.
+- **A2** (no passo 7): se a sincronização ocorre em segundo plano sem o aplicativo aberto, o sistema apenas atualiza os indicadores visuais sem mensagem explícita.
 
 **Exceções:**
 
 - **E1** (no passo 2): se o status HTTP retornado não for válido (timeout, 5xx, sem resposta), o sistema mantém o modo offline ativo, não dispara a sincronização e tenta novamente após intervalo de espera (RN03).
-- **E2** (no passo 5): se o servidor rejeita um registro específico por erro de validação, o sistema mantém esse registro como "pendente com erro", exibe alerta detalhado ao Capataz e prossegue com os demais registros da fila.
+- **E2** (no passo 5): se o servidor rejeita um registro específico por erro de validação, o sistema mantém esse registro como "pendente com erro", exibe mensagem detalhada ao Capataz e prossegue com os demais registros da fila.
 - **E3** (no passo 5): se a conexão cai durante o envio, o sistema interrompe a sincronização, mantém os registros não confirmados como "pendentes" e retoma do ponto de parada quando a conexão for restabelecida.
 
 **Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
@@ -1238,7 +1223,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 6. O Supervisor confirma a criação.
 7. O sistema valida o preenchimento simultâneo de todos os campos obrigatórios.
 8. O sistema persiste a tarefa no servidor (ou local, se offline) e a vincula ao Capataz selecionado.
-9. O sistema notifica o Capataz atribuído sobre a nova tarefa.
+9. O sistema disponibiliza a nova tarefa para o Capataz atribuído.
 10. O sistema exibe confirmação ao Supervisor e retorna à listagem de tarefas com a nova tarefa visível.
 
 **Fluxos Alternativos:**
@@ -1250,7 +1235,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 - **E1** (no passo 7): se algum dos campos obrigatórios (usuário atribuído, descrição, prioridade ou categoria) estiver em branco, o sistema bloqueia a criação, retorna erro de validação e destaca os campos faltantes (RN02).
 - **E2** (no passo 8): se houver falha de persistência no servidor e o dispositivo estiver online, o sistema salva a tarefa localmente e a marca como pendente de sincronização (UC-02).
-- **E3** (no passo 9): se o Capataz atribuído estiver offline no momento da criação, a notificação fica pendente e é entregue assim que o dispositivo dele restabelecer conexão.
+- **E3** (no passo 9): se o Capataz atribuído estiver offline no momento da criação, a tarefa fica disponível quando o dispositivo dele restabelecer conexão.
 
 **Pós-condição:** A tarefa está registrada no sistema, vinculada ao Capataz Daniel, com status inicial "pendente" e disponível tanto na visão do Supervisor quanto na do Capataz. O Capataz Daniel recebe a tarefa e a executa no campo. Ao concluir, a tarefa entra no fluxo de validação pelo Supervisor Luiz (UC-04).
 
@@ -1264,7 +1249,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 |---|---|
 | **UC-ID + Nome** | UC-04 — Validar Registros do Capataz |
 | **Ator primário** | Supervisor (Luiz) |
-| **Atores secundários** | Capataz Daniel (autor do registro, notificado); Gerente Marcos (recebe dados conferidos) |
+| **Atores secundários** | Capataz Daniel (autor do registro); Gerente Marcos (recebe dados conferidos) |
 | **RFs relacionados** | RF006 |
 | **RNs relacionadas** | RN06 |
 | **RNFs relacionados** | SEG, USAB |
@@ -1287,7 +1272,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 6. O Supervisor seleciona a ação "Validar".
 7. O sistema altera o status da movimentação para "Validado", grava o identificador do Supervisor validador e o timestamp da ação.
 8. O sistema envia os dados conferidos para a camada de consolidação visível ao Gerente Marcos (UC-06).
-9. O sistema notifica o Capataz Daniel sobre a validação.
+9. O sistema atualiza o status visível ao Capataz Daniel sobre a validação.
 10. O sistema retorna o Supervisor ao painel com o registro removido da lista de pendências.
 
 **Fluxos Alternativos:**
@@ -1313,7 +1298,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 |---|---|
 | **UC-ID + Nome** | UC-05 — Abrir Ticket de Infraestrutura |
 | **Ator primário** | Capataz (Daniel) |
-| **Atores secundários** | Supervisor Luiz (notificado, pode atribuir); Equipe de Infraestrutura |
+| **Atores secundários** | Supervisor Luiz (acompanha e pode atribuir); Equipe de Infraestrutura |
 | **RFs relacionados** | RF008, RF004 |
 | **RNs relacionadas** | RN08 |
 | **RNFs relacionados** | SUP, USAB |
@@ -1336,7 +1321,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 6. O Capataz confirma a abertura do ticket.
 7. O sistema valida a presença obrigatória de pelo menos uma evidência descritiva.
 8. O sistema persiste o ticket (no servidor ou localmente, se offline) com status "pendente" e identificador único.
-9. O sistema notifica o Supervisor Luiz (que pode atribuir o chamado) e a equipe de Infraestrutura sobre o novo chamado.
+9. O sistema disponibiliza o novo chamado para o Supervisor Luiz (que pode atribuir o atendimento) e para a equipe de Infraestrutura.
 10. O sistema exibe ao Capataz a confirmação com o número do ticket gerado.
 
 **Fluxos Alternativos:**
@@ -1349,7 +1334,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 - **E1** (no passo 7): se o Capataz tentar enviar o ticket sem nenhuma evidência descritiva (mensagem ou áudio), o sistema bloqueia o envio e exibe mensagem clara e visual solicitando o cumprimento da obrigação (RN08).
 - **E2** (no passo 8): se houver falha de persistência mesmo com armazenamento local disponível, o sistema mantém os dados em memória e oferece nova tentativa.
 
-**Pós-condição:** O ticket de infraestrutura está registrado com identificador único, evidência(s) anexada(s), categoria, localização e Capataz autor Daniel. O Supervisor Luiz é notificado e pode atribuir o chamado. A equipe de Infraestrutura pode iniciar o atendimento remotamente (SUP — 100% das correções sem deslocamento a campo).
+**Pós-condição:** O ticket de infraestrutura está registrado com identificador único, evidência(s) anexada(s), categoria, localização e Capataz autor Daniel. O Supervisor Luiz pode acompanhar e atribuir o chamado. A equipe de Infraestrutura pode iniciar o atendimento remotamente (SUP — 100% das correções sem deslocamento a campo).
 
 ---
 
@@ -1532,7 +1517,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 |---|---|
 | **UC-ID + Nome** | UC-10 — Solicitar Correção de Registro |
 | **Ator primário** | Supervisor (Luiz) |
-| **Atores secundários** | Capataz Daniel (notificado da solicitação) |
+| **Atores secundários** | Capataz Daniel (responsável pela correção solicitada) |
 | **RFs relacionados** | RF006 |
 | **RNs relacionadas** | RN06|
 | **RNFs relacionados** | SEG |
@@ -1551,14 +1536,14 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 3. O Supervisor preenche a observação explicando a inconsistência encontrada.
 4. O Supervisor confirma a solicitação.
 5. O sistema mantém o registro como pendente e envia a observação ao Capataz responsável.
-6. O sistema notifica o Capataz Daniel sobre a solicitação, exibindo a observação.
+6. O sistema torna a solicitação visível ao Capataz Daniel, exibindo a observação.
 7. O sistema retorna o Supervisor ao painel de validações (UC-04).
 
 **Exceções:**
 
 - **E1** (no passo 4): se a observação está em branco, o sistema bloqueia a confirmação e exige preenchimento.
 
-**Pós-condição:** O registro permanece pendente com observação visível. O Capataz Daniel é notificado e pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
+**Pós-condição:** O registro permanece pendente com observação visível. O Capataz Daniel pode corrigir o registro e ressubmetê-lo, reiniciando o ciclo (UC-01 → UC-02 → UC-04). 
 Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
 
 
@@ -2111,7 +2096,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. A implementação de armazenamento local e operação offline foi mantida como evolução futura do projeto.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. O fluxo do Capataz inclui armazenamento local no navegador para apoiar a operação em campo sob conectividade intermitente.
 
 
 ### Explicação do diagrama:
@@ -2204,11 +2189,11 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construída visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para atender futuramente à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada para receber armazenamento local e sincronização automática. Esses recursos ainda não integram a versão atual, que depende de conexão com o servidor para persistir os registros.
+&nbsp;&nbsp;&nbsp;&nbsp;Para atender à US01, relacionada ao funcionamento offline da plataforma, a interface do Capataz foi preparada com armazenamento local e sincronização posterior. Esses recursos permitem registrar informações em campo mesmo diante de instabilidade temporária de conexão.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dentro da seção de operações de campo, foi desenvolvida a funcionalidade de movimentação do rebanho que foi implementada para atender à US02, permitindo que os capatazes realizem registros digitais das movimentações bovinas, substituindo o uso de boletas em papel. Para isso, foram desenvolvidos formulários simplificados e adaptados ao uso em campo, priorizando rapidez no preenchimento e facilidade de utilização. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Já a funcionalidade de abertura de chamados foi desenvolvida para atender à US07, permitindo que os capatazes reportem problemas de infraestrutura identificados nos retiros. Nessa interface, o usuário pode selecionar a categoria do problema, descrever a ocorrência e registrar o chamado diretamente pelo dispositivo móvel. Complementando essa funcionalidade, foi implementado o envio de imagens como evidência, atendendo à US12, possibilitando o anexo de fotografias aos chamados e aumentando a confiabilidade das informações registradas.
+&nbsp;&nbsp;&nbsp;&nbsp;Já a funcionalidade de abertura de chamados foi desenvolvida para atender à US06, permitindo que os capatazes reportem problemas de infraestrutura identificados nos retiros. Nessa interface, o usuário pode selecionar a categoria do problema, descrever a ocorrência e registrar o chamado diretamente pelo dispositivo móvel. Complementando essa funcionalidade, foi implementado o envio de imagens como evidência, atendendo à US11, possibilitando o anexo de fotografias aos chamados e aumentando a confiabilidade das informações registradas.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Por fim, a funcionalidade “Minhas tarefas” foi desenvolvida para atender à US03, permitindo que os capatazes visualizem as atividades atribuídas pelos supervisores, incluindo descrições e níveis de prioridade. Dessa forma, a interface contribui para uma melhor organização das atividades operacionais realizadas diariamente na fazenda.
 
@@ -2260,15 +2245,13 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar as funcionalidades mais utilizadas pelos supervisores no dia a dia operacional. A interface apresenta atalhos rápidos para relatórios, registros pendentes, alertas e delegação de tarefas, permitindo acesso direto às principais operações do sistema de forma simplificada e organizada.
-
-&nbsp;&nbsp;&nbsp;&nbsp;Para atender à US05, relacionada ao recebimento de alertas operacionais, foi desenvolvida a funcionalidade de visualização de alertas, permitindo que o supervisor acompanhe notificações relacionadas a problemas identificados nos retiros. Dessa forma, o sistema possibilita respostas mais rápidas às ocorrências registradas durante as operações da fazenda.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar as funcionalidades mais utilizadas pelos supervisores no dia a dia operacional. A interface apresenta atalhos rápidos para relatórios, registros pendentes e delegação de tarefas, permitindo acesso direto às principais operações do sistema de forma simplificada e organizada.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Visando atender à US04, foi implementada a funcionalidade de registros pendentes, permitindo que o supervisor visualize informações enviadas pelos capatazes para posterior análise e validação. Por meio dessa interface, os registros podem ser acompanhados de forma centralizada, contribuindo para maior confiabilidade e controle das informações operacionais armazenadas no sistema.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas foi desenvolvida para atender à US03, permitindo que os supervisores distribuam atividades operacionais aos capatazes de maneira estruturada. Nessa tela, o supervisor consegue definir período, capataz responsável, atividade solicitada e nível de prioridade da tarefa, facilitando a organização das demandas operacionais realizadas nos retiros.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Além disso, foi implementada a funcionalidade de geração de relatórios operacionais, relacionada à US09. A interface permite a utilização de filtros por período, retiro e tipo de relatório, além da visualização prévia das informações antes da exportação da planilha. Dessa forma, o sistema auxilia o supervisor no acompanhamento e análise das operações realizadas na fazenda, permitindo acesso mais organizado aos dados operacionais.
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, foi implementada a funcionalidade de geração de relatórios operacionais, relacionada à US08. A interface permite a utilização de filtros por período, retiro e tipo de relatório, além da visualização prévia das informações antes da exportação da planilha. Dessa forma, o sistema auxilia o supervisor no acompanhamento e análise das operações realizadas na fazenda, permitindo acesso mais organizado aos dados operacionais.
 
 &nbsp;&nbsp;&nbsp;&nbsp;As principais seções da interface mobile do supervisor são Dashboard, Relatórios, Registros Pendentes, Alertas e Delegação de Tarefas, cujos wireframes são apresentados a seguir:
 
@@ -2301,7 +2284,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Versão Desktop:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05, US06 e US09, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
+&nbsp;&nbsp;&nbsp;&nbsp;Já na versão desktop, a interface foi estruturada com áreas de visualização ampliadas, menus laterais e listagens organizadas, proporcionando maior controle administrativo e melhor acompanhamento das operações da fazenda. Nessa versão, foram mantidas as mesmas funcionalidades presentes na interface mobile, atendendo às US03, US04, US05 e US08, porém com uma organização voltada à visualização simultânea de informações e ao gerenciamento centralizado das operações realizadas nos retiros. 
 
 <div align="center">
 <p align="center">Figura 30 - Wireframe Versão Desktop do Supervisor</p>
@@ -2346,11 +2329,11 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Versão Mobile:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar indicadores gerais da fazenda, permitindo que o gerente acompanhe informações relacionadas ao rebanho, tickets aprovados, tarefas aprovadas e movimentações realizadas na operação. Essa funcionalidade foi implementada para atender à US08, relacionada à visualização de dashboards com indicadores operacionais da fazenda, permitindo uma visão mais estratégica e consolidada das atividades realizadas nos retiros.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão mobile, o dashboard principal foi desenvolvido para centralizar indicadores gerais da fazenda, permitindo que o gerente acompanhe informações relacionadas ao rebanho, tickets aprovados, tarefas aprovadas e movimentações realizadas na operação. Essa funcionalidade foi implementada para atender à US07, relacionada à visualização de dashboards com indicadores operacionais da fazenda, permitindo uma visão mais estratégica e consolidada das atividades realizadas nos retiros.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Além disso, a interface apresenta acesso rápido aos relatórios operacionais e à visualização de ocorrências recentes da fazenda, facilitando o acompanhamento das principais atividades registradas no sistema.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios foram desenvolvidas para atender à US11, permitindo a aplicação de filtros por período, retiro e tipo de relatório. Dessa forma, o gerente consegue analisar informações específicas de cada unidade da fazenda de maneira mais organizada e detalhada. Além disso, a interface disponibiliza uma prévia visual das informações antes da exportação em planilha, auxiliando no acompanhamento consolidado das operações pecuárias e apoiando a tomada de decisão de forma centralizada.
+&nbsp;&nbsp;&nbsp;&nbsp;As telas de relatórios foram desenvolvidas para atender à US10, permitindo a aplicação de filtros por período, retiro e tipo de relatório. Dessa forma, o gerente consegue analisar informações específicas de cada unidade da fazenda de maneira mais organizada e detalhada. Além disso, a interface disponibiliza uma prévia visual das informações antes da exportação em planilha, auxiliando no acompanhamento consolidado das operações pecuárias e apoiando a tomada de decisão de forma centralizada.
 
 <div align="center">
 <p align="center">Figura 34 - Wireframe Versão Mobile do Gerente</p>
@@ -2371,7 +2354,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, indicadores estratégicos e informações consolidadas da fazenda. Nessa versão, foram mantidas as funcionalidades relacionadas às US08 e US11, possibilitando ao gerente visualizar dashboards gerenciais, acompanhar ocorrências recentes e analisar dados operacionais utilizando filtros por período e retiro de forma centralizada e mais detalhada.
+&nbsp;&nbsp;&nbsp;&nbsp;Na versão desktop, as interfaces foram organizadas utilizando menus laterais, tabelas e áreas ampliadas de visualização, permitindo melhor acompanhamento dos relatórios operacionais, indicadores estratégicos e informações consolidadas da fazenda. Nessa versão, foram mantidas as funcionalidades relacionadas às US07 e US10, possibilitando ao gerente visualizar dashboards gerenciais, acompanhar ocorrências recentes e analisar dados operacionais utilizando filtros por período e retiro de forma centralizada e mais detalhada.
 
 <div align="center">
 <p align="center">Figura 36 - Wireframe da aba "Login" Versão Desktop do Gerente</p>
@@ -2446,9 +2429,9 @@ As cores secundárias atuam como elementos de apoio visual, auxiliando na organi
 
 **Feedbacks e estados do sistema:**
 
-As cores semânticas são utilizadas para representar alertas, prioridades e feedbacks operacionais dentro do sistema.
+As cores semânticas são utilizadas para representar prioridades, estados críticos e feedbacks operacionais dentro do sistema.
 
-- Prioridade alta e alertas (HEX #FF3B30): utilizado em situações críticas e alertas importantes devido ao seu forte destaque visual e rápida associação com urgência.
+- Prioridade alta e estados críticos (HEX #FF3B30): utilizado em situações críticas devido ao seu forte destaque visual e rápida associação com urgência.
 
 - Prioridade média (HEX #D99A00): representa estados intermediários de atenção e pendências operacionais, auxiliando na identificação de tarefas que exigem acompanhamento.
 
@@ -2494,9 +2477,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### Introdução
 
-&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade representa a evolução das estruturas definidas nos wireframes da Seção 3.3, incorporando os elementos visuais estabelecidos no guia de estilos da Seção 3.4, como paleta de cores, tipografia e iconografia, e transformando-os em interfaces interativas e próximas do produto final. Diferentemente dos wireframes, que focam na organização e no fluxo das telas, o protótipo de alta fidelidade permite avaliar a experiência real de uso, validando tanto a coerência visual quanto a usabilidade da aplicação antes do desenvolvimento.
+&nbsp;&nbsp;&nbsp;&nbsp;O protótipo de alta fidelidade representa a evolução das estruturas definidas nos wireframes da [Seção 3.3](#c3.3), incorporando os elementos visuais estabelecidos no guia de estilos da [Seção 3.4](#c3.4), como paleta de cores, tipografia e iconografia, e transformando-os em interfaces interativas e próximas do produto final. Diferentemente dos wireframes, que focam na organização e no fluxo das telas, o protótipo de alta fidelidade permite avaliar a experiência real de uso, validando tanto a coerência visual quanto a usabilidade da aplicação antes do desenvolvimento.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As interfaces foram desenvolvidas considerando os três perfis de usuários do sistema: Capataz, Supervisor e Gerente, cada um com suas necessidades, contextos de uso e níveis de letramento digital, conforme detalhado nas personas da Seção 2.2. Dado que o Capataz opera exclusivamente em campo e por dispositivos móveis, foi desenvolvido apenas o protótipo mobile para esse perfil. Já para o Supervisor e o Gerente, que podem acessar o sistema tanto no campo quanto em ambientes administrativos, foram desenvolvidas versões mobile e desktop, totalizando cinco protótipos.
+&nbsp;&nbsp;&nbsp;&nbsp;As interfaces foram desenvolvidas considerando os três perfis de usuários do sistema: Capataz, Supervisor e Gerente, cada um com suas necessidades, contextos de uso e níveis de letramento digital, conforme detalhado nas personas da [Seção 2.2](#c2.2). Dado que o Capataz opera exclusivamente em campo e por dispositivos móveis, foi desenvolvido apenas o protótipo mobile para esse perfil. Já para o Supervisor e o Gerente, que podem acessar o sistema tanto no campo quanto em ambientes administrativos, foram desenvolvidas versões mobile e desktop, totalizando cinco protótipos.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Um princípio central ao longo do desenvolvimento foi a responsividade: as interfaces mobile e desktop de cada perfil foram projetadas para oferecer a mesma completude funcional, adaptando o layout, a navegação e a disposição dos elementos conforme o tamanho do dispositivo, sem perda de funcionalidades ou de clareza visual. O protótipo completo pode ser acessado neste [projeto do Figma](https://www.figma.com/design/vrq7u1pMmPSpTdAUUYwxrV/Prot%C3%B3tipo-de-Alta-Fidelidade---BrPec?node-id=169-2&t=CAAp7jVTqMpLjLoy-1).
 
@@ -2514,9 +2497,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;A tela de login foi projetada com apenas um botão de entrar, visto que os capatazes acessarão seus perfis através de um QR code, reduzindo ao máximo as etapas necessárias para que o capataz acesse o sistema. Após a autenticação, o usuário é direcionado à tela inicial, que apresenta de forma centralizada os principais atalhos da aplicação: registrar movimentações, abrir ticket e minhas tarefas. Essa organização minimiza a necessidade de navegação entre menus, permitindo que o capataz alcance qualquer funcionalidade em poucos toques.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de registro de movimentações foi desenvolvida para atender à US02, substituindo o uso de boletas em papel pelo preenchimento de um formulário digital simplificado. Os campos foram organizados de forma sequencial e objetiva, com uso de dropdowns para tipo de movimentação, origem, destino, quantidade e estágio de vida do animal, minimizando a necessidade de digitação. O armazenamento local e a sincronização automática previstos na US01 ainda serão implementados; atualmente, o envio depende de conexão com o servidor.
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de registro de movimentações foi desenvolvida para atender à US02, substituindo o uso de boletas em papel pelo preenchimento de um formulário digital simplificado. Os campos foram organizados de forma sequencial e objetiva, com uso de dropdowns para tipo de movimentação, origem, destino, quantidade e estágio de vida do animal, minimizando a necessidade de digitação. Quando não há conexão, o fluxo do Capataz mantém o registro em armazenamento local para envio posterior.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A seção de abertura de tickets atende à US07 e permite que o capataz reporte problemas de infraestrutura identificados no retiro diretamente pelo celular, como cercas danificadas, falta de água ou equipamentos avariados. O formulário exige o anexo de ao menos uma evidência descritiva, conforme a RN08. Complementando essa funcionalidade, o sistema permite o envio de fotos georreferenciadas como evidência adicional, cumprindo à US12, aumentando a rastreabilidade e a confiabilidade das informações registradas.
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de abertura de tickets atende à US06 e permite que o capataz reporte problemas de infraestrutura identificados no retiro diretamente pelo celular, como cercas danificadas, falta de água ou equipamentos avariados. O formulário exige o anexo de ao menos uma evidência descritiva, conforme a RN08. Complementando essa funcionalidade, o sistema permite o envio de fotos georreferenciadas como evidência adicional, cumprindo à US11, aumentando a rastreabilidade e a confiabilidade das informações registradas.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Por fim, a seção "Minhas Tarefas" atende à US03 e centraliza as atividades atribuídas pelo supervisor ao capataz, exibindo descrição e prioridade de forma clara e hierarquizada. O uso de cores de feedbacks e estados do sistema, definidas no guia de estilos, têm como objetivo sinalizar os níveis de prioridade, contribuindo para que o capataz identifique rapidamente as demandas mais urgentes sem depender de leitura extensiva.
 
@@ -2534,15 +2517,13 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;A tela de login segue o mesmo padrão de objetividade adotado para os demais perfis, com campos reduzidos e acesso direto ao sistema. Após a autenticação, o Supervisor é direcionado ao dashboard principal, que centraliza os principais atalhos da aplicação, sendo eles relatórios, registros pendentes, alertas e delegação de tarefas. Isso permite o acesso rápido às operações mais frequentes sem a necessidade de navegação por menus profundos. A navegação entre seções é realizada por meio de uma barra inferior fixa, padrão consolidado em aplicações mobile que reduz o esforço de navegação e mantém o contexto do usuário durante o uso.
+&nbsp;&nbsp;&nbsp;&nbsp;A tela de login segue o mesmo padrão de objetividade adotado para os demais perfis, com campos reduzidos e acesso direto ao sistema. Após a autenticação, o Supervisor é direcionado ao dashboard principal, que centraliza os principais atalhos da aplicação, sendo eles relatórios, registros pendentes e delegação de tarefas. Isso permite o acesso rápido às operações mais frequentes sem a necessidade de navegação por menus profundos. A navegação entre seções é realizada por meio de uma barra inferior fixa, padrão consolidado em aplicações mobile que reduz o esforço de navegação e mantém o contexto do usuário durante o uso.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de validação de registros, desenvolvida para atender à US04, permite que o Supervisor visualize de forma centralizada as movimentações submetidas pelos capatazes que aguardam análise. Para cada registro, o Supervisor tem a possibilidade de aprovar a entrada, conforme a RN06. Esse fluxo garante maior confiabilidade dos dados operacionais que alimentam os relatórios e dashboards do Gerente, assegurando rastreabilidade sobre quem registrou e quem validou cada informação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A seção de alertas foi desenvolvida em atendimento à US05 e exibe notificações relacionadas a problemas identificados nos retiros, permitindo que o Supervisor tome ciência de ocorrências relevantes e seja redirecionado diretamente ao detalhe correspondente ao interagir com o alerta. Essa funcionalidade contribui para respostas mais rápidas a situações que demandam ação imediata no campo.
-
 &nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas atende à US03 e permite que o Supervisor crie e atribua atividades operacionais aos capatazes de forma estruturada, definindo capataz responsável, categoria da tarefa, prioridade, data e descrição. O uso de cores de feedback e estado do sistema para os níveis de prioridade, que foram definidas no guia de estilos facilitam a identificação visual das demandas mais urgentes tanto para o Supervisor ao criar quanto para o Capataz ao receber as tarefas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a visualização de relatórios operacionais pelo Supervisor está relacionada à US09 e foi implementada com filtros por período, retiro e tipo de relatório, além de uma prévia visual das informações antes da exportação final. Essa funcionalidade permite ao Supervisor analisar os dados das operações de forma organizada diretamente pelo dispositivo móvel, mesmo quando não está no ambiente administrativo, integrando o fluxo cujos dados finais consolidados dão suporte ao Gerente.
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a visualização de relatórios operacionais pelo Supervisor está relacionada à US08 e foi implementada com filtros por período, retiro e tipo de relatório, além de uma prévia visual das informações antes da exportação final. Essa funcionalidade permite ao Supervisor analisar os dados das operações de forma organizada diretamente pelo dispositivo móvel, mesmo quando não está no ambiente administrativo, integrando o fluxo cujos dados finais consolidados dão suporte ao Gerente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Supervisor entrega uma interface operacional completa, adaptada às condições de uso em campo e alinhada ao perfil analítico da persona Luiz Felipe, garantindo controle, rastreabilidade e agilidade na gestão das operações realizadas nos retiros da BrPec.
 
@@ -2560,13 +2541,13 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;A principal diferença estrutural em relação à versão mobile está na navegação: enquanto no mobile a navegação é feita por uma barra inferior fixa, na versão desktop ela é substituída por um menu lateral persistente, que exibe as seções do sistema de forma sempre visível e acessível. Essa mudança é consistente com padrões consolidados de interfaces desktop e permite que o Supervisor alterne entre módulos sem perder o contexto da tela em uso, além de liberar a área central da interface para exibição de mais conteúdo.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal foi reorganizado para aproveitar a largura da tela, exibindo cards de resumo operacional lado a lado, como registros pendentes, alertas ativos, tarefas delegadas e indicadores de retiro. Isso proporciona uma visão consolidada do estado das operações sem a necessidade de rolagem. Essa organização atende diretamente ao perfil analítico da persona Luiz Felipe, que busca maior visibilidade das operações e controle das múltiplas frentes sob sua responsabilidade.
+&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal foi reorganizado para aproveitar a largura da tela, exibindo cards de resumo operacional lado a lado, como registros pendentes, tarefas delegadas e indicadores de retiro. Isso proporciona uma visão consolidada do estado das operações sem a necessidade de rolagem. Essa organização atende diretamente ao perfil analítico da persona Luiz Felipe, que busca maior visibilidade das operações e controle das múltiplas frentes sob sua responsabilidade.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de validação de registros, atendendo à US04, ganha densidade na versão desktop por meio de listagens tabelares que permitem visualizar, filtrar e ordenar múltiplos registros simultaneamente. Cada linha da tabela apresenta as informações essenciais da movimentação, dentre elas capataz, data, tipo, quantidade e status. Ao clicar em um registro o Supervisor acessa o detalhe completo em um painel lateral, sem sair da listagem. Esse padrão reduz o número de navegações necessárias para processar um lote de validações, aumentando a eficiência do fluxo operacional.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A delegação de tarefas, relacionada à US03, o gerenciamento de alertas operacionais, atendendo à US05, e a monitoração de chamados de infraestrutura, conforme a US06, seguem a mesma lógica de aproveitamento do espaço disponível: formulários com campos expandidos, pré-visualizações inline e listagens com mais colunas visíveis. Da mesma forma, a geração de relatórios operacionais, referente à US09, apresenta os filtros de período, retiro e tipo de relatório dispostos horizontalmente, com a prévia dos dados ocupando a maior parte da tela antes da exportação.
+&nbsp;&nbsp;&nbsp;&nbsp;A delegação de tarefas, relacionada à US03, e a monitoração de chamados de infraestrutura, conforme a US05, seguem a mesma lógica de aproveitamento do espaço disponível: formulários com campos expandidos, pré-visualizações inline e listagens com mais colunas visíveis. Da mesma forma, a geração de relatórios operacionais, referente à US08, apresenta os filtros de período, retiro e tipo de relatório dispostos horizontalmente, com a prévia dos dados ocupando a maior parte da tela antes da exportação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Supervisor garante paridade funcional completa com a versão mobile, cobrindo as US03, US04, US05, US06 e US09, ao mesmo tempo em que adapta a organização visual e os padrões de interação ao contexto de uso em tela ampla, entregando uma experiência mais eficiente para as atividades administrativas e de planejamento realizadas fora do campo.
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Supervisor garante paridade funcional completa com a versão mobile, cobrindo as US03, US04, US05 e US08, ao mesmo tempo em que adapta a organização visual e os padrões de interação ao contexto de uso em tela ampla, entregando uma experiência mais eficiente para as atividades administrativas e de planejamento realizadas fora do campo.
 
 ### Gerente - Mobile
 
@@ -2580,15 +2561,15 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Após o login, o Gerente é direcionado ao dashboard principal, desenvolvido para atender à US08. A tela centraliza os indicadores-chave da operação, total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com um totalizador geral. Conforme a RN10, apenas dados com status aprovado e flag sincronizado igual a verdadeiro são contabilizados nesses indicadores, garantindo que Marcos tenha uma visão consolidada e confiável da operação, sem ruídos gerados por registros ainda pendentes de validação. O dashboard também exibe a data e hora da última atualização, permitindo ao Gerente avaliar a recência das informações apresentadas.
+&nbsp;&nbsp;&nbsp;&nbsp;Após o login, o Gerente é direcionado ao dashboard principal, desenvolvido para atender à US07. A tela centraliza os indicadores-chave da operação, total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com um totalizador geral. Conforme a RN10, apenas dados com status aprovado e flag sincronizado igual a verdadeiro são contabilizados nesses indicadores, garantindo que Marcos tenha uma visão consolidada e confiável da operação, sem ruídos gerados por registros ainda pendentes de validação. O dashboard também exibe a data e hora da última atualização, permitindo ao Gerente avaliar a recência das informações apresentadas.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de ocorrências recentes complementa o dashboard com uma lista das últimas atividades registradas na fazenda, oferecendo ao Gerente uma visão cronológica do que aconteceu nos retiros sem a necessidade de navegar por múltiplas telas. Esse acesso rápido atende à necessidade da persona de acompanhar o realizado de forma ágil, especialmente em momentos fora do ambiente administrativo.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de relatórios, desenvolvida em atendimento à US11, permite que o Gerente filtre dados por período, retiro e tipo de relatório, refinando a análise conforme a unidade da fazenda de interesse. Antes de exportar, o sistema apresenta uma prévia visual dos dados filtrados, possibilitando a conferência das informações antes da geração do arquivo em formato de planilha. Conforme a RN07, apenas registros sincronizados e aprovados compõem os relatórios gerados, assegurando consistência e confiabilidade das informações exportadas para uso em análises gerenciais e comunicação com a sede.
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de relatórios, desenvolvida em atendimento à US10, permite que o Gerente filtre dados por período, retiro e tipo de relatório, refinando a análise conforme a unidade da fazenda de interesse. Antes de exportar, o sistema apresenta uma prévia visual dos dados filtrados, possibilitando a conferência das informações antes da geração do arquivo em formato de planilha. Conforme a RN07, apenas registros sincronizados e aprovados compõem os relatórios gerados, assegurando consistência e confiabilidade das informações exportadas para uso em análises gerenciais e comunicação com a sede.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A navegação entre as seções do protótipo mobile do Gerente é realizada por uma barra inferior fixa, mantendo coerência com o padrão adotado na versão mobile do Supervisor e garantindo consistência na experiência de uso entre os perfis da aplicação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Gerente traduz em interface as necessidades estratégicas da persona Marcos Ferreira, entregando indicadores confiáveis, relatórios filtráveis e navegação eficiente, alinhados às US08 e US11 e ao conjunto de regras de negócio que asseguram a integridade dos dados apresentados.
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Gerente traduz em interface as necessidades estratégicas da persona Marcos Ferreira, entregando indicadores confiáveis, relatórios filtráveis e navegação eficiente, alinhados às US07 e US10 e ao conjunto de regras de negócio que asseguram a integridade dos dados apresentados.
 
 ### Gerente - Desktop
 
@@ -2604,28 +2585,28 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;Assim como na versão desktop do Supervisor, a navegação é estruturada por um menu lateral persistente, substituindo a barra inferior da versão mobile. Esse padrão mantém consistência entre os dois perfis na experiência de uso em tela ampla e permite que o Gerente alterne entre o dashboard e os módulos de relatórios sem perder o contexto da tela em uso.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal, desenvolvido para atender à US08, foi reorganizado na versão desktop para exibir os indicadores-chave em cards dispostos lado a lado, nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com totalizador geral. O espaço adicional permite ainda incorporar gráficos de tendência, como a evolução das movimentações ao longo do período selecionado, oferecendo ao Gerente uma camada visual de análise que vai além da simples contagem de registros. Conforme a RN10, todos os indicadores consideram exclusivamente dados com status aprovado e flag sincronizado igual a verdadeiro, garantindo que nenhum registro pendente ou rejeitado distorça a visão consolidada da operação.
+&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal, desenvolvido para atender à US07, foi reorganizado na versão desktop para exibir os indicadores-chave em cards dispostos lado a lado, nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com totalizador geral. O espaço adicional permite ainda incorporar gráficos de tendência, como a evolução das movimentações ao longo do período selecionado, oferecendo ao Gerente uma camada visual de análise que vai além da simples contagem de registros. Conforme a RN10, todos os indicadores consideram exclusivamente dados com status aprovado e flag sincronizado igual a verdadeiro, garantindo que nenhum registro pendente ou rejeitado distorça a visão consolidada da operação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O módulo de relatórios, atendendo à US11, ganha expressiva densidade na versão desktop. Os filtros de período, retiro e tipo de relatório são exibidos horizontalmente em uma barra superior dedicada, e a prévia dos dados ocupa a área central da tela em formato tabular expandido, permitindo ao Gerente inspecionar as informações com mais detalhe antes da exportação. A possibilidade de visualizar múltiplas colunas simultaneamente, algo limitado na versão mobile, facilita a conferência de consistência entre os dados antes da geração do arquivo em formato de planilha, em conformidade com a RN07.
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo de relatórios, atendendo à US10, ganha expressiva densidade na versão desktop. Os filtros de período, retiro e tipo de relatório são exibidos horizontalmente em uma barra superior dedicada, e a prévia dos dados ocupa a área central da tela em formato tabular expandido, permitindo ao Gerente inspecionar as informações com mais detalhe antes da exportação. A possibilidade de visualizar múltiplas colunas simultaneamente, algo limitado na versão mobile, facilita a conferência de consistência entre os dados antes da geração do arquivo em formato de planilha, em conformidade com a RN07.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de ocorrências recentes, que na versão mobile é exibida como lista rolável, é apresentada no desktop como um painel lateral fixo ao lado do dashboard, permitindo que Marcos acompanhe as últimas atividades registradas nos retiros enquanto navega pelos indicadores, sem a necessidade de alternar entre telas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Gerente garante paridade funcional completa com a versão mobile, cobrindo as US08 e US11, e aprofunda a experiência de uso no ambiente administrativo, entregando indicadores visuais mais ricos, relatórios com pré-visualização densa e navegação eficiente para o perfil estratégico da persona Marcos Ferreira.
+&nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Gerente garante paridade funcional completa com a versão mobile, cobrindo as US07 e US10, e aprofunda a experiência de uso no ambiente administrativo, entregando indicadores visuais mais ricos, relatórios com pré-visualização densa e navegação eficiente para o perfil estratégico da persona Marcos Ferreira.
 
 ---
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos, assegurada pela aplicação do guia de estilos definido na Seção 3.4.
+&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos, assegurada pela aplicação do guia de estilos definido na [Seção 3.4](#c3.4).
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro de movimentações do rebanho, a futura sincronização offline, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
+&nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro de movimentações do rebanho, a sincronização offline, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
 ### Entidades e Atributos
 &nbsp;&nbsp;&nbsp;&nbsp;Foram identificadas dezoito entidades no domínio da BrPec. A entidade EVIDENCIA é generalizada em três subclasses — EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM — implementadas como entidades especializadas que herdam o identificador da entidade pai. Os relacionamentos N:N entre EVIDENCIA e as entidades MOVIMENTACAO, TAREFA e TICKET são resolvidos pelas entidades associativas EVIDENCIA_MOVIMENTACAO, EVIDENCIA_TAREFA e EVIDENCIA_TICKET. Além disso, os dados específicos de movimentação foram separados nas entidades MOVIMENTACAO_COMPRA, MOVIMENTACAO_VENDA, MOVIMENTACAO_TRANSFERENCIA, MOVIMENTACAO_NASCIMENTO e MOVIMENTACAO_MORTE. O controle de sincronização offline é representado pelo atributo sincronizado nas entidades operacionais que passam por sincronização, em conformidade com a RN03 e RN07, eliminando a necessidade de uma entidade de fila separada. A validação de movimentações pelo supervisor é expressa pelos atributos status, validado_por e data_validacao dentro da entidade MOVIMENTACAO, em conformidade com a RN06.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A preparação backend para a sincronização utiliza o atributo `sincronizado` (boolean) nas entidades operacionais aplicáveis. Esse atributo e os endpoints existentes permitem identificar e processar registros pendentes no servidor. O armazenamento local no dispositivo, a detecção de reconexão e o disparo automático da sincronização ainda não foram implementados e permanecem previstos na US01 e na RN03.
+&nbsp;&nbsp;&nbsp;&nbsp;A sincronização utiliza o atributo `sincronizado` (boolean) nas entidades operacionais aplicáveis. Esse atributo e os endpoints existentes permitem identificar e processar registros pendentes no servidor, enquanto o cliente do Capataz mantém registros em armazenamento local e tenta reenviá-los quando a conexão retorna.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O atributo estagio_vida permanece na entidade MOVIMENTACAO por ser comum ao registro do rebanho. Já atributos específicos, como causa_obito, origem, destino e quantidade, são distribuídos nas tabelas especializadas de movimentação conforme o tipo do evento registrado. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
 
@@ -2633,8 +2614,8 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
-| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US08. |
-| RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US06, US07, US11.|
+| USUARIO | Atores do sistema (capataz, supervisor, gerente), diferenciados pelo atributo cargo. Origem: US01, US03, US07. |
+| RETIRO | Subdivisão geográfica e operacional da fazenda. Entidade central do modelo; todas as entidades operacionais referenciam um retiro. Origem: US02, US05, US06, US10.|
 | MOVIMENTACAO | Registro base de eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros), criado pelo capataz. Contém status, validado_por e data_validacao para o fluxo de validação pelo supervisor (US04, RN06), sincronizado para controle de operação offline (US01, RN03), e estagio_vida como atributo comum do rebanho. Origem: US01, US02, US04.|
 | MOVIMENTACAO_COMPRA | Especialização de MOVIMENTACAO para registros de compra, contendo destino e quantidade comprada. Origem: US01, RN01. |
 | MOVIMENTACAO_VENDA | Especialização de MOVIMENTACAO para registros de venda, contendo origem e quantidade vendida. Origem: US01, RN01. |
@@ -2642,15 +2623,15 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | MOVIMENTACAO_NASCIMENTO | Especialização de MOVIMENTACAO para registros de nascimento, contendo origem e quantidade. Origem: US01, RN01. |
 | MOVIMENTACAO_MORTE | Especialização de MOVIMENTACAO para registros de morte, contendo origem e causa do óbito. Origem: US01, RN01. |
 | TAREFA | Atividade criada pelo supervisor e atribuída ao capataz para execução. Origem: US03. |
-| TICKET | Solicitação de manutenção de infraestrutura. O supervisor gerencia o chamado e o atribui a um capataz para execução, conforme RF008. Origem: US06, US07, US10. |
-| EVIDENCIA | Comprovação anexada a movimentações, tarefas ou tickets. Generalizada em três subclasses: EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM. Origem: US07, US12. |
-| EVIDENCIA_FOTO | Especialização de EVIDENCIA com atributos de georreferenciamento (latitude e longitude). Origem: US12. |
-| EVIDENCIA_AUDIO | Especialização de EVIDENCIA que armazena o caminho do arquivo de áudio. Origem: US07, US12. |
-| EVIDENCIA_MENSAGEM | Especialização de EVIDENCIA que armazena conteúdo textual. Origem: US07, US12. |
-| EVIDENCIA_MOVIMENTACAO | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e MOVIMENTACAO. Origem: US01, US12. |
-| EVIDENCIA_TAREFA | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TAREFA. Origem: US03, US12. |
-| EVIDENCIA_TICKET | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TICKET. Origem: US06, US07, US12. |
-| RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados com sincronizado = true compõem o relatório, conforme RN07. Origem: US08, US09, US11. |
+| TICKET | Solicitação de manutenção de infraestrutura. O supervisor gerencia o chamado e o atribui a um capataz para execução, conforme RF008. Origem: US05, US06, US09. |
+| EVIDENCIA | Comprovação anexada a movimentações, tarefas ou tickets. Generalizada em três subclasses: EVIDENCIA_FOTO, EVIDENCIA_AUDIO e EVIDENCIA_MENSAGEM. Origem: US06, US11. |
+| EVIDENCIA_FOTO | Especialização de EVIDENCIA com atributos de georreferenciamento (latitude e longitude). Origem: US11. |
+| EVIDENCIA_AUDIO | Especialização de EVIDENCIA que armazena o caminho do arquivo de áudio. Origem: US06, US11. |
+| EVIDENCIA_MENSAGEM | Especialização de EVIDENCIA que armazena conteúdo textual. Origem: US06, US11. |
+| EVIDENCIA_MOVIMENTACAO | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e MOVIMENTACAO. Origem: US01, US11. |
+| EVIDENCIA_TAREFA | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TAREFA. Origem: US03, US11. |
+| EVIDENCIA_TICKET | Entidade associativa que resolve o relacionamento N:N entre EVIDENCIA e TICKET. Origem: US05, US06, US11. |
+| RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados com sincronizado = true compõem o relatório, conforme RN07. Origem: US07, US08, US10. |
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 <p align="center">Quadro 40 - Atributos das entidades</p>
@@ -2680,7 +2661,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 ### Relacionamentos e Cardinalidades
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela conferência e validação, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US07) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 41 apresenta o conjunto de relacionamentos do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela conferência e validação, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US06) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 41 apresenta o conjunto de relacionamentos do modelo.
 
 
 <p align="center">Quadro 41 - Relacionamentos do modelo conceitual</p>
@@ -2694,25 +2675,25 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 | R5 | CRIA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um supervisor cria zero ou várias tarefas; toda tarefa tem exatamente um criador. Origem: US03, RN02. |
 | R6 | EXECUTA | USUARIO ↔ TAREFA | (0,N) : (1,1) | Um capataz executa zero ou várias tarefas; toda tarefa é atribuída a exatamente um capataz. Origem: US03, RN02. |
 | R7 | VINCULADA_A | TAREFA ↔ RETIRO | (1,1) : (0,N) | Toda tarefa está vinculada a exatamente um retiro; um retiro pode ter zero ou várias tarefas. Origem: US03. |
-| R8 | ABRE | USUARIO ↔ TICKET | (0,N) : (1,1) | Um capataz abre zero ou vários tickets; todo ticket tem exatamente um capataz autor. Origem: US07, RN08. |
-| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (0,1) : (0,N) | Um ticket pode estar sem usuário atribuído ou pode ser atribuído pelo supervisor a um usuário executor; um usuário pode ter zero ou vários tickets atribuídos. Origem: US06, RF008. |
-| R10 | LOCALIZADO_EM | TICKET ↔ RETIRO | (1,1) : (0,N) | Todo ticket está vinculado a exatamente um retiro; um retiro pode ter zero ou vários tickets. Origem: US06, US07. |
+| R8 | ABRE | USUARIO ↔ TICKET | (0,N) : (1,1) | Um capataz abre zero ou vários tickets; todo ticket tem exatamente um capataz autor. Origem: US06, RN08. |
+| R9 | ATRIBUIDO_A | TICKET ↔ USUARIO | (0,1) : (0,N) | Um ticket pode estar sem usuário atribuído ou pode ser atribuído pelo supervisor a um usuário executor; um usuário pode ter zero ou vários tickets atribuídos. Origem: US05, RF008. |
+| R10 | LOCALIZADO_EM | TICKET ↔ RETIRO | (1,1) : (0,N) | Todo ticket está vinculado a exatamente um retiro; um retiro pode ter zero ou vários tickets. Origem: US05, US06. |
 | R11 | REGISTRADA_POR | EVIDENCIA ↔ USUARIO | (1,1) : (0,N) | Toda evidência é registrada por exatamente um usuário; um usuário pode registrar zero ou várias evidências. Origem: RF004. |
 | R12 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias movimentações. Origem: RF004, US01. |
 | R13 | ANEXA_MOV | EVIDENCIA_MOVIMENTACAO ↔ MOVIMENTACAO | (0,N) : (1,1) | Cada associação referencia exatamente uma movimentação; uma movimentação pode ter zero ou várias evidências vinculadas. Origem: RF004, US01. |
 | R14 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou várias tarefas. Origem: RF004, US03. |
 | R15 | ANEXA_TAR | EVIDENCIA_TAREFA ↔ TAREFA | (0,N) : (1,1) | Cada associação referencia exatamente uma tarefa; uma tarefa pode ter zero ou várias evidências vinculadas. Origem: RF004, US03. |
-| R16 | ANEXA_TKT | EVIDENCIA_TICKET ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou vários tickets. Origem: RF004, US07. |
-| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (0,N) : (1,1) | Um ticket pode possuir zero ou várias evidências associadas na tabela relacional; a obrigatoriedade de evidência descritiva na criação do chamado é validada pela camada de serviço conforme RN08. Origem: US06, US07, RN08. |
-| R18 | GERA | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um usuário gera zero ou vários relatórios; todo relatório tem exatamente um gerador. Origem: US08, US09, RN07. |
-| R19 | ABRANGE | RELATORIO ↔ RETIRO | (1,1) : (0,N) | Todo relatório está associado a exatamente um retiro; um retiro pode aparecer em zero ou vários relatórios. Origem: US08, US09, US11. |
+| R16 | ANEXA_TKT | EVIDENCIA_TICKET ↔ EVIDENCIA | (0,N) : (1,1) | Cada associação referencia exatamente uma evidência; uma evidência pode ser vinculada a zero ou vários tickets. Origem: RF004, US06. |
+| R17 | ANEXA_TKT | EVIDENCIA_TICKET ↔ TICKET | (0,N) : (1,1) | Um ticket pode possuir zero ou várias evidências associadas na tabela relacional; a obrigatoriedade de evidência descritiva na criação do chamado é validada pela camada de serviço conforme RN08. Origem: US05, US06, RN08. |
+| R18 | GERA | USUARIO ↔ RELATORIO | (0,N) : (1,1) | Um usuário gera zero ou vários relatórios; todo relatório tem exatamente um gerador. Origem: US07, US08, RN07. |
+| R19 | ABRANGE | RELATORIO ↔ RETIRO | (1,1) : (0,N) | Todo relatório está associado a exatamente um retiro; um retiro pode aparecer em zero ou vários relatórios. Origem: US07, US08, US10. |
 | R20 | ESPECIALIZA_FOTO | EVIDENCIA_FOTO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_FOTO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo, latitude e longitude, obrigatórios conforme RN04. Origem: RF004, RN04. |
-| R21 | ESPECIALIZA_AUDIO | EVIDENCIA_AUDIO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_AUDIO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo do arquivo de áudio. Origem: RF004, US07. |
-| R22 | ESPECIALIZA_MSG | EVIDENCIA_MENSAGEM ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_MENSAGEM especializa EVIDENCIA herdando seu identificador; acrescenta o atributo conteudo textual. Origem: RF004, US07, RN08. |
+| R21 | ESPECIALIZA_AUDIO | EVIDENCIA_AUDIO ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_AUDIO especializa EVIDENCIA herdando seu identificador; acrescenta url_arquivo do arquivo de áudio. Origem: RF004, US06. |
+| R22 | ESPECIALIZA_MSG | EVIDENCIA_MENSAGEM ↔ EVIDENCIA | (0,1) : (1,1) | EVIDENCIA_MENSAGEM especializa EVIDENCIA herdando seu identificador; acrescenta o atributo conteudo textual. Origem: RF004, US06, RN08. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-## Conclusão do Modelo Entidade-Relacionamento (Seção 3.6.1)
+## Conclusão do Modelo Entidade-Relacionamento ([Seção 3.6.1](#c3.6.1))
  
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo entidade-relacionamento construído para o AgroFlow traduz as User Stories levantadas junto à BrPec em uma estrutura conceitual composta por dezoito entidades, com atributos, relacionamentos e cardinalidades explicitamente definidos. A generalização da entidade `EVIDENCIA` em três subclasses, a resolução dos relacionamentos N:N por meio de entidades associativas e a especialização de `MOVIMENTACAO` em cinco subtipos isolam regras específicas de cada tipo de registro sem comprometer a coerência do todo. O desdobramento dos relacionamentos entre `USUARIO` e as entidades operacionais em papéis distintos (REGISTRA e VALIDA para movimentações, CRIA e EXECUTA para tarefas, ABRE e ATRIBUIDO_A para tickets) preserva no nível conceitual a hierarquia operacional da fazenda e evidencia a rastreabilidade de autoria exigida pelas regras de negócio. O MER funciona, portanto, como ponte formal entre as necessidades do parceiro e a estrutura física do banco de dados, fazendo com que cada decisão de implementação posterior tenha respaldo direto em uma regra documentada e discutida com a BrPec.
 
@@ -2738,7 +2719,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura dos dados foi definida para permitir o acompanhamento dos principais registros e operações do sistema. A entidade **Retiro** funciona como o centro do banco de dados, conectando-se com quase todas as outras tabelas. Um ponto importante é a ligação entre **Usuário** e **Movimentação**, que garante que cada entrada ou saída tenha um responsável identificado. Além disso, foi configurada a relação entre **Tarefa** e **Evidência** para que uma única atividade possa ter várias comprovações registradas, como fotos, áudios ou mensagens.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O diagrama entidade-relacionamento materializa graficamente o modelo conceitual da Seção 3.6.1, traduzindo as decisões de modelagem em uma representação visual padronizada com convenções claras de cores e formas para entidades, relacionamentos, chaves primárias, chaves estrangeiras e atributos comuns. A centralidade da entidade `Retiro` no diagrama evidencia o papel estruturante dos retiros na operação da BrPec, refletindo a realidade de que praticamente todos os fluxos do sistema (registros de movimentação, tarefas, tickets e relatórios) ocorrem necessariamente vinculados a uma unidade física da fazenda. O desdobramento das relações entre `Usuário` e as entidades operacionais e a separação entre `Tarefa` e `Evidência` em relacionamentos N:N permitem visualizar com clareza tanto a responsabilização individual quanto a flexibilidade na anexação de múltiplas comprovações a uma mesma atividade. Aliado ao modelo relacional e ao modelo físico apresentados na [Seção 3.6.3](#c3.6.3), o DER assegura que a estrutura do banco de dados sustente as regras de negócio definidas na [Seção 3.1.2](#c3.1.2) com integridade referencial, baixa redundância e organização adequada para as consultas exigidas pelos fluxos operacionais e gerenciais do AgroFlow.
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama entidade-relacionamento materializa graficamente o modelo conceitual da [Seção 3.6.1](#c3.6.1), traduzindo as decisões de modelagem em uma representação visual padronizada com convenções claras de cores e formas para entidades, relacionamentos, chaves primárias, chaves estrangeiras e atributos comuns. A centralidade da entidade `Retiro` no diagrama evidencia o papel estruturante dos retiros na operação da BrPec, refletindo a realidade de que praticamente todos os fluxos do sistema (registros de movimentação, tarefas, tickets e relatórios) ocorrem necessariamente vinculados a uma unidade física da fazenda. O desdobramento das relações entre `Usuário` e as entidades operacionais e a separação entre `Tarefa` e `Evidência` em relacionamentos N:N permitem visualizar com clareza tanto a responsabilização individual quanto a flexibilidade na anexação de múltiplas comprovações a uma mesma atividade. Aliado ao modelo relacional e ao modelo físico apresentados na [Seção 3.6.3](#c3.6.3), o DER assegura que a estrutura do banco de dados sustente as regras de negócio definidas na [Seção 3.1.2](#c3.1.2) com integridade referencial, baixa redundância e organização adequada para as consultas exigidas pelos fluxos operacionais e gerenciais do AgroFlow.
 
 ### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -2950,7 +2931,7 @@ CREATE TABLE relatorio (
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação e a consolidação das informações, além de preparar a persistência para a evolução futura do fluxo de sincronização.
+&nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação, a consolidação das informações e o fluxo de sincronização.
 
 ### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
  
@@ -3143,7 +3124,7 @@ WHERE id = ?
 
 #### Consulta 4 - INSERT (Registro de movimentação do rebanho):
  
-&nbsp;&nbsp;&nbsp;&nbsp;A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo `sincronizado` registra no backend se o item já foi processado pelos mecanismos de sincronização. A definição automática dessa flag a partir do armazenamento offline no dispositivo dependerá da futura implementação do cliente prevista no RF003. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
+&nbsp;&nbsp;&nbsp;&nbsp;A tabela `movimentacao` armazena os dados comuns dos eventos do rebanho (nascimento, morte, transferência, compra, venda ou outros) feitos pelos Capatazes em campo. Conforme o RF001, o sistema deve permitir o registro dessas movimentações com campos específicos conforme o tipo selecionado. A consulta abaixo insere a movimentação base no estado inicial pendente e, em seguida, insere os dados específicos em uma tabela complementar. O campo `sincronizado` registra no backend se o item já foi processado pelos mecanismos de sincronização. A validação dos campos obrigatórios ocorre na camada de serviço antes da persistência, garantindo que apenas dados compatíveis com o tipo da movimentação sejam enviados ao banco.
  
 **Código SQL:**
  
@@ -3475,7 +3456,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/sincronizacao/conexao`
     - **Método:** GET
-    - **Descrição:** Verifica se existe conexão disponível com o servidor. A rota prepara o disparo automático previsto na RN03, ainda dependente de implementação no cliente.
+    - **Descrição:** Verifica se existe conexão disponível com o servidor, permitindo que o cliente do Capataz decida quando reenviar registros pendentes.
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Resposta:** `200 OK` — Conexão disponível; `500 Internal Server Error` — Falha interna.
@@ -3484,7 +3465,7 @@ VALUES (?, ?, ?, ?);
 
     - **Endereço:** `/sincronizacao`
     - **Método:** POST
-    - **Descrição:** Processa e persiste no servidor os dados pendentes recebidos com `sincronizado = false`. O armazenamento local no cliente ainda não foi implementado.
+    - **Descrição:** Processa e persiste no servidor os dados pendentes recebidos com `sincronizado = false`, incluindo registros mantidos temporariamente no cliente do Capataz.
     - **Headers:** Nenhum header específico necessário.
     - **Body:** Nenhum.
     - **Respostas:**
@@ -4157,11 +4138,11 @@ VALUES (?, ?, ?, ?);
 |---|---|---|---|---|---|---|
 | Capataz Daniel | RF001 | RN01 | `POST /movimentacoes`<br>`GET /movimentacoes/{id}`<br>`PATCH /movimentacoes/{id}`<br>`DELETE /movimentacoes/{id}` | Registro de movimentação | CT01 (`movimentacao.spec.ts`) | Testes automatizados executados: `POST /movimentacoes` retornando HTTP 201 e objeto da movimentação; `GET` e `PATCH /movimentacoes/{id}` retornando HTTP 200; `DELETE /movimentacoes/{id}` retornando HTTP 204 |
 | Supervisor Luiz | RF002 | RN02 | `POST /tarefas`<br>`GET /tarefas`<br>`GET /tarefas/{id}`<br>`GET /tarefas/status/{status}`<br>`GET /tarefas/usuario/{usuarioId}`<br>`GET /tarefas/prioridade/{prioridade}`<br>`GET /tarefas/categoria/{categoria}`<br>`PATCH /tarefas/{id}`<br>`PATCH /tarefas/{id}/status`<br>`DELETE /tarefas/{id}`<br>`GET /usuarios/capatazes/retiro/{retiroId}` | Criar e acompanhar tarefas | CT02 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204; `GET /usuarios/capatazes/retiro/{retiroId}` retornando HTTP 200 para apoio à atribuição de tarefas |
-| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`<br>`POST /sincronizacao`<br>`GET /sincronizacao/status`<br>`GET /sincronizacao/mensagem`<br>`POST /movimentacoes/sincronizar`<br>`PATCH /movimentacoes/{id}/sincronizar`<br>`POST /tarefas/sincronizar`<br>`POST /tickets/sincronizar` | Sem tela dedicada (mecanismos de backend de sincronização) | CT03 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada. Armazenamento local e disparo automático no cliente não fazem parte desta cobertura (RF003 planejado para implementação futura) |
-| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`<br>`GET /evidencias/{id}`<br>`POST /evidencias/fotos`<br>`POST /evidencias/audios`<br>`POST /evidencias/mensagens` | Anexar evidência (embutida em movimentação, tarefa e chamado) | CT04 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias` e `GET /evidencias/{id}` retornando HTTP 200 |
-| Supervisor Luiz / Gerente Marcos | RF005 | RN05 | `POST /usuarios/login` | Login | CT05 (`usuario.spec.ts`; `usuario.service.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; cenário de Capataz bloqueado retornando HTTP 403 |
+| Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`<br>`POST /sincronizacao`<br>`GET /sincronizacao/status`<br>`GET /sincronizacao/mensagem`<br>`POST /movimentacoes/sincronizar`<br>`PATCH /movimentacoes/{id}/sincronizar`<br>`POST /tarefas/sincronizar`<br>`POST /tickets/sincronizar` | Sem tela dedicada (mecanismos de backend de sincronização) | CT03 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`; `capataz-pwa.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada; fila local do Capataz, IndexedDB e reenvio posterior cobertos por teste unitário em sandbox. |
+| Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`<br>`GET /evidencias/tarefa/{tarefaId}`<br>`GET /evidencias/{id}`<br>`POST /evidencias/fotos`<br>`POST /evidencias/audios`<br>`POST /evidencias/mensagens` | Anexar evidência (embutida em movimentação, tarefa e chamado) | CT04 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias`, `GET /evidencias/tarefa/{tarefaId}` e `GET /evidencias/{id}` retornando HTTP 200 |
+| Supervisor Luiz / Gerente Marcos / Capataz Daniel | RF005 | RN05 | `POST /usuarios/login`<br>`POST /usuarios/logout`<br>`GET /capataz/acesso/{token}` | Login, logout e acesso do Capataz por QR Code | CT05 (`usuario.spec.ts`; `usuario.service.spec.ts`; `rotas-protegidas.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; `POST /usuarios/logout` encerrando a sessão; `GET /capataz/acesso/{token}` autenticando Capataz por token de QR Code e redirecionando para `/capataz/home`; cenário de Capataz bloqueado no login tradicional retornando HTTP 403 |
 | Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`<br>`PATCH /validacoes/movimentacoes/{id}/validar`<br>`PATCH /validacoes/tarefas/{id}/aprovar`<br>`PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT06 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
-| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`<br>`GET /relatorios/tarefas/dados`<br>`GET /relatorios/tickets/dados`<br>`GET /relatorios/movimentacoes`<br>`GET /relatorios/semanal`<br>`GET /relatorios/mensal`<br>`GET /relatorios/exportar`<br>`GET /sincronizacao/relatorios/movimentacoes`<br>`GET /sincronizacao/relatorios/tarefas` | Relatórios | CT07 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal` e `GET /relatorios/mensal` retornando HTTP 200 com dados de movimentações; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
+| Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`<br>`GET /relatorios/tarefas/dados`<br>`GET /relatorios/tickets/dados`<br>`GET /relatorios/movimentacoes`<br>`GET /relatorios/semanal`<br>`GET /relatorios/mensal`<br>`GET /relatorios/exportar`<br>`GET /sincronizacao/relatorios/movimentacoes`<br>`GET /sincronizacao/relatorios/tarefas` | Relatórios | CT07 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal`, `GET /relatorios/mensal`, `GET /relatorios/tickets/dados` e `GET /relatorios/exportar` retornando HTTP 200; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
 | Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`<br>`GET /tickets`<br>`GET /tickets/pendentes`<br>`GET /tickets/status`<br>`GET /tickets/categoria`<br>`GET /tickets/{id}`<br>`PATCH /tickets/{id}/status`<br>`PATCH /tickets/{id}/atribuicao`<br>`PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT08 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
 | Supervisor Luiz | RF009 | RN09 | `GET /movimentacoes/filtrar`<br>`GET /movimentacoes`<br>`GET /movimentacoes/pendentes` | Filtro na tela de validação do Supervisor | CT09 (`movimentacao.spec.ts`) | Testes automatizados executados: `GET /movimentacoes/filtrar` com parâmetros de retiro, tipo, status e período retornando HTTP 200 com a lista filtrada; `GET /movimentacoes` e `GET /movimentacoes/pendentes` retornando HTTP 200 |
 | Gerente Marcos | RF010 | RN10 | `GET /movimentacoes/dashboard`<br>`GET /movimentacoes/contagem/tipo`<br>`GET /tarefas/dashboard`<br>`GET /tarefas/contagem/status`<br>`GET /sincronizacao/dashboard/tickets`<br>`GET /tickets/contagem/prioridade` | Dashboard gerencial | CT10 (`movimentacao.spec.ts`; `tarefa.spec.ts`; `ticket.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: endpoints de dashboard de movimentações, tarefas e tickets retornando HTTP 200; endpoints de contagem por tipo, status e prioridade retornando HTTP 200 com os agrupamentos correspondentes |
@@ -4176,32 +4157,29 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
-### <a name="c3.9.1"></a>3.9.1. Validação de Cobertura das User Stories (sprint 5)
+#### Validação de Cobertura das User Stories 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Complementando a RTM da [Seção 3.9](#c3.9), o Quadro 49 confronta cada uma das 12 User Stories da [Seção 2.3](#c2.3) com os Requisitos Funcionais que as implementam, registrando o status de cobertura observado nesta revisão.
+&nbsp;&nbsp;&nbsp;&nbsp;Complementando a RTM da [Seção 3.9](#c3.9), o Quadro 49 confronta as User Stories da [Seção 2.3](#c2.3) com os Requisitos Funcionais que as implementam, registrando o status de cobertura observado nesta revisão.
 
 <p align="center">Quadro 49 - Validação de Cobertura das User Stories</p>
 
 | US | Resumo | RF associado(s) | Status de cobertura |
 | :--: | -------- | :---: | ---------------------- |
-| US01 | Uso do sistema offline | RF003 | Parcial — endpoints de sincronização implementados e testados no backend; armazenamento local e disparo automático no cliente permanecem planejados, conforme já registrado no status do RF003 e nas Seções 4.1 e 4.2. |
-| US02 | Registrar movimentações do rebanho | RF001 | Atendida — implementada e testada (CT-RF001). O critério CA3 ("salvo localmente") permanece pendente junto com RF003 (parcialmente implementado). |
-| US03 | Criar tarefas para capatazes | RF002 | Atendida — implementada e testada (CT-RF002). |
-| US04 | Validar registros enviados | RF006 | Atendida — implementada e testada (CT-RF006). |
-| US05 | Receber alertas de problemas | — | **Não atendida.** Não há RF, RN, endpoint ou teste associados. A funcionalidade aparece apenas nos wireframes e no protótipo de alta fidelidade do Supervisor (Seções 3.3 e 3.5), sem tela correspondente entregue nem rota de alerta/notificação no backend. Ver observação abaixo. |
-| US06 | Visualizar chamados de infraestrutura | RF008 | Atendida — implementada e testada (CT-RF008). |
-| US07 | Abrir chamados de infraestrutura | RF004, RF008 | Atendida — implementada e testada (CT-RF004, CT-RF008). |
-| US08 | Dashboard com indicadores da fazenda | RF010 | Atendida — implementada e testada (CT-RF010). |
-| US09 | Gerar relatórios semanais | RF007 | Atendida — implementada e testada (CT-RF007). |
-| US10 | Histórico de chamados | RF008, RF010 | Atendida — Gerente visualiza histórico de chamados via dashboard (RF010/CT-RF010); gestão de tickets coberta pelo RF008 (CT-RF008). |
-| US11 | Filtrar dados por retiro | RF010, RF007 | Atendida — indicadores e relatórios segmentados por retiro, conforme RN10. |
-| US12 | Anexar fotos como evidência | RF004 | Atendida — implementada e testada (CT-RF004), incluindo validação de georreferenciamento (RN04). |
+| US01 | Uso do sistema offline | RF003 | Atendida tecnicamente — endpoints de sincronização implementados e testados no backend; fila local, IndexedDB e disparo posterior no cliente cobertos por teste unitário em sandbox (`capataz-pwa.spec.ts`). A validação E2E em navegador real permanece como evolução futura. |
+| US02 | Registrar movimentações do rebanho | RF001 | Atendida — implementada e testada (CT01), incluindo registro local no fluxo PWA coberto por CT03 em sandbox. |
+| US03 | Criar tarefas para capatazes | RF002 | Atendida — implementada e testada (CT02). |
+| US04 | Validar registros enviados | RF006 | Atendida — implementada e testada (CT06). |
+| US05 | Visualizar chamados de infraestrutura | RF008 | Atendida — implementada e testada (CT08). |
+| US06 | Abrir chamados de infraestrutura | RF004, RF008 | Atendida — implementada e testada (CT04, CT08). |
+| US07 | Dashboard com indicadores da fazenda | RF010 | Atendida — implementada e testada (CT10). |
+| US08 | Gerar relatórios semanais | RF007 | Atendida — implementada e testada (CT07). |
+| US09 | Histórico de chamados | RF008, RF010 | Atendida — Gerente visualiza histórico de chamados via dashboard (CT10); gestão de tickets coberta pelo RF008 (CT08). |
+| US10 | Filtrar dados por retiro | RF010, RF007 | Atendida — indicadores e relatórios segmentados por retiro, conforme RN10. |
+| US11 | Anexar fotos como evidência | RF004 | Atendida — implementada e testada (CT04), incluindo validação de georreferenciamento (RN04). |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Inconsistência identificada:** a US05 não possui Requisito Funcional, Regra de Negócio, endpoint ou teste associados, ao contrário das demais 11 User Stories. Diferentemente da US01 — cujo status pendente está explicitamente declarado no RF003 e nas Seções 4.1 e 4.2 —, a US05 não possui nenhuma nota equivalente registrada até esta revisão. Recomenda-se que a equipe decida formalmente entre: (a) registrar a US05 como funcionalidade não implementada e planejada para trabalho futuro, com a devida justificativa na [Seção 7](#c7), ou (b) elaborar um RF e uma RN correspondentes, caso a funcionalidade deva ser priorizada antes da entrega final.
-
-&nbsp;&nbsp;&nbsp;&nbsp;Os demais Requisitos Funcionais, Regras de Negócio e Requisitos Não Funcionais das Seções 3.1.1 a 3.1.3 foram conferidos nesta revisão e permanecem consistentes com as evidências de implementação e teste já documentadas, sem outras lacunas identificadas.
+&nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Funcionais, Regras de Negócio e Requisitos Não Funcionais das [Seções 3.1.1](#c3.1.1), [3.1.2](#c3.1.2) e [3.1.3](#c3.1.3) foram conferidos nesta revisão e permanecem consistentes com as evidências de implementação e teste já documentadas, sem outras lacunas identificadas.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
@@ -4499,7 +4477,7 @@ Os testes white-box foram aplicados na camada de `services` do AgroFlow com o ob
 
 A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **90,33% de statements**, **81,9% de branches**, **96,89% de functions** e **90,1% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
 
-Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da seção 3.9, preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
+Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da [Seção 3.9](#c3.9), preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
 
 **CT01 - RN01 / RF001 | MovimentacaoService**
 - **Arrange:** preparar fixtures de movimentação com campos ausentes ou válidos, simulando compra, venda, nascimento e morte.
@@ -4628,7 +4606,7 @@ Nesta etapa, foram reunidas as evidências de execução dos testes automatizado
  
 Complementarmente, foi executado o comando `npm run test:coverage -- --runInBand`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80% em todas as métricas.
  
-Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na Seção 3.1.4 e com a RTM da Seção 3.9. Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
+Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na [Seção 3.1.4](#c3.1.4) e com a RTM da [Seção 3.9](#c3.9). Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
  
 ---
  
@@ -4709,7 +4687,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;A lacuna que o AgroFlow ocupa é específica: as soluções de gestão agropecuária disponíveis no mercado assumem conectividade estável e usuários com letramento digital intermediário ou avançado, condições que não existem nos retiros da BrPec. Operar no Pantanal com internet instável e com capatazes de ensino fundamental incompleto inviabiliza a adoção de sistemas convencionais, o que força as fazendas a manterem processos manuais por falta de alternativa viável. O AgroFlow foi desenhado especificamente para esse contexto, que não é atendido pelos sistemas convencionais de gestão agropecuária.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O sistema combina recursos relevantes para a operação agropecuária: interface projetada para baixo letramento digital, fluxo de validação hierárquico entre capataz, supervisor e gerente, rastreabilidade de autoria, evidências digitais e organização dos dados por retiro. A arquitetura offline-first, com armazenamento local e sincronização automática, permanece como diferencial planejado para uma evolução futura.
+&nbsp;&nbsp;&nbsp;&nbsp;O sistema combina recursos relevantes para a operação agropecuária: interface projetada para baixo letramento digital, fluxo de validação hierárquico entre capataz, supervisor e gerente, rastreabilidade de autoria, evidências digitais e organização dos dados por retiro. A arquitetura offline-first, com armazenamento local e sincronização posterior, fortalece o uso em campo sob conectividade instável.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os objetivos estratégicos são eliminar boletas de papel, garantir rastreabilidade das movimentações do rebanho e viabilizar decisões baseadas em dados confiáveis, reduzindo a janela de inconsistência entre campo e escritório que hoje compromete a operação da BrPec.
 
@@ -4757,7 +4735,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow entrega para a BrPec Agropecuária S.A. a capacidade de registrar, validar e consolidar dados operacionais do rebanho de forma digital, eliminando a dependência de boletas de papel e o retrabalho de redigitação em planilhas. A proposta de valor da aplicação se estrutura em três pilares complementares que cobrem o ciclo completo da informação operacional.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O primeiro pilar planejado é a **operação offline contínua**, necessária para capatazes que atuam em retiros com conectividade instável. A versão atual já oferece os formulários digitais e os mecanismos backend de sincronização, enquanto o armazenamento local e o envio automático após a reconexão permanecem previstos para uma evolução futura.
+&nbsp;&nbsp;&nbsp;&nbsp;O primeiro pilar é a **operação offline contínua**, necessária para capatazes que atuam em retiros com conectividade instável. A versão atual oferece formulários digitais, armazenamento local no cliente do Capataz e mecanismos backend de sincronização, permitindo envio posterior após a reconexão.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O segundo é a **rastreabilidade com responsabilização**: cada registro é vinculado ao usuário que o criou, e movimentações do rebanho passam por um fluxo de validação obrigatória pelo supervisor antes de serem consideradas válidas para fins operacionais e gerenciais. Evidências, como fotos georreferenciadas com coordenadas GPS, áudios e mensagens de texto, podem ser anexadas a registros, tarefas e chamados, aumentando a confiabilidade e a auditabilidade das informações.
 
@@ -4779,7 +4757,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo (Seção 6.3), proposta de valor e posicionamento (Seção 6.4) e estratégia de marketing (Seção 6.6), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 65 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 65 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
   <p align="center">Figura 65 - Business Model Canvas do AgroFlow</p>
@@ -4787,19 +4765,19 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**1) Segmentos de Clientes:** Em coerência com a Seção 6.3, o AgroFlow atende dois segmentos primários e complementares da pecuária bovina comercial. O primeiro reúne grandes produtores pecuários em regiões remotas com conectividade limitada ou instável, que operam rebanhos de grande porte e ainda dependem de registros manuais em papel. O segundo abrange produtores com conectividade disponível, porém sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade (PNIB, Código Florestal e agendas ESG), incluindo operações integradas agricultura-pecuária e fazendas corporativas, perfil representado pela parceira BrPec (MAPA, 2025; BRASIL, 2012; BANCO DO NORDESTE, 2025).
+&nbsp;&nbsp;&nbsp;&nbsp;**1) Segmentos de Clientes:** Em coerência com a [Seção 6.3](#c6.3), o AgroFlow atende dois segmentos primários e complementares da pecuária bovina comercial. O primeiro reúne grandes produtores pecuários em regiões remotas com conectividade limitada ou instável, que operam rebanhos de grande porte e ainda dependem de registros manuais em papel. O segundo abrange produtores com conectividade disponível, porém sujeitos a exigências regulatórias crescentes de rastreabilidade e sustentabilidade (PNIB, Código Florestal e agendas ESG), incluindo operações integradas agricultura-pecuária e fazendas corporativas, perfil representado pela parceira BrPec (MAPA, 2025; BRASIL, 2012; BANCO DO NORDESTE, 2025).
 
-&nbsp;&nbsp;&nbsp;&nbsp;**2) Proposta de Valor:** Conforme detalhado na Seção 6.4, o AgroFlow digitaliza e centraliza a gestão do rebanho para reduzir erros, aumentar a rastreabilidade e otimizar o processo operacional. O valor atual está na redução da dependência de boletas de papel, na rastreabilidade por autor e na consolidação gerencial de dados. A operação offline com sincronização automática permanece como evolução planejada.
+&nbsp;&nbsp;&nbsp;&nbsp;**2) Proposta de Valor:** Conforme detalhado na [Seção 6.4](#c6.4), o AgroFlow digitaliza e centraliza a gestão do rebanho para reduzir erros, aumentar a rastreabilidade e otimizar o processo operacional. O valor atual está na redução da dependência de boletas de papel, na rastreabilidade por autor e na consolidação gerencial de dados. A operação offline com sincronização automática permanece como evolução planejada.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**3) Canais:** Alinhados à estratégia de distribuição e promoção descrita na Seção 6.6, os canais de relacionamento e divulgação compreendem redes sociais (LinkedIn para decisores; Instagram e YouTube para provas de uso em campo), anúncios em sites voltados ao agronegócio, presença em eventos e feiras de agropecuária (como Agrishow e Expodireto) e tráfego pago segmentado por região e cargo, direcionando leads à página de solicitação de demonstração.
+&nbsp;&nbsp;&nbsp;&nbsp;**3) Canais:** Alinhados à estratégia de distribuição e promoção descrita na [Seção 6.6](#c6.6), os canais de relacionamento e divulgação compreendem redes sociais (LinkedIn para decisores; Instagram e YouTube para provas de uso em campo), anúncios em sites voltados ao agronegócio, presença em eventos e feiras de agropecuária (como Agrishow e Expodireto) e tráfego pago segmentado por região e cargo, direcionando leads à página de solicitação de demonstração.
 
 &nbsp;&nbsp;&nbsp;&nbsp;**4) Relacionamento com Clientes:** O relacionamento combina proximidade na fase de desenvolvimento e suporte remoto na operação. Durante a construção da solução, são realizadas reuniões quinzenais com o cliente para validação do processo. Após a entrega, o modelo prevê atualizações da aplicação sob demanda, suporte e atualizações remotas sem deslocamento ao campo, onboarding remoto com implantação assistida e uma estratégia de sucesso do cliente apoiada na coleta contínua de feedback para a evolução do produto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**5) Fontes de Receita:** Em relação com o modelo de precificação da Seção 6.6.2, as receitas provêm de duas fontes: a assinatura recorrente de planos no modelo SaaS (licenciamento B2B por operação, em faixas escalonadas conforme o número de retiros e usuários ativos) e a taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação.
+&nbsp;&nbsp;&nbsp;&nbsp;**5) Fontes de Receita:** Em relação com o modelo de precificação da [Seção 6.6.2](#c6.6.2), as receitas provêm de duas fontes: a assinatura recorrente de planos no modelo SaaS (licenciamento B2B por operação, em faixas escalonadas conforme o número de retiros e usuários ativos) e a taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação.
 
 &nbsp;&nbsp;&nbsp;&nbsp;**6) Recursos Principais:** Os recursos que sustentam a entrega de valor são, sobretudo, tecnológicos e de conhecimento: o banco de dados PostgreSQL hospedado no Supabase; os endpoints e mecanismos backend de sincronização; a infraestrutura necessária para hospedar o servidor de aplicação; as interfaces adaptadas a cada perfil de usuário (capataz, supervisor e gerente); a equipe de desenvolvimento e sua expertise de software; o know-how sobre o uso por usuários com baixo letramento digital; e a parceria estratégica com a BrPec, que funciona como caso de referência.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**7) Atividades Principais:** As atividades essenciais ao funcionamento do modelo são o desenvolvimento e o gerenciamento da aplicação web; a manutenção da integridade dos dados e dos endpoints de sincronização; a evolução futura do suporte offline; a modelagem e a gestão dos fluxos por perfil de usuário; as ações de vendas, marketing e expansão da base de clientes; e o suporte ao cliente.
+&nbsp;&nbsp;&nbsp;&nbsp;**7) Atividades Principais:** As atividades essenciais ao funcionamento do modelo são o desenvolvimento e o gerenciamento da aplicação web; a manutenção da integridade dos dados, dos endpoints de sincronização e do suporte offline; a modelagem e a gestão dos fluxos por perfil de usuário; as ações de vendas, marketing e expansão da base de clientes; e o suporte ao cliente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;**8) Parcerias Principais:** As parcerias-chave habilitam a infraestrutura e a aquisição de clientes: empresas que promovem eventos agropecuários, que dão acesso ao público-alvo e geram leads qualificados; o provedor de nuvem responsável pelo armazenamento e pela disponibilidade dos dados; e instituições do agronegócio, que ampliam a presença de mercado e reforçam a autoridade técnica da solução no nicho.
 
@@ -4811,9 +4789,9 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O AgroFlow é uma aplicação web de gestão operacional de campo para pecuária bovina de larga escala, disponibilizada em interfaces adaptadas a três perfis de usuário: capataz, supervisor e gerente. Suas funcionalidades centrais cobrem o ciclo completo da informação operacional da fazenda: registro de movimentações do rebanho (nascimentos, mortes com causa de óbito, compras, vendas e transferências), gestão e atribuição de tarefas, abertura de chamados de infraestrutura, anexação de evidências (fotos georreferenciadas com coordenadas GPS, áudios e mensagens) e geração de relatórios exportáveis em formatos compatíveis com os processos já adotados pelo parceiro.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios entregues são diretos: redução do uso de boletas de papel e do retrabalho de redigitação, rastreabilidade com responsabilização por autor e timestamp e apoio às exigências regulatórias crescentes (PNIB, EUDR e agendas ESG). Para a gestão, o dashboard centralizado por retiro consolida indicadores calculados a partir de registros validados, sustentando decisões baseadas em dados confiáveis. A continuidade operacional sem conexão permanece como benefício planejado.
+&nbsp;&nbsp;&nbsp;&nbsp;Os benefícios entregues são diretos: redução do uso de boletas de papel e do retrabalho de redigitação, rastreabilidade com responsabilização por autor e timestamp e apoio às exigências regulatórias crescentes (PNIB, EUDR e agendas ESG). Para a gestão, o dashboard centralizado por retiro consolida indicadores calculados a partir de registros validados, sustentando decisões baseadas em dados confiáveis. A continuidade operacional em conexão instável é apoiada pelo fluxo offline do Capataz.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os diferenciais atuais são a interface voltada ao baixo letramento digital e o fluxo de validação hierárquico integrado à coleta de evidências digitais. A arquitetura offline-first com sincronização automática complementará esse posicionamento após sua implementação futura.
+&nbsp;&nbsp;&nbsp;&nbsp;Os diferenciais atuais são a interface voltada ao baixo letramento digital, o fluxo de validação hierárquico integrado à coleta de evidências digitais e a arquitetura offline-first com sincronização posterior.
 
 
 
@@ -4821,7 +4799,7 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo de precificação adotado é o de assinatura recorrente B2B (SaaS), com licenciamento por operação e faixas escalonadas conforme o número de retiros e de usuários ativos. A esse valor recorrente soma-se uma taxa única de implantação (onboarding), que cobre a configuração dos retiros, o isolamento de dados por unidade e a parametrização inicial dos fluxos de validação. Para reduzir a barreira de adoção, propõe-se um período de piloto assistido em um subconjunto de retiros, convertendo-se em contrato pleno após a comprovação de valor em campo.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo (Seção 6.3) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado, métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue: redução de retrabalho, de perdas de informação e de risco regulatório; e não o volume de funcionalidades genéricas.
+&nbsp;&nbsp;&nbsp;&nbsp;A escolha se justifica pelas análises anteriores. Primeiro, o público-alvo ([Seção 6.3](#c6.3)) é composto por empresas de médio e grande porte com capacidade de investimento e volume operacional que inviabiliza a gestão manual, o que favorece um modelo recorrente por operação em vez de cobrança por cabeça de gado, métrica usada por concorrentes como Bovcontrol e que penaliza justamente os rebanhos de grande escala (superiores a 10 mil cabeças). Segundo, a pressão regulatória do PNIB, que torna obrigatória a rastreabilidade individual até 2032 (MAPA, 2025), e as exigências de ESG e EUDR elevam a disposição a pagar por uma solução que garanta conformidade. Terceiro, o mercado de agricultura de precisão cresce a um CAGR de 14,4% e deve atingir US$ 601 milhões no Brasil até 2030 (GRAND VIEW RESEARCH, 2025), sustentando a viabilidade de uma receita recorrente de longo prazo. O modelo precifica o valor entregue: redução de retrabalho, de perdas de informação e de risco regulatório; e não o volume de funcionalidades genéricas.
 
 **6.6.3)** **Praça (Distribuição)**
 
