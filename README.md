@@ -271,6 +271,13 @@ npm run dev
 ```text
 http://localhost:3000
 ```
+A tabela a seguir guia a navegação na aplicação pelos três perfis distintos: 
+
+| Perfil | Forma de acesso | Dados para login | Link para acesso |
+|----------|----------|----------|----------|
+| Capataz  | QR-code   | `nenhum`   | http://localhost:3000/capataz   |
+| Supervisor  | e-mail e senha   | `supervisor@agroflow.com` e `joaoglauco1`   | http://localhost:3000/auth/login?role=supervisor   |
+| Gerente  | e-mail e senha   | `gerente@agroflow.com` e `joaoglauco1`   | http://localhost:3000/auth/login?role=gerente   |
 
 ### Scripts disponíveis
  
