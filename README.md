@@ -82,65 +82,68 @@
 * **Projeto Publicado:** [link do deploy do site](link_deploy)
 * **Vídeo de Demonstração:** [link para o vídeo](link_video_google_drive)
 
--->
+
 
 Vídeos de demonstração da aplicação por perfil de usuário:
 
 - **Capataz:** [Assistir demonstração](https://drive.google.com/file/d/1K0guUF_NzNWkvYyfJUYhfoKgsJ9PIjO5/view?usp=drive_link)
 - **Supervisor:** [Assistir demonstração](https://drive.google.com/file/d/14vpjfgeATwAM5fS9e7XvAn7X0u9t5An3/view?usp=drive_link)
 - **Gerente:** [Assistir demonstração](https://drive.google.com/file/d/1VjnIooynWBbvwom_4UG_jAqoW7YaBxoz/view?usp=drive_link)
+-->
+
+O link a seguir contém um vídeo de demonstração da aplicação web em funcionamento: [link para o vídeo](link_video_google_drive)
 
 ## 📁 Estrutura de pastas
 
 ```text
 g02/
-├── assets/
-|   ├── icons              
-│   └── pwa
-├── documents/
+├── assets/                     # Recursos estáticos (imagens e ícones)
+|   ├── icons                   # Ícones da aplicação              
+│   └── pwa                     # Arquivos para PWA (funciona offline)
+├── documents/                  # Documentação do projeto
 │   ├── others/                 # Assets da documentação
 │   ├── index.html              # Versão renderizada do WAD
 │   └── wad.md                  # Web Application Document (documentação principal)
-├── src/
-│   ├── backend/
+├── src/                        # Código-fonte da aplicação
+│   ├── backend/                # Servidor (API e lógica de negócio)
 │   │   ├── @types/             # Extensões de tipos do Express
 │   │   ├── controllers/        # Camada de entrada das rotas (HTTP)
-|   |   ├── data/
-│   │   ├── database/
+|   |   ├── data/               # Dados de exemplo e referência para testes
+│   │   ├── database/           # Gerenciamento do Banco de Dados
 │   │   │   ├── migrations/     # Migrations SQL (DDL) versionadas
 │   │   │   ├── connection.ts   # Conexão com o PostgreSQL
 │   │   │   └── migrate.ts      # Runner de migrations
 │   │   ├── middlewares/        # Autenticação, autorização por cargo, logs e erros
-│   │   ├── models/             # Tipos de domínio
-|   |   ├── public/
-|   |   |   ├── docs/
-|   |   |   ├── capataz-pwa.js
-|   |   |   ├── manifest-capataz.json
-|   |   |   └── sw-capataz.js
-│   │   ├── repositories/       # Acesso a dados
+│   │   ├── models/             # Estrutura dos dados principais
+|   |   ├── public/             # Arquivos servidos diretamente (PWA e documentação)
+|   |   |   ├── docs/           # Documentação em HTML
+|   |   |   ├── capataz-pwa.js  # Lógica da aplicação mobile para o Capataz
+|   |   |   ├── manifest-capataz.json   # Configuração da aplicação (nome, ícones, cores)
+|   |   |   └── sw-capataz.js   # Service Worker (permite funcionar sem internet)     
+│   │   ├── repositories/       # Acesso e manipulação de dados no banco
 │   │   ├── routes/             # Definição dos endpoints
 │   │   ├── services/           # Regras de negócio
 │   │   ├── tests/              # Testes unitários e de integração (Jest)
-|   |   |   ├── helpers/
-|   |   |   ├── integration/
-|   |   |   ├── unit/
-|   |   |   └── jest.setup.ts
-|   |   ├── types/
-│   │   ├── utils/              
+|   |   |   ├── helpers/        # Funções utilitárias para os testes (mocks, setup)
+|   |   |   ├── integration/    # Testes que verificam múltiplos componentes juntos
+|   |   |   ├── unit/           # Testes de componentes isolados
+|   |   |   └── jest.setup.ts   # Configuração inicial antes de rodar os testes
+|   |   ├── types/              # Tipos TypeScript auxiliares
+│   │   ├── utils/              # Funções utilitárias reutilizáveis              
 │   │   ├── app.ts              # Configuração do app Express
 │   │   └── server.ts           # Inicialização do servidor
-│   └── views/                  # Templates EJS, estilos e scripts das interfaces
-|       ├── auth/
-|       ├── capataz/
-|       ├── css/
-|       ├── gerente/
-|       ├── js/
-|       ├── partials/
-|       └── supervisor/
-├── jest.config.ts
-├── tsconfig.json
-├── package.json
-└── README.md
+│   └── views/                  # Interface visual (páginas HTML + CSS + JS)
+|       ├── auth/               # Telas de login/autenticação
+|       ├── capataz/            # Página do "Capataz"
+|       ├── css/                # Estilos visuais
+|       ├── gerente/            # Página do "Gerente"
+|       ├── js/                 # Lógica do lado do cliente
+|       ├── partials/           # Componentes reutilizáveis de página
+|       └── supervisor/         # Página do "Supervisor"
+├── jest.config.ts              # Configuração dos testes
+├── tsconfig.json               # Configuração do TypeScript
+├── package.json                # Dependências e scripts do projeto
+└── README.md                   # Guia inicial do projeto
 ```
 Descrição dos principais diretórios:
  
@@ -200,7 +203,9 @@ Descrição dos principais diretórios:
 
 Acesse os tutoriais de instalação dos softwares aqui: [Tutoriais](documents/others/tutoriais-de-instalacao-dos-softwares.md)
 
-### Tutorial de execução da aplicação web localmente (para Windows):
+### Tutorial de execução da aplicação web localmente (para Windows)
+
+O tutorial a seguir fornece o passo a passo para a execução da aplicação web localmente no Windows. Pré-requisitos para que a aplicação seja executada corretamente são que o [tutorial de instalação dos softwares](documents/others/tutoriais-de-instalacao-dos-softwares.md) tenha sido executado e que o usuário possua uma conta no GitLab, Supabase e VS Code instalado.
 
 1. Entre no Explorador de arquivos e crie uma pasta dedicada ao projeto
 
@@ -247,7 +252,7 @@ code .
 
 7. Copie e cole o seguinte código no arquivo .env que você criou:
 ```sh
-DATABASE_URL=postgresql://postgres:g02agroflow@db.mnsbvuqqgcsjxcrtaomy.supabase.co:5432/postgres
+DATABASE_URL=postgresql://postgres.mnsbvuqqgcsjxcrtaomy:g02agroflow@aws-1-us-west-2.pooler.supabase.com:5432/postgres
 JWT_SECRET=hSo5IX8vFI7W-K5mqzBvCaZhlGHY79_EsSW2IDxZ7ocfPACX_jn8kOmNsmy4hqEm
 ```
 
