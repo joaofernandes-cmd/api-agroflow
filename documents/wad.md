@@ -4083,29 +4083,29 @@ VALUES (?, ?, ?, ?);
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
-&nbsp;&nbsp;&nbsp;&nbsp;A autenticação do AgroFlow foi organizada conforme os três perfis de usuário da operação: Capataz, Supervisor e Gerente. Para Supervisores e Gerentes, o fluxo principal ocorre pelo endpoint `POST /usuarios/login`, que recebe `login` e `senha`, valida a existência do usuário, verifica se ele está ativo e compara a senha enviada com o valor armazenado em `senha_hash` por meio de `bcrypt.compare`. Quando as credenciais são válidas, o backend retorna os dados do usuário sem expor `senha_hash` e gera um token JWT para acesso às rotas protegidas.
+&nbsp;&nbsp;&nbsp;&nbsp;A autenticação do AgroFlow foi organizada conforme os três perfis de usuário da operação: Capataz, Supervisor e Gerente. Para Supervisores e Gerentes, o fluxo principal ocorre por login e senha. O sistema valida se o usuário existe, verifica se está ativo e compara a senha informada com o hash armazenado no banco. A escolha do `bcrypt` atende à necessidade de proteger credenciais sem armazenar senhas em texto puro, pois esse algoritmo foi projetado para senhas, utiliza salt e permite configurar custo computacional, dificultando ataques de força bruta. Quando as credenciais são válidas, o backend retorna os dados do usuário sem expor o hash da senha e gera um token JWT para acesso às áreas protegidas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para Capatazes, o acesso não ocorre pelo formulário tradicional de login e senha. Esse perfil utiliza a rota `GET /capataz/acesso/:token`, preparada para ser acionada por QR Code. O token recebido pela URL é convertido em hash SHA-256, uma impressão digital irreversível do token original, e comparado com os hashes ativos armazenados na tabela `acesso_capataz`. Dessa forma, o banco não precisa guardar o token real do QR Code, apenas seu hash para comparação. Se o token estiver válido e vinculado a um usuário com cargo `capataz`, o sistema gera o JWT desse usuário e redireciona para `/capataz/home`.
+&nbsp;&nbsp;&nbsp;&nbsp;Para Capatazes, o acesso não ocorre pelo formulário tradicional de login e senha. Esse perfil utiliza um link acionado por QR Code, vinculado ao retiro e ao usuário responsável. O token recebido por esse link é convertido em hash SHA-256, uma impressão digital irreversível do token original, e comparado com os hashes ativos registrados no banco. Dessa forma, o sistema não precisa armazenar o token real do QR Code. Se o token estiver válido e vinculado a um usuário com perfil de Capataz, o sistema gera a sessão desse usuário e direciona o acesso para a área interna do Capataz.
 
 ### <a name="c3.8.2"></a>3.8.2. Controle de sessão
 
-&nbsp;&nbsp;&nbsp;&nbsp;O controle de sessão utiliza JWT com validade de 1 dia. Após autenticação bem-sucedida, o token é gravado no cookie `agroflow_token`, configurado como `httpOnly`, `sameSite: 'lax'` e `maxAge` de 24 horas. Esse cookie permite proteger as páginas renderizadas pelo servidor e reduz a exposição do token a scripts executados no navegador.
+&nbsp;&nbsp;&nbsp;&nbsp;O controle de sessão utiliza JWT com validade de 1 dia. Após autenticação bem-sucedida, o token é gravado em um cookie seguro da aplicação, configurado para reduzir exposição a scripts do navegador e limitar a duração da sessão a 24 horas. Esse mecanismo permite proteger páginas renderizadas pelo servidor e manter o usuário autenticado durante a navegação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Nas APIs, o middleware `autenticarUsuario` aceita o token tanto pelo header `Authorization: Bearer <token>` quanto pelo cookie `agroflow_token`. Quando o token é válido, os dados do usuário autenticado são adicionados a `req.usuario`. Quando o token está ausente ou inválido, a API retorna `401 Unauthorized`.
+&nbsp;&nbsp;&nbsp;&nbsp;Nas APIs, o token pode ser enviado tanto pela requisição quanto pelo cookie de autenticação. Quando o token é válido, o backend identifica o usuário e seu perfil antes de processar a operação solicitada. Quando o token está ausente ou inválido, a requisição é negada e o acesso ao recurso protegido não é liberado.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Nas views protegidas, o middleware `autenticarViewPorCookie` valida a sessão antes de liberar as rotas de `/capataz`, `/supervisor` e `/gerente`. Se não houver sessão válida, ou se o cookie estiver expirado ou inválido, o usuário é redirecionado para `/auth/perfil`. O encerramento da sessão ocorre pelo endpoint `POST /usuarios/logout`, que remove o cookie e retorna `204 No Content`.
+&nbsp;&nbsp;&nbsp;&nbsp;Nas telas protegidas, a sessão do usuário é verificada antes de liberar o acesso às áreas internas de Capataz, Supervisor e Gerente. Se a sessão estiver ausente, expirada ou inválida, o sistema direciona o usuário para a seleção de perfil e impede o acesso às páginas restritas. O encerramento da sessão remove o cookie de autenticação, finalizando o acesso do usuário às rotas protegidas.
 
 ### <a name="c3.8.3"></a>3.8.3. Autorização
 
-&nbsp;&nbsp;&nbsp;&nbsp;A autorização é aplicada no backend por meio do middleware `exigirCargo`, que verifica o cargo presente em `req.usuario` antes que a requisição chegue ao controller. Quando o usuário está autenticado, mas não possui o cargo exigido para a operação, o sistema retorna `403 Forbidden`. As rotas protegidas são organizadas por módulo e recebem explicitamente os cargos autorizados para cada operação.
+&nbsp;&nbsp;&nbsp;&nbsp;A autorização é aplicada no backend a partir do perfil do usuário autenticado. Antes de executar uma operação protegida, o sistema verifica se o cargo do usuário é compatível com a ação solicitada. Quando o usuário possui sessão válida, mas não tem permissão para aquela operação, o acesso é bloqueado. As rotas protegidas são organizadas por módulo e possuem cargos autorizados definidos de forma explícita.
 
 <p align="center">Quadro 47 - Regras de autorização por módulo</p>
 
 | Módulo | Capataz | Supervisor | Gerente |
 |---|---|---|---|
-| Views internas de Capataz (`/capataz/home` e demais telas protegidas) | Acessa | Bloqueado | Bloqueado |
-| Views de Supervisor (`/supervisor/*`) | Bloqueado | Acessa | Bloqueado |
-| Views de Gerente (`/gerente/*`) | Bloqueado | Bloqueado | Acessa |
+| Telas internas de Capataz | Acessa | Bloqueado | Bloqueado |
+| Telas internas de Supervisor | Bloqueado | Acessa | Bloqueado |
+| Telas internas de Gerente | Bloqueado | Bloqueado | Acessa |
 | Movimentações | Cria e sincroniza | Lista, consulta, atualiza e remove | Lista e consulta |
 | Tarefas | Consulta atribuídas e atualiza status | Cria, lista, atualiza e remove | Lista e consulta |
 | Tickets | Cria e sincroniza | Lista, consulta, altera status, prioridade e atribuição | Lista e consulta |
@@ -4118,13 +4118,13 @@ VALUES (?, ?, ?, ?);
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Além do controle por cargo, os controllers usam os dados da sessão autenticada para reduzir risco de manipulação de autoria e escopo. Em criações feitas por Capataz, o backend usa o `id` e o `retiro_id` do usuário autenticado para preencher autor e retiro. Em consultas e alterações operacionais, Capatazes ficam restritos aos registros vinculados ao próprio usuário e retiro, enquanto Supervisores podem acompanhar e validar registros dos retiros disponíveis no sistema. Gerentes, por sua vez, acessam dados consolidados e relatórios, com possibilidade de filtro por retiro quando a rota oferece essa segmentação.
+&nbsp;&nbsp;&nbsp;&nbsp;Além do controle por cargo, o backend usa os dados da sessão autenticada para reduzir risco de manipulação de autoria e escopo. Em criações feitas por Capataz, o sistema preenche autor e retiro com base no usuário autenticado, evitando que essas informações dependam apenas de dados enviados pelo navegador. Em consultas e alterações operacionais, Capatazes ficam restritos aos registros vinculados ao próprio usuário e retiro, enquanto Supervisores podem acompanhar e validar registros dos retiros disponíveis no sistema. Gerentes, por sua vez, acessam dados consolidados e relatórios, com possibilidade de filtro por retiro quando a operação oferece essa segmentação.
 
 ### <a name="c3.8.4"></a>3.8.4. Estratégias de Resiliência
 
 &nbsp;&nbsp;&nbsp;&nbsp;As estratégias de resiliência do AgroFlow foram definidas para reduzir perda de dados, inconsistências de estado e exposição de erros técnicos ao usuário final. Como parte da operação ocorre em campo, com possibilidade de conexão instável, a aplicação combina validação preventiva, mensagens padronizadas, armazenamento temporário local, reprocessamento de pendências e confirmação do backend antes de alterar estados críticos na interface.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No backend, movimentações, tarefas, tickets e evidências passam por validações de campos obrigatórios, tipos aceitos, status permitidos, permissões por cargo e vínculo com o usuário autenticado quando aplicável. Os controllers utilizam uma camada centralizada de tratamento de erros para separar mensagens públicas de detalhes técnicos. Assim, regras de negócio seguras podem ser apresentadas ao usuário, enquanto erros internos, falhas de conexão, variáveis de ambiente e exceções de infraestrutura são tratados com respostas genéricas e registrados em log para diagnóstico.
+&nbsp;&nbsp;&nbsp;&nbsp;No backend, movimentações, tarefas, tickets e evidências passam por validações de campos obrigatórios, tipos aceitos, status permitidos, permissões por cargo e vínculo com o usuário autenticado quando aplicável. A aplicação utiliza uma camada centralizada de tratamento de erros para separar mensagens públicas de detalhes técnicos. Assim, regras de negócio seguras podem ser apresentadas ao usuário, enquanto erros internos, falhas de conexão, variáveis de ambiente e exceções de infraestrutura são tratados com respostas genéricas e registrados em log para diagnóstico.
 
 &nbsp;&nbsp;&nbsp;&nbsp;No fluxo do Capataz, a aplicação utiliza recursos de PWA (Progressive Web App), modelo em que uma aplicação web pode oferecer funcionalidades próximas às de um aplicativo instalado, como operação offline, cache local e sincronização posterior. Esse mecanismo verifica conectividade pelo endpoint `/health` com tempo limite de resposta. Quando a conexão não está disponível, os registros são mantidos em uma fila local no IndexedDB e reenviados quando a rede retorna. Esse comportamento permite continuidade operacional em campo e evita que falhas temporárias de internet resultem em perda imediata de dados. O envio de mídias também possui validações de tipo, tamanho e regras de domínio, como georreferenciamento em fotos e duração mínima para áudios.
 
@@ -4134,7 +4134,7 @@ VALUES (?, ?, ?, ?);
 
 | Estratégia | Aplicação no AgroFlow | Impacto esperado |
 |---|---|---|
-| Validação preventiva | Controllers e services validam campos, tipos, status, permissões e autoria | Evita persistência de registros inválidos |
+| Validação preventiva | A camada de aplicação valida campos, tipos, status, permissões e autoria | Evita persistência de registros inválidos |
 | Erros padronizados | Camada centralizada de tratamento de erros filtra detalhes técnicos antes da resposta | Protege informações internas e melhora a clareza para o usuário |
 | Diagnóstico interno | Falhas técnicas são registradas em log, sem exposição ao cliente | Mantém rastreabilidade para manutenção |
 | Fila offline | Registros do Capataz são armazenados em IndexedDB quando não há conexão | Reduz risco de perda de dados em campo |
