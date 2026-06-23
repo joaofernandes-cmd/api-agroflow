@@ -94,7 +94,9 @@ Vídeos de demonstração da aplicação por perfil de usuário:
 
 ```text
 g02/
-├── assets/                     # Imagens padrão Inteli
+├── assets/
+|   ├── icons              
+│   └── pwa
 ├── documents/
 │   ├── others/                 # Assets da documentação
 │   ├── index.html              # Versão renderizada do WAD
@@ -103,19 +105,38 @@ g02/
 │   ├── backend/
 │   │   ├── @types/             # Extensões de tipos do Express
 │   │   ├── controllers/        # Camada de entrada das rotas (HTTP)
+|   |   ├── data/
 │   │   ├── database/
 │   │   │   ├── migrations/     # Migrations SQL (DDL) versionadas
 │   │   │   ├── connection.ts   # Conexão com o PostgreSQL
 │   │   │   └── migrate.ts      # Runner de migrations
 │   │   ├── middlewares/        # Autenticação, autorização por cargo, logs e erros
 │   │   ├── models/             # Tipos de domínio
+|   |   ├── public/
+|   |   |   ├── docs/
+|   |   |   ├── capataz-pwa.js
+|   |   |   ├── manifest-capataz.json
+|   |   |   └── sw-capataz.js
 │   │   ├── repositories/       # Acesso a dados
 │   │   ├── routes/             # Definição dos endpoints
 │   │   ├── services/           # Regras de negócio
 │   │   ├── tests/              # Testes unitários e de integração (Jest)
+|   |   |   ├── helpers/
+|   |   |   ├── integration/
+|   |   |   ├── unit/
+|   |   |   └── jest.setup.ts
+|   |   ├── types/
+│   │   ├── utils/              
 │   │   ├── app.ts              # Configuração do app Express
 │   │   └── server.ts           # Inicialização do servidor
 │   └── views/                  # Templates EJS, estilos e scripts das interfaces
+|       ├── auth/
+|       ├── capataz/
+|       ├── css/
+|       ├── gerente/
+|       ├── js/
+|       ├── partials/
+|       └── supervisor/
 ├── jest.config.ts
 ├── tsconfig.json
 ├── package.json
