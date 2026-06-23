@@ -173,8 +173,6 @@ Descrição dos principais diretórios:
 | Software | Versão recomendada | Observação |
 |---|---|---|
 | [Node.js](https://nodejs.org/) | **22.x LTS** ou superior | Definida em `package.json` (`^22.22.3`). Inclui o `npm`. |
-| [npm](https://www.npmjs.com/) | **10.x** ou superior | Acompanha o Node.js 22. |
-| [PostgreSQL](https://www.postgresql.org/) | **13** ou superior | Necessário pela extensão `pgcrypto` e por `gen_random_uuid()` usados nas migrations. |
 | [Git](https://git-scm.com/) | **2.30** ou superior | Para clonar e versionar o repositório. |
 
 ### Tutoriais de instalação dos softwares
@@ -292,40 +290,71 @@ Descrição dos principais diretórios:
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+Concluida a instalação dos softwares necessários, agora é possível prosseguir para o tutorial de execução da aplicação web localmente.
 
-### Passo a passo
- 
-1. Clone o repositório e acesse a pasta raiz do projeto:
+### Tutorial de execução da aplicação web localmente (para Windows):
+
+1. Entre no Explorador de arquivos e crie uma pasta dedicada ao projeto
+
+2. Selecione a pasta criada com o botão direito do mouse e selecione a opção “Abrir no Terminal”
+
+3. No terminal digite “git clone https://git.inteli.edu.br/graduacao/2026-1b/t26/g02.git” (para essa etapa funcionar você deve estar cadastrado no GitLab e ter acesso liberado ao projeto)
+
 ```sh
-git clone <url-do-repositorio>
+git clone https://git.inteli.edu.br/graduacao/2026-1b/t26/g02.git
+```
+
+4. Em seguida, digite “cd g02” no terminal para alternar para a pasta clonada do repositório
+
+```sh
 cd g02
 ```
- 
-2. Instale as dependências (executar na raiz, onde está o `package.json`):
+
+5. Em seguida digite “code .” (Esse comando abrirá a pasta g02 no VS Code)
+
+```sh
+code .
+```
+
+6. Crie um arquivo .env na raiz do projeto (aqui serão inseridas as senhas para acessar o banco de dados, compartilhe-as apenas com pessoas de confiança)
+
+    Clique no icone indicado, digite .env e pressione a tecla enter.
+
+<div align="center">
+  <p align="center">Figura 11 README - Passo 6 do tutorial de execução local</p>
+  <p>
+    <img src="documents/others/assets/imagem-1-tutorial-de-execucao-local.png" alt="Passo 6 do tutorial de execução local" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+  O arquivo .env que você acabou de criar deve se parecer com esse:
+<div align="center">
+  <p align="center">Figura 12 README - Passo 6 do tutorial de execução local (confirmação)</p>
+  <p>
+    <img src="documents/others/assets/imagem-2-tutorial-de-execucao-local.png" alt="Passo 6 do tutorial de execução local (confirmação)" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+7. Copie e cole o seguinte código no arquivo .env que você criou:
+```sh
+DATABASE_URL=postgresql://postgres:g02agroflow@db.mnsbvuqqgcsjxcrtaomy.supabase.co:5432/postgres
+JWT_SECRET=hSo5IX8vFI7W-K5mqzBvCaZhlGHY79_EsSW2IDxZ7ocfPACX_jn8kOmNsmy4hqEm
+```
+
+8. Abra o Terminal que foi utilizado nas etapas 2 a 5 novamente. 
+
+9. Digite os seguintes comandos, um por vez:
+
 ```sh
 npm install
-```
- 
-3. Crie um arquivo `.env` na raiz do projeto com as variáveis necessárias:
-```env
-DATABASE_URL=postgres://usuario:senha@host:5432/nome_do_banco
-JWT_SECRET=defina-uma-senha-forte
-PORT=3000
-```
- 
-> A aplicação não inicia sem as variáveis `DATABASE_URL` e `JWT_SECRET`.
- 
-4. Execute as migrations para criar o esquema do banco:
-```sh
 npm run migrate
-```
- 
-5. Inicie a aplicação em modo de desenvolvimento:
-```sh
 npm run dev
 ```
 
-6. Acesse a aplicação em:
+10. Entre no seu navegador e digite: localhost:3000. Pronto, você está acessando a aplicação web localmente!
+
 ```text
 http://localhost:3000
 ```
