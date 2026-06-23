@@ -68,17 +68,7 @@
   <%- include('../partials/bottomnav-capataz', { ativa: 'inicio' }) %>
 </main>
 
-<script>
-  document.getElementById('data-hoje').textContent =
-    new Date().toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    }).replace(/^\w/, function (letra) {
-      return letra.toUpperCase();
-    });
-</script>
+<script src="/js/data-hoje.js"></script>
 
 </body>
 </html>
