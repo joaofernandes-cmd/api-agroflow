@@ -211,6 +211,12 @@ body {
   font-family: inherit;
 }
 .card__barra { position: absolute; left: 0; top: 10px; bottom: 10px; width: 5px; border-radius: 4px; }
+.card__barra--alta { background: var(--alerta); }
+.card__barra--media { background: #f0ad00; }
+.card__barra--baixa { background: var(--sucesso); }
+.card__barra--critica { background: #8a1c1c; }
+.card__barra--concluida { background: var(--primaria); }
+.card__barra--pendente { background: var(--atencao); }
 .card__corpo { flex: 1; }
 .card__titulo { font-size: 16px; font-weight: 600; color: var(--texto); }
 .card__sub { font-size: 13px; color: var(--texto-sec); margin-top: 3px; }
