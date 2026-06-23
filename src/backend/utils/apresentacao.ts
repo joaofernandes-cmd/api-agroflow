@@ -31,7 +31,7 @@ export async function carregarContexto(req: Request): Promise<ContextoApresentac
   ])
 
   const mapaRetiro = new Map(retiros.map(r => [String(r.id), r.nome]))
-  const mapaUsuario = new Map(usuarios.map(u => [String(u.id), u.nome]))
+  const mapaUsuario = new Map(usuarios.map(u => [String(u.id), limparPrefixoCargo(u.nome)]))
 
   const nomeUsuario = mapaUsuario.get(String(req.usuario?.id ?? '')) ?? 'Usuário'
   const primeiroNomeUsuario = nomeUsuario.split(' ')[0]
@@ -42,6 +42,10 @@ export async function carregarContexto(req: Request): Promise<ContextoApresentac
 export function nomeRetiro(ctx: ContextoApresentacao, retiroId: UUID | null): string {
   if (!retiroId) return ''
   return ctx.mapaRetiro.get(String(retiroId)) ?? ''
+}
+
+export function limparPrefixoCargo(nome: string): string {
+  return nome.replace(/^(capataz|supervisor|gerente)\s+/i, '').trim()
 }
 
 export function nomeUsuarioPorId(ctx: ContextoApresentacao, usuarioId: UUID | null): string {

@@ -26,6 +26,7 @@ import {
   movimentacaoParaExibicao,
   tarefaParaExibicao,
   montarRelatorio,
+  limparPrefixoCargo,
 } from './utils/apresentacao'
 import { UUID } from './models/uuid'
 import { Movimentacao } from './models/movimentacao.model'
@@ -217,7 +218,7 @@ app.get('/supervisor/delegar', async (req, res) => {
   const usuariosRetiro = await UsuarioService.listarPorRetiros(retiros)
   const capatazes = usuariosRetiro
     .filter((u) => u.cargo === 'capataz' && u.status === 'ativo')
-    .map((u) => ({ id: u.id, nome: u.nome, retiro: nomeRetiro(ctx, u.retiro_id) }))
+    .map((u) => ({ id: u.id, nome: limparPrefixoCargo(u.nome), retiro: nomeRetiro(ctx, u.retiro_id) }))
     .sort((a, b) => a.retiro.localeCompare(b.retiro, 'pt-BR'))
   // "Tarefas ativas" = tarefas já delegadas ainda pendentes (do banco), em
   // qualquer retiro coberto pelo supervisor.
