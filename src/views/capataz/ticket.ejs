@@ -3,12 +3,8 @@
 <%
   var CATEGORIAS = [
     { value: 'cerca', label: 'Cerca' },
-    { value: 'hidraulica', label: 'Água / Hidráulica' },
     { value: 'eletrica', label: 'Elétrica' },
-    { value: 'edificacao', label: 'Edificação' },
-    { value: 'abastecimento_agua', label: 'Abastecimento de água' },
-    { value: 'outro', label: 'Outro' }
-
+    { value: 'hidraulica', label: 'Hidráulica' }
   ];
   var PRIORIDADES = [
     { value: 'alta', label: 'Alta' },
@@ -41,11 +37,6 @@
       </select>
     </div>
 
-    <div class="campo" id="campoCategoriaOutro" style="display: none;">
-      <label class="campo__rotulo" for="categoriaOutro">Nome da categoria <span class="obrigatorio">*</span></label>
-      <input class="input" type="text" id="categoriaOutro" placeholder="Diga qual é o problema" required />
-    </div>
-
     <div class="campo">
       <label class="campo__rotulo">Prioridade</label>
       <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
@@ -57,7 +48,7 @@
     </div>
 
     <div class="campo">
-      <label class="campo__rotulo" for="localizacaoTicket">Localização (automática)</label>
+      <label class="campo__rotulo" for="localizacaoTicket">Localização (Automática)</label>
       <input class="input" type="text" id="localizacaoTicket" placeholder="Detectando sua localização..." readonly />
       <p id="localizacaoStatus" style="margin: 6px 0 0; font-size: 13px; color: var(--texto-sec);"></p>
     </div>
@@ -77,17 +68,7 @@
   const feedback = document.getElementById('ticket-feedback');
   const botao = document.getElementById('btnEnviarTicket');
 
-  // Quando a categoria for "Outro", revela o campo para nomear a categoria.
   const categoriaSelect = document.getElementById('categoriaTicket');
-  const campoCategoriaOutro = document.getElementById('campoCategoriaOutro');
-  const categoriaOutroInput = document.getElementById('categoriaOutro');
-
-  function atualizarCategoriaOutro() {
-    const ehOutro = categoriaSelect.value === 'outro';
-    campoCategoriaOutro.style.display = ehOutro ? 'block' : 'none';
-    if (!ehOutro) categoriaOutroInput.value = '';
-  }
-  categoriaSelect.addEventListener('change', atualizarCategoriaOutro);
 
   function mostrarFeedback(mensagem, tipo) {
     if (!feedback) return;
@@ -110,25 +91,16 @@
       throw new Error('Anexe uma evidência (foto, áudio ou texto).');
     }
 
-    // "Outro": mantém categoria='outro' (enum do banco) e guarda o nome digitado à parte.
-    let categoriaOutro = null;
-    if (categoria === 'outro') {
-      categoriaOutro = document.getElementById('categoriaOutro').value.trim();
-      if (!categoriaOutro) {
-        throw new Error('Diga o nome da categoria.');
-      }
-    }
-
     // A descrição vem da evidência de texto; sem texto, usa a categoria como base.
     const textoEvid = evidencias.find(function (e) { return e.tipo === 'texto'; });
-    const catLabel = categoriaOutro || categoriaSelect.options[categoriaSelect.selectedIndex].text;
+    const catLabel = categoriaSelect.options[categoriaSelect.selectedIndex].text;
     const descricao = (textoEvid && textoEvid.conteudo) ? textoEvid.conteudo : ('Ticket de ' + catLabel);
 
     // Identidade (aberto_por) e retiro são preenchidos pelo SERVIDOR a partir do
     // capataz autenticado (cookie) — não enviamos identidade pelo corpo.
     return {
       categoria,
-      categoria_outro: categoriaOutro,
+      categoria_outro: null,
       localizacao,
       descricao,
       prioridade,
@@ -165,7 +137,6 @@
           el.selectedIndex = 0;
         }
       });
-      atualizarCategoriaOutro();
       if (window.PrioSeletor) window.PrioSeletor.resetarTodos();
       obterLocalizacao();
 
@@ -201,7 +172,7 @@
     navigator.geolocation.getCurrentPosition(
       function (pos) {
         campo.value = pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
-        if (status) status.textContent = '📍 Localização capturada automaticamente.';
+        if (status) status.textContent = 'Localização capturada com sucesso.';
       },
       function () {
         campo.readOnly = false;

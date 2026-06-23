@@ -11,6 +11,11 @@ import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movim
 import { UUID } from '../models/uuid'
 import { correspondeRetiro } from '../utils/retiro-filtro'
 
+const ESTAGIOS_NASCIMENTO_VALIDOS: MovimentacaoInput['estagio_vida'][] = [
+  'BEZERRO 0 A 7 MESES',
+  'BEZERRA 0 A 7 MESES',
+]
+
 export const MovimentacaoService = {
   // RN01: valida os campos obrigatórios antes de persistir.
   validarCamposObrigatorios(dados: MovimentacaoInput): void {
@@ -41,6 +46,7 @@ export const MovimentacaoService = {
     if (dados.tipo === 'nascimento') {
       this.validarOrigem(dados.origem)
       this.validarQuantidade(dados.quantidade)
+      this.validarEstagioNascimento(dados.estagio_vida)
     }
 
     if (dados.tipo === 'morte') {
@@ -67,6 +73,12 @@ export const MovimentacaoService = {
   validarQuantidade(quantidade: MovimentacaoInput['quantidade']): void {
     if (!quantidade || quantidade <= 0) {
       throw new Error('Campo "quantidade" é obrigatório e deve ser maior que zero')
+    }
+  },
+
+  validarEstagioNascimento(estagio: MovimentacaoInput['estagio_vida']): void {
+    if (!ESTAGIOS_NASCIMENTO_VALIDOS.includes(estagio)) {
+      throw new Error('Campo "estagio_vida" inválido para movimentações do tipo "nascimento"')
     }
   },
 

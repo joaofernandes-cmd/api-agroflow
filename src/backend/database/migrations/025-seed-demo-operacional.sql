@@ -19,8 +19,8 @@ ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO ticket (id, retiro_id, aberto_por, categoria, localizacao, status, descricao, prioridade, sincronizado)
 SELECT '00000000-0000-4000-8003-000000000002', '00000000-0000-4000-8000-000000000001', cap.id,
-       'abastecimento_agua', 'Galpão central', 'pendente',
-       'Estoque de ração abaixo do mínimo; reposição urgente.', 'media', true
+       'hidraulica', 'Galpão central', 'pendente',
+       'Vazamento no ponto de água; manutenção urgente.', 'media', true
 FROM (SELECT id FROM usuario WHERE login = 'capataz@agroflow.com') cap
 ON CONFLICT (id) DO NOTHING;
 

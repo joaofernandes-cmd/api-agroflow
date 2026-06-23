@@ -67,7 +67,7 @@
 
     <div class="campo" id="campoDestino" style="display: none;">
       <label class="campo__rotulo" for="destinoMov">Retiro de destino</label>
-      <select class="select" id="destinoMov">
+      <select class="select" id="destinoMov" required>
         <option value="" disabled selected>Selecione o retiro</option>
         <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
       </select>
@@ -756,9 +756,17 @@
       causaObito.value = '';
     }
 
-    // Nascimento: o animal é sempre um bezerro de 0 a 7 meses.
+    Array.prototype.forEach.call(estagioMov.options, function (opt) {
+      if (!opt.value) return;
+      opt.hidden = ehNascimento && opt.value !== 'BEZERRO 0 A 7 MESES' && opt.value !== 'BEZERRA 0 A 7 MESES';
+      opt.disabled = opt.hidden;
+    });
+
+    // Nascimento: restringe o estágio a bezerro/bezerra de 0 a 7 meses.
     if (ehNascimento) {
-      estagioMov.value = 'BEZERRO 0 A 7 MESES';
+      if (estagioMov.value !== 'BEZERRO 0 A 7 MESES' && estagioMov.value !== 'BEZERRA 0 A 7 MESES') {
+        estagioMov.value = 'BEZERRO 0 A 7 MESES';
+      }
     }
 
     // "Outro": revela o campo para descrever a movimentação.

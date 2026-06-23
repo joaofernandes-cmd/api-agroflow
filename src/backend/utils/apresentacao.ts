@@ -105,9 +105,6 @@ const CATEGORIA_TICKET_LABEL: Record<TicketCategoria, string> = {
   cerca: 'Cerca',
   hidraulica: 'Hidráulica',
   eletrica: 'Elétrica',
-  edificacao: 'Edificação',
-  abastecimento_agua: 'Abastecimento de água',
-  outro: 'Outro',
 }
 
 export interface TicketExibicao {
@@ -128,9 +125,6 @@ export interface TicketExibicao {
 
 // Título amigável do ticket a partir da categoria (o banco não guarda "nome").
 function tituloTicket(t: Ticket): string {
-  if (t.categoria === 'outro') {
-    return t.categoria_outro?.trim() || 'Outro'
-  }
   return CATEGORIA_TICKET_LABEL[t.categoria] ?? 'Ticket'
 }
 
@@ -222,6 +216,13 @@ const COR_PRIORIDADE: Record<TarefaPrioridade, string> = {
   baixa: 'var(--sucesso)',
 }
 
+const TITULO_TAREFA_LABEL: Record<string, string> = {
+  conferencia: 'Conferência do rebanho',
+  'transferencia-gado': 'Transferência de gado',
+  contagem: 'Contagem geral',
+  inspecao: 'Inspeção sanitária',
+}
+
 export interface TarefaExibicao {
   id: UUID
   titulo: string
@@ -248,6 +249,7 @@ export function tarefaParaExibicao(t: Tarefa, ctx: ContextoApresentacao): Tarefa
   // ali); `descricao` guarda os detalhes. Ciclo: pendente → concluido → aprovado.
   const concluida = t.status === 'concluido' || t.status === 'aprovado'
   const supervisor = nomeUsuarioPorId(ctx, t.criada_por)
+  const titulo = TITULO_TAREFA_LABEL[t.categoria] ?? t.categoria
   const dataCurta = t.data_criacao
     ? new Date(t.data_criacao).toLocaleDateString('pt-BR')
     : ''
@@ -264,7 +266,7 @@ export function tarefaParaExibicao(t: Tarefa, ctx: ContextoApresentacao): Tarefa
 
   return {
     id: t.id,
-    titulo: t.categoria,
+    titulo,
     retiro: nomeRetiro(ctx, t.retiro_id),
     capataz: nomeUsuarioPorId(ctx, t.atribuida_a),
     supervisor,
