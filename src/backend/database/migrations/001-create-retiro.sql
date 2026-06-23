@@ -1,3 +1,5 @@
+-- 001 - Tipos base e tabela retiro.
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 DO $$

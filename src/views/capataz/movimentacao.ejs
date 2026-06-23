@@ -67,7 +67,7 @@
 
     <div class="campo" id="campoDestino" style="display: none;">
       <label class="campo__rotulo" for="destinoMov">Retiro de destino</label>
-      <select class="select" id="destinoMov" required>
+      <select class="select" id="destinoMov" disabled>
         <option value="" disabled selected>Selecione o retiro</option>
         <% RETIROS.forEach(function (r) { %><option value="<%= r %>"><%= r %></option><% }) %>
       </select>
@@ -745,6 +745,8 @@
     const ehOutro = tipo === 'outro';
 
     campoDestino.style.display = ehTransferencia ? 'block' : 'none';
+    destinoMov.required = ehTransferencia;
+    destinoMov.disabled = !ehTransferencia;
     campoCausa.style.display = ehMorte ? 'block' : 'none';
     rotuloOrigem.textContent = ehTransferencia ? 'Retiro de origem' : 'Retiro';
 

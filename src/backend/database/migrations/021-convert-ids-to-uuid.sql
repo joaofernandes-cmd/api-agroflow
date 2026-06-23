@@ -1,5 +1,9 @@
+-- 021 - Converte IDs e FKs de BIGINT para UUID.
+-- Ordem sensivel: nao reorganizar comandos sem validar schema final.
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
+-- Colunas temporarias UUID.
 ALTER TABLE retiro ADD COLUMN id_uuid UUID NOT NULL DEFAULT gen_random_uuid();
 ALTER TABLE movimentacao ADD COLUMN id_uuid UUID NOT NULL DEFAULT gen_random_uuid();
 ALTER TABLE tarefa ADD COLUMN id_uuid UUID NOT NULL DEFAULT gen_random_uuid();
@@ -29,6 +33,7 @@ ALTER TABLE movimentacao_transferencia ADD COLUMN movimentacao_id_uuid UUID;
 ALTER TABLE movimentacao_nascimento ADD COLUMN movimentacao_id_uuid UUID;
 ALTER TABLE movimentacao_morte ADD COLUMN movimentacao_id_uuid UUID;
 
+-- Copia referencias antigas para as colunas UUID.
 UPDATE usuario u
 SET retiro_id_uuid = r.id_uuid
 FROM retiro r
@@ -115,6 +120,7 @@ SET movimentacao_id_uuid = m.id_uuid
 FROM movimentacao m
 WHERE mm.movimentacao_id = m.id;
 
+-- Remove constraints antigas antes de trocar as colunas.
 ALTER TABLE usuario DROP CONSTRAINT IF EXISTS usuario_retiro_id_foreign;
 ALTER TABLE tarefa DROP CONSTRAINT IF EXISTS tarefa_retiro_id_foreign;
 ALTER TABLE movimentacao DROP CONSTRAINT IF EXISTS movimentacao_retiro_id_foreign;
@@ -174,6 +180,7 @@ ALTER TABLE movimentacao_transferencia DROP COLUMN movimentacao_id;
 ALTER TABLE movimentacao_nascimento DROP COLUMN movimentacao_id;
 ALTER TABLE movimentacao_morte DROP COLUMN movimentacao_id;
 
+-- Promove colunas UUID para os nomes definitivos.
 ALTER TABLE relatorio DROP COLUMN id;
 ALTER TABLE evidencia DROP COLUMN id;
 ALTER TABLE ticket DROP COLUMN id;
@@ -210,6 +217,7 @@ ALTER TABLE movimentacao_transferencia RENAME COLUMN movimentacao_id_uuid TO mov
 ALTER TABLE movimentacao_nascimento RENAME COLUMN movimentacao_id_uuid TO movimentacao_id;
 ALTER TABLE movimentacao_morte RENAME COLUMN movimentacao_id_uuid TO movimentacao_id;
 
+-- Reaplica nulabilidade, PKs e FKs sobre UUID.
 ALTER TABLE usuario ALTER COLUMN retiro_id SET NOT NULL;
 ALTER TABLE movimentacao ALTER COLUMN retiro_id SET NOT NULL;
 ALTER TABLE tarefa ALTER COLUMN retiro_id SET NOT NULL;

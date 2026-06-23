@@ -1,3 +1,5 @@
+-- 019 - Remove constraints e tipos legados.
+
 ALTER TABLE usuario
   DROP CONSTRAINT IF EXISTS usuario_retiro_id_fkey;
 
