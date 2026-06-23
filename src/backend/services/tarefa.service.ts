@@ -2,7 +2,7 @@ import { Tarefa, TarefaInput, TarefaStatus, TarefaPrioridade } from '../models/t
 import { TarefaRepository } from '../repositories/tarefa.repository'
 import { Usuario } from '../models/usuario.model'
 import { UUID } from '../models/uuid'
-import { correspondeRetiro } from '../utils/retiro-filtro'
+import { filtrarPorRetiro } from '../utils/retiro-filtro'
 
 export const TarefaService = {
   // RN02: Validar campos obrigatórios na criação de tarefa
@@ -71,46 +71,15 @@ export const TarefaService = {
 
   // RN10: Buscar tarefas para dashboard (apenas concluídas)
   async buscarParaDashboard(retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.buscarTodos()
-
-    // Filtra apenas tarefas aprovadas (e opcionalmente por retiro)
-    return tarefas.filter(t => {
-      if (t.status !== 'aprovado') {
-        return false
-      }
-
-      // Se retiroId foi informado, filtra por esse retiro
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.status === 'aprovado')
   },
 
 
   // Listar tarefas filtradas por status e opcionalmente por retiro
   async listarPorStatus(status: TarefaStatus, retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.buscarTodos()
-
-    // Filtra tarefas por status (e opcionalmente por retiro)
-    return tarefas.filter(t => {
-      // Verifica se o status da tarefa corresponde ao filtro solicitado
-      if (t.status !== status) {
-        return false
-      }
-
-      // Se retiroId foi informado, verifica se pertence a esse retiro
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.status === status)
   },
 
 
@@ -123,45 +92,13 @@ export const TarefaService = {
 
   // Listar tarefas filtradas por prioridade e opcionalmente por retiro
   async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.buscarTodos()
-
-    // Filtra tarefas por prioridade (alta, media, baixa)
-    return tarefas.filter(t => {
-      // Verifica se a prioridade da tarefa corresponde ao filtro
-      if (t.prioridade !== prioridade) {
-        return false
-      }
-
-      // Se retiroId foi informado, verifica se pertence a esse retiro
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.prioridade === prioridade)
   },
   // Listar tarefas filtradas por categoria e opcionalmente por retiro
   async listarPorCategoria(categoria: string, retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.buscarTodos()
-
-    // Filtra tarefas por categoria
-    return tarefas.filter(t => {
-      // Verifica se a categoria da tarefa corresponde ao filtro
-      if (t.categoria !== categoria) {
-        return false
-      }
-
-      // Se retiroId foi informado, verifica se pertence a esse retiro
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.categoria === categoria)
   },
 
 
@@ -239,11 +176,8 @@ export const TarefaService = {
     }
 
     // Itera sobre todas as tarefas e incrementa o contador do status correspondente
-    tarefas.forEach(t => {
-      // Se retiroId foi informado, filtra por esse(s) retiro(s); senão conta todas
-      if (correspondeRetiro(t.retiro_id, retiroId)) {
-        contagem[t.status]++
-      }
+    filtrarPorRetiro(tarefas, retiroId).forEach(t => {
+      contagem[t.status]++
     })
 
     // Retorna objeto com contagem de tarefas por status

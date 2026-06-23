@@ -2,7 +2,7 @@ import { Ticket, TicketInput, TicketStatus, TicketPrioridade, TicketCategoria } 
 import { TicketRepository } from '../repositories/ticket.repository'
 import { Usuario } from '../models/usuario.model'
 import { UUID } from '../models/uuid'
-import { correspondeRetiro } from '../utils/retiro-filtro'
+import { filtrarPorRetiro } from '../utils/retiro-filtro'
 
 export const TicketService = {
   // RN08: Validar campos obrigatórios e existência de evidência
@@ -94,52 +94,19 @@ export const TicketService = {
   // Listar tickets por status
   async listarPorStatus(status: TicketStatus, retiroId?: UUID | UUID[]): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
-
-    return tickets.filter(t => {
-      if (t.status !== status) {
-        return false
-      }
-
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      return true
-    })
+    return filtrarPorRetiro(tickets, retiroId).filter(t => t.status === status)
   },
 
   // Listar tickets por prioridade
   async listarPorPrioridade(prioridade: TicketPrioridade, retiroId?: UUID | UUID[]): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
-
-    return tickets.filter(t => {
-      if (t.prioridade !== prioridade) {
-        return false
-      }
-
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      return true
-    })
+    return filtrarPorRetiro(tickets, retiroId).filter(t => t.prioridade === prioridade)
   },
 
   // Listar tickets por categoria
   async listarPorCategoria(categoria: TicketCategoria, retiroId?: UUID | UUID[]): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
-
-    return tickets.filter(t => {
-      if (t.categoria !== categoria) {
-        return false
-      }
-
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      return true
-    })
+    return filtrarPorRetiro(tickets, retiroId).filter(t => t.categoria === categoria)
   },
 
   // Atualizar status do ticket
@@ -183,18 +150,7 @@ export const TicketService = {
   // Listar tickets pendentes (aguardando aprovação do supervisor)
   async listarPendentes(retiroId?: UUID | UUID[]): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
-
-    return tickets.filter(t => {
-      if (t.status !== 'pendente') {
-        return false
-      }
-
-      if (!correspondeRetiro(t.retiro_id, retiroId)) {
-        return false
-      }
-
-      return true
-    })
+    return filtrarPorRetiro(tickets, retiroId).filter(t => t.status === 'pendente')
   },
 
   // Contar tickets por prioridade
@@ -207,10 +163,8 @@ export const TicketService = {
       baixa: 0,
     }
 
-    tickets.forEach(t => {
-      if (correspondeRetiro(t.retiro_id, retiroId)) {
-        contagem[t.prioridade]++
-      }
+    filtrarPorRetiro(tickets, retiroId).forEach(t => {
+      contagem[t.prioridade]++
     })
 
     return contagem
