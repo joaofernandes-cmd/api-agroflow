@@ -4617,11 +4617,12 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
  
 - `npm test` executado com sucesso.
 - `npm run test:coverage -- --runInBand` executado com sucesso.
-- Suíte atual: **24 test suites aprovadas**.
-- Casos de teste aprovados na execução de cobertura: **315**.
+- Suíte atual: **26 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **338**.
 - Testes de integração aprovados: **147** em **11 test suites**.
-- Testes unitários aprovados: **168** em **13 test suites**.
-- Cobertura global: **74,92% de statements**, **58,42% de branches**, **71,2% de functions** e **75,56% de lines**.
+- Testes unitários aprovados: **191** em **15 test suites**.
+- Cobertura global: **77,47% de statements**, **67,48% de branches**, **76,11% de functions** e **78,17% de lines**.
+- Cobertura da camada de repositories: **53,14% de statements**, **52,91% de branches**, **40,57% de functions** e **53,44% de lines**.
 - Cobertura da camada de middlewares: **92,92% de statements**, **82,05% de branches**, **100% de functions** e **92,92% de lines**.
 - Cobertura da camada de utils: **79,38% de statements**, **50,87% de branches**, **90% de functions** e **90,74% de lines**.
 - Cobertura da camada de services: **88,7% de statements**, **81,72% de branches**, **93,52% de functions** e **88,6% de lines**.
