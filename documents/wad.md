@@ -808,9 +808,9 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 18 apresenta os requisitos funcionais definidos para o sistema, com suas respectivas descrições, prioridades e situações de implementação.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 17 apresenta os requisitos funcionais definidos para o sistema, com suas respectivas descrições, prioridades e situações de implementação.
 
-<p align="center">Quadro 18 - Requisitos Funcionais</p>
+<p align="center">Quadro 17 - Requisitos Funcionais</p>
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
@@ -831,9 +831,9 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;As Regras de Negócio (RN) estabelecem as condições, restrições e validações que governam o comportamento do sistema, traduzindo políticas operacionais da BrPec Agropecuária em critérios implementáveis e testáveis. Cada regra está vinculada explicitamente a um ou mais Requisitos Funcionais (RF), garantindo rastreabilidade completa entre necessidades de negócio e especificações técnicas. A redação das RNs foi estruturada para permitir conversão direta em testes automatizados utilizando verbos de ação precisos e condições verificáveis. O Quadro 19 consolida essas regras e seus respectivos vínculos e critérios de aceite.
+&nbsp;&nbsp;&nbsp;&nbsp;As Regras de Negócio (RN) estabelecem as condições, restrições e validações que governam o comportamento do sistema, traduzindo políticas operacionais da BrPec Agropecuária em critérios implementáveis e testáveis. Cada regra está vinculada explicitamente a um ou mais Requisitos Funcionais (RF), garantindo rastreabilidade completa entre necessidades de negócio e especificações técnicas. A redação das RNs foi estruturada para permitir conversão direta em testes automatizados utilizando verbos de ação precisos e condições verificáveis. O Quadro 18 consolida essas regras e seus respectivos vínculos e critérios de aceite.
 
-<p align="center">Quadro 19 - Regras de Negócios</p>
+<p align="center">Quadro 18 - Regras de Negócios</p>
 
 | ID   | Descrição | RF Associado | Critério de Teste |
 |:----:|-----------|:------------:|-------------------|
@@ -862,7 +862,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 
 
-<p align="center">Quadro 20 - Requisitos Não Funcionais — USAB — Usabilidade</p>
+<p align="center">Quadro 19 - Requisitos Não Funcionais — USAB — Usabilidade</p>
 
 ---
 
@@ -881,7 +881,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 ---
 
 
-<p align="center">Quadro 21 - Requisitos Não Funcionais — CONF — Confiabilidade</p>
+<p align="center">Quadro 20 - Requisitos Não Funcionais — CONF — Confiabilidade</p>
 </div>
 
 **CONF — Confiabilidade**
@@ -898,7 +898,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 22 - Requisitos Não Funcionais — DES — Desempenho</p>
+<p align="center">Quadro 21 - Requisitos Não Funcionais — DES — Desempenho</p>
 </div>
 
 **DES — Desempenho**
@@ -916,7 +916,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 ---
 
 
-<p align="center">Quadro 23 - Requisitos Não Funcionais — SUP — Suportabilidade</p>
+<p align="center">Quadro 22 - Requisitos Não Funcionais — SUP — Suportabilidade</p>
 </div>
 
 **SUP — Suportabilidade**
@@ -934,7 +934,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 ---
 
 
-<p align="center">Quadro 24 - Requisitos Não Funcionais — SEG — Segurança</p>
+<p align="center">Quadro 23 - Requisitos Não Funcionais — SEG — Segurança</p>
 </div>
 
 **SEG — Segurança**
@@ -951,7 +951,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 25 - Requisitos Não Funcionais — CAP — Capacidade</p>
+<p align="center">Quadro 24 - Requisitos Não Funcionais — CAP — Capacidade</p>
 </div>
 
 **CAP — Capacidade**
@@ -969,7 +969,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 ---
 
 
-<p align="center">Quadro 26 - Requisitos Não Funcionais — REST — Restrições de Design</p>
+<p align="center">Quadro 25 - Requisitos Não Funcionais — REST — Restrições de Design</p>
 </div>
 
 **REST — Restrições de Design**
@@ -987,7 +987,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 ---
 
 
-<p align="center">Quadro 27 - Requisitos Não Funcionais — ORG — Organizacionais</p>
+<p align="center">Quadro 26 - Requisitos Não Funcionais — ORG — Organizacionais</p>
 </div>
 
 **ORG — Organizacionais**
@@ -1011,9 +1011,9 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 &nbsp;&nbsp;&nbsp;&nbsp;Os endpoints foram nomeados a partir das entidades consolidadas no modelo relacional apresentado na [Seção 3.6.3](#c3.6.3), utilizando substantivos no plural conforme convenção REST (FIELDING, 2000). Cada rota reflete diretamente uma das tabelas centrais do sistema: `movimentacoes`, `tarefas`, `tickets`, `evidencias`, `relatorios` e `usuarios`, ou uma operação transversal, como autenticação e sincronização. Essa coerência entre a camada de dados, os requisitos e a API garante que as três visões do sistema permaneçam alinhadas ao longo do desenvolvimento. 
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 28 espelha o fluxo operacional descrito no minimundo da [Seção 3.1](#c3.1), partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 27 espelha o fluxo operacional descrito no minimundo da [Seção 3.1](#c3.1), partindo do registro em campo, passando pela sincronização e validação, até a consolidação gerencial.
 
-<p align="center">Quadro 28 - Matriz RF → RN → Endpoint</p>
+<p align="center">Quadro 27 - Matriz RF → RN → Endpoint</p>
 
 | RF    | RN associadas | Endpoint    | Método |
 |:-------:|:---------------:|:-------------:|:--------:|
@@ -1099,7 +1099,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 --- 
 
-<p align="center">Quadro 29 - Use Case 01</p>
+<p align="center">Quadro 28 - Use Case 01</p>
 
 #### UC-01 - Registrar Movimentação de Rebanho
 
@@ -1146,7 +1146,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 **Pós-condição:** A movimentação está registrada no armazenamento local do dispositivo, associada ao Capataz autor (Daniel) e ao retiro de origem, com status "pendente de validação". A movimentação fica disponível para envio ao servidor (UC-02) e posterior validação pelo Supervisor Luiz (UC-04).
 
 ---
-<p align="center">Quadro 30 - Use Case 02</p>
+<p align="center">Quadro 29 - Use Case 02</p>
 
 #### UC-02 - Sincronizar Dados Offline com o Servidor
 
@@ -1191,7 +1191,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 **Pós-condição:** Todos os registros que foram sincronizados com sucesso estão persistidos no servidor central e marcados localmente como "sincronizados". Registros que falharam permanecem no armazenamento local com flag de erro para nova tentativa. Nenhum dado é perdido no processo (CONF — 0% de perda). Os dados sincronizados ficam disponíveis para o Supervisor Luiz validar (UC-04).
 
 ---
-<p align="center">Quadro 31 - Use Case 03</p>
+<p align="center">Quadro 30 - Use Case 03</p>
 
 #### UC-03 - Criar e Atribuir Tarefa a Capataz
 
@@ -1241,7 +1241,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 32 - Use Case 04</p>
+<p align="center">Quadro 31 - Use Case 04</p>
 
 #### UC-04 - Validar Registros do Capataz
 
@@ -1290,7 +1290,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 33 - Use Case 05</p>
+<p align="center">Quadro 32 - Use Case 05</p>
 
 #### UC-05 - Abrir Ticket de Infraestrutura
 
@@ -1338,7 +1338,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 34 - Use Case 06</p>
+<p align="center">Quadro 33 - Use Case 06</p>
 
 #### UC-06 - Visualizar Dados Aprovados e Gerar Relatório
 
@@ -1388,7 +1388,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 35 - Use Case 07</p>
+<p align="center">Quadro 34 - Use Case 07</p>
 
 #### UC-07 - Identificar-se no Sistema
 
@@ -1431,7 +1431,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 **Pós-condição:** O usuário está autenticado com perfil identificado e token de acesso ativo. O menu exibe apenas as ações do perfil: Luiz (Supervisor) vê "Validar registros" e "Criar tarefa"; Marcos (Gerente) vê "Visualizar dados" e "Gerar relatório". O fluxo de login do backend não emite token para Capataz; registros operacionais desse perfil seguem os fluxos específicos de campo e sincronização.
 
 --- 
-<p align="center">Quadro 36 - Use Case 08</p>
+<p align="center">Quadro 35 - Use Case 08</p>
 
 #### UC-08 - Registrar Causa de Óbito
 
@@ -1468,7 +1468,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 ---
 
-<p align="center">Quadro 37 - Use Case 09</p>
+<p align="center">Quadro 36 - Use Case 09</p>
 
 #### UC-09 - Anexar Evidência
 | Campo | Conteúdo |
@@ -1510,7 +1510,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 **Pós-condição:** A evidência está anexada ao registro principal com seus metadados (tipo, timestamp, localização quando aplicável). O fluxo retorna ao UC base.
 
 ---
-<p align="center">Quadro 38 - Use Case 10</p>
+<p align="center">Quadro 37 - Use Case 10</p>
 
 #### UC-10 - Solicitar Correção de Registro
 | Campo | Conteúdo |
@@ -2608,9 +2608,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;A sincronização utiliza o atributo `sincronizado` (boolean) nas entidades operacionais aplicáveis. Esse atributo e os endpoints existentes permitem identificar e processar registros pendentes no servidor, enquanto o cliente do Capataz mantém registros em armazenamento local e tenta reenviá-los quando a conexão retorna.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O atributo estagio_vida permanece na entidade MOVIMENTACAO por ser comum ao registro do rebanho. Já atributos específicos, como causa_obito, origem, destino e quantidade, são distribuídos nas tabelas especializadas de movimentação conforme o tipo do evento registrado. O Quadro 39 consolida as entidades e o Quadro 40 apresenta seus atributos.
+&nbsp;&nbsp;&nbsp;&nbsp;O atributo estagio_vida permanece na entidade MOVIMENTACAO por ser comum ao registro do rebanho. Já atributos específicos, como causa_obito, origem, destino e quantidade, são distribuídos nas tabelas especializadas de movimentação conforme o tipo do evento registrado. O Quadro 38 consolida as entidades e o Quadro 39 apresenta seus atributos.
 
-<p align="center">Quadro 39 - Entidades do modelo conceitual da BrPec.</p>
+<p align="center">Quadro 38 - Entidades do modelo conceitual da BrPec.</p>
 
 | Entidade | Descrição e origem nas User Stories |
 |----------|-------------------------------------|
@@ -2634,7 +2634,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 | RELATORIO | Documento consolidado com indicadores operacionais, gerado por um usuário e associado a um retiro e a um período. Apenas dados com sincronizado = true compõem o relatório, conforme RN07. Origem: US07, US08, US10. |
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-<p align="center">Quadro 40 - Atributos das entidades</p>
+<p align="center">Quadro 39 - Atributos das entidades</p>
 
 | Entidade | Atributos |
 |----------|-----------|
@@ -2661,10 +2661,10 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 ### Relacionamentos e Cardinalidades
 
-&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela conferência e validação, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US06) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 41 apresenta o conjunto de relacionamentos do modelo.
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos conectam as entidades segundo as regras de negócio extraídas das User Stories. O vínculo entre USUARIO e MOVIMENTACAO foi desdobrado em dois relacionamentos distintos — REGISTRA e VALIDA — para diferenciar o papel do capataz (autor do registro, conforme US01 e US02) e do supervisor (responsável pela conferência e validação, conforme US04 e RN06). O vínculo entre USUARIO e TAREFA foi desdobrado em CRIA e EXECUTA para refletir os diferentes perfis envolvidos (US03, RN02). O vínculo entre USUARIO e TICKET foi desdobrado em ABRE e ATRIBUIDO_A, diferenciando o capataz que abre o chamado (US06) do capataz ao qual o supervisor atribui o chamado para execução, conforme RF008. O Quadro 40 apresenta o conjunto de relacionamentos do modelo.
 
 
-<p align="center">Quadro 41 - Relacionamentos do modelo conceitual</p>
+<p align="center">Quadro 40 - Relacionamentos do modelo conceitual</p>
 
 | ID | Relacionamento | Entidades | Cardinalidade | Descrição |
 |----|----------------|-----------|:-------------:|-----------|
@@ -2976,9 +2976,9 @@ WHERE retiro_id = ?
  
 &nbsp;&nbsp;&nbsp;&nbsp;A consulta combina conjunção, disjunção e o operador SQL `IN`. A movimentação só passa pelo filtro se pertencer ao retiro informado e, ao mesmo tempo, satisfizer os filtros opcionais de tipo e status. Quando uma lista não é enviada, a proposição correspondente à ausência do filtro torna a disjunção verdadeira.
  
-**Tabela verdade:** O Quadro 42 apresenta as combinações lógicas da Consulta 1.
+**Tabela verdade:** O Quadro 41 apresenta as combinações lógicas da Consulta 1.
  
-<p align="center">Quadro 42 - Tabela verdade da Consulta 1 (SELECT).</p>
+<p align="center">Quadro 41 - Tabela verdade da Consulta 1 (SELECT).</p>
 
 <div align="center">
 
@@ -3049,9 +3049,9 @@ WHERE retiro_id = ?
 
 &nbsp;&nbsp;&nbsp;&nbsp;A consulta utiliza conjunções para exigir que todas as regras sejam atendidas. O operador `IN` representa a aceitação de mais de uma prioridade em uma mesma condição, mantendo a busca alinhada aos filtros de status, prioridade e retiro presentes no backend.
 
-**Tabela verdade:** O Quadro 43 apresenta as combinações lógicas da Consulta 2.
+**Tabela verdade:** O Quadro 42 apresenta as combinações lógicas da Consulta 2.
 
-<p align="center">Quadro 43 - Tabela verdade da Consulta 2 (SELECT).</p>
+<p align="center">Quadro 42 - Tabela verdade da Consulta 2 (SELECT).</p>
 
 <div align="center">
 
@@ -3097,9 +3097,9 @@ WHERE id = ?
  
 &nbsp;&nbsp;&nbsp;&nbsp;A consulta utiliza conjunção e negação. A atualização só deve ocorrer quando o ticket corresponde ao identificador informado, ainda está pendente e não possui aprovador registrado. A condição `NOT aprovado_por IS NOT NULL` reforça que um ticket já aprovado não deve ser aprovado novamente.
  
-**Tabela verdade:** O Quadro 44 apresenta as combinações lógicas da Consulta 3.
+**Tabela verdade:** O Quadro 43 apresenta as combinações lógicas da Consulta 3.
  
-<p align="center">Quadro 44 - Tabela verdade da Consulta 3 (UPDATE).</p>
+<p align="center">Quadro 43 - Tabela verdade da Consulta 3 (UPDATE).</p>
 
 <div align="center">
 
@@ -3154,9 +3154,9 @@ VALUES (?, ?, ?, ?);
  
 &nbsp;&nbsp;&nbsp;&nbsp;Os conectivos utilizados são negação (¬) e disjunção (∨). Essa expressão é a forma lógica de uma implicação: $M \rightarrow C$, lida como "se o tipo for morte, então causa_obito deve estar preenchido". Pela equivalência $(p \rightarrow q) \equiv (\neg p \lor q)$, essa regra é aplicada antes da inserção dos dados específicos na tabela `movimentacao_morte`.
  
-**Tabela verdade:** O Quadro 45 apresenta as combinações lógicas da validação de morte.
+**Tabela verdade:** O Quadro 44 apresenta as combinações lógicas da validação de morte.
  
-<p align="center">Quadro 45 - Tabela verdade da validação de morte.</p>
+<p align="center">Quadro 44 - Tabela verdade da validação de morte.</p>
 
 <div align="center">
 
@@ -3188,9 +3188,9 @@ VALUES (?, ?, ?, ?);
  
 &nbsp;&nbsp;&nbsp;&nbsp;Os conectivos utilizados são negação (¬), disjunção (∨) e conjunção (∧). É também uma implicação na forma disjuntiva: $T \rightarrow (O \land D \land Q)$, lida como "se o tipo for transferência, então origem, destino e quantidade devem estar preenchidos".
  
-**Tabela verdade:** O Quadro 46 apresenta as combinações lógicas da validação de transferência.
+**Tabela verdade:** O Quadro 45 apresenta as combinações lógicas da validação de transferência.
  
-<p align="center">Quadro 46 - Tabela verdade da validação de transferência.</p>
+<p align="center">Quadro 45 - Tabela verdade da validação de transferência.</p>
 
 <div align="center">
 
@@ -3221,9 +3221,9 @@ VALUES (?, ?, ?, ?);
  
 ---
  
-&nbsp;&nbsp;&nbsp;&nbsp;As consultas escolhidas variam em vários aspectos: o tipo de operação SQL, os conectivos lógicos usados na condição e o contexto operacional do AgroFlow em que cada uma se aplica. O Quadro 47 resume essa variedade.
+&nbsp;&nbsp;&nbsp;&nbsp;As consultas escolhidas variam em vários aspectos: o tipo de operação SQL, os conectivos lógicos usados na condição e o contexto operacional do AgroFlow em que cada uma se aplica. O Quadro 46 resume essa variedade.
  
-<p align="center">Quadro 47 - Síntese da diversidade das consultas.</p>
+<p align="center">Quadro 46 - Síntese da diversidade das consultas.</p>
 
 | Consulta | Operação | Conectivos e operadores | Padrão lógico | Contexto operacional |
 |:---:|:---:|---|---|---|
@@ -4099,7 +4099,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A autorização é aplicada no backend por meio do middleware `exigirCargo`, que verifica o cargo presente em `req.usuario` antes que a requisição chegue ao controller. Quando o usuário está autenticado, mas não possui o cargo exigido para a operação, o sistema retorna `403 Forbidden`. As rotas protegidas são organizadas por módulo e recebem explicitamente os cargos autorizados para cada operação.
 
-<p align="center">Quadro - Regras de autorização por módulo</p>
+<p align="center">Quadro 47 - Regras de autorização por módulo</p>
 
 | Módulo | Capataz | Supervisor | Gerente |
 |---|---|---|---|
@@ -4126,13 +4126,33 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;No backend, movimentações, tarefas, tickets e evidências passam por validações de campos obrigatórios, tipos aceitos, status permitidos, permissões por cargo e vínculo com o usuário autenticado quando aplicável. Os controllers utilizam uma camada centralizada de tratamento de erros para separar mensagens públicas de detalhes técnicos. Assim, regras de negócio seguras podem ser apresentadas ao usuário, enquanto erros internos, falhas de conexão, variáveis de ambiente e exceções de infraestrutura são tratados com respostas genéricas e registrados em log para diagnóstico.
 
-&nbsp;&nbsp;&nbsp;&nbsp;No fluxo do Capataz, a aplicação utiliza recursos de PWA (Progressive Web App), modelo em que uma aplicação web pode oferecer funcionalidades próximas às de um aplicativo instalado, como operação offline, cache local e sincronização posterior. Esse mecanismo verifica conectividade pelo endpoint /health com tempo limite de resposta. Quando a conexão não está disponível, os registros são mantidos em uma fila local no IndexedDB e reenviados quando a rede retorna. Esse comportamento permite continuidade operacional em campo e evita que falhas temporárias de internet resultem em perda imediata de dados. O envio de mídias também possui validações de tipo, tamanho e regras de domínio, como georreferenciamento em fotos e duração mínima para áudios.
+&nbsp;&nbsp;&nbsp;&nbsp;No fluxo do Capataz, a aplicação utiliza recursos de PWA (Progressive Web App), modelo em que uma aplicação web pode oferecer funcionalidades próximas às de um aplicativo instalado, como operação offline, cache local e sincronização posterior. Esse mecanismo verifica conectividade pelo endpoint `/health` com tempo limite de resposta. Quando a conexão não está disponível, os registros são mantidos em uma fila local no IndexedDB e reenviados quando a rede retorna. Esse comportamento permite continuidade operacional em campo e evita que falhas temporárias de internet resultem em perda imediata de dados. O envio de mídias também possui validações de tipo, tamanho e regras de domínio, como georreferenciamento em fotos e duração mínima para áudios.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nas telas do Supervisor, tarefas, tickets e movimentações só são movidos para o estado de validados ou aprovados após confirmação de sucesso pela API. Se a requisição falhar, o item permanece pendente e o sistema exibe uma mensagem amigável. O serviço de sincronização do backend segue a mesma lógica: registros são marcados como sincronizados apenas após confirmação de envio, mantendo falhas registradas para tratamento posterior.
+
+<p align="center">Quadro 48 - Estratégias de resiliência aplicadas</p>
+
+| Estratégia | Aplicação no AgroFlow | Impacto esperado |
+|---|---|---|
+| Validação preventiva | Controllers e services validam campos, tipos, status, permissões e autoria | Evita persistência de registros inválidos |
+| Erros padronizados | Camada centralizada de tratamento de erros filtra detalhes técnicos antes da resposta | Protege informações internas e melhora a clareza para o usuário |
+| Diagnóstico interno | Falhas técnicas são registradas em log, sem exposição ao cliente | Mantém rastreabilidade para manutenção |
+| Fila offline | Registros do Capataz são armazenados em IndexedDB quando não há conexão | Reduz risco de perda de dados em campo |
+| Verificação de conectividade | O PWA consulta `/health` com tempo limite antes de sincronizar | Evita tentativas indefinidas em rede instável |
+| Reprocessamento | Pendências são reenviadas quando a conexão retorna | Aumenta a confiabilidade da sincronização |
+| Validação de mídia | Fotos e áudios passam por regras de tipo, tamanho e domínio | Reduz evidências inválidas ou incompletas |
+| Confirmação pela API | Itens só mudam de estado na interface após sucesso no backend | Evita divergência entre tela e servidor |
+| Controle de acesso | Rotas protegidas validam autenticação, cargo e escopo do usuário | Reduz alterações indevidas em dados operacionais |
+
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Essas estratégias foram validadas nos fluxos críticos da aplicação, contemplando autenticação, autorização, registro offline, sincronização, envio de evidências e tratamento de erros.
 
 ## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada no Quadro 48 relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
+&nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada no Quadro 49 relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
 
-<p align="center"><strong>Quadro 48 - Matriz de Rastreabilidade (RTM)</strong></p>
+<p align="center"><strong>Quadro 49 - Matriz de Rastreabilidade (RTM)</strong></p>
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 |---|---|---|---|---|---|---|
@@ -4159,9 +4179,9 @@ VALUES (?, ?, ?, ?);
 
 #### Validação de Cobertura das User Stories 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Complementando a RTM da [Seção 3.9](#c3.9), o Quadro 49 confronta as User Stories da [Seção 2.3](#c2.3) com os Requisitos Funcionais que as implementam, registrando o status de cobertura observado nesta revisão.
+&nbsp;&nbsp;&nbsp;&nbsp;Complementando a RTM da [Seção 3.9](#c3.9), o Quadro 50 confronta as User Stories da [Seção 2.3](#c2.3) com os Requisitos Funcionais que as implementam, registrando o status de cobertura observado nesta revisão.
 
-<p align="center">Quadro 49 - Validação de Cobertura das User Stories</p>
+<p align="center">Quadro 50 - Validação de Cobertura das User Stories</p>
 
 | US | Resumo | RF associado(s) | Status de cobertura |
 | :--: | -------- | :---: | ---------------------- |
@@ -4271,9 +4291,9 @@ VALUES (?, ?, ?, ?);
 
 ### Tecnologias Utilizadas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 50 resume as tecnologias utilizadas em cada camada da aplicação.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 51 resume as tecnologias utilizadas em cada camada da aplicação.
 
-<p align="center">Quadro 50 - Tecnologias utilizadas na aplicação</p>
+<p align="center">Quadro 51 - Tecnologias utilizadas na aplicação</p>
 
 | Camada | Tecnologia |
 |--------|-----------|
@@ -4418,9 +4438,9 @@ Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma
 - **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
 - **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
 
-Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 51 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 52 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
 
-<p align="center">Quadro 51 - Estrutura AAA adotada nos testes</p>
+<p align="center">Quadro 52 - Estrutura AAA adotada nos testes</p>
 
 | Fase | Responsável | Descrição |
 |---|---|---|
@@ -4432,9 +4452,9 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura 
 
 #### Endpoints Mapeados
 
-Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 52:
+Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 53:
 
-<p align="center">Quadro 52 - Endpoints mapeados pelos testes</p>
+<p align="center">Quadro 53 - Endpoints mapeados pelos testes</p>
 
 | Domínio | Endpoint |
 |---|---|
@@ -4516,9 +4536,9 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 
 ### Tabela Complementar de Testes White-Box
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 53 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e service exercitado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e service exercitado.
 
-<p align="center">Quadro 53 - Testes complementares White-Box</p>
+<p align="center">Quadro 54 - Testes complementares White-Box</p>
 
 | CT | RN | RF | Service(s) | Arquivo(s) | Cenário validado | Resultado esperado |
 |---|---|---|---|---|---|---|
@@ -4548,9 +4568,9 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 
 ### Tabela Complementar de Testes Black-Box
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 apresenta os testes black-box organizados por módulo, arquivo, cenário, endpoints e resultado esperado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 55 apresenta os testes black-box organizados por módulo, arquivo, cenário, endpoints e resultado esperado.
 
-<p align="center">Quadro 54 - Testes complementares Black-Box</p>
+<p align="center">Quadro 55 - Testes complementares Black-Box</p>
 
 | Módulo | Arquivo de teste | Cenário validado | Endpoint(s) | Resultado esperado |
 |---|---|---|---|---|
@@ -4583,9 +4603,9 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 
 ### Matriz de conformidade por cenário
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 55 sintetiza a cobertura atual dos cenários de sucesso, validação, regra de negócio e recurso não encontrado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 56 sintetiza a cobertura atual dos cenários de sucesso, validação, regra de negócio e recurso não encontrado.
 
-<p align="center">Quadro 55 - Matriz de conformidade dos testes por cenário</p>
+<p align="center">Quadro 56 - Matriz de conformidade dos testes por cenário</p>
 
 | Grupo principal | Sucesso `200/201/204` | Validação `400/422` | Regra de negócio `409` ou equivalente | Recurso não encontrado `404` | Situação atual |
 |---|---|---|---|---|---|
@@ -4648,9 +4668,9 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
  
 #### Mapeamento de Rastreabilidade
  
-A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 56:
+A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 57:
 
-<p align="center">Quadro 56 - Mapeamento de rastreabilidade dos testes</p>
+<p align="center">Quadro 57 - Mapeamento de rastreabilidade dos testes</p>
 
 | Caso de Teste | Regra de Negócio | Requisito Funcional |
 |---|---|---|
