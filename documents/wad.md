@@ -4766,6 +4766,27 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Sucesso com dificuldade | Acessou "Tarefas", mas inicialmente clicou em uma tarefa existente antes de encontrar o botão "Nova tarefa" | Após encontrar o botão correto, preencheu título e descrição sem problemas | Não encontrou de imediato o campo de atribuição do capataz | Publicou com sucesso após breve exploração |
 | 5 | Gabriel Almeida | Sucesso | Acessou a seção e encontrou "Nova tarefa" rapidamente | Preencheu os campos de forma direta | Selecionou retiro e capataz sem dificuldade | Publicou a tarefa e verificou que constava na lista |
 
+#### Tarefa 3 — Gerente: Gerar e exportar um relatório semanal
+ 
+**Enunciado:** Suponha que você é o gerente da BrPec e precisa gerar um relatório semanal com os registros de movimentação do rebanho validados pelos supervisores. Utilize o AgroFlow para gerar e exportar esse relatório.
+ 
+| Etapa | Descrição | Expectativa |
+|:-----:|-----------|-------------|
+| 1 | Acessar a seção de relatórios | Acessar o menu lateral e clicar em "Relatórios" |
+| 2 | Selecionar o período e o tipo de relatório | Selecionar o período "Semanal" e o tipo de movimentação desejado |
+| 3 | Visualizar os dados consolidados | Verificar os registros consolidados exibidos na tela |
+| 4 | Exportar o relatório | Clicar em "Exportar" e confirmar o download do arquivo (.xlsx ou .csv) |
+ 
+**Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H8 (Estética e design minimalista)
+ 
+| # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
+|:-:|------|:---------:|---------|---------|---------|---------|
+| 1 | Lucas Martins | Sucesso | Encontrou "Relatórios" no menu lateral sem dificuldade | Selecionou período e tipo de relatório corretamente | Visualizou os dados consolidados sem problemas | Exportou o arquivo com sucesso |
+| 2 | Fernanda Oliveira | Sucesso com dificuldade | Encontrou a seção, mas tentou primeiro buscar relatórios dentro do dashboard | Selecionou o período corretamente, mas ficou em dúvida sobre qual tipo de relatório escolher | Visualizou os dados sem dificuldade após selecionar | Exportou o relatório com sucesso após identificar o botão "Exportar" |
+| 3 | Rafael Souza | Sucesso | Acessou "Relatórios" diretamente pelo menu | Selecionou período semanal e tipo sem hesitação | Verificou os dados na tela rapidamente | Realizou a exportação sem dificuldades |
+| 4 | Beatriz Santos | Sucesso com dificuldade | Acessou a seção corretamente, porém ficou em dúvida se os dados exibidos eram apenas os validados ou todos os registros | Selecionou período e tipo corretos, mas perguntou em voz alta se o filtro de retiro era necessário | Visualizou os dados consolidados sem dificuldade | Exportou o relatório com sucesso |
+| 5 | Gabriel Almeida | Sucesso | Navegou até "Relatórios" rapidamente | Selecionou as opções corretas sem dúvidas | Verificou os dados e confirmou que eram apenas registros validados | Exportou o arquivo e confirmou o download |
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
