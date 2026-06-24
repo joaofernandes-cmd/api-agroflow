@@ -2676,6 +2676,14 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+&nbsp;&nbsp;&nbsp;&nbsp;Na Home do Gerente, a interface foi ajustada para reforçar uma leitura mais analítica. A versão implementada organiza indicadores, atividades recentes, acesso a relatórios e resumo do período em uma única tela, aproximando a experiência do perfil gerencial e tornando mais clara a relação entre acompanhamento da operação e tomada de decisão.
+<div align="center">
+<p align="center">Figura 48 - Interface atual da Home do Gerente</p>
+<p align="center">
+<img src="others/assets/interface-atual-gerente-home.png" alt="Interface atual da Home do Gerente" border="0" width="90%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
