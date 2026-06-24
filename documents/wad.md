@@ -4724,6 +4724,27 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Engenharia de Software | Capataz, Supervisor e Gerente |
 | 5 | Gabriel Almeida | Ciência da Computação | Capataz, Supervisor e Gerente |
 
+#### Tarefa 1 — Capataz: Registrar movimentação do rebanho
+ 
+**Enunciado:** Suponha que você é um capataz do Retiro São João e acabou de identificar a morte de um animal no pasto. Utilize o AgroFlow para registrar essa movimentação do rebanho.
+
+| Etapa | Descrição | Expectativa |
+|:-----:|-----------|-------------|
+| 1 | Acessar a seção de movimentações | Acessar o menu lateral e clicar em "Movimentações" |
+| 2 | Selecionar o tipo de movimentação e o estágio de vida | Selecionar "Morte" como tipo e informar o estágio de vida do animal |
+| 3 | Preencher os campos obrigatórios | Preencher os campos de origem e causa do óbito |
+| 4 | Confirmar e enviar o registro | Clicar em "Confirmar" e verificar mensagem de sucesso |
+
+**Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H3 (Controle e liberdade do usuário)
+
+| # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
+|:-:|------|:---------:|---------|---------|---------|---------|
+| 1 | Lucas Martins | Sucesso | Achou o menu sem dificuldade | Selecionou "Morte" corretamente e informou o estágio de vida | Preencheu todos os campos sem hesitação | Confirmou o envio e visualizou a mensagem de sucesso |
+| 2 | Fernanda Oliveira | Sucesso com dificuldade | Achou o menu sem dificuldade | Selecionou "Morte" corretamente, porém ficou em dúvida sobre o que era "estágio de vida" | Preencheu os campos, mas não entendeu inicialmente por que "causa do óbito" era obrigatório | Confirmou o envio após a segunda tentativa (primeira bloqueada por campo vazio) |
+| 3 | Rafael Souza | Sucesso | Achou o menu sem dificuldade | Selecionou o tipo e o estágio de vida rapidamente | Preencheu todos os campos sem dificuldade | Confirmou e visualizou o registro salvo |
+| 4 | Beatriz Santos | Sucesso com dificuldade | Encontrou o menu, mas tentou acessar primeiro a aba "Rebanho" antes de ir para "Movimentações" | Selecionou o tipo correto, mas deixou o estágio de vida em branco na primeira tentativa e recebeu erro | Após o erro, corrigiu e preencheu todos os campos | Confirmou com sucesso na segunda tentativa |
+| 5 | Gabriel Almeida | Sucesso | Navegou diretamente até "Movimentações" pelo menu lateral | Selecionou "Morte" e preencheu o estágio de vida sem dificuldade | Preencheu causa do óbito e origem corretamente | Enviou o registro e confirmou a mensagem de sucesso |
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
