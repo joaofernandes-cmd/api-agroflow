@@ -5088,6 +5088,8 @@ Também foram considerados subendpoints específicos:
 
 O System Usability Scale (SUS) é um instrumento de avaliação de usabilidade amplamente adotado na indústria e na academia por sua aplicabilidade versátil e pela simplicidade de aplicação. O questionário é composto por dez afirmações com escala de concordância de cinco pontos (1 = Discordo totalmente; 5 = Concordo totalmente), alternando sentenças de polaridade positiva e negativa. A pontuação final, calculada a partir de uma fórmula padronizada, varia de 0 a 100 e permite classificar a percepção de usabilidade do sistema: pontuações abaixo de 50 são consideradas inaceitáveis; 68 representa a média da indústria; valores acima de 80,3 indicam usabilidade excelente.
 
+A escolha do SUS como instrumento complementar aos testes de guerrilha justifica-se por duas razões principais. Primeiramente, sua brevidade e linguagem acessível tornam esse framework perfeito para o perfil dos usuários do AgroFlow, em especial os capatazes, que possuem baixo letramento digital e pouca familiaridade com avaliações formais de software. Além disso, o SUS fornece uma métrica quantitativa e comparável, permitindo ao grupo identificar, de forma objetiva, quais aspectos da interface demandam refinamento antes da entrega final do produto.
+
 *Posicione aqui o relatório dos testes SUS realizados.*
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
