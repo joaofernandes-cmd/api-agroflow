@@ -5090,6 +5090,23 @@ O System Usability Scale (SUS) é um instrumento de avaliação de usabilidade a
 
 A escolha do SUS como instrumento complementar aos testes de guerrilha justifica-se por duas razões principais. Primeiramente, sua brevidade e linguagem acessível tornam esse framework perfeito para o perfil dos usuários do AgroFlow, em especial os capatazes, que possuem baixo letramento digital e pouca familiaridade com avaliações formais de software. Além disso, o SUS fornece uma métrica quantitativa e comparável, permitindo ao grupo identificar, de forma objetiva, quais aspectos da interface demandam refinamento antes da entrega final do produto.
 
+#### Questionário aplicado
+ 
+O questionário foi disponibilizado via Google Forms após a execução das tarefas dos testes de guerrilha. As dez afirmações aplicadas, adaptadas ao contexto do AgroFlow, são apresentadas no quadro a seguir.
+ 
+| # | Afirmação |
+|:-:|-----------|
+| 1 | Eu gostaria de usar o AgroFlow com frequência no meu trabalho diário. |
+| 2 | Achei o AgroFlow desnecessariamente complicado para realizar minhas tarefas. |
+| 3 | Achei o AgroFlow fácil de usar para registrar informações sobre o rebanho e as atividades do retiro. |
+| 4 | Precisaria de ajuda de outra pessoa para conseguir usar o AgroFlow. |
+| 5 | As funcionalidades do AgroFlow, como registrar movimentações, tarefas e chamados, estão bem organizadas. |
+| 6 | Senti que havia muita inconsistência na forma como as telas e os fluxos do AgroFlow funcionam. |
+| 7 | Imagino que a maioria das pessoas aprenderia a usar o AgroFlow rapidamente. |
+| 8 | Achei o AgroFlow confuso e difícil de navegar. |
+| 9 | Me senti confiante usando o AgroFlow para realizar minhas atividades no retiro. |
+| 10 | Precisei aprender muitas coisas antes de conseguir usar o AgroFlow corretamente. |
+ 
 *Posicione aqui o relatório dos testes SUS realizados.*
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
