@@ -1,0 +1,247 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['gerente']
+%>
+
+<!-- ============================================================
+     TELA: Home Gerente
+     Mobile  → TopNav + saudação + indicadores 2x2 + card relatórios
+               + atividades recentes + BottomNav (2 abas)
+     Desktop → Sidebar + TopBar + saudação + KPIs em linha
+               + atividades recentes (esq) + acesso rápido + resumo (dir)
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav -->
+  <header class="topnav" role="banner">
+    <h1 class="topnav__title">Início</h1>
+  </header>
+
+  <!-- Saudação -->
+  <section class="greeting" aria-label="Saudação">
+    <p class="greeting__name">Bom dia, <%= usuario?.nome || 'Marcos Ferreira' %>!</p>
+    <p class="greeting__date" id="data-hoje-mobile"></p>
+  </section>
+
+  <!-- Conteúdo principal -->
+  <main class="home-content" role="main">
+
+    <!-- Tarefas concluídas pelo capataz (com evidência) -->
+    <section class="section">
+      <h2 class="section__title">Concluídas pelo capataz</h2>
+      <div class="concluidas-capataz"><%- include('../partials/concluidas-capataz', { concluidas }) %></div>
+    </section>
+
+    <!-- Indicadores gerais — grid 2×2 -->
+    <section class="section" aria-labelledby="indicadores-title">
+      <h2 class="section__title" id="indicadores-title">Indicadores gerais da fazenda</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-card--green">
+          <p class="kpi-card__value">1900 UA</p>
+          <p class="kpi-card__label">Total de animais</p>
+        </div>
+        <div class="kpi-card kpi-card--red">
+          <p class="kpi-card__value"><%= typeof kpis !== 'undefined' ? kpis.tickets : 0 %></p>
+          <p class="kpi-card__label">Tickets<br>Abertos</p>
+        </div>
+        <div class="kpi-card kpi-card--yellow">
+          <p class="kpi-card__value"><%= typeof kpis !== 'undefined' ? kpis.tarefas : 0 %></p>
+          <p class="kpi-card__label">Tarefas<br>pendentes</p>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <p class="kpi-card__value"><%= typeof kpis !== 'undefined' ? kpis.movimentacoes : 0 %></p>
+          <p class="kpi-card__label">Movimentações<br>no mês</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card de Relatórios -->
+    <section class="section" aria-labelledby="relatorios-title">
+      <a href="/gerente/relatorios" class="rel-card" aria-label="Ir para Relatórios">
+        <div class="rel-card__body">
+          <p class="rel-card__name" id="relatorios-title">Relatórios</p>
+          <p class="rel-card__desc">Exporte-os para vizualizar a atividade operacional do mês</p>
+        </div>
+        <span class="rel-card__arrow" aria-hidden="true">›</span>
+      </a>
+    </section>
+
+    <!-- Atividades recentes -->
+    <section class="section" aria-labelledby="atividades-title">
+      <h2 class="section__title" id="atividades-title">Atividades recentes</h2>
+
+      <% var _recentes = (typeof recentes !== 'undefined' ? recentes : []); %>
+      <% if (!_recentes.length) { %>
+      <p class="concl-vazio">Nenhuma atividade recente.</p>
+      <% } else { %>
+      <% _recentes.forEach(function (a) { %>
+      <article class="act-card">
+        <p class="act-card__name"><%= a.nome %></p>
+        <span class="act-tag act-tag--<%= a.tagClasse %>"><%= a.tag %></span>
+      </article>
+      <% }) %>
+      <% } %>
+
+    </section>
+
+  </main>
+
+  <!-- BottomNav Gerente -->
+  <%- include('../partials/bottomnav-gerente', { paginaAtiva: 'home' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar Gerente -->
+  <%- include('../partials/sidebar-gerente', { usuario, paginaAtiva: 'home' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Início</h1>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Saudação desktop -->
+    <section class="greeting-desktop" aria-label="Saudação">
+      <p class="greeting-desktop__name">Bom dia, <%= usuario?.nome || 'Marcos Ferreira' %>!</p>
+      <p class="greeting-desktop__date" id="data-hoje-desktop2"></p>
+    </section>
+
+    <!-- Tarefas concluídas pelo capataz (com evidência) -->
+    <section class="section section--inset">
+      <h2 class="section__title">Concluídas pelo capataz</h2>
+      <div class="concluidas-capataz"><%- include('../partials/concluidas-capataz', { concluidas }) %></div>
+    </section>
+
+    <!-- Conteúdo desktop: dois painéis lado a lado -->
+    <main class="desktop-content gerente-home-grid" role="main">
+
+      <!-- Coluna esquerda: KPIs + Atividades recentes -->
+      <div class="gerente-col-left">
+
+        <!-- KPIs em linha -->
+        <section class="section" aria-labelledby="kpis-desktop">
+          <h2 class="section__title" id="kpis-desktop">Indicadores gerais da fazenda</h2>
+          <div class="kpi-row">
+            <div class="kpi-item kpi-item--green">
+              <p class="kpi-item__value">1.900 UA</p>
+              <p class="kpi-item__label">Total de animais</p>
+            </div>
+            <div class="kpi-item kpi-item--red">
+              <p class="kpi-item__value"><%= typeof kpis !== 'undefined' ? kpis.tickets : 0 %></p>
+              <p class="kpi-item__label">Tickets abertos</p>
+            </div>
+            <div class="kpi-item kpi-item--yellow">
+              <p class="kpi-item__value"><%= typeof kpis !== 'undefined' ? kpis.tarefas : 0 %></p>
+              <p class="kpi-item__label">Tarefas pendentes</p>
+            </div>
+            <div class="kpi-item kpi-item--green">
+              <p class="kpi-item__value"><%= typeof kpis !== 'undefined' ? kpis.movimentacoes : 0 %></p>
+              <p class="kpi-item__label">Movimentações no mês</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Atividades recentes -->
+        <section class="section" aria-labelledby="atividades-desktop">
+          <h2 class="section__title" id="atividades-desktop">Atividades recentes</h2>
+
+          <% var _recentesD = (typeof recentes !== 'undefined' ? recentes : []); %>
+          <% if (!_recentesD.length) { %>
+          <p class="concl-vazio">Nenhuma atividade recente.</p>
+          <% } else { %>
+          <% _recentesD.forEach(function (a) { %>
+          <article class="act-card-desktop">
+            <div class="act-card-desktop__accent act-card-desktop__accent--green"></div>
+            <div class="act-card-desktop__body">
+              <p class="act-card-desktop__name"><%= a.nome %></p>
+              <p class="act-card-desktop__meta"><%= a.meta %></p>
+            </div>
+            <span class="act-tag act-tag--<%= a.tagClasse %>"><%= a.tag %></span>
+          </article>
+          <% }) %>
+          <% } %>
+
+        </section>
+      </div><!-- /col-left -->
+
+      <!-- Coluna direita: Acesso rápido + Resumo do período -->
+      <aside class="gerente-col-right">
+
+        <section class="section" aria-labelledby="acesso-desktop">
+          <h2 class="section__title" id="acesso-desktop">Acesso rápido</h2>
+
+          <a href="/gerente/relatorios" class="qcard qcard--green-accent">
+            <div class="qcard__accent qcard__accent--green-soft" aria-hidden="true"></div>
+            <div class="qcard__body">
+              <p class="qcard__name">Relatórios</p>
+              <p class="qcard__desc">Exporte para visualizar a atividade operacional do mês</p>
+            </div>
+            <span class="qcard__arrow" aria-hidden="true">›</span>
+          </a>
+        </section>
+
+        <!-- Resumo do período -->
+        <div class="resumo-card">
+          <p class="resumo-card__title">Resumo do período</p>
+          <hr class="resumo-card__divider" />
+          <dl class="resumo-list">
+            <div class="resumo-list__row"><dt>Registros validados</dt><dd><%= typeof resumo !== 'undefined' ? resumo.validados : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Pendentes</dt><dd><%= typeof resumo !== 'undefined' ? resumo.pendentes : 0 %></dd></div>
+            <div class="resumo-list__row"><dt>Retiros incluídos</dt><dd><%= typeof resumo !== 'undefined' ? resumo.retiros : 0 %></dd></div>
+          </dl>
+        </div>
+
+      </aside><!-- /col-right -->
+
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script src="/js/data-hoje.js"></script>
+<script>
+  const usuarioSessao = window.AgroFlowSession?.carregarUsuario();
+  if (usuarioSessao?.nome) {
+    const primeiroNome = usuarioSessao.nome.split(' ')[0];
+
+    document.querySelectorAll('.greeting__name, .greeting-desktop__name').forEach(el => {
+      el.textContent = `Bom dia, ${primeiroNome}!`;
+    });
+
+    document.querySelectorAll('.sidebar__user-name').forEach(el => {
+      el.textContent = usuarioSessao.nome;
+    });
+
+    document.querySelectorAll('.sidebar__user-role').forEach(el => {
+      el.textContent = 'Gerente';
+    });
+
+    document.querySelectorAll('.sidebar__avatar').forEach(el => {
+      el.textContent = usuarioSessao.nome
+        .split(' ')
+        .map(parte => parte[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<%- include('../partials/head', { title: persona + ' — Login', css: 'auth' }) %>
+
+<!-- ============================================================
+     TELA: Login
+     Recebe a variável `persona` do controller ('Supervisor' ou 'Gerente')
+     Mobile  → logo acima do card, título fora do card, botão voltar
+     Desktop → logo acima do card, título e subtítulo DENTRO do card
+     ============================================================ -->
+
+<main class="login" role="main" aria-label="Login <%= persona %>">
+
+  <!-- Botão voltar (só aparece no mobile via CSS) -->
+  <a href="/auth/perfil" class="login__back" aria-label="Voltar para seleção de perfil">
+    <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+      <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <!-- Logo AgroFlow -->
+  <div class="login__logo" aria-hidden="true">
+    <!-- Mobile: asset menor -->
+    <img
+      class="login__logo-img login__logo-img--mobile"
+      src="/assets/logo-agro-flow.svg"
+      alt="AgroFlow"
+    />
+    <!-- Desktop: asset maior -->
+    <img
+      class="login__logo-img login__logo-img--desktop"
+      src="/assets/logo-agro-flow.svg"
+      alt="AgroFlow"
+    />
+  </div>
+
+  <!-- Título mobile (fica fora do card no mobile) -->
+  <h1 class="login__persona login__persona--outside"><%= persona %></h1>
+  <p class="login__persona-sub login__persona-sub--outside">Acesse sua conta para continuar</p>
+
+  <!-- Card do formulário -->
+  <div class="login__card">
+
+    <!-- Título desktop (fica dentro do card no desktop) -->
+    <div class="login__card-header">
+      <h1 class="login__persona login__persona--inside"><%= persona %></h1>
+      <p class="login__persona-sub login__persona-sub--inside">Acesse sua conta para continuar</p>
+    </div>
+
+    <form id="form-login" novalidate>
+
+      <!-- Campo E-mail -->
+      <div class="field">
+        <label class="field__label" for="campo-email">E-mail</label>
+        <input
+          class="field__input"
+          type="email"
+          id="campo-email"
+          name="email"
+          placeholder="Digite seu e-mail"
+          autocomplete="email"
+          required
+          aria-required="true"
+          aria-describedby="erro-email"
+        />
+        <span class="field__error" id="erro-email" role="alert">Informe um e-mail válido.</span>
+      </div>
+
+      <!-- Campo Senha -->
+      <div class="field">
+        <label class="field__label" for="campo-senha">Senha</label>
+        <div class="field__wrap">
+          <input
+            class="field__input"
+            type="password"
+            id="campo-senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+            aria-required="true"
+            aria-describedby="erro-senha"
+          />
+          <button
+            type="button"
+            class="field__toggle"
+            id="toggle-senha"
+            aria-label="Mostrar senha"
+            onclick="alternarSenha()"
+          >
+            <!-- Olho aberto -->
+            <svg id="icon-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <!-- Olho fechado -->
+            <svg id="icon-eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true" style="display:none">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+          </button>
+          <span class="field__error" id="erro-senha" role="alert">Informe sua senha.</span>
+        </div>
+      </div>
+
+      <!-- Erro geral de login (exibido via JS) -->
+      <p id="erro-login" role="alert" style="color:#b42318;font-size:0.875rem;margin-bottom:0.25rem;display:none;"></p>
+
+      <!-- Botão Entrar -->
+      <button
+        class="btn btn--primary btn--entrar"
+        type="submit"
+        id="btn-entrar"
+      >
+        Entrar
+      </button>
+
+    </form>
+  </div>
+
+</main>
+
+<script>
+  /* ── Mostrar/ocultar senha ── */
+  function alternarSenha() {
+    const campo     = document.getElementById('campo-senha');
+    const btn       = document.getElementById('toggle-senha');
+    const iconOpen  = document.getElementById('icon-eye-open');
+    const iconClosed = document.getElementById('icon-eye-closed');
+    const visivel   = campo.type === 'text';
+
+    campo.type           = visivel ? 'password' : 'text';
+    btn.ariaLabel        = visivel ? 'Mostrar senha' : 'Ocultar senha';
+    iconOpen.style.display  = visivel ? 'block' : 'none';
+    iconClosed.style.display = visivel ? 'none'  : 'block';
+  }
+
+  /* ── Validação e submit ── */
+  function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('campo-email');
+    const senha  = document.getElementById('campo-senha');
+    let valido  = true;
+
+    if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.setAttribute('aria-invalid', 'true');
+      valido = false;
+    } else {
+      email.removeAttribute('aria-invalid');
+    }
+
+    if (!senha.value) {
+      senha.setAttribute('aria-invalid', 'true');
+      valido = false;
+    } else {
+      senha.removeAttribute('aria-invalid');
+    }
+
+    if (!valido) return;
+
+    /* Integrar com POST /usuarios/login */
+    const btn = document.getElementById('btn-entrar');
+    const erroLogin = document.getElementById('erro-login');
+    erroLogin.style.display = 'none';
+    erroLogin.textContent = '';
+    btn.setAttribute('aria-busy', 'true');
+    btn.textContent = 'Entrando…';
+
+    fetch('/usuarios/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ login: email.value, senha: senha.value })
+    })
+    .then(async res => {
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        console.warn('Falha ao autenticar usuário', { status: res.status });
+        throw new Error(data.error || 'Não foi possível entrar. Verifique seus dados e tente novamente.');
+      }
+
+      if (data.token && data.usuario) {
+        localStorage.setItem('agroflow.token', data.token);
+        localStorage.setItem('agroflow.usuario', JSON.stringify(data.usuario));
+        window.location.href = data.usuario.cargo === 'gerente'
+          ? '/gerente/home'
+          : '/supervisor/home';
+      } else {
+        console.warn('Resposta de login incompleta', { temToken: Boolean(data.token), temUsuario: Boolean(data.usuario) });
+        throw new Error('Não foi possível iniciar a sessão. Tente novamente.');
+      }
+    })
+    .catch((err) => {
+      btn.removeAttribute('aria-busy');
+      btn.textContent = 'Entrar';
+      const isNetworkError = err instanceof TypeError;
+      erroLogin.textContent = isNetworkError
+        ? 'Não foi possível conectar ao servidor.'
+        : (err.message || 'Não foi possível entrar. Verifique seus dados e tente novamente.');
+      erroLogin.style.display = 'block';
+    });
+  }
+
+  document.getElementById('form-login').addEventListener('submit', handleLogin);
+</script>
+
+</body>
+</html>

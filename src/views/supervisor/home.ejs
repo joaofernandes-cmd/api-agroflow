@@ -1,0 +1,200 @@
+<%- include('../partials/head', { title: 'Início', css: 'supervisor' }) %>
+
+<%#
+  contadores = { tarefas, tickets, movimentacoes } — totais de pendentes vindos
+  das MESMAS fontes das telas de lista (controller), para os blocos de "Acesso
+  rápido" baterem com cada página. Fallback defensivo se a rota não passar.
+%>
+<% const c = (typeof contadores !== 'undefined' && contadores) ? contadores : { tarefas: 0, tickets: 0, movimentacoes: 0 } %>
+
+<!-- ============================================================
+     TELA: Home Supervisor
+     Mobile  → TopNav verde + BottomNav + cards empilhados
+     Desktop → Sidebar fixa esquerda + TopBar + grid de conteúdo
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav -->
+  <header class="topnav" role="banner">
+    <h1 class="topnav__title">Início</h1>
+    <button class="topnav__bell" aria-label="Notificações">
+      <img src="/assets/icons/notificacao.svg" alt="" aria-hidden="true" width="24" height="24" />
+      <span class="topnav__bell-dot" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <!-- Saudação -->
+  <section class="greeting" aria-label="Saudação">
+    <p class="greeting__name">Bom dia, <%= usuario?.nome?.split(' ')[0] || 'Luiz' %>!</p>
+    <p class="greeting__date" id="data-hoje"></p>
+  </section>
+
+  <!-- Conteúdo principal -->
+  <main class="home-content" role="main">
+
+    <!-- Acesso rápido (blocos grandes 2x2) -->
+    <section class="section" aria-labelledby="acesso-rapido-title">
+      <h2 class="section__title" id="acesso-rapido-title">Acesso rápido</h2>
+
+      <div class="tile-grid">
+        <a href="/supervisor/revisao" class="tile tile--yellow" aria-label="Tarefas pendentes: <%= c.tarefas %> aguardando revisão">
+          <span class="tile__icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+          </span>
+          <span class="tile__text">
+            <span class="tile__name">Tarefas pendentes</span>
+            <span class="tile__sub" data-contador="tarefas"><%= c.tarefas %> aguardando revisão</span>
+          </span>
+        </a>
+
+        <a href="/supervisor/tickets" class="tile tile--red" aria-label="Tickets de infraestrutura: <%= c.tickets %> <%= c.tickets === 1 ? 'pendente' : 'pendentes' %>">
+          <span class="tile__icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </span>
+          <span class="tile__text">
+            <span class="tile__name">Tickets</span>
+            <span class="tile__sub" data-contador="tickets"><%= c.tickets %> <%= c.tickets === 1 ? 'pendente' : 'pendentes' %></span>
+          </span>
+        </a>
+
+        <a href="/supervisor/movimentacoes" class="tile tile--teal" aria-label="Movimentações: <%= c.movimentacoes %> aguardando validação">
+          <span class="tile__icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+          </span>
+          <span class="tile__text">
+            <span class="tile__name">Movimentações</span>
+            <span class="tile__sub" data-contador="movimentacoes"><%= c.movimentacoes %> aguardando validação</span>
+          </span>
+        </a>
+
+        <a href="/supervisor/delegar" class="tile tile--blue" aria-label="Delegar tarefa">
+          <span class="tile__icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+          </span>
+          <span class="tile__text">
+            <span class="tile__name">Delegar tarefa</span>
+            <span class="tile__sub">Atribuir ao capataz</span>
+          </span>
+        </a>
+
+        <a href="/supervisor/relatorios" class="tile tile--green" aria-label="Relatórios">
+          <span class="tile__icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+          </span>
+          <span class="tile__text">
+            <span class="tile__name">Relatórios</span>
+            <span class="tile__sub">Ver resumos</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'home' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'home' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <h1 class="topbar__title">Início</h1>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Saudação -->
+    <section class="greeting-desktop" aria-label="Saudação">
+      <p class="greeting-desktop__name">Bom dia, <%= usuario?.nome || 'Luiz Felipe' %>!</p>
+      <p class="greeting-desktop__date" id="data-hoje-desktop2"></p>
+    </section>
+
+    <!-- Conteúdo -->
+    <main class="desktop-content" role="main">
+
+      <!-- Acesso rápido (blocos grandes) -->
+      <section class="section" aria-labelledby="acesso-rapido-desktop">
+        <h2 class="section__title" id="acesso-rapido-desktop">Acesso rápido</h2>
+        <div class="tile-grid">
+          <a href="/supervisor/revisao" class="tile tile--yellow" aria-label="Tarefas pendentes: <%= c.tarefas %> aguardando revisão">
+            <span class="tile__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+            </span>
+            <span class="tile__text">
+              <span class="tile__name">Tarefas pendentes</span>
+              <span class="tile__sub" data-contador="tarefas"><%= c.tarefas %> aguardando revisão</span>
+            </span>
+          </a>
+          <a href="/supervisor/tickets" class="tile tile--red" aria-label="Tickets de infraestrutura: <%= c.tickets %> <%= c.tickets === 1 ? 'pendente' : 'pendentes' %>">
+            <span class="tile__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </span>
+            <span class="tile__text">
+              <span class="tile__name">Tickets</span>
+              <span class="tile__sub" data-contador="tickets"><%= c.tickets %> <%= c.tickets === 1 ? 'pendente' : 'pendentes' %></span>
+            </span>
+          </a>
+          <a href="/supervisor/movimentacoes" class="tile tile--teal" aria-label="Movimentações: <%= c.movimentacoes %> aguardando validação">
+            <span class="tile__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+            </span>
+            <span class="tile__text">
+              <span class="tile__name">Movimentações</span>
+              <span class="tile__sub" data-contador="movimentacoes"><%= c.movimentacoes %> aguardando validação</span>
+            </span>
+          </a>
+
+          <a href="/supervisor/delegar" class="tile tile--blue" aria-label="Delegar tarefa">
+            <span class="tile__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            </span>
+            <span class="tile__text">
+              <span class="tile__name">Delegar tarefa</span>
+              <span class="tile__sub">Atribuir ao capataz</span>
+            </span>
+          </a>
+          <a href="/supervisor/relatorios" class="tile tile--green" aria-label="Relatórios">
+            <span class="tile__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+            </span>
+            <span class="tile__text">
+              <span class="tile__name">Relatórios</span>
+              <span class="tile__sub">Ver resumos</span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script src="/js/data-hoje.js"></script>
+<script>
+  const usuario = window.AgroFlowSession?.carregarUsuario();
+  if (usuario?.nome) {
+    // Apenas a saudação do banner usa o nome da sessão.
+    // A sidebar (nome/cargo/avatar) fica igual às demais telas, renderizada pelo EJS.
+    document.querySelectorAll('.greeting__name, .greeting-desktop__name').forEach(el => {
+      el.textContent = `Bom dia, ${usuario.nome.split(' ')[0]}!`;
+    });
+  }
+</script>
+
+</body>
+</html>

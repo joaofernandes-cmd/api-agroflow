@@ -5,9 +5,8 @@ import { exigirCargo } from '../middlewares/cargo.middleware'
 
 const validacaoRoutes = Router()
 
-// Tela de validação: só entra quem estiver autenticado.
+// Validação só pode ser acessada por usuários autenticados com cargo supervisor.
 validacaoRoutes.use(autenticarUsuario)
-// E, dentro dela, apenas supervisor pode aprovar/validar.
 validacaoRoutes.use(exigirCargo('supervisor'))
 
 // Verifica se um usuário tem permissão para validar registros

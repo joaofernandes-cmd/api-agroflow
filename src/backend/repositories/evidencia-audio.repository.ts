@@ -1,10 +1,11 @@
 import sql from '../database/connection'
 import { EvidenciaAudio, EvidenciaAudioInput } from '../models/evidencia-audio.model'
+import { UUID } from '../models/uuid'
 
-// Retorna todas as evidencias de audio cadastradas
+// Retorna todas as evidências de áudio cadastradas
 export const EvidenciaAudioRepository = {
 
-    // Ordena evidencias de audio por evidencia
+    // Ordena evidências de áudio por evidência
     async buscarTodos(): Promise<EvidenciaAudio[]> {
         return sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo
@@ -14,7 +15,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Busca uma evidência de áudio pelo id da evidência e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number): Promise<EvidenciaAudio | null> {
+    async buscarPorId(evidencia_id: UUID): Promise<EvidenciaAudio | null> {
         const evidenciaAudio = await sql<EvidenciaAudio[]>`
             SELECT evidencia_id, url_arquivo
             FROM evidencia_audio
@@ -37,7 +38,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Atualiza uma evidência de áudio existente
-    async atualizar(evidencia_id: number, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
+    async atualizar(evidencia_id: UUID, input: Partial<EvidenciaAudioInput>): Promise<EvidenciaAudio | null> {
         const [updated] = await sql<EvidenciaAudio[]>`
             UPDATE evidencia_audio
             SET
@@ -50,7 +51,7 @@ export const EvidenciaAudioRepository = {
     },
 
     // Remove uma evidência de áudio pelo id da evidência 
-    async remover(evidencia_id: number): Promise<void> {
+    async remover(evidencia_id: UUID): Promise<void> {
         await sql`
             DELETE FROM evidencia_audio
             WHERE evidencia_id = ${evidencia_id}

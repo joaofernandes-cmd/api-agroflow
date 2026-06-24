@@ -20,7 +20,7 @@ export const ValidacaoService = {
 
   // RN06: Validar movimentação (pendente → validado)
   async validarMovimentacao(
-    movimentacaoId: number,
+    movimentacaoId: UUID,
     supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; movimentacao?: Movimentacao }> {
@@ -60,7 +60,7 @@ export const ValidacaoService = {
 
   // RN06: Aprovar ticket (pendente → aprovado) — apenas Supervisor
   async aprovarTicket(
-    ticketId: number,
+    ticketId: UUID,
     supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; ticket?: Ticket }> {
@@ -97,9 +97,10 @@ export const ValidacaoService = {
     }
   },
 
-  // RN06: Aprovar tarefa (pendente → aprovado) — apenas Supervisor
+  // RN06: Aprovar tarefa (concluido → aprovado) — apenas Supervisor.
+  // Só pode aprovar uma tarefa que o capataz já concluiu (status 'concluido').
   async aprovarTarefa(
-    tarefaId: number,
+    tarefaId: UUID,
     supervisorId: UUID,
     supervisorCargo: string
   ): Promise<{ sucesso: boolean; mensagem: string; tarefa?: Tarefa }> {
@@ -116,10 +117,12 @@ export const ValidacaoService = {
       return { sucesso: false, mensagem: 'Tarefa não encontrada.' }
     }
 
-    if (tarefa.status !== 'pendente') {
+    if (tarefa.status !== 'concluido') {
       return {
         sucesso: false,
-        mensagem: `Tarefa já foi ${tarefa.status}. Não pode ser alterada.`,
+        mensagem: tarefa.status === 'pendente'
+          ? 'Tarefa ainda não foi concluída pelo capataz. Não pode ser aprovada.'
+          : `Tarefa já foi ${tarefa.status}. Não pode ser alterada.`,
       }
     }
 

@@ -447,7 +447,7 @@
         <div class="detail-section">
           <h4>Body (application/json)</h4>
           <pre>{
-  "retiro_id":   number  (obrigatório),
+  "retiro_id":   string UUID  (obrigatório),
   "capataz_id":  string  (obrigatório),
   "tipo":        "nascimento" | "morte" | "transferencia" | "compra" | "venda"  (obrigatório),
   "estagio_vida": string (obrigatório),
@@ -463,7 +463,7 @@
           <table>
             <tr><th>Status</th><th>Descrição</th></tr>
             <tr><td><span class="status-chip s-2">201</span> Created</td><td>Movimentação criada. Retorna o objeto criado.</td></tr>
-            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td><code>{ "error": "Campos obrigatorios nao informados" }</code></td></tr>
+            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td><code>{ "error": "Campos obrigatórios não informados" }</code></td></tr>
             <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Campo inválido para o tipo informado.</td></tr>
           </table>
         </div>
@@ -524,7 +524,7 @@
           <table>
             <tr><th>Status</th><th>Descrição</th></tr>
             <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto da movimentação.</td></tr>
-            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td><code>{ "error": "Movimentacao nao encontrada" }</code></td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td><code>{ "error": "Movimentação não encontrada" }</code></td></tr>
             <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr>
           </table>
         </div>
@@ -907,7 +907,7 @@
         <div class="detail-section">
           <h4>Body (application/json)</h4>
           <pre>{
-  "retiro_id":   number (obrigatório),
+  "retiro_id":   string UUID (obrigatório),
   "capataz_id":  string (obrigatório),
   "tipo":        string (obrigatório),
   "estagio_vida": string (obrigatório),
@@ -1132,8 +1132,9 @@
           <h4>Respostas</h4>
           <table><tr><th>Status</th><th>Descrição</th></tr>
           <tr><td><span class="status-chip s-2">200</span> OK</td><td>Movimentação validada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Movimentação não encontrada, já validada ou violação de regra.</td></tr>
           <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr>
-          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Movimentação não encontrada.</td></tr></table>
+          </table>
         </div>
       </div>
     </div>
@@ -1150,6 +1151,7 @@
           <h4>Respostas</h4>
           <table><tr><th>Status</th><th>Descrição</th></tr>
           <tr><td><span class="status-chip s-2">200</span> OK</td><td>Tarefa aprovada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Tarefa não encontrada, já aprovada ou violação de regra.</td></tr>
           <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr></table>
         </div>
       </div>
@@ -1167,6 +1169,7 @@
           <h4>Respostas</h4>
           <table><tr><th>Status</th><th>Descrição</th></tr>
           <tr><td><span class="status-chip s-2">200</span> OK</td><td>Ticket aprovado.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Ticket não encontrado, já aprovado ou violação de regra.</td></tr>
           <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr></table>
         </div>
       </div>
@@ -1313,7 +1316,7 @@
       <div class="endpoint-body">
         <div class="detail-section">
           <h4>Descrição</h4>
-          <p>Cria um chamado de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo <code>prioridade</code> obrigatoriamente informado, conforme RN08 e RN11.</p>
+          <p>Cria um ticket de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo <code>prioridade</code> obrigatoriamente informado, conforme RN08 e RN11.</p>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1420,7 +1423,7 @@
       <div class="endpoint-body">
         <div class="detail-section">
           <h4>Body (application/json)</h4>
-          <pre>{ "status": "pendente" | "aprovado" }</pre>
+          <pre>{ "novoStatus": "pendente" | "aprovado" }</pre>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1441,7 +1444,7 @@
       <div class="endpoint-body">
         <div class="detail-section">
           <h4>Body (application/json)</h4>
-          <pre>{ "usuario_id": string }</pre>
+          <pre>{ "usuarioId": string }</pre>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1504,7 +1507,7 @@
         <div class="detail-section">
           <h4>Query Parameters (opcional)</h4>
           <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
-          <tr><td><code>retiroId</code></td><td>number</td><td>Filtrar por retiro específico</td></tr></table>
+          <tr><td><code>retiroId</code></td><td>string UUID</td><td>Filtrar por retiro específico</td></tr></table>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1536,7 +1539,7 @@
         <div class="detail-section">
           <h4>Query Parameters (opcional)</h4>
           <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
-          <tr><td><code>retiroId</code></td><td>number</td><td>Segmentar por retiro específico</td></tr></table>
+          <tr><td><code>retiroId</code></td><td>string UUID</td><td>Segmentar por retiro específico</td></tr></table>
         </div>
         <div class="detail-section">
           <h4>Respostas</h4>
@@ -1685,7 +1688,7 @@
         <div class="detail-section">
           <h4>Body (application/json)</h4>
           <pre>{
-  "retiro_id": number  (obrigatório),
+  "retiro_id": string UUID  (obrigatório),
   "nome":      string  (obrigatório),
   "login":     string  (obrigatório),
   "senha_hash": string (obrigatório),

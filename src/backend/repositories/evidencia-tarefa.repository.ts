@@ -1,5 +1,7 @@
 import sql from '../database/connection'
 import { EvidenciaTarefa, EvidenciaTarefaInput } from '../models/evidencia-tarefa.model'
+import { EvidenciaDetalhada } from '../models/evidencia.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências de tarefas cadastradas
 export const EvidenciaTarefaRepository = {
@@ -14,7 +16,7 @@ export const EvidenciaTarefaRepository = {
     },
 
     // Busca uma evidência de tarefa pela chave composta e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number, tarefa_id: number): Promise<EvidenciaTarefa | null> {
+    async buscarPorId(evidencia_id: UUID, tarefa_id: UUID): Promise<EvidenciaTarefa | null> {
         const evidenciaTarefa = await sql<EvidenciaTarefa[]>`
             SELECT evidencia_id, tarefa_id
             FROM evidencia_tarefa
@@ -34,5 +36,25 @@ export const EvidenciaTarefaRepository = {
         `
 
         return created
+    },
+
+    // Lista as evidências de uma tarefa já com o detalhe de cada tipo
+    // (foto/áudio = url_arquivo; foto = latitude/longitude; mensagem = conteudo),
+    // numa única consulta, para o supervisor revisar.
+    async buscarEvidenciasDaTarefa(tarefa_id: UUID): Promise<EvidenciaDetalhada[]> {
+        return sql<EvidenciaDetalhada[]>`
+            SELECT
+                e.id, e.usuario_id, e.tipo, e.data_criacao,
+                COALESCE(f.url_arquivo, a.url_arquivo) AS url_arquivo,
+                f.latitude, f.longitude,
+                m.conteudo
+            FROM evidencia_tarefa et
+            JOIN evidencia e ON e.id = et.evidencia_id
+            LEFT JOIN evidencia_foto f ON f.evidencia_id = e.id
+            LEFT JOIN evidencia_audio a ON a.evidencia_id = e.id
+            LEFT JOIN evidencia_mensagem m ON m.evidencia_id = e.id
+            WHERE et.tarefa_id = ${tarefa_id}
+            ORDER BY e.data_criacao
+        `
     }
 }

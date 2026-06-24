@@ -2,11 +2,13 @@ import { UUID } from './uuid'
 
 export type TarefaPrioridade = 'alta' | 'media' | 'baixa'
 
-export type TarefaStatus = 'pendente' | 'aprovado'
+// Ciclo: pendente (delegada) → concluido (capataz concluiu, aguardando supervisor)
+// → aprovado (supervisor validou; exibido como "Validada" na interface).
+export type TarefaStatus = 'pendente' | 'concluido' | 'aprovado'
 
 export interface Tarefa {
-  id: number
-  retiro_id: number
+  id: UUID
+  retiro_id: UUID
   criada_por: UUID
   atribuida_a: UUID
   descricao: string
@@ -19,7 +21,8 @@ export interface Tarefa {
 }
 
 export interface TarefaInput {
-  retiro_id: number
+  id?: UUID
+  retiro_id: UUID
   criada_por: UUID
   atribuida_a: UUID
   descricao: string

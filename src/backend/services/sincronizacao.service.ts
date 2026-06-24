@@ -4,6 +4,38 @@ import { TicketRepository } from '../repositories/ticket.repository'
 import { Movimentacao } from '../models/movimentacao.model'
 import { Tarefa } from '../models/tarefa.model'
 import { Ticket } from '../models/ticket.model'
+import { UUID } from '../models/uuid'
+
+function obterBaseApi(): string {
+  const base = process.env.API_BASE_URL?.trim()
+  if (base) {
+    return base.replace(/\/+$/, '')
+  }
+
+  const porta = process.env.PORT ?? '3000'
+  return `http://127.0.0.1:${porta}`
+}
+
+function montarUrlApi(caminho: string): string {
+  return `${obterBaseApi()}${caminho.startsWith('/') ? caminho : `/${caminho}`}`
+}
+
+const MENSAGEM_ERRO_SINCRONIZACAO = 'Não foi possível sincronizar os dados. Tente novamente.'
+
+function registrarFalhaSincronizacao(contexto: string, error: unknown) {
+  console.warn(`Falha na sincronização: ${contexto}`, {
+    erro: error instanceof Error ? error.message : error,
+  })
+}
+
+function erroSincronizacao(categoria: string, response: Response): Error {
+  console.warn(`Falha ao sincronizar ${categoria}`, {
+    status: response.status,
+    statusText: response.statusText,
+  })
+
+  return new Error(MENSAGEM_ERRO_SINCRONIZACAO)
+}
 
 // RN03: Sincronização offline com detecção automática de conexão
 // RN07: Apenas dados com sincronizado=true entram em relatórios
@@ -12,7 +44,7 @@ export const SincronizacaoService = {
   // Retorna true se HTTP 200 foi recebido do servidor
   async detectarConexao(): Promise<boolean> {
     try {
-      const response = await fetch('/api/health', {
+      const response = await fetch(montarUrlApi('/health'), {
         method: 'HEAD',
         cache: 'no-cache',
       })
@@ -53,7 +85,8 @@ export const SincronizacaoService = {
           } as any)
           registrosSincronizados++
         } catch (error) {
-          erros.push(`Erro ao sincronizar movimentação ${mov.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+          registrarFalhaSincronizacao(`movimentação ${mov.id}`, error)
+          erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
         }
       }
 
@@ -72,7 +105,8 @@ export const SincronizacaoService = {
           } as any)
           registrosSincronizados++
         } catch (error) {
-          erros.push(`Erro ao sincronizar tarefa ${tarefa.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+          registrarFalhaSincronizacao(`tarefa ${tarefa.id}`, error)
+          erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
         }
       }
 
@@ -91,21 +125,23 @@ export const SincronizacaoService = {
           } as any)
           registrosSincronizados++
         } catch (error) {
-          erros.push(`Erro ao sincronizar ticket ${ticket.id}: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+          registrarFalhaSincronizacao(`ticket ${ticket.id}`, error)
+          erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
         }
       }
 
       const sucesso = registrosSincronizados > 0 || erros.length === 0
       return { sucesso, registrosSincronizados, erros }
     } catch (error) {
-      erros.push(`Erro geral na sincronização: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
+      registrarFalhaSincronizacao('fluxo geral', error)
+      erros.push(MENSAGEM_ERRO_SINCRONIZACAO)
       return { sucesso: false, registrosSincronizados, erros }
     }
   },
 
   // RN07: Buscar movimentações sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=validado
-  async buscarMovimentacoesParaRelatrio(retiroId?: number): Promise<Movimentacao[]> {
+  async buscarMovimentacoesParaRelatrio(retiroId?: UUID): Promise<Movimentacao[]> {
     const movimentacoes = await MovimentacaoRepository.buscarTodos()
 
     return movimentacoes.filter(m => {
@@ -122,7 +158,7 @@ export const SincronizacaoService = {
 
   // RN07: Buscar tarefas sincronizadas para relatórios
   // Retorna apenas registros com sincronizado=true e status=aprovado
-  async buscarTarefasParaRelatrio(retiroId?: number): Promise<Tarefa[]> {
+  async buscarTarefasParaRelatrio(retiroId?: UUID): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.buscarTodos()
 
     return tarefas.filter(t => {
@@ -139,7 +175,7 @@ export const SincronizacaoService = {
 
   // RN10: Buscar tickets sincronizados para dashboard
   // Retorna apenas tickets com sincronizado=true e status=aprovado
-  async buscarTicketsParaDashboard(retiroId?: number): Promise<Ticket[]> {
+  async buscarTicketsParaDashboard(retiroId?: UUID): Promise<Ticket[]> {
     const tickets = await TicketRepository.buscarTodos()
 
     return tickets.filter(t => {
@@ -157,40 +193,40 @@ export const SincronizacaoService = {
 
   // RN03: Envia movimentação para o servidor
   async enviarMovimentacao(movimentacao: Movimentacao): Promise<void> {
-    const response = await fetch('/api/movimentacoes/sincronizar', {
+    const response = await fetch(montarUrlApi('/movimentacoes/sincronizar'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(movimentacao),
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar movimentação: HTTP ${response.status}`)
+      throw erroSincronizacao('movimentação', response)
     }
   },
 
   // RN03: Envia tarefa para o servidor
   async enviarTarefa(tarefa: Tarefa): Promise<void> {
-    const response = await fetch('/api/tarefas/sincronizar', {
+    const response = await fetch(montarUrlApi('/tarefas/sincronizar'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(tarefa),
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar tarefa: HTTP ${response.status}`)
+      throw erroSincronizacao('tarefa', response)
     }
   },
 
   // RN03: Envia ticket para o servidor
   async enviarTicket(ticket: Ticket): Promise<void> {
-    const response = await fetch('/api/tickets/sincronizar', {
+    const response = await fetch(montarUrlApi('/tickets/sincronizar'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(ticket),
     })
 
     if (!response.ok) {
-      throw new Error(`Erro ao enviar ticket: HTTP ${response.status}`)
+      throw erroSincronizacao('ticket', response)
     }
   },
 

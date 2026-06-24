@@ -1,0 +1,352 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['supervisor']
+  - capatazes: { id: UUID, nome: string, retiro: string }[]
+      Capatazes REAIS do banco (do retiro do supervisor). Vira um campo
+      combinado "Retiro — Capataz": o value é o UUID do capataz, usado direto
+      em atribuida_a, então a tarefa chega ao capataz certo.
+  - tarefasAtivas: tarefas delegadas e ainda não realizadas (status pendente)
+%>
+
+<!-- ============================================================
+     TELA: Delegar tarefa
+     Mobile  → TopNav com voltar + formulário + BottomNav
+     Desktop → Sidebar + TopBar + formulário (esq) + tarefas ativas (dir)
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Delegar tarefa</h1>
+  </header>
+
+  <!-- Formulário -->
+  <main class="form-content" role="main">
+    <form class="delegate-form" id="form-delegar" novalidate>
+
+      <div class="dfield">
+        <label class="dfield__label" for="retiro-capataz-mobile">Retiro / Capataz responsável</label>
+        <div class="dfield__select-wrap">
+          <select class="dfield__select" id="retiro-capataz-mobile" name="retiroCapataz" required aria-required="true">
+            <option value="" disabled selected>Escolha o capataz</option>
+            <% capatazes.forEach(function (c) { %>
+            <option value="<%= c.id %>" data-capataz="<%= c.nome %>"><%= c.retiro %> — <%= c.nome %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label" for="atividade-mobile">Atividade solicitada</label>
+        <div class="dfield__select-wrap">
+          <select class="dfield__select" id="atividade-mobile" name="atividade" required aria-required="true">
+            <option value="" disabled selected>Tarefa a delegar</option>
+            <option value="conferencia">Conferência do rebanho</option>
+            <option value="transferencia-gado">Transferência de gado</option>
+            <option value="contagem">Contagem geral</option>
+            <option value="inspecao">Inspeção sanitária</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Aparece só quando a atividade for "Outro" (campo para descrever a tarefa) -->
+      <div class="dfield" id="campo-outro-mobile" style="display: none;">
+        <label class="dfield__label" for="outro-mobile">Qual é a tarefa?</label>
+        <input
+          class="dfield__input"
+          type="text"
+          id="outro-mobile"
+          name="outroAtividade"
+          placeholder="Escreva a tarefa a delegar"
+        />
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label">Prioridade</label>
+        <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
+          <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
+          <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
+          <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
+          <input type="hidden" id="prioridade-mobile" name="prioridade" />
+        </div>
+      </div>
+
+      <div class="dfield">
+        <label class="dfield__label" for="descricao-mobile">Descrição (obrigatório)</label>
+        <textarea
+          class="dfield__textarea"
+          id="descricao-mobile"
+          name="descricao"
+          placeholder="Adicione detalhes da tarefa..."
+          required
+          aria-required="true"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <p class="delegar-feedback" style="margin: 0 0 8px; font-size: 14px; line-height: 1.4; display: none;"></p>
+      <button type="submit" class="btn btn--primary btn--enviar">Enviar</button>
+
+    </form>
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'delegar' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar -->
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'delegar' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <div class="topbar__lead">
+        <h1 class="topbar__title">Delegar tarefa</h1>
+      </div>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Conteúdo: formulário + tarefas ativas -->
+    <main class="desktop-content delegar-grid" role="main">
+
+      <!-- Coluna esquerda: formulário -->
+      <section class="delegar-form-col" aria-label="Formulário de delegação">
+        <form id="form-delegar-desktop" novalidate>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="retiro-capataz-desktop">Retiro / Capataz responsável</label>
+            <div class="dfield__select-wrap">
+              <select class="dfield__select dfield__select--desktop" id="retiro-capataz-desktop" name="retiroCapataz" required>
+                <option value="" disabled selected>Escolha o capataz</option>
+                <% capatazes.forEach(function (c) { %>
+                <option value="<%= c.id %>" data-capataz="<%= c.nome %>"><%= c.retiro %> — <%= c.nome %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="atividade-desktop">Atividade solicitada</label>
+            <div class="dfield__select-wrap">
+              <select class="dfield__select dfield__select--desktop" id="atividade-desktop" name="atividade" required>
+                <option value="" disabled selected>Tarefa a delegar</option>
+                <option value="conferencia">Conferência do rebanho</option>
+                <option value="transferencia-gado">Transferência de gado</option>
+                <option value="contagem">Contagem geral</option>
+                <option value="inspecao">Inspeção sanitária</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Aparece só quando a atividade for "Outro" (campo para descrever a tarefa) -->
+          <div class="dfield dfield--desktop" id="campo-outro-desktop" style="display: none;">
+            <label class="dfield__label dfield__label--dark" for="outro-desktop">Qual é a tarefa?</label>
+            <input
+              class="dfield__input dfield__input--desktop"
+              type="text"
+              id="outro-desktop"
+              name="outroAtividade"
+              placeholder="Escreva a tarefa a delegar"
+            />
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark">Prioridade</label>
+            <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
+              <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
+              <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
+              <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
+              <input type="hidden" id="prioridade-desktop" name="prioridade" />
+            </div>
+          </div>
+
+          <div class="dfield dfield--desktop">
+            <label class="dfield__label dfield__label--dark" for="descricao-desktop">Descrição (obrigatório)</label>
+            <textarea
+              class="dfield__textarea dfield__textarea--desktop"
+              id="descricao-desktop"
+              name="descricao"
+              placeholder="Adicione detalhes da tarefa..."
+              required
+              rows="5"
+            ></textarea>
+          </div>
+
+          <p class="delegar-feedback" style="margin: 0 0 8px; font-size: 14px; line-height: 1.4; display: none;"></p>
+          <button type="submit" class="btn btn--primary btn--enviar-desktop">Enviar tarefa</button>
+
+        </form>
+      </section>
+
+      <!-- Coluna direita: tarefas já delegadas que o capataz ainda não realizou -->
+      <aside class="delegar-tarefas-col" aria-labelledby="tarefas-ativas-title">
+        <h2 class="section__title" id="tarefas-ativas-title">Tarefas ativas</h2>
+
+        <% var acentoPrioridade = { alta: 'red', media: 'yellow', baixa: 'blue' }; %>
+        <% if (!tarefasAtivas || tarefasAtivas.length === 0) { %>
+        <p class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</p>
+        <% } else { %>
+        <% tarefasAtivas.forEach(function (t) { %>
+        <article class="tarefa-card">
+          <div class="tarefa-card__accent tarefa-card__accent--<%= acentoPrioridade[t.prioridade] || 'blue' %>"></div>
+          <div class="tarefa-card__body">
+            <p class="tarefa-card__name"><%= t.titulo %></p>
+            <p class="tarefa-card__meta"><%= t.capataz %> • <%= t.retiro %></p>
+          </div>
+          <span class="prioridade-badge prioridade-badge--<%= t.prioridade %>"><%= t.nivel %></span>
+        </article>
+        <% }) %>
+        <% } %>
+
+      </aside>
+
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script src="/js/prioridade-seletor.js"></script>
+<script src="/js/data-hoje.js"></script>
+<script>
+  function mostrarFeedback(mensagem, tipo) {
+    document.querySelectorAll('.delegar-feedback').forEach(el => {
+      el.textContent = mensagem;
+      el.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+      el.style.display = mensagem ? 'block' : 'none';
+    });
+  }
+
+  function atualizarEstadoSelect(select) {
+    select.classList.toggle('dfield__select--has-value', select.value !== '');
+  }
+
+  // Mostra o campo "Qual é a tarefa?" só quando a atividade for "Outro".
+  // Esconde e limpa nos demais casos. Funciona por formulário (mobile/desktop).
+  function alternarCampoOutro(form) {
+    const atividade = form.querySelector('select[name="atividade"]');
+    const campo = form.querySelector('[id^="campo-outro"]');
+    const input = form.querySelector('input[name="outroAtividade"]');
+    if (!atividade || !campo) return;
+    const ehOutro = atividade.value === 'outro';
+    campo.style.display = ehOutro ? 'block' : 'none';
+    if (!ehOutro && input) input.value = '';
+  }
+
+  // Cria a tarefa no BACKEND (o cookie de sessão autentica). Nasce com status
+  // 'pendente' e é atribuída ao capataz escolhido (atribuida_a = UUID), então
+  // aparece nas tarefas do capataz e em Revisão → Não realizadas.
+  async function delegarNoBackend(dados) {
+    const resp = await fetch('/tarefas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        atribuida_a: dados.capatazId,
+        descricao: dados.descricao,
+        categoria: dados.titulo,
+        prioridade: dados.prioridade,
+      }),
+    });
+    if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) throw new Error('Sessão expirada.');
+    const corpo = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(corpo.error || 'Não foi possível delegar a tarefa.');
+    return corpo;
+  }
+
+  // Delega a tarefa ao capataz escolhido. O campo combinado "Retiro — Capataz"
+  // já traz o UUID do capataz real do banco como value.
+  async function enviarTarefa(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const retiroCapataz = form.querySelector('select[name="retiroCapataz"]');
+    const atividade = form.querySelector('select[name="atividade"]');
+    const outro = form.querySelector('input[name="outroAtividade"]');
+    const prioridade = form.querySelector('[name="prioridade"]');
+    const descricao = form.querySelector('textarea[name="descricao"]');
+
+    if (!retiroCapataz || !atividade || !prioridade || !descricao) {
+      mostrarFeedback('Formulário incompleto.', 'error');
+      return;
+    }
+
+    if (!retiroCapataz.value) {
+      mostrarFeedback('Escolha o capataz.', 'error');
+      return;
+    }
+
+    if (!atividade.value || !prioridade.value || !descricao.value.trim()) {
+      mostrarFeedback('Preencha todos os campos obrigatórios.', 'error');
+      return;
+    }
+
+    if (atividade.value === 'outro' && (!outro || !outro.value.trim())) {
+      mostrarFeedback('Escreva qual é a tarefa.', 'error');
+      return;
+    }
+
+    // Título da tarefa: o texto da atividade escolhida (ou o que o supervisor
+    // escreveu em "Outro").
+    const titulo =
+      atividade.value === 'outro'
+        ? outro.value.trim()
+        : (atividade.selectedOptions[0]?.textContent || 'Tarefa').trim();
+
+    const dados = {
+      titulo,
+      capatazId: retiroCapataz.value, // UUID do capataz (value da opção)
+      prioridade: prioridade.value,
+      descricao: descricao.value.trim(),
+    };
+
+    try {
+      await delegarNoBackend(dados);
+    } catch (e) {
+      mostrarFeedback(e.message || 'Não foi possível delegar a tarefa.', 'error');
+      return;
+    }
+
+    mostrarFeedback('Tarefa enviada. Já aparece para o capataz e em Revisão → Não realizadas.', 'success');
+    form.reset();
+    if (window.PrioSeletor) PrioSeletor.resetarTodos();
+    form.querySelectorAll('.dfield__select').forEach(atualizarEstadoSelect);
+    alternarCampoOutro(form);
+  }
+
+  document.querySelectorAll('#form-delegar, #form-delegar-desktop').forEach(form => {
+    form.addEventListener('submit', enviarTarefa);
+    const atividade = form.querySelector('select[name="atividade"]');
+    if (atividade) atividade.addEventListener('change', () => alternarCampoOutro(form));
+    alternarCampoOutro(form);
+  });
+
+  document.querySelectorAll('.dfield__select').forEach(select => {
+    atualizarEstadoSelect(select);
+    select.addEventListener('change', () => atualizarEstadoSelect(select));
+  });
+</script>
+
+</body>
+</html>

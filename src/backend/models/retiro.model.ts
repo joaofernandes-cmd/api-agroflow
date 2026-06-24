@@ -1,8 +1,11 @@
+import { UUID } from './uuid'
+
 export interface Retiro {
-  id: number
+  id: UUID
   nome: string
 }
 
 export interface RetiroInput {
+  id?: UUID
   nome: string
 }

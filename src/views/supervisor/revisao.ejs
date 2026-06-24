@@ -1,0 +1,408 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller (tudo do BANCO, fonte única — mesmo
+  padrão das telas de Tickets e Movimentações):
+  - usuario: { nome: string }
+  - css: ['supervisor']
+  - tarefasNaoRealizadas: tarefas delegadas que o capataz ainda não fez (pendente)
+  - tarefas: concluídas pelo capataz aguardando validação (concluido)
+  - tarefasValidadas: já aprovadas pelo supervisor (aprovado)
+  Validar = PATCH /validacoes/tarefas/:id/aprovar (autenticado pelo cookie) +
+  reload: o servidor re-renderiza a lista a partir do banco, então a tarefa sai
+  de "Realizadas" e entra em "Validadas" — e o mesmo dado aparece no relatório.
+%>
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Tarefas</h1>
+  </header>
+
+  <!-- Barra de busca + badge -->
+  <div class="revisao-filter-bar" role="search">
+    <div class="revisao-search-wrap">
+      <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        class="revisao-search"
+        type="search"
+        placeholder="Pesquisar tarefas"
+        aria-label="Pesquisar tarefas"
+      />
+    </div>
+    <span class="revisao-badge-pendentes"><%= tarefas.length %> Pendentes</span>
+  </div>
+
+  <!-- Lista de tarefas -->
+  <main class="revisao-list" role="main">
+
+    <!-- Não realizadas: delegadas que o capataz ainda não fez (não dá pra validar) -->
+    <section class="lista-secao lista-secao--naorealizadas">
+      <h2 class="lista-secao__titulo">Não realizadas</h2>
+      <p class="lista-secao__sub">O capataz ainda não fez — não dá para validar ainda</p>
+
+      <% if (!tarefasNaoRealizadas || tarefasNaoRealizadas.length === 0) { %>
+      <p class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</p>
+      <% } else { %>
+      <% tarefasNaoRealizadas.forEach(function (t) { %>
+      <div class="pend-item" data-tarefa-id="<%= t.id %>">
+        <div class="pend-head">
+          <span class="pend-title"><%= t.titulo %> — <%= t.retiro %></span>
+          <span class="badge badge--cinza">Não realizado</span>
+          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="pend-panel">
+          <div class="pend-panel__inner">
+            <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Delegada:</strong> <%= t.enviado %></p>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+      <% } %>
+    </section>
+
+    <!-- Realizadas: concluídas pelo capataz, aguardando validação -->
+    <section class="lista-secao lista-secao--validar">
+      <h2 class="lista-secao__titulo">Realizadas</h2>
+      <p class="lista-secao__sub">Concluídas pelo capataz — toque em Validar para aprovar</p>
+
+      <% if (!tarefas || tarefas.length === 0) { %>
+      <p class="concl-vazio">Nenhuma tarefa pendente de revisão.</p>
+      <% } else { %>
+      <% tarefas.forEach(function (t) { %>
+      <div class="pend-item" data-tarefa-id="<%= t.id %>">
+        <div class="pend-head">
+          <span class="pend-title"><%= t.titulo %> — <%= t.retiro %></span>
+          <button class="btn-revisar" data-action="validar">Validar</button>
+          <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="pend-panel">
+          <div class="pend-panel__inner">
+            <p class="pend-info"><strong>Capataz:</strong> <%= t.capataz %><br><strong>Retiro:</strong> <%= t.retiro %><br><strong>Enviado:</strong> <%= t.enviado %></p>
+            <div class="concl-bloco">
+              <span class="concl-bloco__label">Descrição</span>
+              <p class="concl-bloco__texto"><%= t.descricao %></p>
+            </div>
+            <div class="concl-bloco">
+              <span class="concl-bloco__label">Evidência</span>
+              <div class="js-evid-tarefa">Abra para ver a evidência.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+      <% } %>
+    </section>
+
+    <!-- Validadas -->
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Validadas</h2>
+      <p class="lista-secao__sub">Tarefas que você já validou</p>
+      <div class="concluidas-capataz"><%- include('../partials/tarefas-validadas', { tarefasValidadas }) %></div>
+    </section>
+
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'revisao' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar -->
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'revisao' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <div class="topbar__lead">
+        <h1 class="topbar__title">Tarefas</h1>
+      </div>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Barra de busca + badge desktop -->
+    <div class="revisao-filter-bar-desktop" role="search">
+      <div class="revisao-search-wrap-desktop">
+        <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          class="revisao-search-desktop"
+          type="search"
+          placeholder="Pesquisar tarefas"
+          aria-label="Pesquisar tarefas"
+        />
+      </div>
+      <span class="revisao-badge-pendentes revisao-badge-pendentes--desktop"><%= tarefas.length %> Pendentes</span>
+    </div>
+
+    <!-- Tabela de tarefas -->
+    <main class="desktop-content revisao-desktop-content" role="main">
+      <!-- Não realizadas: delegadas que o capataz ainda não fez -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Não realizadas</h2>
+        <p class="lista-secao__sub">O capataz ainda não fez — não dá para validar ainda</p>
+      </section>
+
+      <div class="revisao-table-wrap">
+        <table class="revisao-table revisao-table--naorealizadas" aria-label="Tarefas delegadas ainda não realizadas">
+          <thead>
+            <tr>
+              <th>Tarefa</th>
+              <th>Retiro</th>
+              <th>Capataz</th>
+              <th>Delegada</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (!tarefasNaoRealizadas || tarefasNaoRealizadas.length === 0) { %>
+            <tr><td colspan="6" class="concl-vazio">Nenhuma tarefa delegada pendente no momento.</td></tr>
+            <% } else { %>
+            <% tarefasNaoRealizadas.forEach(function (t, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-tarefa-id="<%= t.id %>">
+              <td class="td--bold"><%= t.titulo %></td>
+              <td><%= t.retiro %></td>
+              <td>Capataz <%= t.capataz %></td>
+              <td><%= t.enviado %></td>
+              <td><span class="badge badge--cinza">Não realizado</span></td>
+              <td><button class="btn-revisar" data-action="validar" disabled title="Aguardando o capataz realizar">Validar</button></td>
+            </tr>
+            <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Realizadas: concluídas pelo capataz, aguardando validação -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Realizadas</h2>
+        <p class="lista-secao__sub">Concluídas pelo capataz — clique em Validar para aprovar</p>
+      </section>
+
+      <div class="revisao-table-wrap">
+        <table class="revisao-table revisao-table--validar" aria-label="Lista de tarefas para revisão">
+          <thead>
+            <tr>
+              <th>Tarefa</th>
+              <th>Retiro</th>
+              <th>Capataz</th>
+              <th>Há quanto tempo</th>
+              <th>Status</th>
+              <th></th><!-- ver mais -->
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (!tarefas || tarefas.length === 0) { %>
+            <tr><td colspan="7" class="concl-vazio">Nenhuma tarefa pendente de revisão.</td></tr>
+            <% } else { %>
+            <% tarefas.forEach(function (t, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-tarefa-id="<%= t.id %>">
+              <td class="td--bold"><%= t.titulo %></td>
+              <td><%= t.retiro %></td>
+              <td>Capataz <%= t.capataz %></td>
+              <td><%= t.enviado %></td>
+              <td><span class="badge badge--yellow">Realizada</span></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-revisar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto"><%= t.descricao %></p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <div class="js-evid-tarefa">Abra para ver a evidência.</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Validadas -->
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Validadas</h2>
+        <p class="lista-secao__sub">Tarefas que você já validou</p>
+        <div class="concluidas-capataz"><%- include('../partials/tarefas-validadas', { tarefasValidadas }) %></div>
+      </section>
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script src="/js/data-hoje.js"></script>
+<script src="/js/revisao-utils.js"></script>
+<script>
+
+  function mostrarFeedbackValidacao(mensagem, tipo) {
+    AgroFlowRevisao.mostrarFeedback({
+      feedbackSelector: '.revisao-feedback',
+      alvoSelector: '.revisao-filter-bar',
+      alvoFallbackSelector: '.revisao-list',
+      feedbackClass: 'revisao-feedback',
+      mensagem,
+      tipo,
+    });
+  }
+
+  // Aprova a tarefa no BACKEND (concluido → aprovado, PATCH autenticado pelo
+  // cookie de sessão). Em caso de sucesso recarrega: o servidor re-renderiza as
+  // listas do banco, então a tarefa sai de "Realizadas" e entra em "Validadas"
+  // — e o mesmo dado passa a aparecer no relatório e para o gerente.
+  async function validarTarefa(tarefaId, btn) {
+    return AgroFlowRevisao.validarItem({
+      id: tarefaId,
+      botao: btn,
+      url: '/validacoes/tarefas/' + encodeURIComponent(tarefaId) + '/aprovar',
+      mensagemErro: 'Não foi possível validar a tarefa.',
+      mostrarFeedback: mostrarFeedbackValidacao,
+    });
+  }
+
+  // Botão "Validar" (vara mobile ou linha desktop) — pega o id do elemento que
+  // carrega data-tarefa-id (o card mobile ou a linha da tabela).
+  AgroFlowRevisao.vincularValidacao({
+    hostSelector: '[data-tarefa-id]',
+    datasetKey: 'tarefaId',
+    validar: validarTarefa,
+    ignorarDesabilitados: true,
+  });
+
+  // ── Evidência real vinda do backend (foto/áudio do Supabase, texto) ──────────
+  // Carregada sob demanda quando o supervisor abre a tarefa, por GET
+  // /evidencias/tarefa/:id (autenticado pelo cookie). Cada container .js-evid-tarefa
+  // pertence a um elemento com data-tarefa-id (card, linha de detalhe ou vara).
+  function elementoEvidencia(ev) {
+    if (ev.tipo === 'foto' && ev.url_arquivo) {
+      const img = document.createElement('img');
+      img.className = 'evidencia-midia';
+      img.src = ev.url_arquivo;
+      img.alt = 'Foto da evidência';
+      return img;
+    }
+    if (ev.tipo === 'audio' && ev.url_arquivo) {
+      const audio = document.createElement('audio');
+      audio.className = 'evidencia-audio';
+      audio.controls = true;
+      audio.src = ev.url_arquivo;
+      return audio;
+    }
+    if (ev.tipo === 'mensagem') {
+      const p = document.createElement('p');
+      p.className = 'evidencia-texto';
+      p.textContent = ev.conteudo || '';
+      return p;
+    }
+    return null;
+  }
+
+  function renderEvidencias(container, evidencias) {
+    container.replaceChildren();
+    if (!evidencias || !evidencias.length) {
+      const vazio = document.createElement('p');
+      vazio.className = 'evidencia-texto';
+      vazio.textContent = 'Nenhuma evidência enviada.';
+      container.appendChild(vazio);
+      return;
+    }
+    evidencias.forEach(ev => {
+      const el = elementoEvidencia(ev);
+      if (el) container.appendChild(el);
+    });
+  }
+
+  async function carregarEvidencia(container, tarefaId) {
+    if (!container || container.dataset.loaded === '1') return;
+    container.dataset.loaded = '1';
+    container.textContent = 'Carregando evidência...';
+    try {
+      const resp = await fetch('/evidencias/tarefa/' + encodeURIComponent(tarefaId));
+      if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) return;
+      if (!resp.ok) throw new Error('falha');
+      renderEvidencias(container, await resp.json());
+    } catch (e) {
+      container.dataset.loaded = '';
+      container.textContent = 'Não foi possível carregar a evidência.';
+    }
+  }
+
+  // Carrega a evidência de todos os containers dentro de um host (card/linha/vara).
+  function carregarEvidenciasDe(host) {
+    if (!host) return;
+    const id = host.dataset.tarefaId;
+    if (!id) return;
+    host.querySelectorAll('.js-evid-tarefa').forEach(c => carregarEvidencia(c, id));
+  }
+
+  // Setinha (mobile): abre/fecha as informações + carrega a evidência real
+  AgroFlowRevisao.vincularAcordeao('.pend-toggle', '.pend-item', carregarEvidenciasDe);
+
+  // "Ver mais" (desktop): abre a linha de detalhe + carrega a evidência real
+  AgroFlowRevisao.vincularDetalheTabela('.ver-mais', 'pend-detalhe', carregarEvidenciasDe);
+
+  // Varas de "Validadas" (acordeão): abre/fecha + carrega a evidência real
+  AgroFlowRevisao.vincularAcordeao('.concluidas-capataz .concl-head', '.concl-item', carregarEvidenciasDe);
+
+  // Filtro de busca — mobile
+  const searchMobile = document.querySelector('.revisao-search');
+  if (searchMobile) {
+    searchMobile.addEventListener('input', function () {
+      const termo = this.value.toLowerCase().trim();
+      document.querySelectorAll('.revisao-list .pend-item').forEach(card => {
+        const nome = card.querySelector('.pend-title')?.textContent.toLowerCase() ?? '';
+        card.style.display = nome.includes(termo) ? '' : 'none';
+      });
+    });
+  }
+
+  // Filtro de busca — desktop
+  const searchDesktop = document.querySelector('.revisao-search-desktop');
+  if (searchDesktop) {
+    searchDesktop.addEventListener('input', function () {
+      const termo = this.value.toLowerCase().trim();
+      document.querySelectorAll('.revisao-table tbody tr[data-tarefa-id]').forEach(row => {
+        const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
+        row.style.display = nome.includes(termo) ? '' : 'none';
+        const det = row.nextElementSibling;
+        if (det && det.classList.contains('pend-detalhe')) det.setAttribute('hidden', '');
+        const vm = row.querySelector('.ver-mais');
+        if (vm) vm.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

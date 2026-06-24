@@ -1,0 +1,74 @@
+<%- include('../partials/capataz-head', { titulo: 'Alow · Início' }) %>
+
+<main class="celular">
+  <header class="cabecalho">
+    <div class="cabecalho__barra">
+      <span class="cabecalho__titulo">Início</span>
+    </div>
+  </header>
+
+  <div class="saudacao">
+    <h2 class="saudacao__titulo">Bom dia, <%= (typeof usuario !== 'undefined' && usuario.nome) ? usuario.nome : 'capataz' %>!</h2>
+    <p class="saudacao__data" id="data-hoje"></p>
+  </div>
+
+  <div class="conteudo">
+    <div class="acoes-grid">
+      <a href="/capataz/movimentacao" class="acao-card">
+        <span class="acao-card__icone" style="background: var(--info);">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m17 2 4 4-4 4"/><path d="M3 6h18"/><path d="m7 22-4-4 4-4"/><path d="M21 18H3"/>
+          </svg>
+        </span>
+        <span class="acao-card__texto">
+          <span class="acao-card__titulo">Movimentação</span>
+          <span class="acao-card__sub">Nascimento, morte, transferência...</span>
+        </span>
+      </a>
+
+      <a href="/capataz/ticket" class="acao-card">
+        <span class="acao-card__icone" style="background: #6b5b95;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+          </svg>
+        </span>
+        <span class="acao-card__texto">
+          <span class="acao-card__titulo">Ticket</span>
+          <span class="acao-card__sub">Reportar problema de infraestrutura</span>
+        </span>
+      </a>
+
+      <a href="/capataz/tarefas" class="acao-card acao-card--larga">
+        <span class="acao-card__icone" style="background: var(--primaria);">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="m18 9 2 2 4-4"/>
+          </svg>
+        </span>
+        <span class="acao-card__texto">
+          <span class="acao-card__titulo">Tarefas pendentes</span>
+          <span class="acao-card__sub">Veja suas tarefas a fazer</span>
+        </span>
+      </a>
+
+      <div class="pwa-install-row" aria-label="Instalação do aplicativo">
+        <button type="button" class="pwa-install-icon" id="btn-instalar-pwa" aria-label="Instalar app" title="Instalar app">
+          <span class="pwa-install-icon__glyph" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
+            </svg>
+          </span>
+          <span class="pwa-install-icon__label">Instalar app</span>
+        </button>
+        <p class="pwa-install__hint" id="pwa-install-hint" hidden></p>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../partials/bottomnav-capataz', { ativa: 'inicio' }) %>
+</main>
+
+<script src="/js/data-hoje.js"></script>
+
+</body>
+</html>

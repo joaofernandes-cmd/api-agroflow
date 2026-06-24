@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { Tarefa, TarefaInput } from '../models/tarefa.model'
+import { UUID } from '../models/uuid'
 
 export const TarefaRepository = {
 
@@ -11,7 +12,7 @@ export const TarefaRepository = {
         `
     },
 
-    async buscarPorId(id: number): Promise<Tarefa | null> {
+    async buscarPorId(id: UUID): Promise<Tarefa | null> {
         const tarefa = await sql<Tarefa[]>`
             SELECT id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
             FROM tarefa
@@ -24,8 +25,9 @@ export const TarefaRepository = {
 
     async criar(input: TarefaInput): Promise<Tarefa> {
         const [created] = await sql<Tarefa[]>`
-            INSERT INTO tarefa (retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado)
+            INSERT INTO tarefa (id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado)
             VALUES (
+                COALESCE(${input.id ?? null}::uuid, gen_random_uuid()),
                 ${input.retiro_id},
                 ${input.criada_por},
                 ${input.atribuida_a},
@@ -37,13 +39,24 @@ export const TarefaRepository = {
                 ${input.aprovado_por ?? null},
                 ${input.sincronizado ?? false}
             )
+            ON CONFLICT (id) DO UPDATE SET
+                retiro_id = EXCLUDED.retiro_id,
+                criada_por = EXCLUDED.criada_por,
+                atribuida_a = EXCLUDED.atribuida_a,
+                descricao = EXCLUDED.descricao,
+                categoria = EXCLUDED.categoria,
+                prioridade = EXCLUDED.prioridade,
+                data_criacao = EXCLUDED.data_criacao,
+                status = EXCLUDED.status,
+                aprovado_por = EXCLUDED.aprovado_por,
+                sincronizado = EXCLUDED.sincronizado
             RETURNING id, retiro_id, criada_por, atribuida_a, descricao, categoria, prioridade, data_criacao, status, aprovado_por, sincronizado
         `
 
         return created
     },
 
-    async atualizar(id: number, input: Partial<TarefaInput>): Promise<Tarefa | null> {
+    async atualizar(id: UUID, input: Partial<TarefaInput>): Promise<Tarefa | null> {
         const [updated] = await sql<Tarefa[]>`
             UPDATE tarefa
             SET
@@ -64,7 +77,7 @@ export const TarefaRepository = {
         return updated ?? null
     },
 
-    async remover(id: number): Promise<void> {
+    async remover(id: UUID): Promise<void> {
         await sql`
             DELETE FROM tarefa
             WHERE id = ${id}

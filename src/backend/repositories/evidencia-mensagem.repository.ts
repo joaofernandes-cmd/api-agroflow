@@ -1,5 +1,6 @@
 import sql from '../database/connection'
 import { EvidenciaMensagem, EvidenciaMensagemInput } from '../models/evidencia-mensagem.model'
+import { UUID } from '../models/uuid'
 
 // Retorna todas as evidências de mensagem cadastradas
 export const EvidenciaMensagemRepository = {
@@ -14,7 +15,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Busca uma evidência de mensagem pelo id da evidência e retorna null se não encontrar
-    async buscarPorId(evidencia_id: number): Promise<EvidenciaMensagem | null> {
+    async buscarPorId(evidencia_id: UUID): Promise<EvidenciaMensagem | null> {
         const evidenciaMensagem = await sql<EvidenciaMensagem[]>`
             SELECT evidencia_id, conteudo
             FROM evidencia_mensagem
@@ -37,7 +38,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Atualiza uma evidência de mensagem existente
-    async atualizar(evidencia_id: number, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
+    async atualizar(evidencia_id: UUID, input: Partial<EvidenciaMensagemInput>): Promise<EvidenciaMensagem | null> {
         const [updated] = await sql<EvidenciaMensagem[]>`
             UPDATE evidencia_mensagem
             SET
@@ -50,7 +51,7 @@ export const EvidenciaMensagemRepository = {
     },
 
     // Remove uma evidência de mensagem pelo id da evidência
-    async remover(evidencia_id: number): Promise<void> {
+    async remover(evidencia_id: UUID): Promise<void> {
         await sql`
             DELETE FROM evidencia_mensagem
             WHERE evidencia_id = ${evidencia_id}

@@ -4,7 +4,10 @@
   "description": "<p align=\"center\">\r <a href= \"https://www.inteli.edu.br/\"><img src=\"/assets/inteli.png\" alt=\"Inteli - Instituto de Tecnologia e Liderança\" border=\"0\"></a>\r </p>",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "exceljs": "^4.4.0",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "node": "^22.22.3",
@@ -14,7 +17,10 @@
   },
   "scripts": {
     "dev": "tsx watch src/backend/server.ts",
-    "build": "tsc",
+    "migrate": "tsx src/backend/database/migrate.ts",
+    "gerar:acesso": "tsx src/backend/scripts/gerar-acesso-capataz.ts",
+    "build": "tsc && npm run copy:static",
+    "copy:static": "copyfiles -u 1 \"src/views/**/*\" \"src/backend/public/**/*\" \"src/backend/database/migrations/**/*\" dist && copyfiles \"assets/**/*\" dist",
     "start": "node dist/backend/server.js",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -32,17 +38,28 @@
     }
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.9.0",
     "@types/pg": "^8.20.0",
     "@types/supertest": "^7.2.0",
+    "copyfiles": "^2.4.1",
     "jest": "^30.4.2",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.10",
     "ts-node": "^10.9.2",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.inteli.edu.br/graduacao/2026-1b/t26/g02.git"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "^11.1.1"
+    }
   }
 }

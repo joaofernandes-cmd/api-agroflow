@@ -2,6 +2,7 @@ import { Tarefa, TarefaInput, TarefaStatus, TarefaPrioridade } from '../models/t
 import { TarefaRepository } from '../repositories/tarefa.repository'
 import { Usuario } from '../models/usuario.model'
 import { UUID } from '../models/uuid'
+import { filtrarPorRetiro } from '../utils/retiro-filtro'
 
 export const TarefaService = {
   // RN02: Validar campos obrigatórios na criação de tarefa
@@ -49,50 +50,36 @@ export const TarefaService = {
     return tarefa
   },
 
+  async sincronizarRecebida(dados: TarefaInput): Promise<Tarefa> {
+    if (!dados.criada_por) {
+      throw new Error('Campo "criada_por" é obrigatório')
+    }
 
+    if (!dados.status) {
+      throw new Error('Campo "status" é obrigatório')
+    }
 
-  // RN10: Buscar tarefas para dashboard (apenas concluídas)
-  async buscarParaDashboard(retiroId?: number): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
-    const tarefas = await TarefaRepository.buscarTodos()
+    this.validarCamposObrigatorios(dados)
 
-    // Filtra apenas tarefas aprovadas (e opcionalmente por retiro)
-    return tarefas.filter(t => {
-      if (t.status !== 'aprovado') {
-        return false
-      }
-
-      // Se retiroId foi informado, filtra por esse retiro
-      if (retiroId && t.retiro_id !== retiroId) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
+    return TarefaRepository.criar({
+      ...dados,
+      sincronizado: true,
     })
   },
 
 
-  // Listar tarefas filtradas por status e opcionalmente por retiro
-  async listarPorStatus(status: TarefaStatus, retiroId?: number): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
+
+  // RN10: Buscar tarefas para dashboard (apenas concluídas)
+  async buscarParaDashboard(retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.buscarTodos()
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.status === 'aprovado')
+  },
 
-    // Filtra tarefas por status (e opcionalmente por retiro)
-    return tarefas.filter(t => {
-      // Verifica se o status da tarefa corresponde ao filtro solicitado
-      if (t.status !== status) {
-        return false
-      }
 
-      // Se retiroId foi informado, verifica se pertence a esse retiro
-      if (retiroId && t.retiro_id !== retiroId) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+  // Listar tarefas filtradas por status e opcionalmente por retiro
+  async listarPorStatus(status: TarefaStatus, retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
+    const tarefas = await TarefaRepository.buscarTodos()
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.status === status)
   },
 
 
@@ -104,51 +91,19 @@ export const TarefaService = {
 
 
   // Listar tarefas filtradas por prioridade e opcionalmente por retiro
-  async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: number): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
+  async listarPorPrioridade(prioridade: TarefaPrioridade, retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.buscarTodos()
-
-    // Filtra tarefas por prioridade (alta, media, baixa)
-    return tarefas.filter(t => {
-      // Verifica se a prioridade da tarefa corresponde ao filtro
-      if (t.prioridade !== prioridade) {
-        return false
-      }
-
-      // Se retiroId foi informado, verifica se pertence a esse retiro
-      if (retiroId && t.retiro_id !== retiroId) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.prioridade === prioridade)
   },
   // Listar tarefas filtradas por categoria e opcionalmente por retiro
-  async listarPorCategoria(categoria: string, retiroId?: number): Promise<Tarefa[]> {
-    // Busca todas as tarefas do banco
+  async listarPorCategoria(categoria: string, retiroId?: UUID | UUID[]): Promise<Tarefa[]> {
     const tarefas = await TarefaRepository.buscarTodos()
-
-    // Filtra tarefas por categoria
-    return tarefas.filter(t => {
-      // Verifica se a categoria da tarefa corresponde ao filtro
-      if (t.categoria !== categoria) {
-        return false
-      }
-
-      // Se retiroId foi informado, verifica se pertence a esse retiro
-      if (retiroId && t.retiro_id !== retiroId) {
-        return false
-      }
-
-      // Passou em todos os filtros? Inclui no resultado
-      return true
-    })
+    return filtrarPorRetiro(tarefas, retiroId).filter(t => t.categoria === categoria)
   },
 
 
   // Buscar uma tarefa específica pelo ID
-  async buscarPorId(id: number): Promise<Tarefa | null> {
+  async buscarPorId(id: UUID): Promise<Tarefa | null> {
     // Retorna a tarefa ou null se não encontrar
     return TarefaRepository.buscarPorId(id)
   },
@@ -162,7 +117,7 @@ export const TarefaService = {
 
 
   // Atualizar apenas o status de uma tarefa
-  async atualizarStatus(id: number, novoStatus: TarefaStatus): Promise<Tarefa | null> {
+  async atualizarStatus(id: UUID, novoStatus: TarefaStatus): Promise<Tarefa | null> {
     // Busca a tarefa atual no banco
     const tarefa = await TarefaRepository.buscarPorId(id)
 
@@ -182,7 +137,7 @@ export const TarefaService = {
 
   // Atualizar tarefa com validação de campos obrigatórios
   // Campos que NÃO podem ser alterados: data_criacao, criada_por, retiro_id, status
-  async atualizar(id: number, dados: Partial<Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'retiro_id' | 'status'>>): Promise<Tarefa | null> {
+  async atualizar(id: UUID, dados: Partial<Omit<TarefaInput, 'data_criacao' | 'criada_por' | 'retiro_id' | 'status'>>): Promise<Tarefa | null> {
     // Busca a tarefa atual no banco
     const tarefaAtual = await TarefaRepository.buscarPorId(id)
     // Se tarefa não existe, retorna null
@@ -209,22 +164,20 @@ export const TarefaService = {
 
 
   // Contar quantas tarefas existem em cada status
-  async contarPorStatus(retiroId?: number): Promise<Record<TarefaStatus, number>> {
+  async contarPorStatus(retiroId?: UUID | UUID[]): Promise<Record<TarefaStatus, number>> {
     // Busca todas as tarefas do banco
     const tarefas = await TarefaRepository.buscarTodos()
 
     // Inicializa contador para cada status possível
     const contagem: Record<TarefaStatus, number> = {
       pendente: 0,
+      concluido: 0,
       aprovado: 0,
     }
 
     // Itera sobre todas as tarefas e incrementa o contador do status correspondente
-    tarefas.forEach(t => {
-      // Se retiroId foi informado, filtra por esse retiro; senão conta todas
-      if (!retiroId || t.retiro_id === retiroId) {
-        contagem[t.status]++
-      }
+    filtrarPorRetiro(tarefas, retiroId).forEach(t => {
+      contagem[t.status]++
     })
 
     // Retorna objeto com contagem de tarefas por status
@@ -233,7 +186,7 @@ export const TarefaService = {
 
 
   // Remover uma tarefa do banco de dados
-  async remover(id: number): Promise<void> {
+  async remover(id: UUID): Promise<void> {
     // Deleta a tarefa do banco de dados permanentemente
     await TarefaRepository.remover(id)
   },

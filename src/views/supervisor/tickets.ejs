@@ -1,0 +1,276 @@
+<%- include('../partials/head', { title: title, css: css }) %>
+
+<%#
+  Variáveis esperadas pelo controller:
+  - usuario: { nome: string }
+  - css: ['supervisor']
+%>
+
+<!-- ============================================================
+     TELA: Tickets de infraestrutura
+     Mobile  → TopNav com voltar + filtro + lista de tickets + BottomNav
+     Desktop → Sidebar + TopBar + busca + tabela com botão Validar
+     Validar move o ticket para a seção "Validados" (mais recente no topo).
+     ============================================================ -->
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT MOBILE
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-mobile">
+
+  <!-- TopNav com botão voltar -->
+  <header class="topnav topnav--back" role="banner">
+    <a href="/supervisor/home" class="topnav__back" aria-label="Voltar">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+        <path d="M16 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="topnav__title">Tickets de infraestrutura</h1>
+  </header>
+
+  <!-- Barra de busca + badge -->
+  <div class="tickets-filter-bar" role="search">
+    <div class="revisao-search-wrap">
+      <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        class="tickets-search"
+        type="search"
+        placeholder="Pesquisar tickets"
+        aria-label="Pesquisar tickets"
+      />
+    </div>
+    <span class="tickets-badge-ativos"><%= tickets.length %> Pendentes</span>
+  </div>
+
+  <!-- Lista de tickets -->
+  <main class="tickets-list" role="main">
+
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Tickets pendentes</h2>
+      <p class="lista-secao__sub">Aguardando sua validação</p>
+
+      <div id="tickets-ativos">
+        <% tickets.forEach(function (t) { %>
+        <div class="pend-item" data-ticket="<%= t.id %>" data-nome="<%= t.nome %>" data-retiro="<%= t.retiro %>" data-quando="<%= t.quando %>" data-sev="<%= t.severidade %>">
+          <div class="pend-head">
+            <span class="pend-title"><span class="sev-badge sev-badge--<%= t.sevClasse %>"><%= t.severidade %></span> <%= t.nome %></span>
+            <button class="btn-revisar" data-action="validar">Validar</button>
+            <button class="pend-toggle" type="button" aria-expanded="false" aria-label="Ver informações">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
+          <div class="pend-panel">
+            <div class="pend-panel__inner">
+              <p class="pend-info"><strong>Retiro:</strong> <%= t.retiro %><br><strong>Quando:</strong> <%= t.quando %><br><strong>Severidade:</strong> <%= t.severidade %><br><strong>Evidência:</strong> <%= t.evidencia %><br><strong>Descrição:</strong> <%= t.descricao %></p>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </section>
+
+    <section class="lista-secao">
+      <h2 class="lista-secao__titulo">Validados</h2>
+      <p class="lista-secao__sub">Tickets que você já validou</p>
+      <div class="tickets-concluidas"><%- include('../partials/tickets-validados', { ticketsValidados }) %></div>
+    </section>
+
+  </main>
+
+  <!-- BottomNav -->
+  <%- include('../partials/bottomnav-supervisor', { paginaAtiva: 'tickets' }) %>
+
+</div><!-- /layout-mobile -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     LAYOUT DESKTOP
+     ════════════════════════════════════════════════════════ -->
+<div class="layout-desktop">
+
+  <!-- Sidebar -->
+  <%- include('../partials/sidebar-supervisor', { usuario, paginaAtiva: 'tickets' }) %>
+
+  <!-- Área principal -->
+  <div class="desktop-main">
+
+    <!-- TopBar -->
+    <header class="topbar" role="banner">
+      <div class="topbar__lead">
+        <h1 class="topbar__title">Tickets de Infraestrutura</h1>
+      </div>
+      <p class="topbar__date" id="data-hoje-desktop"></p>
+    </header>
+
+    <!-- Barra de busca + badge desktop -->
+    <div class="tickets-filter-bar-desktop" role="search">
+      <div class="revisao-search-wrap-desktop">
+        <svg class="revisao-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          class="revisao-search-desktop"
+          type="search"
+          placeholder="Buscar tickets..."
+          aria-label="Buscar tickets"
+        />
+      </div>
+      <span class="tickets-badge-ativos tickets-badge-ativos--desktop"><%= tickets.length %> Pendentes</span>
+    </div>
+
+    <!-- Tabela de tickets -->
+    <main class="desktop-content revisao-desktop-content" role="main">
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Tickets pendentes</h2>
+        <p class="lista-secao__sub">Aguardando sua validação</p>
+      </section>
+      <div class="revisao-table-wrap">
+        <table class="revisao-table" aria-label="Tickets pendentes">
+          <thead>
+            <tr>
+              <th>Ticket</th>
+              <th>Retiro</th>
+              <th>Data/Hora</th>
+              <th>Severidade</th>
+              <th>Status</th>
+              <th></th><!-- ver mais -->
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="tickets-ativos-tbody">
+            <%
+              function escHtmlTk(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+              function evidenciaBlocoTicket(t){
+                if (!t.evidencia) {
+                  return '<p class="evidencia-texto">Sem evidência registrada.</p>';
+                }
+                if (t.evidencia === 'Texto') {
+                  return '<p class="evidencia-texto">' + escHtmlTk(t.evidenciaTexto) + '</p>';
+                }
+                var isAudio = t.evidencia === 'Áudio';
+                var icone = isAudio
+                  ? '<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/>'
+                  : '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/>';
+                return '<div class="evidencia ' + (isAudio ? 'evidencia--audio' : 'evidencia--foto') + '">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icone + '</svg>' +
+                  '<span class="evidencia__tipo">' + escHtmlTk(t.evidencia) + '</span></div>';
+              }
+            %>
+            <% tickets.forEach(function (t, i) { %>
+            <tr<%- i % 2 === 1 ? ' class="tr--alt"' : '' %> data-ticket="<%= t.id %>">
+              <td class="td--bold"><%= t.nome %></td>
+              <td><%= t.retiro %></td>
+              <td><%= t.quando %></td>
+              <td><span class="badge <%= t.badgeClasse %>"><%= t.severidade %></span></td>
+              <td><span class="badge badge--yellow">Pendente</span></td>
+              <td><button class="ver-mais" type="button" aria-expanded="false">Ver mais <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></td>
+              <td><button class="btn-validar" data-action="validar">Validar</button></td>
+            </tr>
+            <tr class="pend-detalhe" hidden>
+              <td colspan="7">
+                <div class="pend-detalhe__inner">
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Descrição</span>
+                    <p class="concl-bloco__texto"><%= t.descricao %></p>
+                  </div>
+                  <div class="concl-bloco">
+                    <span class="concl-bloco__label">Evidência</span>
+                    <%- evidenciaBlocoTicket(t) %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <section class="lista-secao">
+        <h2 class="lista-secao__titulo">Validados</h2>
+        <p class="lista-secao__sub">Tickets que você já validou</p>
+        <div class="tickets-concluidas"><%- include('../partials/tickets-validados', { ticketsValidados }) %></div>
+      </section>
+    </main>
+  </div><!-- /desktop-main -->
+
+</div><!-- /layout-desktop -->
+
+<script src="/js/data-hoje.js"></script>
+<script src="/js/revisao-utils.js"></script>
+<script>
+
+  function mostrarFeedbackValidacao(mensagem, tipo) {
+    AgroFlowRevisao.mostrarFeedback({
+      feedbackSelector: '.tickets-feedback',
+      alvoSelector: '.tickets-filter-bar',
+      alvoFallbackSelector: '.tickets-list',
+      feedbackClass: 'tickets-feedback',
+      mensagem,
+      tipo,
+    });
+  }
+
+  // Valida o ticket no BACKEND (PATCH real, autenticado pelo cookie de sessão).
+  // Em caso de sucesso recarrega a página: o servidor re-renderiza a lista a
+  // partir do banco, então o ticket sai de "Pendentes" e entra em "Validados"
+  // — e o mesmo dado aparece no relatório e para o gerente.
+  async function validarTicket(ticketId, btn) {
+    return AgroFlowRevisao.validarItem({
+      id: ticketId,
+      botao: btn,
+      url: '/validacoes/tickets/' + encodeURIComponent(ticketId) + '/aprovar',
+      mensagemErro: 'Não foi possível validar o ticket.',
+      mostrarFeedback: mostrarFeedbackValidacao,
+    });
+  }
+
+  // Botão "Validar" (vara mobile ou linha desktop) — pega o id do elemento que
+  // carrega data-ticket (o card mobile ou a linha da tabela).
+  AgroFlowRevisao.vincularValidacao({
+    hostSelector: '[data-ticket]',
+    datasetKey: 'ticket',
+    validar: validarTicket,
+  });
+
+  // Abrir/fechar as "varas" de tickets já validados.
+  AgroFlowRevisao.vincularAcordeao('.tickets-concluidas .concl-head', '.concl-item');
+
+  // Setinha: abre/fecha as informações do ticket pendente (mobile)
+  AgroFlowRevisao.vincularAcordeao('.pend-toggle', '.pend-item');
+
+  // "Ver mais" (desktop): abre a linha de detalhe com a descrição + evidência
+  AgroFlowRevisao.vincularDetalheTabela('.ver-mais', 'pend-detalhe');
+
+  // Filtro de busca — mobile
+  const searchMobile = document.querySelector('.tickets-search');
+  if (searchMobile) {
+    searchMobile.addEventListener('input', function () {
+      const termo = this.value.toLowerCase().trim();
+      document.querySelectorAll('.tickets-list .pend-item').forEach(card => {
+        const nome = card.querySelector('.pend-title')?.textContent.toLowerCase() ?? '';
+        card.style.display = nome.includes(termo) ? '' : 'none';
+      });
+    });
+  }
+
+  // Filtro de busca — desktop
+  const searchDesktop = document.querySelector('.revisao-search-desktop');
+  if (searchDesktop) {
+    searchDesktop.addEventListener('input', function () {
+      const termo = this.value.toLowerCase().trim();
+      document.querySelectorAll('.revisao-table tbody tr[data-ticket]').forEach(row => {
+        const nome = row.querySelector('.td--bold')?.textContent.toLowerCase() ?? '';
+        row.style.display = nome.includes(termo) ? '' : 'none';
+        const det = row.nextElementSibling;
+        if (det && det.classList.contains('pend-detalhe')) det.setAttribute('hidden', '');
+        const vm = row.querySelector('.ver-mais');
+        if (vm) vm.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

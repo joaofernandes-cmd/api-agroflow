@@ -1,16 +1,17 @@
 import { UUID } from './uuid'
 
-export type TicketCategoria = 'cerca' | 'hidraulica' | 'eletrica' | 'edificacao' | 'abastecimento_agua' | 'outro'
+export type TicketCategoria = 'cerca' | 'hidraulica' | 'eletrica'
 
 export type TicketStatus = 'pendente' | 'aprovado'
 
 export type TicketPrioridade = 'alta' | 'media' | 'baixa'
 
 export interface Ticket {
-  id: number
-  retiro_id: number
+  id: UUID
+  retiro_id: UUID
   aberto_por: UUID
   categoria: TicketCategoria
+  categoria_outro?: string | null
   localizacao: string
   status: TicketStatus
   atribuido_a: UUID | null
@@ -23,9 +24,11 @@ export interface Ticket {
 }
 
 export interface TicketInput {
-  retiro_id: number
+  id?: UUID
+  retiro_id: UUID
   aberto_por: UUID
   categoria: TicketCategoria
+  categoria_outro?: string | null
   localizacao: string
   status: TicketStatus
   atribuido_a: UUID | null

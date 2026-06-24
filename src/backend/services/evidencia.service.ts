@@ -1,4 +1,4 @@
-import { Evidencia, EvidenciaInput, TipoEvidencia } from '../models/evidencia.model'
+import { Evidencia, EvidenciaDetalhada, EvidenciaInput, TipoEvidencia } from '../models/evidencia.model'
 import { UUID } from '../models/uuid'
 import { EvidenciaFoto, EvidenciaFotoInput } from '../models/evidencia-foto.model'
 import { EvidenciaAudio, EvidenciaAudioInput } from '../models/evidencia-audio.model'
@@ -7,6 +7,8 @@ import { EvidenciaRepository } from '../repositories/evidencia.repository'
 import { EvidenciaFotoRepository } from '../repositories/evidencia-foto.repository'
 import { EvidenciaAudioRepository } from '../repositories/evidencia-audio.repository'
 import { EvidenciaMensagemRepository } from '../repositories/evidencia-mensagem.repository'
+import { EvidenciaTarefaRepository } from '../repositories/evidencia-tarefa.repository'
+import { EvidenciaMovimentacaoRepository } from '../repositories/evidencia-movimentacao.repository'
 
 export const EvidenciaService = {
   // RN04: Validar georreferenciamento de foto (latitude e longitude obrigatórias e válidas)
@@ -49,7 +51,8 @@ export const EvidenciaService = {
     usuarioId: UUID,
     urlArquivo: string,
     latitude?: number,
-    longitude?: number
+    longitude?: number,
+    tarefaId?: UUID
   ): Promise<{ evidencia: Evidencia; foto: EvidenciaFoto }> {
     // RN04: Se georreferenciamento foi extraído dos metadados, valida se está dentro dos intervalos válidos
     if (latitude === undefined || longitude === undefined) {
@@ -74,12 +77,17 @@ export const EvidenciaService = {
       longitude,
     })
 
+    // Liga a evidência à tarefa, se informada (para o supervisor revisar depois).
+    if (tarefaId) {
+      await EvidenciaTarefaRepository.criar({ evidencia_id: evidencia.id, tarefa_id: tarefaId })
+    }
+
     return { evidencia, foto }
   },
 
   // Criar evidência de áudio
   // RN08: Áudio deve ter mínimo 3 segundos
-  async criarAudio(usuarioId: UUID, urlArquivo: string, duracao: number): Promise<{ evidencia: Evidencia; audio: EvidenciaAudio }> {
+  async criarAudio(usuarioId: UUID, urlArquivo: string, duracao: number, tarefaId?: UUID): Promise<{ evidencia: Evidencia; audio: EvidenciaAudio }> {
     EvidenciaService.validarEvidenciaDescritiva('audio', { duracao })
 
     // Cria registro base de evidência (tabela: evidencia)
@@ -95,11 +103,15 @@ export const EvidenciaService = {
       url_arquivo: urlArquivo,
     })
 
+    if (tarefaId) {
+      await EvidenciaTarefaRepository.criar({ evidencia_id: evidencia.id, tarefa_id: tarefaId })
+    }
+
     return { evidencia, audio }
   },
 
   // RN08: Criar evidência de mensagem + validar mínimo 10 caracteres
-  async criarMensagem(usuarioId: UUID, conteudo: string): Promise<{ evidencia: Evidencia; mensagem: EvidenciaMensagem }> {
+  async criarMensagem(usuarioId: UUID, conteudo: string, tarefaId?: UUID): Promise<{ evidencia: Evidencia; mensagem: EvidenciaMensagem }> {
     // RN08: Valida que mensagem atende requisitos mínimos (10 caracteres)
     EvidenciaService.validarEvidenciaDescritiva('mensagem', { conteudo })
 
@@ -116,11 +128,15 @@ export const EvidenciaService = {
       conteudo: conteudo.trim(),
     })
 
+    if (tarefaId) {
+      await EvidenciaTarefaRepository.criar({ evidencia_id: evidencia.id, tarefa_id: tarefaId })
+    }
+
     return { evidencia, mensagem }
   },
 
   // Buscar evidência base por ID
-  async buscarPorId(id: number): Promise<Evidencia | null> {
+  async buscarPorId(id: UUID): Promise<Evidencia | null> {
     // Retorna a evidência ou null se não encontrar
     return EvidenciaRepository.buscarPorId(id)
   },
@@ -129,5 +145,15 @@ export const EvidenciaService = {
   async listarTodas(): Promise<Evidencia[]> {
     // Retorna todas as evidências registradas
     return EvidenciaRepository.buscarTodos()
+  },
+
+  // Listar as evidências de uma tarefa, já com o detalhe de cada tipo,
+  // para o supervisor revisar (foto/áudio com url_arquivo, mensagem com conteudo).
+  async buscarPorTarefa(tarefaId: UUID): Promise<EvidenciaDetalhada[]> {
+    return EvidenciaTarefaRepository.buscarEvidenciasDaTarefa(tarefaId)
+  },
+
+  async buscarPorMovimentacao(movimentacaoId: UUID): Promise<EvidenciaDetalhada[]> {
+    return EvidenciaMovimentacaoRepository.buscarEvidenciasDaMovimentacao(movimentacaoId)
   },
 }
