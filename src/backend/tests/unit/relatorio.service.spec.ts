@@ -200,6 +200,41 @@ describe('RelatorioService', () => {
     csvSpy.mockRestore()
   })
 
+  it('gerarArquivo deve exportar somente registros dentro do periodo filtrado', async () => {
+    mockedSincronizacao.buscarMovimentacoesParaRelatrio.mockResolvedValueOnce([
+      {
+        ...mockMovimentacaoValidada,
+        id: '00000000-0000-4000-8000-000000000211',
+        origem: 'Aroeira',
+        data_criacao: new Date('2026-06-22T21:00:00.000Z'),
+      } as any,
+      {
+        ...mockMovimentacaoValidada,
+        id: '00000000-0000-4000-8000-000000000212',
+        origem: 'Puga',
+        data_criacao: new Date('2026-06-23T02:52:00.000Z'),
+      } as any,
+      {
+        ...mockMovimentacaoValidada,
+        id: '00000000-0000-4000-8000-000000000213',
+        origem: 'CMB',
+        data_criacao: new Date('2026-06-24T00:00:00.000Z'),
+      } as any,
+    ])
+
+    const csv = await RelatorioService.gerarArquivo(
+      'movimentacoes',
+      'csv',
+      new Date('2026-06-22T00:00:00.000Z'),
+      new Date('2026-06-23T23:59:59.999Z')
+    )
+
+    const conteudo = csv.toString('utf8')
+    expect(conteudo).toContain('Aroeira')
+    expect(conteudo).toContain('Puga')
+    expect(conteudo).not.toContain('CMB')
+  })
+
   it('gerarArquivo deve selecionar XLSX', async () => {
     const linhasSpy = jest.spyOn(RelatorioService, 'obterLinhasExportacao').mockResolvedValue([])
     const xlsxSpy = jest.spyOn(RelatorioService, 'gerarXlsx').mockResolvedValue(Buffer.from('xlsx'))
