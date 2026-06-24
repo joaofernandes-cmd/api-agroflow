@@ -2815,23 +2815,35 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 **Modelo Relacional**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi feito com base no minimundo descrito na Seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação (composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+
 
 <div align="center">
+<<<<<<< HEAD
+<p align="center"><a href="others/assets/diagrama-relacional1.svg">Figura 47 – Modelo Relacional</a></p>
+<p align="center">
+<img src="others/assets/diagrama-relacional1.svg" alt="Modelo Relacional">
+</p>
+=======
 <p align="center">Figura 50 – Modelo Relacional</p>
 <img src="others/assets/diagrama-relacional.png" alt="Modelo Relacional">
+>>>>>>> origin/develop
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na [Seção 3.1](#c3.1), adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+   
+ &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na Seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+    
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos N:N foram resolvidos com tabelas intermediárias: `evidencia_movimentacao`, `evidencia_tarefa` e `evidencia_ticket` vinculam a tabela `evidencia` às entidades `movimentacao`, `tarefa` e `ticket`; e `supervisor_retiro` associa cada supervisor a um ou mais retiros sob sua coordenação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo evita repetição de dados: cada tabela armazena apenas o que lhe pertence e referencia as demais por chaves estrangeiras. O nome do retiro, por exemplo, fica somente na tabela `retiro` e é referenciado via `retiro_id`.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade seguem as regras de negócio do parceiro. A tabela `movimentacao` guarda os dados comuns, enquanto os específicos de compra, venda, transferência, nascimento e morte ficam em tabelas especializadas, cada uma identificada pelo próprio `movimentacao_id` (chave primária e estrangeira). O campo `login` da tabela `usuario` é `UNIQUE`; o campo `sincronizado` tem padrão `false` nas tabelas operacionais, atendendo à RN03; e os campos de estado fixo (`tipo`, `status`, `prioridade`) são `ENUM`. Para opções fora dos valores fixos, há os campos de texto livre `tipo_outro` (em `movimentacao`) e `categoria_outro` (em `ticket`), usados quando o `ENUM` corresponde a "outro".
 
-&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. A tabela movimentacao armazena os dados comuns do registro, enquanto os dados específicos de compra, venda, transferência, nascimento e morte foram separados em tabelas especializadas. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado recebeu valor padrão false nas tabelas operacionais, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN03. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+&nbsp;&nbsp;&nbsp;&nbsp;A autenticação dos Capatazes em campo é tratada na tabela `acesso_capataz` (`token_hash`, `ativo`, datas de expiração e criação e `usuario_id`), permitindo o uso offline e a posterior sincronização de forma independente do login convencional. A tabela `usuario` também inclui o campo `identificador`, com o código do operador adotado pelo parceiro.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial é garantida por chaves estrangeiras em todas as relações. O modelo físico completo, com o script DDL (`CREATE TABLE` e `ALTER TABLE`), é apresentado na sequência.
+
 
 **Modelo Físico**
 
