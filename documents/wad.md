@@ -2817,19 +2817,212 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
   &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi feito com base no minimundo descrito na Seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação (composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional é representado a seguir em notação textual (Mermaid ER Diagram), o que facilita a leitura das tabelas, dos atributos, das chaves primárias (PK), das chaves estrangeiras (FK) e das cardinalidades diretamente no repositório.
 
-<div align="center">
-<<<<<<< HEAD
-<p align="center"><a href="others/assets/diagrama-relacional1.svg">Figura 47 – Modelo Relacional</a></p>
-<p align="center">
-<img src="others/assets/diagrama-relacional1.svg" alt="Modelo Relacional">
-</p>
-=======
-<p align="center">Figura 50 – Modelo Relacional</p>
-<img src="others/assets/diagrama-relacional.png" alt="Modelo Relacional">
->>>>>>> origin/develop
+```mermaid
+erDiagram
+    %% Modelo Relacional completo do AgroFlow (tabelas de domínio).
+    %% Tipos preservados conforme o diagrama (uuid, varchar, text, bool, int4, float8, timestamp, timestamptz, date e tipos ENUM).
+    %% Os ícones de chave do diagrama marcam as PKs; as FKs derivam das linhas de relacionamento entre as tabelas.
+
+    retiro {
+        uuid id PK
+        varchar nome
+    }
+
+    usuario {
+        uuid id PK
+        uuid retiro_id FK
+        varchar nome
+        varchar identificador
+        varchar login
+        varchar senha_hash
+        usuario_status status
+        timestamp data_criacao
+        usuario_cargo cargo
+    }
+
+    acesso_capataz {
+        uuid id PK
+        uuid usuario_id FK
+        varchar token_hash
+        bool ativo
+        timestamptz data_expiracao
+        timestamptz data_criacao
+    }
+
+    supervisor_retiro {
+        uuid supervisor_id PK, FK
+        uuid retiro_id PK, FK
+    }
+
+    tarefa {
+        uuid id PK
+        uuid retiro_id FK
+        uuid criada_por FK
+        uuid atribuida_a FK
+        uuid aprovado_por FK
+        text descricao
+        varchar categoria
+        tarefa_prioridade prioridade
+        timestamp data_criacao
+        tarefa_status status
+        bool sincronizado
+    }
+
+    movimentacao {
+        uuid id PK
+        uuid retiro_id FK
+        uuid capataz_id FK
+        uuid validado_por FK
+        movimentacao_tipo tipo
+        movimentacao_status status
+        bool sincronizado
+        timestamp data_criacao
+        movimentacao_estagio_vida estagio_vida
+        timestamp data_validacao
+        text tipo_outro
+    }
+
+    movimentacao_compra {
+        uuid movimentacao_id PK, FK
+        varchar destino
+        int4 quantidade
+    }
+
+    movimentacao_venda {
+        uuid movimentacao_id PK, FK
+        varchar origem
+        int4 quantidade
+    }
+
+    movimentacao_transferencia {
+        uuid movimentacao_id PK, FK
+        varchar origem
+        varchar destino
+        int4 quantidade
+    }
+
+    movimentacao_nascimento {
+        uuid movimentacao_id PK, FK
+        varchar origem
+        int4 quantidade
+    }
+
+    movimentacao_morte {
+        uuid movimentacao_id PK, FK
+        varchar origem
+        varchar causa_obito
+    }
+
+    ticket {
+        uuid id PK
+        uuid retiro_id FK
+        uuid aberto_por FK
+        ticket_categoria categoria
+        varchar localizacao
+        ticket_status status
+        uuid atribuido_a FK
+        uuid aprovado_por FK
+        varchar descricao
+        ticket_prioridade prioridade
+        bool sincronizado
+        date data_criacao
+        date data_realizado
+        text categoria_outro
+    }
+
+    evidencia {
+        uuid id PK
+        uuid usuario_id FK
+        evidencia_tipo tipo
+        timestamp data_criacao
+    }
+
+    evidencia_foto {
+        uuid evidencia_id PK, FK
+        text url_arquivo
+        float8 latitude
+        float8 longitude
+    }
+
+    evidencia_audio {
+        uuid evidencia_id PK, FK
+        text url_arquivo
+    }
+
+    evidencia_mensagem {
+        uuid evidencia_id PK, FK
+        text conteudo
+    }
+
+    evidencia_movimentacao {
+        uuid evidencia_id PK, FK
+        uuid movimentacao_id PK, FK
+    }
+
+    evidencia_tarefa {
+        uuid evidencia_id PK, FK
+        uuid tarefa_id PK, FK
+    }
+
+    evidencia_ticket {
+        uuid evidencia_id PK, FK
+        uuid ticket_id PK, FK
+    }
+
+    relatorio {
+        uuid id PK
+        uuid gerado_por FK
+        uuid retiro_id FK
+        relatorio_tipo tipo
+        date data_inicio
+        date data_fim
+        timestamp data_gerado
+        text url_arquivo
+    }
+
+    %% Relacionamentos (|| = exatamente um, |o = zero ou um, o{ = zero ou muitos)
+    retiro ||--o{ usuario : ""
+    retiro ||--o{ tarefa : ""
+    retiro ||--o{ movimentacao : ""
+    retiro ||--o{ ticket : ""
+    retiro ||--o{ relatorio : ""
+    retiro ||--o{ supervisor_retiro : ""
+
+    usuario ||--o{ acesso_capataz : ""
+    usuario ||--o{ supervisor_retiro : ""
+    usuario ||--o{ tarefa : ""
+    usuario ||--o{ tarefa : ""
+    usuario |o--o{ tarefa : ""
+    usuario ||--o{ movimentacao : ""
+    usuario |o--o{ movimentacao : ""
+    usuario ||--o{ ticket : ""
+    usuario |o--o{ ticket : ""
+    usuario |o--o{ ticket : ""
+    usuario ||--o{ evidencia : ""
+    usuario ||--o{ relatorio : ""
+
+    movimentacao ||--o| movimentacao_compra : ""
+    movimentacao ||--o| movimentacao_venda : ""
+    movimentacao ||--o| movimentacao_transferencia : ""
+    movimentacao ||--o| movimentacao_nascimento : ""
+    movimentacao ||--o| movimentacao_morte : ""
+
+    evidencia ||--o| evidencia_foto : ""
+    evidencia ||--o| evidencia_audio : ""
+    evidencia ||--o| evidencia_mensagem : ""
+
+    evidencia ||--o{ evidencia_movimentacao : ""
+    movimentacao ||--o{ evidencia_movimentacao : ""
+    evidencia ||--o{ evidencia_tarefa : ""
+    tarefa ||--o{ evidencia_tarefa : ""
+    evidencia ||--o{ evidencia_ticket : ""
+    ticket ||--o{ evidencia_ticket : ""
+```
+
+<p align="center">Figura 50 – Modelo Relacional (Mermaid ER Diagram)</p>
 <p align="center">Fonte: Próprios autores (2026).</p>
-</div>
 
    
  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na Seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
@@ -2855,24 +3048,25 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE TYPE usuario_status AS ENUM ('ativo', 'inativo');
 CREATE TYPE usuario_cargo AS ENUM ('capataz', 'supervisor', 'gerente');
 CREATE TYPE tarefa_prioridade AS ENUM ('alta', 'media', 'baixa');
-CREATE TYPE tarefa_status AS ENUM ('pendente', 'aprovado');
-CREATE TYPE ticket_categoria AS ENUM ('cerca', 'hidraulica', 'eletrica', 'edificacao', 'abastecimento_agua', 'outro');
+CREATE TYPE tarefa_status AS ENUM ('pendente', 'concluido', 'aprovado');
+CREATE TYPE ticket_categoria AS ENUM ('cerca', 'eletrica', 'hidraulica');
 CREATE TYPE ticket_status AS ENUM ('pendente', 'aprovado');
 CREATE TYPE ticket_prioridade AS ENUM ('alta', 'media', 'baixa');
 CREATE TYPE movimentacao_tipo AS ENUM ('nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros');
 CREATE TYPE movimentacao_status AS ENUM ('pendente', 'validado');
 CREATE TYPE movimentacao_estagio_vida AS ENUM (
     'BEZERRO 0 A 7 MESES',
+    'BEZERRA 0 A 7 MESES',
     'GARROTE 8 A 12 MESES',
-    'NOVILHA 8 A 12 MESES',
     'GARROTE 13 A 24 MESES',
+    'NOVILHA 8 A 12 MESES',
     'NOVILHA 13 A 24 MESES',
     'BOI 25 A 36 MESES',
-    'NOVILHA 25 A 36 MESES',
-    'TOURO 25 A 36 MESES',
-    'VACA ACIMA 36 MESES',
     'BOI ACIMA 36 MESES',
-    'TOURO ACIMA 36 MESES'
+    'TOURO 25 A 36 MESES',
+    'TOURO ACIMA 36 MESES',
+    'VACA 25 A 36 MESES',
+    'VACA ACIMA 36 MESES'
 );
 CREATE TYPE evidencia_tipo AS ENUM ('foto', 'audio', 'mensagem');
 CREATE TYPE relatorio_tipo AS ENUM ('movimentacao', 'tarefas', 'tickets', 'consolidado');
@@ -2886,11 +3080,29 @@ CREATE TABLE usuario (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     retiro_id UUID NOT NULL REFERENCES retiro(id),
     nome VARCHAR(255) NOT NULL,
-    login VARCHAR(255) NOT NULL UNIQUE,
-    senha_hash VARCHAR(255) NOT NULL,
+    identificador VARCHAR(255) NOT NULL UNIQUE,
+    login VARCHAR(255) UNIQUE,
+    senha_hash VARCHAR(255),
     status usuario_status NOT NULL,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
     cargo usuario_cargo NOT NULL
+);
+
+CREATE TABLE acesso_capataz (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    usuario_id UUID NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    token_hash VARCHAR(64) NOT NULL UNIQUE,
+    ativo BOOLEAN NOT NULL DEFAULT true,
+    data_expiracao TIMESTAMPTZ,
+    data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX acesso_capataz_usuario_id_idx ON acesso_capataz (usuario_id);
+
+CREATE TABLE supervisor_retiro (
+    supervisor_id UUID NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    retiro_id UUID NOT NULL REFERENCES retiro(id) ON DELETE CASCADE,
+    PRIMARY KEY (supervisor_id, retiro_id)
 );
 
 CREATE TABLE tarefa (
@@ -2917,7 +3129,8 @@ CREATE TABLE movimentacao (
     sincronizado BOOLEAN NOT NULL DEFAULT false,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
     estagio_vida movimentacao_estagio_vida NOT NULL,
-    data_validacao TIMESTAMP NULL
+    data_validacao TIMESTAMP NULL,
+    tipo_outro TEXT
 );
 
 CREATE TABLE movimentacao_compra (
@@ -2968,7 +3181,9 @@ CREATE TABLE ticket (
     prioridade ticket_prioridade NOT NULL,
     sincronizado BOOLEAN NOT NULL DEFAULT false,
     data_criacao DATE NOT NULL DEFAULT CURRENT_DATE,
-    data_realizado DATE NOT NULL DEFAULT CURRENT_DATE
+    data_realizado DATE NOT NULL DEFAULT CURRENT_DATE,
+    categoria_outro TEXT,
+    CONSTRAINT ticket_categoria_restrita_check CHECK (categoria IN ('cerca', 'eletrica', 'hidraulica'))
 );
 
 CREATE TABLE evidencia (
@@ -3029,6 +3244,8 @@ CREATE TABLE relatorio (
 &nbsp;&nbsp;&nbsp;&nbsp;Os campos que representam categorias ou estados fixos, como tipo, status e prioridade, foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco. O campo sincronizado foi definido como BOOLEAN com valor padrão false nas tabelas operacionais que passam pelo fluxo offline, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, tornando-se true apenas após a sincronização com o servidor, em conformidade com a RN03. Os campos latitude e longitude foram concentrados na tabela evidencia_foto, pois o georreferenciamento é exigido apenas para evidências do tipo foto. Os campos de data utilizam DATE ou TIMESTAMP conforme a necessidade de registrar apenas o dia ou o momento completo da operação.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi implementada por meio de FOREIGN KEY em todas as relações. Esse padrão garante que nenhum registro possa referenciar um identificador inexistente em outra tabela, mantendo a consistência dos dados ao longo de todas as operações do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Como o Capataz acessa o sistema por QR Code, e não por login e senha, os campos `login` e `senha_hash` da tabela `usuario` são opcionais (nulos para esse perfil), enquanto o campo `identificador` garante a identificação única de todos os usuários. Para sustentar esse fluxo, a tabela `acesso_capataz` armazena o hash SHA-256 do token de acesso (`token_hash`), além dos campos `ativo` e `data_expiracao`, que permitem, respectivamente, a revogação e a expiração do acesso sem alteração do cadastro do usuário. Por fim, a tabela de junção `supervisor_retiro` modela o relacionamento N:N entre Supervisor e Retiro, permitindo que um mesmo supervisor cubra múltiplos retiros além do seu retiro sede.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
