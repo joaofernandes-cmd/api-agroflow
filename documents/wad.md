@@ -4729,7 +4729,7 @@ Também foram considerados subendpoints específicos:
 #### Relatório de Cobertura Jest
 
 **Comando executado:**
-`npm run test:coverage -- --runInBand`
+`npm run test:coverage -- --runInBand --coverageReporters=text-summary`
 
 <div align="center">
   <p align="center">Figura 65 - Cobertura atual dos testes</p>
@@ -4743,14 +4743,14 @@ Também foram considerados subendpoints específicos:
 
 - `npm test` executado com sucesso.
 - `npm run test:coverage -- --runInBand` executado com sucesso.
-- Suíte atual: **29 test suites aprovadas**.
-- Casos de teste aprovados na execução de cobertura: **360**.
+- Suíte atual: **30 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **365**.
 - Testes de integração aprovados: **147** em **11 test suites**.
-- Testes unitários aprovados: **213** em **18 test suites**.
-- Cobertura global: **80,39% de statements**, **70,52% de branches**, **81,47% de functions** e **81,09% de lines**.
+- Testes unitários aprovados: **218** em **19 test suites**.
+- Cobertura global: **79,66% de statements**, **70,19% de branches**, **81,09% de functions** e **80,33% de lines**.
 - Cobertura da camada de repositories: **78,28% de statements**, **65,75% de branches**, **75,36% de functions** e **78,73% de lines**.
 - Cobertura da camada de middlewares: **92,92% de statements**, **82,05% de branches**, **100% de functions** e **92,92% de lines**.
-- Cobertura da camada de utils: **80,79% de statements**, **53,6% de branches**, **91,89% de functions** e **90,55% de lines**.
+- Cobertura da camada de utils: **80,6% de statements**, **51,9% de branches**, **90,47% de functions** e **89,36% de lines**.
 - Cobertura da camada de services: **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**.
 
 <div align="center">
@@ -4761,7 +4761,7 @@ Também foram considerados subendpoints específicos:
 
 <div align="center">
   <p align="center">Figura 67 - Execução atual da suíte completa</p>
-  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 29 suítes, com 360 testes aprovados." />
+  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 30 suítes, com 365 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
