@@ -4961,64 +4961,60 @@ Também foram considerados subendpoints específicos:
 
 # <a name="c8"></a>8. Referências
 
-APROSOJA MS. Panorama da soja em Mato Grosso do Sul. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br
-. Acesso em: 30 abr. 2026.
 
-BANCO DO NORDESTE. 6 tendências do agronegócio para 2025: IA, Sustentabilidade e Inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
+APROSOJA MS. **Panorama da soja em Mato Grosso do Sul**. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br. Acesso em: 30 abr. 2026.
 
-BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da vegetação nativa (Código Florestal). Diário Oficial da União: seção 1, Brasília, DF, 28 maio 2012.
+BANCO DO NORDESTE. **6 tendências do agronegócio para 2025**: IA, sustentabilidade e inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
 
-BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
+BRASIL. **Lei nº 12.651, de 25 de maio de 2012**. Dispõe sobre a proteção da vegetação nativa (Código Florestal). **Diário Oficial da União**: seção 1, Brasília, DF, 28 maio 2012.
 
-CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
+BRPEC AGROPECUÁRIA S.A. **Informações institucionais e operacionais**. Mato Grosso do Sul, 2026.
 
-COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addison-Wesley, 2004.
+CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. **Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%**. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
 
-DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
-. Acesso em: 30 abr. 2026.
+COHN, Mike. **User Stories Applied**: for agile software development. Boston: Addison-Wesley, 2004.
 
-ECONODATA. Dados empresariais da BrPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
-. Acesso em: 30 abr. 2026.
+DE OLHO NOS RURALISTAS. **Relatórios sobre ESG e agronegócio**. 2025. Disponível em: https://deolhonosruralistas.com.br. Acesso em: 30 abr. 2026.
 
-FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Software Architectures. 2000. Tese (Doutorado em Ciência da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 15 maio 2026.
+ECONODATA. **Dados empresariais da BrPec Agropecuária S.A.** 2026. Disponível em: https://www.econodata.com.br. Acesso em: 30 abr. 2026.
 
-G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com
-. Acesso em: 30 abr. 2026.
+FIELDING, Roy Thomas. **Architectural styles and the design of network-based software architectures**. 2000. Tese (Doutorado em Ciência da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 15 maio 2026.
 
-GRAND VIEW RESEARCH. Brazil Precision Farming Market Size & Outlook, 2025-2030. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
+G4 EDUCAÇÃO. **Canvas de proposta de valor**: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com. Acesso em: 30 abr. 2026.
 
-HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
-. Acesso em: 30 abr. 2026.
+GRAND VIEW RESEARCH. **Brazil precision farming market size & outlook, 2025-2030**. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
 
-IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Abate de bovinos atinge recorde em 2024. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
+HARLEY, Aurora. **Personas make users memorable for product team members**. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/. Acesso em: 30 abr. 2026.
 
-ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model. Genebra: ISO, 2023.
+IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Abate de bovinos atinge recorde em 2024**. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
 
-JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succeeding with use cases. [S.l.]: Ivar Jacobson International, 2024.
+ISO/IEC 25010:2023. **Systems and software engineering** — systems and software quality requirements and evaluation (SQuaRE) — product quality model. Genebra: ISO, 2023.
 
-LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. **Use Case 3.0**: the guide to succeeding with use cases. [S. l.]: Ivar Jacobson International, 2024.
 
-MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
+LARMAN, Craig. **Applying UML and patterns**: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
 
-MARKET DATA FORECAST. Latin America Precision Agriculture Market Size Report 2033. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
+MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. **Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025**: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
 
-OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
+MARKET DATA FORECAST. **Latin America precision agriculture market size report 2033**. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
 
-PANORAMA DA GESTÃO RURAL. Pesquisa Panorama da Gestão Rural 2024. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
+OSTERWALDER, Alexander. **Value proposition design**: how to create products and services customers want. Hoboken: Wiley, 2014.
 
-PATTON, Jeff. User Story Mapping: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
+PANORAMA DA GESTÃO RURAL. **Pesquisa Panorama da Gestão Rural 2024**. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
 
-PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+PATTON, Jeff. **User story mapping**: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
 
-PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
+PMI – PROJECT MANAGEMENT INSTITUTE. **A guide to the project management body of knowledge (PMBOK Guide)**. 7. ed. Newtown Square: PMI, 2021.
 
-PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
+PORTER, Michael E. The five competitive forces that shape strategy. **Harvard Business Review**, v. 86, n. 1, p. 78-93, jan. 2008.
 
-RADAR AGTECH BRASIL. Mapeamento das startups do agronegócio brasileiro: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
+PRESSMAN, Roger S.; MAXIM, Bruce R. **Engenharia de software**: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
 
-TOTVS. Tendências Agronegócio 2026: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
+RADAR AGTECH BRASIL. **Mapeamento das startups do agronegócio brasileiro**: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
 
-UNIÃO EUROPEIA. Regulamento (UE) 2023/1115 do Parlamento Europeu e do Conselho, de 31 de maio de 2023, relativo à disponibilização no mercado da União e à exportação da União de determinadas matérias-primas e produtos associados à desflorestação e à degradação florestal (EUDR). Jornal Oficial da União Europeia, L 150, 9 jun. 2023.
+TOTVS. **Tendências agronegócio 2026**: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
+
+UNIÃO EUROPEIA. **Regulamento (UE) 2023/1115 do Parlamento Europeu e do Conselho, de 31 de maio de 2023**, relativo à disponibilização no mercado da União e à exportação da União de determinadas matérias-primas e produtos associados à desflorestação e à degradação florestal (EUDR). **Jornal Oficial da União Europeia**, L 150, 9 jun. 2023.
 
 # <a name="c9"></a>Anexos
 
