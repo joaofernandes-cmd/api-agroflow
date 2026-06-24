@@ -4712,6 +4712,18 @@ O teste de guerrilha é uma modalidade de teste de usabilidade caracterizada pel
 
 No contexto do AgroFlow, o teste de guerrilha foi conduzido com o objetivo de validar a navegabilidade e a clareza dos fluxos principais da aplicação, registro de movimentações do rebanho, atribuição e acompanhamento de tarefas e abertura de chamados de infraestrutura, antes da avaliação quantitativa pelo questionário SUS (Seção 5.2.2). Dado que o público-alvo inclui usuários com baixo letramento digital, como capatazes de retiro com pouca familiaridade com sistemas informatizados, o teste priorizou a observação de comportamentos espontâneos e a identificação de barreiras de compreensão na interface, sem orientação prévia sobre o funcionamento do sistema. Cabe destacar, no entanto, que os participantes recrutados para esta etapa foram alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia, perfil distinto do usuário final do produto. Essa limitação deve ser considerada na interpretação dos resultados, uma vez que a familiaridade dos participantes com interfaces digitais pode subestimar dificuldades que seriam encontradas pelo público real da aplicação.
 
+#### Perfil dos participantes
+
+Os nomes listados abaixo são fictícios, utilizados para preservar a privacidade dos participantes. Todos são alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia.
+
+| # | Nome | Curso | Persona testada |
+|:-:|------|-------|:---------------:|
+| 1 | Lucas Martins | Engenharia de Software | Capataz, Supervisor e Gerente |
+| 2 | Fernanda Oliveira | Ciência da Computação | Capataz, Supervisor e Gerente |
+| 3 | Rafael Souza | Sistemas de Informação | Capataz, Supervisor e Gerente |
+| 4 | Beatriz Santos | Engenharia de Software | Capataz, Supervisor e Gerente |
+| 5 | Gabriel Almeida | Ciência da Computação | Capataz, Supervisor e Gerente |
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
