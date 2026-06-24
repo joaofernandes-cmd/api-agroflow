@@ -4793,6 +4793,18 @@ Os dados completos dos testes de guerrilha, incluindo o registro detalhado das o
 
 [Acessar planilha de resultados dos testes de guerrilha](https://docs.google.com/spreadsheets/d/1QZ1_aPrnHj_M3JJAqonSPjTrNXyP4aJiIZqZUg4Ch5Q/edit?usp=sharing)
 
+#### Resumo das ocorrências
+
+| Tarefa | Severidade | Resumo do ocorrido | Tipo | Participantes afetados | Potencial melhoria |
+|--------|:----------:|-------------------|:----:|:---------------------:|-------------------|
+| Registrar movimentação (Capataz) | Média | Dúvida sobre o significado do campo "estágio de vida" | Compreensão de conteúdo | F. Oliveira | Adicionar tooltip ou texto explicativo ao lado do campo |
+| Registrar movimentação (Capataz) | Média | Não ficou claro por que "causa do óbito" é obrigatório | Compreensão de conteúdo | F. Oliveira | Exibir mensagem de erro mais descritiva indicando a regra de negócio |
+| Registrar movimentação (Capataz) | Baixa | Usuário tentou acessar aba "Rebanho" antes de "Movimentações" | Usabilidade | B. Santos | Revisar nomenclatura ou hierarquia do menu lateral |
+| Criar tarefa (Supervisor) | Baixa | Dúvida se o campo "descrição" era obrigatório | Compreensão de conteúdo | F. Oliveira | Indicar visualmente quais campos são obrigatórios com asterisco (*) |
+| Criar tarefa (Supervisor) | Média | Dificuldade em localizar o filtro de retiro dentro do formulário | Usabilidade | F. Oliveira, B. Santos | Destacar o campo de seleção de retiro com maior contraste ou reposicioná-lo no topo do formulário |
+| Gerar relatório (Gerente) | Baixa | Usuário buscou relatórios dentro do dashboard antes de encontrar a seção correta | Usabilidade | F. Oliveira | Adicionar atalho ou card no dashboard apontando para a seção de relatórios |
+| Gerar relatório (Gerente) | Média | Dúvida se os dados exibidos incluíam apenas registros validados ou todos os registros | Compreensão de conteúdo | B. Santos | Exibir legenda ou indicador visual informando que apenas dados validados constam no relatório |
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
