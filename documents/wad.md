@@ -2831,6 +2831,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional é representado a seguir em notação textual (Mermaid ER Diagram), o que facilita a leitura das tabelas, dos atributos, das chaves primárias (PK), das chaves estrangeiras (FK) e das cardinalidades diretamente no repositório.
 
+<p align="center">Figura 50 – Modelo Relacional (Mermaid ER Diagram)</p>
+
+
 ```mermaid
 erDiagram
     %% Modelo Relacional completo do AgroFlow (tabelas de domínio).
@@ -3033,12 +3036,11 @@ erDiagram
     ticket ||--o{ evidencia_ticket : ""
 ```
 
-<p align="center">Figura 50 – Modelo Relacional (Mermaid ER Diagram)</p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 
    
  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na Seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
-    
+
 &nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos N:N foram resolvidos com tabelas intermediárias: `evidencia_movimentacao`, `evidencia_tarefa` e `evidencia_ticket` vinculam a tabela `evidencia` às entidades `movimentacao`, `tarefa` e `ticket`; e `supervisor_retiro` associa cada supervisor a um ou mais retiros sob sua coordenação.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo evita repetição de dados: cada tabela armazena apenas o que lhe pertence e referencia as demais por chaves estrangeiras. O nome do retiro, por exemplo, fica somente na tabela `retiro` e é referenciado via `retiro_id`.
@@ -3261,7 +3263,7 @@ CREATE TABLE relatorio (
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
-***Mapeamento de coerência entre ER, DER e Modelo Físico***
+**Mapeamento de coerência entre ER, DER e Modelo Físico**
  
 &nbsp;&nbsp;&nbsp;&nbsp;Para tornar explícita a coerência mantida entre o Modelo Entidade-Relacionamento ([Seção 3.6.1](#c3.6.1)), o Diagrama Entidade-Relacionamento ([Seção 3.6.2](#c3.6.2)) e o Modelo Físico apresentado nesta seção, o Quadro XX apresenta o mapeamento direto entre os elementos dos três artefatos. Esse mapeamento explicita a preservação dos mesmos nomes de atributos, chaves primárias, chaves estrangeiras e cardinalidades em todos os níveis de abstração, do conceitual ao executável.
  
@@ -3292,7 +3294,6 @@ CREATE TABLE relatorio (
 
 &nbsp;&nbsp;&nbsp;&nbsp;Além da correspondência direta entre nomes e chaves, as cardinalidades foram preservadas em todos os níveis. As relações 1:N do ER (como USUARIO PERTENCE_A RETIRO, ou MOVIMENTACAO OCORRE_EM RETIRO) são implementadas como `FOREIGN KEY` simples na tabela do lado N (por exemplo, `usuario.retiro_id` e `movimentacao.retiro_id`), enquanto as relações N:N (como EVIDENCIA ANEXA MOVIMENTACAO) são materializadas pelas tabelas associativas com chaves primárias compostas e cláusulas `ON DELETE CASCADE` para preservar integridade referencial. As especializações de MOVIMENTACAO e EVIDENCIA seguem o padrão de herança por tabela, com a tabela filha referenciando o `id` da tabela pai como chave primária e estrangeira simultaneamente, garantindo que cada registro especializado tenha sempre um correspondente na tabela base. Essa coerência completa sustenta a rastreabilidade entre o conceito de domínio, sua representação visual e a implementação executável no PostgreSQL hospedado no Supabase.
  
----
 
 &nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação, a consolidação das informações e o fluxo de sincronização.
 
