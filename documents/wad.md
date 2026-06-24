@@ -2747,8 +2747,10 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 <div align="center">
-<p align="center">Figura 47 – Modelo Relacional</p>
-<img src="others/assets/diagrama-relacional.png" alt="Modelo Relacional">
+<p align="center"><a href="others/assets/diagrama-relacional1.svg">Figura 47 – Modelo Relacional</a></p>
+<p align="center">
+<img src="others/assets/diagrama-relacional1.svg" alt="Modelo Relacional">
+</p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
