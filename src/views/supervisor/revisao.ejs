@@ -262,22 +262,19 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/data-hoje.js"></script>
+<script src="/js/revisao-utils.js"></script>
 <script>
-  const elData = document.getElementById('data-hoje-desktop');
-  if (elData) elData.textContent = new Date().toLocaleDateString('pt-BR', {
-    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
-  }).replace(/^\w/, c => c.toUpperCase());
 
   function mostrarFeedbackValidacao(mensagem, tipo) {
-    document.querySelectorAll('.revisao-feedback').forEach(el => el.remove());
-    const alvo = document.querySelector('.revisao-filter-bar') || document.querySelector('.revisao-list');
-    if (!alvo) return;
-    const feedback = document.createElement('p');
-    feedback.className = 'revisao-feedback';
-    feedback.textContent = mensagem;
-    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
-    feedback.style.margin = '8px 0 0';
-    alvo.insertAdjacentElement('afterend', feedback);
+    AgroFlowRevisao.mostrarFeedback({
+      feedbackSelector: '.revisao-feedback',
+      alvoSelector: '.revisao-filter-bar',
+      alvoFallbackSelector: '.revisao-list',
+      feedbackClass: 'revisao-feedback',
+      mensagem,
+      tipo,
+    });
   }
 
   // Aprova a tarefa no BACKEND (concluido → aprovado, PATCH autenticado pelo
@@ -285,34 +282,22 @@
   // listas do banco, então a tarefa sai de "Realizadas" e entra em "Validadas"
   // — e o mesmo dado passa a aparecer no relatório e para o gerente.
   async function validarTarefa(tarefaId, btn) {
-    if (!tarefaId) return;
-    if (btn) btn.disabled = true;
-    try {
-      const resp = await fetch('/validacoes/tarefas/' + encodeURIComponent(tarefaId) + '/aprovar', {
-        method: 'PATCH',
-      });
-      if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) return;
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) {
-        mostrarFeedbackValidacao(data.mensagem || data.error || 'Não foi possível validar a tarefa.', 'error');
-        if (btn) btn.disabled = false;
-        return;
-      }
-      window.location.reload();
-    } catch (e) {
-      mostrarFeedbackValidacao('Falha de conexão. Tente novamente.', 'error');
-      if (btn) btn.disabled = false;
-    }
+    return AgroFlowRevisao.validarItem({
+      id: tarefaId,
+      botao: btn,
+      url: '/validacoes/tarefas/' + encodeURIComponent(tarefaId) + '/aprovar',
+      mensagemErro: 'Não foi possível validar a tarefa.',
+      mostrarFeedback: mostrarFeedbackValidacao,
+    });
   }
 
   // Botão "Validar" (vara mobile ou linha desktop) — pega o id do elemento que
   // carrega data-tarefa-id (o card mobile ou a linha da tabela).
-  document.querySelectorAll('[data-action="validar"]').forEach(btn => {
-    if (btn.disabled) return;
-    btn.addEventListener('click', () => {
-      const host = btn.closest('[data-tarefa-id]');
-      validarTarefa(host && host.dataset.tarefaId, btn);
-    });
+  AgroFlowRevisao.vincularValidacao({
+    hostSelector: '[data-tarefa-id]',
+    datasetKey: 'tarefaId',
+    validar: validarTarefa,
+    ignorarDesabilitados: true,
   });
 
   // ── Evidência real vinda do backend (foto/áudio do Supabase, texto) ──────────
@@ -382,39 +367,13 @@
   }
 
   // Setinha (mobile): abre/fecha as informações + carrega a evidência real
-  document.querySelectorAll('.pend-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.pend-item');
-      if (!item) return;
-      const aberto = item.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-      if (aberto) carregarEvidenciasDe(item);
-    });
-  });
+  AgroFlowRevisao.vincularAcordeao('.pend-toggle', '.pend-item', carregarEvidenciasDe);
 
   // "Ver mais" (desktop): abre a linha de detalhe + carrega a evidência real
-  document.querySelectorAll('.ver-mais').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const row = btn.closest('tr');
-      const det = row && row.nextElementSibling;
-      if (!det || !det.classList.contains('pend-detalhe')) return;
-      const abrindo = det.hasAttribute('hidden');
-      det.toggleAttribute('hidden');
-      btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
-      if (abrindo) carregarEvidenciasDe(row);
-    });
-  });
+  AgroFlowRevisao.vincularDetalheTabela('.ver-mais', 'pend-detalhe', carregarEvidenciasDe);
 
   // Varas de "Validadas" (acordeão): abre/fecha + carrega a evidência real
-  document.querySelectorAll('.concluidas-capataz .concl-head').forEach(head => {
-    head.addEventListener('click', () => {
-      const item = head.closest('.concl-item');
-      if (!item) return;
-      const aberto = item.classList.toggle('is-open');
-      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-      if (aberto) carregarEvidenciasDe(item);
-    });
-  });
+  AgroFlowRevisao.vincularAcordeao('.concluidas-capataz .concl-head', '.concl-item', carregarEvidenciasDe);
 
   // Filtro de busca — mobile
   const searchMobile = document.querySelector('.revisao-search');

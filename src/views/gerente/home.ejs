@@ -214,30 +214,9 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/data-hoje.js"></script>
 <script>
-  function formatarData() {
-    return new Date().toLocaleDateString('pt-BR', {
-      weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
-    }).replace(/^\w/, c => c.toUpperCase());
-  }
-
-  function carregarSessao() {
-    try {
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
-      if (!usuarioRaw) return null;
-      return JSON.parse(usuarioRaw);
-    } catch {
-      return null;
-    }
-  }
-
-  const data = formatarData();
-  ['data-hoje-mobile', 'data-hoje-desktop', 'data-hoje-desktop2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = data;
-  });
-
-  const usuarioSessao = carregarSessao();
+  const usuarioSessao = window.AgroFlowSession?.carregarUsuario();
   if (usuarioSessao?.nome) {
     const primeiroNome = usuarioSessao.nome.split(' ')[0];
 

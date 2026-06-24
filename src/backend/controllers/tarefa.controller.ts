@@ -5,21 +5,10 @@ import { TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { Usuario } from '../models/usuario.model'
 import { converterUUID } from '../models/uuid'
 import { mensagemErroCliente } from '../utils/erro-api'
+import { converterUuidDeConsulta, extrairTexto, retiroDaConsulta } from '../utils/parametros-controller'
 
 const STATUS_TAREFA_VALIDOS: TarefaStatus[] = ['pendente', 'concluido', 'aprovado']
 const PRIORIDADES_TAREFA_VALIDAS: TarefaPrioridade[] = ['alta', 'media', 'baixa']
-
-function extrairTexto(valor: unknown): string | undefined {
-  return typeof valor === 'string' ? valor : undefined
-}
-
-function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'capataz') {
-    return req.usuario.retiro_id
-  }
-
-  return valor
-}
 
 function capatazNaoEDonoDaTarefa(req: Request, atribuidaA: string): boolean {
   return req.usuario?.cargo === 'capataz' && atribuidaA !== req.usuario.id
@@ -130,8 +119,7 @@ export const TarefaController = {
 
   async buscarParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -148,8 +136,7 @@ export const TarefaController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.params.status) as TarefaStatus
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -186,8 +173,7 @@ export const TarefaController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.params.prioridade) as TarefaPrioridade
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -208,8 +194,7 @@ export const TarefaController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.params.categoria)
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -282,8 +267,7 @@ export const TarefaController = {
 
   async contarPorStatus(req: Request, res: Response) {
     try {
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

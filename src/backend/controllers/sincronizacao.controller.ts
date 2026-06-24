@@ -1,15 +1,7 @@
 import { Request, Response } from 'express'
-import { converterUUID } from '../models/uuid'
 import { SincronizacaoService } from '../services/sincronizacao.service'
 import { mensagemErroCliente } from '../utils/erro-api'
-
-function converterUuidQuery(valor: unknown): string | undefined | null {
-  if (valor === undefined || valor === null || valor === '') {
-    return undefined
-  }
-
-  return converterUUID(valor)
-}
+import { converterUuidOpcional } from '../utils/parametros-controller'
 
 export const SincronizacaoController = {
   // RN03: Verifica se há conexão disponível com o servidor.
@@ -39,7 +31,7 @@ export const SincronizacaoController = {
   // RN07: Busca movimentações sincronizadas e validadas para relatórios.
   async buscarMovimentacoesParaRelatrio(req: Request, res: Response) {
     try {
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -58,7 +50,7 @@ export const SincronizacaoController = {
   // RN07: Busca tarefas sincronizadas e aprovadas para relatórios.
   async buscarTarefasParaRelatrio(req: Request, res: Response) {
     try {
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -77,7 +69,7 @@ export const SincronizacaoController = {
   // RN10: Busca tickets sincronizados e aprovados para o dashboard.
   async buscarTicketsParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
