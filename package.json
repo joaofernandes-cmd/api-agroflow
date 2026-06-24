@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "tsx watch src/backend/server.ts",
     "migrate": "tsx src/backend/database/migrate.ts",
+    "gerar:acesso": "tsx src/backend/scripts/gerar-acesso-capataz.ts",
     "build": "tsc && npm run copy:static",
     "copy:static": "copyfiles -u 1 \"src/views/**/*\" \"src/backend/public/**/*\" \"src/backend/database/migrations/**/*\" dist && copyfiles \"assets/**/*\" dist",
     "start": "node dist/backend/server.js",

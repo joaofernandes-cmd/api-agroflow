@@ -55,7 +55,7 @@ export const UsuarioController = {
       const usuario = await UsuarioService.autenticarCapatazPorToken(tokenAcesso)
 
       if (!usuario) {
-        return res.redirect('/capataz')
+        return res.redirect('/capataz/acesso-invalido')
       }
 
       const token = gerarToken(usuario)
@@ -68,7 +68,7 @@ export const UsuarioController = {
 
       return res.redirect('/capataz/home')
     } catch (error) {
-      return res.redirect('/capataz')
+      return res.redirect('/capataz/acesso-invalido')
     }
   },
 

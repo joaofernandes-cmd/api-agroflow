@@ -96,7 +96,7 @@ describe('Usuarios', () => {
     const response = await request(app).get('/capataz/acesso/token-invalido')
 
     expect(response.status).toBe(302)
-    expect(response.headers.location).toBe('/capataz')
+    expect(response.headers.location).toBe('/capataz/acesso-invalido')
   })
 
   it('RN12 deve bloquear rota administrativa para usuario que nao seja gerente', () => {

@@ -13,6 +13,10 @@ capatazViewRoutes.get('/capataz', (_req, res) => {
 
 capatazViewRoutes.get('/capataz/acesso/:token', UsuarioController.autenticarCapatazPorToken)
 
+capatazViewRoutes.get('/capataz/acesso-invalido', (_req, res) => {
+  res.render('capataz/acesso-invalido')
+})
+
 capatazViewRoutes.use('/capataz', autenticarViewPorCookie, exigirCargoView('capataz'))
 
 capatazViewRoutes.get('/capataz/home', async (req, res) => {
