@@ -5256,6 +5256,14 @@ Também foram considerados subendpoints específicos:
 
 &nbsp;&nbsp;&nbsp;&nbsp;A versão final entregue contempla os três níveis hierárquicos previstos: o **capataz** registra a execução das atividades em campo, anexa evidências multimodais (fotos e áudios) e opera em modo *offline-first*, com armazenamento local no navegador e sincronização posterior quando há conexão; o **supervisor** acompanha, valida ou rejeita os registros consolidados; e o **gerente** define e distribui tarefas calendarizadas, acompanha indicadores e exporta dados em formato Excel/CSV para apoio à decisão administrativa. Dessa forma, a digitalização do fluxo operacional, a padronização dos registros e a integração entre as frentes de campo e escritório foram efetivamente estabelecidas.
 
+### Resultados alcançados
+
+- **Registro digital de ocorrências** por retiro e tipo de evento, com anexo de evidências multimodais.
+- **Operação offline-first** no fluxo do capataz, com persistência local e sincronização ao reestabelecer conexão.
+- **Fluxo de validação hierárquico**, no qual supervisores aprovam os registros antes da consolidação final.
+- **Exportação de dados** em Excel/CSV para suporte à gestão.
+- **Painéis de indicadores** e acompanhamento de tarefas, tickets e movimentações por perfil de usuário.
+
 
 # <a name="c8"></a>8. Referências
 
