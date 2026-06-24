@@ -2650,8 +2650,23 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Gerente garante paridade funcional completa com a versão mobile, cobrindo as US07 e US10, e aprofunda a experiência de uso no ambiente administrativo, entregando indicadores visuais mais ricos, relatórios com pré-visualização densa e navegação eficiente para o perfil estratégico da persona Marcos Ferreira.
 
 
-
 &nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos foi assegurada pela aplicação do guia de estilos definido na [Seção 3.4](#c3.4).
+
+#### Ajustes visuais na interface implementada
+
+&nbsp;&nbsp;&nbsp;&nbsp;Durante a implementação do sistema, algumas telas foram ajustadas visualmente em relação ao protótipo de alta fidelidade. As mudanças não alteraram os fluxos previstos, mas refinaram a organização dos componentes, a hierarquia das informações, os espaçamentos e a forma de apresentar ações principais. Com isso, a interface final manteve a identidade visual definida no guia de estilos, mas passou a refletir melhor o uso real de cada perfil.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As telas com alterações mais significativas foram as páginas iniciais dos perfis Capataz, Supervisor e Gerente. Elas foram selecionadas por concentrarem a navegação principal de cada usuário e por apresentarem diferenças visuais perceptíveis entre o protótipo e a versão implementada.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na Home do Capataz, a composição foi simplificada para favorecer o uso em campo. Em vez de priorizar listas logo na primeira visualização, a interface implementada apresenta cards maiores de ação, com ícones centrais e textos curtos. Essa decisão torna os principais caminhos mais evidentes para o capataz, que precisa registrar movimentações, abrir tickets ou consultar tarefas com poucos toques.
+<div align="center">
+<p align="center">Figura 46 - Interface atual da Home do Capataz</p>
+<p align="center">
+<img src="others/assets/interface-atual-capataz-home.png" alt="Interface atual da Home do Capataz" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
