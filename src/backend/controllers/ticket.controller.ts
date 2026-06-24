@@ -4,6 +4,7 @@ import { Usuario } from '../models/usuario.model'
 import { TicketCategoria, TicketPrioridade, TicketStatus } from '../models/ticket.model'
 import { converterUUID } from '../models/uuid'
 import { mensagemErroCliente } from '../utils/erro-api'
+import { converterUuidDeConsulta } from '../utils/parametros-controller'
 
 const STATUS_TICKET_VALIDOS: TicketStatus[] = ['pendente', 'aprovado']
 const PRIORIDADES_TICKET_VALIDAS: TicketPrioridade[] = ['alta', 'media', 'baixa']
@@ -12,14 +13,6 @@ const CATEGORIAS_TICKET_VALIDAS: TicketCategoria[] = [
   'hidraulica',
   'eletrica',
 ]
-
-function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'capataz') {
-    return req.usuario.retiro_id
-  }
-
-  return valor
-}
 
 export const TicketController = {
   async listarTodos(req: Request, res: Response) {
@@ -143,8 +136,7 @@ export const TicketController = {
   async listarPorStatus(req: Request, res: Response) {
     try {
       const status = String(req.query.status ?? '')
-      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
-      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
+      const retiroId = converterUuidDeConsulta(req)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -170,8 +162,7 @@ export const TicketController = {
   async listarPorPrioridade(req: Request, res: Response) {
     try {
       const prioridade = String(req.query.prioridade ?? '')
-      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
-      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
+      const retiroId = converterUuidDeConsulta(req)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -197,8 +188,7 @@ export const TicketController = {
   async listarPorCategoria(req: Request, res: Response) {
     try {
       const categoria = String(req.query.categoria ?? '')
-      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
-      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
+      const retiroId = converterUuidDeConsulta(req)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -223,8 +213,7 @@ export const TicketController = {
 
   async listarPendentes(req: Request, res: Response) {
     try {
-      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
-      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
+      const retiroId = converterUuidDeConsulta(req)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -238,8 +227,7 @@ export const TicketController = {
 
   async contarPorPrioridade(req: Request, res: Response) {
     try {
-      const retiroConsulta = retiroDaConsulta(req, req.query.retiroId ? String(req.query.retiroId) : undefined)
-      const retiroId = retiroConsulta ? converterUUID(retiroConsulta) : undefined
+      const retiroId = converterUuidDeConsulta(req)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

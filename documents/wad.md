@@ -4489,26 +4489,26 @@ VALUES (?, ?, ?, ?);
 
 ### 5.1.1 Estratégia de Documentação dos Testes
 
-Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma análise da relação entre os requisitos funcionais, a implementação do backend e os testes já existentes no repositório. A documentação foi organizada em duas frentes complementares:
+&nbsp;&nbsp;&nbsp;&nbsp;Para documentar a estratégia de testes automatizados do AgroFlow, foi feita uma análise da relação entre os requisitos funcionais, a implementação do backend e os testes já existentes no repositório. A documentação foi organizada em duas frentes complementares:
 
 - **White-box:** validação da lógica interna dos services, com foco nas regras de negócio, exceções e comportamentos isolados.
 - **Black-box:** validação do comportamento externo da API, por meio de requisições HTTP simuladas com Jest e Supertest.
 
-Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 52 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**, cuja estrutura é apresentada no Quadro 52 e adotada de forma consistente tanto nos testes unitários quanto nos de integração:
 
 <p align="center">Quadro 52 - Estrutura AAA adotada nos testes</p>
 
 | Fase | Responsável | Descrição |
 |---|---|---|
-| **Arrange** | Fixtures e helpers | Preparação do estado inicial — dados de entrada, mocks de repositório e instâncias de serviço são configurados antes da execução, utilizando os arquivos da pasta `src/backend/tests/helpers/` e os fixtures de simulação. |
-| **Act** | Chamada ao service ou requisição HTTP | Execução da ação sob teste — invocação direta do método do service (white-box) ou envio de requisição HTTP via Supertest ao endpoint correspondente (black-box). |
-| **Assert** | Verificação do resultado esperado | Confirmação do comportamento — validação do retorno, status HTTP, estrutura do corpo da resposta ou lançamento de exceção, conforme o cenário documentado em cada tabela de cobertura. |
+| **Arrange** | Fixtures e helpers | Preparação do estado inicial - dados de entrada, mocks de repositório e instâncias de serviço são configurados antes da execução, utilizando os arquivos da pasta `src/backend/tests/helpers/` e os fixtures de simulação. |
+| **Act** | Chamada ao service ou requisição HTTP | Execução da ação sob teste - invocação direta do método do service (white-box) ou envio de requisição HTTP via Supertest ao endpoint correspondente (black-box). |
+| **Assert** | Verificação do resultado esperado | Confirmação do comportamento - validação do retorno, status HTTP, estrutura do corpo da resposta ou lançamento de exceção, conforme o cenário documentado em cada tabela de cobertura. |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 #### Endpoints Mapeados
 
-Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 53:
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes foram organizados por domínio funcional, considerando os principais endpoints da aplicação apresentados no Quadro 53:
 
 <p align="center">Quadro 53 - Endpoints mapeados pelos testes</p>
 
@@ -4539,7 +4539,7 @@ Também foram considerados subendpoints específicos:
 
 #### Estrutura Analisada
 
-Para sustentar essa documentação, foram analisados:
+&nbsp;&nbsp;&nbsp;&nbsp;Para sustentar essa documentação, foram analisados:
 
 - A configuração do Jest em `jest.config.ts`
 - A pasta `src/backend/tests/unit/`
@@ -4549,11 +4549,11 @@ Para sustentar essa documentação, foram analisados:
 - Os arquivos de teste existentes para cada módulo
 
 ### 5.1.2 White Box
-Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema.
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema. Além dos services, os testes white-box foram estendidos a pontos internos de apoio — repositories com banco mockado, tratamento de erros em controllers, validação estática das migrations e o JavaScript inline da tela de relatórios —, documentados nos casos `CT13` a `CT16`.
 
-A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **90,33% de statements**, **81,9% de branches**, **96,89% de functions** e **90,1% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+&nbsp;&nbsp;&nbsp;&nbsp;A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
 
-Para organizar a documentação, os cinco casos prioritários foram numerados como `CT01` a `CT05`, seguindo a ordem de prioridade das regras de negócio do artefato 1. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da [Seção 3.9](#c3.9), preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, cada caso é descrito com a lógica `AAA` e com o caminho de falha correspondente.
+&nbsp;&nbsp;&nbsp;&nbsp;Para organizar a documentação, os casos de teste foram numerados como `CT01` a `CT16`, seguindo a ordem de prioridade das regras de negócio do artefato 1: os casos `CT01` a `CT12` correspondem às regras de negócio exercitadas na camada de services e os casos `CT13` a `CT16` cobrem os pontos de apoio técnico. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da [Seção 3.9](#c3.9), preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, os casos prioritários são descritos com a lógica `AAA` e com o caminho de falha correspondente.
 
 **CT01 - RN01 / RF001 | MovimentacaoService**
 - **Arrange:** preparar fixtures de movimentação com campos ausentes ou válidos, simulando compra, venda, nascimento e morte.
@@ -4592,7 +4592,7 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 
 ### Tabela Complementar de Testes White-Box
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e service exercitado.
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro 54 consolida a rastreabilidade dos testes white-box por caso de teste, regra de negócio, requisito funcional e camada exercitada.
 
 <p align="center">Quadro 54 - Testes complementares White-Box</p>
 
@@ -4610,17 +4610,21 @@ Para organizar a documentação, os cinco casos prioritários foram numerados co
 | CT10 | RN10 | RF010 | MovimentacaoService, TarefaService, TicketService, SincronizacaoService | `src/backend/tests/unit/movimentacao.service.spec.ts`; `src/backend/tests/unit/tarefa.service.spec.ts`; `src/backend/tests/unit/ticket.service.spec.ts`; `src/backend/tests/unit/sincronizacao.service.spec.ts` | Consolidação de indicadores por retiro | Contagens do dashboard retornam apenas registros sincronizados e validados/aprovados |
 | CT11 | RN11 | RF011 | TicketService | `src/backend/tests/unit/ticket.service.spec.ts` | Prioridade obrigatória e alteração posterior | Prioridade inválida rejeitada e prioridade válida atualizada com sucesso |
 | CT12 | RN12 | RF012 | UsuarioService | `src/backend/tests/unit/usuario.service.spec.ts` | Gestão de usuários: campos obrigatórios, login em formato de e-mail e operações de CRUD | Usuário criado quando válido e rejeitado quando o login é inválido ou faltam campos obrigatórios |
+| CT13 | RN01–RN12 | RF001–RF012 | Camada de Repositories (Usuario, Tarefa, Ticket, Movimentacao, Evidencia e tipos/vínculos de evidência) | `src/backend/tests/unit/repositories.spec.ts` | Queries principais com banco mockado: busca, criação, atualização, remoção e transações de movimentação | Retorno fiel das linhas do banco, `null` na ausência de registro e uso de transação na criação/remoção da movimentação |
+| CT14 | RN05, RN07, RN12 | RF005, RF007, RF012 | Controllers (Usuario, Relatório) | `src/backend/tests/unit/erros.controller.spec.ts` | Tratamento de erros: payload inválido, recurso inexistente e falha do service | Erro genérico sem vazar detalhe técnico, `404` para recurso inexistente e `400` para payload inválido |
+| CT15 | RNF (integridade de dados) | — | Migrations | `src/backend/tests/unit/migrations.schema.spec.ts` | Validação estática: numeração sequencial, enums alinhados ao front/back, UUID desde a base e compatibilidade de login/identificador | Schema permanece alinhado entre migrations, backend e frontend |
+| CT16 | RN07 | RF007 | View de relatórios (JavaScript inline) | `src/backend/tests/unit/relatorios.view.spec.ts` | Filtro de prévia e exportação aplicados ao mesmo período selecionado na tela | Prévia e arquivo exportado refletem exatamente o mesmo filtro visual |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Os casos prioritários `CT01` a `CT05` são os mais críticos para o sistema, pois cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
+&nbsp;&nbsp;&nbsp;&nbsp;Esse conjunto de testes confirma que os services do AgroFlow seguem as regras de negócio documentadas e fornece evidência objetiva de cobertura mínima para a camada de serviço. Entre os casos mapeados, `CT01` a `CT05` cobrem o fluxo base de operação em campo: registrar movimentações, criar tarefas, sincronizar pendências, anexar evidências e autenticar usuários.
 
 ### 5.1.3 Black Box
-Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes black-box foram aplicados na camada de integração dos endpoints do AgroFlow, com foco na validação do comportamento observável da API. Essa abordagem considera a aplicação como uma caixa-preta, verificando apenas entradas e saídas, sem dependência da implementação interna dos serviços ou controladores.
 
-Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP e validar os fluxos de sucesso, entrada inválida, violação de regra de negócio e recurso inexistente. Os cenários foram adicionados aos arquivos de integração existentes, sem mudanças nas rotas, nos payloads ou nos códigos utilizados pelas telas.
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes foram implementados com Jest e Supertest, permitindo simular requisições HTTP e validar os fluxos de sucesso, entrada inválida, violação de regra de negócio e recurso inexistente. Os cenários foram adicionados aos arquivos de integração existentes, sem mudanças nas rotas, nos payloads ou nos códigos utilizados pelas telas.
 
-Para os endpoints que endereçam recursos individuais, foram exercitados sucesso (`200/201/204`), validação (`400`), regra de negócio (`403`, `409` ou `400` equivalente) e recurso inexistente (`404`). Nos endpoints agregados, como sincronização, relatórios e health check, `404` e conflito não se aplicam quando não há recurso individual nem transição concorrente. No fluxo de validação, registros inexistentes retornam `404` e registros já processados retornam `409`.
+&nbsp;&nbsp;&nbsp;&nbsp;Para os endpoints que endereçam recursos individuais, foram exercitados sucesso (`200/201/204`), validação (`400`), regra de negócio (`403`, `409` ou `400` equivalente) e recurso inexistente (`404`). Nos endpoints agregados, como sincronização, relatórios e health check, `404` e conflito não se aplicam quando não há recurso individual nem transição concorrente. No fluxo de validação, registros inexistentes retornam `404` e registros já processados retornam `409`.
 
 ### Tabela Complementar de Testes Black-Box
 
@@ -4651,13 +4655,15 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 | Sincronização | `src/backend/tests/integration/sincronizacao.spec.ts` | Sincronização com sucesso, falha e retiro inválido | `POST /sincronizacao`, `GET /sincronizacao/relatorios/movimentacoes`, `GET /sincronizacao/relatorios/tarefas`, `GET /sincronizacao/dashboard/tickets` | Retornos 200 e 400 |
 | Validações | `src/backend/tests/integration/validacao.spec.ts` | Permissão do usuário | `POST /validacoes/permissao` | Retorno indicando acesso autorizado |
 | Validações | `src/backend/tests/integration/validacao.spec.ts` | Sucesso, ID inválido, registro inexistente e já processado | `PATCH /validacoes/movimentacoes/:id/validar`, `PATCH /validacoes/tickets/:id/aprovar`, `PATCH /validacoes/tarefas/:id/aprovar` | Retornos 200, 400, 404 e 409 |
-| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos, período inválido e formato de relatório | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes` | Retornos 200 e 400 |
+| Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Dados brutos, período inválido, formato de relatório e exportação | `GET /relatorios/movimentacoes/dados`, `GET /relatorios/tarefas/dados`, `GET /relatorios/movimentacoes`, `GET /relatorios/exportar` | Retornos 200 e 400, com arquivo exportável quando válido |
 | Relatórios | `src/backend/tests/integration/relatorio.spec.ts` | Relatórios semanal e mensal | `GET /relatorios/semanal`, `GET /relatorios/mensal` | Resposta correta para consolidação periódica |
+| Rotas protegidas | `src/backend/tests/integration/rotas-protegidas.spec.ts` | Controle de acesso a páginas e APIs autenticadas | Rotas internas de Capataz, Supervisor, Gerente e APIs protegidas | Usuários sem permissão são bloqueados conforme autenticação e cargo |
+| Views principais | `src/backend/tests/integration/app-views.spec.ts` | Renderização das telas principais por perfil | Views de autenticação, Capataz, Supervisor e Gerente | Telas renderizadas sem erro de servidor |
 | Health Check | `src/backend/tests/integration/health.spec.ts` | Disponibilidade da API | `GET /health` | Retorno 200 com status ok |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-### Matriz de conformidade por cenário
+#### Matriz de conformidade por cenário
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Quadro 56 sintetiza a cobertura atual dos cenários de sucesso, validação, regra de negócio e recurso não encontrado.
 
@@ -4678,17 +4684,17 @@ Para os endpoints que endereçam recursos individuais, foram exercitados sucesso
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 ### 5.1.4 Relatório de cobertura Jest
-Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que todos os casos definidos permaneceram estáveis após a implementação dos cenários adicionais de validação e erro.
- 
-Complementarmente, foi executado o comando `npm run test:coverage -- --runInBand`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares e demais módulos do backend. Na execução atual, a camada de services atingiu cobertura superior a 80% em todas as métricas.
- 
-Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na [Seção 3.1.4](#c3.1.4) e com a RTM da [Seção 3.9](#c3.9). Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes.
- 
+&nbsp;&nbsp;&nbsp;&nbsp;Nesta etapa, foram reunidas as evidências de execução dos testes automatizados do AgroFlow, contemplando tanto os testes de unidade quanto os testes de integração de endpoints. A validação foi realizada por meio do comando `npm test`, que executou a suíte completa de testes com sucesso, confirmando que os fluxos críticos permaneceram estáveis após a inclusão de novos cenários de validação, erro, persistência mockada e exportação de relatórios.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Complementarmente, foi executado o comando `npm run test:coverage -- --runInBand`, responsável pela geração do relatório de cobertura do Jest. Esse relatório apresenta a distribuição percentual por camada da aplicação, permitindo avaliar de forma objetiva o alcance dos testes sobre services, controllers, routes, middlewares, repositories e demais módulos do backend. Na execução atual, as camadas de services, middlewares, routes e repositories apresentaram cobertura consistente para os fluxos mais relevantes do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além disso, a rastreabilidade entre casos de teste, regras de negócio e requisitos foi preservada por meio do mapeamento CT → RN → RF, coerente com a Matriz RF → RN → Endpoint apresentada na [Seção 3.1.4](#c3.1.4) e com a RTM da [Seção 3.9](#c3.9). Dessa forma, cada caso de teste executado possui vínculo explícito com a regra de negócio correspondente, garantindo consistência entre o que foi especificado no projeto e o que foi efetivamente validado nos testes. A cobertura também foi ampliada para pontos de apoio técnico, como repositories com banco mockado, tratamento de erros em controllers, validação estática das migrations, comportamento de exportação de relatórios e JavaScript inline da tela de relatórios.
+
 ---
- 
+
 #### Relatório de Cobertura Jest
- 
-**Comando executado:** 
+
+**Comando executado:**
 `npm run test:coverage -- --runInBand`
 
 <div align="center">
@@ -4696,18 +4702,22 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
   <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
- 
+
 ---
- 
+
 #### Evidência de Execução
- 
+
 - `npm test` executado com sucesso.
 - `npm run test:coverage -- --runInBand` executado com sucesso.
-- Suíte atual: **17 test suites aprovadas**.
-- Casos de teste aprovados na execução de cobertura: **238**.
-- Testes de integração aprovados: **97** em **9 test suites**.
-- Cobertura global: **71,38% de statements**, **51,05% de branches**, **66,66% de functions** e **71,25% de lines**.
-- Cobertura da camada de services: **90,33% de statements**, **81,9% de branches**, **96,89% de functions** e **90,1% de lines**.
+- Suíte atual: **29 test suites aprovadas**.
+- Casos de teste aprovados na execução de cobertura: **360**.
+- Testes de integração aprovados: **147** em **11 test suites**.
+- Testes unitários aprovados: **213** em **18 test suites**.
+- Cobertura global: **79,62% de statements**, **70,01% de branches**, **81,47% de functions** e **80,38% de lines**.
+- Cobertura da camada de repositories: **78,28% de statements**, **65,75% de branches**, **75,36% de functions** e **78,73% de lines**.
+- Cobertura da camada de middlewares: **92,92% de statements**, **82,05% de branches**, **100% de functions** e **92,92% de lines**.
+- Cobertura da camada de utils: **79,38% de statements**, **51,75% de branches**, **90% de functions** e **90,74% de lines**.
+- Cobertura da camada de services: **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**.
 
 <div align="center">
   <p align="center">Figura 66 - Execução atual dos testes de integração</p>
@@ -4720,11 +4730,12 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
   <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 17 suítes, com 238 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
 ---
- 
+
 #### Mapeamento de Rastreabilidade
- 
-A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 57:
+
+&nbsp;&nbsp;&nbsp;&nbsp;A rastreabilidade dos testes foi mantida conforme a estrutura definida no projeto e consolidada no Quadro 57:
 
 <p align="center">Quadro 57 - Mapeamento de rastreabilidade dos testes</p>
 
@@ -4742,6 +4753,10 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 | CT10 | RN10 | RF010 |
 | CT11 | RN11 | RF011 |
 | CT12 | RN12 | RF012 |
+| CT13 | RN01–RN12 | RF001–RF012 |
+| CT14 | RN05, RN07, RN12 | RF005, RF007, RF012 |
+| CT15 | RNF (integridade de dados) | — |
+| CT16 | RN07 | RF007 |
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
