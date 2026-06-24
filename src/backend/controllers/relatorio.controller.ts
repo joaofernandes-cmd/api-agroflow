@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { converterUUID } from '../models/uuid'
 import {
   FormatoRelatorioExportacao,
   RelatorioService,
@@ -8,6 +7,7 @@ import {
 import { relatorioDemo } from '../data/relatorio-demo'
 import { OPCOES_RETIRO } from '../data/referencia'
 import { mensagemErroCliente } from '../utils/erro-api'
+import { converterUuidOpcional } from '../utils/parametros-controller'
 
 // Converte uma string de query em Date.
 // Se o valor vier vazio, retorna undefined.
@@ -24,14 +24,6 @@ function converterDataQuery(valor: unknown): Date | undefined | null {
   }
 
   return data
-}
-
-function converterUuidQuery(valor: unknown): string | undefined | null {
-  if (valor === undefined || valor === null || valor === '') {
-    return undefined
-  }
-
-  return converterUUID(valor)
 }
 
 function converterTipoExportacao(valor: unknown): TipoRelatorioExportacao | null {
@@ -83,7 +75,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -109,7 +101,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -134,7 +126,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -158,7 +150,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (dataInicio === null || dataFim === null) {
         return res.status(400).json({ error: 'Datas inválidas em dataInicio ou dataFim' })
@@ -181,7 +173,7 @@ export const RelatorioController = {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
       const dataFim = converterDataQuery(req.query.dataFim)
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
       const tipo = converterTipoExportacao(req.query.tipo)
       const formato = converterFormatoExportacao(req.query.formato)
 
@@ -226,7 +218,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório semanal usando os últimos 7 dias.
   async gerarRelatorioSemanal(req: Request, res: Response) {
     try {
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -245,7 +237,7 @@ export const RelatorioController = {
   // RN07: Gera o relatório mensal usando os últimos 30 dias.
   async gerarRelatorioMensal(req: Request, res: Response) {
     try {
-      const retiroId = converterUuidQuery(req.query.retiroId)
+      const retiroId = converterUuidOpcional(req.query.retiroId)
 
       if (retiroId === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
