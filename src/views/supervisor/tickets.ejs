@@ -197,22 +197,19 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/data-hoje.js"></script>
+<script src="/js/revisao-utils.js"></script>
 <script>
-  const el = document.getElementById('data-hoje-desktop');
-  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
-    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
-  }).replace(/^\w/, c => c.toUpperCase());
 
   function mostrarFeedbackValidacao(mensagem, tipo) {
-    document.querySelectorAll('.tickets-feedback').forEach(el => el.remove());
-    const alvo = document.querySelector('.tickets-filter-bar') || document.querySelector('.tickets-list');
-    if (!alvo) return;
-    const feedback = document.createElement('p');
-    feedback.className = 'tickets-feedback';
-    feedback.textContent = mensagem;
-    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
-    feedback.style.margin = '8px 0 0';
-    alvo.insertAdjacentElement('afterend', feedback);
+    AgroFlowRevisao.mostrarFeedback({
+      feedbackSelector: '.tickets-feedback',
+      alvoSelector: '.tickets-filter-bar',
+      alvoFallbackSelector: '.tickets-list',
+      feedbackClass: 'tickets-feedback',
+      mensagem,
+      tipo,
+    });
   }
 
   // Valida o ticket no BACKEND (PATCH real, autenticado pelo cookie de sessão).
@@ -220,65 +217,31 @@
   // partir do banco, então o ticket sai de "Pendentes" e entra em "Validados"
   // — e o mesmo dado aparece no relatório e para o gerente.
   async function validarTicket(ticketId, btn) {
-    if (!ticketId) return;
-    if (btn) btn.disabled = true;
-    try {
-      const resp = await fetch('/validacoes/tickets/' + encodeURIComponent(ticketId) + '/aprovar', {
-        method: 'PATCH',
-      });
-      if (window.AgroFlowSession && AgroFlowSession.tratarResposta(resp)) return;
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) {
-        mostrarFeedbackValidacao(data.mensagem || data.error || 'Não foi possível validar o ticket.', 'error');
-        if (btn) btn.disabled = false;
-        return;
-      }
-      window.location.reload();
-    } catch (e) {
-      mostrarFeedbackValidacao('Falha de conexão. Tente novamente.', 'error');
-      if (btn) btn.disabled = false;
-    }
+    return AgroFlowRevisao.validarItem({
+      id: ticketId,
+      botao: btn,
+      url: '/validacoes/tickets/' + encodeURIComponent(ticketId) + '/aprovar',
+      mensagemErro: 'Não foi possível validar o ticket.',
+      mostrarFeedback: mostrarFeedbackValidacao,
+    });
   }
 
   // Botão "Validar" (vara mobile ou linha desktop) — pega o id do elemento que
   // carrega data-ticket (o card mobile ou a linha da tabela).
-  document.querySelectorAll('[data-action="validar"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const host = btn.closest('[data-ticket]');
-      validarTicket(host && host.dataset.ticket, btn);
-    });
+  AgroFlowRevisao.vincularValidacao({
+    hostSelector: '[data-ticket]',
+    datasetKey: 'ticket',
+    validar: validarTicket,
   });
 
   // Abrir/fechar as "varas" de tickets já validados.
-  document.querySelectorAll('.tickets-concluidas .concl-head').forEach(head => {
-    head.addEventListener('click', () => {
-      const item = head.closest('.concl-item');
-      if (!item) return;
-      const aberto = item.classList.toggle('is-open');
-      head.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-    });
-  });
+  AgroFlowRevisao.vincularAcordeao('.tickets-concluidas .concl-head', '.concl-item');
 
   // Setinha: abre/fecha as informações do ticket pendente (mobile)
-  document.querySelectorAll('.pend-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.pend-item');
-      if (!item) return;
-      const aberto = item.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-    });
-  });
+  AgroFlowRevisao.vincularAcordeao('.pend-toggle', '.pend-item');
 
   // "Ver mais" (desktop): abre a linha de detalhe com a descrição + evidência
-  document.querySelectorAll('.ver-mais').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const det = btn.closest('tr')?.nextElementSibling;
-      if (!det || !det.classList.contains('pend-detalhe')) return;
-      const abrindo = det.hasAttribute('hidden');
-      det.toggleAttribute('hidden');
-      btn.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
-    });
-  });
+  AgroFlowRevisao.vincularDetalheTabela('.ver-mais', 'pend-detalhe');
 
   // Filtro de busca — mobile
   const searchMobile = document.querySelector('.tickets-search');

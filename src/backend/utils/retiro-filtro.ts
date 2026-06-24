@@ -16,3 +16,10 @@ export function correspondeRetiro(retiroAlvo: UUID, filtro?: UUID | UUID[]): boo
 
   return String(filtro) === String(retiroAlvo)
 }
+
+export function filtrarPorRetiro<T extends { retiro_id: UUID }>(
+  registros: T[],
+  filtro?: UUID | UUID[]
+): T[] {
+  return registros.filter((registro) => correspondeRetiro(registro.retiro_id, filtro))
+}

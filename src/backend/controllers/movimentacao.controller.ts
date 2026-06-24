@@ -3,14 +3,11 @@ import { MovimentacaoService } from '../services/movimentacao.service'
 import { MovimentacaoStatus, MovimentacaoTipo } from '../models/movimentacao.model'
 import { converterUUID } from '../models/uuid'
 import { mensagemErroCliente } from '../utils/erro-api'
+import { converterUuidDeConsulta, extrairTexto, retiroDaConsulta } from '../utils/parametros-controller'
 
 const TIPOS_MOVIMENTACAO_VALIDOS: MovimentacaoTipo[] = ['nascimento', 'morte', 'transferencia', 'compra', 'venda', 'outros']
 const STATUS_MOVIMENTACAO_VALIDOS: MovimentacaoStatus[] = ['pendente', 'validado']
 const TIPOS_MOVIMENTACAO_ACEITOS = [...TIPOS_MOVIMENTACAO_VALIDOS, 'outro'] as const
-
-function extrairTexto(valor: unknown): string | undefined {
-  return typeof valor === 'string' ? valor : undefined
-}
 
 function converterNumero(valor: unknown): number | null {
   const numero = Number(valor)
@@ -85,14 +82,6 @@ function normalizarTiposMovimentacao(valores: string[] | undefined): Movimentaca
   }
 
   return valores.map(valor => normalizarTipoMovimentacao(valor)).filter((valor): valor is MovimentacaoTipo => valor !== null)
-}
-
-function retiroDaConsulta(req: Request, valor?: string): string | undefined {
-  if (req.usuario?.cargo === 'capataz') {
-    return req.usuario.retiro_id
-  }
-
-  return valor
 }
 
 function capatazNaoEDonoDaMovimentacao(req: Request, capatazId: string): boolean {
@@ -299,8 +288,7 @@ export const MovimentacaoController = {
 
   async buscarParaRelatorio(req: Request, res: Response) {
     try {
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -315,8 +303,7 @@ export const MovimentacaoController = {
 
   async buscarParaDashboard(req: Request, res: Response) {
     try {
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -358,8 +345,7 @@ export const MovimentacaoController = {
 
   async listarPendentes(req: Request, res: Response) {
     try {
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })
@@ -375,8 +361,7 @@ export const MovimentacaoController = {
 
   async contarPorTipo(req: Request, res: Response) {
     try {
-      const retiroId = retiroDaConsulta(req, extrairTexto(req.query.retiroId))
-      const retiroUuid = retiroId ? converterUUID(retiroId) : undefined
+      const retiroUuid = converterUuidDeConsulta(req)
 
       if (retiroUuid === null) {
         return res.status(400).json({ error: 'Retiro inválido' })

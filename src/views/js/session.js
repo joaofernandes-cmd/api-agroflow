@@ -12,6 +12,15 @@
     }
   }
 
+  function carregarUsuario() {
+    try {
+      var usuarioRaw = localStorage.getItem('agroflow.usuario');
+      return usuarioRaw ? JSON.parse(usuarioRaw) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   function tratarResposta(response) {
     if (response && response.status === 401) {
       limparSessaoLocal();
@@ -23,6 +32,7 @@
   }
 
   global.AgroFlowSession = {
+    carregarUsuario: carregarUsuario,
     limparSessaoLocal: limparSessaoLocal,
     tratarResposta: tratarResposta,
   };

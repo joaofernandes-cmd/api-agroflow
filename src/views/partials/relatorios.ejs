@@ -268,11 +268,8 @@
 
 </div><!-- /layout-desktop -->
 
+<script src="/js/data-hoje.js"></script>
 <script>
-  const el = document.getElementById('data-hoje-desktop');
-  if (el) el.textContent = new Date().toLocaleDateString('pt-BR', {
-    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
-  }).replace(/^\w/, c => c.toUpperCase());
 
   function mostrarFeedback(mensagem, tipo) {
     ['relatorio-feedback', 'relatorio-feedback-mobile'].forEach(id => {
