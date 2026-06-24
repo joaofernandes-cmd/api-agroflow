@@ -5250,11 +5250,12 @@ Também foram considerados subendpoints específicos:
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-*Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na [Seção 2](#c2) deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
+### Conclusões
 
-*Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras*
+&nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento da aplicação web para a **BrPec Agropecuária S.A.** alcançou os objetivos centrais descritos na [Seção 2](#c2) deste documento. A solução substituiu o fluxo manual baseado em "boletas" de papel por um sistema centralizado de registro de eventos zootécnicos — nascimentos, óbitos, compras, vendas e transferências entre retiros —, eliminando a etapa de redigitação em planilhas e reduzindo a janela de inconsistência entre campo e escritório.
 
-*Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
+&nbsp;&nbsp;&nbsp;&nbsp;A versão final entregue contempla os três níveis hierárquicos previstos: o **capataz** registra a execução das atividades em campo, anexa evidências multimodais (fotos e áudios) e opera em modo *offline-first*, com armazenamento local no navegador e sincronização posterior quando há conexão; o **supervisor** acompanha, valida ou rejeita os registros consolidados; e o **gerente** define e distribui tarefas calendarizadas, acompanha indicadores e exporta dados em formato Excel/CSV para apoio à decisão administrativa. Dessa forma, a digitalização do fluxo operacional, a padronização dos registros e a integração entre as frentes de campo e escritório foram efetivamente estabelecidas.
+
 
 # <a name="c8"></a>8. Referências
 
