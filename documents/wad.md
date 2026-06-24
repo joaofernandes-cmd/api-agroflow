@@ -4805,6 +4805,10 @@ Os dados completos dos testes de guerrilha, incluindo o registro detalhado das o
 | Gerar relatório (Gerente) | Baixa | Usuário buscou relatórios dentro do dashboard antes de encontrar a seção correta | Usabilidade | F. Oliveira | Adicionar atalho ou card no dashboard apontando para a seção de relatórios |
 | Gerar relatório (Gerente) | Média | Dúvida se os dados exibidos incluíam apenas registros validados ou todos os registros | Compreensão de conteúdo | B. Santos | Exibir legenda ou indicador visual informando que apenas dados validados constam no relatório |
 
+#### Conclusão
+ 
+Os testes de guerrilha evidenciaram que o AgroFlow apresenta uma navegação geral satisfatória, com a maioria dos participantes completando as tarefas com sucesso. Os principais pontos de atenção concentram-se na clareza dos campos obrigatórios e na nomenclatura de alguns elementos do menu, que geraram momentos de hesitação em participantes com menor familiaridade com o fluxo do sistema. Esses achados serão considerados em conjunto com os resultados quantitativos obtidos pelo questionário SUS (Seção 5.2.2), permitindo ao grupo identificar melhoras futuras e priorizar os ajustes de interface mais relevantes antes da entrega final do produto.
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
