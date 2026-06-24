@@ -2762,6 +2762,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo evita repetição de dados: cada tabela armazena apenas o que lhe pertence e referencia as demais por chaves estrangeiras. O nome do retiro, por exemplo, fica somente na tabela `retiro` e é referenciado via `retiro_id`.
 
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade seguem as regras de negócio do parceiro. A tabela `movimentacao` guarda os dados comuns, enquanto os específicos de compra, venda, transferência, nascimento e morte ficam em tabelas especializadas, cada uma identificada pelo próprio `movimentacao_id` (chave primária e estrangeira). O campo `login` da tabela `usuario` é `UNIQUE`; o campo `sincronizado` tem padrão `false` nas tabelas operacionais, atendendo à RN03; e os campos de estado fixo (`tipo`, `status`, `prioridade`) são `ENUM`. Para opções fora dos valores fixos, há os campos de texto livre `tipo_outro` (em `movimentacao`) e `categoria_outro` (em `ticket`), usados quando o `ENUM` corresponde a "outro".
+
+
 
 **Modelo Físico**
 
