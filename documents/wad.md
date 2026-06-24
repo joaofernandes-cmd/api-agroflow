@@ -2177,21 +2177,13 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 <p align="center">Quadro XX - Síntese dos Padrões de Projeto Aplicados no AgroFlow</p>
 
 | Padrão | Localização no código | Responsabilidade | Justificativa de adoção | Princípio SOLID predominante |
-
 |--------|----------------------|------------------|--------------------------|------------------------------|
-
 | **MVC adaptado** | Estrutura geral do backend (`views/`, `controllers/`, `models/`) | Separar apresentação (Views EJS), regras de negócio (Service) e dados (Repository) | Permite múltiplos clientes (navegador desktop, mobile e PWA do Capataz) consumirem a mesma lógica de negócio sem duplicação | Single Responsibility |
-
 | **Controller** | `/src/backend/controllers/` | Receber requisições HTTP, validar presença de campos e formatar respostas | Isola o tratamento de transporte HTTP (status codes, body, headers) da lógica de domínio, evitando que regras de negócio fiquem acopladas ao Express | Single Responsibility |
-
 | **Service** | `/src/backend/services/` | Concentrar regras de negócio (RN01 a RN12) e orquestrar múltiplas entidades | Permite que mudanças nas regras (ex.: novo tipo de movimentação) não afetem rotas nem persistência, isolando a complexidade do domínio | Open/Closed |
-
 | **Repository** | `/src/backend/repositories/` | Encapsular queries SQL parametrizadas para cada entidade | Centraliza acesso ao banco em um local por entidade, evitando SQL espalhado e facilitando troca futura do driver `postgres` ou do SGBD | Dependency Inversion |
-
 | **Middleware** | `/src/backend/middlewares/` | Concentrar preocupações transversais (autenticação JWT, autorização por cargo, validação de payload, log e tratamento de erros) | Evita duplicação de lógica de autenticação e validação nos Controllers, aplicando essas verificações de forma reutilizável na cadeia de processamento | Open/Closed |
-
 | **DTO implícito (Interfaces TypeScript)** | `/src/backend/models/` | Definir a forma esperada dos dados em cada camada | Garante contrato estável entre camadas via tipagem estática, mesmo sem classes formais de DTO | Interface Segregation |
-
 | **Route Module** | `/src/backend/routes/` | Agrupar endpoints REST por entidade em arquivos separados | Permite expansão da API (adicionar novos endpoints) sem alterar o roteamento global, mantendo a organização por recurso conforme convenção REST | Open/Closed |
  
 <p align="center">Fonte: Próprios autores (2026).</p>
@@ -3047,7 +3039,6 @@ CREATE TABLE relatorio (
 <p align="center">Quadro XX - Mapeamento entre ER, DER e Modelo Físico</p>
 
 | Entidade (ER) | Representação no DER | Tabela física (PostgreSQL) | Chave primária | Principais chaves estrangeiras |
-
 |---------------|----------------------|----------------------------|----------------|--------------------------------|
 | USUARIO | Usuario | `usuario` | `id` (UUID) | `retiro_id` → `retiro(id)` |
 | RETIRO | Retiro | `retiro` | `id` (UUID) | — |
@@ -3396,6 +3387,41 @@ VALUES (?, ?, ?, ?);
 &nbsp;&nbsp;&nbsp;&nbsp;É válido mencionar que todos os endpoints são relativos à URL base: `http://localhost:3000`
 
 &nbsp;&nbsp;&nbsp;&nbsp;A documentação navegável completa da WebAPI encontra-se no arquivo `documents/index.html`, disponível no repositório do projeto.
+
+**Padrão de documentação dos endpoints**
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints documentados nesta seção seguem o mesmo padrão estrutural, contendo obrigatoriamente os seguintes campos para garantir um contrato técnico completo:
+ 
+- **Endereço:** caminho do endpoint relativo à Base URL.
+- **Método HTTP:** verbo utilizado (GET, POST, PATCH ou DELETE).
+- **Descrição:** propósito funcional do endpoint e RF/RN relacionados quando aplicável.
+- **Headers obrigatórios:** cabeçalhos HTTP exigidos. Inclui `Content-Type: application/json` para requisições com corpo JSON e `Authorization: Bearer <token>` para rotas protegidas por JWT. Endpoints sem requisitos específicos são marcados explicitamente como "Nenhum header específico necessário".
+- **Parâmetros de entrada:** parâmetros de rota (`/recurso/:id`), de query (`?campo=valor`) e seus tipos quando aplicáveis.
+- **Body esperado:** estrutura JSON do corpo da requisição, com tipos e obrigatoriedade de cada campo. Endpoints sem corpo são marcados explicitamente como "Nenhum".
+- **Formato de resposta:** estrutura JSON retornada para o status de sucesso e mensagens padronizadas para erros.
+- **Status codes possíveis:** códigos HTTP que o endpoint pode retornar, com seus significados específicos no contexto da aplicação.
+&nbsp;&nbsp;&nbsp;&nbsp;Os status codes utilizados em toda a API seguem o significado padronizado apresentado no Quadro XX, garantindo previsibilidade do comportamento da API e facilitando a integração de clientes futuros.
+ 
+<p align="center">Quadro XX - Status codes HTTP utilizados na API AgroFlow</p>
+
+| Código | Significado | Contexto de ocorrência no AgroFlow |
+|--------|-------------|-------------------------------------|
+| **200 OK** | Sucesso | Operações de leitura (GET) ou atualização (PATCH) concluídas com sucesso, incluindo retorno do recurso atualizado. |
+| **201 Created** | Recurso criado | Operações de criação (POST) bem-sucedidas, retornando o recurso criado com seu identificador UUID gerado. |
+| **204 No Content** | Sucesso sem retorno | Operações de exclusão (DELETE) bem-sucedidas. |
+| **400 Bad Request** | Requisição inválida | Campo obrigatório ausente, JSON malformado ou violação de regra de validação simples (RN01, RN02, RN08, RN11). Exemplo: tentativa de registrar movimentação tipo "morte" sem `causa_obito`. |
+| **401 Unauthorized** | Não autenticado | Token JWT ausente, inválido ou expirado em rotas protegidas. |
+| **403 Forbidden** | Sem permissão | Usuário autenticado, mas com cargo insuficiente para a operação solicitada (RN06, RN12). Exemplos: Capataz tentando validar movimentação; usuário não-Gerente tentando gerenciar usuários. |
+| **404 Not Found** | Recurso não encontrado | UUID informado não corresponde a nenhum registro no banco. Aplicado em buscas, atualizações e remoções por ID. |
+| **409 Conflict** | Conflito de estado | Tentativa de aprovar/validar um recurso que já foi processado anteriormente (ex.: aprovar ticket já aprovado). |
+| **422 Unprocessable Entity** | Regra de negócio violada | Requisição sintaticamente válida, mas bloqueada por regra de domínio (ex.: foto sem georreferenciamento, conforme RN04). |
+| **500 Internal Server Error** | Falha interna | Erro inesperado no servidor, capturado pelo middleware global de tratamento de erros e registrado em log sem exposição de detalhes técnicos ao cliente. |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Endpoints públicos (como `/health` e `/usuarios/login`) não exigem autenticação e estão explicitamente marcados na descrição. Endpoints protegidos por JWT exigem o header `Authorization: Bearer <token>` ou o cookie de sessão equivalente, e validam o cargo do usuário via middleware `cargo.middleware`, retornando 401 quando o token está ausente ou inválido e 403 quando o cargo é insuficiente para a operação solicitada. Os endpoints que recebem corpo JSON exigem o header `Content-Type: application/json` para correto processamento pelo Express.
+ 
+---
 
 **Endpoints**
 
