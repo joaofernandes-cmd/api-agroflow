@@ -1,4 +1,4 @@
-<img src="../assets/logointeli.png" alt="Logo Inteli">
+﻿<img src="../assets/logointeli.png" alt="Logo Inteli">
 
 
 # WAD - Web Application Document - Módulo 2 - Inteli
@@ -2744,7 +2744,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 **Modelo Relacional**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na Seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação (composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi feito com base no minimundo descrito na Seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação (composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 
 <div align="center">
