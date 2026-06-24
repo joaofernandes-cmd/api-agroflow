@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
-import crypto from 'crypto'
 import { Usuario, UsuarioInput, UsuarioCargo } from '../models/usuario.model'
 import { UsuarioRepository } from '../repositories/usuario.repository'
 import { UUID } from '../models/uuid'
 import { AcessoCapatazRepository } from '../repositories/acesso-capataz.repository'
 import { SupervisorRetiroRepository } from '../repositories/supervisor-retiro.repository'
+import { hashTokenAcesso } from '../utils/token-acesso'
 
 const BCRYPT_SALT_ROUNDS = 12
 
@@ -43,10 +43,7 @@ export const UsuarioService = {
       return null
     }
 
-    const tokenHash = crypto
-      .createHash('sha256')
-      .update(token.trim())
-      .digest('hex')
+    const tokenHash = hashTokenAcesso(token)
 
     return AcessoCapatazRepository.buscarCapatazPorTokenHash(tokenHash)
   },
