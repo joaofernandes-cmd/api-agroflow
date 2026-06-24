@@ -2490,7 +2490,19 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 41 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
 <p align="center">
-<img src="others/assets/hi-fi-capataz.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz" border="0">
+<img src="others/assets/hi-fi-capataz-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - seleção de perfil" border="0" width="42%">
+<img src="others/assets/hi-fi-capataz-02-home.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - home" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz-03-registrar-movimentacao.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - registrar movimentação" border="0" width="42%">
+<img src="others/assets/hi-fi-capataz-04-movimentacao-morte.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - movimentação de morte" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz-05-abrir-chamado.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - abrir chamado" border="0" width="42%">
+<img src="others/assets/hi-fi-capataz-06-minhas-tarefas.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - minhas tarefas" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz-07-detalhe-tarefa.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - detalhe da tarefa" border="0" width="42%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2499,9 +2511,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de registro de movimentações foi desenvolvida para atender à US02, substituindo o uso de boletas em papel pelo preenchimento de um formulário digital simplificado. Os campos foram organizados de forma sequencial e objetiva, com uso de dropdowns para tipo de movimentação, origem, destino, quantidade e estágio de vida do animal, minimizando a necessidade de digitação. Quando não há conexão, o fluxo do Capataz mantém o registro em armazenamento local para envio posterior.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A seção de abertura de tickets atende à US06 e permite que o capataz reporte problemas de infraestrutura identificados no retiro diretamente pelo celular, como cercas danificadas, falta de água ou equipamentos avariados. O formulário exige o anexo de ao menos uma evidência descritiva, conforme a RN08. Complementando essa funcionalidade, o sistema permite o envio de fotos georreferenciadas como evidência adicional, cumprindo à US11, aumentando a rastreabilidade e a confiabilidade das informações registradas.
+&nbsp;&nbsp;&nbsp;&nbsp;A seção de abertura de tickets atende à US06 e permite que o capataz reporte problemas de infraestrutura identificados no retiro diretamente pelo celular, como cercas danificadas, falta de água ou equipamentos avariados. O formulário exige o anexo de ao menos uma evidência descritiva, conforme a RN08. Complementando essa funcionalidade, o sistema permite o envio de fotos georreferenciadas como evidência adicional, cumprindo a US11, aumentando a rastreabilidade e a confiabilidade das informações registradas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a seção "Minhas Tarefas" atende à US03 e centraliza as atividades atribuídas pelo supervisor ao capataz, exibindo descrição e prioridade de forma clara e hierarquizada. O uso de cores de feedbacks e estados do sistema, definidas no guia de estilos, têm como objetivo sinalizar os níveis de prioridade, contribuindo para que o capataz identifique rapidamente as demandas mais urgentes sem depender de leitura extensiva.
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, a seção "Minhas Tarefas" está relacionada ao fluxo da US03 e centraliza as atividades atribuídas pelo supervisor ao capataz, exibindo descrição e prioridade de forma clara e hierarquizada. O uso de cores de feedbacks e estados do sistema, definidas no guia de estilos, tem como objetivo sinalizar os níveis de prioridade, contribuindo para que o capataz identifique rapidamente as demandas mais urgentes sem depender de leitura extensiva.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo mobile do Capataz traduz em interface visual os requisitos levantados para a persona Daniel, entregando um sistema funcional, direto e acessível para uso em campo, com suporte completo ao modo offline e fluxos otimizados para o contexto operacional da BrPec.
 
@@ -2512,7 +2524,19 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 42 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
 <p align="center">
-<img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor" border="0">
+<img src="others/assets/hi-fi-supervisor-mobile-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - seleção de perfil" border="0" width="42%">
+<img src="others/assets/hi-fi-supervisor-mobile-02-login.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - login" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-mobile-03-home.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - home" border="0" width="42%">
+<img src="others/assets/hi-fi-supervisor-mobile-04-relatorios.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - relatórios" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-mobile-05-delegar-tarefa.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - delegar tarefa" border="0" width="42%">
+<img src="others/assets/hi-fi-supervisor-mobile-06-tarefas-pendentes.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - tarefas pendentes" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-mobile-07-tickets-infraestrutura.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - tickets de infraestrutura" border="0" width="42%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2521,7 +2545,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de validação de registros, desenvolvida para atender à US04, permite que o Supervisor visualize de forma centralizada as movimentações submetidas pelos capatazes que aguardam análise. Para cada registro, o Supervisor tem a possibilidade de aprovar a entrada, conforme a RN06. Esse fluxo garante maior confiabilidade dos dados operacionais que alimentam os relatórios e dashboards do Gerente, assegurando rastreabilidade sobre quem registrou e quem validou cada informação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas atende à US03 e permite que o Supervisor crie e atribua atividades operacionais aos capatazes de forma estruturada, definindo capataz responsável, categoria da tarefa, prioridade, data e descrição. O uso de cores de feedback e estado do sistema para os níveis de prioridade, que foram definidas no guia de estilos facilitam a identificação visual das demandas mais urgentes tanto para o Supervisor ao criar quanto para o Capataz ao receber as tarefas.
+&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de delegação de tarefas atende à US03 e permite que o Supervisor crie e atribua atividades operacionais aos capatazes de forma estruturada, definindo capataz responsável, categoria da tarefa, prioridade, data e descrição. O uso de cores de feedback e estado do sistema para os níveis de prioridade, definidas no guia de estilos, facilita a identificação visual das demandas mais urgentes tanto para o Supervisor ao criar quanto para o Capataz ao receber as tarefas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O acompanhamento de chamados de infraestrutura atende à US05 e permite que o Supervisor visualize os tickets abertos pelos capatazes nos retiros, acesse os detalhes de cada chamado e atualize seu status conforme o andamento da resolução. Esse acompanhamento centralizado dá ao Supervisor visibilidade sobre os problemas reportados em campo, apoiando a priorização e o encaminhamento das demandas de manutenção.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Por fim, a visualização de relatórios operacionais pelo Supervisor está relacionada à US08 e foi implementada com filtros por período, retiro e tipo de relatório, além de uma prévia visual das informações antes da exportação final. Essa funcionalidade permite ao Supervisor analisar os dados das operações de forma organizada diretamente pelo dispositivo móvel, mesmo quando não está no ambiente administrativo, integrando o fluxo cujos dados finais consolidados dão suporte ao Gerente.
 
@@ -2534,7 +2560,25 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 43 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
 <p align="center">
-<img src="others/assets/hi-fi-desktop-supervisor.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor" border="0">
+<img src="others/assets/hi-fi-supervisor-desktop-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - seleção de perfil" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-02-login.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - login" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-03-home.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - home" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-04-relatorios.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - relatórios" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-05-delegar-tarefa.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - delegar tarefa" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-06-tarefas-pendentes.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - tarefas pendentes" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-07-tickets-infraestrutura.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - tickets de infraestrutura" border="0" width="90%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2556,12 +2600,17 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 44 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
 <p align="center">
-<img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente" border="0">
+<img src="others/assets/hi-fi-gerente-mobile-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - seleção de perfil" border="0" width="42%">
+<img src="others/assets/hi-fi-gerente-mobile-02-login.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - login" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-mobile-03-home.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - home" border="0" width="42%">
+<img src="others/assets/hi-fi-gerente-mobile-04-relatorio.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - relatório" border="0" width="42%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Após o login, o Gerente é direcionado ao dashboard principal, desenvolvido para atender à US07. A tela centraliza os indicadores-chave da operação, total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com um totalizador geral. Conforme a RN10, apenas dados com status aprovado e flag sincronizado igual a verdadeiro são contabilizados nesses indicadores, garantindo que Marcos tenha uma visão consolidada e confiável da operação, sem ruídos gerados por registros ainda pendentes de validação. O dashboard também exibe a data e hora da última atualização, permitindo ao Gerente avaliar a recência das informações apresentadas.
+&nbsp;&nbsp;&nbsp;&nbsp;Após o login, o Gerente é direcionado ao dashboard principal, desenvolvido para atender à US07. A tela centraliza os indicadores-chave da operação, total de nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com um totalizador geral. Conforme a RN10, apenas registros validados ou aprovados, conforme o tipo, e com a flag sincronizado igual a verdadeiro são contabilizados nesses indicadores, garantindo que Marcos tenha uma visão consolidada e confiável da operação, sem ruídos gerados por registros ainda pendentes de validação. O dashboard também exibe a data e hora da última atualização, permitindo ao Gerente avaliar a recência das informações apresentadas.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A seção de ocorrências recentes complementa o dashboard com uma lista das últimas atividades registradas na fazenda, oferecendo ao Gerente uma visão cronológica do que aconteceu nos retiros sem a necessidade de navegar por múltiplas telas. Esse acesso rápido atende à necessidade da persona de acompanhar o realizado de forma ágil, especialmente em momentos fora do ambiente administrativo.
 
@@ -2578,14 +2627,23 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 45 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
 <p align="center">
-<img src="others/assets/hi-fi-desktop-gerente.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente" border="0">
+<img src="others/assets/hi-fi-gerente-desktop-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - seleção de perfil" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-desktop-02-login.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - login" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-desktop-03-home.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - home" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-desktop-04-relatorios.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - relatórios" border="0" width="90%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Assim como na versão desktop do Supervisor, a navegação é estruturada por um menu lateral persistente, substituindo a barra inferior da versão mobile. Esse padrão mantém consistência entre os dois perfis na experiência de uso em tela ampla e permite que o Gerente alterne entre o dashboard e os módulos de relatórios sem perder o contexto da tela em uso.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal, desenvolvido para atender à US07, foi reorganizado na versão desktop para exibir os indicadores-chave em cards dispostos lado a lado, nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com totalizador geral. O espaço adicional permite ainda incorporar gráficos de tendência, como a evolução das movimentações ao longo do período selecionado, oferecendo ao Gerente uma camada visual de análise que vai além da simples contagem de registros. Conforme a RN10, todos os indicadores consideram exclusivamente dados com status aprovado e flag sincronizado igual a verdadeiro, garantindo que nenhum registro pendente ou rejeitado distorça a visão consolidada da operação.
+&nbsp;&nbsp;&nbsp;&nbsp;O dashboard principal, desenvolvido para atender à US07, foi reorganizado na versão desktop para exibir os indicadores-chave em cards dispostos lado a lado, nascimentos, mortes, transferências, tickets abertos e tarefas pendentes, segmentados por retiro e com totalizador geral. O espaço adicional permite ainda incorporar gráficos de tendência, como a evolução das movimentações ao longo do período selecionado, oferecendo ao Gerente uma camada visual de análise que vai além da simples contagem de registros. Conforme a RN10, todos os indicadores consideram exclusivamente registros validados ou aprovados, conforme o tipo, e com flag sincronizado igual a verdadeiro, garantindo que nenhum registro pendente ou rejeitado distorça a visão consolidada da operação.
 
 &nbsp;&nbsp;&nbsp;&nbsp;O módulo de relatórios, atendendo à US10, ganha expressiva densidade na versão desktop. Os filtros de período, retiro e tipo de relatório são exibidos horizontalmente em uma barra superior dedicada, e a prévia dos dados ocupa a área central da tela em formato tabular expandido, permitindo ao Gerente inspecionar as informações com mais detalhe antes da exportação. A possibilidade de visualizar múltiplas colunas simultaneamente, algo limitado na versão mobile, facilita a conferência de consistência entre os dados antes da geração do arquivo em formato de planilha, em conformidade com a RN07.
 
@@ -2593,9 +2651,41 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Gerente garante paridade funcional completa com a versão mobile, cobrindo as US07 e US10, e aprofunda a experiência de uso no ambiente administrativo, entregando indicadores visuais mais ricos, relatórios com pré-visualização densa e navegação eficiente para o perfil estratégico da persona Marcos Ferreira.
 
----
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos, assegurada pela aplicação do guia de estilos definido na [Seção 3.4](#c3.4).
+&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos foi assegurada pela aplicação do guia de estilos definido na [Seção 3.4](#c3.4).
+
+#### Ajustes visuais na interface implementada
+
+&nbsp;&nbsp;&nbsp;&nbsp;Durante a implementação do sistema, algumas telas foram ajustadas visualmente em relação ao protótipo de alta fidelidade. As mudanças não alteraram os fluxos previstos, mas refinaram a organização dos componentes, a hierarquia das informações, os espaçamentos e a forma de apresentar ações principais. Com isso, a interface final manteve a identidade visual definida no guia de estilos, mas passou a refletir melhor o uso real de cada perfil.
+
+&nbsp;&nbsp;&nbsp;&nbsp;As telas com alterações mais significativas foram as páginas iniciais dos perfis Capataz, Supervisor e Gerente. Elas foram selecionadas por concentrarem a navegação principal de cada usuário e por apresentarem diferenças visuais perceptíveis entre o protótipo e a versão implementada.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na Home do Capataz, a composição foi simplificada para favorecer o uso em campo. Em vez de priorizar listas logo na primeira visualização, a interface implementada apresenta cards maiores de ação, com ícones centrais e textos curtos. Essa decisão torna os principais caminhos mais evidentes para o capataz, que precisa registrar movimentações, abrir tickets ou consultar tarefas com poucos toques.
+<div align="center">
+<p align="center">Figura 46 - Interface atual da Home do Capataz</p>
+<p align="center">
+<img src="others/assets/interface-atual-capataz-home.png" alt="Interface atual da Home do Capataz" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na Home do Supervisor, a versão implementada reorganiza o conteúdo em áreas de acesso rápido, operações de campo e atividades recentes. A diferença visual mais relevante está na troca de uma composição mais concentrada por uma estrutura mais espaçada, com listas horizontais e blocos de ação que facilitam o acompanhamento operacional e a entrada nos módulos de revisão, tickets e delegação.
+<div align="center">
+<p align="center">Figura 47 - Interface atual da Home do Supervisor</p>
+<p align="center">
+<img src="others/assets/interface-atual-supervisor-home.png" alt="Interface atual da Home do Supervisor" border="0" width="90%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Na Home do Gerente, a interface foi ajustada para reforçar uma leitura mais analítica. A versão implementada organiza indicadores, atividades recentes, acesso a relatórios e resumo do período em uma única tela, aproximando a experiência do perfil gerencial e tornando mais clara a relação entre acompanhamento da operação e tomada de decisão.
+<div align="center">
+<p align="center">Figura 48 - Interface atual da Home do Gerente</p>
+<p align="center">
+<img src="others/assets/interface-atual-gerente-home.png" alt="Interface atual da Home do Gerente" border="0" width="90%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -2702,7 +2792,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
 <div align="center">
-<p align="center">Figura 46 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">Figura 49 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
 <img src="others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
@@ -2725,23 +2815,35 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 **Modelo Relacional**
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi feito com base no minimundo descrito na Seção 3.1, que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação (composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
+
 
 <div align="center">
-<p align="center">Figura 47 – Modelo Relacional</p>
+<<<<<<< HEAD
+<p align="center"><a href="others/assets/diagrama-relacional1.svg">Figura 47 – Modelo Relacional</a></p>
+<p align="center">
+<img src="others/assets/diagrama-relacional1.svg" alt="Modelo Relacional">
+</p>
+=======
+<p align="center">Figura 50 – Modelo Relacional</p>
 <img src="others/assets/diagrama-relacional.png" alt="Modelo Relacional">
+>>>>>>> origin/develop
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na [Seção 3.1](#c3.1), adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+   
+ &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na Seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
+    
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos N:N foram resolvidos com tabelas intermediárias: `evidencia_movimentacao`, `evidencia_tarefa` e `evidencia_ticket` vinculam a tabela `evidencia` às entidades `movimentacao`, `tarefa` e `ticket`; e `supervisor_retiro` associa cada supervisor a um ou mais retiros sob sua coordenação.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Identificou-se a necessidade de resolver os relacionamentos N:N (muitos-para-muitos) entre a tabela evidencia e as tabelas movimentacao, tarefa e ticket. Para isso, foram criadas três tabelas intermediárias (evidencia_movimentacao, evidencia_tarefa e evidencia_ticket), cada uma contendo dois campos: a chave estrangeira da tabela evidencia e a chave estrangeira da entidade correspondente.
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo evita repetição de dados: cada tabela armazena apenas o que lhe pertence e referencia as demais por chaves estrangeiras. O nome do retiro, por exemplo, fica somente na tabela `retiro` e é referenciado via `retiro_id`.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Optou-se por organizar o modelo de forma a evitar repetição desnecessária de informações entre as tabelas. Cada tabela armazena apenas os dados que lhe pertencem, referenciando informações de outras tabelas por meio de chaves estrangeiras. Por exemplo, o nome do retiro é armazenado exclusivamente na tabela retiro, sendo referenciado nas demais tabelas por meio do campo retiro_id.
+&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade seguem as regras de negócio do parceiro. A tabela `movimentacao` guarda os dados comuns, enquanto os específicos de compra, venda, transferência, nascimento e morte ficam em tabelas especializadas, cada uma identificada pelo próprio `movimentacao_id` (chave primária e estrangeira). O campo `login` da tabela `usuario` é `UNIQUE`; o campo `sincronizado` tem padrão `false` nas tabelas operacionais, atendendo à RN03; e os campos de estado fixo (`tipo`, `status`, `prioridade`) são `ENUM`. Para opções fora dos valores fixos, há os campos de texto livre `tipo_outro` (em `movimentacao`) e `categoria_outro` (em `ticket`), usados quando o `ENUM` corresponde a "outro".
 
-&nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade foram aplicadas conforme as regras de negócio levantadas junto ao parceiro. A tabela movimentacao armazena os dados comuns do registro, enquanto os dados específicos de compra, venda, transferência, nascimento e morte foram separados em tabelas especializadas. Ao campo login da tabela usuario foi atribuída a restrição UNIQUE, impedindo cadastros duplicados. O campo sincronizado recebeu valor padrão false nas tabelas operacionais, garantindo que todo registro criado em modo offline seja iniciado como não sincronizado, em conformidade com a RN03. Os campos que representam categorias ou estados fixos como tipo, status e prioridade foram definidos como ENUM, restringindo os valores aceitos àqueles previstos nas regras de negócio e impedindo inserções inválidas diretamente no banco.
+&nbsp;&nbsp;&nbsp;&nbsp;A autenticação dos Capatazes em campo é tratada na tabela `acesso_capataz` (`token_hash`, `ativo`, datas de expiração e criação e `usuario_id`), permitindo o uso offline e a posterior sincronização de forma independente do login convencional. A tabela `usuario` também inclui o campo `identificador`, com o código do operador adotado pelo parceiro.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial foi assegurada por meio de chaves estrangeiras em todas as relações do modelo, impedindo que qualquer registro referencie um identificador inexistente em outra tabela. O modelo físico completo, contendo o script DDL com os comandos CREATE TABLE e ALTER TABLE para definição das constraints e relacionamentos, é apresentado na sequência.
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial é garantida por chaves estrangeiras em todas as relações. O modelo físico completo, com o script DDL (`CREATE TABLE` e `ALTER TABLE`), é apresentado na sequência.
+
 
 **Modelo Físico**
 
@@ -4160,7 +4262,7 @@ VALUES (?, ?, ?, ?);
 | Supervisor Luiz | RF002 | RN02 | `POST /tarefas`<br>`GET /tarefas`<br>`GET /tarefas/{id}`<br>`GET /tarefas/status/{status}`<br>`GET /tarefas/usuario/{usuarioId}`<br>`GET /tarefas/prioridade/{prioridade}`<br>`GET /tarefas/categoria/{categoria}`<br>`PATCH /tarefas/{id}`<br>`PATCH /tarefas/{id}/status`<br>`DELETE /tarefas/{id}`<br>`GET /usuarios/capatazes/retiro/{retiroId}` | Criar e acompanhar tarefas | CT02 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204; `GET /usuarios/capatazes/retiro/{retiroId}` retornando HTTP 200 para apoio à atribuição de tarefas |
 | Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`<br>`POST /sincronizacao`<br>`GET /sincronizacao/status`<br>`GET /sincronizacao/mensagem`<br>`POST /movimentacoes/sincronizar`<br>`PATCH /movimentacoes/{id}/sincronizar`<br>`POST /tarefas/sincronizar`<br>`POST /tickets/sincronizar` | Sem tela dedicada (mecanismos de backend de sincronização) | CT03 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`; `capataz-pwa.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada; fila local do Capataz, IndexedDB e reenvio posterior cobertos por teste unitário em sandbox. |
 | Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`<br>`GET /evidencias/tarefa/{tarefaId}`<br>`GET /evidencias/{id}`<br>`POST /evidencias/fotos`<br>`POST /evidencias/audios`<br>`POST /evidencias/mensagens` | Anexar evidência (embutida em movimentação, tarefa e chamado) | CT04 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias`, `GET /evidencias/tarefa/{tarefaId}` e `GET /evidencias/{id}` retornando HTTP 200 |
-| Supervisor Luiz / Gerente Marcos / Capataz Daniel | RF005 | RN05 | `POST /usuarios/login`<br>`POST /usuarios/logout`<br>`GET /capataz/acesso/{token}` | Login, logout e acesso do Capataz por QR Code | CT05 (`usuario.spec.ts`; `usuario.service.spec.ts`; `rotas-protegidas.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; `POST /usuarios/logout` encerrando a sessão; `GET /capataz/acesso/{token}` autenticando Capataz por token de QR Code e redirecionando para `/capataz/home`; cenário de Capataz bloqueado no login tradicional retornando HTTP 403 |
+| Supervisor Luiz / Gerente Marcos / Capataz Daniel | RF005 | RN05 | `POST /usuarios/login`<br>`POST /usuarios/logout`<br>`GET /capataz/acesso/{token}` | Login, logout e acesso do Capataz por QR Code | CT05 (`usuario.spec.ts`; `usuario.service.spec.ts`; `rotas-protegidas.spec.ts`) | Figura 54 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; `POST /usuarios/logout` encerrando a sessão; `GET /capataz/acesso/{token}` autenticando Capataz por token de QR Code e redirecionando para `/capataz/home`; cenário de Capataz bloqueado no login tradicional retornando HTTP 403 |
 | Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`<br>`PATCH /validacoes/movimentacoes/{id}/validar`<br>`PATCH /validacoes/tarefas/{id}/aprovar`<br>`PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT06 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
 | Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`<br>`GET /relatorios/tarefas/dados`<br>`GET /relatorios/tickets/dados`<br>`GET /relatorios/movimentacoes`<br>`GET /relatorios/semanal`<br>`GET /relatorios/mensal`<br>`GET /relatorios/exportar`<br>`GET /sincronizacao/relatorios/movimentacoes`<br>`GET /sincronizacao/relatorios/tarefas` | Relatórios | CT07 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal`, `GET /relatorios/mensal`, `GET /relatorios/tickets/dados` e `GET /relatorios/exportar` retornando HTTP 200; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
 | Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`<br>`GET /tickets`<br>`GET /tickets/pendentes`<br>`GET /tickets/status`<br>`GET /tickets/categoria`<br>`GET /tickets/{id}`<br>`PATCH /tickets/{id}/status`<br>`PATCH /tickets/{id}/atribuicao`<br>`PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT08 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
@@ -4173,7 +4275,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 51 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
+&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 54 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
@@ -4213,10 +4315,10 @@ VALUES (?, ?, ?, ?);
 
 **1. Estrutura do Projeto e Configuração do Ambiente**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, postgres, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 48).
+&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, postgres, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 51).
 
 <div align="center">
-  <p align="center">Figura 48 - package.json com dependências do projeto</p>
+  <p align="center">Figura 51 - package.json com dependências do projeto</p>
   <p>
     <img src="others/assets/print-json.png" alt="package.json com dependências" border="0">
   </p>
@@ -4225,20 +4327,20 @@ VALUES (?, ?, ?, ?);
 
 **2. Banco de Dados e Migrations**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 49).
+&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 52).
 
 <div align="center">
-  <p align="center">Figura 49 - Tabelas criadas no banco de dados PostgreSQL</p>
+  <p align="center">Figura 52 - Tabelas criadas no banco de dados PostgreSQL</p>
   <p>
     <img src="others/assets/print-supabase.png" alt="Tabelas no banco de dados" border="0">
   </p>
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda, outros), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 50).
+&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda, outros), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 53).
 
 <div align="center">
-  <p align="center">Figura 50 - Script de migração com ENUMs e estrutura de tabelas</p>
+  <p align="center">Figura 53 - Script de migração com ENUMs e estrutura de tabelas</p>
   <p>
     <img src="others/assets/print-migrations.png" alt="Script SQL de migração" border="0">
   </p>
@@ -4247,10 +4349,10 @@ VALUES (?, ?, ?, ?);
 
 **3. Sistema de Autenticação e Autorização**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 51).
+&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 54).
 
 <div align="center">
-  <p align="center">Figura 51 - Requisição de login e token JWT retornado</p>
+  <p align="center">Figura 54 - Requisição de login e token JWT retornado</p>
   <p>
     <img src="others/assets/print-token.png" alt="Login e JWT" border="0">
   </p>
@@ -4261,7 +4363,7 @@ VALUES (?, ?, ?, ?);
 
 **4. Arquitetura em Camadas**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 52):
+&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 55):
 
 - **Controllers** (`/src/backend/controllers/`): recebem as requisições HTTP, validam presença dos campos obrigatórios e delegam a lógica ao Service.
 - **Services** (`/src/backend/services/`): aplicam as regras de negócio do domínio.
@@ -4270,7 +4372,7 @@ VALUES (?, ?, ?, ?);
 - **Middlewares** (`/src/backend/middlewares/`): autenticação, autorização, log de requisições, tratamento centralizado de erros e validação de payload.
 
 <div align="center">
-  <p align="center">Figura 52 - Estrutura de diretórios do projeto</p>
+  <p align="center">Figura 55 - Estrutura de diretórios do projeto</p>
   <p>
     <img src="others/assets/print-estruturas-paginas.png" alt="Estrutura de diretórios do backend" border="0">
   </p>
@@ -4279,10 +4381,10 @@ VALUES (?, ?, ?, ?);
 
 **5. Rotas da API**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 53).
+&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 56).
 
 <div align="center">
-  <p align="center">Figura 53 - Servidor rodando no terminal</p>
+  <p align="center">Figura 56 - Servidor rodando no terminal</p>
   <p>
     <img src="others/assets/print-terminal.png" alt="Servidor rodando no terminal" border="0">
   </p>
@@ -4322,10 +4424,10 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Paralelamente ao desenvolvimento do backend, a equipe elaborou os protótipos de alta fidelidade das telas principais da aplicação. Os protótipos foram produzidos no Figma e serviram como referência visual para guiar a implementação das interfaces, garantindo alinhamento entre design e desenvolvimento desde o início do projeto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (Figuras 53, 54 e 55).
+&nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (Figuras 56, 57 e 58).
 
 <div align="center">
-  <p align="center">Figura 54 - Protótipo de Alta Fidelidade (Capataz)</p>
+  <p align="center">Figura 57 - Protótipo de Alta Fidelidade (Capataz)</p>
   <p>
     <img src="others/assets/hi-fi-capataz.png" alt="Protótipo de alta fidelidade - tela 1" border="0">
   </p>
@@ -4333,7 +4435,7 @@ VALUES (?, ?, ?, ?);
 </div>
 
 <div align="center">
-  <p align="center">Figura 55 - Protótipo de Alta Fidelidade (Supervisor)</p>
+  <p align="center">Figura 58 - Protótipo de Alta Fidelidade (Supervisor)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4341,7 +4443,7 @@ VALUES (?, ?, ?, ?);
 </div>
 
 <div align="center">
-  <p align="center">Figura 56 - Protótipo de Alta Fidelidade (Gerente)</p>
+  <p align="center">Figura 59 - Protótipo de Alta Fidelidade (Gerente)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4374,18 +4476,18 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 57). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 60). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`).
 
 <div align="center">
-<p align="center">Figura 57 - Estrutura de views do Capataz</p>
+<p align="center">Figura 60 - Estrutura de views do Capataz</p>
 <img src="others/assets/views-capataz.png" alt="Views do Capataz" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estilização também foi segmentada por perfil, conforme a Figura 58. Além das folhas de estilo específicas de cada papel (`capataz.css`, `gerente.css` e `supervisor.css`), o projeto mantém arquivos de uso transversal — `base.css` e `global.css` para as definições compartilhadas, `auth.css` para as telas de autenticação e `relatorios.css` para os relatórios.
+&nbsp;&nbsp;&nbsp;&nbsp;A estilização também foi segmentada por perfil, conforme a Figura 61. Além das folhas de estilo específicas de cada papel (`capataz.css`, `gerente.css` e `supervisor.css`), o projeto mantém arquivos de uso transversal — `base.css` e `global.css` para as definições compartilhadas, `auth.css` para as telas de autenticação e `relatorios.css` para os relatórios.
 
 <div align="center">
-<p align="center">Figura 58 - Arquivos CSS por perfil de usuário</p>
+<p align="center">Figura 61 - Arquivos CSS por perfil de usuário</p>
 <img src="others/assets/views-css.png" alt="CSS por perfil" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4393,23 +4495,23 @@ VALUES (?, ?, ?, ?);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, conta com apenas duas telas: a página inicial do perfil e a de relatórios. Como a página de relatórios é compartilhada entre o gerente e o supervisor, ela reside no diretório de parciais (`relatorios.ejs`), de modo que a pasta `src/views/gerente` contém somente o arquivo `home.ejs`.
 
 <div align="center">
-<p align="center">Figura 59 - Estrutura de views do Gerente</p>
+<p align="center">Figura 62 - Estrutura de views do Gerente</p>
 <img src="others/assets/views-gerente.png" alt="Views do Gerente" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 60. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-gerente.ejs` e `sidebar-supervisor.ejs`), os arquivos referentes ao `<head>` do HTML (`head.ejs` e `capataz-head.ejs`), responsáveis pela importação de folhas de estilo, definição do título da janela e demais metadados, e a parcial de relatórios (`relatorios.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 63. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-gerente.ejs` e `sidebar-supervisor.ejs`), os arquivos referentes ao `<head>` do HTML (`head.ejs` e `capataz-head.ejs`), responsáveis pela importação de folhas de estilo, definição do título da janela e demais metadados, e a parcial de relatórios (`relatorios.ejs`).
 
 <div align="center">
-<p align="center">Figura 60 - Componentes parciais compartilhados</p>
+<p align="center">Figura 63 - Componentes parciais compartilhados</p>
 <img src="others/assets/views-partial.png" alt="Partials" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 61. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 64. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`).
 
 <div align="center">
-<p align="center">Figura 61 - Estrutura de views do Supervisor</p>
+<p align="center">Figura 64 - Estrutura de views do Supervisor</p>
 <img src="others/assets/views-supervisor.png" alt="Views do Supervisor" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4495,7 +4597,7 @@ Também foram considerados subendpoints específicos:
 ### 5.1.2 White Box
 &nbsp;&nbsp;&nbsp;&nbsp;Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema. Além dos services, os testes white-box foram estendidos a pontos internos de apoio — repositories com banco mockado, tratamento de erros em controllers, validação estática das migrations e o JavaScript inline da tela de relatórios —, documentados nos casos `CT13` a `CT16`.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+&nbsp;&nbsp;&nbsp;&nbsp;A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para organizar a documentação, os casos de teste foram numerados como `CT01` a `CT16`, seguindo a ordem de prioridade das regras de negócio do artefato 1: os casos `CT01` a `CT12` correspondem às regras de negócio exercitadas na camada de services e os casos `CT13` a `CT16` cobrem os pontos de apoio técnico. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da [Seção 3.9](#c3.9), preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, os casos prioritários são descritos com a lógica `AAA` e com o caminho de falha correspondente.
 
@@ -4642,8 +4744,8 @@ Também foram considerados subendpoints específicos:
 `npm run test:coverage -- --runInBand`
 
 <div align="center">
-  <p align="center">Figura 62 - Cobertura atual dos testes</p>
-  <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global dos testes automatizados." />
+  <p align="center">Figura 65 - Cobertura atual dos testes</p>
+  <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
@@ -4657,20 +4759,20 @@ Também foram considerados subendpoints específicos:
 - Casos de teste aprovados na execução de cobertura: **360**.
 - Testes de integração aprovados: **147** em **11 test suites**.
 - Testes unitários aprovados: **213** em **18 test suites**.
-- Cobertura global: **79,62% de statements**, **70,01% de branches**, **81,47% de functions** e **80,38% de lines**.
+- Cobertura global: **80,39% de statements**, **70,52% de branches**, **81,47% de functions** e **81,09% de lines**.
 - Cobertura da camada de repositories: **78,28% de statements**, **65,75% de branches**, **75,36% de functions** e **78,73% de lines**.
 - Cobertura da camada de middlewares: **92,92% de statements**, **82,05% de branches**, **100% de functions** e **92,92% de lines**.
-- Cobertura da camada de utils: **79,38% de statements**, **51,75% de branches**, **90% de functions** e **90,74% de lines**.
-- Cobertura da camada de services: **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**.
+- Cobertura da camada de utils: **80,79% de statements**, **53,6% de branches**, **91,89% de functions** e **90,55% de lines**.
+- Cobertura da camada de services: **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**.
 
 <div align="center">
-  <p align="center">Figura 63 - Execução atual dos testes de integração</p>
-  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das suítes de integração, com 147 testes aprovados." />
+  <p align="center">Figura 66 - Execução atual dos testes de integração</p>
+  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das 11 suítes de integração, com 147 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-  <p align="center">Figura 64 - Execução atual da suíte completa</p>
+  <p align="center">Figura 67 - Execução atual da suíte completa</p>
   <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 29 suítes, com 360 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4989,10 +5091,10 @@ A escolha do SUS como instrumento complementar aos testes de guerrilha justifica
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 65 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 68 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
-  <p align="center">Figura 65 - Business Model Canvas do AgroFlow</p>
+  <p align="center">Figura 68 - Business Model Canvas do AgroFlow</p>
   <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
