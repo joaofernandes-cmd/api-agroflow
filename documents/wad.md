@@ -5132,6 +5132,23 @@ A pontuação média obtida pelo AgroFlow foi de **77,5 pontos**, acima da médi
 | 51 – 70 | Good (Bom) | |
 | 71 – 85 | Excellent (Excelente) | **77,5** |
 | 86 – 100 | Best Imaginable (Perfeito) | |
+
+#### Análise qualitativa
+ 
+A análise das respostas individuais permite identificar os pontos fortes e os pontos de atenção da interface do AgroFlow, complementando os achados qualitativos dos testes de guerrilha.
+ 
+**Pontos fortes** - itens com maior concordância entre os participantes:
+ 
+- **Q1 (Intenção de uso frequente):** a maioria dos participantes demonstrou interesse em utilizar o AgroFlow com regularidade, refletindo uma percepção positiva do valor entregue pelo sistema.
+- **Q5 (Organização das funcionalidades):** as funcionalidades principais, como registro de movimentações, tarefas e chamados, foram consideradas bem organizadas pela maioria, indicando que a arquitetura de informação atende às expectativas dos usuários.
+- **Q9 (Confiança no uso):** os participantes relataram sentir-se confiantes ao utilizar o sistema, o que sugere que a interface transmite clareza e previsibilidade suficientes para o público testado.
+- **Q10 (Curva de aprendizado):** a grande maioria concordou que não precisou aprender muitas coisas antes de usar o AgroFlow corretamente, indicando baixa curva de aprendizado.
+
+**Pontos de atenção** - itens com maior dispersão ou discordância:
+ 
+- **Q4 (Necessidade de ajuda):** houve maior variação nas respostas, com alguns participantes indicando que precisariam de auxílio para usar o sistema. Esse resultado é coerente com as dificuldades observadas nos testes de guerrilha, especialmente nos fluxos de criação de tarefas e geração de relatórios.
+- **Q7 (Facilidade de aprendizado por terceiros):** um participante discordou que a maioria das pessoas aprenderia o sistema rapidamente, sinalizando que o AgroFlow pode apresentar barreiras para usuários com menor letramento digital, exatamente o perfil do público-alvo real da aplicação.
+- **Q8 (Confusão na navegação):** dois participantes apontaram algum grau de dificuldade na navegação, alinhado às ocorrências registradas na Tarefa 1 (Capataz) e na Tarefa 2 (Supervisor) durante os testes de guerrilha.
  
 *Posicione aqui o relatório dos testes SUS realizados.*
 
