@@ -5119,6 +5119,19 @@ Os 5 participantes do teste de guerrilha realizaram o preenchimento do formulár
 | 4 | Beatriz Santos | 4 | 1 | 4 | 1 | 3 | 2 | 5 | 4 | 5 | 1 | **80,0** |
 | 5 | Gabriel Almeida | 3 | 2 | 4 | 4 | 5 | 2 | 1 | 1 | 5 | 3 | **65,0** |
 | | **Média** | | | | | | | | | | | **77,5** |
+
+#### Pontuação média e interpretação
+ 
+A pontuação média obtida pelo AgroFlow foi de **77,5 pontos**, acima da média da indústria estabelecida em 68 pontos. Segundo a escala de adjetivos proposta por Bangor, essa pontuação situa o sistema na classificação **"Excellent" (Excelente)**, próxima ao limiar de "Best Imaginable" (Perfeito) (> 85), indicando uma percepção geral positiva de usabilidade pelos participantes, com margem identificável para melhorias pontuais.
+ 
+| Faixa de pontuação | Classificação | AgroFlow |
+|:------------------:|:-------------:|:--------:|
+| 0 – 25 | Worst Imaginable (Pior Imaginável) | |
+| 26 - 35 | Poor (Ruim)
+| 36 – 50 | OK (Aceitável) | |
+| 51 – 70 | Good (Bom) | |
+| 71 – 85 | Excellent (Excelente) | **77,5** |
+| 86 – 100 | Best Imaginable (Perfeito) | |
  
 *Posicione aqui o relatório dos testes SUS realizados.*
 
