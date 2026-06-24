@@ -2758,6 +2758,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
    
  &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi desenvolvido tendo como banco de dados alvo o PostgreSQL hospedado no Supabase. As tabelas, colunas, tipos de dados e chaves primárias e estrangeiras foram definidos com base no minimundo descrito na Seção 3.1, adotando-se o padrão de nomenclatura snake_case em todos os nomes de tabelas e campos, garantindo consistência e legibilidade ao longo do modelo.
     
+&nbsp;&nbsp;&nbsp;&nbsp;Os relacionamentos N:N foram resolvidos com tabelas intermediárias: `evidencia_movimentacao`, `evidencia_tarefa` e `evidencia_ticket` vinculam a tabela `evidencia` às entidades `movimentacao`, `tarefa` e `ticket`; e `supervisor_retiro` associa cada supervisor a um ou mais retiros sob sua coordenação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O modelo evita repetição de dados: cada tabela armazena apenas o que lhe pertence e referencia as demais por chaves estrangeiras. O nome do retiro, por exemplo, fica somente na tabela `retiro` e é referenciado via `retiro_id`.
 
 
 **Modelo Físico**
