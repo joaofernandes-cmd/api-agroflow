@@ -2170,6 +2170,33 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Controllers exemplificam o princípio Single Responsibility, ao se ocuparem exclusivamente do tratamento das requisições e respostas HTTP, como códigos de status, serialização e remoção de dados sensíveis, delegando toda a lógica de negócio aos Services e mantendo, assim, uma clara separação de responsabilidades entre as camadas.
 
+***Síntese dos Padrões de Projeto Aplicados***
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro XX consolida os padrões de projeto adotados no AgroFlow, padronizando o nível de detalhe das justificativas e indicando o princípio SOLID predominante em cada um. Essa síntese permite uma visão comparativa entre os padrões e reforça a rastreabilidade entre as decisões arquiteturais e a estrutura do código entregue.
+ 
+<p align="center">Quadro XX - Síntese dos Padrões de Projeto Aplicados no AgroFlow</p>
+
+| Padrão | Localização no código | Responsabilidade | Justificativa de adoção | Princípio SOLID predominante |
+
+|--------|----------------------|------------------|--------------------------|------------------------------|
+
+| **MVC adaptado** | Estrutura geral do backend (`views/`, `controllers/`, `models/`) | Separar apresentação (Views EJS), regras de negócio (Service) e dados (Repository) | Permite múltiplos clientes (navegador desktop, mobile e PWA do Capataz) consumirem a mesma lógica de negócio sem duplicação | Single Responsibility |
+
+| **Controller** | `/src/backend/controllers/` | Receber requisições HTTP, validar presença de campos e formatar respostas | Isola o tratamento de transporte HTTP (status codes, body, headers) da lógica de domínio, evitando que regras de negócio fiquem acopladas ao Express | Single Responsibility |
+
+| **Service** | `/src/backend/services/` | Concentrar regras de negócio (RN01 a RN12) e orquestrar múltiplas entidades | Permite que mudanças nas regras (ex.: novo tipo de movimentação) não afetem rotas nem persistência, isolando a complexidade do domínio | Open/Closed |
+
+| **Repository** | `/src/backend/repositories/` | Encapsular queries SQL parametrizadas para cada entidade | Centraliza acesso ao banco em um local por entidade, evitando SQL espalhado e facilitando troca futura do driver `postgres` ou do SGBD | Dependency Inversion |
+
+| **Middleware** | `/src/backend/middlewares/` | Concentrar preocupações transversais (autenticação JWT, autorização por cargo, validação de payload, log e tratamento de erros) | Evita duplicação de lógica de autenticação e validação nos Controllers, aplicando essas verificações de forma reutilizável na cadeia de processamento | Open/Closed |
+
+| **DTO implícito (Interfaces TypeScript)** | `/src/backend/models/` | Definir a forma esperada dos dados em cada camada | Garante contrato estável entre camadas via tipagem estática, mesmo sem classes formais de DTO | Interface Segregation |
+
+| **Route Module** | `/src/backend/routes/` | Agrupar endpoints REST por entidade em arquivos separados | Permite expansão da API (adicionar novos endpoints) sem alterar o roteamento global, mantendo a organização por recurso conforme convenção REST | Open/Closed |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+&nbsp;&nbsp;&nbsp;&nbsp;Esses padrões trabalham de forma integrada: o fluxo de uma requisição percorre o pipeline Route → Middleware → Controller → Service → Repository → Banco de Dados, e a resposta percorre o caminho inverso. Cada camada possui responsabilidade única e depende exclusivamente de abstrações da camada subsequente, característica que sustenta a manutenibilidade, a testabilidade (evidenciada pela cobertura superior a 90% na camada de services, conforme [Seção 5.1.4](#c5.1.4)) e a evolução incremental do sistema ao longo das sprints.
+
 &nbsp;&nbsp;&nbsp;&nbsp;A aplicação combinada do padrão Model-View-Controller adaptado para API REST e da arquitetura Controller-Service-Repository estrutura o backend do AgroFlow em camadas com responsabilidades bem delimitadas, mantendo decisões de transporte HTTP, regras de negócio e acesso a dados isoladas entre si. A separação entre `Controllers`, `Services` e `Repositories` permite que regras específicas do domínio agropecuário, como a validação condicional de campos por tipo de movimentação e o controle de permissões por cargo, sejam alteradas sem impacto direto sobre o roteamento ou a persistência. Os `Middlewares` complementam essa estrutura ao concentrar preocupações transversais como autenticação JWT, autorização por cargo, validação de payload e tratamento centralizado de erros, evitando duplicação de lógica entre endpoints. O alinhamento dessas decisões com os princípios SOLID, em especial Single Responsibility, Open/Closed e Dependency Inversion, torna o sistema mais testável, manutenível e preparado para evoluir conforme novas regras de negócio sejam incorporadas em sprints futuras, sem comprometer a base já validada.
 
 
