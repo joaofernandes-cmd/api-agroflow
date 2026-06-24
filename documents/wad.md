@@ -5106,6 +5106,19 @@ O questionário foi disponibilizado via Google Forms após a execução das tare
 | 8 | Achei o AgroFlow confuso e difícil de navegar. |
 | 9 | Me senti confiante usando o AgroFlow para realizar minhas atividades no retiro. |
 | 10 | Precisei aprender muitas coisas antes de conseguir usar o AgroFlow corretamente. |
+
+#### Respostas e pontuações individuais
+ 
+Os 5 participantes do teste de guerrilha realizaram o preenchimento do formulário de testes SUS. Os nomes utilizados se mantêm fictícios para preservar a privacidade dos participantes. A pontuação SUS individual foi calculada pela fórmula padronizada: para itens de polaridade positiva (Q1, Q3, Q5, Q7, Q9), subtrai-se 1 do valor marcado; para itens de polaridade negativa (Q2, Q4, Q6, Q8, Q10), subtrai-se o valor marcado de 5. A soma de todas as contribuições é multiplicada por 2,5, resultando em uma pontuação entre 0 e 100.
+ 
+| # | Nome | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | **Pontuação SUS** |
+|:-:|------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 1 | Lucas Martins | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 2 | 5 | 3 | **90,0** |
+| 2 | Fernanda Oliveira | 4 | 2 | 4 | 4 | 5 | 2 | 5 | 2 | 5 | 3 | **75,0** |
+| 3 | Rafael Souza | 4 | 2 | 5 | 3 | 4 | 2 | 4 | 2 | 4 | 1 | **77,5** |
+| 4 | Beatriz Santos | 4 | 1 | 4 | 1 | 3 | 2 | 5 | 4 | 5 | 1 | **80,0** |
+| 5 | Gabriel Almeida | 3 | 2 | 4 | 4 | 5 | 2 | 1 | 1 | 5 | 3 | **65,0** |
+| | **Média** | | | | | | | | | | | **77,5** |
  
 *Posicione aqui o relatório dos testes SUS realizados.*
 
