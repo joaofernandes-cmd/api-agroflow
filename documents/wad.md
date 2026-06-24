@@ -4585,7 +4585,7 @@ Também foram considerados subendpoints específicos:
 ### 5.1.2 White Box
 &nbsp;&nbsp;&nbsp;&nbsp;Os testes white-box foram aplicados na camada de `services` do AgroFlow com o objetivo de validar as regras internas de negócio, os fluxos condicionais e os caminhos de falha antes da persistência dos dados. Essa camada foi isolada por meio de mocks dos repositórios e de dados fixos em fixtures, garantindo que os cenários executados fossem determinísticos, reprodutíveis e independentes de banco de dados, rede ou relógio do sistema. Além dos services, os testes white-box foram estendidos a pontos internos de apoio — repositories com banco mockado, tratamento de erros em controllers, validação estática das migrations e o JavaScript inline da tela de relatórios —, documentados nos casos `CT13` a `CT16`.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
+&nbsp;&nbsp;&nbsp;&nbsp;A execução de `npm run test:coverage -- --runInBand` demonstrou que a camada `backend/services` atingiu **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**, superando 80% em todas as métricas. Os testes cobrem autenticação, movimentações, sincronização, evidências, tarefas, tickets, validações e relatórios.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para organizar a documentação, os casos de teste foram numerados como `CT01` a `CT16`, seguindo a ordem de prioridade das regras de negócio do artefato 1: os casos `CT01` a `CT12` correspondem às regras de negócio exercitadas na camada de services e os casos `CT13` a `CT16` cobrem os pontos de apoio técnico. Essa nomenclatura segue a mesma lógica de rastreabilidade adotada na RTM da [Seção 3.9](#c3.9), preservando a relação entre teste, regra de negócio e requisito funcional. Abaixo, os casos prioritários são descritos com a lógica `AAA` e com o caminho de falha correspondente.
 
@@ -4747,21 +4747,21 @@ Também foram considerados subendpoints específicos:
 - Casos de teste aprovados na execução de cobertura: **360**.
 - Testes de integração aprovados: **147** em **11 test suites**.
 - Testes unitários aprovados: **213** em **18 test suites**.
-- Cobertura global: **79,62% de statements**, **70,01% de branches**, **81,47% de functions** e **80,38% de lines**.
+- Cobertura global: **80,39% de statements**, **70,52% de branches**, **81,47% de functions** e **81,09% de lines**.
 - Cobertura da camada de repositories: **78,28% de statements**, **65,75% de branches**, **75,36% de functions** e **78,73% de lines**.
 - Cobertura da camada de middlewares: **92,92% de statements**, **82,05% de branches**, **100% de functions** e **92,92% de lines**.
-- Cobertura da camada de utils: **79,38% de statements**, **51,75% de branches**, **90% de functions** e **90,74% de lines**.
-- Cobertura da camada de services: **88,87% de statements**, **81,97% de branches**, **93,52% de functions** e **88,77% de lines**.
+- Cobertura da camada de utils: **80,79% de statements**, **53,6% de branches**, **91,89% de functions** e **90,55% de lines**.
+- Cobertura da camada de services: **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**.
 
 <div align="center">
   <p align="center">Figura 66 - Execução atual dos testes de integração</p>
-  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das nove suítes de integração, com 97 testes aprovados." />
+  <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das 11 suítes de integração, com 147 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
   <p align="center">Figura 67 - Execução atual da suíte completa</p>
-  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 17 suítes, com 238 testes aprovados." />
+  <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 29 suítes, com 360 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
