@@ -1,4 +1,4 @@
-<img src="../assets/logointeli.png" alt="Logo Inteli">
+﻿<img src="../assets/logointeli.png" alt="Logo Inteli">
 
 
 # WAD - Web Application Document - Módulo 2 - Inteli
@@ -2490,7 +2490,19 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 41 - Protótipo de Alta Fidelidade | Mobile | Capataz</p>
 <p align="center">
-<img src="others/assets/hi-fi-capataz.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz" border="0">
+<img src="others/assets/hi-fi-capataz-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - seleção de perfil" border="0" width="42%">
+<img src="others/assets/hi-fi-capataz-02-home.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - home" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz-03-registrar-movimentacao.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - registrar movimentação" border="0" width="42%">
+<img src="others/assets/hi-fi-capataz-04-movimentacao-morte.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - movimentação de morte" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz-05-abrir-chamado.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - abrir chamado" border="0" width="42%">
+<img src="others/assets/hi-fi-capataz-06-minhas-tarefas.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - minhas tarefas" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-capataz-07-detalhe-tarefa.png" alt="Protótipo de Alta Fidelidade | Mobile | Capataz - detalhe da tarefa" border="0" width="42%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2512,7 +2524,19 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 42 - Protótipo de Alta Fidelidade | Mobile | Supervisor</p>
 <p align="center">
-<img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor" border="0">
+<img src="others/assets/hi-fi-supervisor-mobile-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - seleção de perfil" border="0" width="42%">
+<img src="others/assets/hi-fi-supervisor-mobile-02-login.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - login" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-mobile-03-home.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - home" border="0" width="42%">
+<img src="others/assets/hi-fi-supervisor-mobile-04-relatorios.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - relatórios" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-mobile-05-delegar-tarefa.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - delegar tarefa" border="0" width="42%">
+<img src="others/assets/hi-fi-supervisor-mobile-06-tarefas-pendentes.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - tarefas pendentes" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-mobile-07-tickets-infraestrutura.png" alt="Protótipo de Alta Fidelidade | Mobile | Supervisor - tickets de infraestrutura" border="0" width="42%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2534,7 +2558,25 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 43 - Protótipo de Alta Fidelidade | Desktop | Supervisor</p>
 <p align="center">
-<img src="others/assets/hi-fi-desktop-supervisor.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor" border="0">
+<img src="others/assets/hi-fi-supervisor-desktop-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - seleção de perfil" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-02-login.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - login" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-03-home.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - home" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-04-relatorios.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - relatórios" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-05-delegar-tarefa.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - delegar tarefa" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-06-tarefas-pendentes.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - tarefas pendentes" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-supervisor-desktop-07-tickets-infraestrutura.png" alt="Protótipo de Alta Fidelidade | Desktop | Supervisor - tickets de infraestrutura" border="0" width="90%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2556,7 +2598,12 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 44 - Protótipo de Alta Fidelidade | Mobile | Gerente</p>
 <p align="center">
-<img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente" border="0">
+<img src="others/assets/hi-fi-gerente-mobile-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - seleção de perfil" border="0" width="42%">
+<img src="others/assets/hi-fi-gerente-mobile-02-login.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - login" border="0" width="42%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-mobile-03-home.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - home" border="0" width="42%">
+<img src="others/assets/hi-fi-gerente-mobile-04-relatorio.png" alt="Protótipo de Alta Fidelidade | Mobile | Gerente - relatório" border="0" width="42%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2578,7 +2625,16 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <div align="center">
 <p align="center">Figura 45 - Protótipo de Alta Fidelidade | Desktop | Gerente</p>
 <p align="center">
-<img src="others/assets/hi-fi-desktop-gerente.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente" border="0">
+<img src="others/assets/hi-fi-gerente-desktop-01-selecione-perfil.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - seleção de perfil" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-desktop-02-login.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - login" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-desktop-03-home.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - home" border="0" width="90%">
+</p>
+<p align="center">
+<img src="others/assets/hi-fi-gerente-desktop-04-relatorios.png" alt="Protótipo de Alta Fidelidade | Desktop | Gerente - relatórios" border="0" width="90%">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -2593,9 +2649,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, o protótipo desktop do Gerente garante paridade funcional completa com a versão mobile, cobrindo as US07 e US10, e aprofunda a experiência de uso no ambiente administrativo, entregando indicadores visuais mais ricos, relatórios com pré-visualização densa e navegação eficiente para o perfil estratégico da persona Marcos Ferreira.
 
----
 
-&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos, assegurada pela aplicação do guia de estilos definido na [Seção 3.4](#c3.4).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Em conjunto, os cinco protótipos desenvolvidos (Capataz Mobile, Supervisor Mobile, Supervisor Desktop, Gerente Mobile e Gerente Desktop) cobrem a totalidade dos perfis de usuário e dispositivos mapeados no projeto, garantindo que cada persona tenha uma interface adequada ao seu contexto de uso, nível de letramento digital e conjunto de responsabilidades. A consistência visual entre todos os protótipos foi assegurada pela aplicação do guia de estilos definido na [Seção 3.4](#c3.4).
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -2702,7 +2758,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
 <div align="center">
-<p align="center">Figura 46 - Diagrama Entidade-Relacionamento (DER)</p>
+<p align="center">Figura 49 - Diagrama Entidade-Relacionamento (DER)</p>
 <p align="center">
 <img src="others/assets/diagrama-entidade-relacionamento.png" alt="DER" border="0">
 </p>
@@ -2728,7 +2784,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo relacional foi construído com base no minimundo descrito na [Seção 3.1](#c3.1), que define as entidades, os perfis de usuário e os fluxos operacionais da BrPec Agropecuária S.A. A modelagem considera a estrutura hierárquica da operação ( composta por Capatazes, Supervisores e Gerentes) e o ciclo completo de dados: registros e tarefas em campo, sincronização, validação e consolidação para relatórios. Cada decisão estrutural do modelo buscou refletir diretamente os requisitos funcionais e as regras de negócio levantados junto ao parceiro.
 
 <div align="center">
-<p align="center">Figura 47 – Modelo Relacional</p>
+<p align="center">Figura 50 – Modelo Relacional</p>
 <img src="others/assets/diagrama-relacional.png" alt="Modelo Relacional">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4160,7 +4216,7 @@ VALUES (?, ?, ?, ?);
 | Supervisor Luiz | RF002 | RN02 | `POST /tarefas`<br>`GET /tarefas`<br>`GET /tarefas/{id}`<br>`GET /tarefas/status/{status}`<br>`GET /tarefas/usuario/{usuarioId}`<br>`GET /tarefas/prioridade/{prioridade}`<br>`GET /tarefas/categoria/{categoria}`<br>`PATCH /tarefas/{id}`<br>`PATCH /tarefas/{id}/status`<br>`DELETE /tarefas/{id}`<br>`GET /usuarios/capatazes/retiro/{retiroId}` | Criar e acompanhar tarefas | CT02 (`tarefa.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; consultas, filtros e atualizações retornando HTTP 200; remoção retornando HTTP 204; `GET /usuarios/capatazes/retiro/{retiroId}` retornando HTTP 200 para apoio à atribuição de tarefas |
 | Capataz Daniel | RF003 | RN03 | `GET /sincronizacao/conexao`<br>`POST /sincronizacao`<br>`GET /sincronizacao/status`<br>`GET /sincronizacao/mensagem`<br>`POST /movimentacoes/sincronizar`<br>`PATCH /movimentacoes/{id}/sincronizar`<br>`POST /tarefas/sincronizar`<br>`POST /tickets/sincronizar` | Sem tela dedicada (mecanismos de backend de sincronização) | CT03 (`sincronizacao.spec.ts`; `movimentacao.spec.ts`; `capataz-pwa.spec.ts`) | Testes automatizados executados: `GET /sincronizacao/conexao` retornando HTTP 200 com o estado da conexão; `POST /sincronizacao` retornando HTTP 200 com o resultado do processamento; `PATCH /movimentacoes/{id}/sincronizar` retornando HTTP 200 com a flag `sincronizado` atualizada; fila local do Capataz, IndexedDB e reenvio posterior cobertos por teste unitário em sandbox. |
 | Capataz Daniel / Supervisor Luiz | RF004 | RN04 | `GET /evidencias`<br>`GET /evidencias/tarefa/{tarefaId}`<br>`GET /evidencias/{id}`<br>`POST /evidencias/fotos`<br>`POST /evidencias/audios`<br>`POST /evidencias/mensagens` | Anexar evidência (embutida em movimentação, tarefa e chamado) | CT04 (`evidencia.spec.ts`) | Testes automatizados executados: `POST /evidencias/fotos`, `POST /evidencias/audios` e `POST /evidencias/mensagens` retornando HTTP 201 com a evidência criada; `GET /evidencias`, `GET /evidencias/tarefa/{tarefaId}` e `GET /evidencias/{id}` retornando HTTP 200 |
-| Supervisor Luiz / Gerente Marcos / Capataz Daniel | RF005 | RN05 | `POST /usuarios/login`<br>`POST /usuarios/logout`<br>`GET /capataz/acesso/{token}` | Login, logout e acesso do Capataz por QR Code | CT05 (`usuario.spec.ts`; `usuario.service.spec.ts`; `rotas-protegidas.spec.ts`) | Figura 51 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; `POST /usuarios/logout` encerrando a sessão; `GET /capataz/acesso/{token}` autenticando Capataz por token de QR Code e redirecionando para `/capataz/home`; cenário de Capataz bloqueado no login tradicional retornando HTTP 403 |
+| Supervisor Luiz / Gerente Marcos / Capataz Daniel | RF005 | RN05 | `POST /usuarios/login`<br>`POST /usuarios/logout`<br>`GET /capataz/acesso/{token}` | Login, logout e acesso do Capataz por QR Code | CT05 (`usuario.spec.ts`; `usuario.service.spec.ts`; `rotas-protegidas.spec.ts`) | Figura 54 – `POST /usuarios/login` com token JWT retornado; teste automatizado executado retornando HTTP 200 com o campo `token`; `POST /usuarios/logout` encerrando a sessão; `GET /capataz/acesso/{token}` autenticando Capataz por token de QR Code e redirecionando para `/capataz/home`; cenário de Capataz bloqueado no login tradicional retornando HTTP 403 |
 | Supervisor Luiz | RF006 | RN06 | `POST /validacoes/permissao`<br>`PATCH /validacoes/movimentacoes/{id}/validar`<br>`PATCH /validacoes/tarefas/{id}/aprovar`<br>`PATCH /validacoes/tickets/{id}/aprovar` | Validações pendentes | CT06 (`validacao.spec.ts`; `usuario.service.spec.ts`) | Testes automatizados executados: `POST /validacoes/permissao` retornando HTTP 200 com o campo `podeValidar`; `PATCH /validacoes/movimentacoes/{id}/validar`, `PATCH /validacoes/tarefas/{id}/aprovar` e `PATCH /validacoes/tickets/{id}/aprovar` retornando HTTP 200 com confirmação de sucesso |
 | Gerente Marcos / Supervisor Luiz | RF007 | RN07 | `GET /relatorios/movimentacoes/dados`<br>`GET /relatorios/tarefas/dados`<br>`GET /relatorios/tickets/dados`<br>`GET /relatorios/movimentacoes`<br>`GET /relatorios/semanal`<br>`GET /relatorios/mensal`<br>`GET /relatorios/exportar`<br>`GET /sincronizacao/relatorios/movimentacoes`<br>`GET /sincronizacao/relatorios/tarefas` | Relatórios | CT07 (`relatorio.spec.ts`; `sincronizacao.spec.ts`) | Testes automatizados executados: `GET /relatorios/semanal`, `GET /relatorios/mensal`, `GET /relatorios/tickets/dados` e `GET /relatorios/exportar` retornando HTTP 200; `GET /sincronizacao/relatorios/movimentacoes` e `GET /sincronizacao/relatorios/tarefas` retornando HTTP 200 |
 | Capataz Daniel / Supervisor Luiz | RF008 | RN08 | `POST /tickets`<br>`GET /tickets`<br>`GET /tickets/pendentes`<br>`GET /tickets/status`<br>`GET /tickets/categoria`<br>`GET /tickets/{id}`<br>`PATCH /tickets/{id}/status`<br>`PATCH /tickets/{id}/atribuicao`<br>`PATCH /validacoes/tickets/{id}/aprovar` | Tickets de infraestrutura | CT08 (`ticket.spec.ts`; `validacao.spec.ts`) | Testes automatizados executados: criação retornando HTTP 201; listagem, filtros, consulta, atualização de status e atribuição retornando HTTP 200; aprovação retornando HTTP 200 com confirmação de sucesso |
@@ -4173,7 +4229,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A RTM evidencia que os fluxos centrais do sistema mantêm a rastreabilidade entre personas, requisitos funcionais, regras de negócio, endpoints, telas e testes automatizados. Os registros de movimentações, tarefas, tickets, evidências, autenticação, sincronização, validação, relatórios, dashboard e gestão de usuários estão associados aos respectivos arquivos de teste, permitindo verificar objetivamente os endpoints exercitados, os status HTTP retornados e os resultados esperados em cada cenário.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 51 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
+&nbsp;&nbsp;&nbsp;&nbsp;As atualizações previstas para a Matriz de Rastreabilidade na Sprint 4 foram realizadas com base nas implementações iniciadas e consolidadas na Sprint 3. Nesse processo, a RTM deixou de representar apenas o planejamento das funcionalidades e passou a incorporar os elementos efetivamente implementados no backend, como rotas REST, controllers, middlewares, services, repositories e testes automatizados. Essa atualização mantém o alinhamento entre o escopo definido no WAD, as regras de negócio e o comportamento validado pela API. Além dos testes automatizados, a Figura 54 apresenta uma evidência visual do fluxo de autenticação com retorno do token JWT.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A manutenção dessa rastreabilidade reduz o risco de requisitos sem implementação correspondente ou de endpoints sem justificativa funcional. Dessa forma, a RTM serve como referência para revisões futuras, execução de testes e validação técnica das próximas entregas, mantendo a documentação e a aplicação sincronizadas sem depender de valores específicos utilizados internamente nos cenários de teste.
 
@@ -4213,10 +4269,10 @@ VALUES (?, ?, ?, ?);
 
 **1. Estrutura do Projeto e Configuração do Ambiente**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, postgres, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 48).
+&nbsp;&nbsp;&nbsp;&nbsp;Configuração completa do ambiente de desenvolvimento com TypeScript, definição do `tsconfig.json`, instalação das dependências essenciais (Express, postgres, jsonwebtoken, dotenv, uuid) e scripts de execução no `package.json` (Figura 51).
 
 <div align="center">
-  <p align="center">Figura 48 - package.json com dependências do projeto</p>
+  <p align="center">Figura 51 - package.json com dependências do projeto</p>
   <p>
     <img src="others/assets/print-json.png" alt="package.json com dependências" border="0">
   </p>
@@ -4225,20 +4281,20 @@ VALUES (?, ?, ?, ?);
 
 **2. Banco de Dados e Migrations**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 49).
+&nbsp;&nbsp;&nbsp;&nbsp;Modelagem inicial do banco de dados com criação das tabelas fundamentais: `retiro`, `usuario`, `tarefa`, `movimentacao`, `ticket`, `evidencia` e suas especializações. Todas as tabelas foram implementadas via scripts SQL de migração numerados e executados em ordem, garantindo a reprodutibilidade do ambiente (Figura 52).
 
 <div align="center">
-  <p align="center">Figura 49 - Tabelas criadas no banco de dados PostgreSQL</p>
+  <p align="center">Figura 52 - Tabelas criadas no banco de dados PostgreSQL</p>
   <p>
     <img src="others/assets/print-supabase.png" alt="Tabelas no banco de dados" border="0">
   </p>
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda, outros), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 50).
+&nbsp;&nbsp;&nbsp;&nbsp;O banco utiliza tipos enumerados (`ENUM`) para campos com domínio fechado, como `usuario_cargo` (capataz, supervisor, gerente), `movimentacao_tipo` (nascimento, morte, transferência, compra, venda, outros), `ticket_categoria` e `tarefa_status`. Os IDs de usuário são gerados como `UUID` via extensão `pgcrypto`, garantindo unicidade distribuída (Figura 53).
 
 <div align="center">
-  <p align="center">Figura 50 - Script de migração com ENUMs e estrutura de tabelas</p>
+  <p align="center">Figura 53 - Script de migração com ENUMs e estrutura de tabelas</p>
   <p>
     <img src="others/assets/print-migrations.png" alt="Script SQL de migração" border="0">
   </p>
@@ -4247,10 +4303,10 @@ VALUES (?, ?, ?, ?);
 
 **3. Sistema de Autenticação e Autorização**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 51).
+&nbsp;&nbsp;&nbsp;&nbsp;Implementação do endpoint de login (`POST /usuarios/login`) com geração de token **JWT** assinado com segredo configurado via variável de ambiente. O token carrega o `id`, `login`, `cargo` e `retiro_id` do usuário (Figura 54).
 
 <div align="center">
-  <p align="center">Figura 51 - Requisição de login e token JWT retornado</p>
+  <p align="center">Figura 54 - Requisição de login e token JWT retornado</p>
   <p>
     <img src="others/assets/print-token.png" alt="Login e JWT" border="0">
   </p>
@@ -4261,7 +4317,7 @@ VALUES (?, ?, ?, ?);
 
 **4. Arquitetura em Camadas**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 52):
+&nbsp;&nbsp;&nbsp;&nbsp;Definição e implementação da estrutura completa de camadas do backend (Figura 55):
 
 - **Controllers** (`/src/backend/controllers/`): recebem as requisições HTTP, validam presença dos campos obrigatórios e delegam a lógica ao Service.
 - **Services** (`/src/backend/services/`): aplicam as regras de negócio do domínio.
@@ -4270,7 +4326,7 @@ VALUES (?, ?, ?, ?);
 - **Middlewares** (`/src/backend/middlewares/`): autenticação, autorização, log de requisições, tratamento centralizado de erros e validação de payload.
 
 <div align="center">
-  <p align="center">Figura 52 - Estrutura de diretórios do projeto</p>
+  <p align="center">Figura 55 - Estrutura de diretórios do projeto</p>
   <p>
     <img src="others/assets/print-estruturas-paginas.png" alt="Estrutura de diretórios do backend" border="0">
   </p>
@@ -4279,10 +4335,10 @@ VALUES (?, ?, ?, ?);
 
 **5. Rotas da API**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 53).
+&nbsp;&nbsp;&nbsp;&nbsp;Registro das rotas modulares no servidor, cobrindo os recursos principais: `/usuarios`, `/tarefas`, `/movimentacoes`, `/tickets`, `/evidencias`, `/relatorios`, `/sincronizacao` e `/validacoes`. O endpoint `/health` foi adicionado para verificação de disponibilidade da aplicação. A documentação navegável da API ficou disponível em `/docs` (Figura 56).
 
 <div align="center">
-  <p align="center">Figura 53 - Servidor rodando no terminal</p>
+  <p align="center">Figura 56 - Servidor rodando no terminal</p>
   <p>
     <img src="others/assets/print-terminal.png" alt="Servidor rodando no terminal" border="0">
   </p>
@@ -4322,10 +4378,10 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Paralelamente ao desenvolvimento do backend, a equipe elaborou os protótipos de alta fidelidade das telas principais da aplicação. Os protótipos foram produzidos no Figma e serviram como referência visual para guiar a implementação das interfaces, garantindo alinhamento entre design e desenvolvimento desde o início do projeto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (Figuras 53, 54 e 55).
+&nbsp;&nbsp;&nbsp;&nbsp;As telas prototipadas cobrem os fluxos centrais do sistema: autenticação (login) e as visões de cada perfil de usuário (capataz, supervisor e gerente), considerando as restrições de acesso por cargo definidas nas regras de negócio (Figuras 56, 57 e 58).
 
 <div align="center">
-  <p align="center">Figura 54 - Protótipo de Alta Fidelidade (Capataz)</p>
+  <p align="center">Figura 57 - Protótipo de Alta Fidelidade (Capataz)</p>
   <p>
     <img src="others/assets/hi-fi-capataz.png" alt="Protótipo de alta fidelidade - tela 1" border="0">
   </p>
@@ -4333,7 +4389,7 @@ VALUES (?, ?, ?, ?);
 </div>
 
 <div align="center">
-  <p align="center">Figura 55 - Protótipo de Alta Fidelidade (Supervisor)</p>
+  <p align="center">Figura 58 - Protótipo de Alta Fidelidade (Supervisor)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-supervisor.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4341,7 +4397,7 @@ VALUES (?, ?, ?, ?);
 </div>
 
 <div align="center">
-  <p align="center">Figura 56 - Protótipo de Alta Fidelidade (Gerente)</p>
+  <p align="center">Figura 59 - Protótipo de Alta Fidelidade (Gerente)</p>
   <p>
     <img src="others/assets/hi-fi-mobile-gerente.png" alt="Protótipo de alta fidelidade - tela 2" border="0">
   </p>
@@ -4374,18 +4430,18 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
 
-&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 57). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;O módulo do capataz, responsável pelo fluxo de campo, é o mais completo da aplicação (Figura 60). Ele reúne as telas de listagem e detalhamento de tarefas (`tarefas.ejs` e `detalhe-tarefa.ejs`), o registro de movimentações (`movimentacao.ejs`), a abertura de chamados (`chamado.ejs`) e a página inicial do perfil (`home.ejs`).
 
 <div align="center">
-<p align="center">Figura 57 - Estrutura de views do Capataz</p>
+<p align="center">Figura 60 - Estrutura de views do Capataz</p>
 <img src="others/assets/views-capataz.png" alt="Views do Capataz" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;A estilização também foi segmentada por perfil, conforme a Figura 58. Além das folhas de estilo específicas de cada papel (`capataz.css`, `gerente.css` e `supervisor.css`), o projeto mantém arquivos de uso transversal — `base.css` e `global.css` para as definições compartilhadas, `auth.css` para as telas de autenticação e `relatorios.css` para os relatórios.
+&nbsp;&nbsp;&nbsp;&nbsp;A estilização também foi segmentada por perfil, conforme a Figura 61. Além das folhas de estilo específicas de cada papel (`capataz.css`, `gerente.css` e `supervisor.css`), o projeto mantém arquivos de uso transversal — `base.css` e `global.css` para as definições compartilhadas, `auth.css` para as telas de autenticação e `relatorios.css` para os relatórios.
 
 <div align="center">
-<p align="center">Figura 58 - Arquivos CSS por perfil de usuário</p>
+<p align="center">Figura 61 - Arquivos CSS por perfil de usuário</p>
 <img src="others/assets/views-css.png" alt="CSS por perfil" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4393,23 +4449,23 @@ VALUES (?, ?, ?, ?);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O módulo do gerente, voltado à camada de gestão, conta com apenas duas telas: a página inicial do perfil e a de relatórios. Como a página de relatórios é compartilhada entre o gerente e o supervisor, ela reside no diretório de parciais (`relatorios.ejs`), de modo que a pasta `src/views/gerente` contém somente o arquivo `home.ejs`.
 
 <div align="center">
-<p align="center">Figura 59 - Estrutura de views do Gerente</p>
+<p align="center">Figura 62 - Estrutura de views do Gerente</p>
 <img src="others/assets/views-gerente.png" alt="Views do Gerente" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 60. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-gerente.ejs` e `sidebar-supervisor.ejs`), os arquivos referentes ao `<head>` do HTML (`head.ejs` e `capataz-head.ejs`), responsáveis pela importação de folhas de estilo, definição do título da janela e demais metadados, e a parcial de relatórios (`relatorios.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Os componentes parciais, compartilhados entre os diferentes perfis, são apresentados na Figura 63. Esse diretório concentra as barras de navegação inferior específicas de cada papel (`bottomnav-capataz.ejs`, `bottomnav-gerente.ejs` e `bottomnav-supervisor.ejs`), as barras laterais correspondentes (`sidebar-gerente.ejs` e `sidebar-supervisor.ejs`), os arquivos referentes ao `<head>` do HTML (`head.ejs` e `capataz-head.ejs`), responsáveis pela importação de folhas de estilo, definição do título da janela e demais metadados, e a parcial de relatórios (`relatorios.ejs`).
 
 <div align="center">
-<p align="center">Figura 60 - Componentes parciais compartilhados</p>
+<p align="center">Figura 63 - Componentes parciais compartilhados</p>
 <img src="others/assets/views-partial.png" alt="Partials" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 61. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`).
+&nbsp;&nbsp;&nbsp;&nbsp;Por fim, o módulo do supervisor, responsável pela camada intermediária de acompanhamento, é apresentado na Figura 64. Ele contempla a delegação de atividades (`delegar.ejs`), a revisão do trabalho executado (`revisao.ejs`), a gestão de chamados (`tickets.ejs`) e a página inicial do perfil (`home.ejs`).
 
 <div align="center">
-<p align="center">Figura 61 - Estrutura de views do Supervisor</p>
+<p align="center">Figura 64 - Estrutura de views do Supervisor</p>
 <img src="others/assets/views-supervisor.png" alt="Views do Supervisor" border="0">
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4636,7 +4692,7 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 `npm run test:coverage -- --runInBand`
 
 <div align="center">
-  <p align="center">Figura 62 - Cobertura atual dos testes</p>
+  <p align="center">Figura 65 - Cobertura atual dos testes</p>
   <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4654,13 +4710,13 @@ Além disso, a rastreabilidade entre casos de teste, regras de negócio e requis
 - Cobertura da camada de services: **90,33% de statements**, **81,9% de branches**, **96,89% de functions** e **90,1% de lines**.
 
 <div align="center">
-  <p align="center">Figura 63 - Execução atual dos testes de integração</p>
+  <p align="center">Figura 66 - Execução atual dos testes de integração</p>
   <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das nove suítes de integração, com 97 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-  <p align="center">Figura 64 - Execução atual da suíte completa</p>
+  <p align="center">Figura 67 - Execução atual da suíte completa</p>
   <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 17 suítes, com 238 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4777,10 +4833,10 @@ A rastreabilidade dos testes foi mantida conforme a estrutura definida no projet
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 65 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 68 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
-  <p align="center">Figura 65 - Business Model Canvas do AgroFlow</p>
+  <p align="center">Figura 68 - Business Model Canvas do AgroFlow</p>
   <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
