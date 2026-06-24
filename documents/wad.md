@@ -5264,6 +5264,9 @@ Também foram considerados subendpoints específicos:
 - **Exportação de dados** em Excel/CSV para suporte à gestão.
 - **Painéis de indicadores** e acompanhamento de tarefas, tickets e movimentações por perfil de usuário.
 
+### Pontos fortes
+
+&nbsp;&nbsp;&nbsp;&nbsp;O principal diferencial da solução é a arquitetura preparada para **operação offline**, requisito crítico para áreas remotas sem conectividade. A segmentação por perfis de acesso e o fluxo de validação garantem rastreabilidade e controle sobre a qualidade dos dados consolidados, enquanto a exportação estruturada conecta a operação de campo à tomada de decisão administrativa.
 
 # <a name="c8"></a>8. Referências
 
