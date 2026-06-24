@@ -2376,7 +2376,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 
 
-## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
+## <a name="c3.4"></a>3.4. Guia de estilos 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O guia de estilos da aplicação tem como objetivo garantir consistência visual, organização e padronização em toda a interface do sistema desenvolvido para a BrPec. Ele funciona como uma referência central para o desenvolvimento das telas, definindo diretrizes relacionadas ao uso de cores, tipografia, hierarquia visual e elementos gráficos da aplicação. Dessa forma, o guia auxilia na construção de interfaces mais intuitivas, acessíveis e visualmente coerentes entre os diferentes perfis de usuários do sistema.
 
@@ -2473,7 +2473,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a padronização da iconografia contribui diretamente para a consistência visual e a usabilidade da aplicação, reforçando a identidade do sistema e facilitando o reconhecimento imediato das funcionalidades pelos diferentes perfis de usuários. A utilização de um conjunto coeso e semanticamente claro de ícones garante que tanto o capataz em campo quanto o gerente no escritório possam interagir com a interface de maneira eficiente, reduzindo erros de interpretação e tornando a experiência de uso mais acessível e intuitiva em todas as telas da aplicação.
 
-## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade (sprint 3)
+## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade 
 
 ### Introdução
 
@@ -2687,9 +2687,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
+## <a name="c3.6"></a>3.6. Modelagem do banco de dados 
 
-### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro de movimentações do rebanho, a sincronização offline, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
@@ -2787,7 +2787,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
  
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo entidade-relacionamento construído para o AgroFlow traduz as User Stories levantadas junto à BrPec em uma estrutura conceitual composta por dezoito entidades, com atributos, relacionamentos e cardinalidades explicitamente definidos. A generalização da entidade `EVIDENCIA` em três subclasses, a resolução dos relacionamentos N:N por meio de entidades associativas e a especialização de `MOVIMENTACAO` em cinco subtipos isolam regras específicas de cada tipo de registro sem comprometer a coerência do todo. O desdobramento dos relacionamentos entre `USUARIO` e as entidades operacionais em papéis distintos (REGISTRA e VALIDA para movimentações, CRIA e EXECUTA para tarefas, ABRE e ATRIBUIDO_A para tickets) preserva no nível conceitual a hierarquia operacional da fazenda e evidencia a rastreabilidade de autoria exigida pelas regras de negócio. O MER funciona, portanto, como ponte formal entre as necessidades do parceiro e a estrutura física do banco de dados, fazendo com que cada decisão de implementação posterior tenha respaldo direto em uma regra documentada e discutida com a BrPec.
 
-### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
@@ -2811,7 +2811,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;O diagrama entidade-relacionamento materializa graficamente o modelo conceitual da [Seção 3.6.1](#c3.6.1), traduzindo as decisões de modelagem em uma representação visual padronizada com convenções claras de cores e formas para entidades, relacionamentos, chaves primárias, chaves estrangeiras e atributos comuns. A centralidade da entidade `Retiro` no diagrama evidencia o papel estruturante dos retiros na operação da BrPec, refletindo a realidade de que praticamente todos os fluxos do sistema (registros de movimentação, tarefas, tickets e relatórios) ocorrem necessariamente vinculados a uma unidade física da fazenda. O desdobramento das relações entre `Usuário` e as entidades operacionais e a separação entre `Tarefa` e `Evidência` em relacionamentos N:N permitem visualizar com clareza tanto a responsabilização individual quanto a flexibilidade na anexação de múltiplas comprovações a uma mesma atividade. Aliado ao modelo relacional e ao modelo físico apresentados na [Seção 3.6.3](#c3.6.3), o DER assegura que a estrutura do banco de dados sustente as regras de negócio definidas na [Seção 3.1.2](#c3.1.2) com integridade referencial, baixa redundância e organização adequada para as consultas exigidas pelos fluxos operacionais e gerenciais do AgroFlow.
 
-### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico 
 
 **Modelo Relacional**
 
@@ -3035,7 +3035,7 @@ CREATE TABLE relatorio (
 
 &nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação, a consolidação das informações e o fluxo de sincronização.
 
-### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;As consultas SQL apresentadas nesta seção representam regras utilizadas nos fluxos centrais do AgroFlow e demonstram como a lógica proposicional aparece na seleção, atualização e inserção de dados. Para manter coerência com a implementação, foram escolhidos exemplos relacionados aos filtros de movimentação, aprovação de tickets e criação de registros do rebanho. Em alguns casos, a condição aparece no backend distribuída entre controller, service e repository, por isso, o SQL abaixo apresenta a forma relacional equivalente da regra aplicada pela camada de servidor.
@@ -3343,7 +3343,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Esse alinhamento entre a formalização lógica e a implementação real evidencia que a modelagem proposicional tem valor prático direto no desenvolvimento de sistemas, tornando explícitas as condições que governam cada operação, facilitando a identificação de casos de borda e fundamentando as decisões de projeto que de outra forma permaneceriam implícitas no código. No contexto do AgroFlow, isso se traduz em maior confiabilidade das regras aplicadas aos registros de movimentação do rebanho e aos chamados de infraestrutura gerenciados em campo. 
 
-## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
+## <a name="c3.7"></a>3.7. WebAPI e endpoints 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Endpoints são pontos de entrada ou endereços por meio dos quais um sistema se comunica com o outro, estando relacionados a um verbo HTTP (GET, POST, PATCH, DELETE...), que são métodos usados para suprir as requisições feitas em um sistema web.
 
@@ -4181,7 +4181,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
 
-## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência 
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
@@ -4250,7 +4250,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Essas estratégias foram validadas nos fluxos críticos da aplicação, contemplando autenticação, autorização, registro offline, sincronização, envio de evidências e tratamento de erros.
 
-## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada no Quadro 49 relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
 
@@ -4305,7 +4305,7 @@ VALUES (?, ?, ?, ?);
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## <a name="c4.1"></a>4.1. Primeira versão da aplicação web (sprint 3)
+## <a name="c4.1"></a>4.1. Primeira versão da aplicação web 
 
 ### Visão Geral do Desenvolvimento
 
@@ -4525,13 +4525,13 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o site responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a configuração da aplicação como PWA, a expansão da cobertura de testes e correções finais de interface.
 
-## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
+## <a name="c4.3"></a>4.3. Versão final da aplicação web 
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
 
 # <a name="c5"></a>5. Testes
 
-## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados
 
 ### 5.1.1 Estratégia de Documentação dos Testes
 
@@ -4806,7 +4806,7 @@ Também foram considerados subendpoints específicos:
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
+## <a name="c5.2"></a>5.2. Testes de usabilidade 
 
 ### <a name="c5.2.1"></a>5.2.1. Relatório de testes de guerrilha
 
@@ -4816,7 +4816,7 @@ Também foram considerados subendpoints específicos:
 
 *Posicione aqui o relatório dos testes SUS realizados.*
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
 
 ## <a name="c6.1"></a>6.1 Resumo Executivo
 
@@ -4959,7 +4959,7 @@ Também foram considerados subendpoints específicos:
 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências
 
 APROSOJA MS. Panorama da soja em Mato Grosso do Sul. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br
 . Acesso em: 30 abr. 2026.
