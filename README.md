@@ -77,21 +77,7 @@
 
 ## 📝 Link de demonstração
 
-<!-- 
-
-* **Projeto Publicado:** [link do deploy do site](link_deploy)
-* **Vídeo de Demonstração:** [link para o vídeo](link_video_google_drive)
-
-
-
-Vídeos de demonstração da aplicação por perfil de usuário:
-
-- **Capataz:** [Assistir demonstração](https://drive.google.com/file/d/1K0guUF_NzNWkvYyfJUYhfoKgsJ9PIjO5/view?usp=drive_link)
-- **Supervisor:** [Assistir demonstração](https://drive.google.com/file/d/14vpjfgeATwAM5fS9e7XvAn7X0u9t5An3/view?usp=drive_link)
-- **Gerente:** [Assistir demonstração](https://drive.google.com/file/d/1VjnIooynWBbvwom_4UG_jAqoW7YaBxoz/view?usp=drive_link)
--->
-
-O link a seguir contém um vídeo de demonstração da aplicação web em funcionamento: [link para o vídeo](link_video_google_drive)
+O link a seguir contém um vídeo de demonstração da aplicação web em funcionamento: [link para o vídeo](https://youtu.be/-ksGCJHxo7s)
 
 ## 📁 Estrutura de pastas
 
