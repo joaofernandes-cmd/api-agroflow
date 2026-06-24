@@ -5268,6 +5268,10 @@ Também foram considerados subendpoints específicos:
 
 &nbsp;&nbsp;&nbsp;&nbsp;O principal diferencial da solução é a arquitetura preparada para **operação offline**, requisito crítico para áreas remotas sem conectividade. A segmentação por perfis de acesso e o fluxo de validação garantem rastreabilidade e controle sobre a qualidade dos dados consolidados, enquanto a exportação estruturada conecta a operação de campo à tomada de decisão administrativa.
 
+### Limitações e pontos a melhorar
+
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar de atender ao escopo proposto, a aplicação ainda apresenta limitações identificadas ao longo do desenvolvimento e dos testes de usabilidade, concentradas principalmente na **experiência de uso das interfaces de supervisor e gerente** e na ausência de recursos analíticos mais avançados. Esses pontos não comprometem o funcionamento central da solução, mas representam oportunidades claras de evolução, detalhadas nos trabalhos futuros a seguir.
+
 # <a name="c8"></a>8. Referências
 
 
