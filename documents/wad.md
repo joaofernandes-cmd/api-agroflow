@@ -5149,6 +5149,10 @@ A análise das respostas individuais permite identificar os pontos fortes e os p
 - **Q4 (Necessidade de ajuda):** houve maior variação nas respostas, com alguns participantes indicando que precisariam de auxílio para usar o sistema. Esse resultado é coerente com as dificuldades observadas nos testes de guerrilha, especialmente nos fluxos de criação de tarefas e geração de relatórios.
 - **Q7 (Facilidade de aprendizado por terceiros):** um participante discordou que a maioria das pessoas aprenderia o sistema rapidamente, sinalizando que o AgroFlow pode apresentar barreiras para usuários com menor letramento digital, exatamente o perfil do público-alvo real da aplicação.
 - **Q8 (Confusão na navegação):** dois participantes apontaram algum grau de dificuldade na navegação, alinhado às ocorrências registradas na Tarefa 1 (Capataz) e na Tarefa 2 (Supervisor) durante os testes de guerrilha.
+
+#### Conclusão
+ 
+Os resultados do questionário SUS confirmam e complementam os achados dos testes de guerrilha: o AgroFlow apresenta uma usabilidade geral satisfatória, classificada como "Excellent" com pontuação média de 77,5, porém com oportunidades de melhoria concentradas na clareza dos fluxos de navegação e na redução da necessidade de ajuda externa para determinados perfis de usuário. Recomenda-se, como encaminhamento prioritário, a revisão dos rótulos e da hierarquia dos menus, a adição de indicadores visuais para campos obrigatórios nos formulários e a inserção de dicas em todos os campos com terminologia técnica específica do domínio pecuário, como "estágio de vida" e "causa do óbito".
  
 *Posicione aqui o relatório dos testes SUS realizados.*
 
