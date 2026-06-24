@@ -2094,48 +2094,41 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
-&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
-
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. O fluxo do Capataz inclui armazenamento local no navegador para apoiar a operação em campo sob conectividade intermitente.
-
-
-### Explicação do diagrama:
-**Nós Clientes**
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção, incluindo dispositivos clientes, servidor de aplicação, servidor de banco de dados, pipeline de entrega contínua e canais de comunicação seguros.
  
-• O dispositivo do *Capataz* é um celular Android utilizado em campo, acessando a *interface web em EJS* (renderizada pelo servidor de aplicação) e mantendo armazenamento local no navegador via *IndexedDB* (buffer de mídias, como gravações de áudio) e *localStorage* (sessão), essencial para a captura de dados em campo sob conectividade intermitente conforme definido pelo RF003 e pela RN03.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. O fluxo do Capataz inclui um Service Worker registrado pelo navegador e armazenamento local em IndexedDB e localStorage, sustentando a operação em campo sob conectividade intermitente conforme RF003 e RN03.
  
-• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, acessando apenas a *interface web em EJS*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+***Nós Clientes***
  
-• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também acessando apenas a *interface web em EJS*, com acesso ao painel consolidado e aos relatórios gerenciais.
-
-**Nó do Servidor de Aplicação**
+- O dispositivo do *Capataz* é um celular Android utilizado em campo, acessando a *interface web em EJS* (renderizada pelo servidor de aplicação) e mantendo armazenamento local no navegador via *IndexedDB* (buffer de mídias e fila de sincronização) e *localStorage* (sessão e estado do PWA). Um *Service Worker* é registrado para cache de assets estáticos e detecção do estado da conexão, viabilizando a operação offline-first definida pelo RF003 e pela RN03.
+- O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, acessando a *interface web em EJS* via navegadores Chrome, Edge ou Safari, conforme o RNF REST descrito na [Seção 3.1.3](#c3.1.3), uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+- O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também acessando a *interface web em EJS*, com acesso ao painel consolidado e aos relatórios gerenciais exportáveis em formato `.xlsx` e `.csv`.
+***Nó do Servidor de Aplicação***
  
-• O *Application Server* executa a aplicação desenvolvida em *Node.js + Express + TypeScript*, sendo responsável pela renderização das Views EJS, pela disponibilização dos arquivos estáticos e pela API REST.
+- O *Application Server* é hospedado em provedor de nuvem (configurável via `process.env.PORT` e `DATABASE_URL`, compatível com Render, AWS EC2, Railway ou similares) e executa o backend desenvolvido em *Node.js 22 + Express 5 + TypeScript*, sendo responsável pela renderização das Views EJS, pela disponibilização dos arquivos estáticos e pela exposição da API REST.
+- Esse nó concentra os artefatos Controllers, Services, Repositories, Middlewares e Routes descritos na [Seção 3.2.1](#c3.2.1), processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+- O processo é controlado por scripts npm (`npm run build`, `npm start`, `npm run migrate`), e o pipeline de entrega contínua é executado via *GitHub Actions*, que dispara build, testes automatizados e deploy a cada push na branch principal, atendendo ao RNF SUP da [Seção 3.1.3](#c3.1.3) e eliminando a necessidade de deslocamento técnico aos retiros.
+***Nó do Servidor de Banco de Dados***
  
-• Esse nó concentra todos os controladores e serviços do AgroFlow, processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+- O *Database Server* é hospedado no *Supabase* (PostgreSQL gerenciado em nuvem), garantindo alta disponibilidade, backups automáticos e escalabilidade horizontal sob demanda.
+- Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações e suas especializações, tarefas, tickets, evidências, relatórios e tabelas associativas), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
+- A extensão *pgcrypto* é habilitada na inicialização do banco (`CREATE EXTENSION IF NOT EXISTS pgcrypto`) para geração de identificadores únicos via `gen_random_uuid()` e para suporte às funções de hash de senha utilizadas pelo bcrypt na camada de aplicação, conforme o RNF SEG.
+- As migrations SQL versionadas em `src/backend/database/migrations/` são executadas em ordem numérica pelo runner `migrate.ts`, garantindo a reprodutibilidade do esquema em qualquer ambiente.
+***Canais de Comunicação***
  
- 
-**Nó do Servidor de Banco de Dados**
- 
-• O *Database Server* é hospedado no Supabase, executa o PostgreSQL como sistema de gerenciamento de banco de dados relacional e é acessado pela aplicação por meio da conexão definida em `DATABASE_URL`.
- 
-• Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
-
-**Canais de Comunicação**
- 
-• A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* com autenticação baseada em *JWT*, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
- 
-• A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
-
+- A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* (porta 443) com autenticação baseada em *JWT* enviado no cookie de sessão ou no header `Authorization: Bearer <token>`, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
+- A comunicação entre o *Application Server* e o *Database Server* ocorre via *TCP/IP sobre SSL/TLS*, utilizando o driver `postgres` (versão 3.4.9) com a connection string definida em `DATABASE_URL`, permitindo leitura, gravação e atualização criptografadas dos dados persistentes.
+- A sincronização entre o *IndexedDB* local e o backend ocorre via requisições HTTP padrão para os endpoints `/sincronizacao`, `/movimentacoes/sincronizar`, `/tarefas/sincronizar` e `/tickets/sincronizar`, disparadas automaticamente quando o Service Worker detecta o restabelecimento da conectividade através de polling no endpoint `/health`.
 <div align="center">
 <p align="center">Figura 22 - Diagrama de implantação</p>
 <p align="center">
-<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
-
-*Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
+&nbsp;&nbsp;&nbsp;&nbsp;Esse diagrama traduz a visão Engineering + Technology do RM-ODP, materializando em nós físicos e artefatos de software os componentes lógicos descritos no diagrama de arquitetura da [Seção 3.2.1](#c3.2.1) e nos diagramas de sequência da [Seção 3.2.4](#c3.2.4), e fundamenta as estratégias de resiliência detalhadas na [Seção 3.8.4](#c3.8.4).
+ 
+---
 
 ### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
