@@ -2764,6 +2764,9 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;As restrições de integridade seguem as regras de negócio do parceiro. A tabela `movimentacao` guarda os dados comuns, enquanto os específicos de compra, venda, transferência, nascimento e morte ficam em tabelas especializadas, cada uma identificada pelo próprio `movimentacao_id` (chave primária e estrangeira). O campo `login` da tabela `usuario` é `UNIQUE`; o campo `sincronizado` tem padrão `false` nas tabelas operacionais, atendendo à RN03; e os campos de estado fixo (`tipo`, `status`, `prioridade`) são `ENUM`. Para opções fora dos valores fixos, há os campos de texto livre `tipo_outro` (em `movimentacao`) e `categoria_outro` (em `ticket`), usados quando o `ENUM` corresponde a "outro".
 
+&nbsp;&nbsp;&nbsp;&nbsp;A autenticação dos Capatazes em campo é tratada na tabela `acesso_capataz` (`token_hash`, `ativo`, datas de expiração e criação e `usuario_id`), permitindo o uso offline e a posterior sincronização de forma independente do login convencional. A tabela `usuario` também inclui o campo `identificador`, com o código do operador adotado pelo parceiro.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A integridade referencial é garantida por chaves estrangeiras em todas as relações. O modelo físico completo, com o script DDL (`CREATE TABLE` e `ALTER TABLE`), é apresentado na sequência.
 
 
 **Modelo Físico**
