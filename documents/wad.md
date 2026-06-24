@@ -1628,7 +1628,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 • Caso todas as informações estejam corretas, o serviço solicita ao *RepositorioMovimentacao* o salvamento da movimentação no banco de dados.
 
-• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente./
+• Após a persistência, o banco retorna o identificador do registro criado, confirmando que a movimentação foi salva corretamente.
 
 • Por fim, o controlador responde à interface com status `201 – Criado`, exibindo ao capataz a confirmação do registro da movimentação.
 
@@ -1838,7 +1838,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 **Fluxo Principal**
 
-• O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação./
+• O processo inicia quando o gerente define os filtros desejados para geração do relatório na interface da aplicação.
 
 • Em seguida, a interface envia uma requisição `GET` para os endpoints de relatórios implementados, como `/relatorios/movimentacoes`, `/relatorios/semanal` ou `/relatorios/mensal`, encaminhando os parâmetros ao *ControladorRelatorio*.
 
@@ -2140,7 +2140,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 ### Capataz
 
-&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construida visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
+&nbsp;&nbsp;&nbsp;&nbsp;A interface de uso para capatazes foi construída visando maximizar a simplicidade e facilidade de uso da plataforma. Considerando que os capatazes possuem um nível de instrução e letramento digital baixo, como foi constatado durante o kickoff do projeto e expressado na persona do capataz, as telas foram estruturadas utilizando poucos elementos visuais, botões objetivos e fluxos curtos de navegação, buscando tornar a utilização do sistema mais intuitiva durante as atividades realizadas em campo. Outra escolha guiada por esse princípio de simplicidade foi desenvolver apenas a versão mobile do wireframe para o capataz, visto que essa classe de usuário só acessará o site pelo celular. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para atender à US01, relacionada ao funcionamento offline da plataforma, a interface foi planejada de forma a permitir acesso rápido às funcionalidades principais mesmo em ambientes com baixa ou ausência de conexão com a internet. Além disso, os registros realizados pelo usuário podem ser armazenados localmente até que a conexão seja restabelecida e os dados sincronizados automaticamente.
 
@@ -2664,7 +2664,7 @@ As cores semânticas são utilizadas para representar alertas, prioridades e fee
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para facilitar a interpretação dos elementos gráficos e a semântica do modelo, foi adotado o seguinte padrão de cores e formas:
 
-- **Retangulos Verdes Escuros:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
+- **Retângulos Verdes Escuros:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
 - **Losangos Brancos:** Indicam os **Relacionamentos** e a lógica de interação entre as entidades, acompanhados de sua respectiva cardinalidade (ex: 1:N).
 - **Elipses Azuis Claras:** Identificam a **Chave Primária (PK)**, o identificador único de cada registro na tabela.
 - **Elipses Verdes Claras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
