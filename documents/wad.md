@@ -4745,6 +4745,27 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Sucesso com dificuldade | Encontrou o menu, mas tentou acessar primeiro a aba "Rebanho" antes de ir para "Movimentações" | Selecionou o tipo correto, mas deixou o estágio de vida em branco na primeira tentativa e recebeu erro | Após o erro, corrigiu e preencheu todos os campos | Confirmou com sucesso na segunda tentativa |
 | 5 | Gabriel Almeida | Sucesso | Navegou diretamente até "Movimentações" pelo menu lateral | Selecionou "Morte" e preencheu o estágio de vida sem dificuldade | Preencheu causa do óbito e origem corretamente | Enviou o registro e confirmou a mensagem de sucesso |
 
+#### Tarefa 2 — Supervisor: Criar e atribuir uma tarefa
+ 
+**Enunciado:** Suponha que você é o supervisor responsável pelos retiros da BrPec e precisa criar uma nova tarefa para os capatazes do Retiro Bela Vista. Utilize o AgroFlow para criar e atribuir essa tarefa.
+
+| Etapa | Descrição | Expectativa |
+|:-----:|-----------|-------------|
+| 1 | Acessar a seção de tarefas do supervisor | Acessar o menu lateral e clicar em "Tarefas" |
+| 2 | Clicar em "Nova tarefa" e preencher título e descrição | Clicar em "Nova tarefa" e preencher título e descrição da atividade |
+| 3 | Selecionar o retiro de destino e o capataz responsável | Selecionar o retiro "Bela Vista" e atribuir ao capataz responsável |
+| 4 | Confirmar e publicar a tarefa | Clicar em "Publicar" e confirmar que a tarefa aparece na lista |
+ 
+**Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H6 (Reconhecimento em vez de memorização)
+
+| # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
+|:-:|------|:---------:|---------|---------|---------|---------|
+| 1 | Lucas Martins | Sucesso | Acessou "Tarefas" pelo menu sem dificuldade | Preencheu título e descrição sem hesitação | Selecionou retiro e capataz corretamente | Publicou a tarefa e confirmou que apareceu na lista |
+| 2 | Fernanda Oliveira | Sucesso com dificuldade | Acessou a seção corretamente | Preencheu o título, mas ficou em dúvida se a descrição era obrigatória | Demorou para encontrar o filtro de retiro dentro do formulário | Publicou com sucesso após explorar o formulário por alguns segundos |
+| 3 | Rafael Souza | Sucesso | Navegou diretamente à seção de tarefas | Preencheu todos os campos sem dificuldade | Selecionou retiro e capataz rapidamente | Confirmou a publicação sem problemas |
+| 4 | Beatriz Santos | Sucesso com dificuldade | Acessou "Tarefas", mas inicialmente clicou em uma tarefa existente antes de encontrar o botão "Nova tarefa" | Após encontrar o botão correto, preencheu título e descrição sem problemas | Não encontrou de imediato o campo de atribuição do capataz | Publicou com sucesso após breve exploração |
+| 5 | Gabriel Almeida | Sucesso | Acessou a seção e encontrou "Nova tarefa" rapidamente | Preencheu os campos de forma direta | Selecionou retiro e capataz sem dificuldade | Publicou a tarefa e verificou que constava na lista |
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
