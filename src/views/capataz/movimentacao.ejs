@@ -228,15 +228,15 @@
   function getSession() {
     try {
       const token = localStorage.getItem('agroflow.token');
-      const usuarioRaw = localStorage.getItem('agroflow.usuario');
+      const usuario = window.AgroFlowSession?.carregarUsuario();
 
-      if (!usuarioRaw) {
+      if (!usuario) {
         return null;
       }
 
       return {
         token,
-        usuario: JSON.parse(usuarioRaw),
+        usuario,
       };
     } catch {
       return null;
@@ -286,7 +286,7 @@
     });
   }
 
-  async function salvarAudioNoIndexedDb(registro) {
+  async function salvarRegistroNoIndexedDb(registro) {
     const db = await abrirIndexedDB();
     try {
       return await new Promise((resolve, reject) => {
@@ -298,76 +298,58 @@
     } finally {
       db.close();
     }
+  }
+
+  async function lerRegistroDoIndexedDb(id) {
+    const db = await abrirIndexedDB();
+    try {
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readonly');
+        const req = tx.objectStore(IDB_STORE).get(id);
+        req.onsuccess = () => resolve(req.result ?? null);
+        req.onerror = () => reject(req.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function removerRegistroDoIndexedDb(id) {
+    const db = await abrirIndexedDB();
+    try {
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).delete(id);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    } finally {
+      db.close();
+    }
+  }
+
+  async function salvarAudioNoIndexedDb(registro) {
+    return salvarRegistroNoIndexedDb(registro);
   }
 
   async function lerAudioDoIndexedDb() {
-    const db = await abrirIndexedDB();
-    try {
-      return await new Promise((resolve, reject) => {
-        const tx = db.transaction(IDB_STORE, 'readonly');
-        const req = tx.objectStore(IDB_STORE).get(AUDIO_DRAFT_KEY);
-        req.onsuccess = () => resolve(req.result ?? null);
-        req.onerror = () => reject(req.error);
-      });
-    } finally {
-      db.close();
-    }
+    return lerRegistroDoIndexedDb(AUDIO_DRAFT_KEY);
   }
 
   async function removerAudioDoIndexedDb() {
-    const db = await abrirIndexedDB();
-    try {
-      await new Promise((resolve, reject) => {
-        const tx = db.transaction(IDB_STORE, 'readwrite');
-        tx.objectStore(IDB_STORE).delete(AUDIO_DRAFT_KEY);
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error);
-      });
-    } finally {
-      db.close();
-    }
+    return removerRegistroDoIndexedDb(AUDIO_DRAFT_KEY);
   }
 
   async function salvarFotoNoIndexedDb(registro) {
-    const db = await abrirIndexedDB();
-    try {
-      return await new Promise((resolve, reject) => {
-        const tx = db.transaction(IDB_STORE, 'readwrite');
-        tx.objectStore(IDB_STORE).put(registro);
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error);
-      });
-    } finally {
-      db.close();
-    }
+    return salvarRegistroNoIndexedDb(registro);
   }
 
   async function lerFotoDoIndexedDb() {
-    const db = await abrirIndexedDB();
-    try {
-      return await new Promise((resolve, reject) => {
-        const tx = db.transaction(IDB_STORE, 'readonly');
-        const req = tx.objectStore(IDB_STORE).get(FOTO_DRAFT_KEY);
-        req.onsuccess = () => resolve(req.result ?? null);
-        req.onerror = () => reject(req.error);
-      });
-    } finally {
-      db.close();
-    }
+    return lerRegistroDoIndexedDb(FOTO_DRAFT_KEY);
   }
 
   async function removerFotoDoIndexedDb() {
-    const db = await abrirIndexedDB();
-    try {
-      await new Promise((resolve, reject) => {
-        const tx = db.transaction(IDB_STORE, 'readwrite');
-        tx.objectStore(IDB_STORE).delete(FOTO_DRAFT_KEY);
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error);
-      });
-    } finally {
-      db.close();
-    }
+    return removerRegistroDoIndexedDb(FOTO_DRAFT_KEY);
   }
 
   function obterLocalizacaoAtual() {
