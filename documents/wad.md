@@ -5086,31 +5086,44 @@ Também foram considerados subendpoints específicos:
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
 
-O System Usability Scale (SUS) é um instrumento de avaliação de usabilidade amplamente adotado na indústria e na academia por sua aplicabilidade versátil e pela simplicidade de aplicação. O questionário é composto por dez afirmações com escala de concordância de cinco pontos (1 = Discordo totalmente; 5 = Concordo totalmente), alternando sentenças de polaridade positiva e negativa. A pontuação final, calculada a partir de uma fórmula padronizada, varia de 0 a 100 e permite classificar a percepção de usabilidade do sistema: pontuações abaixo de 50 são consideradas inaceitáveis; 68 representa a média da indústria; valores acima de 80,3 indicam usabilidade excelente.
+&nbsp;&nbsp;&nbsp;&nbsp;O System Usability Scale (SUS) é um instrumento de avaliação de usabilidade amplamente adotado na indústria e na academia por sua aplicabilidade versátil e pela simplicidade de aplicação. O questionário é composto por dez afirmações com escala de concordância de cinco pontos (1 = Discordo totalmente; 5 = Concordo totalmente), alternando sentenças de polaridade positiva e negativa. A pontuação final, calculada a partir de uma fórmula padronizada, varia de 0 a 100 e permite classificar a percepção de usabilidade do sistema: pontuações abaixo de 50 são consideradas inaceitáveis; 68 representa a média da indústria; valores acima de 80,3 indicam usabilidade excelente.
 
-A escolha do SUS como instrumento complementar aos testes de guerrilha justifica-se por duas razões principais. Primeiramente, sua brevidade e linguagem acessível tornam esse framework perfeito para o perfil dos usuários do AgroFlow, em especial os capatazes, que possuem baixo letramento digital e pouca familiaridade com avaliações formais de software. Além disso, o SUS fornece uma métrica quantitativa e comparável, permitindo ao grupo identificar, de forma objetiva, quais aspectos da interface demandam refinamento antes da entrega final do produto.
+&nbsp;&nbsp;&nbsp;&nbsp;A escolha do SUS como instrumento complementar aos testes de guerrilha justifica-se por duas razões principais. Primeiramente, sua brevidade e linguagem acessível tornam esse framework perfeito para o perfil dos usuários do AgroFlow, em especial os capatazes, que possuem baixo letramento digital e pouca familiaridade com avaliações formais de software. Além disso, o SUS fornece uma métrica quantitativa e comparável, permitindo ao grupo identificar, de forma objetiva, quais aspectos da interface demandam refinamento antes da entrega final do produto.
+
+---
 
 #### Questionário aplicado
  
-O questionário foi disponibilizado via Google Forms após a execução das tarefas dos testes de guerrilha. As dez afirmações aplicadas, adaptadas ao contexto do AgroFlow, são apresentadas no quadro a seguir.
+&nbsp;&nbsp;&nbsp;&nbsp;O questionário foi disponibilizado via Google Forms após a execução das tarefas dos testes de guerrilha. As dez afirmações aplicadas, adaptadas ao contexto do AgroFlow, são apresentadas no quadro a seguir.
+
+<div align="center">
+  <p align="center">Quadro 71 - Questionário aplicado</p>
  
-| # | Afirmação |
+| Questões | Afirmação |
 |:-:|-----------|
-| 1 | Eu gostaria de usar o AgroFlow com frequência no meu trabalho diário. |
-| 2 | Achei o AgroFlow desnecessariamente complicado para realizar minhas tarefas. |
-| 3 | Achei o AgroFlow fácil de usar para registrar informações sobre o rebanho e as atividades do retiro. |
-| 4 | Precisaria de ajuda de outra pessoa para conseguir usar o AgroFlow. |
-| 5 | As funcionalidades do AgroFlow, como registrar movimentações, tarefas e chamados, estão bem organizadas. |
-| 6 | Senti que havia muita inconsistência na forma como as telas e os fluxos do AgroFlow funcionam. |
-| 7 | Imagino que a maioria das pessoas aprenderia a usar o AgroFlow rapidamente. |
-| 8 | Achei o AgroFlow confuso e difícil de navegar. |
-| 9 | Me senti confiante usando o AgroFlow para realizar minhas atividades no retiro. |
-| 10 | Precisei aprender muitas coisas antes de conseguir usar o AgroFlow corretamente. |
+| Q1 | Eu gostaria de usar o AgroFlow com frequência no meu trabalho diário. |
+| Q2 | Achei o AgroFlow desnecessariamente complicado para realizar minhas tarefas. |
+| Q3 | Achei o AgroFlow fácil de usar para registrar informações sobre o rebanho e as atividades do retiro. |
+| Q4 | Precisaria de ajuda de outra pessoa para conseguir usar o AgroFlow. |
+| Q5 | As funcionalidades do AgroFlow, como registrar movimentações, tarefas e chamados, estão bem organizadas. |
+| Q6 | Senti que havia muita inconsistência na forma como as telas e os fluxos do AgroFlow funcionam. |
+| Q7 | Imagino que a maioria das pessoas aprenderia a usar o AgroFlow rapidamente. |
+| Q8 | Achei o AgroFlow confuso e difícil de navegar. |
+| Q9 | Me senti confiante usando o AgroFlow para realizar minhas atividades no retiro. |
+| Q10 | Precisei aprender muitas coisas antes de conseguir usar o AgroFlow corretamente. |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
 
 #### Respostas e pontuações individuais
  
-Os 5 participantes do teste de guerrilha realizaram o preenchimento do formulário de testes SUS. Os nomes utilizados se mantêm fictícios para preservar a privacidade dos participantes. A pontuação SUS individual foi calculada pela fórmula padronizada: para itens de polaridade positiva (Q1, Q3, Q5, Q7, Q9), subtrai-se 1 do valor marcado; para itens de polaridade negativa (Q2, Q4, Q6, Q8, Q10), subtrai-se o valor marcado de 5. A soma de todas as contribuições é multiplicada por 2,5, resultando em uma pontuação entre 0 e 100.
+&nbsp;&nbsp;&nbsp;&nbsp;Os 5 participantes do teste de guerrilha realizaram o preenchimento do formulário de testes SUS. Os nomes utilizados se mantêm fictícios para preservar a privacidade dos participantes. A pontuação SUS individual foi calculada pela fórmula padronizada: para itens de polaridade positiva (Q1, Q3, Q5, Q7, Q9), subtrai-se 1 do valor marcado; para itens de polaridade negativa (Q2, Q4, Q6, Q8, Q10), subtrai-se o valor marcado de 5. A soma de todas as contribuições é multiplicada por 2,5, resultando em uma pontuação entre 0 e 100.
  
+ <div align="center">
+  <p align="center">Quadro 72 - Respostas e pontuações individuais</p>
+
 | # | Nome | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | **Pontuação SUS** |
 |:-:|------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | 1 | Lucas Martins | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 2 | 5 | 3 | **90,0** |
@@ -5120,9 +5133,17 @@ Os 5 participantes do teste de guerrilha realizaram o preenchimento do formulár
 | 5 | Gabriel Almeida | 3 | 2 | 4 | 4 | 5 | 2 | 1 | 1 | 5 | 3 | **65,0** |
 | | **Média** | | | | | | | | | | | **77,5** |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Pontuação média e interpretação
  
-A pontuação média obtida pelo AgroFlow foi de **77,5 pontos**, acima da média da indústria estabelecida em 68 pontos. Segundo a escala de adjetivos proposta por Bangor, essa pontuação situa o sistema na classificação **"Excellent" (Excelente)**, próxima ao limiar de "Best Imaginable" (Perfeito) (> 85), indicando uma percepção geral positiva de usabilidade pelos participantes, com margem identificável para melhorias pontuais.
+&nbsp;&nbsp;&nbsp;&nbsp;A pontuação média obtida pelo AgroFlow foi de **77,5 pontos**, acima da média da indústria estabelecida em 68 pontos. Segundo a escala de adjetivos proposta por Bangor, essa pontuação situa o sistema na classificação **"Excellent" (Excelente)**, próxima ao limiar de "Best Imaginable" (Perfeito) (> 85), indicando uma percepção geral positiva de usabilidade pelos participantes, com margem identificável para melhorias pontuais.
+
+<div align="center">
+  <p align="center">Quadro 73 - Pontuação média e interpretação</p>
  
 | Faixa de pontuação | Classificação | AgroFlow |
 |:------------------:|:-------------:|:--------:|
@@ -5133,9 +5154,14 @@ A pontuação média obtida pelo AgroFlow foi de **77,5 pontos**, acima da médi
 | 71 – 85 | Excellent (Excelente) | **77,5** |
 | 86 – 100 | Best Imaginable (Perfeito) | |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Análise qualitativa
  
-A análise das respostas individuais permite identificar os pontos fortes e os pontos de atenção da interface do AgroFlow, complementando os achados qualitativos dos testes de guerrilha.
+&nbsp;&nbsp;&nbsp;&nbsp;A análise das respostas individuais permite identificar os pontos fortes e os pontos de atenção da interface do AgroFlow, complementando os achados qualitativos dos testes de guerrilha.
  
 **Pontos fortes** - itens com maior concordância entre os participantes:
  
@@ -5144,17 +5170,19 @@ A análise das respostas individuais permite identificar os pontos fortes e os p
 - **Q9 (Confiança no uso):** os participantes relataram sentir-se confiantes ao utilizar o sistema, o que sugere que a interface transmite clareza e previsibilidade suficientes para o público testado.
 - **Q10 (Curva de aprendizado):** a grande maioria concordou que não precisou aprender muitas coisas antes de usar o AgroFlow corretamente, indicando baixa curva de aprendizado.
 
+<br>
+
 **Pontos de atenção** - itens com maior dispersão ou discordância:
  
 - **Q4 (Necessidade de ajuda):** houve maior variação nas respostas, com alguns participantes indicando que precisariam de auxílio para usar o sistema. Esse resultado é coerente com as dificuldades observadas nos testes de guerrilha, especialmente nos fluxos de criação de tarefas e geração de relatórios.
 - **Q7 (Facilidade de aprendizado por terceiros):** um participante discordou que a maioria das pessoas aprenderia o sistema rapidamente, sinalizando que o AgroFlow pode apresentar barreiras para usuários com menor letramento digital, exatamente o perfil do público-alvo real da aplicação.
 - **Q8 (Confusão na navegação):** dois participantes apontaram algum grau de dificuldade na navegação, alinhado às ocorrências registradas na Tarefa 1 (Capataz) e na Tarefa 2 (Supervisor) durante os testes de guerrilha.
 
+---
+
 #### Conclusão
  
-Os resultados do questionário SUS confirmam e complementam os achados dos testes de guerrilha: o AgroFlow apresenta uma usabilidade geral satisfatória, classificada como "Excellent" com pontuação média de 77,5, porém com oportunidades de melhoria concentradas na clareza dos fluxos de navegação e na redução da necessidade de ajuda externa para determinados perfis de usuário. Recomenda-se, como encaminhamento prioritário, a revisão dos rótulos e da hierarquia dos menus, a adição de indicadores visuais para campos obrigatórios nos formulários e a inserção de dicas em todos os campos com terminologia técnica específica do domínio pecuário, como "estágio de vida" e "causa do óbito".
- 
-*Posicione aqui o relatório dos testes SUS realizados.*
+&nbsp;&nbsp;&nbsp;&nbsp;Os resultados do questionário SUS confirmam e complementam os achados dos testes de guerrilha: o AgroFlow apresenta uma usabilidade geral satisfatória, classificada como "Excellent" com pontuação média de 77,5, porém com oportunidades de melhoria concentradas na clareza dos fluxos de navegação e na redução da necessidade de ajuda externa para determinados perfis de usuário. Recomenda-se, como encaminhamento prioritário, a revisão dos rótulos e da hierarquia dos menus, a adição de indicadores visuais para campos obrigatórios nos formulários e a inserção de dicas em todos os campos com terminologia técnica específica do domínio pecuário, como "estágio de vida" e "causa do óbito".
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
 
