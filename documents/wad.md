@@ -3040,6 +3040,39 @@ CREATE TABLE relatorio (
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
+***Mapeamento de coerência entre ER, DER e Modelo Físico***
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Para tornar explícita a coerência mantida entre o Modelo Entidade-Relacionamento ([Seção 3.6.1](#c3.6.1)), o Diagrama Entidade-Relacionamento ([Seção 3.6.2](#c3.6.2)) e o Modelo Físico apresentado nesta seção, o Quadro XX apresenta o mapeamento direto entre os elementos dos três artefatos. Esse mapeamento explicita a preservação dos mesmos nomes de atributos, chaves primárias, chaves estrangeiras e cardinalidades em todos os níveis de abstração, do conceitual ao executável.
+ 
+<p align="center">Quadro XX - Mapeamento entre ER, DER e Modelo Físico</p>
+
+| Entidade (ER) | Representação no DER | Tabela física (PostgreSQL) | Chave primária | Principais chaves estrangeiras |
+
+|---------------|----------------------|----------------------------|----------------|--------------------------------|
+| USUARIO | Usuario | `usuario` | `id` (UUID) | `retiro_id` → `retiro(id)` |
+| RETIRO | Retiro | `retiro` | `id` (UUID) | — |
+| MOVIMENTACAO | Movimentacao | `movimentacao` | `id` (UUID) | `retiro_id`, `capataz_id`, `validado_por` |
+| MOVIMENTACAO_COMPRA | Especialização de Movimentacao | `movimentacao_compra` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_VENDA | Especialização de Movimentacao | `movimentacao_venda` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_TRANSFERENCIA | Especialização de Movimentacao | `movimentacao_transferencia` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_NASCIMENTO | Especialização de Movimentacao | `movimentacao_nascimento` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_MORTE | Especialização de Movimentacao | `movimentacao_morte` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| TAREFA | Tarefa | `tarefa` | `id` (UUID) | `retiro_id`, `criada_por`, `atribuida_a`, `aprovado_por` |
+| TICKET | Ticket | `ticket` | `id` (UUID) | `retiro_id`, `aberto_por`, `atribuido_a`, `aprovado_por` |
+| EVIDENCIA | Evidencia | `evidencia` | `id` (UUID) | `usuario_id` → `usuario(id)` |
+| EVIDENCIA_FOTO | Especialização de Evidencia | `evidencia_foto` | `evidencia_id` (UUID) | `evidencia_id` → `evidencia(id)` |
+| EVIDENCIA_AUDIO | Especialização de Evidencia | `evidencia_audio` | `evidencia_id` (UUID) | `evidencia_id` → `evidencia(id)` |
+| EVIDENCIA_MENSAGEM | Especialização de Evidencia | `evidencia_mensagem` | `evidencia_id` (UUID) | `evidencia_id` → `evidencia(id)` |
+| EVIDENCIA_MOVIMENTACAO | Entidade associativa N:N | `evidencia_movimentacao` | (`evidencia_id`, `movimentacao_id`) | Ambas FKs com `ON DELETE CASCADE` |
+| EVIDENCIA_TAREFA | Entidade associativa N:N | `evidencia_tarefa` | (`evidencia_id`, `tarefa_id`) | Ambas FKs com `ON DELETE CASCADE` |
+| EVIDENCIA_TICKET | Entidade associativa N:N | `evidencia_ticket` | (`evidencia_id`, `ticket_id`) | Ambas FKs com `ON DELETE CASCADE` |
+| RELATORIO | Relatorio | `relatorio` | `id` (UUID) | `gerado_por`, `retiro_id` |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além da correspondência direta entre nomes e chaves, as cardinalidades foram preservadas em todos os níveis. As relações 1:N do ER (como USUARIO PERTENCE_A RETIRO, ou MOVIMENTACAO OCORRE_EM RETIRO) são implementadas como `FOREIGN KEY` simples na tabela do lado N (por exemplo, `usuario.retiro_id` e `movimentacao.retiro_id`), enquanto as relações N:N (como EVIDENCIA ANEXA MOVIMENTACAO) são materializadas pelas tabelas associativas com chaves primárias compostas e cláusulas `ON DELETE CASCADE` para preservar integridade referencial. As especializações de MOVIMENTACAO e EVIDENCIA seguem o padrão de herança por tabela, com a tabela filha referenciando o `id` da tabela pai como chave primária e estrangeira simultaneamente, garantindo que cada registro especializado tenha sempre um correspondente na tabela base. Essa coerência completa sustenta a rastreabilidade entre o conceito de domínio, sua representação visual e a implementação executável no PostgreSQL hospedado no Supabase.
+ 
+---
 
 &nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação, a consolidação das informações e o fluxo de sincronização.
 
