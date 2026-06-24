@@ -4787,6 +4787,12 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Sucesso com dificuldade | Acessou a seção corretamente, porém ficou em dúvida se os dados exibidos eram apenas os validados ou todos os registros | Selecionou período e tipo corretos, mas perguntou em voz alta se o filtro de retiro era necessário | Visualizou os dados consolidados sem dificuldade | Exportou o relatório com sucesso |
 | 5 | Gabriel Almeida | Sucesso | Navegou até "Relatórios" rapidamente | Selecionou as opções corretas sem dúvidas | Verificou os dados e confirmou que eram apenas registros validados | Exportou o arquivo e confirmou o download |
 
+#### Planilha completa de resultados
+ 
+Os dados completos dos testes de guerrilha, incluindo o registro detalhado das ocorrências por participante e o resumo de severidade, estão disponíveis na planilha a seguir:
+
+[Acessar planilha de resultados dos testes de guerrilha](https://docs.google.com/spreadsheets/d/1QZ1_aPrnHj_M3JJAqonSPjTrNXyP4aJiIZqZUg4Ch5Q/edit?usp=sharing)
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
