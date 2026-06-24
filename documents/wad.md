@@ -430,7 +430,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, foram desenvolvidas três personas, como demonstra as figuras 5, 6 e 7, com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec (capataz, supervisor e gerente), possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto deste projeto, foram desenvolvidas três personas, como demonstram as figuras 5, 6 e 7, com o objetivo de representar os principais perfis de partes interessadas usuárias da solução proposta. Cada persona foi associada a um cargo presente na estrutura das fazendas da BrPec (capataz, supervisor e gerente), possibilitando-se a análise de diferentes perspectivas, responsabilidades e necessidades no contexto do sistema proposto.
 
 ### Persona 1 - Daniel Carvalho
 
@@ -869,7 +869,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Não Funcionais (RNF) estabelecem os critérios de qualidade que o sistema deve atender, traduzindo características operacionais, técnicas e organizacionais da BrPec Agropecuária em especificações mensuráveis e testáveis. Cada RNF foi estruturado segundo a norma ISO/IEC 25010 (ISO/IEC 25010, 2023), abrangendo oito eixos de qualidade de software, e derivado diretamente do contexto operacional do parceiro: os 14 retiros distribuídos no Pantanal e Cerrado, a conectividade instável via Starlink, o perfil dos usuários (capatazes com ensino fundamental incompleto), a criticidade da rastreabilidade de dados do rebanho e as restrições de suporte técnico remoto.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A derivação de cada RNF partiu da análise dos Requisitos Funcionais (RF), das Regras de Negócio (RN), das restrições organizacionais identificadas nas entrevistas com o parceiro e das limitações de infraestrutura dos retiros.Os critérios de aceite foram definidos com métricas objetivas, limites quantitativos e protocolos de teste específicos, permitindo validação em sessões controladas com usuários reais, testes de carga automatizados e auditorias de segurança. Essa estrutura garante rastreabilidade completa entre o contexto do parceiro, os requisitos funcionais e os atributos de qualidade esperados, estabelecendo uma base sólida para validação técnica e aceite do produto final.
+&nbsp;&nbsp;&nbsp;&nbsp;A derivação de cada RNF partiu da análise dos Requisitos Funcionais (RF), das Regras de Negócio (RN), das restrições organizacionais identificadas nas entrevistas com o parceiro e das limitações de infraestrutura dos retiros. Os critérios de aceite foram definidos com métricas objetivas, limites quantitativos e protocolos de teste específicos, permitindo validação em sessões controladas com usuários reais, testes de carga automatizados e auditorias de segurança. Essa estrutura garante rastreabilidade completa entre o contexto do parceiro, os requisitos funcionais e os atributos de qualidade esperados, estabelecendo uma base sólida para validação técnica e aceite do produto final.
 
 
 
@@ -1050,11 +1050,11 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Controllers** é composta por oito controladores (`usuario`, `validacao`, `movimentacao`, `evidencia`, `tarefa`, `ticket`, `relatorio` e `sincronizacao`) que recebem as requisições HTTP e delegam o processamento aos services correspondentes.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Services** concentra as regras de negócio, aplicando as Regras de Negócio documentadas na [Seção 3.1.2](#c3.1.2), como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização offline(RN03).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Services** concentra as regras de negócio, aplicando as Regras de Negócio documentadas na [Seção 3.1.2](#c3.1.2), como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização offline (RN03).
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Repositories** abstrai o acesso ao banco por meio dos repositories. A entidade Evidência é segmentada em sete repositórios distintos — um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket) —, refletindo a estratégia de **herança polimórfica** adotada.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Models** contém entidades de domínio, persistidas em **PostgreSQL** conforme o modelo relacional da [Seção 3.6.3](#c3.6.3). As tecnologias adotadas são React (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da [Seção 3.1.3](#c3.1.3).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Models** contém entidades de domínio, persistidas em **PostgreSQL** conforme o modelo relacional da [Seção 3.6.3](#c3.6.3). As tecnologias adotadas são EJS (Views), Node.js com Express/TypeScript (camadas intermediárias) e PostgreSQL (persistência), comunicando-se via API REST com autenticação JWT, atendendo aos Requisitos Não Funcionais da [Seção 3.1.3](#c3.1.3).
 
 ### <a name="c3.2.1.1"></a>3.2.1.1 Diagrama de Arquitetura 
 
