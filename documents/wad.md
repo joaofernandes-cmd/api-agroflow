@@ -4793,6 +4793,24 @@ Os dados completos dos testes de guerrilha, incluindo o registro detalhado das o
 
 [Acessar planilha de resultados dos testes de guerrilha](https://docs.google.com/spreadsheets/d/1QZ1_aPrnHj_M3JJAqonSPjTrNXyP4aJiIZqZUg4Ch5Q/edit?usp=sharing)
 
+**Tarefa 1 — Capataz**
+
+<div align="center">
+  <img src="/documents/others/assets/tarefa1-capataz.png" alt="Print da tabela de resultados - Tarefa 1 (Capataz)" width="800px">
+</div>
+
+**Tarefa 2 — Supervisor**
+
+<div align="center">
+  <img src="/documents/others/assets/tarefa2-supervisor.png" alt="Print da tabela de resultados - Tarefa 2 (Supervisor)" width="800px">
+</div>
+
+**Tarefa 3 — Gerente**
+
+<div align="center">
+  <img src="/documents/others/assets/tarefa3-gerente.png" alt="Print da tabela de resultados - Tarefa 3 (Gerente)" width="800px">
+</div>
+
 #### Resumo das ocorrências
 
 | Tarefa | Severidade | Resumo do ocorrido | Tipo | Participantes afetados | Potencial melhoria |
