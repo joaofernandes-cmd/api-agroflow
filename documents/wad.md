@@ -186,7 +186,7 @@
 [Anexos](#c9)
 
 
-# <a name="c1"></a>1. Introdução (sprints 1 a 5)
+# <a name="c1"></a>1. Introdução 
 
 &nbsp;&nbsp;&nbsp;&nbsp;No início do projeto, a **BrPec Agropecuária S.A.** apresentou sua necessidade em aprimorar a forma de registro de cada animal em seu rebanho bovino. Atualmente, o fluxo de informações entre o campo e o escritório é prejudicado por **processos manuais** baseados em **"boletas" de papel**, o que acarreta lentidão na consolidação de dados e riscos de erros durante a **redigitação em planilhas**. Essa desconexão entre as áreas operacional e administrativa compromete a precisão do inventário pecuário e impede maior agilidade na consolidação das informações, fator crítico para a gestão eficiente.
 
@@ -194,9 +194,9 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos** da operação: gerentes definem e distribuem as tarefas calendarizadas, o que impacta diretamente a previsibilidade e o controle dos ciclos produtivos; capatazes registram a execução mediante envio de evidências digitais, como fotos e áudios; e coordenadores validam as informações antes da consolidação final. Os dados aprovados são exportados em formatos Excel ou CSV, suportando a tomada de decisão administrativa. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
 
-# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a name="c2"></a>2. Visão Geral da Aplicação Web 
 
-## <a name="c2.1"></a>2.1. Escopo do Projeto (sprints 1 e 4)
+## <a name="c2.1"></a>2.1. Escopo do Projeto 
 
 ### <a name="c2.1.1"></a>2.1.1. Modelo de 5 Forças de Porter
 
@@ -373,7 +373,7 @@
 - Elimina o uso de boletas de papel ao digitalizar o registro de movimentações diretamente no campo.
 
 
-### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto (sprint 1)
+### <a name="c2.1.5"></a>2.1.5. Matriz de Riscos do Projeto 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A matriz de risco é uma ferramenta utilizada para identificar, analisar e classificar os riscos de um projeto, permitindo compreender tanto as ameaças (riscos negativos) quanto às oportunidades (riscos positivos) que devem ser priorizadas ao longo do seu desenvolvimento (PMI, 2021). Dessa forma, foi elaborada a matriz de risco do projeto BrPec, conforme apresentado na Figura 4.
 
@@ -426,7 +426,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;A aplicação integrada das análises SWOT, Cinco Forças de Porter e Business Model Canvas foi fundamental para entender melhor o problema enfrentado pela BrPec e direcionar a solução proposta. A análise SWOT ajudou a organizar os principais pontos internos e externos do negócio, evidenciando tanto a força da operação quanto limitações como a dependência de processos manuais. Já o modelo de Porter mostrou como o setor é altamente competitivo, com forte pressão de compradores e baixa diferenciação, exigindo maior eficiência operacional. Por fim, o Canvas permitiu enxergar o negócio de forma mais completa, conectando a proposta de valor com as necessidades reais da operação. No conjunto, essas análises deixaram claro que o principal desafio está na organização e confiabilidade das informações do campo, e que a digitalização dos processos é essencial para reduzir retrabalho, organizar os dados e aumentar o controle da operação.
 
-## <a name="c2.2"></a>2.2. Personas (sprint 1)
+## <a name="c2.2"></a>2.2. Personas 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Personas são definidas como representações fictícias, porém realistas, de usuários, utilizadas para sintetizar comportamentos, motivações, necessidades e objetivos de um determinado grupo. Embora não correspondam a indivíduos reais, são construídas com base em dados e padrões observáveis, permitindo-se uma compreensão mais aprofundada do público-alvo e apoiando o desenvolvimento de soluções orientadas ao usuário (HARLEY, 2015).
 
@@ -604,7 +604,7 @@
 - Estabilidade financeira e qualidade de vida.
 
 
-## <a name="c2.3"></a>2.3. User Stories (sprints 1 a 5)
+## <a name="c2.3"></a>2.3. User Stories 
 
 &nbsp;&nbsp;&nbsp;&nbsp;As user stories (ou histórias de usuário) consistem em descrições simples e objetivas das funcionalidades de um sistema, elaboradas a partir da perspectiva do usuário final, com foco no valor entregue e sem o uso de linguagem técnica excessiva (COHN, 2004; PATTON, 2014). Nesse contexto, elas são centradas nas necessidades e experiências dos usuários, contribuindo para um desenvolvimento mais alinhado à realidade de uso e aos objetivos do negócio (PRESSMAN; MAXIM, 2020). No presente projeto da BrPec, as user stories foram definidas com base nos fluxos operacionais da fazenda, como gestão de tarefas, registro de movimentações do rebanho e comunicação entre campo e escritório, estruturando os requisitos da aplicação web proposta, de acordo com os quadros 6 a 16.
 
@@ -773,9 +773,9 @@
 <p align="center">Fonte: Próprios autores (2026).</p>
 
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web 
 
-## <a name="c3.1"></a>3.1. Requisitos do Sistema (sprints 1 a 5)
+## <a name="c3.1"></a>3.1. Requisitos do Sistema 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os requisitos do sistema representam o ponto de partida para tudo que será construído, estabelecendo um entendimento comum entre nossa equipe e o parceiro sobre o que a aplicação precisa ser, como deve se comportar e sob quais critérios será testada e aprovada.
 
@@ -806,7 +806,7 @@ Ticket (aberto por Capataz, gerenciado por Supervisor) associada a Evidências
 Evidência (foto georreferenciada, áudio ou mensagem) vinculada a Movimentações, Tarefas ou Tickets
 Relatório (gerado por Gerente) consolidando dados conferidos
 
-### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+### <a name="c3.1.1"></a>3.1.1. Requisitos Funcionais 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Quadro 17 apresenta os requisitos funcionais definidos para o sistema, com suas respectivas descrições, prioridades e situações de implementação.
 
@@ -829,7 +829,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-### <a name="c3.1.2"></a>3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
+### <a name="c3.1.2"></a>3.1.2. Regras de Negócio 
 
 &nbsp;&nbsp;&nbsp;&nbsp;As Regras de Negócio (RN) estabelecem as condições, restrições e validações que governam o comportamento do sistema, traduzindo políticas operacionais da BrPec Agropecuária em critérios implementáveis e testáveis. Cada regra está vinculada explicitamente a um ou mais Requisitos Funcionais (RF), garantindo rastreabilidade completa entre necessidades de negócio e especificações técnicas. A redação das RNs foi estruturada para permitir conversão direta em testes automatizados utilizando verbos de ação precisos e condições verificáveis. O Quadro 18 consolida essas regras e seus respectivos vínculos e critérios de aceite.
 
@@ -854,7 +854,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+### <a name="c3.1.3"></a>3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os Requisitos Não Funcionais (RNF) estabelecem os critérios de qualidade que o sistema deve atender, traduzindo características operacionais, técnicas e organizacionais da BrPec Agropecuária em especificações mensuráveis e testáveis. Cada RNF foi estruturado segundo a norma ISO/IEC 25010 (ISO/IEC 25010, 2023), abrangendo oito eixos de qualidade de software, e derivado diretamente do contexto operacional do parceiro: os 14 retiros distribuídos no Pantanal e Cerrado, a conectividade instável via Starlink, o perfil dos usuários (capatazes com ensino fundamental incompleto), a criticidade da rastreabilidade de dados do rebanho e as restrições de suporte técnico remoto.
 
@@ -1004,7 +1004,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div> 
 
-### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+### <a name="c3.1.4"></a>3.1.4. Matriz RF → RN → Endpoint 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A Matriz RF → RN → Endpoint estabelece o vínculo direto entre cada Requisito Funcional (RF) definido na [Seção 3.1.1](#c3.1.1), a Regra de Negócio (RN) que o restringe ([Seção 3.1.2](#c3.1.2)) e o endpoint REST responsável por implementá-lo no backend da aplicação. Essa rastreabilidade é fundamental para garantir que nenhuma funcionalidade definida em conjunto com o parceiro BrPec Agropecuária fique sem implementação correspondente, evitando lacunas entre o que foi especificado e o que será construído.
 
@@ -1038,7 +1038,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os endpoints `/usuarios/login`, `/usuarios/logout` e `/capataz/acesso/{token}` (RF005) representam casos à parte: embora não persistam uma entidade de domínio, validam a identificação do usuário, emitem ou encerram a sessão autenticada e sustentam o acesso às rotas protegidas.
 
-## <a name="c3.2"></a>3.2. Arquitetura (sprints 1 a 5)
+## <a name="c3.2"></a>3.2. Arquitetura 
 
 # 3.2.1 Arquitetura em Camadas
 
@@ -1081,7 +1081,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;O fluxo de comunicação segue um modelo unidirecional (Cliente → Views → Routes → Middlewares → Controllers → Services → Repositories → Models → Banco de Dados), garantindo baixo acoplamento, alta coesão, maior testabilidade entre as camadas do sistema e rastreabilidade completa entre os requisitos funcionais ([Seção 3.1.1](#c3.1.1)), as regras de negócio ([Seção 3.1.2](#c3.1.2)) e a implementação técnica.
 
-### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso (sprint 1)
+### <a name="c3.2.2"></a>3.2.2. Diagrama de Casos de Uso 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Use cases são compreendidos como uma técnica consolidada para o levantamento e a documentação de requisitos, por meio da qual são descritas as diferentes formas de interação com um sistema, visando ao atendimento das necessidades dos usuários. Nessa abordagem, são considerados tanto os fluxos de sucesso quanto situações de exceção, desafios e falhas, independentemente de aspectos relacionados à implementação, tecnologia ou plataforma.
 
@@ -1547,7 +1547,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-06 / RN07).
 
 
-### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio (sprint 2)
+### <a name="c3.2.3"></a>3.2.3. Diagrama de Classes do Domínio 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Um diagrama de classes do domínio é um modelo visual da linguagem UML que representa as principais entidades de um sistema, seus atributos, operações e os relacionamentos entre elas. Diferente de um diagrama de implementação, seu foco está no domínio do negócio, ou seja, em como os conceitos do mundo real se traduzem em estruturas de software, estabelecendo uma linguagem comum entre as equipes técnica e de negócio.
 
@@ -1565,7 +1565,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 
 
-### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML (sprint 3)
+### <a name="c3.2.4"></a>3.2.4. Diagrama de Sequência UML
 
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas de sequência UML constituem representações visuais que modelam a interação temporal entre os componentes de um sistema de software durante a execução de funcionalidades específicas. Diferentemente de outros artefatos que descrevem apenas estados ou resultados finais, os diagramas de sequência explicitam o fluxo completo de mensagens trocadas entre objetos, preservando a ordenação cronológica das interações (LARMAN, 2004).
 
@@ -2088,56 +2088,49 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 &nbsp;&nbsp;&nbsp;&nbsp;Os diagramas desenvolvidos permitem visualizar de forma detalhada o comportamento do AgroFlow durante a execução das principais operações da aplicação. A representação dos fluxos contribui para a compreensão das regras de negócio, das permissões de acesso e do tratamento de exceções presentes no sistema. Além disso, a modelagem evidencia preocupações importantes do projeto, como a integridade das informações registradas, o controle das validações e a continuidade da operação mesmo em cenários de conectividade limitada. Dessa forma, os diagramas auxiliam tanto na documentação técnica quanto na garantia de que os processos implementados atendem às necessidades operacionais da BrPec.
 
 
-### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+### <a name="c3.2.5"></a>3.2.5. Diagrama de Atividades ou Estados 
 
 *Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções).*
 
-### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### <a name="c3.2.6"></a>3.2.6. Diagrama de Implantação 
 
-&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção.
-
-&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. O fluxo do Capataz inclui armazenamento local no navegador para apoiar a operação em campo sob conectividade intermitente.
-
-
-### Explicação do diagrama:
-**Nós Clientes**
+&nbsp;&nbsp;&nbsp;&nbsp;O diagrama de implantação UML representa a visão física da arquitetura, descrevendo os nós de hardware, os artefatos de software instalados e os canais de comunicação entre eles. Seu objetivo é evidenciar onde cada componente executa em tempo de produção, incluindo dispositivos clientes, servidor de aplicação, servidor de banco de dados, pipeline de entrega contínua e canais de comunicação seguros.
  
-• O dispositivo do *Capataz* é um celular Android utilizado em campo, acessando a *interface web em EJS* (renderizada pelo servidor de aplicação) e mantendo armazenamento local no navegador via *IndexedDB* (buffer de mídias, como gravações de áudio) e *localStorage* (sessão), essencial para a captura de dados em campo sob conectividade intermitente conforme definido pelo RF003 e pela RN03.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto atual do AgroFlow, a aplicação é acessada por dispositivos móveis ou desktops dos três perfis de usuário. O servidor Express renderiza as Views EJS, disponibiliza os arquivos estáticos e hospeda a API REST, comunicando-se com um banco de dados PostgreSQL hospedado no Supabase e configurado por meio da variável `DATABASE_URL`. O fluxo do Capataz inclui um Service Worker registrado pelo navegador e armazenamento local em IndexedDB e localStorage, sustentando a operação em campo sob conectividade intermitente conforme RF003 e RN03.
  
-• O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, acessando apenas a *interface web em EJS*, uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+***Nós Clientes***
  
-• O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também acessando apenas a *interface web em EJS*, com acesso ao painel consolidado e aos relatórios gerenciais.
-
-**Nó do Servidor de Aplicação**
+- O dispositivo do *Capataz* é um celular Android utilizado em campo, acessando a *interface web em EJS* (renderizada pelo servidor de aplicação) e mantendo armazenamento local no navegador via *IndexedDB* (buffer de mídias e fila de sincronização) e *localStorage* (sessão e estado do PWA). Um *Service Worker* é registrado para cache de assets estáticos e detecção do estado da conexão, viabilizando a operação offline-first definida pelo RF003 e pela RN03.
+- O dispositivo do *Supervisor* pode ser tanto mobile quanto desktop, acessando a *interface web em EJS* via navegadores Chrome, Edge ou Safari, conforme o RNF REST descrito na [Seção 3.1.3](#c3.1.3), uma vez que sua atuação ocorre majoritariamente em ambientes com conexão estável.
+- O dispositivo do *Gerente* pode ser tanto mobile quanto desktop, também acessando a *interface web em EJS*, com acesso ao painel consolidado e aos relatórios gerenciais exportáveis em formato `.xlsx` e `.csv`.
+***Nó do Servidor de Aplicação***
  
-• O *Application Server* executa a aplicação desenvolvida em *Node.js + Express + TypeScript*, sendo responsável pela renderização das Views EJS, pela disponibilização dos arquivos estáticos e pela API REST.
+- O *Application Server* é hospedado em provedor de nuvem (configurável via `process.env.PORT` e `DATABASE_URL`, compatível com Render, AWS EC2, Railway ou similares) e executa o backend desenvolvido em *Node.js 22 + Express 5 + TypeScript*, sendo responsável pela renderização das Views EJS, pela disponibilização dos arquivos estáticos e pela exposição da API REST.
+- Esse nó concentra os artefatos Controllers, Services, Repositories, Middlewares e Routes descritos na [Seção 3.2.1](#c3.2.1), processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+- O processo é controlado por scripts npm (`npm run build`, `npm start`, `npm run migrate`), e o pipeline de entrega contínua é executado via *GitHub Actions*, que dispara build, testes automatizados e deploy a cada push na branch principal, atendendo ao RNF SUP da [Seção 3.1.3](#c3.1.3) e eliminando a necessidade de deslocamento técnico aos retiros.
+***Nó do Servidor de Banco de Dados***
  
-• Esse nó concentra todos os controladores e serviços do AgroFlow, processando as requisições recebidas dos clientes e aplicando as regras de negócio antes de persistir os dados.
+- O *Database Server* é hospedado no *Supabase* (PostgreSQL gerenciado em nuvem), garantindo alta disponibilidade, backups automáticos e escalabilidade horizontal sob demanda.
+- Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações e suas especializações, tarefas, tickets, evidências, relatórios e tabelas associativas), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
+- A extensão *pgcrypto* é habilitada na inicialização do banco (`CREATE EXTENSION IF NOT EXISTS pgcrypto`) para geração de identificadores únicos via `gen_random_uuid()` e para suporte às funções de hash de senha utilizadas pelo bcrypt na camada de aplicação, conforme o RNF SEG.
+- As migrations SQL versionadas em `src/backend/database/migrations/` são executadas em ordem numérica pelo runner `migrate.ts`, garantindo a reprodutibilidade do esquema em qualquer ambiente.
+***Canais de Comunicação***
  
- 
-**Nó do Servidor de Banco de Dados**
- 
-• O *Database Server* é hospedado no Supabase, executa o PostgreSQL como sistema de gerenciamento de banco de dados relacional e é acessado pela aplicação por meio da conexão definida em `DATABASE_URL`.
- 
-• Esse nó armazena todas as entidades persistentes do sistema (usuários, retiros, movimentações, tarefas, tickets, evidências e relatórios), conforme o modelo físico apresentado na [Seção 3.6.3](#c3.6.3).
-
-**Canais de Comunicação**
- 
-• A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* com autenticação baseada em *JWT*, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
- 
-• A comunicação entre o *Application Server* e o *Database Server* ocorre via *SQL* sobre conexão TCP/IP segura, permitindo a leitura, gravação e atualização dos dados persistentes.
-
+- A comunicação entre os dispositivos clientes e o *Application Server* ocorre via protocolo *HTTPS* (porta 443) com autenticação baseada em *JWT* enviado no cookie de sessão ou no header `Authorization: Bearer <token>`, garantindo segurança em trânsito e controle de acesso por perfil conforme o RNF SEG da [Seção 3.1.3](#c3.1.3).
+- A comunicação entre o *Application Server* e o *Database Server* ocorre via *TCP/IP sobre SSL/TLS*, utilizando o driver `postgres` (versão 3.4.9) com a connection string definida em `DATABASE_URL`, permitindo leitura, gravação e atualização criptografadas dos dados persistentes.
+- A sincronização entre o *IndexedDB* local e o backend ocorre via requisições HTTP padrão para os endpoints `/sincronizacao`, `/movimentacoes/sincronizar`, `/tarefas/sincronizar` e `/tickets/sincronizar`, disparadas automaticamente quando o Service Worker detecta o restabelecimento da conectividade através de polling no endpoint `/health`.
 <div align="center">
 <p align="center">Figura 22 - Diagrama de implantação</p>
 <p align="center">
-<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0"></a>
+<img src="others/assets/diagrama-de-implantacao.png" alt="Diagrama de Implantação" border="0">
 </p>
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+&nbsp;&nbsp;&nbsp;&nbsp;Esse diagrama traduz a visão Engineering + Technology do RM-ODP, materializando em nós físicos e artefatos de software os componentes lógicos descritos no diagrama de arquitetura da [Seção 3.2.1](#c3.2.1) e nos diagramas de sequência da [Seção 3.2.4](#c3.2.4), e fundamenta as estratégias de resiliência detalhadas na [Seção 3.8.4](#c3.8.4).
+ 
+---
 
-*Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
-
-### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### <a name="c3.2.7"></a>3.2.7. Padrões de Projeto Aplicados 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do projeto BrPec segue o padrão Model-View-Controller (MVC) adaptado para uma aplicação backend em API REST. Nesta implementação, o Model encapsula estrutura de dados e persistência através de Repositories, o Controller gerencia fluxo de requisições HTTP e orquestração com Services, e a View é abstraída pela própria API REST, consumida pelos clientes frontend (web e mobile). Esta separação permite que cada camada tenha responsabilidades bem definidas e desacopladas, facilitando testes unitários, manutenção independente e a possibilidade de múltiplos clientes consumirem a mesma lógica de negócio sem duplicação. Nas seções seguintes, detalha-se a implementação específica de cada componente e os padrões complementares utilizados.
 
@@ -2177,10 +2170,29 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 &nbsp;&nbsp;&nbsp;&nbsp;Do ponto de vista SOLID, os Controllers exemplificam o princípio Single Responsibility, ao se ocuparem exclusivamente do tratamento das requisições e respostas HTTP, como códigos de status, serialização e remoção de dados sensíveis, delegando toda a lógica de negócio aos Services e mantendo, assim, uma clara separação de responsabilidades entre as camadas.
 
+***Síntese dos Padrões de Projeto Aplicados***
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;O Quadro XX consolida os padrões de projeto adotados no AgroFlow, padronizando o nível de detalhe das justificativas e indicando o princípio SOLID predominante em cada um. Essa síntese permite uma visão comparativa entre os padrões e reforça a rastreabilidade entre as decisões arquiteturais e a estrutura do código entregue.
+ 
+<p align="center">Quadro XX - Síntese dos Padrões de Projeto Aplicados no AgroFlow</p>
+
+| Padrão | Localização no código | Responsabilidade | Justificativa de adoção | Princípio SOLID predominante |
+|--------|----------------------|------------------|--------------------------|------------------------------|
+| **MVC adaptado** | Estrutura geral do backend (`views/`, `controllers/`, `models/`) | Separar apresentação (Views EJS), regras de negócio (Service) e dados (Repository) | Permite múltiplos clientes (navegador desktop, mobile e PWA do Capataz) consumirem a mesma lógica de negócio sem duplicação | Single Responsibility |
+| **Controller** | `/src/backend/controllers/` | Receber requisições HTTP, validar presença de campos e formatar respostas | Isola o tratamento de transporte HTTP (status codes, body, headers) da lógica de domínio, evitando que regras de negócio fiquem acopladas ao Express | Single Responsibility |
+| **Service** | `/src/backend/services/` | Concentrar regras de negócio (RN01 a RN12) e orquestrar múltiplas entidades | Permite que mudanças nas regras (ex.: novo tipo de movimentação) não afetem rotas nem persistência, isolando a complexidade do domínio | Open/Closed |
+| **Repository** | `/src/backend/repositories/` | Encapsular queries SQL parametrizadas para cada entidade | Centraliza acesso ao banco em um local por entidade, evitando SQL espalhado e facilitando troca futura do driver `postgres` ou do SGBD | Dependency Inversion |
+| **Middleware** | `/src/backend/middlewares/` | Concentrar preocupações transversais (autenticação JWT, autorização por cargo, validação de payload, log e tratamento de erros) | Evita duplicação de lógica de autenticação e validação nos Controllers, aplicando essas verificações de forma reutilizável na cadeia de processamento | Open/Closed |
+| **DTO implícito (Interfaces TypeScript)** | `/src/backend/models/` | Definir a forma esperada dos dados em cada camada | Garante contrato estável entre camadas via tipagem estática, mesmo sem classes formais de DTO | Interface Segregation |
+| **Route Module** | `/src/backend/routes/` | Agrupar endpoints REST por entidade em arquivos separados | Permite expansão da API (adicionar novos endpoints) sem alterar o roteamento global, mantendo a organização por recurso conforme convenção REST | Open/Closed |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+&nbsp;&nbsp;&nbsp;&nbsp;Esses padrões trabalham de forma integrada: o fluxo de uma requisição percorre o pipeline Route → Middleware → Controller → Service → Repository → Banco de Dados, e a resposta percorre o caminho inverso. Cada camada possui responsabilidade única e depende exclusivamente de abstrações da camada subsequente, característica que sustenta a manutenibilidade, a testabilidade (evidenciada pela cobertura superior a 90% na camada de services, conforme [Seção 5.1.4](#c5.1.4)) e a evolução incremental do sistema ao longo das sprints.
+
 &nbsp;&nbsp;&nbsp;&nbsp;A aplicação combinada do padrão Model-View-Controller adaptado para API REST e da arquitetura Controller-Service-Repository estrutura o backend do AgroFlow em camadas com responsabilidades bem delimitadas, mantendo decisões de transporte HTTP, regras de negócio e acesso a dados isoladas entre si. A separação entre `Controllers`, `Services` e `Repositories` permite que regras específicas do domínio agropecuário, como a validação condicional de campos por tipo de movimentação e o controle de permissões por cargo, sejam alteradas sem impacto direto sobre o roteamento ou a persistência. Os `Middlewares` complementam essa estrutura ao concentrar preocupações transversais como autenticação JWT, autorização por cargo, validação de payload e tratamento centralizado de erros, evitando duplicação de lógica entre endpoints. O alinhamento dessas decisões com os princípios SOLID, em especial Single Responsibility, Open/Closed e Dependency Inversion, torna o sistema mais testável, manutenível e preparado para evoluir conforme novas regras de negócio sejam incorporadas em sprints futuras, sem comprometer a base já validada.
 
 
-## <a name="c3.3"></a>3.3. Wireframes (sprint 2)
+## <a name="c3.3"></a>3.3. Wireframes
 
 &nbsp;&nbsp;&nbsp;&nbsp;Wireframe é uma representação visual simplificada da interface de um sistema, utilizada para planejar a organização das telas, a navegação e a experiência do usuário. Nesta seção, serão apresentados os wireframes desenvolvidos para a aplicação web da BrPec, demonstrando como a interface foi estruturada para atender às necessidades operacionais da fazenda. 
 &nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento dessas interfaces foi realizado com base nas [User Stories apresentadas na Seção 2.3](#c2.3) deste documento, garantindo alinhamento entre os requisitos levantados, os fluxos operacionais da fazenda e as necessidades de cada perfil de usuário identificado durante o levantamento de requisitos. Dessa forma, os wireframes buscam apresentar a disposição dos elementos, os fluxos de navegação e as funcionalidades disponíveis no sistema, priorizando simplicidade, rapidez e acessibilidade no uso em campo. 
@@ -2376,7 +2388,7 @@ Registros pendentes não entram nos relatórios oficiais do Gerente Marcos (UC-0
 
 
 
-## <a name="c3.4"></a>3.4. Guia de estilos (sprint 3)
+## <a name="c3.4"></a>3.4. Guia de estilos 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O guia de estilos da aplicação tem como objetivo garantir consistência visual, organização e padronização em toda a interface do sistema desenvolvido para a BrPec. Ele funciona como uma referência central para o desenvolvimento das telas, definindo diretrizes relacionadas ao uso de cores, tipografia, hierarquia visual e elementos gráficos da aplicação. Dessa forma, o guia auxilia na construção de interfaces mais intuitivas, acessíveis e visualmente coerentes entre os diferentes perfis de usuários do sistema.
 
@@ -2473,7 +2485,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dessa forma, a padronização da iconografia contribui diretamente para a consistência visual e a usabilidade da aplicação, reforçando a identidade do sistema e facilitando o reconhecimento imediato das funcionalidades pelos diferentes perfis de usuários. A utilização de um conjunto coeso e semanticamente claro de ícones garante que tanto o capataz em campo quanto o gerente no escritório possam interagir com a interface de maneira eficiente, reduzindo erros de interpretação e tornando a experiência de uso mais acessível e intuitiva em todas as telas da aplicação.
 
-## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade (sprint 3)
+## <a name="c3.5"></a>3.5 Protótipo de alta fidelidade 
 
 ### Introdução
 
@@ -2687,9 +2699,9 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
+## <a name="c3.6"></a>3.6. Modelagem do banco de dados 
 
-### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+### <a name="c3.6.1"></a>3.6.1. Modelo Entidade-Relacionamento (ER) 
 
 &nbsp;&nbsp;&nbsp;&nbsp;O Modelo Entidade-Relacionamento (MER), proposto por Chen (1976), é uma representação conceitual e abstrata dos dados de um sistema, elaborada antes da implementação física do banco de dados. Para o aplicativo BrPec, voltado à logística interna da fazenda, o modelo foi construído a partir das User Stories da [Seção 2.3](#c2.3), considerando as personas Daniel Carvalho (capataz), Luiz Felipe (supervisor) e Marcos Ferreira (gerente). A análise dessas histórias permitiu mapear as informações necessárias para suportar os principais fluxos do sistema, como o registro de movimentações do rebanho, a sincronização offline, a gestão de tarefas e tickets de manutenção, a validação de registros em campo e a geração de relatórios gerenciais. A representação adota a notação Chen, em que retângulos indicam entidades, losangos indicam relacionamentos e as cardinalidades aparecem no formato (mín, máx).
 
@@ -2787,7 +2799,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
  
 &nbsp;&nbsp;&nbsp;&nbsp;O modelo entidade-relacionamento construído para o AgroFlow traduz as User Stories levantadas junto à BrPec em uma estrutura conceitual composta por dezoito entidades, com atributos, relacionamentos e cardinalidades explicitamente definidos. A generalização da entidade `EVIDENCIA` em três subclasses, a resolução dos relacionamentos N:N por meio de entidades associativas e a especialização de `MOVIMENTACAO` em cinco subtipos isolam regras específicas de cada tipo de registro sem comprometer a coerência do todo. O desdobramento dos relacionamentos entre `USUARIO` e as entidades operacionais em papéis distintos (REGISTRA e VALIDA para movimentações, CRIA e EXECUTA para tarefas, ABRE e ATRIBUIDO_A para tickets) preserva no nível conceitual a hierarquia operacional da fazenda e evidencia a rastreabilidade de autoria exigida pelas regras de negócio. O MER funciona, portanto, como ponte formal entre as necessidades do parceiro e a estrutura física do banco de dados, fazendo com que cada decisão de implementação posterior tenha respaldo direto em uma regra documentada e discutida com a BrPec.
 
-### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### <a name="c3.6.2"></a>3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para compreender a persistência de dados do sistema por trás da aplicação web, foi elaborado o seguinte Diagrama Entidade-Relacionamento. Ele traduz os requisitos de negócio em uma estrutura técnica, definindo as propriedades de cada objeto (entidade) e as regras que regem suas associações. Esta modelagem é fundamental para assegurar que o banco de dados seja escalável e que as consultas às informações ocorram de maneira lógica e otimizada.
 
@@ -2811,7 +2823,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;O diagrama entidade-relacionamento materializa graficamente o modelo conceitual da [Seção 3.6.1](#c3.6.1), traduzindo as decisões de modelagem em uma representação visual padronizada com convenções claras de cores e formas para entidades, relacionamentos, chaves primárias, chaves estrangeiras e atributos comuns. A centralidade da entidade `Retiro` no diagrama evidencia o papel estruturante dos retiros na operação da BrPec, refletindo a realidade de que praticamente todos os fluxos do sistema (registros de movimentação, tarefas, tickets e relatórios) ocorrem necessariamente vinculados a uma unidade física da fazenda. O desdobramento das relações entre `Usuário` e as entidades operacionais e a separação entre `Tarefa` e `Evidência` em relacionamentos N:N permitem visualizar com clareza tanto a responsabilização individual quanto a flexibilidade na anexação de múltiplas comprovações a uma mesma atividade. Aliado ao modelo relacional e ao modelo físico apresentados na [Seção 3.6.3](#c3.6.3), o DER assegura que a estrutura do banco de dados sustente as regras de negócio definidas na [Seção 3.1.2](#c3.1.2) com integridade referencial, baixa redundância e organização adequada para as consultas exigidas pelos fluxos operacionais e gerenciais do AgroFlow.
 
-### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### <a name="c3.6.3"></a>3.6.3. Modelo Relacional e Modelo Físico 
 
 **Modelo Relacional**
 
@@ -3032,10 +3044,42 @@ CREATE TABLE relatorio (
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para melhor visualização o diagrama utiliza a notação Crow's Foot, na qual o símbolo de pé de galinha indica cardinalidade muitos (N) e a linha simples indica cardinalidade um (1), estando as multiplicidades representadas visualmente em ambos os lados de cada relacionamento.
 
+***Mapeamento de coerência entre ER, DER e Modelo Físico***
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Para tornar explícita a coerência mantida entre o Modelo Entidade-Relacionamento ([Seção 3.6.1](#c3.6.1)), o Diagrama Entidade-Relacionamento ([Seção 3.6.2](#c3.6.2)) e o Modelo Físico apresentado nesta seção, o Quadro XX apresenta o mapeamento direto entre os elementos dos três artefatos. Esse mapeamento explicita a preservação dos mesmos nomes de atributos, chaves primárias, chaves estrangeiras e cardinalidades em todos os níveis de abstração, do conceitual ao executável.
+ 
+<p align="center">Quadro XX - Mapeamento entre ER, DER e Modelo Físico</p>
+
+| Entidade (ER) | Representação no DER | Tabela física (PostgreSQL) | Chave primária | Principais chaves estrangeiras |
+|---------------|----------------------|----------------------------|----------------|--------------------------------|
+| USUARIO | Usuario | `usuario` | `id` (UUID) | `retiro_id` → `retiro(id)` |
+| RETIRO | Retiro | `retiro` | `id` (UUID) | — |
+| MOVIMENTACAO | Movimentacao | `movimentacao` | `id` (UUID) | `retiro_id`, `capataz_id`, `validado_por` |
+| MOVIMENTACAO_COMPRA | Especialização de Movimentacao | `movimentacao_compra` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_VENDA | Especialização de Movimentacao | `movimentacao_venda` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_TRANSFERENCIA | Especialização de Movimentacao | `movimentacao_transferencia` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_NASCIMENTO | Especialização de Movimentacao | `movimentacao_nascimento` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| MOVIMENTACAO_MORTE | Especialização de Movimentacao | `movimentacao_morte` | `movimentacao_id` (UUID) | `movimentacao_id` → `movimentacao(id)` |
+| TAREFA | Tarefa | `tarefa` | `id` (UUID) | `retiro_id`, `criada_por`, `atribuida_a`, `aprovado_por` |
+| TICKET | Ticket | `ticket` | `id` (UUID) | `retiro_id`, `aberto_por`, `atribuido_a`, `aprovado_por` |
+| EVIDENCIA | Evidencia | `evidencia` | `id` (UUID) | `usuario_id` → `usuario(id)` |
+| EVIDENCIA_FOTO | Especialização de Evidencia | `evidencia_foto` | `evidencia_id` (UUID) | `evidencia_id` → `evidencia(id)` |
+| EVIDENCIA_AUDIO | Especialização de Evidencia | `evidencia_audio` | `evidencia_id` (UUID) | `evidencia_id` → `evidencia(id)` |
+| EVIDENCIA_MENSAGEM | Especialização de Evidencia | `evidencia_mensagem` | `evidencia_id` (UUID) | `evidencia_id` → `evidencia(id)` |
+| EVIDENCIA_MOVIMENTACAO | Entidade associativa N:N | `evidencia_movimentacao` | (`evidencia_id`, `movimentacao_id`) | Ambas FKs com `ON DELETE CASCADE` |
+| EVIDENCIA_TAREFA | Entidade associativa N:N | `evidencia_tarefa` | (`evidencia_id`, `tarefa_id`) | Ambas FKs com `ON DELETE CASCADE` |
+| EVIDENCIA_TICKET | Entidade associativa N:N | `evidencia_ticket` | (`evidencia_id`, `ticket_id`) | Ambas FKs com `ON DELETE CASCADE` |
+| RELATORIO | Relatorio | `relatorio` | `id` (UUID) | `gerado_por`, `retiro_id` |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Além da correspondência direta entre nomes e chaves, as cardinalidades foram preservadas em todos os níveis. As relações 1:N do ER (como USUARIO PERTENCE_A RETIRO, ou MOVIMENTACAO OCORRE_EM RETIRO) são implementadas como `FOREIGN KEY` simples na tabela do lado N (por exemplo, `usuario.retiro_id` e `movimentacao.retiro_id`), enquanto as relações N:N (como EVIDENCIA ANEXA MOVIMENTACAO) são materializadas pelas tabelas associativas com chaves primárias compostas e cláusulas `ON DELETE CASCADE` para preservar integridade referencial. As especializações de MOVIMENTACAO e EVIDENCIA seguem o padrão de herança por tabela, com a tabela filha referenciando o `id` da tabela pai como chave primária e estrangeira simultaneamente, garantindo que cada registro especializado tenha sempre um correspondente na tabela base. Essa coerência completa sustenta a rastreabilidade entre o conceito de domínio, sua representação visual e a implementação executável no PostgreSQL hospedado no Supabase.
+ 
+---
 
 &nbsp;&nbsp;&nbsp;&nbsp;Portanto, o modelo relacional e físico desenvolvido nesta seção centraliza digitalmente todas as entidades operacionais da BrPec Agropecuária S.A., traduzindo os fluxos descritos no minimundo em tabelas, relacionamentos e restrições executáveis no PostgreSQL hospedado no Supabase. As decisões estruturais tomadas ao longo da modelagem buscaram refletir diretamente as regras de negócio levantadas junto ao parceiro, garantindo que o banco de dados seja funcional e consistente com a realidade operacional dos retiros. O modelo fornece a base necessária para o registro, a validação, a consolidação das informações e o fluxo de sincronização.
 
-### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional (sprint 3)
+### <a name="c3.6.4"></a>3.6.4. Consultas SQL e lógica proposicional 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;As consultas SQL apresentadas nesta seção representam regras utilizadas nos fluxos centrais do AgroFlow e demonstram como a lógica proposicional aparece na seleção, atualização e inserção de dados. Para manter coerência com a implementação, foram escolhidos exemplos relacionados aos filtros de movimentação, aprovação de tickets e criação de registros do rebanho. Em alguns casos, a condição aparece no backend distribuída entre controller, service e repository, por isso, o SQL abaixo apresenta a forma relacional equivalente da regra aplicada pela camada de servidor.
@@ -3343,7 +3387,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Esse alinhamento entre a formalização lógica e a implementação real evidencia que a modelagem proposicional tem valor prático direto no desenvolvimento de sistemas, tornando explícitas as condições que governam cada operação, facilitando a identificação de casos de borda e fundamentando as decisões de projeto que de outra forma permaneceriam implícitas no código. No contexto do AgroFlow, isso se traduz em maior confiabilidade das regras aplicadas aos registros de movimentação do rebanho e aos chamados de infraestrutura gerenciados em campo. 
 
-## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
+## <a name="c3.7"></a>3.7. WebAPI e endpoints 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Endpoints são pontos de entrada ou endereços por meio dos quais um sistema se comunica com o outro, estando relacionados a um verbo HTTP (GET, POST, PATCH, DELETE...), que são métodos usados para suprir as requisições feitas em um sistema web.
 
@@ -3355,6 +3399,41 @@ VALUES (?, ?, ?, ?);
 &nbsp;&nbsp;&nbsp;&nbsp;É válido mencionar que todos os endpoints são relativos à URL base: `http://localhost:3000`
 
 &nbsp;&nbsp;&nbsp;&nbsp;A documentação navegável completa da WebAPI encontra-se no arquivo `documents/index.html`, disponível no repositório do projeto.
+
+**Padrão de documentação dos endpoints**
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints documentados nesta seção seguem o mesmo padrão estrutural, contendo obrigatoriamente os seguintes campos para garantir um contrato técnico completo:
+ 
+- **Endereço:** caminho do endpoint relativo à Base URL.
+- **Método HTTP:** verbo utilizado (GET, POST, PATCH ou DELETE).
+- **Descrição:** propósito funcional do endpoint e RF/RN relacionados quando aplicável.
+- **Headers obrigatórios:** cabeçalhos HTTP exigidos. Inclui `Content-Type: application/json` para requisições com corpo JSON e `Authorization: Bearer <token>` para rotas protegidas por JWT. Endpoints sem requisitos específicos são marcados explicitamente como "Nenhum header específico necessário".
+- **Parâmetros de entrada:** parâmetros de rota (`/recurso/:id`), de query (`?campo=valor`) e seus tipos quando aplicáveis.
+- **Body esperado:** estrutura JSON do corpo da requisição, com tipos e obrigatoriedade de cada campo. Endpoints sem corpo são marcados explicitamente como "Nenhum".
+- **Formato de resposta:** estrutura JSON retornada para o status de sucesso e mensagens padronizadas para erros.
+- **Status codes possíveis:** códigos HTTP que o endpoint pode retornar, com seus significados específicos no contexto da aplicação.
+&nbsp;&nbsp;&nbsp;&nbsp;Os status codes utilizados em toda a API seguem o significado padronizado apresentado no Quadro XX, garantindo previsibilidade do comportamento da API e facilitando a integração de clientes futuros.
+ 
+<p align="center">Quadro XX - Status codes HTTP utilizados na API AgroFlow</p>
+
+| Código | Significado | Contexto de ocorrência no AgroFlow |
+|--------|-------------|-------------------------------------|
+| **200 OK** | Sucesso | Operações de leitura (GET) ou atualização (PATCH) concluídas com sucesso, incluindo retorno do recurso atualizado. |
+| **201 Created** | Recurso criado | Operações de criação (POST) bem-sucedidas, retornando o recurso criado com seu identificador UUID gerado. |
+| **204 No Content** | Sucesso sem retorno | Operações de exclusão (DELETE) bem-sucedidas. |
+| **400 Bad Request** | Requisição inválida | Campo obrigatório ausente, JSON malformado ou violação de regra de validação simples (RN01, RN02, RN08, RN11). Exemplo: tentativa de registrar movimentação tipo "morte" sem `causa_obito`. |
+| **401 Unauthorized** | Não autenticado | Token JWT ausente, inválido ou expirado em rotas protegidas. |
+| **403 Forbidden** | Sem permissão | Usuário autenticado, mas com cargo insuficiente para a operação solicitada (RN06, RN12). Exemplos: Capataz tentando validar movimentação; usuário não-Gerente tentando gerenciar usuários. |
+| **404 Not Found** | Recurso não encontrado | UUID informado não corresponde a nenhum registro no banco. Aplicado em buscas, atualizações e remoções por ID. |
+| **409 Conflict** | Conflito de estado | Tentativa de aprovar/validar um recurso que já foi processado anteriormente (ex.: aprovar ticket já aprovado). |
+| **422 Unprocessable Entity** | Regra de negócio violada | Requisição sintaticamente válida, mas bloqueada por regra de domínio (ex.: foto sem georreferenciamento, conforme RN04). |
+| **500 Internal Server Error** | Falha interna | Erro inesperado no servidor, capturado pelo middleware global de tratamento de erros e registrado em log sem exposição de detalhes técnicos ao cliente. |
+ 
+<p align="center">Fonte: Próprios autores (2026).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Endpoints públicos (como `/health` e `/usuarios/login`) não exigem autenticação e estão explicitamente marcados na descrição. Endpoints protegidos por JWT exigem o header `Authorization: Bearer <token>` ou o cookie de sessão equivalente, e validam o cargo do usuário via middleware `cargo.middleware`, retornando 401 quando o token está ausente ou inválido e 403 quando o cargo é insuficiente para a operação solicitada. Os endpoints que recebem corpo JSON exigem o header `Content-Type: application/json` para correto processamento pelo Express.
+ 
+---
 
 **Endpoints**
 
@@ -4181,7 +4260,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
 
-## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência 
 
 ### <a name="c3.8.1"></a>3.8.1. Autenticação
 
@@ -4250,7 +4329,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Essas estratégias foram validadas nos fluxos críticos da aplicação, contemplando autenticação, autorização, registro offline, sincronização, envio de evidências e tratamento de erros.
 
-## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## <a name="c3.9"></a>3.9. Matriz de Rastreabilidade (RTM) 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A matriz de rastreabilidade apresentada no Quadro 49 relaciona as personas do AgroFlow aos requisitos funcionais, regras de negócio, endpoints implementados no backend, telas previstas e critérios de teste associados. Seu objetivo é garantir que cada funcionalidade descrita no WAD possua uma ligação verificável entre a necessidade do usuário, a regra que governa o comportamento do sistema e a implementação técnica responsável por atender essa necessidade. Dessa forma, a RTM funciona como um instrumento de controle de qualidade e acompanhamento do escopo ao longo das sprints, reduzindo o risco de requisitos documentados sem implementação ou endpoints implementados sem justificativa funcional.
 
@@ -4305,7 +4384,7 @@ VALUES (?, ?, ?, ?);
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## <a name="c4.1"></a>4.1. Primeira versão da aplicação web (sprint 3)
+## <a name="c4.1"></a>4.1. Primeira versão da aplicação web 
 
 ### Visão Geral do Desenvolvimento
 
@@ -4525,13 +4604,13 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o site responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a configuração da aplicação como PWA, a expansão da cobertura de testes e correções finais de interface.
 
-## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
+## <a name="c4.3"></a>4.3. Versão final da aplicação web 
 
 *Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
 
 # <a name="c5"></a>5. Testes
 
-## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## <a name="c5.1"></a>5.1. Relatório de testes de integração de endpoints automatizados
 
 ### 5.1.1 Estratégia de Documentação dos Testes
 
@@ -4806,7 +4885,7 @@ Também foram considerados subendpoints específicos:
 
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-## <a name="c5.2"></a>5.2. Testes de usabilidade (sprint 5)
+## <a name="c5.2"></a>5.2. Testes de usabilidade 
 
 ### <a name="c5.2.1"></a>5.2.1. Relatório de testes de guerrilha
 
@@ -5009,7 +5088,7 @@ Também foram considerados subendpoints específicos:
 
 *Posicione aqui o relatório dos testes SUS realizados.*
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
 
 ## <a name="c6.1"></a>6.1 Resumo Executivo
 
@@ -5152,66 +5231,62 @@ Também foram considerados subendpoints específicos:
 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências
 
-APROSOJA MS. Panorama da soja em Mato Grosso do Sul. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br
-. Acesso em: 30 abr. 2026.
 
-BANCO DO NORDESTE. 6 tendências do agronegócio para 2025: IA, Sustentabilidade e Inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
+APROSOJA MS. **Panorama da soja em Mato Grosso do Sul**. Mato Grosso do Sul, 2024. Disponível em: https://aprosojams.org.br. Acesso em: 30 abr. 2026.
 
-BRASIL. Lei nº 12.651, de 25 de maio de 2012. Dispõe sobre a proteção da vegetação nativa (Código Florestal). Diário Oficial da União: seção 1, Brasília, DF, 28 maio 2012.
+BANCO DO NORDESTE. **6 tendências do agronegócio para 2025**: IA, sustentabilidade e inovação. 2025. Disponível em: https://www.bnb.gov.br/agroinforma/-/asset_publisher/ji416hA780C3/content/6-tendencias-do-agronegocio-para-2025-ia-sustentabilidade-e-inovacao/45799. Acesso em: 9 jun. 2026.
 
-BRPEC AGROPECUÁRIA S.A. Informações institucionais e operacionais. Mato Grosso do Sul, 2026.
+BRASIL. **Lei nº 12.651, de 25 de maio de 2012**. Dispõe sobre a proteção da vegetação nativa (Código Florestal). **Diário Oficial da União**: seção 1, Brasília, DF, 28 maio 2012.
 
-CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
+BRPEC AGROPECUÁRIA S.A. **Informações institucionais e operacionais**. Mato Grosso do Sul, 2026.
 
-COHN, Mike. User Stories Applied: for Agile Software Development. Boston: Addison-Wesley, 2004.
+CNA – CONFEDERAÇÃO DA AGRICULTURA E PECUÁRIA DO BRASIL. **Impulsionado pelo crescimento de 11,7% da agropecuária, PIB brasileiro fecha 2025 com alta de 2,3%**. 2026. Disponível em: https://cnabrasil.org.br/publicacoes/impulsionado-pelo-crescimento-de-11-7-da-agropecuaria-pib-brasileiro-fecha-2025-com-alta-de-2-3. Acesso em: 9 jun. 2026.
 
-DE OLHO NOS RURALISTAS. Relatórios sobre ESG e agronegócio. 2025. Disponível em: https://deolhonosruralistas.com.br
-. Acesso em: 30 abr. 2026.
+COHN, Mike. **User Stories Applied**: for agile software development. Boston: Addison-Wesley, 2004.
 
-ECONODATA. Dados empresariais da BrPec Agropecuária S.A. 2026. Disponível em: https://www.econodata.com.br
-. Acesso em: 30 abr. 2026.
+DE OLHO NOS RURALISTAS. **Relatórios sobre ESG e agronegócio**. 2025. Disponível em: https://deolhonosruralistas.com.br. Acesso em: 30 abr. 2026.
 
-FIELDING, Roy Thomas. Architectural Styles and the Design of Network-based Software Architectures. 2000. Tese (Doutorado em Ciência da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 15 maio 2026.
+ECONODATA. **Dados empresariais da BrPec Agropecuária S.A.** 2026. Disponível em: https://www.econodata.com.br. Acesso em: 30 abr. 2026.
 
-G4 EDUCAÇÃO. Canvas de Proposta de Valor: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com
-. Acesso em: 30 abr. 2026.
+FIELDING, Roy Thomas. **Architectural styles and the design of network-based software architectures**. 2000. Tese (Doutorado em Ciência da Computação) — University of California, Irvine, 2000. Disponível em: https://ics.uci.edu/~fielding/pubs/dissertation/top.htm. Acesso em: 15 maio 2026.
 
-GRAND VIEW RESEARCH. Brazil Precision Farming Market Size & Outlook, 2025-2030. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
+G4 EDUCAÇÃO. **Canvas de proposta de valor**: conceitos e aplicações. 2025. Disponível em: https://g4educacao.com. Acesso em: 30 abr. 2026.
 
-HARLEY, Aurora. Personas make users memorable for product team members. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/
-. Acesso em: 30 abr. 2026.
+GRAND VIEW RESEARCH. **Brazil precision farming market size & outlook, 2025-2030**. 2025. Disponível em: https://www.grandviewresearch.com/horizon/outlook/precision-farming-market/brazil. Acesso em: 9 jun. 2026.
 
-IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Abate de bovinos atinge recorde em 2024. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
+HARLEY, Aurora. **Personas make users memorable for product team members**. Nielsen Norman Group, 2015. Disponível em: https://www.nngroup.com/articles/personas-users/. Acesso em: 30 abr. 2026.
 
-ISO/IEC 25010:2023. Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model. Genebra: ISO, 2023.
+IBGE – INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Abate de bovinos atinge recorde em 2024**. Agência IBGE Notícias, 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/42899-abate-de-bovinos-atinge-recorde-em-2024. Acesso em: 9 jun. 2026.
 
-JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. Use Case 3.0: the guide to succeeding with use cases. [S.l.]: Ivar Jacobson International, 2024.
+ISO/IEC 25010:2023. **Systems and software engineering** — systems and software quality requirements and evaluation (SQuaRE) — product quality model. Genebra: ISO, 2023.
 
-LARMAN, Craig. Applying UML and Patterns: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
+JACOBSON, Ivar; SPENCE, Ian; DE MENDONÇA, Rick. **Use Case 3.0**: the guide to succeeding with use cases. [S. l.]: Ivar Jacobson International, 2024.
 
-MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
+LARMAN, Craig. **Applying UML and patterns**: an introduction to object-oriented analysis and design and iterative development. 3. ed. Upper Saddle River: Prentice Hall, 2004.
 
-MARKET DATA FORECAST. Latin America Precision Agriculture Market Size Report 2033. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
+MAPA – MINISTÉRIO DA AGRICULTURA E PECUÁRIA. **Portaria SDA/Mapa nº 1.331, de 21 de julho de 2025**: institui o cronograma do Programa Nacional de Identificação Individual de Bovinos e Búfalos (PNIB). Brasília, DF, 2025. Disponível em: https://cnabrasil.org.br/noticias/governo-federal-define-cronograma-para-identificacao-individual-obrigatoria-de-bovinos-e-bubalinos. Acesso em: 9 jun. 2026.
 
-OSTERWALDER, Alexander. Value Proposition Design: How to Create Products and Services Customers Want. Hoboken: Wiley, 2014.
+MARKET DATA FORECAST. **Latin America precision agriculture market size report 2033**. 2025. Disponível em: https://www.marketdataforecast.com/market-reports/latin-america-precision-agriculture-market. Acesso em: 9 jun. 2026.
 
-PANORAMA DA GESTÃO RURAL. Pesquisa Panorama da Gestão Rural 2024. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
+OSTERWALDER, Alexander. **Value proposition design**: how to create products and services customers want. Hoboken: Wiley, 2014.
 
-PATTON, Jeff. User Story Mapping: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
+PANORAMA DA GESTÃO RURAL. **Pesquisa Panorama da Gestão Rural 2024**. Canal Rural, 2024. Disponível em: https://www.canalrural.com.br. Acesso em: 9 jun. 2026.
 
-PMI – PROJECT MANAGEMENT INSTITUTE. A guide to the Project Management Body of Knowledge (PMBOK Guide). 7. ed. Newtown Square: PMI, 2021.
+PATTON, Jeff. **User story mapping**: discover the whole story, build the right product. Sebastopol: O'Reilly Media, 2014.
 
-PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, v. 86, n. 1, p. 78-93, jan. 2008.
+PMI – PROJECT MANAGEMENT INSTITUTE. **A guide to the project management body of knowledge (PMBOK Guide)**. 7. ed. Newtown Square: PMI, 2021.
 
-PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
+PORTER, Michael E. The five competitive forces that shape strategy. **Harvard Business Review**, v. 86, n. 1, p. 78-93, jan. 2008.
 
-RADAR AGTECH BRASIL. Mapeamento das startups do agronegócio brasileiro: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
+PRESSMAN, Roger S.; MAXIM, Bruce R. **Engenharia de software**: uma abordagem profissional. 9. ed. Porto Alegre: AMGH, 2020.
 
-TOTVS. Tendências Agronegócio 2026: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
+RADAR AGTECH BRASIL. **Mapeamento das startups do agronegócio brasileiro**: edição 2025. Embrapa, SP Ventures e Homo Ludens, 2025. Disponível em: https://radaragtech.com.br. Acesso em: 9 jun. 2026.
 
-UNIÃO EUROPEIA. Regulamento (UE) 2023/1115 do Parlamento Europeu e do Conselho, de 31 de maio de 2023, relativo à disponibilização no mercado da União e à exportação da União de determinadas matérias-primas e produtos associados à desflorestação e à degradação florestal (EUDR). Jornal Oficial da União Europeia, L 150, 9 jun. 2023.
+TOTVS. **Tendências agronegócio 2026**: tecnologias, IA e sustentabilidade. 2025. Disponível em: https://www.totvs.com/blog/gestao-agricola/tendencias-agro/. Acesso em: 9 jun. 2026.
+
+UNIÃO EUROPEIA. **Regulamento (UE) 2023/1115 do Parlamento Europeu e do Conselho, de 31 de maio de 2023**, relativo à disponibilização no mercado da União e à exportação da União de determinadas matérias-primas e produtos associados à desflorestação e à degradação florestal (EUDR). **Jornal Oficial da União Europeia**, L 150, 9 jun. 2023.
 
 # <a name="c9"></a>Anexos
 
