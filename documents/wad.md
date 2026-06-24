@@ -2667,6 +2667,15 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
+&nbsp;&nbsp;&nbsp;&nbsp;Na Home do Supervisor, a versão implementada reorganiza o conteúdo em áreas de acesso rápido, operações de campo e atividades recentes. A diferença visual mais relevante está na troca de uma composição mais concentrada por uma estrutura mais espaçada, com listas horizontais e blocos de ação que facilitam o acompanhamento operacional e a entrada nos módulos de revisão, tickets e delegação.
+<div align="center">
+<p align="center">Figura 47 - Interface atual da Home do Supervisor</p>
+<p align="center">
+<img src="others/assets/interface-atual-supervisor-home.png" alt="Interface atual da Home do Supervisor" border="0" width="90%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 
 ## <a name="c3.6"></a>3.6. Modelagem do banco de dados (sprints 2 e 4)
 
