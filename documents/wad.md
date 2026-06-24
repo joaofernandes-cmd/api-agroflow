@@ -4708,13 +4708,18 @@ Também foram considerados subendpoints específicos:
 
 ### <a name="c5.2.1"></a>5.2.1. Relatório de testes de guerrilha
 
-O teste de guerrilha é uma modalidade de teste de usabilidade caracterizada pela sua aplicação rápida e informal, realizada com usuários recrutados de forma oportunista, sem agendamento prévio ou ambiente controlado de laboratório. Proposto como alternativa ágil aos testes tradicionais, o método consiste em apresentar o sistema a participantes reais e observar, sem intervenção direta, como eles executam tarefas previamente definidas, registrando dificuldades, erros e comportamentos inesperados. Sua principal vantagem é a capacidade de identificar problemas críticos de usabilidade com um número reduzido de participantes e em curto prazo, tornando-o especialmente adequado ao ciclo de desenvolvimento iterativo adotado pelo grupo.
+&nbsp;&nbsp;&nbsp;&nbsp;O teste de guerrilha é uma modalidade de teste de usabilidade caracterizada pela sua aplicação rápida e informal, realizada com usuários recrutados de forma oportunista, sem agendamento prévio ou ambiente controlado de laboratório. Proposto como alternativa ágil aos testes tradicionais, o método consiste em apresentar o sistema a participantes reais e observar, sem intervenção direta, como eles executam tarefas previamente definidas, registrando dificuldades, erros e comportamentos inesperados. Sua principal vantagem é a capacidade de identificar problemas críticos de usabilidade com um número reduzido de participantes e em curto prazo, tornando-o especialmente adequado ao ciclo de desenvolvimento iterativo adotado pelo grupo.
 
-No contexto do AgroFlow, o teste de guerrilha foi conduzido com o objetivo de validar a navegabilidade e a clareza dos fluxos principais da aplicação, registro de movimentações do rebanho, atribuição e acompanhamento de tarefas e abertura de chamados de infraestrutura, antes da avaliação quantitativa pelo questionário SUS (Seção 5.2.2). Dado que o público-alvo inclui usuários com baixo letramento digital, como capatazes de retiro com pouca familiaridade com sistemas informatizados, o teste priorizou a observação de comportamentos espontâneos e a identificação de barreiras de compreensão na interface, sem orientação prévia sobre o funcionamento do sistema. Cabe destacar, no entanto, que os participantes recrutados para esta etapa foram alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia, perfil distinto do usuário final do produto. Essa limitação deve ser considerada na interpretação dos resultados, uma vez que a familiaridade dos participantes com interfaces digitais pode subestimar dificuldades que seriam encontradas pelo público real da aplicação.
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o teste de guerrilha foi conduzido com o objetivo de validar a navegabilidade e a clareza dos fluxos principais da aplicação, registro de movimentações do rebanho, atribuição e acompanhamento de tarefas e abertura de chamados de infraestrutura, antes da avaliação quantitativa pelo questionário SUS (Seção 5.2.2). Dado que o público-alvo inclui usuários com baixo letramento digital, como capatazes de retiro com pouca familiaridade com sistemas informatizados, o teste priorizou a observação de comportamentos espontâneos e a identificação de barreiras de compreensão na interface, sem orientação prévia sobre o funcionamento do sistema. Cabe destacar, no entanto, que os participantes recrutados para esta etapa foram alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia, perfil distinto do usuário final do produto. Essa limitação deve ser considerada na interpretação dos resultados, uma vez que a familiaridade dos participantes com interfaces digitais pode subestimar dificuldades que seriam encontradas pelo público real da aplicação.
+
+---
 
 #### Perfil dos participantes
 
-Os nomes listados abaixo são fictícios, utilizados para preservar a privacidade dos participantes. Todos são alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia.
+>Os nomes listados abaixo são fictícios, utilizados para preservar a privacidade dos participantes. Todos são alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia.
+
+<div align="center">
+  <p align="center">Quadro 63 - Perfil dos participantes</p>
 
 | # | Nome | Curso | Persona testada |
 |:-:|------|-------|:---------------:|
@@ -4724,9 +4729,17 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Engenharia da Computação | Capataz, Supervisor e Gerente |
 | 5 | Gabriel Almeida | Ciência da Computação | Capataz, Supervisor e Gerente |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Tarefa 1 — Capataz: Registrar movimentação do rebanho
  
 **Enunciado:** Suponha que você é um capataz do retiro Aroeira e acabou de identificar a morte de um animal no pasto. Utilize o AgroFlow para registrar essa movimentação do rebanho.
+
+<div align="center">
+  <p align="center">Quadro 64 - Etapas e expectativas da Tarefa 1</p>
 
 | Etapa | Descrição | Expectativa |
 |:-----:|-----------|-------------|
@@ -4735,7 +4748,15 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 3 | Preencher os campos obrigatórios | Preencher os campos de origem e causa do óbito |
 | 4 | Confirmar e enviar o registro | Clicar em "Confirmar" e verificar mensagem de sucesso |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
 **Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H3 (Controle e liberdade do usuário)
+
+<br><br>
+
+<div align="center">
+  <p align="center">Quadro 65 - Resultados da Tarefa 1</p>
 
 | # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
 |:-:|------|:---------:|---------|---------|---------|---------|
@@ -4745,9 +4766,17 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Sucesso com dificuldade | Encontrou o menu, mas tentou acessar primeiro a página "Tarefas" antes de ir para "Movimentações" | Selecionou o tipo correto, mas deixou o estágio de vida em branco na primeira tentativa e recebeu erro | Após o erro, corrigiu e preencheu todos os campos | Confirmou com sucesso na segunda tentativa |
 | 5 | Gabriel Almeida | Sucesso | Navegou diretamente até "Movimentações" pela tela de início | Selecionou "Morte" e preencheu o estágio de vida sem dificuldade | Preencheu causa do óbito e origem corretamente | Enviou o registro e confirmou a mensagem de sucesso |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Tarefa 2 — Supervisor: Criar e atribuir uma tarefa
  
 **Enunciado:** Suponha que você é o supervisor responsável pelo retiro Puga e precisa criar uma nova tarefa para o capataz. Utilize o AgroFlow para criar e atribuir essa tarefa.
+
+<div align="center">
+  <p align="center">Quadro 66 - Etapas e expectativas da Tarefa 2</p>
 
 | Etapa | Descrição | Expectativa |
 |:-----:|-----------|-------------|
@@ -4755,8 +4784,16 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 2 | Clicar em "Nova tarefa" e preencher título e descrição | Clicar em "Nova tarefa" e preencher título e descrição da atividade |
 | 3 | Selecionar o retiro de destino e o capataz responsável | Selecionar o retiro "Puga" e atribuir ao capataz responsável |
 | 4 | Confirmar e publicar a tarefa | Clicar em "Publicar" e confirmar que a tarefa aparece na lista |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
  
 **Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H6 (Reconhecimento em vez de memorização)
+
+<br><br>
+
+<div align="center">
+  <p align="center">Quadro 67 - Resultado da Tarefa 2</p>
 
 | # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
 |:-:|------|:---------:|---------|---------|---------|---------|
@@ -4766,9 +4803,17 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Sucesso com dificuldade | Acessou "Delegar", mas inicialmente acessou a página "Tarefas" por engano | Após encontrar o botão correto, preencheu título e descrição sem problemas | Não encontrou de imediato o campo de atribuição do capataz | Publicou com sucesso após breve exploração |
 | 5 | Gabriel Almeida | Sucesso | Acessou a seção e encontrou os campos a serem preenchidos rapidamente | Preencheu os campos de forma direta | Selecionou retiro e capataz sem dificuldade | Publicou a tarefa e verificou que constava na lista |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Tarefa 3 — Gerente: Gerar e exportar um relatório semanal
  
 **Enunciado:** Suponha que você é o gerente da BrPec e precisa gerar um relatório semanal com os registros de movimentação do rebanho validados pelos supervisores. Utilize o AgroFlow para gerar e exportar esse relatório.
+
+<div align="center">
+  <p align="center">Quadro 68 - Etapas e expectativas da Tarefa 3</p>
  
 | Etapa | Descrição | Expectativa |
 |:-----:|-----------|-------------|
@@ -4776,8 +4821,16 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 2 | Selecionar o período e o tipo de relatório | Selecionar o período nos campos de período e o tipo de movimentação desejado |
 | 3 | Visualizar os dados consolidados | Verificar os registros consolidados exibidos na tela |
 | 4 | Exportar o relatório | Clicar em "Exportar" e confirmar o download do arquivo (.xlsx ou .csv) |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
  
 **Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H8 (Estética e design minimalista)
+
+<br><br>
+
+<div align="center">
+  <p align="center">Quadro 69 - Resultado da Tarefa 3</p>
  
 | # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
 |:-:|------|:---------:|---------|---------|---------|---------|
@@ -4787,31 +4840,49 @@ Os nomes listados abaixo são fictícios, utilizados para preservar a privacidad
 | 4 | Beatriz Santos | Sucesso com dificuldade | Acessou a seção corretamente, porém ficou em dúvida se os dados exibidos eram apenas os validados ou todos os registros | Selecionou período e tipo corretos, mas perguntou em voz alta se o filtro de retiro era necessário | Visualizou os dados consolidados sem dificuldade | Exportou o relatório com sucesso |
 | 5 | Gabriel Almeida | Sucesso | Navegou até "Relatórios" rapidamente | Selecionou as opções corretas sem dúvidas | Verificou os dados e confirmou que eram apenas registros validados | Exportou o arquivo e confirmou o download |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Planilha completa de resultados
  
-Os dados completos dos testes de guerrilha, incluindo o registro detalhado das ocorrências por participante e o resumo de severidade, estão disponíveis na planilha a seguir:
+&nbsp;&nbsp;&nbsp;&nbsp;Os dados completos dos testes de guerrilha, incluindo o registro detalhado das ocorrências por participante e o resumo de severidade, estão disponíveis na planilha a seguir:
 
 [Acessar planilha de resultados dos testes de guerrilha](https://docs.google.com/spreadsheets/d/1QZ1_aPrnHj_M3JJAqonSPjTrNXyP4aJiIZqZUg4Ch5Q/edit?usp=sharing)
 
-**Tarefa 1 — Capataz**
+&nbsp;&nbsp;&nbsp;&nbsp;A seguir, são apresentados os prints de cada bloco da planilha, correspondentes às três tarefas executadas durante os testes.
+
+<br>
 
 <div align="center">
+  <p align="center">Figura 70 - Tabela de resultados da Tarefa 1 na planilha</p>
   <img src="/documents/others/assets/tarefa1-capataz.png" alt="Print da tabela de resultados - Tarefa 1 (Capataz)" width="800px">
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**Tarefa 2 — Supervisor**
+<br>
 
 <div align="center">
+  <p align="center">Figura 71 - Tabela de resultados da Tarefa 2 na planilha</p>
   <img src="/documents/others/assets/tarefa2-supervisor.png" alt="Print da tabela de resultados - Tarefa 2 (Supervisor)" width="800px">
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-**Tarefa 3 — Gerente**
+<br>
 
 <div align="center">
+  <p align="center">Figura 72 - Tabela de resultados da Tarefa 3 na planilha</p>
   <img src="/documents/others/assets/tarefa3-gerente.png" alt="Print da tabela de resultados - Tarefa 3 (Gerente)" width="800px">
+  <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
+
+---
 
 #### Resumo das ocorrências
+
+<div align="center">
+  <p align="center">Quadro 70 - Resumo das ocorrências</p>
 
 | Tarefa | Severidade | Resumo do ocorrido | Tipo | Participantes afetados | Potencial melhoria |
 |--------|:----------:|-------------------|:----:|:---------------------:|-------------------|
@@ -4823,11 +4894,14 @@ Os dados completos dos testes de guerrilha, incluindo o registro detalhado das o
 | Gerar relatório (Gerente) | Baixa | Usuário buscou relatórios dentro do dashboard antes de encontrar a seção correta | Usabilidade | F. Oliveira | Adicionar atalho ou card no dashboard apontando para a seção de relatórios |
 | Gerar relatório (Gerente) | Média | Dúvida se os dados exibidos incluíam apenas registros validados ou todos os registros | Compreensão de conteúdo | B. Santos | Exibir legenda ou indicador visual informando que apenas dados validados constam no relatório |
 
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
 #### Conclusão
  
-Os testes de guerrilha evidenciaram que o AgroFlow apresenta uma navegação geral satisfatória, com a maioria dos participantes completando as tarefas com sucesso. Os principais pontos de atenção concentram-se na clareza dos campos obrigatórios e na nomenclatura de alguns elementos do menu, que geraram momentos de hesitação em participantes com menor familiaridade com o fluxo do sistema. Esses achados serão considerados em conjunto com os resultados quantitativos obtidos pelo questionário SUS (Seção 5.2.2), permitindo ao grupo identificar melhoras futuras e priorizar os ajustes de interface mais relevantes antes da entrega final do produto.
-
-*Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes de guerrilha evidenciaram que o AgroFlow apresenta uma navegação geral satisfatória, com a maioria dos participantes completando as tarefas com sucesso. Os principais pontos de atenção concentram-se na clareza dos campos obrigatórios e na nomenclatura de alguns elementos do menu, que geraram momentos de hesitação em participantes com menor familiaridade com o fluxo do sistema. Esses achados serão considerados em conjunto com os resultados quantitativos obtidos pelo questionário SUS (Seção 5.2.2), permitindo ao grupo identificar melhoras futuras e priorizar os ajustes de interface mais relevantes antes da entrega final do produto.
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
 
