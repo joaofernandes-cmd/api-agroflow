@@ -4558,7 +4558,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A segunda versão do AgroFlow consolidou a integração entre o frontend e o backend implementado na Sprint 3, expandindo as funcionalidades disponíveis para cada perfil de usuário e estabelecendo a camada de validação e autorização do sistema. O foco desta sprint foi tornar o sistema operacional de ponta a ponta, conectando os fluxos de campo (capataz), supervisão e gerência em uma aplicação web coesa e funcional.
 
-### (a) O que foi implementado
+### O que foi implementado
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
 
@@ -4602,40 +4602,88 @@ VALUES (?, ?, ?, ?);
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-### (b) O que não foi concluído
+### O que não foi concluído
 
 &nbsp;&nbsp;&nbsp;&nbsp;A configuração da aplicação como PWA (Progressive Web App) ficou pendente, sendo prevista para a próxima sprint.
 
-### (c) Dificuldades técnicas enfrentadas e próximos passos
+### Dificuldades técnicas enfrentadas e próximos passos
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o site responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a configuração da aplicação como PWA, a expansão da cobertura de testes e correções finais de interface.
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A Sprint 5 fechou os três compromissos deixados em aberto ao final da Sprint 4 ([Seção 4.2](#c4.2)): a configuração da aplicação como PWA, a expansão da cobertura de testes e as correções finais de interface. Diferentemente das sprints anteriores, o esforço não esteve concentrado na criação de telas ou rotas novas, mas na consolidação do que já existia: a estrutura do backend foi refatorada, a camada de autenticação/autorização/resiliência foi formalizada ([Seção 3.8](#c3.8)) e o contrato da WebAPI foi fechado ([Seção 3.7](#c3.7)) com seus 52 endpoints documentados.
+&nbsp;&nbsp;&nbsp;&nbsp;A versão final do AgroFlow consolidou a aplicação como um sistema web completo, seguro e que pode ser instalado no celular. O trabalho desta etapa concentrou-se em três frentes principais: o controle de acesso ao sistema, a entrada do Capataz por QR Code e a possibilidade de instalar a aplicação como um aplicativo (PWA), pendência herdada da Sprint 4. Além disso, os testes automatizados foram ampliados e a interface recebeu ajustes finais.
 
-### (a) O que foi refinado ou adicionado desde a sprint 4
+### O que foi refinado ou adicionado: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Camada de autenticação e autorização.** A autenticação por login e senha passou a usar `bcrypt` para o hash das credenciais, eliminando o armazenamento em texto puro identificado como pendência na Sprint 3 ([Seção 4.1](#c4.1)), e o JWT passou a ser exigido com segredo configurado via variável de ambiente. O fluxo de acesso do Capataz por QR Code foi implementado com verificação por hash SHA-256 do token. A sessão passou a ser controlada por cookie com validade de 1 dia, e a autorização por cargo foi padronizada em todas as rotas via middleware `exigirCargo`, conforme detalhado na [Seção 3.8](#c3.8) e consolidado no Quadro 47.
+**Acesso por QR Code do Capataz.** 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**PWA e resiliência offline.** A aplicação do Capataz passou a operar como Progressive Web App, com service worker, manifesto instalável e um módulo dedicado de fila offline (`capataz-pwa.js`) que persiste registros no IndexedDB quando a conexão cai e os reenvia automaticamente quando ela retorna, verificando disponibilidade pelo endpoint `/health`. Esse mecanismo, descrito na [Seção 3.8.4](#c3.8.4), encerra a pendência de PWA registrada na Sprint 4.
+&nbsp;&nbsp;&nbsp;&nbsp;Como o Capataz atua em campo e possui baixo letramento digital, o acesso desse perfil ocorre por QR Code, em conformidade com a RN05. Ao escanear o código, o sistema reconhece o Capataz, confirma que o acesso é válido e o leva à tela de entrada e, em seguida, à página inicial (Figura 65). Cada código de acesso pode ser desativado ou ter um prazo de validade, o que permite encerrar o acesso a qualquer momento sem alterar o cadastro do usuário.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Refatoração do backend.** As camadas de controllers e services foram reorganizadas para reduzir duplicação e isolar responsabilidades, os scripts de inicialização do Express foram extraídos em helpers compartilhados, e as rotas das telas EJS foram separadas por perfil de usuário (Capataz, Supervisor, Gerente), em vez de concentradas em arquivos únicos. Funções relacionadas a evidências de áudio foram renomeadas para maior clareza e consistência com o restante do domínio.
+<div align="center">
+<p align="center">Figura 65 - Tela de acesso do Capataz por QR Code</p>
+<p align="center">
+<img src="others/assets/acesso-capataz-qrcode.png" alt="Tela de acesso do Capataz por QR Code" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Documentação da WebAPI.** O contrato dos 52 endpoints foi revisado e padronizado na [Seção 3.7](#c3.7), incluindo headers de autenticação, parâmetros, corpo de requisição/resposta e status codes possíveis para cada rota, com checagem cruzada contra o comportamento real do código e do banco de dados.
+**Tratamento de erros do acesso.** 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Cobertura de testes.** A suíte automatizada foi ampliada para **29 test suites** e **360 casos de teste aprovados** (147 de integração, 213 unitários), elevando a cobertura global para **80,39% de statements**, conforme reportado na [Seção 5.1.4](#c5.1). Os ajustes finais de interface por perfil (Capataz, Supervisor e Gerente) estão documentados na subseção "Ajustes visuais na interface implementada" da [Seção 3.5](#c3.5).
+&nbsp;&nbsp;&nbsp;&nbsp;Quando o código lido não é mais válido ou já expirou, o sistema apresenta uma tela amigável, que informa o problema de forma simples e orienta o Capataz a solicitar um novo código, sem exibir mensagens técnicas (Figura 66).
 
-### (b) Pendências remanescentes
+<div align="center">
+<p align="center">Figura 66 - Tela de QR Code inválido ou expirado</p>
+<p align="center">
+<img src="others/assets/acesso-capataz-invalido.png" alt="Tela de QR Code inválido ou expirado" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
 
-- A validação end-to-end do fluxo offline em navegador real não foi realizada; a cobertura atual se limita a testes unitários em sandbox para a fila local e o reenvio via IndexedDB (US01, [Seção 3.9](#c3.9)).
-- Os relatórios de testes de usabilidade (testes de guerrilha e SUS) previstos na [Seção 5.2](#c5.2) ainda não foram consolidados neste documento.
-- As conclusões finais e o plano de melhorias futuras ([Seção 7](#c7)) permanecem em aberto.
+**Controle de acesso ao sistema.** 
 
-### (c) Dificuldades técnicas enfrentadas
+&nbsp;&nbsp;&nbsp;&nbsp;O acesso foi padronizado para os três perfis. O Supervisor e o Gerente entram com login e senha, guardadas de forma protegida, enquanto o Capataz entra pelo QR Code. Em todos os casos, o sistema mantém a sessão do usuário de forma segura e garante que cada perfil utilize apenas as funcionalidades correspondentes ao seu papel. O detalhamento desse controle encontra-se na [Seção 3.8](#c3.8).
 
-&nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade da sprint foi refatorar um backend já em produção sem quebrar contratos consumidos pelo frontend EJS e pela fila offline do PWA. Cada mudança na estrutura de controllers, services e rotas exigia reexecutar a suíte de testes para garantir que o comportamento observável das rotas permanecesse o mesmo. A implementação do PWA também trouxe desafios específicos de sincronização: garantir que um mesmo registro não fosse duplicado ao ser reenviado após reconexão exigiu reforçar a idempotência dos endpoints de sincronização (upsert por UUID) e ampliar os testes desse fluxo. Por fim, manter a documentação da WebAPI (Seção 3.7) coerente com o código durante as refatorações exigiu revisões cruzadas recorrentes entre rotas, controllers e o próprio WAD.
+**Instalação como aplicativo (PWA).**
+
+&nbsp;&nbsp;&nbsp;&nbsp;A possibilidade de instalar o AgroFlow como aplicativo, pendente na Sprint 4, foi concluída. A página inicial passou a oferecer um botão "Instalar app" (Figura 67) que abre a janela de instalação do próprio navegador (Figura 68), permitindo que o Capataz instale o sistema no celular e o utilize com a aparência de um aplicativo comum.
+
+<div align="center">
+<p align="center">Figura 67 - Botão de instalação do aplicativo na página inicial</p>
+<p align="center">
+<img src="others/assets/pwa-instalar-capataz.png" alt="Botão Instalar app na página inicial do Capataz" border="0" width="28%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 68 - Diálogo de instalação do aplicativo (PWA)</p>
+<p align="center">
+<img src="others/assets/pwa-dialogo-capataz.png" alt="Diálogo de instalação do aplicativo como PWA" border="0" width="60%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Ampliação dos testes e ajustes de interface.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes automatizados foram ampliados para cobrir o novo acesso por QR Code e o controle de acesso ao sistema, conforme detalhado na [Seção 5](#c5). Na interface, foram feitos ajustes finais, como a exibição de uma tela de confirmação ao término de ações importantes. Ao enviar um ticket, por exemplo, o Capataz passa a receber um retorno visual simples e direto, com um ícone de confirmação, uma mensagem curta informando que o ticket foi enviado ao supervisor e um botão para voltar ao início (Figura 76). Esse retorno é importante para usuários com baixo letramento digital, pois confirma que a ação foi concluída com sucesso e deixa claro o próximo passo.
+
+<div align="center">
+<p align="center">Figura 76 - Tela de confirmação de envio de ticket do Capataz</p>
+<p align="center">
+<img src="others/assets/interface-atual-capataz-ticket-enviado.png" alt="Tela de confirmação de envio de ticket do Capataz" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### Pendências remanescentes
+
+&nbsp;&nbsp;&nbsp;&nbsp;Atualmente, os códigos de acesso do Capataz são gerados por uma ferramenta separada do sistema, e ainda não existe uma tela própria para que o Gerente ou o Supervisor crie e desative esses acessos diretamente pela aplicação. A criação dessa tela de gerenciamento de acessos permanece como evolução futura.
+
+### Dificuldades técnicas enfrentadas
+
+&nbsp;&nbsp;&nbsp;&nbsp;O principal desafio foi adicionar o acesso por QR Code, sem prejudicar a entrada dos perfis Supervisor e Gerente nem as regras de permissão do sistema. Também foi preciso diferenciar o primeiro acesso pelo QR Code, que leva à tela de entrada, da confirmação seguinte, que leva à página inicial, garantindo uma navegação fluida sem mudar a interface. Por fim, a instalação como aplicativo exigiu ajustes para não interferir nas telas que dependem de login.
 
 # <a name="c5"></a>5. Testes
 
@@ -4852,7 +4900,7 @@ Também foram considerados subendpoints específicos:
 `npm run test:coverage -- --runInBand --coverageReporters=text-summary`
 
 <div align="center">
-  <p align="center">Figura 65 - Cobertura atual dos testes</p>
+  <p align="center">Figura 69 - Cobertura atual dos testes</p>
   <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -4874,13 +4922,13 @@ Também foram considerados subendpoints específicos:
 - Cobertura da camada de services: **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**.
 
 <div align="center">
-  <p align="center">Figura 66 - Execução atual dos testes de integração</p>
+  <p align="center">Figura 70 - Execução atual dos testes de integração</p>
   <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das 11 suítes de integração, com 147 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-  <p align="center">Figura 67 - Execução atual da suíte completa</p>
+  <p align="center">Figura 71 - Execução atual da suíte completa</p>
   <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 30 suítes, com 365 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5066,7 +5114,7 @@ Também foram considerados subendpoints específicos:
 <br>
 
 <div align="center">
-  <p align="center">Figura 70 - Tabela de resultados da Tarefa 1 na planilha</p>
+  <p align="center">Figura 72 - Tabela de resultados da Tarefa 1 na planilha</p>
   <img src="/documents/others/assets/tarefa1-capataz.png" alt="Print da tabela de resultados - Tarefa 1 (Capataz)" width="800px">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5074,7 +5122,7 @@ Também foram considerados subendpoints específicos:
 <br>
 
 <div align="center">
-  <p align="center">Figura 71 - Tabela de resultados da Tarefa 2 na planilha</p>
+  <p align="center">Figura 73 - Tabela de resultados da Tarefa 2 na planilha</p>
   <img src="/documents/others/assets/tarefa2-supervisor.png" alt="Print da tabela de resultados - Tarefa 2 (Supervisor)" width="800px">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5082,7 +5130,7 @@ Também foram considerados subendpoints específicos:
 <br>
 
 <div align="center">
-  <p align="center">Figura 72 - Tabela de resultados da Tarefa 3 na planilha</p>
+  <p align="center">Figura 74 - Tabela de resultados da Tarefa 3 na planilha</p>
   <img src="/documents/others/assets/tarefa3-gerente.png" alt="Print da tabela de resultados - Tarefa 3 (Gerente)" width="800px">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5291,10 +5339,10 @@ Também foram considerados subendpoints específicos:
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 68 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 75 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
-  <p align="center">Figura 68 - Business Model Canvas do AgroFlow</p>
+  <p align="center">Figura 75 - Business Model Canvas do AgroFlow</p>
   <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
