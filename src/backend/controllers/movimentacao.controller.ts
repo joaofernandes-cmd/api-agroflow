@@ -43,7 +43,7 @@ function converterData(valor: unknown, fimDoDia = false): Date | null | undefine
   }
 
   // Quando o filtro traz dataFim, o ajuste para o fim do dia evita excluir
-  // registros criados em horario posterior dentro da mesma data.
+  // registros criados em horário posterior dentro da mesma data
   if (fimDoDia) {
     data.setHours(23, 59, 59, 999)
   }
@@ -151,8 +151,7 @@ export const MovimentacaoController = {
     }
   },
 
-  // Endpoint usado pelo cliente offline quando o backend recebe a sincronização.
-  // O registro chega completo e já deve ser gravado como sincronizado no servidor.
+  // Recebe o registro já completo do cliente offline e grava como sincronizado
   async sincronizarRecebida(req: Request, res: Response) {
     try {
       const { tipo, tipo_outro, origem, destino, quantidade, causa_obito, estagio_vida, evidencia } = req.body
@@ -236,8 +235,7 @@ export const MovimentacaoController = {
 
   async filtrar(req: Request, res: Response) {
     try {
-      // O WAD documenta os filtros como retiro, tipo, status, dataInicio e dataFim.
-      // Mantemos aliases antigos para não quebrar chamadas já existentes.
+      // Mantém aliases antigos (retiroId, tipos) para não quebrar chamadas já existentes
       const retiro = retiroDaConsulta(req, extrairTexto(req.query.retiro) ?? extrairTexto(req.query.retiroId))
       const tiposBrutos = listaOuFallback<string>(req.query.tipo ?? req.query.tipos)
       const tipos = normalizarTiposMovimentacao(tiposBrutos)

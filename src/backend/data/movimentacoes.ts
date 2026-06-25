@@ -1,6 +1,5 @@
-// Fonte ÚNICA das movimentações de rebanho registradas pelos capatazes.
-// Alimenta a tela de Movimentações do supervisor, o relatório de movimentações
-// e o contador da home. Editar aqui reflete em todas as telas.
+// Fonte única das movimentações de rebanho registradas pelos capatazes;
+// alimenta a tela de Movimentações, o relatório e o contador da home
 
 import { capatazDoRetiro } from './referencia'
 
@@ -123,12 +122,11 @@ function decorar(m: MovimentacaoBase): MovimentacaoExibicao {
   }
 }
 
-// Movimentações pendentes de validação (fonte da tela e do relatório).
+// Movimentações pendentes de validação (fonte da tela e do relatório)
 export const movimentacoesPendentes: MovimentacaoExibicao[] = MOVIMENTACOES.map(decorar)
 
 // Remove uma movimentação da lista de pendentes (ex.: quando o supervisor
-// valida). Mutação in-place: fonte única da tela e do contador da home, então
-// a remoção reflete em ambos no próximo carregamento. Retorna true se removeu.
+// valida); mutação in-place para refletir na tela e no contador da home
 export function removerMovimentacaoPendente(id: string): boolean {
   const indice = movimentacoesPendentes.findIndex((m) => m.id === id)
   if (indice === -1) return false
@@ -137,7 +135,7 @@ export function removerMovimentacaoPendente(id: string): boolean {
 }
 
 // Mapa id → { detalhes, evidencia, evidenciaTexto } lido pelo JS da tela ao
-// mover uma movimentação para "Validadas".
+// mover uma movimentação para "Validadas"
 export const movimentacoesDadosMap: Record<
   string,
   { detalhes: string; evidencia: TipoEvidenciaMov; evidenciaTexto?: string }

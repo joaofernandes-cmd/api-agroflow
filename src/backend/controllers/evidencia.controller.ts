@@ -4,7 +4,7 @@ import { TarefaService } from '../services/tarefa.service'
 import { converterUUID, UUID } from '../models/uuid'
 import { mensagemErroCliente } from '../utils/erro-api'
 
-// Lê o tarefa_id (opcional) do corpo da requisição.
+// Lê o tarefa_id (opcional) do corpo da requisição
 // - ausente  → undefined (evidência criada sem vínculo com tarefa)
 // - inválido → null (controller responde 400)
 // - válido   → o UUID da tarefa

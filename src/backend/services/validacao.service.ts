@@ -97,8 +97,8 @@ export const ValidacaoService = {
     }
   },
 
-  // RN06: Aprovar tarefa (concluido → aprovado) — apenas Supervisor.
-  // Só pode aprovar uma tarefa que o capataz já concluiu (status 'concluido').
+  // RN06: Aprovar tarefa (concluido → aprovado) — apenas Supervisor, e só se
+  // o capataz já tiver concluído (status 'concluido')
   async aprovarTarefa(
     tarefaId: UUID,
     supervisorId: UUID,

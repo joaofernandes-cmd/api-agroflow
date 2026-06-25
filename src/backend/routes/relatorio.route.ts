@@ -5,9 +5,9 @@ import { exigirCargo } from '../middlewares/cargo.middleware'
 
 const relatorioRoutes = Router()
 
-// Relatórios são área restrita.
+// Relatórios são área restrita
 relatorioRoutes.use(autenticarUsuario)
-// Gerente e supervisor podem consultar esses dados.
+// Gerente e supervisor podem consultar esses dados
 relatorioRoutes.use(exigirCargo('gerente', 'supervisor'))
 
 // Dados brutos usados na montagem de relatórios

@@ -1,29 +1,26 @@
 import { NextFunction, Request, Response } from 'express'
 
-// Estrutura padrão de um erro de validação.
+// Estrutura padrão de um erro de validação
 export type ErroDeValidacao = {
   campo: string
   mensagem: string
 }
 
-// Resultado esperado de qualquer validação.
+// Resultado esperado de qualquer validação
 export type ResultadoDeValidacao = {
   valido: boolean
   erros: ErroDeValidacao[]
 }
 
-// Assinatura da função que valida uma request.
+// Assinatura da função que valida uma request
 export type ValidadorDeRequisicao = (req: Request) => ResultadoDeValidacao | Promise<ResultadoDeValidacao>
 
-// Factory de middleware.
-// Recebe uma função de validação e devolve um middleware Express pronto para uso.
+// Recebe uma função de validação e devolve um middleware Express pronto para uso
 export function validarRequisicao(validador: ValidadorDeRequisicao) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Executa a validação específica da rota.
       const resultado = await validador(req)
 
-      // Se a validação falhar, interrompe aqui e responde 400.
       if (!resultado.valido) {
         return res.status(400).json({
           error: 'Dados inválidos',
@@ -31,10 +28,9 @@ export function validarRequisicao(validador: ValidadorDeRequisicao) {
         })
       }
 
-      // Se estiver tudo certo, segue para o controller.
       return next()
     } catch (error) {
-      // Erros inesperados de validação também viram 400.
+      // Erros inesperados de validação também viram 400
       return res.status(400).json({
         error: error instanceof Error ? error.message : 'Falha na validação da requisição',
       })
@@ -42,7 +38,7 @@ export function validarRequisicao(validador: ValidadorDeRequisicao) {
   }
 }
 
-// Helper para campos texto obrigatórios.
+// Helper para campos texto obrigatórios
 export function textoObrigatorio(
   valor: unknown,
   campo: string,
@@ -55,7 +51,7 @@ export function textoObrigatorio(
   return null
 }
 
-// Helper para campos numéricos obrigatórios.
+// Helper para campos numéricos obrigatórios
 export function numeroObrigatorio(
   valor: unknown,
   campo: string,
@@ -70,7 +66,7 @@ export function numeroObrigatorio(
   return null
 }
 
-// Helper para campos de data.
+// Helper para campos de data
 export function dataObrigatoria(
   valor: unknown,
   campo: string,
@@ -89,7 +85,7 @@ export function dataObrigatoria(
   return null
 }
 
-// Helper para validar valores dentro de uma lista permitida.
+// Helper para validar valores dentro de uma lista permitida
 export function umaDasOpcoes<T extends string>(
   valor: unknown,
   campo: string,

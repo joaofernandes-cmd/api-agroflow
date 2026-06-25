@@ -77,7 +77,7 @@ export const EvidenciaService = {
       longitude,
     })
 
-    // Liga a evidência à tarefa, se informada (para o supervisor revisar depois).
+    // Liga a evidência à tarefa, se informada (para o supervisor revisar depois)
     if (tarefaId) {
       await EvidenciaTarefaRepository.criar({ evidencia_id: evidencia.id, tarefa_id: tarefaId })
     }
@@ -148,7 +148,7 @@ export const EvidenciaService = {
   },
 
   // Listar as evidências de uma tarefa, já com o detalhe de cada tipo,
-  // para o supervisor revisar (foto/áudio com url_arquivo, mensagem com conteudo).
+  // para o supervisor revisar (foto/áudio com url_arquivo, mensagem com conteudo)
   async buscarPorTarefa(tarefaId: UUID): Promise<EvidenciaDetalhada[]> {
     return EvidenciaTarefaRepository.buscarEvidenciasDaTarefa(tarefaId)
   },
