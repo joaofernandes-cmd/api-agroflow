@@ -20,7 +20,7 @@ describe('Migrations - alinhamento estatico do schema', () => {
       .filter(nome => nome.endsWith('.sql'))
       .sort()
 
-    expect(arquivos).toHaveLength(22)
+    expect(arquivos).toHaveLength(23)
     arquivos.forEach((nome, indice) => {
       expect(nome).toMatch(new RegExp(`^${String(indice + 1).padStart(3, '0')}-`))
     })
