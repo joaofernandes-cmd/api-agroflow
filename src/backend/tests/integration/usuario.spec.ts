@@ -90,13 +90,13 @@ describe('Usuarios', () => {
     expect(mockedService.autenticarCapatazPorToken).toHaveBeenCalledWith('token-valido')
   })
 
-  it('GET /capataz/acesso/:token deve ir para a home quando ja existe sessao (botao Entrar)', async () => {
+  it('GET /capataz/acesso/:token deve ir para a entrada mesmo quando ja existe sessao', async () => {
     const response = await request(app)
       .get('/capataz/acesso/token-valido')
       .set('Cookie', ['agroflow_token=sessao-existente'])
 
     expect(response.status).toBe(302)
-    expect(response.headers.location).toBe('/capataz/home')
+    expect(response.headers.location).toBe('/capataz')
   })
 
   it('GET /capataz/acesso/:token deve rejeitar token invalido', async () => {

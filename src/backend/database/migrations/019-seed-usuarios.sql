@@ -4,7 +4,7 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO usuario (id, retiro_id, nome, identificador, login, senha_hash, status, cargo)
-VALUES ('11111111-1111-1111-1111-111111111111', '00000000-0000-4000-8000-000000000001', 'Capataz Daniel', 'capataz-capataz', NULL, NULL, 'ativo', 'capataz')
+VALUES ('11111111-1111-1111-1111-111111111111', '00000000-0000-4000-8000-000000000001', 'Capataz Lucas', 'capataz-capataz', NULL, NULL, 'ativo', 'capataz')
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO usuario (retiro_id, nome, identificador, login, senha_hash, status, cargo)

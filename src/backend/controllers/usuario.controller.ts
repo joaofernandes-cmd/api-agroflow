@@ -58,10 +58,7 @@ export const UsuarioController = {
         return res.redirect('/capataz/acesso-invalido')
       }
 
-      // Primeiro acesso pelo QR Code (ainda sem sessão) leva à tela de entrada;
-      // ao tocar "Entrar" (já com a sessão criada) o capataz segue para a home.
-      const jaPossuiSessao = (req.headers.cookie ?? '').includes(`${COOKIE_TOKEN_AUTENTICACAO}=`)
-
+      // O acesso pelo QR Code sempre leva à tela de entrada do capataz.
       const token = gerarToken(usuario)
 
       res.cookie(COOKIE_TOKEN_AUTENTICACAO, token, {
@@ -70,7 +67,7 @@ export const UsuarioController = {
         maxAge: 24 * 60 * 60 * 1000,
       })
 
-      return res.redirect(jaPossuiSessao ? '/capataz/home' : '/capataz')
+      return res.redirect('/capataz')
     } catch (error) {
       return res.redirect('/capataz/acesso-invalido')
     }
