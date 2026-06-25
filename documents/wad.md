@@ -3387,7 +3387,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;Esse alinhamento entre a formalização lógica e a implementação real evidencia que a modelagem proposicional tem valor prático direto no desenvolvimento de sistemas, tornando explícitas as condições que governam cada operação, facilitando a identificação de casos de borda e fundamentando as decisões de projeto que de outra forma permaneceriam implícitas no código. No contexto do AgroFlow, isso se traduz em maior confiabilidade das regras aplicadas aos registros de movimentação do rebanho e aos chamados de infraestrutura gerenciados em campo. 
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## <a name="c3.7"></a>3.7. WebAPI e endpoints (sprints 3 e 4)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Endpoints são pontos de entrada por meio dos quais o cliente (navegador, PWA do Capataz ou ferramenta externa) se comunica com o servidor, associados a um verbo HTTP (GET, POST, PATCH, DELETE) que determina o tipo de operação realizada sobre o recurso. A WebAPI do AgroFlow expõe todos os fluxos descritos nos Requisitos Funcionais ([Seção 3.1.1](#c3.1.1)), garantindo que cada interação prevista (registro de movimentação, abertura de chamado, sincronização offline, validação supervisora, consolidação gerencial) possua um endpoint correspondente no backend Express.
 
@@ -3677,7 +3677,7 @@ VALUES (?, ?, ?, ?);
 - **Método:** POST
 - **Descrição:** Cria ticket diretamente. Exige evidência descritiva obrigatória (RN08) e prioridade explícita (RN11). Apenas usuários com cargo `capataz` podem abrir tickets. Para o Capataz autenticado, `retiro_id` e `aberto_por` são preenchidos a partir do JWT.
 - **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (capataz)
-- **Body:** `{ "id": "UUID?", "categoria": "cerca | hidraulica | eletrica | edificacao | abastecimento_agua | outro", "categoria_outro": "string?", "localizacao": "string", "descricao": "string", "prioridade": "alta | media | baixa", "temEvidenciaDescritiva": "boolean" }`
+- **Body:** `{ "id": "UUID?", "categoria": "cerca | eletrica | hidraulica", "categoria_outro": "string?", "localizacao": "string", "descricao": "string", "prioridade": "alta | media | baixa", "temEvidenciaDescritiva": "boolean" }`
 - **Resposta:** Ticket criado.
 - **Status codes:** `201 Created` | `400 Bad Request` (`"Campos obrigatórios não informados"`, `"Categoria inválida"`, `"Prioridade inválida"`, `"Retiro inválido"`) | `401 Unauthorized` | `500 Internal Server Error`
 
@@ -3687,7 +3687,7 @@ VALUES (?, ?, ?, ?);
 - **Método:** POST
 - **Descrição:** Variante usada pela fila offline do PWA do Capataz. Mesmas regras de validação do endpoint 21 (RN08 e RN11). Apenas usuários com cargo `capataz` podem usar.
 - **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (capataz)
-- **Body:** `{ "id": "UUID?", "categoria": "enum", "categoria_outro": "string?", "localizacao": "string", "descricao": "string", "prioridade": "alta | media | baixa", "status": "pendente", "atribuido_a": null, "aprovado_por": null, "sincronizado": "boolean" }`
+- **Body:** `{ "id": "UUID?", "categoria": "cerca | eletrica | hidraulica", "categoria_outro": "string?", "localizacao": "string", "descricao": "string", "prioridade": "alta | media | baixa", "status": "pendente", "atribuido_a": null, "aprovado_por": null, "sincronizado": "boolean" }`
 - **Resposta:** Ticket criado.
 - **Status codes:** `201 Created` | `400 Bad Request` (`"Status inválido"`, `"Prioridade inválida"`, `"Categoria inválida"`) | `401 Unauthorized` | `500 Internal Server Error`
 
@@ -4395,7 +4395,29 @@ VALUES (?, ?, ?, ?);
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web (sprint 5)
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
+&nbsp;&nbsp;&nbsp;&nbsp;A Sprint 5 fechou os três compromissos deixados em aberto ao final da Sprint 4 ([Seção 4.2](#c4.2)): a configuração da aplicação como PWA, a expansão da cobertura de testes e as correções finais de interface. Diferentemente das sprints anteriores, o esforço não esteve concentrado na criação de telas ou rotas novas, mas na consolidação do que já existia: a estrutura do backend foi refatorada, a camada de autenticação/autorização/resiliência foi formalizada ([Seção 3.8](#c3.8)) e o contrato da WebAPI foi fechado ([Seção 3.7](#c3.7)) com seus 52 endpoints documentados.
+
+### (a) O que foi refinado ou adicionado desde a sprint 4
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Camada de autenticação e autorização.** A autenticação por login e senha passou a usar `bcrypt` para o hash das credenciais, eliminando o armazenamento em texto puro identificado como pendência na Sprint 3 ([Seção 4.1](#c4.1)), e o JWT passou a ser exigido com segredo configurado via variável de ambiente. O fluxo de acesso do Capataz por QR Code foi implementado com verificação por hash SHA-256 do token. A sessão passou a ser controlada por cookie com validade de 1 dia, e a autorização por cargo foi padronizada em todas as rotas via middleware `exigirCargo`, conforme detalhado na [Seção 3.8](#c3.8) e consolidado no Quadro 47.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**PWA e resiliência offline.** A aplicação do Capataz passou a operar como Progressive Web App, com service worker, manifesto instalável e um módulo dedicado de fila offline (`capataz-pwa.js`) que persiste registros no IndexedDB quando a conexão cai e os reenvia automaticamente quando ela retorna, verificando disponibilidade pelo endpoint `/health`. Esse mecanismo, descrito na [Seção 3.8.4](#c3.8.4), encerra a pendência de PWA registrada na Sprint 4.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Refatoração do backend.** As camadas de controllers e services foram reorganizadas para reduzir duplicação e isolar responsabilidades, os scripts de inicialização do Express foram extraídos em helpers compartilhados, e as rotas das telas EJS foram separadas por perfil de usuário (Capataz, Supervisor, Gerente), em vez de concentradas em arquivos únicos. Funções relacionadas a evidências de áudio foram renomeadas para maior clareza e consistência com o restante do domínio.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Documentação da WebAPI.** O contrato dos 52 endpoints foi revisado e padronizado na [Seção 3.7](#c3.7), incluindo headers de autenticação, parâmetros, corpo de requisição/resposta e status codes possíveis para cada rota, com checagem cruzada contra o comportamento real do código e do banco de dados.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Cobertura de testes.** A suíte automatizada foi ampliada para **29 test suites** e **360 casos de teste aprovados** (147 de integração, 213 unitários), elevando a cobertura global para **80,39% de statements**, conforme reportado na [Seção 5.1.4](#c5.1). Os ajustes finais de interface por perfil (Capataz, Supervisor e Gerente) estão documentados na subseção "Ajustes visuais na interface implementada" da [Seção 3.5](#c3.5).
+
+### (b) Pendências remanescentes
+
+- A validação end-to-end do fluxo offline em navegador real não foi realizada; a cobertura atual se limita a testes unitários em sandbox para a fila local e o reenvio via IndexedDB (US01, [Seção 3.9](#c3.9)).
+- Os relatórios de testes de usabilidade (testes de guerrilha e SUS) previstos na [Seção 5.2](#c5.2) ainda não foram consolidados neste documento.
+- As conclusões finais e o plano de melhorias futuras ([Seção 7](#c7)) permanecem em aberto.
+
+### (c) Dificuldades técnicas enfrentadas
+
+&nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade da sprint foi refatorar um backend já em produção sem quebrar contratos consumidos pelo frontend EJS e pela fila offline do PWA. Cada mudança na estrutura de controllers, services e rotas exigia reexecutar a suíte de testes para garantir que o comportamento observável das rotas permanecesse o mesmo. A implementação do PWA também trouxe desafios específicos de sincronização: garantir que um mesmo registro não fosse duplicado ao ser reenviado após reconexão exigiu reforçar a idempotência dos endpoints de sincronização (upsert por UUID) e ampliar os testes desse fluxo. Por fim, manter a documentação da WebAPI (Seção 3.7) coerente com o código durante as refatorações exigiu revisões cruzadas recorrentes entre rotas, controllers e o próprio WAD.
 
 # <a name="c5"></a>5. Testes
 
