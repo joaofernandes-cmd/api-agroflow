@@ -10,6 +10,24 @@
   <div class="saudacao">
     <h2 class="saudacao__titulo">Bom dia, <%= (typeof usuario !== 'undefined' && usuario.nome) ? usuario.nome : 'capataz' %>!</h2>
     <p class="saudacao__data" id="data-hoje"></p>
+
+    <section class="pwa-status-card" id="pwa-status-card" aria-live="polite" aria-label="Status de conexao e sincronizacao">
+      <div class="pwa-status-card__row">
+        <span class="pwa-status-card__icon pwa-status-card__icon--checking" id="pwa-connection-icon" aria-hidden="true"></span>
+        <span class="pwa-status-card__text">
+          <strong id="pwa-connection-status">Verificando conexao</strong>
+          <span id="pwa-connection-message">Conferindo se ha internet disponivel.</span>
+        </span>
+      </div>
+
+      <div class="pwa-status-card__row pwa-status-card__row--sync" id="pwa-sync-row">
+        <span class="pwa-status-card__sync-icon" id="pwa-sync-icon" aria-hidden="true"></span>
+        <span class="pwa-status-card__text">
+          <strong id="pwa-sync-status">Tudo sincronizado</strong>
+          <span id="pwa-queue-status">Nenhum registro pendente</span>
+        </span>
+      </div>
+    </section>
   </div>
 
   <div class="conteudo">

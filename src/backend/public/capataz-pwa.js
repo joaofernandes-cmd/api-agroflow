@@ -7,6 +7,12 @@
   var SERVICE_WORKER_SCOPE = '/capataz/'
   var INSTALL_BUTTON_SELECTOR = '#btn-instalar-pwa'
   var CONNECTION_STATUS_SELECTOR = '#pwa-connection-status'
+  var CONNECTION_MESSAGE_SELECTOR = '#pwa-connection-message'
+  var CONNECTION_ICON_SELECTOR = '#pwa-connection-icon'
+  var STATUS_CARD_SELECTOR = '#pwa-status-card'
+  var SYNC_ROW_SELECTOR = '#pwa-sync-row'
+  var SYNC_STATUS_SELECTOR = '#pwa-sync-status'
+  var SYNC_ICON_SELECTOR = '#pwa-sync-icon'
   var QUEUE_STATUS_SELECTOR = '#pwa-queue-status'
   var INSTALL_HINT_SELECTOR = '#pwa-install-hint'
   var CONNECTIVITY_CHECK_URL = '/health'
@@ -21,6 +27,8 @@
   var registeredServiceWorker = false
   var lastKnownOnline = navigator.onLine
   var connectivityIntervalId = null
+  var syncSuccessUntil = 0
+  var syncSuccessTimeoutId = null
 
   function isStandalone() {
     return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
@@ -382,6 +390,25 @@
     return response
   }
 
+  function markSyncSuccess(count) {
+    syncSuccessUntil = Date.now() + 4500
+
+    if (syncSuccessTimeoutId) {
+      window.clearTimeout(syncSuccessTimeoutId)
+    }
+
+    syncSuccessTimeoutId = window.setTimeout(function () {
+      syncSuccessUntil = 0
+      renderHomeWidgets()
+    }, 4500)
+
+    if (syncSuccessTimeoutId && typeof syncSuccessTimeoutId.unref === 'function') {
+      syncSuccessTimeoutId.unref()
+    }
+
+    window.dispatchEvent(new CustomEvent('agroflow:sync-success', { detail: { count: count || 0 } }))
+  }
+
   function notifyQueueChange(onlineOverride) {
     var detail = {
       queueCount: 0,
@@ -399,7 +426,13 @@
   function getElements() {
     return {
       installButton: document.querySelector(INSTALL_BUTTON_SELECTOR),
+      statusCard: document.querySelector(STATUS_CARD_SELECTOR),
       connectionStatus: document.querySelector(CONNECTION_STATUS_SELECTOR),
+      connectionMessage: document.querySelector(CONNECTION_MESSAGE_SELECTOR),
+      connectionIcon: document.querySelector(CONNECTION_ICON_SELECTOR),
+      syncRow: document.querySelector(SYNC_ROW_SELECTOR),
+      syncStatus: document.querySelector(SYNC_STATUS_SELECTOR),
+      syncIcon: document.querySelector(SYNC_ICON_SELECTOR),
       queueStatus: document.querySelector(QUEUE_STATUS_SELECTOR),
       installHint: document.querySelector(INSTALL_HINT_SELECTOR),
     }
@@ -411,6 +444,8 @@
     var online = state && typeof state.online === 'boolean' ? state.online : lastKnownOnline
     var standalone = state && typeof state.standalone === 'boolean' ? state.standalone : isStandalone()
     var installable = Boolean(deferredInstallPrompt) && !standalone
+    var showingSuccess = online && queueCount === 0 && syncSuccessUntil > Date.now()
+    var hasPending = queueCount > 0
 
     if (els.installButton) {
       els.installButton.hidden = false
@@ -428,16 +463,55 @@
       els.installHint.textContent = ''
     }
 
+    if (els.statusCard) {
+      els.statusCard.classList.toggle('pwa-status-card--online', online && !hasPending && !showingSuccess)
+      els.statusCard.classList.toggle('pwa-status-card--offline', !online)
+      els.statusCard.classList.toggle('pwa-status-card--pending', hasPending)
+      els.statusCard.classList.toggle('pwa-status-card--success', showingSuccess)
+    }
+
     if (els.connectionStatus) {
       els.connectionStatus.textContent = online ? 'Online' : 'Offline'
       els.connectionStatus.classList.toggle('pwa-status__pill--offline', !online)
-      els.connectionStatus.classList.toggle('pwa-status__pill--pending', queueCount > 0)
+      els.connectionStatus.classList.toggle('pwa-status__pill--pending', hasPending)
+    }
+
+    if (els.connectionMessage) {
+      els.connectionMessage.textContent = online
+        ? 'Conectado a internet.'
+        : 'Sem internet. Os registros ficam salvos no aparelho.'
+    }
+
+    if (els.connectionIcon) {
+      els.connectionIcon.classList.remove('pwa-status-card__icon--checking', 'pwa-status-card__icon--online', 'pwa-status-card__icon--offline')
+      els.connectionIcon.classList.add(online ? 'pwa-status-card__icon--online' : 'pwa-status-card__icon--offline')
+    }
+
+    if (els.syncRow) {
+      els.syncRow.hidden = false
+    }
+
+    if (els.syncIcon) {
+      els.syncIcon.classList.remove('pwa-status-card__sync-icon--pending', 'pwa-status-card__sync-icon--success')
+      els.syncIcon.classList.add(hasPending ? 'pwa-status-card__sync-icon--pending' : 'pwa-status-card__sync-icon--success')
+    }
+
+    if (els.syncStatus) {
+      els.syncStatus.textContent = showingSuccess
+        ? 'Sincronizacao enviada'
+        : hasPending
+          ? 'Sincronizacao pendente'
+          : 'Tudo sincronizado'
     }
 
     if (els.queueStatus) {
-      els.queueStatus.textContent = queueCount > 0
-        ? queueCount + ' registro(s) na fila'
-        : 'Nenhum registro pendente'
+      els.queueStatus.textContent = showingSuccess
+        ? 'Registros enviados com sucesso.'
+        : hasPending
+          ? online
+            ? queueCount + ' registro(s) aguardando envio. Tentando sincronizar...'
+            : queueCount + ' registro(s) salvo(s). Enviaremos quando a internet voltar.'
+          : 'Nenhum registro pendente'
     }
   }
 
@@ -471,6 +545,10 @@
       }
     }
 
+    if (sincronizados > 0 && erros.length === 0) {
+      markSyncSuccess(sincronizados)
+    }
+
     notifyQueueChange()
 
     return {
@@ -501,6 +579,7 @@
         body: queueBody,
         meta: config.meta || {},
       })
+      syncSuccessUntil = 0
       notifyQueueChange(false)
 
       return { queued: true, online: false }
@@ -557,6 +636,7 @@
         body: queueBody,
         meta: config.meta || {},
       })
+      syncSuccessUntil = 0
       notifyQueueChange()
       return { queued: true, online: lastKnownOnline, error: error }
     }
