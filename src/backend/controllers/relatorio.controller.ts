@@ -9,9 +9,8 @@ import { OPCOES_RETIRO } from '../data/referencia'
 import { mensagemErroCliente } from '../utils/erro-api'
 import { converterUuidOpcional } from '../utils/parametros-controller'
 
-// Converte uma string de query em Date.
-// Se o valor vier vazio, retorna undefined.
-// Se a data for inválida, retorna null para permitir resposta 400.
+// Converte uma string de query em Date; vazio retorna undefined,
+// inválida retorna null para permitir resposta 400
 function converterDataQuery(valor: unknown): Date | undefined | null {
   if (valor === undefined || valor === null || valor === '') {
     return undefined
@@ -41,7 +40,7 @@ function converterFormatoExportacao(valor: unknown): FormatoRelatorioExportacao 
 }
 
 export const RelatorioController = {
-  // - Views -
+  // Views
 
   // Renderiza a tela de relatórios para o Supervisor
   renderRelatoriosSupervisor(req: Request, res: Response) {
@@ -67,10 +66,10 @@ export const RelatorioController = {
     })
   },
 
-  // - API -
+  // API
 
   // RN07: Busca dados de movimentações já sincronizadas e validadas,
-  // com filtro opcional por período e retiro.
+  // com filtro opcional por período e retiro
   async buscarDadosMovimentacoes(req: Request, res: Response) {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
@@ -96,7 +95,7 @@ export const RelatorioController = {
   },
 
   // RN07: Busca dados de tarefas já sincronizadas e concluídas,
-  // com filtro opcional por período e retiro.
+  // com filtro opcional por período e retiro
   async buscarDadosTarefas(req: Request, res: Response) {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
@@ -121,7 +120,7 @@ export const RelatorioController = {
     }
   },
 
-  // RN07: Formata o relatório de movimentações em um formato pronto para planilha.
+  // RN07: Formata o relatório de movimentações em um formato pronto para planilha
   async formatarRelatorioMovimentacoes(req: Request, res: Response) {
     try {
       const dataInicio = converterDataQuery(req.query.dataInicio)
@@ -215,7 +214,7 @@ export const RelatorioController = {
     }
   },
 
-  // RN07: Gera o relatório semanal usando os últimos 7 dias.
+  // RN07: Gera o relatório semanal usando os últimos 7 dias
   async gerarRelatorioSemanal(req: Request, res: Response) {
     try {
       const retiroId = converterUuidOpcional(req.query.retiroId)
@@ -234,7 +233,7 @@ export const RelatorioController = {
     }
   },
 
-  // RN07: Gera o relatório mensal usando os últimos 30 dias.
+  // RN07: Gera o relatório mensal usando os últimos 30 dias
   async gerarRelatorioMensal(req: Request, res: Response) {
     try {
       const retiroId = converterUuidOpcional(req.query.retiroId)

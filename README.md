@@ -20,7 +20,7 @@
       <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-andre.png" width="100px" height="100px" alt=""/></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-enzo.png" width="100px" height="100px" alt=""/></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-fabiana.png" width="100px" height="100px" alt=""/></a></td>
-       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-joao.png" width="100px" height="100px" alt=""/></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-joao.png" width="100px" height="100px" alt=""/></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-levi.png" width="100px" height="100px" alt=""/></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-matheus.png" width="100px" height="100px" alt=""/></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><img style="border-radius: 10%; object-fit: cover;" src="documents/others/assets/fotos-integrantes/foto-theo.png" width="100px" height="100px" alt=""/></a></td>
@@ -30,7 +30,7 @@
       <td align="center"><a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/"><sub><b>André Fischer de Carvalho</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/"><sub><b>Enzo Braga Heins</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/fabiana-dias-souza/"><sub><b>Fabiana Dias de Souza</b></sub></a></td>
-       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//"><sub><b>João Glauco Fernandes <br> Araújo de Freitas</b></sub></a></td>
+       <td align="center"><a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9/"><sub><b>João Glauco Fernandes <br> Araújo de Freitas</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/"><sub><b>Levi Correia Silveira</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en"><sub><b>Matheus Augusto <br> Corrêa Santos</b></sub></a></td>
       <td align="center"><a href="https://www.linkedin.com/in/theo-moreda"><sub><b>Théo Pires Morêda</b></sub></a></td>
@@ -77,42 +77,59 @@
 
 ## 📝 Link de demonstração
 
-Vídeos de demonstração da aplicação por perfil de usuário:
-
-- **Capataz:** [Assistir demonstração](https://drive.google.com/file/d/1K0guUF_NzNWkvYyfJUYhfoKgsJ9PIjO5/view?usp=drive_link)
-- **Supervisor:** [Assistir demonstração](https://drive.google.com/file/d/14vpjfgeATwAM5fS9e7XvAn7X0u9t5An3/view?usp=drive_link)
-- **Gerente:** [Assistir demonstração](https://drive.google.com/file/d/1VjnIooynWBbvwom_4UG_jAqoW7YaBxoz/view?usp=drive_link)
+O link a seguir contém um vídeo de demonstração da aplicação web em funcionamento: [link para o vídeo](https://youtu.be/-ksGCJHxo7s)
 
 ## 📁 Estrutura de pastas
 
 ```text
 g02/
-├── assets/                     # Imagens padrão Inteli
-├── documents/
+├── assets/                     # Recursos estáticos (imagens e ícones)
+|   ├── icons                   # Ícones da aplicação              
+│   └── pwa                     # Arquivos para PWA (funciona offline)
+├── documents/                  # Documentação do projeto
 │   ├── others/                 # Assets da documentação
 │   ├── index.html              # Versão renderizada do WAD
 │   └── wad.md                  # Web Application Document (documentação principal)
-├── src/
-│   ├── backend/
+├── src/                        # Código-fonte da aplicação
+│   ├── backend/                # Servidor (API e lógica de negócio)
 │   │   ├── @types/             # Extensões de tipos do Express
 │   │   ├── controllers/        # Camada de entrada das rotas (HTTP)
-│   │   ├── database/
+|   |   ├── data/               # Dados de exemplo e referência para testes
+│   │   ├── database/           # Gerenciamento do Banco de Dados
 │   │   │   ├── migrations/     # Migrations SQL (DDL) versionadas
 │   │   │   ├── connection.ts   # Conexão com o PostgreSQL
 │   │   │   └── migrate.ts      # Runner de migrations
 │   │   ├── middlewares/        # Autenticação, autorização por cargo, logs e erros
-│   │   ├── models/             # Tipos de domínio
-│   │   ├── repositories/       # Acesso a dados
+│   │   ├── models/             # Estrutura dos dados principais
+|   |   ├── public/             # Arquivos servidos diretamente (PWA e documentação)
+|   |   |   ├── docs/           # Documentação em HTML
+|   |   |   ├── capataz-pwa.js  # Lógica da aplicação mobile para o Capataz
+|   |   |   ├── manifest-capataz.json   # Configuração da aplicação (nome, ícones, cores)
+|   |   |   └── sw-capataz.js   # Service Worker (permite funcionar sem internet)     
+│   │   ├── repositories/       # Acesso e manipulação de dados no banco
 │   │   ├── routes/             # Definição dos endpoints
 │   │   ├── services/           # Regras de negócio
 │   │   ├── tests/              # Testes unitários e de integração (Jest)
+|   |   |   ├── helpers/        # Funções utilitárias para os testes (mocks, setup)
+|   |   |   ├── integration/    # Testes que verificam múltiplos componentes juntos
+|   |   |   ├── unit/           # Testes de componentes isolados
+|   |   |   └── jest.setup.ts   # Configuração inicial antes de rodar os testes
+|   |   ├── types/              # Tipos TypeScript auxiliares
+│   │   ├── utils/              # Funções utilitárias reutilizáveis              
 │   │   ├── app.ts              # Configuração do app Express
 │   │   └── server.ts           # Inicialização do servidor
-│   └── views/                  # Templates EJS, estilos e scripts das interfaces
-├── jest.config.ts
-├── tsconfig.json
-├── package.json
-└── README.md
+│   └── views/                  # Interface visual (páginas HTML + CSS + JS)
+|       ├── auth/               # Telas de login/autenticação
+|       ├── capataz/            # Página do "Capataz"
+|       ├── css/                # Estilos visuais
+|       ├── gerente/            # Página do "Gerente"
+|       ├── js/                 # Lógica do lado do cliente
+|       ├── partials/           # Componentes reutilizáveis de página
+|       └── supervisor/         # Página do "Supervisor"
+├── jest.config.ts              # Configuração dos testes
+├── tsconfig.json               # Configuração do TypeScript
+├── package.json                # Dependências e scripts do projeto
+└── README.md                   # Guia inicial do projeto
 ```
 Descrição dos principais diretórios:
  
@@ -126,8 +143,9 @@ Descrição dos principais diretórios:
 
 
 ## 🎮 Funcionalidades
-- Autenticação de usuários via login e senha com emissão de token JWT.
-- Controle de acesso por cargo (capataz, supervisor e gerente) verificado no backend.
+- Autenticação de supervisores e gerentes por senha.
+- Autenticação de capatazes por token de acesso via QR Code.
+- Controle de acesso por cargo (capataz, supervisor e gerente) verificado no backend (proteção por RBAC).
 - Registro e gestão de movimentações do rebanho (nascimento, morte, transferência, compra e venda), com estágio de vida do animal.
 - Validação e aprovação de movimentações, tickets e tarefas pendentes pelo supervisor.
 - Gestão de tarefas operacionais por status, prioridade, categoria, usuário e retiro.
@@ -165,46 +183,87 @@ Descrição dos principais diretórios:
 | Software | Versão recomendada | Observação |
 |---|---|---|
 | [Node.js](https://nodejs.org/) | **22.x LTS** ou superior | Definida em `package.json` (`^22.22.3`). Inclui o `npm`. |
-| [npm](https://www.npmjs.com/) | **10.x** ou superior | Acompanha o Node.js 22. |
-| [PostgreSQL](https://www.postgresql.org/) | **13** ou superior | Necessário pela extensão `pgcrypto` e por `gen_random_uuid()` usados nas migrations. |
 | [Git](https://git-scm.com/) | **2.30** ou superior | Para clonar e versionar o repositório. |
 
-### Passo a passo
- 
-1. Clone o repositório e acesse a pasta raiz do projeto:
+### Tutoriais de instalação dos softwares
+
+Acesse os tutoriais de instalação dos softwares aqui: [Tutoriais](documents/others/tutoriais-de-instalacao-dos-softwares.md)
+
+### Tutorial de execução da aplicação web localmente (para Windows)
+
+O tutorial a seguir fornece o passo a passo para a execução da aplicação web localmente no Windows. Pré-requisitos para que a aplicação seja executada corretamente são que o [tutorial de instalação dos softwares](documents/others/tutoriais-de-instalacao-dos-softwares.md) tenha sido executado e que o usuário possua uma conta no GitLab, Supabase e VS Code instalado.
+
+1. Entre no Explorador de arquivos e crie uma pasta dedicada ao projeto
+
+2. Selecione a pasta criada com o botão direito do mouse e selecione a opção “Abrir no Terminal”
+
+3. No terminal digite “git clone https://git.inteli.edu.br/graduacao/2026-1b/t26/g02.git” (para essa etapa funcionar você deve estar cadastrado no GitLab e ter acesso liberado ao projeto)
+
 ```sh
-git clone <url-do-repositorio>
+git clone https://git.inteli.edu.br/graduacao/2026-1b/t26/g02.git
+```
+
+4. Em seguida, digite “cd g02” no terminal para alternar para a pasta clonada do repositório
+
+```sh
 cd g02
 ```
- 
-2. Instale as dependências (executar na raiz, onde está o `package.json`):
+
+5. Em seguida digite “code .” (Esse comando abrirá a pasta g02 no VS Code)
+
+```sh
+code .
+```
+
+6. Crie um arquivo .env na raiz do projeto (aqui serão inseridas as senhas para acessar o banco de dados, compartilhe-as apenas com pessoas de confiança)
+
+    Clique no icone indicado, digite .env e pressione a tecla enter.
+
+<div align="center">
+  <p align="center">Figura 11 README - Passo 6 do tutorial de execução local</p>
+  <p>
+    <img src="documents/others/assets/imagem-1-tutorial-de-execucao-local.png" alt="Passo 6 do tutorial de execução local" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+  O arquivo .env que você acabou de criar deve se parecer com esse:
+<div align="center">
+  <p align="center">Figura 12 README - Passo 6 do tutorial de execução local (confirmação)</p>
+  <p>
+    <img src="documents/others/assets/imagem-2-tutorial-de-execucao-local.png" alt="Passo 6 do tutorial de execução local (confirmação)" border="0"></a>
+  </p>
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+7. Copie e cole o seguinte código no arquivo .env que você criou:
+```sh
+DATABASE_URL=postgresql://postgres.mnsbvuqqgcsjxcrtaomy:g02agroflow@aws-1-us-west-2.pooler.supabase.com:5432/postgres
+JWT_SECRET=hSo5IX8vFI7W-K5mqzBvCaZhlGHY79_EsSW2IDxZ7ocfPACX_jn8kOmNsmy4hqEm
+```
+
+8. Abra o Terminal que foi utilizado nas etapas 2 a 5 novamente. 
+
+9. Digite os seguintes comandos, um por vez:
+
 ```sh
 npm install
-```
- 
-3. Crie um arquivo `.env` na raiz do projeto com as variáveis necessárias:
-```env
-DATABASE_URL=postgres://usuario:senha@host:5432/nome_do_banco
-JWT_SECRET=defina-uma-senha-forte
-PORT=3000
-```
- 
-> A aplicação não inicia sem as variáveis `DATABASE_URL` e `JWT_SECRET`.
- 
-4. Execute as migrations para criar o esquema do banco:
-```sh
 npm run migrate
-```
- 
-5. Inicie a aplicação em modo de desenvolvimento:
-```sh
 npm run dev
 ```
 
-6. Acesse a aplicação em:
+10. Entre no seu navegador e digite: localhost:3000. Pronto, você está acessando a aplicação web localmente!
+
 ```text
 http://localhost:3000
 ```
+A tabela a seguir guia a navegação na aplicação pelos três perfis distintos: 
+
+| Perfil | Forma de acesso | Dados para login | Link para acesso |
+|----------|----------|----------|----------|
+| Capataz  | QR-code   | `nenhum`   | http://localhost:3000/capataz   |
+| Supervisor  | e-mail e senha   | `supervisor@agroflow.com` e `joaoglauco1`   | http://localhost:3000/auth/login?role=supervisor   |
+| Gerente  | e-mail e senha   | `gerente@agroflow.com` e `joaoglauco1`   | http://localhost:3000/auth/login?role=gerente   |
 
 ### Scripts disponíveis
  
@@ -222,17 +281,17 @@ http://localhost:3000
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 — prevista para 26/06/2026 — Sprint 5
-    * Versão final planejada; consolidação de autenticação, controle de sessão e autorização; estratégias de resiliência.
-* 0.4.0 — 12/06/2026 — Sprint 4
+* **0.5.0 — prevista para 26/06/2026 — Sprint 5**
+    * Versão final; autenticação completa, controle de sessão e autorização, acesso por QR code do capataz.
+* **0.4.0 — 12/06/2026 — Sprint 4**
     * Segunda versão; WebAPI completa; testes de integração automatizados; atualização do modelo físico do banco.
-* 0.3.0 — 29/05/2026 — Sprint 3
+* **0.3.0 — 29/05/2026 — Sprint 3**
     * Primeira versão funcional; endpoints de leitura e escrita (WebAPI v1); guia de estilos e protótipo de alta fidelidade.
-* 0.2.0 — 15/05/2026 — Sprint 2
+* **0.2.0 — 15/05/2026 — Sprint 2**
     * Modelagem do banco de dados (ER, DER, modelo relacional e migrations DDL); wireframes; diagrama de classes.
-* 0.1.0 — 30/04/2026 — Sprint 1
+* **0.1.0 — 30/04/2026 — Sprint 1**
     * Fundação do projeto: escopo, personas, user stories iniciais, requisitos funcionais e regras de negócio.
 
 ## 📋 Licença/License
 
-<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="#">AgroFlow</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.inteli.edu.br/">Inteli</a>, <a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/" target="_blank" rel="noopener noreferrer">Ana Clara da Silva Silvestre</a>, <a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/" target="_blank" rel="noopener noreferrer">André Fischer de Carvalho</a>, <a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/" target="_blank" rel="noopener noreferrer">Enzo Braga Heins</a>, <a href="https://www.linkedin.com/in/fabiana-dias-souza/" target="_blank" rel="noopener noreferrer">Fabiana Dias de Souza</a>, <a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9//" target="_blank" rel="noopener noreferrer">João Glauco Fernandes Araújo de Freitas</a>, <a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/" target="_blank" rel="noopener noreferrer">Levi Correia Silveira</a>, <a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en" target="_blank" rel="noopener noreferrer">Matheus Augusto Corrêa Santos</a>, <a href="https://www.linkedin.com/in/theo-moreda" target="_blank" rel="noopener noreferrer">Théo Pires Morêda</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
+<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="#">AgroFlow</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.inteli.edu.br/">Inteli</a>, <a href="https://www.linkedin.com/in/ana-clara-silvestre-328706326/" target="_blank" rel="noopener noreferrer">Ana Clara da Silva Silvestre</a>, <a href="https://www.linkedin.com/in/andr%C3%A9-fischer-de-carvalho-5588443b0/" target="_blank" rel="noopener noreferrer">André Fischer de Carvalho</a>, <a href="https://www.linkedin.com/in/enzo-braga-heins-b706603b9/" target="_blank" rel="noopener noreferrer">Enzo Braga Heins</a>, <a href="https://www.linkedin.com/in/fabiana-dias-souza/" target="_blank" rel="noopener noreferrer">Fabiana Dias de Souza</a>, <a href="https://www.linkedin.com/in/jo%C3%A3o-glauco-fernandes-2292513a9/" target="_blank" rel="noopener noreferrer">João Glauco Fernandes Araújo de Freitas</a>, <a href="https://www.linkedin.com/in/levi-correia-silveira-4900a4312/" target="_blank" rel="noopener noreferrer">Levi Correia Silveira</a>, <a href="https://www.linkedin.com/in/matheus-augusto-corr%C3%AAa-santos-0bab03373/?locale=en" target="_blank" rel="noopener noreferrer">Matheus Augusto Corrêa Santos</a>, <a href="https://www.linkedin.com/in/theo-moreda" target="_blank" rel="noopener noreferrer">Théo Pires Morêda</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>

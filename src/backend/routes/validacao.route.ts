@@ -5,7 +5,7 @@ import { exigirCargo } from '../middlewares/cargo.middleware'
 
 const validacaoRoutes = Router()
 
-// Validação só pode ser acessada por usuários autenticados com cargo supervisor.
+// Validação só pode ser acessada por usuários autenticados com cargo supervisor
 validacaoRoutes.use(autenticarUsuario)
 validacaoRoutes.use(exigirCargo('supervisor'))
 

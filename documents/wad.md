@@ -192,7 +192,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para solucionar essa problemática, uma **aplicação web centralizada** foi projetada para integrar a **gestão de cronogramas operacionais** e o **controle de movimentação bovina**. A solução permite a digitalização de **eventos zootécnicos** essenciais, como nascimentos, óbitos, compras, vendas e transferências entre retiros. O valor fundamental do produto reside na arquitetura preparada para **operação offline**, garantindo a integridade dos registros em áreas remotas e a **sincronização** de dados assim que a conexão for restabelecida, eliminando a dependência de processos manuais e reduzindo a janela de inconsistência entre campo e escritório.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos** da operação: gerentes definem e distribuem as tarefas calendarizadas, o que impacta diretamente a previsibilidade e o controle dos ciclos produtivos; capatazes registram a execução mediante envio de evidências digitais, como fotos e áudios; e coordenadores validam as informações antes da consolidação final. Os dados aprovados são exportados em formatos Excel ou CSV, suportando a tomada de decisão administrativa. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
+&nbsp;&nbsp;&nbsp;&nbsp;A interface foi estruturada para atender a diferentes **níveis hierárquicos** da operação: gerentes definem e distribuem as tarefas calendarizadas, o que impacta diretamente a previsibilidade e o controle dos ciclos produtivos; capatazes registram a execução mediante envio de evidências digitais, como fotos e áudios; e supervisores validam as informações antes da consolidação final. Os dados aprovados são exportados em formatos Excel ou CSV, suportando a tomada de decisão administrativa. Com essa implementação, os processos manuais são eliminados, as falhas de comunicação são reduzidas e uma **integração efetiva** entre as frentes agrícola e pecuária é estabelecida.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web 
 
@@ -1054,7 +1054,7 @@ Relatório (gerado por Gerente) consolidando dados conferidos
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Controllers** é composta por oito controladores (`usuario`, `validacao`, `movimentacao`, `evidencia`, `tarefa`, `ticket`, `relatorio` e `sincronizacao`) que recebem as requisições HTTP e delegam o processamento aos services correspondentes.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Services** concentra as regras de negócio, aplicando as Regras de Negócio documentadas na [Seção 3.1.2](#c3.1.2), como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização offline(RN03).
+&nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Services** concentra as regras de negócio, aplicando as Regras de Negócio documentadas na [Seção 3.1.2](#c3.1.2), como a validação de campos obrigatórios (RN01), o controle de validação restrita a Supervisores (RN06), o georreferenciamento de evidências (RN04) e a sincronização offline (RN03).
 
 &nbsp;&nbsp;&nbsp;&nbsp;A **Camada de Repositories** abstrai o acesso ao banco por meio dos repositories. A entidade Evidência é segmentada em sete repositórios distintos sendo um base e seis especializados por tipo de mídia (foto, áudio, mensagem) e por contexto de uso (movimentação, tarefa, ticket), refletindo a estratégia de **herança polimórfica** adotada.
 
@@ -2813,7 +2813,7 @@ As cores semânticas são utilizadas para representar prioridades, estados crít
 
 &nbsp;&nbsp;&nbsp;&nbsp;Para facilitar a interpretação dos elementos gráficos e a semântica do modelo, foi adotado o seguinte padrão de cores e formas:
 
-- **Retangulos Verdes Escuros:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
+- **Retângulos Verdes Escuros:** Representam as **Entidades** (objetos principais do sistema, como Usuário, Ticket, Movimentação, etc.).
 - **Losangos Brancos:** Indicam os **Relacionamentos** e a lógica de interação entre as entidades, acompanhados de sua respectiva cardinalidade (ex: 1:N).
 - **Elipses Azuis Claras:** Identificam a **Chave Primária (PK)**, o identificador único de cada registro na tabela.
 - **Elipses Verdes Claras:** Identificam as **Chaves Estrangeiras (FK)**, que estabelecem os vínculos de referência entre diferentes entidades.
@@ -3607,876 +3607,665 @@ VALUES (?, ?, ?, ?);
 
 ## <a name="c3.7"></a>3.7. WebAPI e endpoints 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Endpoints são pontos de entrada ou endereços por meio dos quais um sistema se comunica com o outro, estando relacionados a um verbo HTTP (GET, POST, PATCH, DELETE...), que são métodos usados para suprir as requisições feitas em um sistema web.
-
-&nbsp;&nbsp;&nbsp;&nbsp;Com base nessa definição, a vigente equipe precisou refletir sobre quais métodos seriam necessários incluir para cobrir todas as funcionalidades que se almeja entregar no sistema AgroFlow. Isso envolveu mapear cada funcionalidade da aplicação, como por exemplo registrar uma movimentação do rebanho, criar e acompanhar tarefas, sincronizar dados coletados em modo offline, além de gerar relatórios gerenciais e controlar tickets de infraestrutura. Dessa forma, a equipe garante que cada interação do usuário com o sistema tenha o suporte necessário por meio da API.
-
+&nbsp;&nbsp;&nbsp;&nbsp;Endpoints são pontos de entrada por meio dos quais o cliente (navegador, PWA do Capataz ou ferramenta externa) se comunica com o servidor, associados a um verbo HTTP (GET, POST, PATCH, DELETE) que determina o tipo de operação realizada sobre o recurso. A WebAPI do AgroFlow expõe todos os fluxos descritos nos Requisitos Funcionais ([Seção 3.1.1](#c3.1.1)), garantindo que cada interação prevista (registro de movimentação, abertura de chamado, sincronização offline, validação supervisora, consolidação gerencial) possua um endpoint correspondente no backend Express.
 
 **Base URL**
 
-&nbsp;&nbsp;&nbsp;&nbsp;É válido mencionar que todos os endpoints são relativos à URL base: `http://localhost:3000`
+&nbsp;&nbsp;&nbsp;&nbsp;Em ambiente de desenvolvimento, todos os endpoints são relativos a `http://localhost:3000`. Em produção, a Base URL corresponde ao domínio do servidor de aplicação hospedado em nuvem ([Seção 3.2.6](#c3.2.6)). A documentação navegável completa da WebAPI encontra-se em `documents/index.html` e em `/docs` quando a aplicação está em execução.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A documentação navegável completa da WebAPI encontra-se no arquivo `documents/index.html`, disponível no repositório do projeto.
+### 3.7.1. Padrão de documentação dos endpoints
 
-**Padrão de documentação dos endpoints**
- 
-&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints documentados nesta seção seguem o mesmo padrão estrutural, contendo obrigatoriamente os seguintes campos para garantir um contrato técnico completo:
- 
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints documentados nesta seção seguem o mesmo padrão estrutural, contendo obrigatoriamente os seguintes campos para garantir um contrato técnico completo e previsível:
+
 - **Endereço:** caminho do endpoint relativo à Base URL.
 - **Método HTTP:** verbo utilizado (GET, POST, PATCH ou DELETE).
 - **Descrição:** propósito funcional do endpoint e RF/RN relacionados quando aplicável.
-- **Headers obrigatórios:** cabeçalhos HTTP exigidos. Inclui `Content-Type: application/json` para requisições com corpo JSON e `Authorization: Bearer <token>` para rotas protegidas por JWT. Endpoints sem requisitos específicos são marcados explicitamente como "Nenhum header específico necessário".
+- **Headers obrigatórios:** cabeçalhos HTTP exigidos. Inclui `Content-Type: application/json` para requisições com corpo JSON e `Authorization: Bearer <token>` (ou cookie `agroflow_token`) para rotas protegidas por JWT. Endpoints públicos são marcados explicitamente como "Nenhum header específico necessário".
 - **Parâmetros de entrada:** parâmetros de rota (`/recurso/:id`), de query (`?campo=valor`) e seus tipos quando aplicáveis.
 - **Body esperado:** estrutura JSON do corpo da requisição, com tipos e obrigatoriedade de cada campo. Endpoints sem corpo são marcados explicitamente como "Nenhum".
-- **Formato de resposta:** estrutura JSON retornada para o status de sucesso e mensagens padronizadas para erros.
-- **Status codes possíveis:** códigos HTTP que o endpoint pode retornar, com seus significados específicos no contexto da aplicação.
-&nbsp;&nbsp;&nbsp;&nbsp;Os status codes utilizados em toda a API seguem o significado padronizado apresentado no Quadro XX, garantindo previsibilidade do comportamento da API e facilitando a integração de clientes futuros.
- 
-<p align="center">Quadro XX - Status codes HTTP utilizados na API AgroFlow</p>
+- **Resposta:** estrutura JSON retornada para o status de sucesso e mensagens padronizadas para erros.
+- **Status codes possíveis:** códigos HTTP que o endpoint pode retornar com seus significados específicos no contexto da aplicação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Três pontos transversais valem para toda a API:
+
+1. **Identidade preenchida pelo servidor.** Quando o cargo do usuário autenticado é `capataz`, os campos `aberto_por`, `capataz_id` e `retiro_id` são sempre preenchidos pelo servidor a partir do JWT (`req.usuario`), nunca do corpo. Mesmo que o cliente envie esses campos, o servidor sobrescreve para o Capataz autenticado.
+2. **Supervisão multi-retiro.** A tabela `supervisor_retiro` permite que um Supervisor cubra mais de um retiro. Em todos os endpoints listados nos módulos RF006, RF007 e nas listagens do Supervisor, "retiro do supervisor" significa o conjunto `{retiro_sede ∪ retiros_adicionais}`.
+3. **Endpoints públicos.** `/health`, `/usuarios/login` e `/capataz/acesso/:token` não exigem autenticação. Os demais validam o token via middleware `autenticarUsuario` e o cargo via middleware `exigirCargo`, retornando 401 quando o token está ausente ou inválido e 403 quando o cargo é insuficiente.
+
+### 3.7.2. Status codes HTTP utilizados na API
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os status codes utilizados em toda a API seguem o significado padronizado apresentado no Quadro 28, garantindo previsibilidade do comportamento da WebAPI e facilitando a integração de clientes futuros e a depuração em produção.
+
+<p align="center">Quadro 28 - Status codes HTTP utilizados na API AgroFlow</p>
 
 | Código | Significado | Contexto de ocorrência no AgroFlow |
 |--------|-------------|-------------------------------------|
-| **200 OK** | Sucesso | Operações de leitura (GET) ou atualização (PATCH) concluídas com sucesso, incluindo retorno do recurso atualizado. |
-| **201 Created** | Recurso criado | Operações de criação (POST) bem-sucedidas, retornando o recurso criado com seu identificador UUID gerado. |
+| **200 OK** | Sucesso | Operações de leitura (GET) ou atualização (PATCH) concluídas com sucesso. |
+| **201 Created** | Recurso criado | Operações de criação (POST) bem-sucedidas, retornando o recurso criado com seu UUID. |
 | **204 No Content** | Sucesso sem retorno | Operações de exclusão (DELETE) bem-sucedidas. |
-| **400 Bad Request** | Requisição inválida | Campo obrigatório ausente, JSON malformado ou violação de regra de validação simples (RN01, RN02, RN08, RN11). Exemplo: tentativa de registrar movimentação tipo "morte" sem `causa_obito`. |
+| **400 Bad Request** | Requisição inválida | Campo obrigatório ausente, JSON malformado, ou violação de RN01, RN02, RN08, RN11. Exemplo: registrar movimentação tipo `morte` sem `causa_obito`. |
 | **401 Unauthorized** | Não autenticado | Token JWT ausente, inválido ou expirado em rotas protegidas. |
-| **403 Forbidden** | Sem permissão | Usuário autenticado, mas com cargo insuficiente para a operação solicitada (RN06, RN12). Exemplos: Capataz tentando validar movimentação; usuário não-Gerente tentando gerenciar usuários. |
-| **404 Not Found** | Recurso não encontrado | UUID informado não corresponde a nenhum registro no banco. Aplicado em buscas, atualizações e remoções por ID. |
-| **409 Conflict** | Conflito de estado | Tentativa de aprovar/validar um recurso que já foi processado anteriormente (ex.: aprovar ticket já aprovado). |
-| **422 Unprocessable Entity** | Regra de negócio violada | Requisição sintaticamente válida, mas bloqueada por regra de domínio (ex.: foto sem georreferenciamento, conforme RN04). |
-| **500 Internal Server Error** | Falha interna | Erro inesperado no servidor, capturado pelo middleware global de tratamento de erros e registrado em log sem exposição de detalhes técnicos ao cliente. |
- 
+| **403 Forbidden** | Sem permissão | Usuário autenticado mas com cargo insuficiente para a operação (RN06, RN12) ou Capataz tentando acessar ticket de outro retiro. |
+| **404 Not Found** | Recurso não encontrado | UUID informado não corresponde a nenhum registro no banco. |
+| **409 Conflict** | Conflito de estado | Tentativa de aprovar/validar recurso já processado anteriormente. |
+| **422 Unprocessable Entity** | Regra de negócio violada | Requisição sintaticamente válida bloqueada por regra de domínio (ex.: foto sem georreferenciamento, RN04). |
+| **500 Internal Server Error** | Falha interna | Erro inesperado capturado pelo middleware global `tratadorDeErros`, registrado em log sem expor detalhes ao cliente. |
+
 <p align="center">Fonte: Próprios autores (2026).</p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;Endpoints públicos (como `/health` e `/usuarios/login`) não exigem autenticação e estão explicitamente marcados na descrição. Endpoints protegidos por JWT exigem o header `Authorization: Bearer <token>` ou o cookie de sessão equivalente, e validam o cargo do usuário via middleware `cargo.middleware`, retornando 401 quando o token está ausente ou inválido e 403 quando o cargo é insuficiente para a operação solicitada. Os endpoints que recebem corpo JSON exigem o header `Content-Type: application/json` para correto processamento pelo Express.
- 
+### 3.7.3. Endpoints
+
+#### Sistema
+
+**1. Verificar saúde da aplicação**
+
+- **Endereço:** `/health`
+- **Método:** GET
+- **Descrição:** Verifica a disponibilidade do servidor. Usado pelo Service Worker do PWA do Capataz para detectar o restabelecimento da conexão antes de disparar sincronização (RF003, RN03).
+- **Headers:** Nenhum header específico necessário.
+- **Parâmetros:** Nenhum.
+- **Body:** Nenhum.
+- **Resposta:** `{ "status": "ok" }`
+- **Status codes:** `200 OK` | `500 Internal Server Error`
+
 ---
 
-**Endpoints**
-
-**Sistema**
-
-1. Verificar Saúde da Aplicação
-
-   - **Endereço:** `/health`
-   - **Método:** GET
-   - **Descrição:** Verifica a disponibilidade do servidor. Não exige autenticação nem corpo de requisição.
-   - **Headers:** Nenhum header específico necessário.
-   - **Body:** Nenhum.
-   - **Resposta:** `200 OK` — `{ "status": "ok" }` enquanto o processo estiver em execução; `500 Internal Server Error` em caso de falha interna.
-
-**RF001 — Registro de Movimentação do Rebanho (Prioridade: Alta)**
-
-2. Registrar Movimentação
-
-   - **Endereço:** `/movimentacoes`
-   - **Método:** POST
-   - **Descrição:** Registra uma nova movimentação do rebanho (nascimento, morte, transferência, compra ou venda). Valida campos obrigatórios conforme o tipo da movimentação, conforme RN01.
-   - **Headers:** `Content-Type: application/json`
-   - **Body:** Campos: `retiro_id` (string UUID, obrigatório), `capataz_id` (string, obrigatório), `tipo` (string, obrigatório — `nascimento`, `morte`, `transferencia`, `compra` ou `venda`), `estagio_vida` (string, obrigatório), `origem` (string, condicional), `destino` (string, condicional), `quantidade` (number, condicional), `causa_obito` (string, condicional para tipo morte), `sincronizado` (boolean).
-   - **Respostas:**
-     - `201 Created`: Movimentação criada. Retorna o objeto criado.
-     - `400 Bad Request`: Campo obrigatório ausente ou inválido para o tipo informado.
-     - `500 Internal Server Error`: Falha interna no servidor.
-
-3. Listar Movimentações
-
-   - **Endereço:** `/movimentacoes`
-   - **Método:** GET
-   - **Descrição:** Retorna todas as movimentações cadastradas. Quando parâmetros de filtro são informados (retiro, tipo, status, dataInicio, dataFim), executa o filtro automaticamente.
-   - **Headers:** Nenhum header específico necessário.
-   - **Body:** Nenhum.
-   - **Resposta:**
-     - `200 OK`: Array de movimentações.
-     - `500 Internal Server Error`: Falha interna.
-
-4. Buscar Movimentação por ID
-
-   - **Endereço:** `/movimentacoes/:id`
-   - **Método:** GET
-   - **Descrição:** Retorna uma movimentação específica pelo seu identificador (UUID).
-   - **Headers:** Nenhum header específico necessário.
-   - **Body:** Nenhum.
-   - **Respostas:**
-     - `200 OK`: Objeto da movimentação.
-     - `400 Bad Request`: ID inválido.
-     - `404 Not Found`: Movimentação não encontrada.
-     - `500 Internal Server Error`: Falha interna.
-
-5. Atualizar Movimentação
-
-   - **Endereço:** `/movimentacoes/:id`
-   - **Método:** PATCH
-   - **Descrição:** Atualiza campos de uma movimentação existente. Apenas os campos informados no corpo são atualizados.
-   - **Headers:** `Content-Type: application/json`
-   - **Body:** Campos parciais da movimentação a serem atualizados.
-   - **Respostas:**
-     - `200 OK`: Objeto atualizado.
-     - `400 Bad Request`: Violação de regra de negócio.
-     - `404 Not Found`: Movimentação não encontrada.
-     - `500 Internal Server Error`: Falha interna.
-
-6. Remover Movimentação
-
-   - **Endereço:** `/movimentacoes/:id`
-   - **Método:** DELETE
-   - **Descrição:** Remove uma movimentação e seus dados associados.
-   - **Headers:** Nenhum header específico necessário.
-   - **Body:** Nenhum.
-   - **Respostas:**
-     - `204 No Content`: Removida com sucesso.
-     - `400 Bad Request`: ID inválido.
-     - `404 Not Found`: Movimentação não encontrada.
-     - `500 Internal Server Error`: Falha interna.
-
-**RF002 — Criar e Acompanhar Tarefas (Prioridade: Alta)**
-
-7. Criar Tarefa
-
-   - **Endereço:** `/tarefas`
-   - **Método:** POST
-   - **Descrição:** Cria uma nova tarefa e a atribui a um usuário. Todos os campos obrigatórios devem estar presentes simultaneamente, conforme RN02.
-   - **Headers:** `Content-Type: application/json`
-   - **Body:** Campos enviados pelo cliente: `retiro_id` (string UUID, obrigatório), `atribuida_a` (string UUID do capataz responsável pela execução, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `categoria` (string, obrigatório) e `usuarioCriador` (objeto do usuário que cria a tarefa, obrigatório — deve ter `cargo` igual a `supervisor`, conforme RN02). Opcionalmente aceita `id` (string UUID) gerado localmente em modo offline. Os campos `criada_por`, `status` (iniciado como `pendente`) e `data_criacao` são preenchidos automaticamente pelo servidor e não devem ser enviados.
-   - **Respostas:**
-     - `201 Created`: Tarefa criada. Retorna o objeto criado.
-     - `400 Bad Request`: Campo obrigatório ausente, `retiro_id` inválido ou `usuarioCriador` sem perfil `supervisor`.
-     - `500 Internal Server Error`: Falha interna.
-
-8. Listar Todas as Tarefas
-
-   - **Endereço:** `/tarefas`
-   - **Método:** GET
-   - **Descrição:** Retorna todas as tarefas cadastradas.
-   - **Headers:** Nenhum header específico necessário.
-   - **Body:** Nenhum.
-   - **Respostas:**
-     - `200 OK`: Array de tarefas.
-     - `500 Internal Server Error`: Falha interna.
-
-9. Buscar Tarefa por ID
-
-   - **Endereço:** `/tarefas/:id`
-   - **Método:** GET
-   - **Descrição:** Retorna uma tarefa específica pelo seu identificador (UUID).
-   - **Headers:** Nenhum header específico necessário.
-   - **Body:** Nenhum.
-   - **Respostas:**
-     - `200 OK`: Objeto da tarefa.
-     - `404 Not Found`: Tarefa não encontrada.
-     - `500 Internal Server Error`: Falha interna.
-
-10. Atualizar Tarefa
-
-    - **Endereço:** `/tarefas/:id`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza campos gerais de uma tarefa existente.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos parciais a atualizar.
-    - **Respostas:**
-      - `200 OK`: Tarefa atualizada.
-      - `404 Not Found`: Tarefa não encontrada.
-      - `500 Internal Server Error`: Falha interna.
-
-11. Atualizar Status da Tarefa
-
-    - **Endereço:** `/tarefas/:id/status`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza exclusivamente o status de uma tarefa.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "status": "pendente" | "aprovado" }`
-    - **Respostas:**
-      - `200 OK`: Status atualizado.
-      - `400 Bad Request`: Status ausente ou ID inválido.
-      - `404 Not Found`: Tarefa não encontrada.
-      - `500 Internal Server Error`: Falha interna.
-
-12. Remover Tarefa
-
-    - **Endereço:** `/tarefas/:id`
-    - **Método:** DELETE
-    - **Descrição:** Remove uma tarefa pelo identificador (UUID).
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `204 No Content`: Removida com sucesso.
-      - `404 Not Found`: Tarefa não encontrada.
-      - `500 Internal Server Error`: Falha interna.
-
-13. Listar Tarefas por Status
-
-    - **Endereço:** `/tarefas/status/:status`
-    - **Método:** GET
-    - **Descrição:** Filtra tarefas pelo status informado no parâmetro de rota.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tarefas filtradas; `500 Internal Server Error` — Falha interna.
-
-14. Listar Tarefas por Usuário
-
-    - **Endereço:** `/tarefas/usuario/:usuarioId`
-    - **Método:** GET
-    - **Descrição:** Retorna todas as tarefas atribuídas a um usuário específico.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tarefas do usuário; `500 Internal Server Error` — Falha interna.
-
-15. Listar Tarefas por Prioridade
-
-    - **Endereço:** `/tarefas/prioridade/:prioridade`
-    - **Método:** GET
-    - **Descrição:** Filtra tarefas pela prioridade informada no parâmetro de rota (`alta`, `media` ou `baixa`).
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tarefas filtradas; `500 Internal Server Error` — Falha interna.
-
-16. Listar Tarefas por Categoria
-
-    - **Endereço:** `/tarefas/categoria/:categoria`
-    - **Método:** GET
-    - **Descrição:** Filtra tarefas pela categoria informada no parâmetro de rota.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tarefas da categoria; `500 Internal Server Error` — Falha interna.
-
-17. Contar Tarefas por Status
-
-    - **Endereço:** `/tarefas/contagem/status`
-    - **Método:** GET
-    - **Descrição:** Retorna a contagem de tarefas agrupadas por status.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Objeto com totais por status (ex.: `{ "pendente": 4, "aprovado": 2 }`); `500 Internal Server Error` — Falha interna.
-
-**RF003 — Sincronização Offline/Online (Prioridade: Alta)**
-
-18. Detectar Disponibilidade de Conexão
-
-    - **Endereço:** `/sincronizacao/conexao`
-    - **Método:** GET
-    - **Descrição:** Verifica se existe conexão disponível com o servidor, permitindo que o cliente do Capataz decida quando reenviar registros pendentes.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Conexão disponível; `500 Internal Server Error` — Falha interna.
-
-19. Executar Sincronização de Dados Pendentes
-
-    - **Endereço:** `/sincronizacao`
-    - **Método:** POST
-    - **Descrição:** Processa e persiste no servidor os dados pendentes recebidos com `sincronizado = false`, incluindo registros mantidos temporariamente no cliente do Capataz.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Sincronização concluída.
-      - `400 Bad Request`: Falha parcial ou erro de validação.
-      - `500 Internal Server Error`: Erro durante sincronização.
-
-20. Obter Status da Sincronização
-
-    - **Endereço:** `/sincronizacao/status`
-    - **Método:** GET
-    - **Descrição:** Retorna o status agregado da sincronização, com contagens de registros pendentes e já sincronizados por entidade.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Objeto com status atual; `500 Internal Server Error` — Falha interna.
-
-21. Obter Mensagem de Sincronização
-
-    - **Endereço:** `/sincronizacao/mensagem`
-    - **Método:** GET
-    - **Descrição:** Retorna uma mensagem legível pelo usuário com base no estado atual da sincronização.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — `{ "mensagem": "string" }`; `500 Internal Server Error` — Falha interna.
-
-22. Receber Movimentação Sincronizada do Cliente Offline
-
-    - **Endereço:** `/movimentacoes/sincronizar`
-    - **Método:** POST
-    - **Descrição:** Recebe um registro criado offline e o persiste no servidor marcado como `sincronizado = true`.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `retiro_id` (string UUID, obrigatório), `capataz_id` (string, obrigatório), `tipo` (string, obrigatório), `estagio_vida` (string, obrigatório), `origem`, `destino`, `quantidade`, `causa_obito`.
-    - **Respostas:**
-      - `201 Created`: Registro sincronizado e criado.
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `500 Internal Server Error`: Falha interna.
-
-23. Marcar Movimentação como Sincronizada
-
-    - **Endereço:** `/movimentacoes/:id/sincronizar`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza a flag `sincronizado` de um registro existente para `true`.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Movimentação marcada como sincronizada.
-      - `404 Not Found`: Movimentação não encontrada.
-      - `500 Internal Server Error`: Falha interna.
-
-**RF004 — Evidências (Prioridade: Alta)**
-
-24. Listar Evidências
-
-    - **Endereço:** `/evidencias`
-    - **Método:** GET
-    - **Descrição:** Retorna todas as evidências registradas no sistema.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de evidências; `500 Internal Server Error` — Falha interna.
-
-25. Buscar Evidência por ID
-
-    - **Endereço:** `/evidencias/:id`
-    - **Método:** GET
-    - **Descrição:** Retorna uma evidência específica pelo seu identificador (UUID).
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Objeto da evidência.
-      - `404 Not Found`: Evidência não encontrada.
-      - `500 Internal Server Error`: Falha interna.
-
-26. Criar Evidência de Mensagem Escrita
-
-    - **Endereço:** `/evidencias/mensagens`
-    - **Método:** POST
-    - **Descrição:** Anexa uma mensagem escrita como evidência descritiva. Obrigatória para abertura de tickets conforme RN08.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `usuarioId` (string, obrigatório), `conteudo` (string, obrigatório).
-    - **Respostas:**
-      - `201 Created`: Evidência criada.
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `500 Internal Server Error`: Falha interna.
-
-27. Criar Evidência de Áudio
-
-    - **Endereço:** `/evidencias/audios`
-    - **Método:** POST
-    - **Descrição:** Registra um áudio como evidência descritiva.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `usuarioId` (string, obrigatório), `urlArquivo` (string, obrigatório), `duracao` (number, obrigatório).
-    - **Respostas:**
-      - `201 Created`: Evidência criada.
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `500 Internal Server Error`: Falha interna.
-
-28. Criar Evidência de Foto Georreferenciada
-
-    - **Endereço:** `/evidencias/fotos`
-    - **Método:** POST
-    - **Descrição:** Registra uma foto como evidência, com validação obrigatória de georreferenciamento (latitude −90 a +90, longitude −180 a +180). Rejeita com 400 caso os metadados sejam inválidos ou ausentes, conforme RN04.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `usuarioId` (string, obrigatório), `urlArquivo` (string, obrigatório), `latitude` (number, obrigatório), `longitude` (number, obrigatório).
-    - **Respostas:**
-      - `201 Created`: Foto salva com georreferenciamento válido.
-      - `400 Bad Request`: `"Foto rejeitada: georreferenciamento inválido ou ausente"`
-      - `500 Internal Server Error`: Falha interna.
-
-**RF005 — Autenticação de Usuários (Prioridade: Alta)**
-
-29. Autenticar Usuário e Obter Token JWT
-
-    - **Endereço:** `/usuarios/login`
-    - **Método:** POST
-    - **Descrição:** Valida o par `login` e `senha`. Retorna o token JWT utilizado por todas as rotas protegidas. Usuários com cargo `capataz` não recebem token por este fluxo, conforme RN05 e RN06.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos: `login` (string, obrigatório), `senha` (string, obrigatório).
-    - **Respostas:**
-      - `200 OK`: `{ "usuario": { ...dados sem senha_hash }, "token": "JWT..." }`
-      - `400 Bad Request`: Login ou senha ausentes.
-      - `401 Unauthorized`: Credenciais inválidas.
-      - `403 Forbidden`: Usuário inativo ou cargo `capataz`.
-      - `500 Internal Server Error`: Falha interna.
-
-**RF006 — Validações (Prioridade: Média)**
-
-&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem autenticação JWT com cargo `supervisor`.
-
-36. Verificar Permissão de Validação
-
-    - **Endereço:** `/validacoes/permissao`
-    - **Método:** POST
-    - **Descrição:** Verifica se o usuário autenticado possui permissão para validar registros, com base no token informado.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: `{ "podeValidar": true }`
-      - `401 Unauthorized` / `403 Forbidden`: Sem permissão.
-      - `500 Internal Server Error`: Falha interna.
-
-37. Validar Movimentação Pendente
-
-    - **Endereço:** `/validacoes/movimentacoes/:id/validar`
-    - **Método:** PATCH
-    - **Descrição:** Altera o status da movimentação para `validado`, registrando o supervisor responsável e a data de validação. Restrito a cargo `supervisor` conforme RN06.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Movimentação validada.
-      - `400 Bad Request`: ID inválido ou violação de regra.
-      - `404 Not Found`: Movimentação não encontrada.
-      - `409 Conflict`: Movimentação já validada.
-      - `403 Forbidden`: Cargo não autorizado.
-      - `500 Internal Server Error`: Falha interna.
-
-38. Aprovar Tarefa
-
-    - **Endereço:** `/validacoes/tarefas/:id/aprovar`
-    - **Método:** PATCH
-    - **Descrição:** Aprova uma tarefa pendente, registrando o supervisor e atualizando o status para `aprovado`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Tarefa aprovada.
-      - `400 Bad Request`: ID inválido ou violação de regra.
-      - `404 Not Found`: Tarefa não encontrada.
-      - `409 Conflict`: Tarefa já aprovada.
-      - `403 Forbidden`: Cargo não autorizado.
-      - `500 Internal Server Error`: Falha interna.
-
-39. Aprovar Ticket de Infraestrutura
-
-    - **Endereço:** `/validacoes/tickets/:id/aprovar`
-    - **Método:** PATCH
-    - **Descrição:** Aprova um ticket pendente, registrando o supervisor aprovador e atualizando o status para `aprovado`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Ticket aprovado.
-      - `400 Bad Request`: ID inválido ou violação de regra.
-      - `404 Not Found`: Ticket não encontrado.
-      - `409 Conflict`: Ticket já aprovado.
-      - `403 Forbidden`: Cargo não autorizado.
-      - `500 Internal Server Error`: Falha interna.
-
-**RF007 — Relatórios (Prioridade: Média)**
-
-&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem autenticação JWT com cargo `gerente` ou `supervisor`. Apenas registros com `sincronizado = true` são incluídos nos resultados, conforme RN07.
-
-40. Dados Brutos de Movimentações para Relatório
-
-    - **Endereço:** `/relatorios/movimentacoes/dados`
-    - **Método:** GET
-    - **Descrição:** Retorna movimentações sincronizadas e validadas para composição de relatórios. Aceita os query params opcionais `dataInicio`, `dataFim` (ISO 8601) e `retiroId`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de movimentações sincronizadas.
-      - `400 Bad Request`: Datas ou retiro inválidos.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-41. Dados Brutos de Tarefas para Relatório
-
-    - **Endereço:** `/relatorios/tarefas/dados`
-    - **Método:** GET
-    - **Descrição:** Retorna tarefas sincronizadas e concluídas para composição de relatórios. Aceita os mesmos query params opcionais de datas e `retiroId`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de tarefas sincronizadas.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-42. Relatório de Movimentações Formatado para Exportação
-
-    - **Endereço:** `/relatorios/movimentacoes`
-    - **Método:** GET
-    - **Descrição:** Retorna o relatório de movimentações estruturado para exportação em planilha (.xlsx / .csv). Aceita `dataInicio`, `dataFim` e `retiroId` como query params opcionais.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Dados formatados para exportação.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-43. Relatório Semanal
-
-    - **Endereço:** `/relatorios/semanal`
-    - **Método:** GET
-    - **Descrição:** Gera o relatório consolidado dos últimos 7 dias, sem necessidade de informar datas manualmente. Aceita `retiroId` opcional.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Relatório semanal.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-44. Relatório Mensal
-
-    - **Endereço:** `/relatorios/mensal`
-    - **Método:** GET
-    - **Descrição:** Gera o relatório consolidado dos últimos 30 dias. Aceita `retiroId` opcional.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Relatório mensal.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-45. Movimentações Sincronizadas para Relatório
-
-    - **Endereço:** `/sincronizacao/relatorios/movimentacoes`
-    - **Método:** GET
-    - **Descrição:** Retorna movimentações com `sincronizado = true` via módulo de sincronização. Aceita `retiroId` opcional.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de movimentações; `500 Internal Server Error` — Falha interna.
-
-46. Tarefas Sincronizadas para Relatório
-
-    - **Endereço:** `/sincronizacao/relatorios/tarefas`
-    - **Método:** GET
-    - **Descrição:** Retorna tarefas com `sincronizado = true` via módulo de sincronização. Aceita `retiroId` opcional.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tarefas; `500 Internal Server Error` — Falha interna.
-
-**RF008 — Tickets de Infraestrutura (Prioridade: Média)**
-
-47. Abrir Ticket de Infraestrutura
-
-    - **Endereço:** `/tickets`
-    - **Método:** POST
-    - **Descrição:** Cria um chamado de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo `prioridade` obrigatoriamente informado, conforme RN08 e RN11.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos enviados pelo cliente: `retiro_id` (string UUID, obrigatório), `categoria` (string, obrigatório), `localizacao` (string, obrigatório), `descricao` (string, obrigatório), `prioridade` (string, obrigatório — `alta`, `media` ou `baixa`), `usuarioAbridorTicket` (objeto do usuário que abre o chamado, obrigatório — deve ter `cargo` igual a `capataz`, conforme RN08) e `temEvidenciaDescritiva` (boolean, obrigatório). Opcionalmente aceita `id` (string UUID) gerado localmente em modo offline. Os campos `status` (iniciado como `pendente`), `aberto_por`, `atribuido_a`, `data_criacao` e `data_realizado` são preenchidos automaticamente pelo servidor.
-    - **Respostas:**
-      - `201 Created`: Ticket aberto.
-      - `400 Bad Request`: Campo obrigatório ausente, evidência descritiva ausente, prioridade não informada ou `usuarioAbridorTicket` sem perfil `capataz`.
-      - `500 Internal Server Error`: Falha interna.
-
-48. Listar Todos os Tickets
-
-    - **Endereço:** `/tickets`
-    - **Método:** GET
-    - **Descrição:** Retorna todos os tickets cadastrados.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tickets; `500 Internal Server Error` — Falha interna.
-
-49. Listar Tickets Pendentes
-
-    - **Endereço:** `/tickets/pendentes`
-    - **Método:** GET
-    - **Descrição:** Retorna tickets com status `pendente`. Aceita `retiroId` opcional como query param.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de tickets pendentes.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `500 Internal Server Error`: Falha interna.
-
-50. Listar Tickets por Status
-
-    - **Endereço:** `/tickets/status`
-    - **Método:** GET
-    - **Descrição:** Filtra tickets por status via query string. O parâmetro `status` é obrigatório.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tickets filtrados; `500 Internal Server Error` — Falha interna.
-
-51. Listar Tickets por Categoria
-
-    - **Endereço:** `/tickets/categoria`
-    - **Método:** GET
-    - **Descrição:** Filtra tickets por categoria via query string. O parâmetro `categoria` é obrigatório.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Array de tickets da categoria; `500 Internal Server Error` — Falha interna.
-
-52. Buscar Ticket por ID
-
-    - **Endereço:** `/tickets/:id`
-    - **Método:** GET
-    - **Descrição:** Retorna um ticket específico pelo seu identificador (UUID).
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Objeto do ticket.
-      - `404 Not Found`: Ticket não encontrado.
-      - `500 Internal Server Error`: Falha interna.
-
-53. Atualizar Status do Ticket
-
-    - **Endereço:** `/tickets/:id/status`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza o status de um ticket existente.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "novoStatus": "pendente" | "aprovado" }`
-    - **Respostas:**
-      - `200 OK`: Status atualizado.
-      - `404 Not Found`: Ticket não encontrado.
-      - `500 Internal Server Error`: Falha interna.
-
-54. Atribuir Ticket a um Usuário
-
-    - **Endereço:** `/tickets/:id/atribuicao`
-    - **Método:** PATCH
-    - **Descrição:** Atribui um ticket a um usuário responsável para organização da demanda de manutenção.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "usuarioId": "string (UUID)" }`
-    - **Respostas:**
-      - `200 OK`: Ticket atribuído.
-      - `400 Bad Request`: Campo `usuarioId` ausente.
-      - `404 Not Found`: Ticket não encontrado.
-      - `500 Internal Server Error`: Falha interna.
-
-**RF009 — Filtros de Movimentações (Prioridade: Média)**
-
-55. Filtrar Movimentações com Critérios Específicos
-
-    - **Endereço:** `/movimentacoes/filtrar`
-    - **Método:** GET
-    - **Descrição:** Rota dedicada ao filtro de validação do Supervisor, conforme RN09. Permite seleção múltipla de tipos e status (separados por vírgula), mas apenas um retiro por vez. Quando nenhum status é informado, retorna registros com status `pendente` por padrão.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Parâmetros de Query:** `retiro` (number, obrigatório), `tipo` (string(s) por vírgula, opcional), `status` (string(s) por vírgula, opcional — padrão: `pendente`), `dataInicio` (string ISO 8601, opcional), `dataFim` (string ISO 8601, opcional).
-    - **Respostas:**
-      - `200 OK`: Array de movimentações filtradas.
-      - `400 Bad Request`: Retiro ausente ou data inválida.
-      - `500 Internal Server Error`: Falha interna.
-
-56. Listar Movimentações Pendentes de Validação
-
-    - **Endereço:** `/movimentacoes/pendentes`
-    - **Método:** GET
-    - **Descrição:** Retorna movimentações com status `pendente`, aguardando validação pelo Supervisor. Aceita `retiroId` opcional como query param.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de movimentações pendentes.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `500 Internal Server Error`: Falha interna.
-
-
-**RF010 — Dashboard Gerencial (Prioridade: Média)**
-
-&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de dashboard consideram exclusivamente registros com `sincronizado = true` e status `validado` ou `aprovado`, conforme RN10.
-
-57. Dados de Movimentações para o Dashboard
-
-    - **Endereço:** `/movimentacoes/dashboard`
-    - **Método:** GET
-    - **Descrição:** Retorna movimentações validadas e sincronizadas para alimentar o painel gerencial. Aceita `retiroId` opcional para segmentar por retiro.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Indicadores consolidados de movimentações.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `500 Internal Server Error`: Falha interna.
-
-58. Contar Movimentações por Tipo
-
-    - **Endereço:** `/movimentacoes/contagem/tipo`
-    - **Método:** GET
-    - **Descrição:** Retorna a contagem de movimentações agrupadas por tipo. Aceita `retiroId` opcional.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — `{ "nascimento": 3, "morte": 1, ... }`; `500 Internal Server Error` — Falha interna.
-
-59. Dados de Tarefas para o Dashboard
-
-    - **Endereço:** `/tarefas/dashboard`
-    - **Método:** GET
-    - **Descrição:** Retorna tarefas aprovadas e sincronizadas para o painel gerencial. Aceita `retiroId` opcional.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Indicadores consolidados de tarefas; `500 Internal Server Error` — Falha interna.
-
-60. Tickets Sincronizados para o Dashboard
-
-    - **Endereço:** `/sincronizacao/dashboard/tickets`
-    - **Método:** GET
-    - **Descrição:** Retorna tickets aprovados e sincronizados para o painel gerencial. Aceita `retiroId` opcional.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — Dados de tickets aprovados; `500 Internal Server Error` — Falha interna.
-
-61. Contar Tickets por Prioridade
-
-    - **Endereço:** `/tickets/contagem/prioridade`
-    - **Método:** GET
-    - **Descrição:** Retorna a contagem de tickets agrupados por prioridade. Aceita `retiroId` opcional.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Resposta:** `200 OK` — `{ "alta": 2, "media": 5, "baixa": 1 }`; `500 Internal Server Error` — Falha interna.
-
-**RF011 — Prioridade de Tickets (Prioridade: Média)**
-
-62. Listar Tickets por Prioridade
-
-    - **Endereço:** `/tickets/prioridade`
-    - **Método:** GET
-    - **Descrição:** Filtra tickets por prioridade via query string. O parâmetro `prioridade` aceita `alta`, `media` ou `baixa`.
-    - **Headers:** Nenhum header específico necessário.
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de tickets filtrados.
-      - `400 Bad Request`: Prioridade ausente ou inválida.
-      - `500 Internal Server Error`: Falha interna.
-
-63. Alterar Prioridade de Ticket Existente
-
-    - **Endereço:** `/tickets/:id/prioridade`
-    - **Método:** PATCH
-    - **Descrição:** Permite reorganização da demanda operacional alterando a prioridade após a criação do ticket, conforme RN11.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** `{ "novaPrioridade": "alta" | "media" | "baixa" }`
-    - **Respostas:**
-      - `200 OK`: Prioridade atualizada.
-      - `400 Bad Request`: Campo ausente ou ID inválido.
-      - `404 Not Found`: Ticket não encontrado.
-      - `500 Internal Server Error`: Falha interna.
-
-**RF012 — Gestão de Usuários (Prioridade: Média)**
-
-30. Criar Usuário
-
-    - **Endereço:** `/usuarios`
-    - **Método:** POST
-    - **Descrição:** Cria um novo usuário no sistema. Requer autenticação JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos: `retiro_id` (string UUID, obrigatório), `nome` (string, obrigatório), `login` (string, obrigatório), `senha_hash` (string, obrigatório), `status` (string, obrigatório), `cargo` (string, obrigatório — `capataz`, `supervisor` ou `gerente`).
-    - **Respostas:**
-      - `201 Created`: Usuário criado (sem `senha_hash` na resposta).
-      - `400 Bad Request`: Campo obrigatório ausente.
-      - `400 Bad Request`: Login fora do formato de e-mail — `{ "error": "Login deve ser um email válido" }`.
-      - `401 Unauthorized`: Token ausente ou inválido.
-      - `403 Forbidden`: Cargo insuficiente.
-      - `500 Internal Server Error`: Falha interna.
-
-31. Listar Todos os Usuários
-
-    - **Endereço:** `/usuarios`
-    - **Método:** GET
-    - **Descrição:** Retorna todos os usuários cadastrados, sem expor o campo `senha_hash`. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-32. Buscar Usuário por ID
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** GET
-    - **Descrição:** Retorna um usuário específico pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Objeto do usuário (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-33. Listar Usuários por Retiro
-
-    - **Endereço:** `/usuarios/retiro/:retiroId`
-    - **Método:** GET
-    - **Descrição:** Retorna os usuários vinculados a um retiro específico. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de usuários do retiro.
-      - `400 Bad Request`: `retiroId` inválido.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-34. Atualizar Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** PATCH
-    - **Descrição:** Atualiza campos de um usuário existente. Requer JWT com cargo `gerente`.
-    - **Headers:** `Content-Type: application/json` e `Authorization: Bearer <token>`
-    - **Body:** Campos parciais a atualizar.
-    - **Respostas:**
-      - `200 OK`: Usuário atualizado (sem `senha_hash`).
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-35. Remover Usuário
-
-    - **Endereço:** `/usuarios/:id`
-    - **Método:** DELETE
-    - **Descrição:** Remove um usuário pelo UUID. Requer JWT com cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `204 No Content`: Removido com sucesso.
-      - `404 Not Found`: Usuário não encontrado.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-64. Receber Tarefa Sincronizada do Cliente Offline
-
-    - **Endereço:** `/tarefas/sincronizar`
-    - **Método:** POST
-    - **Descrição:** Recebe uma tarefa criada offline e a persiste no servidor marcada como `sincronizado = true`.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos da tarefa, incluindo `criada_por` (obrigatório), `status` (obrigatório) e os campos validados como obrigatórios (`retiro_id`, `atribuida_a`, `descricao`, `prioridade`, `categoria`). Aceita opcionalmente `id` (string UUID) gerado localmente em modo offline.
-    - **Respostas:**
-      - `201 Created`: Tarefa sincronizada e criada.
-      - `400 Bad Request`: Campo obrigatório ausente (incluindo `criada_por` ou `status`).
-      - `500 Internal Server Error`: Falha interna.
-
-65. Receber Ticket Sincronizado do Cliente Offline
-
-    - **Endereço:** `/tickets/sincronizar`
-    - **Método:** POST
-    - **Descrição:** Recebe um chamado criado offline e o persiste no servidor marcado como `sincronizado = true`.
-    - **Headers:** `Content-Type: application/json`
-    - **Body:** Campos do chamado, incluindo `aberto_por` (obrigatório), `status` (obrigatório) e os demais campos obrigatórios (`retiro_id`, `categoria`, `localizacao`, `descricao`, `prioridade`). Aceita opcionalmente `id` (string UUID) gerado localmente em modo offline.
-    - **Respostas:**
-      - `201 Created`: Ticket sincronizado e criado.
-      - `400 Bad Request`: Campo obrigatório ausente (incluindo `aberto_por` ou `status`).
-      - `500 Internal Server Error`: Falha interna.
-
-66. Buscar Dados de Tickets para Relatório
-
-    - **Endereço:** `/relatorios/tickets/dados`
-    - **Método:** GET
-    - **Descrição:** Retorna os dados de chamados consolidados, filtrados por período e retiro, para a composição de relatórios. Requer JWT com cargo `gerente` ou `supervisor`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Query params:** `dataInicio`, `dataFim` (datas) e `retiroId` (string UUID).
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array com os dados de tickets do período.
-      - `400 Bad Request`: `dataInicio`/`dataFim` inválidas ou `retiroId` inválido.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-67. Exportar Relatório em Arquivo
-
-    - **Endereço:** `/relatorios/exportar`
-    - **Método:** GET
-    - **Descrição:** Gera e disponibiliza o relatório como arquivo para download (`xlsx` ou `csv`), conforme o tipo e o formato solicitados. Requer JWT com cargo `gerente` ou `supervisor`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Query params:** `tipo`, `formato` (`xlsx` ou `csv`), `dataInicio`, `dataFim` e `retiroId` (string UUID).
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Arquivo gerado, retornado com `Content-Disposition: attachment`.
-      - `400 Bad Request`: Datas inválidas, `retiroId` inválido ou `tipo`/`formato` de exportação inválido.
-      - `401 Unauthorized` / `403 Forbidden`: Acesso negado.
-      - `500 Internal Server Error`: Falha interna.
-
-68. Listar Capatazes por Retiro
-
-    - **Endereço:** `/usuarios/capatazes/retiro/:retiroId`
-    - **Método:** GET
-    - **Descrição:** Retorna os capatazes ativos vinculados a um retiro específico, utilizado, por exemplo, na atribuição de tarefas. Diferentemente dos demais endpoints de gestão de usuários, exige apenas JWT autenticado, sem restrição ao cargo `gerente`.
-    - **Headers:** `Authorization: Bearer <token>`
-    - **Body:** Nenhum.
-    - **Respostas:**
-      - `200 OK`: Array de capatazes ativos do retiro (sem `senha_hash`).
-      - `400 Bad Request`: `retiroId` inválido.
-      - `401 Unauthorized`: Token ausente ou inválido.
-      - `500 Internal Server Error`: Falha interna.
-
-&nbsp;&nbsp;&nbsp;&nbsp;É importante ressaltar que a documentação acima representa todos os endpoints implementados no sistema AgroFlow, incluindo endpoints de operação em campo, sincronização, validação, relatórios e dashboard. A implementação completa abrange os métodos HTTP GET, POST, PATCH e DELETE, cumprindo o objetivo da equipe de cobrir com a API todas as interações previstas pelos Requisitos Funcionais do projeto.
+#### RF005 — Autenticação de Usuários
+
+**2. Autenticar Supervisor ou Gerente**
+
+- **Endereço:** `/usuarios/login`
+- **Método:** POST
+- **Descrição:** Valida `login` e `senha`, retorna token JWT e dados do usuário. Capatazes não recebem token por este fluxo (RN05) — devem usar `/capataz/acesso/:token`.
+- **Headers:** `Content-Type: application/json`
+- **Body:** `{ "login": "string (email)", "senha": "string" }`
+- **Resposta:** `{ "usuario": { "id", "nome", "cargo", "retiro_id" }, "token": "JWT..." }` (sem expor `senha_hash`)
+- **Status codes:** `200 OK` | `400 Bad Request` (login/senha ausentes) | `401 Unauthorized` (credenciais inválidas) | `403 Forbidden` (usuário inativo ou cargo capataz) | `500 Internal Server Error`
+
+**3. Autenticar Capataz por QR Code**
+
+- **Endereço:** `/capataz/acesso/:token`
+- **Método:** GET
+- **Descrição:** Autenticação simplificada por token via QR Code (RN05). Compara hash SHA-256 do token recebido com os hashes ativos no banco, identifica o Capataz vinculado e cria a sessão via cookie `agroflow_token`. Redireciona para `/capataz/home` em caso de sucesso.
+- **Headers:** Nenhum header específico necessário.
+- **Parâmetros de rota:** `token` (string) — token único do QR Code do Capataz.
+- **Body:** Nenhum.
+- **Resposta:** Redirect para `/capataz/home` (sucesso) ou para `/auth/perfil` (falha).
+- **Status codes:** `302 Found` (redirect) | `401 Unauthorized` | `404 Not Found` | `500 Internal Server Error`
+
+**4. Encerrar sessão**
+
+- **Endereço:** `/usuarios/logout`
+- **Método:** POST
+- **Descrição:** Remove o cookie `agroflow_token`, encerrando a sessão do usuário.
+- **Headers:** `Authorization: Bearer <token>` ou cookie `agroflow_token`
+- **Body:** Nenhum.
+- **Resposta:** Confirmação de logout.
+- **Status codes:** `200 OK` | `401 Unauthorized`
+
+---
+
+#### RF001 — Movimentações do Rebanho
+
+**5. Registrar movimentação (sincronizada)**
+
+- **Endereço:** `/movimentacoes/sincronizar`
+- **Método:** POST
+- **Descrição:** Recebe uma movimentação do PWA do Capataz e a persiste com `sincronizado = true`. Aplica as validações por tipo (RN01): `compra` exige `destino` e `quantidade > 0`; `venda` exige `origem` e `quantidade > 0`; `transferencia` exige `origem`, `destino` e `quantidade > 0`; `nascimento` exige `origem` e `quantidade > 0`; `morte` exige `origem` e `causa_obito`. Para o Capataz autenticado, `retiro_id` e `capataz_id` vêm do JWT.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (capataz)
+- **Body:** `{ "tipo": "nascimento | morte | transferencia | compra | venda | outros", "estagio_vida": "string", "origem": "string?", "destino": "string?", "quantidade": "number?", "causa_obito": "string?", "tipo_outro": "string?", "status": "pendente", "sincronizado": "boolean", "evidenciaDraft": "object?" }`
+- **Resposta:** Objeto da movimentação criada.
+- **Status codes:** `201 Created` | `400 Bad Request` (RN01) | `401 Unauthorized` | `500 Internal Server Error`
+
+**6. Listar / filtrar movimentações**
+
+- **Endereço:** `/movimentacoes` (lista completa) ou `/movimentacoes/filtrar` (RF009)
+- **Método:** GET
+- **Descrição:** Lista movimentações dos retiros do usuário autenticado. Filtros opcionais permitem segmentação por tipo, status e período (RN09).
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiro` (UUID), `tipo` (lista separada por vírgula), `status` (`pendente`/`validado`), `dataInicio`, `dataFim` (ISO 8601)
+- **Body:** Nenhum.
+- **Resposta:** Array de movimentações formatadas.
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+**7. Listar movimentações pendentes**
+
+- **Endereço:** `/movimentacoes/pendentes`
+- **Método:** GET
+- **Descrição:** Retorna apenas movimentações com `status = pendente` dos retiros do Supervisor autenticado.
+- **Headers:** `Authorization: Bearer <token>` (supervisor)
+- **Body:** Nenhum.
+- **Resposta:** Array de movimentações pendentes.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+---
+
+#### RF002 — Tarefas
+
+**8. Criar tarefa (Supervisor)**
+
+- **Endereço:** `/tarefas`
+- **Método:** POST
+- **Descrição:** Cria tarefa delegada a um Capataz. Validação RN02 exige preenchimento simultâneo de `atribuida_a`, `descricao`, `prioridade` e `categoria`. Apenas Supervisores podem criar tarefas (RN06). `criada_por` é preenchido automaticamente a partir do usuário autenticado.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (supervisor)
+- **Body:** `{ "atribuida_a": "UUID", "descricao": "string", "categoria": "string", "prioridade": "alta | media | baixa" }`
+- **Resposta:** Objeto da tarefa criada com status inicial `pendente`.
+- **Status codes:** `201 Created` | `400 Bad Request` (`"Campos obrigatórios não informados"`, `"Apenas supervisores podem criar tarefas"`) | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+**9. Sincronizar tarefa do PWA**
+
+- **Endereço:** `/tarefas/sincronizar`
+- **Método:** POST
+- **Descrição:** Upsert idempotente por UUID, usado pela fila offline do PWA do Capataz. Para o fluxo online padrão de conclusão, o cliente envia primeiro as evidências e depois chama `PATCH /tarefas/:id/status` — esse upsert serve a casos em que a tarefa precisa ser recriada (ex.: fila offline persistida).
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Body:** `{ "id": "UUID", "retiro_id": "UUID", "criada_por": "UUID", "atribuida_a": "UUID", "descricao": "string", "categoria": "string", "prioridade": "string", "status": "pendente | concluido | aprovado", "sincronizado": "boolean" }`
+- **Resposta:** Objeto da tarefa upsertada.
+- **Status codes:** `201 Created` | `400 Bad Request` (`"Status inválido"`, `"Campo 'criada_por' é obrigatório"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**10. Atualizar status de tarefa**
+
+- **Endereço:** `/tarefas/:id/status`
+- **Método:** PATCH
+- **Descrição:** Atualiza exclusivamente o campo `status` (`pendente | concluido | aprovado`). É o endpoint canônico de conclusão pelo Capataz: o cliente envia as evidências obrigatórias e, em seguida, faz o PATCH alterando o status para `concluido`. Também usado para reverter a conclusão para `pendente` quando o envio de evidências falha, mantendo a regra "tarefa concluída sempre tem evidência".
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** `{ "status": "pendente | concluido | aprovado" }`
+- **Resposta:** Tarefa atualizada.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Status inválido"`) | `404 Not Found` | `401 Unauthorized` | `500 Internal Server Error`
+
+**11. Listar todas as tarefas**
+
+- **Endereço:** `/tarefas`
+- **Método:** GET
+- **Descrição:** Retorna todas as tarefas do sistema. Endpoint administrativo, sem filtros.
+- **Headers:** `Authorization: Bearer <token>`
+- **Body:** Nenhum.
+- **Resposta:** Array de tarefas.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `500 Internal Server Error`
+
+**12. Buscar tarefa por ID**
+
+- **Endereço:** `/tarefas/:id`
+- **Método:** GET
+- **Descrição:** Retorna uma tarefa específica.
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Objeto da tarefa.
+- **Status codes:** `200 OK` | `400 Bad Request` (ID inválido) | `404 Not Found` (`"Tarefa não encontrada"`) | `500 Internal Server Error`
+
+**13. Listar tarefas por status**
+
+- **Endereço:** `/tarefas/status/:status`
+- **Método:** GET
+- **Descrição:** Lista tarefas filtradas por status (`pendente`, `concluido`, `aprovado`).
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `status` (enum).
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tarefas.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Status inválido"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**14. Listar tarefas atribuídas a um usuário**
+
+- **Endereço:** `/tarefas/usuario/:usuarioId`
+- **Método:** GET
+- **Descrição:** Retorna todas as tarefas atribuídas a um determinado usuário. Usado pelo PWA do Capataz para listar suas próprias tarefas.
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `usuarioId` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Array de tarefas.
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+**15. Listar tarefas por prioridade**
+
+- **Endereço:** `/tarefas/prioridade/:prioridade`
+- **Método:** GET
+- **Descrição:** Lista tarefas filtradas por prioridade (`alta`, `media`, `baixa`).
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `prioridade` (enum).
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tarefas.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Prioridade inválida"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**16. Listar tarefas por categoria**
+
+- **Endereço:** `/tarefas/categoria/:categoria`
+- **Método:** GET
+- **Descrição:** Lista tarefas filtradas por categoria (string livre, usada como título da atividade).
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `categoria` (string).
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tarefas.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `500 Internal Server Error`
+
+**17. Contagem de tarefas por status**
+
+- **Endereço:** `/tarefas/contagem/status`
+- **Método:** GET
+- **Descrição:** Retorna agregado `{ pendente: N, concluido: N, aprovado: N }`. Usado pelo dashboard.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Objeto com contagens.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `500 Internal Server Error`
+
+**18. Dashboard de tarefas**
+
+- **Endereço:** `/tarefas/dashboard`
+- **Método:** GET
+- **Descrição:** Retorna apenas tarefas aprovadas (`status = aprovado`), prontas para composição do dashboard gerencial (RN10).
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tarefas aprovadas.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `500 Internal Server Error`
+
+**19. Atualizar tarefa**
+
+- **Endereço:** `/tarefas/:id`
+- **Método:** PATCH
+- **Descrição:** Atualização parcial de uma tarefa. Não permite alterar `data_criacao`, `criada_por`, `retiro_id` ou `status` (este último tem endpoint próprio — item 10).
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Campos parciais: `{ "atribuida_a": "UUID?", "descricao": "string?", "categoria": "string?", "prioridade": "string?" }`
+- **Resposta:** Tarefa atualizada.
+- **Status codes:** `200 OK` | `400 Bad Request` | `404 Not Found` | `401 Unauthorized` | `500 Internal Server Error`
+
+**20. Remover tarefa**
+
+- **Endereço:** `/tarefas/:id`
+- **Método:** DELETE
+- **Descrição:** Remove uma tarefa permanentemente. Endpoint administrativo.
+- **Headers:** `Authorization: Bearer <token>` (gerente)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Vazia.
+- **Status codes:** `204 No Content` | `401 Unauthorized` | `403 Forbidden` | `404 Not Found` | `500 Internal Server Error`
+
+---
+
+#### RF008, RF011 — Tickets de Infraestrutura
+
+**21. Abrir ticket (rota direta)**
+
+- **Endereço:** `/tickets`
+- **Método:** POST
+- **Descrição:** Cria ticket diretamente. Exige evidência descritiva obrigatória (RN08) e prioridade explícita (RN11). Apenas usuários com cargo `capataz` podem abrir tickets. Para o Capataz autenticado, `retiro_id` e `aberto_por` são preenchidos a partir do JWT.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (capataz)
+- **Body:** `{ "id": "UUID?", "categoria": "cerca | eletrica | hidraulica", "categoria_outro": "string?", "localizacao": "string", "descricao": "string", "prioridade": "alta | media | baixa", "temEvidenciaDescritiva": "boolean" }`
+- **Resposta:** Ticket criado.
+- **Status codes:** `201 Created` | `400 Bad Request` (`"Campos obrigatórios não informados"`, `"Categoria inválida"`, `"Prioridade inválida"`, `"Retiro inválido"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**22. Abrir ticket (sincronizado)**
+
+- **Endereço:** `/tickets/sincronizar`
+- **Método:** POST
+- **Descrição:** Variante usada pela fila offline do PWA do Capataz. Mesmas regras de validação do endpoint 21 (RN08 e RN11). Apenas usuários com cargo `capataz` podem usar.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (capataz)
+- **Body:** `{ "id": "UUID?", "categoria": "cerca | eletrica | hidraulica", "categoria_outro": "string?", "localizacao": "string", "descricao": "string", "prioridade": "alta | media | baixa", "status": "pendente", "atribuido_a": null, "aprovado_por": null, "sincronizado": "boolean" }`
+- **Resposta:** Ticket criado.
+- **Status codes:** `201 Created` | `400 Bad Request` (`"Status inválido"`, `"Prioridade inválida"`, `"Categoria inválida"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**23. Listar todos os tickets**
+
+- **Endereço:** `/tickets`
+- **Método:** GET
+- **Descrição:** Retorna todos os tickets do sistema.
+- **Headers:** `Authorization: Bearer <token>`
+- **Body:** Nenhum.
+- **Resposta:** Array de tickets.
+- **Status codes:** `200 OK` | `500 Internal Server Error` (`"Erro ao listar tickets"`)
+
+**24. Buscar ticket por ID**
+
+- **Endereço:** `/tickets/:id`
+- **Método:** GET
+- **Descrição:** Retorna um ticket específico. Capataz só pode acessar tickets do próprio retiro.
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Objeto do ticket.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"ID inválido"`) | `403 Forbidden` (`"Acesso negado: retiro diferente do usuário"`) | `404 Not Found` (`"Ticket não encontrado"`) | `500 Internal Server Error`
+
+**25. Listar tickets por status**
+
+- **Endereço:** `/tickets/status?status=pendente|aprovado`
+- **Método:** GET
+- **Descrição:** Lista tickets filtrados por status. Para Capataz, `retiro_id` é forçado ao do JWT independentemente do query param.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `status` (obrigatório), `retiroId` (UUID) — opcional para supervisor/gerente.
+- **Body:** Nenhum.
+- **Resposta:** Array de tickets.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Campo 'status' é obrigatório"`, `"Status inválido"`, `"Retiro inválido"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**26. Listar tickets por prioridade**
+
+- **Endereço:** `/tickets/prioridade?prioridade=alta|media|baixa`
+- **Método:** GET
+- **Descrição:** Lista tickets filtrados por prioridade.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `prioridade` (obrigatório), `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tickets.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Campo 'prioridade' é obrigatório"`, `"Prioridade inválida"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**27. Listar tickets por categoria**
+
+- **Endereço:** `/tickets/categoria?categoria=cerca|hidraulica|...`
+- **Método:** GET
+- **Descrição:** Lista tickets filtrados por categoria.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `categoria` (obrigatório), `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tickets.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Campo 'categoria' é obrigatório"`, `"Categoria inválida"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**28. Listar tickets pendentes**
+
+- **Endereço:** `/tickets/pendentes`
+- **Método:** GET
+- **Descrição:** Atalho para `/tickets/status?status=pendente`. Retorna apenas tickets aguardando validação do Supervisor.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Array de tickets pendentes.
+- **Status codes:** `200 OK` | `500 Internal Server Error` (`"Erro ao listar tickets pendentes"`)
+
+**29. Contagem de tickets por prioridade**
+
+- **Endereço:** `/tickets/contagem/prioridade`
+- **Método:** GET
+- **Descrição:** Retorna agregado `{ alta: N, media: N, baixa: N }`. Usado pelo dashboard gerencial.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Objeto com contagens.
+- **Status codes:** `200 OK` | `500 Internal Server Error` (`"Erro ao contar tickets por prioridade"`)
+
+**30. Atualizar status do ticket**
+
+- **Endereço:** `/tickets/:id/status`
+- **Método:** PATCH
+- **Descrição:** Atualiza o status do ticket (`pendente` ou `aprovado`).
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** `{ "novoStatus": "pendente | aprovado" }`
+- **Resposta:** Ticket atualizado.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Campo 'novoStatus' é obrigatório"`, `"Status inválido"`, `"ID inválido"`) | `404 Not Found` (`"Ticket não encontrado"`) | `500 Internal Server Error`
+
+**31. Alterar prioridade de ticket**
+
+- **Endereço:** `/tickets/:id/prioridade`
+- **Método:** PATCH
+- **Descrição:** Permite reorganização da demanda alterando a prioridade após a criação (RN11).
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** `{ "novaPrioridade": "alta | media | baixa" }`
+- **Resposta:** Ticket atualizado.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Campo 'novaPrioridade' é obrigatório"`, `"Prioridade inválida"`) | `404 Not Found` | `500 Internal Server Error`
+
+**32. Atribuir ticket a um usuário**
+
+- **Endereço:** `/tickets/:id/atribuir`
+- **Método:** PATCH
+- **Descrição:** Define o `atribuido_a` do ticket, vinculando-o a um responsável para resolução.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (supervisor)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** `{ "usuarioId": "UUID" }`
+- **Resposta:** Ticket atualizado.
+- **Status codes:** `200 OK` | `400 Bad Request` (`"Campo 'usuarioId' é obrigatório"`, `"ID inválido"`) | `404 Not Found` (`"Ticket não encontrado"`) | `500 Internal Server Error`
+
+---
+
+#### RF004 — Evidências
+
+**33. Criar evidência de mensagem escrita**
+
+- **Endereço:** `/evidencias/mensagens`
+- **Método:** POST
+- **Descrição:** Anexa mensagem textual como evidência descritiva. Obrigatória para abertura de tickets (RN08) e suficiente para tarefas. Conteúdo deve ter no mínimo 10 caracteres. O `usuarioId` é resolvido pelo servidor a partir do JWT do Capataz autenticado.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Body:** `{ "conteudo": "string (≥10 chars)", "tarefa_id": "UUID?", "ticket_id": "UUID?", "movimentacao_id": "UUID?" }`
+- **Resposta:** Evidência criada.
+- **Status codes:** `201 Created` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+**34. Criar evidência de áudio**
+
+- **Endereço:** `/evidencias/audios`
+- **Método:** POST
+- **Descrição:** Registra áudio como evidência. Duração mínima de 3 segundos (RN08). O arquivo é previamente enviado ao Supabase Storage pelo cliente; o endpoint recebe apenas a URL pública.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Body:** `{ "urlArquivo": "string", "duracao": "number (≥3)", "tarefa_id": "UUID?", "ticket_id": "UUID?", "movimentacao_id": "UUID?" }`
+- **Resposta:** Evidência criada.
+- **Status codes:** `201 Created` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+**35. Criar evidência de foto georreferenciada**
+
+- **Endereço:** `/evidencias/fotos`
+- **Método:** POST
+- **Descrição:** Registra foto como evidência. Validação obrigatória de georreferenciamento conforme RN04: latitude entre −90 e +90, longitude entre −180 e +180. Foto sem coordenadas válidas é rejeitada.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>`
+- **Body:** `{ "urlArquivo": "string", "latitude": "number (-90..90)", "longitude": "number (-180..180)", "tarefa_id": "UUID?", "ticket_id": "UUID?", "movimentacao_id": "UUID?" }`
+- **Resposta:** Evidência criada.
+- **Status codes:** `201 Created` | `400 Bad Request` (`"Foto rejeitada: georreferenciamento inválido ou ausente"`) | `401 Unauthorized` | `500 Internal Server Error`
+
+**36. Listar evidências de uma tarefa**
+
+- **Endereço:** `/evidencias/tarefa/:tarefaId`
+- **Método:** GET
+- **Descrição:** Retorna todas as evidências vinculadas a uma tarefa, usado pelo Supervisor ao revisar tarefas concluídas pelo Capataz.
+- **Headers:** `Authorization: Bearer <token>` (supervisor)
+- **Parâmetros de rota:** `tarefaId` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Array de evidências.
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+---
+
+#### RF003 — Sincronização Offline
+
+**37. Verificar disponibilidade de conexão**
+
+- **Endereço:** `/sincronizacao/conexao`
+- **Método:** GET
+- **Descrição:** Endpoint complementar ao `/health` para detecção de conectividade pelo PWA do Capataz antes do disparo da sincronização (RN03).
+- **Headers:** Nenhum header específico necessário.
+- **Body:** Nenhum.
+- **Resposta:** `{ "conexao": true }`
+- **Status codes:** `200 OK` | `500 Internal Server Error`
+
+**38. Executar sincronização**
+
+- **Endereço:** `/sincronizacao`
+- **Método:** POST
+- **Descrição:** Processa registros pendentes da fila local (IndexedDB) do Capataz, persistindo no servidor e marcando `sincronizado = true` após confirmação.
+- **Headers:** `Authorization: Bearer <token>` (capataz)
+- **Body:** Nenhum.
+- **Resposta:** `{ "sincronizados": "number", "falhas": "number" }`
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+**39. Status agregado da sincronização**
+
+- **Endereço:** `/sincronizacao/status`
+- **Método:** GET
+- **Descrição:** Retorna contagens de registros pendentes e já sincronizados por entidade.
+- **Headers:** `Authorization: Bearer <token>`
+- **Body:** Nenhum.
+- **Resposta:** Objeto com totais.
+- **Status codes:** `200 OK` | `500 Internal Server Error`
+
+---
+
+#### RF006 — Validações (Supervisor)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem autenticação JWT com cargo `supervisor` (RN06).
+
+**40. Validar movimentação**
+
+- **Endereço:** `/validacoes/movimentacoes/:id/validar`
+- **Método:** PATCH
+- **Descrição:** Altera status da movimentação para `validado`, registrando o `validado_por` (id do Supervisor) e `data_validacao`. Após validação, a movimentação passa a aparecer no dashboard do Gerente (RF010) e nos relatórios (RF007).
+- **Headers:** `Authorization: Bearer <token>` (supervisor)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Movimentação validada.
+- **Status codes:** `200 OK` | `400 Bad Request` | `403 Forbidden` | `404 Not Found` | `409 Conflict` (já validada) | `500 Internal Server Error`
+
+**41. Aprovar tarefa**
+
+- **Endereço:** `/validacoes/tarefas/:id/aprovar`
+- **Método:** PATCH
+- **Descrição:** Aprova tarefa concluída pelo Capataz, registrando `aprovado_por` e atualizando o status para `aprovado`.
+- **Headers:** `Authorization: Bearer <token>` (supervisor)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Tarefa aprovada.
+- **Status codes:** `200 OK` | `400 Bad Request` | `403 Forbidden` | `404 Not Found` | `409 Conflict` | `500 Internal Server Error`
+
+**42. Aprovar ticket**
+
+- **Endereço:** `/validacoes/tickets/:id/aprovar`
+- **Método:** PATCH
+- **Descrição:** Aprova ticket de infraestrutura, registrando `aprovado_por` e atualizando o status para `aprovado`.
+- **Headers:** `Authorization: Bearer <token>` (supervisor)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Ticket aprovado.
+- **Status codes:** `200 OK` | `400 Bad Request` | `403 Forbidden` | `404 Not Found` | `409 Conflict` | `500 Internal Server Error`
+
+---
+
+#### RF007 — Relatórios
+
+&nbsp;&nbsp;&nbsp;&nbsp;Todos os endpoints deste módulo exigem JWT com cargo `gerente` ou `supervisor`. Apenas registros com `sincronizado = true` e status `validado`/`aprovado` são incluídos, conforme RN07.
+
+**43. Dados brutos de movimentações para relatório**
+
+- **Endereço:** `/relatorios/movimentacoes/dados`
+- **Método:** GET
+- **Descrição:** Retorna movimentações sincronizadas e validadas para composição de relatórios.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `dataInicio`, `dataFim` (ISO 8601), `retiroId` (UUID) — todos opcionais.
+- **Body:** Nenhum.
+- **Resposta:** Array de movimentações.
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+**44. Relatório semanal consolidado**
+
+- **Endereço:** `/relatorios/semanal`
+- **Método:** GET
+- **Descrição:** Gera relatório consolidado dos últimos 7 dias sem necessidade de informar datas manualmente.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Relatório semanal estruturado.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+**45. Relatório mensal consolidado**
+
+- **Endereço:** `/relatorios/mensal`
+- **Método:** GET
+- **Descrição:** Gera relatório consolidado dos últimos 30 dias.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Relatório mensal estruturado.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+**46. Exportar relatório em arquivo**
+
+- **Endereço:** `/relatorios/exportar`
+- **Método:** GET
+- **Descrição:** Gera e disponibiliza relatório como arquivo `.xlsx` ou `.csv` para download.
+- **Headers:** `Authorization: Bearer <token>`
+- **Query params:** `tipo` (`movimentacoes | tarefas | tickets`), `formato` (`xlsx | csv`), `dataInicio`, `dataFim`, `retiroId`.
+- **Body:** Nenhum.
+- **Resposta:** Arquivo binário com `Content-Disposition: attachment`.
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+---
+
+#### RF010 — Dashboard Gerencial
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os endpoints de dashboard consideram exclusivamente registros com `sincronizado = true` e status `validado`/`aprovado` (RN10).
+
+**47. Indicadores de movimentações**
+
+- **Endereço:** `/movimentacoes/dashboard`
+- **Método:** GET
+- **Descrição:** Retorna agregados de movimentações validadas por retiro.
+- **Headers:** `Authorization: Bearer <token>` (gerente)
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Objeto com indicadores consolidados.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+**48. Contagem de movimentações por tipo**
+
+- **Endereço:** `/movimentacoes/contagem/tipo`
+- **Método:** GET
+- **Descrição:** Retorna `{ nascimento: N, morte: N, transferencia: N, compra: N, venda: N, outros: N }`.
+- **Headers:** `Authorization: Bearer <token>` (gerente)
+- **Query params:** `retiroId` (UUID) — opcional.
+- **Body:** Nenhum.
+- **Resposta:** Objeto com agrupamento.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+---
+
+#### RF012 — Gestão de Usuários
+
+&nbsp;&nbsp;&nbsp;&nbsp;Operações CRUD restritas ao cargo `gerente` (RN12), exceto a consulta de capatazes ativos.
+
+**49. Criar usuário**
+
+- **Endereço:** `/usuarios`
+- **Método:** POST
+- **Descrição:** Cria novo usuário com validação de login no formato de e-mail. A senha é recebida em claro no campo `senha_hash` e o servidor aplica `bcrypt` (12 rounds) antes de persistir. A resposta omite o `senha_hash`.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (gerente)
+- **Body:** `{ "retiro_id": "UUID", "nome": "string", "login": "email", "senha_hash": "string", "status": "ativo | inativo", "cargo": "capataz | supervisor | gerente" }`
+- **Resposta:** Usuário criado (sem `senha_hash`).
+- **Status codes:** `201 Created` | `400 Bad Request` (`"Login deve ser um email válido"`) | `401 Unauthorized` | `403 Forbidden` | `500 Internal Server Error`
+
+**50. Listar capatazes ativos por retiro**
+
+- **Endereço:** `/usuarios/capatazes/retiro/:retiroId`
+- **Método:** GET
+- **Descrição:** Retorna capatazes ativos vinculados a um retiro. Usado pela tela de delegação de tarefas do Supervisor. Diferentemente das demais rotas de gestão de usuários, exige apenas JWT autenticado (qualquer cargo).
+- **Headers:** `Authorization: Bearer <token>`
+- **Parâmetros de rota:** `retiroId` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Array de capatazes (sem `senha_hash`).
+- **Status codes:** `200 OK` | `400 Bad Request` | `401 Unauthorized` | `500 Internal Server Error`
+
+**51. Atualizar usuário**
+
+- **Endereço:** `/usuarios/:id`
+- **Método:** PATCH
+- **Descrição:** Atualização parcial de um usuário existente. Se `senha_hash` for enviado, o servidor aplica `bcrypt` antes de persistir.
+- **Headers:** `Content-Type: application/json` | `Authorization: Bearer <token>` (gerente)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Campos parciais do usuário.
+- **Resposta:** Usuário atualizado.
+- **Status codes:** `200 OK` | `401 Unauthorized` | `403 Forbidden` | `404 Not Found` | `500 Internal Server Error`
+
+**52. Remover usuário**
+
+- **Endereço:** `/usuarios/:id`
+- **Método:** DELETE
+- **Descrição:** Remove usuário existente.
+- **Headers:** `Authorization: Bearer <token>` (gerente)
+- **Parâmetros de rota:** `id` (UUID).
+- **Body:** Nenhum.
+- **Resposta:** Vazia.
+- **Status codes:** `204 No Content` | `401 Unauthorized` | `403 Forbidden` | `404 Not Found` | `500 Internal Server Error`
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;A documentação acima representa o conjunto de endpoints efetivamente implementados no backend do AgroFlow, totalizando 52 endpoints que cobrem todos os Requisitos Funcionais especificados na [Seção 3.1.1](#c3.1.1). Os endpoints estão organizados em arquivos de rotas modulares (`evidencia.route.ts`, `movimentacao.route.ts`, `relatorio.route.ts`, `sincronizacao.route.ts`, `tarefa.route.ts`, `ticket.route.ts`, `usuario.route.ts`, `validacao.route.ts`) e centralmente registrados em `app.ts`. As rotas das telas EJS (`/auth/*`, `/capataz/*`, `/supervisor/*`, `/gerente/*`) consomem internamente os mesmos endpoints da API REST, garantindo coerência entre a interface renderizada no servidor e a camada de dados.
 
 ## <a name="c3.8"></a>3.8. Autenticação, Autorização e Resiliência 
 
@@ -4769,7 +4558,7 @@ VALUES (?, ?, ?, ?);
 
 &nbsp;&nbsp;&nbsp;&nbsp;A segunda versão do AgroFlow consolidou a integração entre o frontend e o backend implementado na Sprint 3, expandindo as funcionalidades disponíveis para cada perfil de usuário e estabelecendo a camada de validação e autorização do sistema. O foco desta sprint foi tornar o sistema operacional de ponta a ponta, conectando os fluxos de campo (capataz), supervisão e gerência em uma aplicação web coesa e funcional.
 
-### (a) O que foi implementado
+### O que foi implementado
 
 &nbsp;&nbsp;&nbsp;&nbsp;A estrutura de views do frontend foi organizada em módulos por perfil de usuário, utilizando o motor de templates EJS. Essa separação por papel mantém cada fluxo isolado e facilita a manutenção, ao mesmo tempo em que componentes compartilhados são centralizados em um diretório de parciais, evitando duplicação de código.
 
@@ -4813,18 +4602,88 @@ VALUES (?, ?, ?, ?);
 <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
-### (b) O que não foi concluído
+### O que não foi concluído
 
 &nbsp;&nbsp;&nbsp;&nbsp;A configuração da aplicação como PWA (Progressive Web App) ficou pendente, sendo prevista para a próxima sprint.
 
-### (c) Dificuldades técnicas enfrentadas e próximos passos
+### Dificuldades técnicas enfrentadas e próximos passos
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A principal dificuldade desta sprint foi organizar a estrutura de pastas e padronizá-la entre todos os arquivos, mantendo um mesmo critério de nomenclatura e de separação por perfil em todos os módulos (views, parciais e folhas de estilo). A ausência de um padrão definido desde o início gerou retrabalho para uniformizar a estrutura. Outra dificuldade foi tornar o site responsivo, adaptando os layouts às diferentes resoluções de tela sem comprometer a usabilidade. Para a Sprint 5, os próximos passos incluem a configuração da aplicação como PWA, a expansão da cobertura de testes e correções finais de interface.
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web 
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
+&nbsp;&nbsp;&nbsp;&nbsp;A versão final do AgroFlow consolidou a aplicação como um sistema web completo, seguro e que pode ser instalado no celular. O trabalho desta etapa concentrou-se em três frentes principais: o controle de acesso ao sistema, a entrada do Capataz por QR Code e a possibilidade de instalar a aplicação como um aplicativo (PWA), pendência herdada da Sprint 4. Além disso, os testes automatizados foram ampliados e a interface recebeu ajustes finais.
+
+### O que foi refinado ou adicionado: 
+
+**Acesso por QR Code do Capataz.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Como o Capataz atua em campo e possui baixo letramento digital, o acesso desse perfil ocorre por QR Code, em conformidade com a RN05. Ao escanear o código, o sistema reconhece o Capataz, confirma que o acesso é válido e o leva à tela de entrada e, em seguida, à página inicial (Figura 65). Cada código de acesso pode ser desativado ou ter um prazo de validade, o que permite encerrar o acesso a qualquer momento sem alterar o cadastro do usuário.
+
+<div align="center">
+<p align="center">Figura 65 - Tela de acesso do Capataz por QR Code</p>
+<p align="center">
+<img src="others/assets/acesso-capataz-qrcode.png" alt="Tela de acesso do Capataz por QR Code" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Tratamento de erros do acesso.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Quando o código lido não é mais válido ou já expirou, o sistema apresenta uma tela amigável, que informa o problema de forma simples e orienta o Capataz a solicitar um novo código, sem exibir mensagens técnicas (Figura 66).
+
+<div align="center">
+<p align="center">Figura 66 - Tela de QR Code inválido ou expirado</p>
+<p align="center">
+<img src="others/assets/acesso-capataz-invalido.png" alt="Tela de QR Code inválido ou expirado" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Controle de acesso ao sistema.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;O acesso foi padronizado para os três perfis. O Supervisor e o Gerente entram com login e senha, guardadas de forma protegida, enquanto o Capataz entra pelo QR Code. Em todos os casos, o sistema mantém a sessão do usuário de forma segura e garante que cada perfil utilize apenas as funcionalidades correspondentes ao seu papel. O detalhamento desse controle encontra-se na [Seção 3.8](#c3.8).
+
+**Instalação como aplicativo (PWA).**
+
+&nbsp;&nbsp;&nbsp;&nbsp;A possibilidade de instalar o AgroFlow como aplicativo, pendente na Sprint 4, foi concluída. A página inicial passou a oferecer um botão "Instalar app" (Figura 67) que abre a janela de instalação do próprio navegador (Figura 68), permitindo que o Capataz instale o sistema no celular e o utilize com a aparência de um aplicativo comum.
+
+<div align="center">
+<p align="center">Figura 67 - Botão de instalação do aplicativo na página inicial</p>
+<p align="center">
+<img src="others/assets/pwa-instalar-capataz.png" alt="Botão Instalar app na página inicial do Capataz" border="0" width="28%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 68 - Diálogo de instalação do aplicativo (PWA)</p>
+<p align="center">
+<img src="others/assets/pwa-dialogo-capataz.png" alt="Diálogo de instalação do aplicativo como PWA" border="0" width="60%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Ampliação dos testes e ajustes de interface.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes automatizados foram ampliados para cobrir o novo acesso por QR Code e o controle de acesso ao sistema, conforme detalhado na [Seção 5](#c5). Na interface, foram feitos ajustes finais, como a exibição de uma tela de confirmação ao término de ações importantes. Ao enviar um ticket, por exemplo, o Capataz passa a receber um retorno visual simples e direto, com um ícone de confirmação, uma mensagem curta informando que o ticket foi enviado ao supervisor e um botão para voltar ao início (Figura 76). Esse retorno é importante para usuários com baixo letramento digital, pois confirma que a ação foi concluída com sucesso e deixa claro o próximo passo.
+
+<div align="center">
+<p align="center">Figura 76 - Tela de confirmação de envio de ticket do Capataz</p>
+<p align="center">
+<img src="others/assets/interface-atual-capataz-ticket-enviado.png" alt="Tela de confirmação de envio de ticket do Capataz" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### Pendências remanescentes
+
+&nbsp;&nbsp;&nbsp;&nbsp;Atualmente, os códigos de acesso do Capataz são gerados por uma ferramenta separada do sistema, e ainda não existe uma tela própria para que o Gerente ou o Supervisor crie e desative esses acessos diretamente pela aplicação. A criação dessa tela de gerenciamento de acessos permanece como evolução futura.
+
+### Dificuldades técnicas enfrentadas
+
+&nbsp;&nbsp;&nbsp;&nbsp;O principal desafio foi adicionar o acesso por QR Code, sem prejudicar a entrada dos perfis Supervisor e Gerente nem as regras de permissão do sistema. Também foi preciso diferenciar o primeiro acesso pelo QR Code, que leva à tela de entrada, da confirmação seguinte, que leva à página inicial, garantindo uma navegação fluida sem mudar a interface. Por fim, a instalação como aplicativo exigiu ajustes para não interferir nas telas que dependem de login.
 
 # <a name="c5"></a>5. Testes
 
@@ -5041,7 +4900,7 @@ Também foram considerados subendpoints específicos:
 `npm run test:coverage -- --runInBand --coverageReporters=text-summary`
 
 <div align="center">
-  <p align="center">Figura 65 - Cobertura atual dos testes</p>
+  <p align="center">Figura 69 - Cobertura atual dos testes</p>
   <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5063,13 +4922,13 @@ Também foram considerados subendpoints específicos:
 - Cobertura da camada de services: **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**.
 
 <div align="center">
-  <p align="center">Figura 66 - Execução atual dos testes de integração</p>
+  <p align="center">Figura 70 - Execução atual dos testes de integração</p>
   <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das 11 suítes de integração, com 147 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-  <p align="center">Figura 67 - Execução atual da suíte completa</p>
+  <p align="center">Figura 71 - Execução atual da suíte completa</p>
   <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 30 suítes, com 365 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5107,11 +4966,300 @@ Também foram considerados subendpoints específicos:
 
 ### <a name="c5.2.1"></a>5.2.1. Relatório de testes de guerrilha
 
-*Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
+&nbsp;&nbsp;&nbsp;&nbsp;O teste de guerrilha é uma modalidade de teste de usabilidade caracterizada pela sua aplicação rápida e informal, realizada com usuários recrutados de forma oportunista, sem agendamento prévio ou ambiente controlado de laboratório. Proposto como alternativa ágil aos testes tradicionais, o método consiste em apresentar o sistema a participantes reais e observar, sem intervenção direta, como eles executam tarefas previamente definidas, registrando dificuldades, erros e comportamentos inesperados. Sua principal vantagem é a capacidade de identificar problemas críticos de usabilidade com um número reduzido de participantes e em curto prazo, tornando-o especialmente adequado ao ciclo de desenvolvimento iterativo adotado pelo grupo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;No contexto do AgroFlow, o teste de guerrilha foi conduzido com o objetivo de validar a navegabilidade e a clareza dos fluxos principais da aplicação, registro de movimentações do rebanho, atribuição e acompanhamento de tarefas e abertura de chamados de infraestrutura, antes da avaliação quantitativa pelo questionário SUS (Seção 5.2.2). Dado que o público-alvo inclui usuários com baixo letramento digital, como capatazes de retiro com pouca familiaridade com sistemas informatizados, o teste priorizou a observação de comportamentos espontâneos e a identificação de barreiras de compreensão na interface, sem orientação prévia sobre o funcionamento do sistema. Cabe destacar, no entanto, que os participantes recrutados para esta etapa foram alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia, perfil distinto do usuário final do produto. Essa limitação deve ser considerada na interpretação dos resultados, uma vez que a familiaridade dos participantes com interfaces digitais pode subestimar dificuldades que seriam encontradas pelo público real da aplicação.
+
+---
+
+#### Perfil dos participantes
+
+>Os nomes listados abaixo são fictícios, utilizados para preservar a privacidade dos participantes. Todos são alunos do Inteli - Instituto de Tecnologia e Liderança, estudantes de cursos da área de tecnologia.
+
+<div align="center">
+  <p align="center">Quadro 63 - Perfil dos participantes</p>
+
+| # | Nome | Curso | Persona testada |
+|:-:|------|-------|:---------------:|
+| 1 | Lucas Martins | Engenharia de Software | Capataz, Supervisor e Gerente |
+| 2 | Fernanda Oliveira | Ciência da Computação | Capataz, Supervisor e Gerente |
+| 3 | Rafael Souza | Sistemas de Informação | Capataz, Supervisor e Gerente |
+| 4 | Beatriz Santos | Engenharia da Computação | Capataz, Supervisor e Gerente |
+| 5 | Gabriel Almeida | Ciência da Computação | Capataz, Supervisor e Gerente |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Tarefa 1 — Capataz: Registrar movimentação do rebanho
+ 
+**Enunciado:** Suponha que você é um capataz do retiro Aroeira e acabou de identificar a morte de um animal no pasto. Utilize o AgroFlow para registrar essa movimentação do rebanho.
+
+<div align="center">
+  <p align="center">Quadro 64 - Etapas e expectativas da Tarefa 1</p>
+
+| Etapa | Descrição | Expectativa |
+|:-----:|-----------|-------------|
+| 1 | Acessar a seção de movimentações | Acessar a página de "Movimentações" pelo menu inferior ou pela tela de Início |
+| 2 | Selecionar o tipo de movimentação e o estágio de vida | Selecionar "Morte" como tipo e informar o estágio de vida do animal |
+| 3 | Preencher os campos obrigatórios | Preencher os campos de origem e causa do óbito |
+| 4 | Confirmar e enviar o registro | Clicar em "Confirmar" e verificar mensagem de sucesso |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H3 (Controle e liberdade do usuário)
+
+<br><br>
+
+<div align="center">
+  <p align="center">Quadro 65 - Resultados da Tarefa 1</p>
+
+| # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
+|:-:|------|:---------:|---------|---------|---------|---------|
+| 1 | Lucas Martins | Sucesso | Achou o menu sem dificuldade | Selecionou "Morte" corretamente e informou o estágio de vida | Preencheu todos os campos sem hesitação | Confirmou o envio e visualizou a mensagem de sucesso |
+| 2 | Fernanda Oliveira | Sucesso com dificuldade | Achou o menu sem dificuldade | Selecionou "Morte" corretamente, porém ficou em dúvida sobre o que era "estágio de vida" | Preencheu os campos, mas não entendeu inicialmente por que "causa do óbito" era obrigatório | Confirmou o envio após a segunda tentativa (primeira bloqueada por campo vazio) |
+| 3 | Rafael Souza | Sucesso | Achou o menu sem dificuldade | Selecionou o tipo e o estágio de vida rapidamente | Preencheu todos os campos sem dificuldade | Confirmou e visualizou o registro salvo |
+| 4 | Beatriz Santos | Sucesso com dificuldade | Encontrou o menu, mas tentou acessar primeiro a página "Tarefas" antes de ir para "Movimentações" | Selecionou o tipo correto, mas deixou o estágio de vida em branco na primeira tentativa e recebeu erro | Após o erro, corrigiu e preencheu todos os campos | Confirmou com sucesso na segunda tentativa |
+| 5 | Gabriel Almeida | Sucesso | Navegou diretamente até "Movimentações" pela tela de início | Selecionou "Morte" e preencheu o estágio de vida sem dificuldade | Preencheu causa do óbito e origem corretamente | Enviou o registro e confirmou a mensagem de sucesso |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Tarefa 2 — Supervisor: Criar e atribuir uma tarefa
+ 
+**Enunciado:** Suponha que você é o supervisor responsável pelo retiro Puga e precisa criar uma nova tarefa para o capataz. Utilize o AgroFlow para criar e atribuir essa tarefa.
+
+<div align="center">
+  <p align="center">Quadro 66 - Etapas e expectativas da Tarefa 2</p>
+
+| Etapa | Descrição | Expectativa |
+|:-----:|-----------|-------------|
+| 1 | Acessar a seção de tarefas do supervisor | Acessar o menu lateral e clicar em "Tarefas" |
+| 2 | Clicar em "Nova tarefa" e preencher título e descrição | Clicar em "Nova tarefa" e preencher título e descrição da atividade |
+| 3 | Selecionar o retiro de destino e o capataz responsável | Selecionar o retiro "Puga" e atribuir ao capataz responsável |
+| 4 | Confirmar e publicar a tarefa | Clicar em "Publicar" e confirmar que a tarefa aparece na lista |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+ 
+**Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H6 (Reconhecimento em vez de memorização)
+
+<br><br>
+
+<div align="center">
+  <p align="center">Quadro 67 - Resultado da Tarefa 2</p>
+
+| # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
+|:-:|------|:---------:|---------|---------|---------|---------|
+| 1 | Lucas Martins | Sucesso | Acessou "Delegar" pelo menu sem dificuldade | Preencheu título e descrição sem hesitação | Selecionou retiro e capataz corretamente | Publicou a tarefa e confirmou que apareceu na lista |
+| 2 | Fernanda Oliveira | Sucesso com dificuldade | Acessou a seção corretamente | Preencheu o título, mas ficou em dúvida se a descrição era obrigatória | Demorou para encontrar o filtro de retiro dentro do formulário | Publicou com sucesso após explorar o formulário por alguns segundos |
+| 3 | Rafael Souza | Sucesso | Navegou diretamente à seção de Delegar | Preencheu todos os campos sem dificuldade | Selecionou retiro e capataz rapidamente | Confirmou a publicação sem problemas |
+| 4 | Beatriz Santos | Sucesso com dificuldade | Acessou "Delegar", mas inicialmente acessou a página "Tarefas" por engano | Após encontrar o botão correto, preencheu título e descrição sem problemas | Não encontrou de imediato o campo de atribuição do capataz | Publicou com sucesso após breve exploração |
+| 5 | Gabriel Almeida | Sucesso | Acessou a seção e encontrou os campos a serem preenchidos rapidamente | Preencheu os campos de forma direta | Selecionou retiro e capataz sem dificuldade | Publicou a tarefa e verificou que constava na lista |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Tarefa 3 — Gerente: Gerar e exportar um relatório semanal
+ 
+**Enunciado:** Suponha que você é o gerente da BrPec e precisa gerar um relatório semanal com os registros de movimentação do rebanho validados pelos supervisores. Utilize o AgroFlow para gerar e exportar esse relatório.
+
+<div align="center">
+  <p align="center">Quadro 68 - Etapas e expectativas da Tarefa 3</p>
+ 
+| Etapa | Descrição | Expectativa |
+|:-----:|-----------|-------------|
+| 1 | Acessar a seção de relatórios | Acessar o menu lateral e clicar em "Relatórios" |
+| 2 | Selecionar o período e o tipo de relatório | Selecionar o período nos campos de período e o tipo de movimentação desejado |
+| 3 | Visualizar os dados consolidados | Verificar os registros consolidados exibidos na tela |
+| 4 | Exportar o relatório | Clicar em "Exportar" e confirmar o download do arquivo (.xlsx ou .csv) |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+ 
+**Heurísticas relacionadas:** H1 (Visibilidade do status do sistema) e H8 (Estética e design minimalista)
+
+<br><br>
+
+<div align="center">
+  <p align="center">Quadro 69 - Resultado da Tarefa 3</p>
+ 
+| # | Nome | Resultado | Etapa 1 | Etapa 2 | Etapa 3 | Etapa 4 |
+|:-:|------|:---------:|---------|---------|---------|---------|
+| 1 | Lucas Martins | Sucesso | Encontrou "Relatórios" no menu lateral sem dificuldade | Selecionou período e tipo de relatório corretamente | Visualizou os dados consolidados sem problemas | Exportou o arquivo com sucesso |
+| 2 | Fernanda Oliveira | Sucesso com dificuldade | Encontrou a seção, mas tentou primeiro buscar relatórios dentro do dashboard | Selecionou o período corretamente, mas ficou em dúvida sobre qual tipo de relatório escolher | Visualizou os dados sem dificuldade após selecionar | Exportou o relatório com sucesso após identificar o botão "Exportar" |
+| 3 | Rafael Souza | Sucesso | Acessou "Relatórios" diretamente pelo menu | Selecionou o período e tipo sem hesitação | Verificou os dados na tela rapidamente | Realizou a exportação sem dificuldades |
+| 4 | Beatriz Santos | Sucesso com dificuldade | Acessou a seção corretamente, porém ficou em dúvida se os dados exibidos eram apenas os validados ou todos os registros | Selecionou período e tipo corretos, mas perguntou em voz alta se o filtro de retiro era necessário | Visualizou os dados consolidados sem dificuldade | Exportou o relatório com sucesso |
+| 5 | Gabriel Almeida | Sucesso | Navegou até "Relatórios" rapidamente | Selecionou as opções corretas sem dúvidas | Verificou os dados e confirmou que eram apenas registros validados | Exportou o arquivo e confirmou o download |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Planilha completa de resultados
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Os dados completos dos testes de guerrilha, incluindo o registro detalhado das ocorrências por participante e o resumo de severidade, estão disponíveis na planilha a seguir:
+
+[Acessar planilha de resultados dos testes de guerrilha](https://docs.google.com/spreadsheets/d/1QZ1_aPrnHj_M3JJAqonSPjTrNXyP4aJiIZqZUg4Ch5Q/edit?usp=sharing)
+
+&nbsp;&nbsp;&nbsp;&nbsp;A seguir, são apresentados os prints de cada bloco da planilha, correspondentes às três tarefas executadas durante os testes.
+
+<br>
+
+<div align="center">
+  <p align="center">Figura 72 - Tabela de resultados da Tarefa 1 na planilha</p>
+  <img src="/documents/others/assets/tarefa1-capataz.png" alt="Print da tabela de resultados - Tarefa 1 (Capataz)" width="800px">
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<br>
+
+<div align="center">
+  <p align="center">Figura 73 - Tabela de resultados da Tarefa 2 na planilha</p>
+  <img src="/documents/others/assets/tarefa2-supervisor.png" alt="Print da tabela de resultados - Tarefa 2 (Supervisor)" width="800px">
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<br>
+
+<div align="center">
+  <p align="center">Figura 74 - Tabela de resultados da Tarefa 3 na planilha</p>
+  <img src="/documents/others/assets/tarefa3-gerente.png" alt="Print da tabela de resultados - Tarefa 3 (Gerente)" width="800px">
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Resumo das ocorrências
+
+<div align="center">
+  <p align="center">Quadro 70 - Resumo das ocorrências</p>
+
+| Tarefa | Severidade | Resumo do ocorrido | Tipo | Participantes afetados | Potencial melhoria |
+|--------|:----------:|-------------------|:----:|:---------------------:|-------------------|
+| Registrar movimentação (Capataz) | Média | Dúvida sobre o significado do campo "estágio de vida" | Compreensão de conteúdo | F. Oliveira | Adicionar texto explicativo ao lado do campo |
+| Registrar movimentação (Capataz) | Média | Não ficou claro por que "causa do óbito" é obrigatório | Compreensão de conteúdo | F. Oliveira | Exibir mensagem de erro mais descritiva indicando a regra de negócio |
+| Registrar movimentação (Capataz) | Baixa | Usuário tentou acessar aba "Tarefas" antes de "Movimentações" | Usabilidade | B. Santos | Revisar nomenclatura ou hierarquia do menu de navegação |
+| Criar tarefa (Supervisor) | Baixa | Dúvida se o campo "descrição" era obrigatório | Compreensão de conteúdo | F. Oliveira | Indicar visualmente quais campos são obrigatórios com asterisco (*) |
+| Criar tarefa (Supervisor) | Média | Dificuldade em localizar o filtro de retiro dentro do formulário | Usabilidade | F. Oliveira, B. Santos | Destacar o campo de seleção de retiro com maior contraste |
+| Gerar relatório (Gerente) | Baixa | Usuário buscou relatórios dentro do dashboard antes de encontrar a seção correta | Usabilidade | F. Oliveira | Adicionar atalho ou card no dashboard apontando para a seção de relatórios |
+| Gerar relatório (Gerente) | Média | Dúvida se os dados exibidos incluíam apenas registros validados ou todos os registros | Compreensão de conteúdo | B. Santos | Exibir legenda ou indicador visual informando que apenas dados validados constam no relatório |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Conclusão
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes de guerrilha evidenciaram que o AgroFlow apresenta uma navegação geral satisfatória, com a maioria dos participantes completando as tarefas com sucesso. Os principais pontos de atenção concentram-se na clareza dos campos obrigatórios e na nomenclatura de alguns elementos do menu, que geraram momentos de hesitação em participantes com menor familiaridade com o fluxo do sistema. Esses achados serão considerados em conjunto com os resultados quantitativos obtidos pelo questionário SUS (Seção 5.2.2), permitindo ao grupo identificar melhoras futuras e priorizar os ajustes de interface mais relevantes antes da entrega final do produto.
 
 ### <a name="c5.2.2"></a>5.2.2. Relatório de testes SUS (System Usability Scale)
 
-*Posicione aqui o relatório dos testes SUS realizados.*
+&nbsp;&nbsp;&nbsp;&nbsp;O System Usability Scale (SUS) é um instrumento de avaliação de usabilidade amplamente adotado na indústria e na academia por sua aplicabilidade versátil e pela simplicidade de aplicação. O questionário é composto por dez afirmações com escala de concordância de cinco pontos (1 = Discordo totalmente; 5 = Concordo totalmente), alternando sentenças de polaridade positiva e negativa. A pontuação final, calculada a partir de uma fórmula padronizada, varia de 0 a 100 e permite classificar a percepção de usabilidade do sistema: pontuações abaixo de 50 são consideradas inaceitáveis; 68 representa a média da indústria; valores acima de 80,3 indicam usabilidade excelente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A escolha do SUS como instrumento complementar aos testes de guerrilha justifica-se por duas razões principais. Primeiramente, sua brevidade e linguagem acessível tornam esse framework perfeito para o perfil dos usuários do AgroFlow, em especial os capatazes, que possuem baixo letramento digital e pouca familiaridade com avaliações formais de software. Além disso, o SUS fornece uma métrica quantitativa e comparável, permitindo ao grupo identificar, de forma objetiva, quais aspectos da interface demandam refinamento antes da entrega final do produto.
+
+---
+
+#### Questionário aplicado
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;O questionário foi disponibilizado via Google Forms após a execução das tarefas dos testes de guerrilha. As dez afirmações aplicadas, adaptadas ao contexto do AgroFlow, são apresentadas no quadro a seguir.
+
+<div align="center">
+  <p align="center">Quadro 71 - Questionário aplicado</p>
+ 
+| Questões | Afirmação |
+|:-:|-----------|
+| Q1 | Eu gostaria de usar o AgroFlow com frequência no meu trabalho diário. |
+| Q2 | Achei o AgroFlow desnecessariamente complicado para realizar minhas tarefas. |
+| Q3 | Achei o AgroFlow fácil de usar para registrar informações sobre o rebanho e as atividades do retiro. |
+| Q4 | Precisaria de ajuda de outra pessoa para conseguir usar o AgroFlow. |
+| Q5 | As funcionalidades do AgroFlow, como registrar movimentações, tarefas e chamados, estão bem organizadas. |
+| Q6 | Senti que havia muita inconsistência na forma como as telas e os fluxos do AgroFlow funcionam. |
+| Q7 | Imagino que a maioria das pessoas aprenderia a usar o AgroFlow rapidamente. |
+| Q8 | Achei o AgroFlow confuso e difícil de navegar. |
+| Q9 | Me senti confiante usando o AgroFlow para realizar minhas atividades no retiro. |
+| Q10 | Precisei aprender muitas coisas antes de conseguir usar o AgroFlow corretamente. |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Respostas e pontuações individuais
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Os 5 participantes do teste de guerrilha realizaram o preenchimento do formulário de testes SUS. Os nomes utilizados se mantêm fictícios para preservar a privacidade dos participantes. A pontuação SUS individual foi calculada pela fórmula padronizada: para itens de polaridade positiva (Q1, Q3, Q5, Q7, Q9), subtrai-se 1 do valor marcado; para itens de polaridade negativa (Q2, Q4, Q6, Q8, Q10), subtrai-se o valor marcado de 5. A soma de todas as contribuições é multiplicada por 2,5, resultando em uma pontuação entre 0 e 100.
+ 
+ <div align="center">
+  <p align="center">Quadro 72 - Respostas e pontuações individuais</p>
+
+| # | Nome | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | **Pontuação SUS** |
+|:-:|------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 1 | Lucas Martins | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 2 | 5 | 3 | **90,0** |
+| 2 | Fernanda Oliveira | 4 | 2 | 4 | 4 | 5 | 2 | 5 | 2 | 5 | 3 | **75,0** |
+| 3 | Rafael Souza | 4 | 2 | 5 | 3 | 4 | 2 | 4 | 2 | 4 | 1 | **77,5** |
+| 4 | Beatriz Santos | 4 | 1 | 4 | 1 | 3 | 2 | 5 | 4 | 5 | 1 | **80,0** |
+| 5 | Gabriel Almeida | 3 | 2 | 4 | 4 | 5 | 2 | 1 | 1 | 5 | 3 | **65,0** |
+| | **Média** | | | | | | | | | | | **77,5** |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Pontuação média e interpretação
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;A pontuação média obtida pelo AgroFlow foi de **77,5 pontos**, acima da média da indústria estabelecida em 68 pontos. Segundo a escala de adjetivos proposta por Bangor, essa pontuação situa o sistema na classificação **"Excellent" (Excelente)**, próxima ao limiar de "Best Imaginable" (Perfeito) (> 85), indicando uma percepção geral positiva de usabilidade pelos participantes, com margem identificável para melhorias pontuais.
+
+<div align="center">
+  <p align="center">Quadro 73 - Pontuação média e interpretação</p>
+ 
+| Faixa de pontuação | Classificação | AgroFlow |
+|:------------------:|:-------------:|:--------:|
+| 0 – 25 | Worst Imaginable (Pior Imaginável) | |
+| 26 - 35 | Poor (Ruim)
+| 36 – 50 | OK (Aceitável) | |
+| 51 – 70 | Good (Bom) | |
+| 71 – 85 | Excellent (Excelente) | **77,5** |
+| 86 – 100 | Best Imaginable (Perfeito) | |
+
+  <p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+---
+
+#### Análise qualitativa
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;A análise das respostas individuais permite identificar os pontos fortes e os pontos de atenção da interface do AgroFlow, complementando os achados qualitativos dos testes de guerrilha.
+ 
+**Pontos fortes** - itens com maior concordância entre os participantes:
+ 
+- **Q1 (Intenção de uso frequente):** a maioria dos participantes demonstrou interesse em utilizar o AgroFlow com regularidade, refletindo uma percepção positiva do valor entregue pelo sistema.
+- **Q5 (Organização das funcionalidades):** as funcionalidades principais, como registro de movimentações, tarefas e chamados, foram consideradas bem organizadas pela maioria, indicando que a arquitetura de informação atende às expectativas dos usuários.
+- **Q9 (Confiança no uso):** os participantes relataram sentir-se confiantes ao utilizar o sistema, o que sugere que a interface transmite clareza e previsibilidade suficientes para o público testado.
+- **Q10 (Curva de aprendizado):** a grande maioria concordou que não precisou aprender muitas coisas antes de usar o AgroFlow corretamente, indicando baixa curva de aprendizado.
+
+<br>
+
+**Pontos de atenção** - itens com maior dispersão ou discordância:
+ 
+- **Q4 (Necessidade de ajuda):** houve maior variação nas respostas, com alguns participantes indicando que precisariam de auxílio para usar o sistema. Esse resultado é coerente com as dificuldades observadas nos testes de guerrilha, especialmente nos fluxos de criação de tarefas e geração de relatórios.
+- **Q7 (Facilidade de aprendizado por terceiros):** um participante discordou que a maioria das pessoas aprenderia o sistema rapidamente, sinalizando que o AgroFlow pode apresentar barreiras para usuários com menor letramento digital, exatamente o perfil do público-alvo real da aplicação.
+- **Q8 (Confusão na navegação):** dois participantes apontaram algum grau de dificuldade na navegação, alinhado às ocorrências registradas na Tarefa 1 (Capataz) e na Tarefa 2 (Supervisor) durante os testes de guerrilha.
+
+---
+
+#### Conclusão
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;Os resultados do questionário SUS confirmam e complementam os achados dos testes de guerrilha: o AgroFlow apresenta uma usabilidade geral satisfatória, classificada como "Excellent" com pontuação média de 77,5, porém com oportunidades de melhoria concentradas na clareza dos fluxos de navegação e na redução da necessidade de ajuda externa para determinados perfis de usuário. Recomenda-se, como encaminhamento prioritário, a revisão dos rótulos e da hierarquia dos menus, a adição de indicadores visuais para campos obrigatórios nos formulários e a inserção de dicas em todos os campos com terminologia técnica específica do domínio pecuário, como "estágio de vida" e "causa do óbito".
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
 
@@ -5191,10 +5339,10 @@ Também foram considerados subendpoints específicos:
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 68 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 75 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
-  <p align="center">Figura 68 - Business Model Canvas do AgroFlow</p>
+  <p align="center">Figura 75 - Business Model Canvas do AgroFlow</p>
   <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5250,11 +5398,71 @@ Também foram considerados subendpoints específicos:
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-*Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na [Seção 2](#c2) deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
+### Conclusões
 
-*Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras*
+&nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento da aplicação web para a **BrPec Agropecuária S.A.** alcançou os objetivos centrais descritos na [Seção 2](#c2) deste documento. A solução substituiu o fluxo manual baseado em "boletas" de papel por um sistema centralizado de registro de eventos zootécnicos — nascimentos, óbitos, compras, vendas e transferências entre retiros —, eliminando a etapa de redigitação em planilhas e reduzindo a janela de inconsistência entre campo e escritório.
 
-*Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
+&nbsp;&nbsp;&nbsp;&nbsp;A versão final entregue contempla os três níveis hierárquicos previstos: o **capataz** registra a execução das atividades em campo, anexa evidências multimodais (fotos e áudios) e opera em modo *offline-first*, com armazenamento local no navegador e sincronização posterior quando há conexão; o **supervisor** acompanha, valida ou rejeita os registros consolidados; e o **gerente** acompanha indicadores e exporta dados em formato Excel/CSV para apoio à decisão administrativa. Dessa forma, a digitalização do fluxo operacional, a padronização dos registros e a integração entre as frentes de campo e escritório foram efetivamente estabelecidas.
+
+### Resultados alcançados
+
+- **Registro digital de ocorrências** por retiro e tipo de evento, com anexo de evidências multimodais.
+- **Operação offline-first** no fluxo do capataz, com persistência local e sincronização ao reestabelecer conexão.
+- **Fluxo de validação hierárquico**, no qual supervisores aprovam os registros antes da consolidação final.
+- **Exportação de dados** em Excel/CSV para suporte à gestão.
+- **Painéis de indicadores** e acompanhamento de tarefas, tickets e movimentações por perfil de usuário.
+
+### Pontos fortes
+
+&nbsp;&nbsp;&nbsp;&nbsp;O principal diferencial da solução é a arquitetura preparada para **operação offline**, requisito crítico para áreas remotas sem conectividade. A segmentação por perfis de acesso e o fluxo de validação garantem rastreabilidade e controle sobre a qualidade dos dados consolidados, enquanto a exportação estruturada conecta a operação de campo à tomada de decisão administrativa.
+
+### Limitações e pontos a melhorar
+
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar de atender ao escopo proposto, a aplicação ainda apresenta limitações identificadas ao longo do desenvolvimento e dos testes de usabilidade, concentradas principalmente na **experiência de uso das interfaces de supervisor e gerente** e na ausência de recursos analíticos mais avançados. Esses pontos não comprometem o funcionamento central da solução, mas representam oportunidades claras de evolução, detalhadas nos trabalhos futuros a seguir.
+
+### Trabalhos futuros
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os itens abaixo organizam as melhorias e expansões mapeadas para as próximas iterações da solução. O grupo não as implementou nesta entrega, registrando-as como plano de ação para evolução futura.
+
+### Análise inteligente de padrões de ocorrências (interfaces de gerente e supervisor)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Propõe-se a integração de um módulo de **inteligência artificial para análise de padrões nas ocorrências da fazenda**. O recurso monitoraria os registros consolidados e **notificaria gerentes e supervisores automaticamente sempre que um padrão relevante fosse identificado**. Exemplos de padrões:
+
+- Alta incidência de cercas quebradas em uma localização específica.
+- Retiro com número elevado de mortes bovinas em determinado mês.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Ao receber esse alerta, o gestor poderia investigar a **causa raiz** do padrão recorrente e atuar sobre ela, prevenindo ocorrências potencialmente mais graves na fazenda. Essa funcionalidade transforma o sistema de um registro passivo para uma ferramenta ativa de apoio à decisão preventiva.
+
+### Melhorias na interface do supervisor
+
+**Layout e uso do espaço de tela**
+
+- Redesenhar a aba de **tarefas / tickets / movimentações**, cuja disposição de elementos subutiliza o espaço da tela. A opção atual de centralizar todos os elementos e estender as caixas brancas até o limite da tela não foi a mais esteticamente nem funcionalmente ideal; recomenda-se uma distribuição que aproveite melhor a área disponível e que priorize a usabilidade.
+
+**Funcionalidades de validação**
+
+- Adicionar **botão de rejeitar** tarefa pendente de validação (hoje há apenas a aprovação). Quando um supervisor rejeitar uma tarefa, o capataz deve ser notificado automaticamente.
+
+**Visualização e paginação de registros**
+
+- Nos registros **já validados**, indicar **até qual data** os registros exibidos abrangem.
+- Implementar **paginação** que permita ao supervisor carregar mais registros quando desejar visualizar além do conjunto inicial.
+- Aplicar **paginação também na seção de tarefas ativas** (lado direito da tela de delegar), prevendo cenários com muitas tarefas ativas.
+
+**Correções na barra de pesquisa**
+
+- A pesquisa filtra apenas tarefas **pendentes de validação**, ignorando as **já validadas**; deve abranger ambos os conjuntos.
+
+### Melhorias na interface do gerente
+
+**Personalização e textos**
+
+- Substituir a saudação genérica **"Bom dia, Gerente"** pelo **nome do usuário** (ex.: "Bom dia, Marcos").
+- Retirar o texto **"Concluídas pelo capataz. Nenhuma tarefa concluída pelo capataz ainda"** localizado na porção superior da interface do gerente.
+
+**Visualização e paginação**
+
+- Adicionar **paginação** à seção de **atividades recentes**.
 
 # <a name="c8"></a>8. Referências
 
