@@ -1,4 +1,4 @@
-const VERSION = 'v10'
+const VERSION = 'v11'
 const STATIC_CACHE = `agroflow-capataz-static-${VERSION}`
 const RUNTIME_CACHE = `agroflow-capataz-runtime-${VERSION}`
 
@@ -6,6 +6,7 @@ const PRECACHE_URLS = [
   '/manifest-capataz.json',
   '/capataz-pwa.js?v=8',
   '/capataz',
+  '/capataz/',
   '/capataz/home',
   '/capataz/tarefas',
   '/capataz/movimentacao',
@@ -61,7 +62,7 @@ async function networkFirst(request) {
       return cached
     }
 
-    const fallback = await caches.match('/capataz/home') || await caches.match('/capataz')
+    const fallback = await caches.match('/capataz/') || await caches.match('/capataz') || await caches.match('/capataz/home')
     if (fallback) {
       return fallback
     }
