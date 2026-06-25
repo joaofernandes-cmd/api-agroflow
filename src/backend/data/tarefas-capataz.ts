@@ -1,10 +1,5 @@
-// Fonte ÚNICA das tarefas. A mesma lista alimenta:
-//  - capataz: home (pendentes), lista de tarefas, detalhe da tarefa
-//  - supervisor: preview da tarefa delegada (tarefa.ejs) e a tela de Revisão
-//  - relatório de tarefas
-// Assim a "tarefa 1" é sempre a mesma em todas as telas e, ao editar aqui,
-// muda em todo lugar. As tarefas que o capataz concluiu (status 'concluida')
-// são exatamente as que o supervisor vê em "Pendentes de revisão".
+// Fonte única das tarefas: alimenta a home e o detalhe do capataz, o preview
+// de delegação e a tela de Revisão do supervisor, e o relatório de tarefas
 
 import { capatazDoRetiro } from './referencia'
 
@@ -40,7 +35,7 @@ export interface TarefaExibicao extends TarefaBase {
 }
 
 const TAREFAS: TarefaBase[] = [
-  // ── Pendentes (o capataz ainda vai fazer) ────────────────────────────────
+  // Pendentes (o capataz ainda vai fazer)
   {
     titulo: 'Inspeção das cercas',
     retiro: 'Aroeira',
@@ -81,8 +76,7 @@ const TAREFAS: TarefaBase[] = [
       'Verificar o funcionamento dos bebedouros do retiro e registrar qualquer vazamento ou falta de água.',
   },
 
-  // ── Concluídas pelo capataz (aguardando revisão do supervisor) ───────────
-  // Estas seis são exatamente as que aparecem na tela de Revisão do supervisor.
+  // Concluídas pelo capataz, aguardando revisão do supervisor
   {
     titulo: 'Conferência do rebanho',
     retiro: 'Aroeira',
@@ -197,23 +191,21 @@ function decorar(t: TarefaBase, id: number): TarefaExibicao {
   }
 }
 
-// Lista pronta para exibição (com selo, cor, autor e capataz já calculados).
+// Lista pronta para exibição (com selo, cor, autor e capataz já calculados)
 export const tarefasCapataz: TarefaExibicao[] = TAREFAS.map((t, i) => decorar(t, i + 1))
 
-// Mesma lista, ordenada da mais recente para a mais antiga (por data de criação).
+// Mesma lista, ordenada da mais recente para a mais antiga
 export const tarefasCapatazRecentes: TarefaExibicao[] = tarefasCapataz
   .slice()
   .sort((a, b) => b.criadaEm.localeCompare(a.criadaEm))
 
-// Tarefas que o capataz concluiu e que aguardam a revisão do supervisor.
-// É a fonte da seção "Pendentes de revisão" da tela de Revisão.
+// Tarefas concluídas pelo capataz, aguardando revisão do supervisor
 export const tarefasRevisao: TarefaExibicao[] = tarefasCapataz.filter(
   (t) => t.status === 'concluida'
 )
 
 // Remove uma tarefa da lista de "Pendentes de revisão" (ex.: quando o
-// supervisor valida). Mutação in-place: fonte única da tela e do contador da
-// home, então a remoção reflete em ambos no próximo carregamento.
+// supervisor valida); mutação in-place para refletir na tela e no contador
 export function removerTarefaRevisao(id: number): boolean {
   const indice = tarefasRevisao.findIndex((t) => t.id === id)
   if (indice === -1) return false
@@ -221,8 +213,8 @@ export function removerTarefaRevisao(id: number): boolean {
   return true
 }
 
-// Seleciona a tarefa pelo id da query (?id=N, 1-based). Faz fallback para a
-// primeira quando o id está ausente ou é inválido.
+// Seleciona a tarefa pelo id da query (?id=N, 1-based), com fallback para a
+// primeira quando o id está ausente ou é inválido
 export function buscarTarefaCapataz(id: unknown): TarefaExibicao {
   const indice = Number.parseInt(String(id), 10)
   if (Number.isNaN(indice) || indice < 1 || indice > tarefasCapataz.length) {

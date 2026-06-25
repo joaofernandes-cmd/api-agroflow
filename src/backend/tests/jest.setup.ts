@@ -3,8 +3,8 @@ jest.mock('../middlewares/autenticacao.middleware', () => ({
   COOKIE_TOKEN_AUTENTICACAO: 'agroflow_token',
   gerarToken: jest.fn(() => 'mock-jwt-token'),
   autenticarUsuario: (req: any, _res: any, next: any) => {
-    // Os testes mockados precisam de um usuario autenticado padrao para
-    // percorrer rotas protegidas sem depender de JWT real.
+    // Os testes mockados precisam de um usuário autenticado padrão para
+    // percorrer rotas protegidas sem depender de JWT real
     req.usuario = {
       id: '00000000-0000-4000-8000-000000000101',
       identificador: 'supervisor-teste',
@@ -36,8 +36,8 @@ jest.mock('../middlewares/cargo.middleware', () => ({
 
 jest.mock('../database/connection', () => {
   // Retorna [] (e não undefined) para que repositórios que fazem
-  // `(await sql`...`).map/filter/[0]` não quebrem nas telas que leem do banco
-  // (ex.: carregarContexto). Quem precisa de linhas específicas mocka o serviço.
+  // `(await sql`...`).map/filter/[0]` não quebrem nas telas que leem do banco;
+  // quem precisa de linhas específicas mocka o serviço
   const sqlMock = jest.fn(() => []) as jest.Mock & { begin: jest.Mock }
   sqlMock.begin = jest.fn(async (callback: any) => callback(jest.fn()))
 

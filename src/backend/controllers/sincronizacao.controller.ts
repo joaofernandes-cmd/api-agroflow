@@ -4,7 +4,7 @@ import { mensagemErroCliente } from '../utils/erro-api'
 import { converterUuidOpcional } from '../utils/parametros-controller'
 
 export const SincronizacaoController = {
-  // RN03: Verifica se há conexão disponível com o servidor.
+  // RN03: Verifica se há conexão disponível com o servidor
   async detectarConexao(_req: Request, res: Response) {
     try {
       const temConexao = await SincronizacaoService.detectarConexao()
@@ -16,7 +16,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN03: Sincroniza movimentações, tarefas e tickets pendentes.
+  // RN03: Sincroniza movimentações, tarefas e tickets pendentes
   async sincronizar(_req: Request, res: Response) {
     try {
       const resultado = await SincronizacaoService.sincronizar()
@@ -28,7 +28,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN07: Busca movimentações sincronizadas e validadas para relatórios.
+  // RN07: Busca movimentações sincronizadas e validadas para relatórios
   async buscarMovimentacoesParaRelatrio(req: Request, res: Response) {
     try {
       const retiroId = converterUuidOpcional(req.query.retiroId)
@@ -47,7 +47,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN07: Busca tarefas sincronizadas e aprovadas para relatórios.
+  // RN07: Busca tarefas sincronizadas e aprovadas para relatórios
   async buscarTarefasParaRelatrio(req: Request, res: Response) {
     try {
       const retiroId = converterUuidOpcional(req.query.retiroId)
@@ -66,7 +66,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN10: Busca tickets sincronizados e aprovados para o dashboard.
+  // RN10: Busca tickets sincronizados e aprovados para o dashboard
   async buscarTicketsParaDashboard(req: Request, res: Response) {
     try {
       const retiroId = converterUuidOpcional(req.query.retiroId)
@@ -85,7 +85,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN03/RN10: Retorna o status geral da sincronização.
+  // RN03/RN10: Retorna o status geral da sincronização
   async obterStatusSincronizacao(_req: Request, res: Response) {
     try {
       const status = await SincronizacaoService.obterStatusSincronizacao()
@@ -97,7 +97,7 @@ export const SincronizacaoController = {
     }
   },
 
-  // RN03/RN10: Retorna uma mensagem amigável baseada no status atual da sincronização.
+  // RN03/RN10: Retorna uma mensagem amigável baseada no status atual da sincronização
   async obterMensagemSincronizacao(_req: Request, res: Response) {
     try {
       const mensagem = await SincronizacaoService.obterMensagemSincronizacao()

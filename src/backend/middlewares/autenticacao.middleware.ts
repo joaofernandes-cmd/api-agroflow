@@ -4,14 +4,10 @@ import { UsuarioCargo } from '../models/usuario.model'
 import { UUID } from '../models/uuid'
 
 export interface UsuarioAutenticado {
-  // Id do usuário autenticado no sistema.
   id: UUID
   identificador: string
-  // Login usado na autenticação.
   login: string | null
-  // Cargo carregado do token para liberar ou bloquear rotas.
-  cargo: UsuarioCargo
-  // Retiro ao qual o usuário pertence.
+  cargo: UsuarioCargo // carregado do token para liberar ou bloquear rotas
   retiro_id: UUID
 }
 
@@ -31,7 +27,7 @@ const JWT_SECRET = obterJwtSecret()
 const JWT_EXPIRES_IN = '1d'
 export const COOKIE_TOKEN_AUTENTICACAO = 'agroflow_token'
 
-// Gera o token que será enviado ao cliente após o login.
+// Gera o token que será enviado ao cliente após o login
 export function gerarToken(usuario: UsuarioAutenticado): string {
   return jwt.sign(
     {
@@ -83,13 +79,11 @@ function obterCookie(req: Request, nome: string): string | null {
   return decodeURIComponent(cookie.slice(nome.length + 1))
 }
 
-// Middleware de autenticação.
-// Verifica se existe token Bearer válido e, se existir, preenche req.usuario.
+// Verifica se existe token Bearer ou cookie válido e preenche req.usuario
 export function autenticarUsuario(req: Request, res: Response, next: NextFunction) {
   const autorizacao = req.headers.authorization
   const tokenCookie = obterCookie(req, COOKIE_TOKEN_AUTENTICACAO)
 
-  // Sem token na cabeça Authorization não há autenticação.
   if (!autorizacao?.startsWith('Bearer ') && !tokenCookie) {
     return res.status(401).json({ error: 'Token não informado' })
   }
@@ -99,12 +93,9 @@ export function autenticarUsuario(req: Request, res: Response, next: NextFunctio
     : tokenCookie
 
   try {
-    // Valida e decodifica o JWT usando o segredo do servidor.
     req.usuario = montarUsuarioAPartirDoToken(String(token))
-
     return next()
   } catch {
-    // Qualquer falha de verificação vira erro de autenticação.
     return res.status(401).json({ error: 'Token inválido ou expirado' })
   }
 }

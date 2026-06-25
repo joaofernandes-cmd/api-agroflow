@@ -9,7 +9,7 @@ evidenciaRoutes.use(autenticarUsuario)
 
 // Listagem geral e busca individual de evidências
 evidenciaRoutes.get('/', exigirCargo('supervisor', 'gerente'), EvidenciaController.listar)
-// Evidências de uma tarefa (para o supervisor revisar). Antes de '/:id' por convenção.
+// Evidências de uma tarefa (para o supervisor revisar); antes de '/:id' por convenção
 evidenciaRoutes.get('/tarefa/:tarefaId', exigirCargo('capataz', 'supervisor', 'gerente'), EvidenciaController.buscarPorTarefa)
 evidenciaRoutes.get('/:id', exigirCargo('capataz', 'supervisor', 'gerente'), EvidenciaController.buscarPorId)
 

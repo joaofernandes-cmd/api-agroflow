@@ -23,8 +23,8 @@ jest.mock('../../services/tarefa.service', () => ({
 }))
 
 // A criação de tarefa pelo supervisor resolve o retiro a partir do capataz
-// (atribuida_a). Mockamos UsuarioService.buscarPorId para devolver um capataz
-// com retiro válido.
+// (atribuida_a); mockamos UsuarioService.buscarPorId para devolver um capataz
+// com retiro válido
 jest.mock('../../services/usuario.service', () => ({
   UsuarioService: {
     buscarPorId: jest.fn(),

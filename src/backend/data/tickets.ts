@@ -1,6 +1,5 @@
-// Fonte ÚNICA dos tickets de infraestrutura registrados pelos capatazes.
-// Alimenta a tela de Tickets do supervisor, o relatório de tickets e o
-// contador da home. Editar aqui reflete em todas as telas.
+// Fonte única dos tickets de infraestrutura registrados pelos capatazes;
+// alimenta a tela de Tickets, o relatório e o contador da home
 
 import { capatazDoRetiro } from './referencia'
 
@@ -104,12 +103,11 @@ function decorar(t: TicketBase): TicketExibicao {
   }
 }
 
-// Tickets pendentes de validação (fonte da tela de Tickets e do relatório).
+// Tickets pendentes de validação (fonte da tela de Tickets e do relatório)
 export const ticketsPendentes: TicketExibicao[] = TICKETS.map(decorar)
 
-// Remove um ticket da lista de pendentes (ex.: quando o supervisor valida).
-// Mutação in-place: a lista é fonte única da tela e do contador da home, então
-// a remoção reflete em ambos no próximo carregamento. Retorna true se removeu.
+// Remove um ticket da lista de pendentes (ex.: quando o supervisor valida);
+// mutação in-place para refletir na tela e no contador da home
 export function removerTicketPendente(id: string): boolean {
   const indice = ticketsPendentes.findIndex((t) => t.id === id)
   if (indice === -1) return false
@@ -118,7 +116,7 @@ export function removerTicketPendente(id: string): boolean {
 }
 
 // Mapa id → { descricao, evidencia, evidenciaTexto } lido pelo JS da tela ao
-// mover um ticket para "Validados".
+// mover um ticket para "Validados"
 export const ticketsDadosMap: Record<
   string,
   { descricao: string; evidencia: TipoEvidenciaTicket; evidenciaTexto?: string }

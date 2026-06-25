@@ -73,7 +73,7 @@ export const UsuarioService = {
     return usuarios.filter(u => u.retiro_id === retiroId)
   },
 
-  // Listar usuarios de um conjunto de retiros (supervisor que cobre varios).
+  // Listar usuarios de um conjunto de retiros (supervisor que cobre varios)
   async listarPorRetiros(retiroIds: UUID[]): Promise<Usuario[]> {
     const conjunto = new Set(retiroIds.map(String))
     const usuarios = await UsuarioRepository.buscarTodos()
@@ -81,7 +81,7 @@ export const UsuarioService = {
   },
 
   // Retiros que um supervisor cobre: o retiro sede (usuario.retiro_id) mais os
-  // retiros adicionais da tabela supervisor_retiro.
+  // retiros adicionais da tabela supervisor_retiro
   async retirosDoSupervisor(supervisor: { id: UUID; retiro_id: UUID }): Promise<UUID[]> {
     const adicionais = await SupervisorRetiroRepository.buscarRetirosPorSupervisor(supervisor.id)
     const conjunto = new Set<UUID>([supervisor.retiro_id, ...adicionais])
