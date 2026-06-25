@@ -7,8 +7,8 @@ const movimentacaoRoutes = Router()
 
 movimentacaoRoutes.use(autenticarUsuario)
 
-// Mantem a listagem geral separada do filtro para ficar mais fiel ao WAD.
-// A rota /filtrar representa o contrato documentado para o Supervisor.
+// Mantém a listagem geral separada do filtro para ficar mais fiel ao WAD;
+// a rota /filtrar é o contrato documentado para o Supervisor
 function listarOuFiltrar(req: Request, res: Response) {
   const temAlgumFiltro =
     req.query.retiro ||
@@ -26,23 +26,22 @@ function listarOuFiltrar(req: Request, res: Response) {
   return MovimentacaoController.listarTodas(req, res)
 }
 
-// Criacao e listagem de movimentacoes do rebanho.
+// Criação e listagem de movimentações do rebanho
 movimentacaoRoutes.post('/', exigirCargo('capataz'), MovimentacaoController.criar)
 movimentacaoRoutes.get('/', exigirCargo('supervisor', 'gerente'), listarOuFiltrar)
 movimentacaoRoutes.get('/filtrar', exigirCargo('supervisor', 'gerente'), MovimentacaoController.filtrar)
 
-// Recebe movimentacoes sincronizadas vindas do cliente offline.
-// Esse endpoint cobre o contrato usado pelo fluxo de sincronização.
+// Recebe movimentações sincronizadas vindas do cliente offline
 movimentacaoRoutes.post('/sincronizar', exigirCargo('capataz'), MovimentacaoController.sincronizarRecebida)
 
-// Consulta movimentacoes ainda aguardando validacao.
+// Consulta movimentações ainda aguardando validação
 movimentacaoRoutes.get('/pendentes', exigirCargo('supervisor', 'gerente'), MovimentacaoController.listarPendentes)
 
-// Dados consolidados para dashboard.
+// Dados consolidados para dashboard
 movimentacaoRoutes.get('/dashboard', exigirCargo('supervisor', 'gerente'), MovimentacaoController.buscarParaDashboard)
 movimentacaoRoutes.get('/contagem/tipo', exigirCargo('supervisor', 'gerente'), MovimentacaoController.contarPorTipo)
 
-// Rotas por ID ficam por último para não capturar rotas específicas.
+// Rotas por ID ficam por último para não capturar rotas específicas
 movimentacaoRoutes.get('/:id', exigirCargo('supervisor', 'gerente'), MovimentacaoController.buscarPorId)
 movimentacaoRoutes.patch('/:id', exigirCargo('capataz', 'supervisor'), MovimentacaoController.atualizar)
 movimentacaoRoutes.patch('/:id/sincronizar', exigirCargo('capataz'), MovimentacaoController.sincronizar)

@@ -17,7 +17,7 @@ export interface EvidenciaInput {
 }
 
 // Evidência já "achatada" com o detalhe de cada tipo (foto/áudio/mensagem),
-// usada para devolver ao supervisor tudo que precisa numa consulta só.
+// usada para devolver ao supervisor tudo que precisa numa consulta só
 export interface EvidenciaDetalhada {
   id: UUID
   usuario_id: UUID

@@ -1,7 +1,5 @@
-// Prévias do relatório (modo demo, sem login) montadas a partir das MESMAS
-// fontes únicas das telas. Assim cada linha do relatório é exatamente um item
-// que aparece na página correspondente (Tarefas, Tickets ou Movimentações) —
-// é o que garante a rastreabilidade "a tarefa do relatório é a mesma da página".
+// Prévias do relatório (modo demo, sem login) montadas a partir das mesmas
+// fontes únicas das telas de Tarefas, Tickets e Movimentações
 
 import { tarefasRevisao } from './tarefas-capataz'
 import { ticketsPendentes } from './tickets'
@@ -32,7 +30,7 @@ const ROTULO_PRIORIDADE: Record<string, string> = {
   baixa: 'Baixa',
 }
 
-// Data aproximada (texto) a partir do "enviado" relativo, para a coluna Data.
+// Data aproximada (texto) a partir do "enviado" relativo, para a coluna Data
 const DATA_POR_ENVIADO: Record<string, string> = {
   'há 1h': '17/06/2026',
   'há 3h': '17/06/2026',
@@ -52,7 +50,7 @@ function resumir(linhas: LinhaRelatorio[], retiros: string[], periodo: string): 
   }
 }
 
-// Os itens das páginas estão todos aguardando validação → status Pendente.
+// Os itens das páginas estão todos aguardando validação → status Pendente
 const tarefas: DatasetRelatorio = (() => {
   const linhas: LinhaRelatorio[] = tarefasRevisao.map((t) => ({
     celulas: [t.data, t.retiro, t.titulo, ROTULO_PRIORIDADE[t.prioridade] ?? t.prioridade],
@@ -93,7 +91,7 @@ const movimentacoes: DatasetRelatorio = (() => {
   }
 })()
 
-// Datasets prontos para injeção como JSON na tela de relatórios.
+// Datasets prontos para injeção como JSON na tela de relatórios
 export const relatorioDemo: Record<'tarefas' | 'tickets' | 'movimentacoes', DatasetRelatorio> = {
   tarefas,
   tickets,

@@ -10,8 +10,7 @@ function obterRotuloDaRota(req: Request): string {
   return req.originalUrl || req.url
 }
 
-// Middleware de log de requisição.
-// Registra informações úteis para auditoria, suporte e depuração.
+// Registra cada requisição para auditoria, suporte e depuração
 export function middlewareDeLog(req: Request, res: Response, next: NextFunction) {
   const inicio = process.hrtime.bigint()
 
