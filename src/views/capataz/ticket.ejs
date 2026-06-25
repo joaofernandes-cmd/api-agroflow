@@ -1,0 +1,190 @@
+<%- include('../partials/capataz-head', { titulo: 'Alow · Abrir Ticket' }) %>
+
+<%
+  var CATEGORIAS = [
+    { value: 'cerca', label: 'Cerca' },
+    { value: 'eletrica', label: 'Elétrica' },
+    { value: 'hidraulica', label: 'Hidráulica' }
+  ];
+  var PRIORIDADES = [
+    { value: 'alta', label: 'Alta' },
+    { value: 'media', label: 'Média' },
+    { value: 'baixa', label: 'Baixa' }
+  ];
+%>
+
+<main class="celular">
+  <header class="cabecalho">
+    <div class="cabecalho__barra">
+      <a href="/capataz/home" class="cabecalho__voltar" aria-label="Voltar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </a>
+      <span class="cabecalho__titulo">Ticket de Infraestrutura</span>
+    </div>
+  </header>
+
+  <p id="ticket-feedback" style="margin: 12px 16px 0; font-size: 14px; line-height: 1.4;"></p>
+
+  <div class="conteudo">
+    <div class="campo">
+      <label class="campo__rotulo" for="categoriaTicket">Categoria do problema</label>
+      <select class="select" id="categoriaTicket" required>
+        <option value="" disabled selected>Selecione a categoria</option>
+        <% CATEGORIAS.forEach(function (c) { %><option value="<%= c.value %>"><%= c.label %></option><% }) %>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label class="campo__rotulo">Prioridade</label>
+      <div class="prio-seletor" role="radiogroup" aria-label="Prioridade">
+        <button type="button" class="prio-opcao prio-opcao--alta" data-valor="alta">Alta</button>
+        <button type="button" class="prio-opcao prio-opcao--media" data-valor="media">Média</button>
+        <button type="button" class="prio-opcao prio-opcao--baixa" data-valor="baixa">Baixa</button>
+        <input type="hidden" id="prioridadeTicket" value="" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo__rotulo" for="localizacaoTicket">Localização (Automática)</label>
+      <input class="input" type="text" id="localizacaoTicket" placeholder="Detectando sua localização..." readonly />
+      <p id="localizacaoStatus" style="margin: 6px 0 0; font-size: 13px; color: var(--texto-sec);"></p>
+    </div>
+
+    <%- include('evidencia', { ns: 'tk' }) %>
+
+    <button type="button" class="btn-primario" id="btnEnviarTicket">Enviar ticket</button>
+  </div>
+
+  <%- include('../partials/bottomnav-capataz', { ativa: 'tickets' }) %>
+  <%- include('../partials/aviso-sucesso') %>
+</main>
+
+<script src="/js/prioridade-seletor.js"></script>
+<script src="/js/aviso-sucesso.js"></script>
+<script>
+  const feedback = document.getElementById('ticket-feedback');
+  const botao = document.getElementById('btnEnviarTicket');
+
+  const categoriaSelect = document.getElementById('categoriaTicket');
+
+  function mostrarFeedback(mensagem, tipo) {
+    if (!feedback) return;
+    feedback.textContent = mensagem;
+    feedback.style.color = tipo === 'error' ? '#b42318' : '#146c43';
+  }
+
+  function montarPayload() {
+    let categoria = document.getElementById('categoriaTicket').value;
+    const prioridade = document.getElementById('prioridadeTicket').value;
+    const localizacao = document.getElementById('localizacaoTicket').value.trim();
+    const evidenciasApi = window.__evidencias && window.__evidencias['tk'];
+    const evidencias = evidenciasApi ? evidenciasApi.obter() : [];
+
+    if (!categoria || !prioridade || !localizacao) {
+      throw new Error('Preencha categoria, prioridade e localização.');
+    }
+
+    if (!evidencias.length) {
+      throw new Error('Anexe uma evidência (foto, áudio ou texto).');
+    }
+
+    // A descrição vem da evidência de texto; sem texto, usa a categoria como base.
+    const textoEvid = evidencias.find(function (e) { return e.tipo === 'texto'; });
+    const catLabel = categoriaSelect.options[categoriaSelect.selectedIndex].text;
+    const descricao = (textoEvid && textoEvid.conteudo) ? textoEvid.conteudo : ('Ticket de ' + catLabel);
+
+    // Identidade (aberto_por) e retiro são preenchidos pelo SERVIDOR a partir do
+    // capataz autenticado (cookie) — não enviamos identidade pelo corpo.
+    return {
+      categoria,
+      categoria_outro: null,
+      localizacao,
+      descricao,
+      prioridade,
+      temEvidenciaDescritiva: true,
+    };
+  }
+
+  async function enviarTicket() {
+    try {
+      botao.disabled = true;
+      botao.textContent = 'Enviando...';
+
+      const payload = montarPayload();
+      const syncPayload = Object.assign({}, payload, {
+        status: 'pendente',
+        atribuido_a: null,
+        aprovado_por: null,
+        sincronizado: false,
+      });
+      delete syncPayload.temEvidenciaDescritiva;
+
+      const resultado = await window.AgroFlowCapataz.fetchOrQueueOperation({
+        kind: 'ticket',
+        url: '/tickets/sincronizar',
+        method: 'POST',
+        body: syncPayload,
+        queueBody: syncPayload,
+      });
+
+      document.querySelectorAll('.select, .input').forEach(el => {
+        if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          el.value = '';
+        } else {
+          el.selectedIndex = 0;
+        }
+      });
+      if (window.PrioSeletor) window.PrioSeletor.resetarTodos();
+      obterLocalizacao();
+
+      // Confirmação em tela cheia (o capataz precisa ver claramente que deu certo).
+      window.AvisoSucesso.mostrar(
+        resultado.queued
+          ? 'Seu Ticket foi salvo no aparelho. Ele será enviado sozinho quando a internet voltar.'
+          : 'Seu Ticket foi enviado para o supervisor.',
+        {
+          titulo: resultado.queued ? 'Ticket salvo!' : 'Ticket enviado!',
+          aoFechar: function () { window.location.href = '/capataz/home'; },
+        }
+      );
+    } catch (error) {
+      mostrarFeedback(error instanceof Error ? error.message : 'Erro ao criar ticket', 'error');
+    } finally {
+      botao.disabled = false;
+      botao.textContent = 'Enviar ticket';
+    }
+  }
+
+  // Localização automática por GPS (preenche sem o capataz precisar digitar).
+  function obterLocalizacao() {
+    const campo = document.getElementById('localizacaoTicket');
+    const status = document.getElementById('localizacaoStatus');
+    if (!navigator.geolocation) {
+      campo.readOnly = false;
+      campo.placeholder = 'Digite a localização';
+      if (status) status.textContent = 'GPS indisponível — digite a localização.';
+      return;
+    }
+    if (status) status.textContent = 'Obtendo sua localização...';
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        campo.value = pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
+        if (status) status.textContent = 'Localização capturada com sucesso.';
+      },
+      function () {
+        campo.readOnly = false;
+        campo.placeholder = 'Não foi possível pegar o GPS — digite a localização';
+        if (status) status.textContent = 'Sem permissão de localização — digite manualmente.';
+      }
+    );
+  }
+  obterLocalizacao();
+
+  botao.addEventListener('click', enviarTicket);
+</script>
+
+</body>
+</html>

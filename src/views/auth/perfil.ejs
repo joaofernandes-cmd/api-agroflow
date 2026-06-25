@@ -1,0 +1,49 @@
+<%- include('../partials/head', { title: 'Selecione seu perfil', css: 'auth' }) %>
+
+<!-- ============================================================
+     TELA: Selecione seu perfil
+     Mobile  → card centralizado estilo "telefone"
+     Desktop → logo + card centralizados na tela cheia
+     ============================================================ -->
+
+<main class="perfil" role="main" aria-label="Seleção de perfil">
+
+  <!-- Logo AgroFlow -->
+  <div class="perfil__logo" aria-hidden="true">
+    <!-- Mobile: asset menor -->
+    <img
+      class="perfil__logo-img perfil__logo-img--mobile"
+      src="/assets/logo-agro-flow.svg"
+      alt="AgroFlow"
+    />
+    <!-- Desktop: asset maior -->
+    <img
+      class="perfil__logo-img perfil__logo-img--desktop"
+      src="/assets/logo-agro-flow.svg"
+      alt="AgroFlow"
+    />
+  </div>
+
+  <!-- Título (apenas mobile) -->
+  <h1 class="perfil__title">Selecione<br>seu perfil</h1>
+  <p class="perfil__subtitle">Escolha como deseja acessar o sistema</p>
+
+  <!-- Card de seleção -->
+  <div class="perfil__card" role="group" aria-labelledby="perfil-label">
+    <p class="perfil__label" id="perfil-label">Acessar como:</p>
+
+    <a href="/auth/login?role=supervisor" class="btn btn--primary" aria-label="Acessar como Supervisor">
+      Supervisor
+    </a>
+
+    <a href="/auth/login?role=gerente" class="btn btn--outline" aria-label="Acessar como Gerente">
+      Gerente
+    </a>
+  </div>
+
+  <p class="perfil__version" aria-hidden="true">v1.0.0</p>
+
+</main>
+
+</body>
+</html>

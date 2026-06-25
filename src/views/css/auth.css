@@ -1,0 +1,346 @@
+/* =============================================================
+   auth.css — Telas de autenticação (perfil.ejs + login.ejs)
+   Depende de: global.css
+   ============================================================= */
+
+/* ═══════════════════════════════════════════════════════════
+   TELA DE PERFIL — Mobile First
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Wrapper principal ─────────────────────────────────────── */
+.perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  padding-bottom: 32px;
+  background: var(--color-bg);
+}
+
+/* ── Logo ─────────────────────────────────────────────────── */
+.perfil__logo {
+  width: 100%;
+  padding: 14px 16px 0;
+}
+
+/* Mobile: mostra logo mobile, esconde desktop */
+.perfil__logo-img--desktop { display: none; }
+.perfil__logo-img--mobile  { width: 100%; max-height: 28vh; height: auto; object-fit: contain; }
+
+/* ── Título (só aparece no mobile) ────────────────────────── */
+.perfil__title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 22px;
+  padding: 0 20px;
+}
+
+.perfil__subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text);
+  opacity: 0.75;
+  text-align: center;
+  margin-top: 8px;
+  padding: 0 20px;
+}
+
+/* ── Card de seleção ──────────────────────────────────────── */
+.perfil__card {
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  width: calc(100% - 48px);
+  max-width: 420px;
+  margin: 24px 0 0;
+  padding: 32px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.perfil__label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-muted);
+  text-align: center;
+  width: 100%;
+}
+
+/* ── Versão ───────────────────────────────────────────────── */
+.perfil__version {
+  font-size: 12px;
+  color: var(--color-muted);
+  text-align: center;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TELA DE PERFIL — Desktop (≥ 768px)
+   Layout: tela cheia com logo + card centralizados
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  /* Body centraliza o conteúdo verticalmente */
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+  }
+
+  .perfil {
+    min-height: unset;
+    padding-bottom: 0;
+    width: 420px; /* largura do card desktop (Figma: 420px) */
+  }
+
+  /* Troca os assets de logo */
+  .perfil__logo-img--mobile  { display: none; }
+  .perfil__logo-img--desktop { display: block; width: 100%; max-width: 420px; height: 220px; max-height: 220px; object-fit: contain; }
+
+  .perfil__title { margin-top: 12px; }
+
+  /* Card desktop */
+  .perfil__card {
+    width: 100%;
+    height: 256px;
+    margin-top: 16px;
+    justify-content: flex-start;
+    padding: 20px 36px 32px;
+  }
+
+  /* Versão abaixo do card */
+  .perfil__version {
+    margin-top: 8px;
+    padding-top: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TELA DE LOGIN — Mobile First
+   Mobile:  logo + título FORA do card, botão voltar visível
+   Desktop: logo acima, título e subtítulo DENTRO do card,
+            sem botão voltar
+   ═══════════════════════════════════════════════════════════ */
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  padding-bottom: 32px;
+  background: var(--color-bg);
+  position: relative;
+}
+
+/* ── Botão voltar ─────────────────────────────────────────── */
+.login__back {
+  position: absolute;
+  top: 17px;
+  left: 19px;
+  width: 40px;
+  height: 40px;
+  background: var(--color-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+.login__back:hover        { opacity: 0.85; }
+.login__back:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+
+/* ── Logo ─────────────────────────────────────────────────── */
+.login__logo {
+  width: 100%;
+  padding: 14px 16px 0;
+}
+
+/* Mobile: mostra logo mobile, esconde desktop */
+.login__logo-img--desktop { display: none; }
+.login__logo-img--mobile  { width: 100%; max-height: 28vh; height: auto; object-fit: contain; }
+
+/* ── Título fora do card (mobile) ─────────────────────────── */
+.login__persona--outside {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  padding: 0 20px;
+}
+
+.login__persona-sub--outside {
+  font-size: 13px;
+  color: var(--color-text);
+  opacity: 0.8;
+  text-align: center;
+  margin-top: 4px;
+  padding: 0 20px;
+}
+
+/* Título dentro do card: escondido no mobile */
+.login__card-header { display: none; }
+
+/* ── Card do formulário ───────────────────────────────────── */
+.login__card {
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card-lg);
+  width: calc(100% - 34px);
+  max-width: 440px;
+  margin: 24px 0 0;
+  padding: 24px 31px 28px;
+}
+
+/* ── Campos ───────────────────────────────────────────────── */
+.field { margin-bottom: 16px; }
+.field:last-of-type { margin-bottom: 0; }
+
+.field__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+
+.field__input {
+  width: 100%;
+  height: 52px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--color-text);
+  padding: 0 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field__input::placeholder { color: var(--color-muted); }
+.field__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(47, 108, 61, 0.12);
+}
+.field__input[aria-invalid="true"] {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.10);
+}
+
+/* Campo de senha com ícone */
+.field__wrap { position: relative; }
+.field__wrap .field__input { padding-right: 48px; }
+
+.field__toggle {
+  position: absolute;
+  right: 14px;
+  top: 26px; /* metade fixa da altura do input (52px) — imune ao erro inline */
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+  padding: 4px;
+}
+.field__toggle:hover { color: var(--color-primary); }
+
+/* Erro inline */
+.field__error {
+  display: none;
+  font-size: 12px;
+  color: #c0392b;
+  margin-top: 5px;
+}
+.field__input[aria-invalid="true"] ~ .field__error { display: block; }
+
+/* ── Botão entrar ─────────────────────────────────────────── */
+.btn--entrar {
+  width: 100%;
+  height: 56px;
+  margin-top: 16px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn-lg);
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn--entrar:hover             { opacity: 0.92; }
+.btn--entrar:active            { transform: scale(0.98); }
+.btn--entrar[aria-busy="true"] { opacity: 0.7; cursor: not-allowed; }
+
+/* ═══════════════════════════════════════════════════════════
+   TELA DE LOGIN — Desktop (≥ 768px)
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .login {
+    min-height: unset;
+    padding-bottom: 0;
+    width: 440px;
+    position: static;
+  }
+
+  /* Esconde botão voltar no desktop */
+  .login__back { display: none; }
+
+  /* Troca asset de logo */
+  .login__logo-img--mobile  { display: none; }
+  .login__logo-img--desktop {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    height: 220px;
+    max-height: 220px;
+    object-fit: contain;
+  }
+
+  .login__logo { padding-top: 32px; }
+
+  /* Esconde título fora do card */
+  .login__persona--outside,
+  .login__persona-sub--outside { display: none; }
+
+  /* Mostra título dentro do card */
+  .login__card-header {
+    display: block;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .login__persona--inside {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .login__persona-sub--inside {
+    font-size: 14px;
+    color: var(--color-muted);
+    margin-top: 4px;
+  }
+
+  /* Card desktop: 440px largura, padding maior */
+  .login__card {
+    width: 100%;
+    margin-top: 0;
+    padding: 32px 32px 36px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Labels no desktop são mais escuras (Figma: #1f1f1f) */
+  .field__label { color: var(--color-text); }
+}

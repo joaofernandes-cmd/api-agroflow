@@ -1,0 +1,51 @@
+<%#
+  Partial: bottomnav-supervisor.ejs
+  Variáveis esperadas:
+  - paginaAtiva: 'home' | 'revisao' | 'tickets' | 'movimentacoes' | 'delegar' | 'relatorios'
+%>
+
+<nav class="bottomnav" role="navigation" aria-label="Navegação principal">
+
+  <a href="/supervisor/home"
+     class="bottomnav__item <%= paginaAtiva === 'home' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'home' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--home" aria-hidden="true"></span>
+    <span>Início</span>
+  </a>
+
+  <a href="/supervisor/revisao"
+     class="bottomnav__item <%= paginaAtiva === 'revisao' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'revisao' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--revisao" aria-hidden="true"></span>
+    <span>Tarefas</span>
+  </a>
+
+  <a href="/supervisor/tickets"
+     class="bottomnav__item <%= paginaAtiva === 'tickets' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'tickets' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--tickets" aria-hidden="true"></span>
+    <span>Tickets</span>
+  </a>
+
+  <a href="/supervisor/movimentacoes"
+     class="bottomnav__item <%= paginaAtiva === 'movimentacoes' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'movimentacoes' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--movimentacoes" aria-hidden="true"></span>
+    <span>Movimentações</span>
+  </a>
+
+  <a href="/supervisor/delegar"
+     class="bottomnav__item <%= paginaAtiva === 'delegar' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'delegar' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--delegar" aria-hidden="true"></span>
+    <span>Delegar</span>
+  </a>
+
+  <a href="/supervisor/relatorios"
+     class="bottomnav__item <%= paginaAtiva === 'relatorios' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'relatorios' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--relatorios" aria-hidden="true"></span>
+    <span>Relatório</span>
+  </a>
+
+</nav>

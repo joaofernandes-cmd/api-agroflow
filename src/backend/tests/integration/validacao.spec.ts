@@ -1,0 +1,193 @@
+import request from 'supertest'
+import app from '../../app'
+import { ValidacaoService } from '../../services/validacao.service'
+import { mockMovimentacaoValidada, mockSupervisor, mockTarefa, mockTicket } from '../helpers/fixtures'
+
+jest.mock('../../services/validacao.service', () => ({
+  ValidacaoService: {
+    podeValidar: jest.fn(),
+    validarMovimentacao: jest.fn(),
+    aprovarTicket: jest.fn(),
+    aprovarTarefa: jest.fn(),
+  },
+}))
+
+const mockedService = ValidacaoService as jest.Mocked<typeof ValidacaoService>
+
+describe('Validacoes', () => {
+  beforeEach(() => {
+    mockedService.podeValidar.mockReturnValue(true)
+    mockedService.validarMovimentacao.mockResolvedValue({
+      sucesso: true,
+      mensagem: 'Movimentacao validada com sucesso.',
+      movimentacao: mockMovimentacaoValidada as any,
+    })
+    mockedService.aprovarTicket.mockResolvedValue({
+      sucesso: true,
+      mensagem: 'Ticket aprovado com sucesso.',
+      ticket: mockTicket as any,
+    })
+    mockedService.aprovarTarefa.mockResolvedValue({
+      sucesso: true,
+      mensagem: 'Tarefa aprovada com sucesso.',
+      tarefa: mockTarefa as any,
+    })
+  })
+
+  it('POST /validacoes/permissao deve confirmar permissao do usuario', async () => {
+    const response = await request(app).post('/validacoes/permissao')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({ podeValidar: true })
+  })
+
+  it.each(['capataz', 'gerente'])(
+    'RN06 deve bloquear validacao para usuario com cargo %s',
+    cargo => {
+      const { exigirCargo } = jest.requireActual('../../middlewares/cargo.middleware')
+      const req = {
+        usuario: {
+          ...mockSupervisor,
+          cargo,
+        },
+      } as any
+      const json = jest.fn()
+      const status = jest.fn().mockReturnValue({ json })
+      const res = { status } as any
+      const next = jest.fn()
+
+      exigirCargo('supervisor')(req, res, next)
+
+      expect(status).toHaveBeenCalledWith(403)
+      expect(json).toHaveBeenCalledWith({ error: 'Acesso negado: cargo insuficiente' })
+      expect(next).not.toHaveBeenCalled()
+    }
+  )
+
+  it('PATCH /validacoes/movimentacoes/:id/validar deve validar movimentacao', async () => {
+    const response = await request(app).patch('/validacoes/movimentacoes/00000000-0000-4000-8000-000000000201/validar')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toMatchObject({
+      sucesso: true,
+      mensagem: 'Movimentacao validada com sucesso.',
+    })
+    expect(response.body.movimentacao).toMatchObject({
+      id: mockMovimentacaoValidada.id,
+      status: mockMovimentacaoValidada.status,
+    })
+  })
+
+  it('PATCH /validacoes/movimentacoes/:id/validar deve rejeitar id invalido', async () => {
+    const response = await request(app).patch('/validacoes/movimentacoes/id-invalido/validar')
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ error: 'ID inválido' })
+  })
+
+  it('PATCH /validacoes/movimentacoes/:id/validar deve informar recurso inexistente', async () => {
+    mockedService.validarMovimentacao.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Movimentação não encontrada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/movimentacoes/00000000-0000-4000-8000-999999999999/validar'
+    )
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({
+      sucesso: false,
+      mensagem: 'Movimentação não encontrada.',
+    })
+  })
+
+  it('PATCH /validacoes/movimentacoes/:id/validar deve rejeitar registro ja processado', async () => {
+    mockedService.validarMovimentacao.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Movimentação já foi validado. Não pode ser alterada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/movimentacoes/00000000-0000-4000-8000-000000000201/validar'
+    )
+
+    expect(response.status).toBe(409)
+    expect(response.body).toEqual({
+      sucesso: false,
+      mensagem: 'Movimentação já foi validado. Não pode ser alterada.',
+    })
+  })
+
+  it('PATCH /validacoes/tickets/:id/aprovar deve aprovar ticket', async () => {
+    const response = await request(app).patch('/validacoes/tickets/00000000-0000-4000-8000-000000000401/aprovar')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toMatchObject({
+      sucesso: true,
+      mensagem: 'Ticket aprovado com sucesso.',
+    })
+  })
+
+  it('PATCH /validacoes/tickets/:id/aprovar deve retornar 404 para ticket inexistente', async () => {
+    mockedService.aprovarTicket.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Ticket não encontrado.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tickets/00000000-0000-4000-8000-999999999999/aprovar'
+    )
+
+    expect(response.status).toBe(404)
+  })
+
+  it('PATCH /validacoes/tickets/:id/aprovar deve retornar 409 para ticket ja processado', async () => {
+    mockedService.aprovarTicket.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Ticket já foi aprovado. Não pode ser alterado.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tickets/00000000-0000-4000-8000-000000000401/aprovar'
+    )
+
+    expect(response.status).toBe(409)
+  })
+
+  it('PATCH /validacoes/tarefas/:id/aprovar deve aprovar tarefa', async () => {
+    const response = await request(app).patch('/validacoes/tarefas/00000000-0000-4000-8000-000000000301/aprovar')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toMatchObject({
+      sucesso: true,
+      mensagem: 'Tarefa aprovada com sucesso.',
+    })
+  })
+
+  it('PATCH /validacoes/tarefas/:id/aprovar deve retornar 404 para tarefa inexistente', async () => {
+    mockedService.aprovarTarefa.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Tarefa não encontrada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tarefas/00000000-0000-4000-8000-999999999999/aprovar'
+    )
+
+    expect(response.status).toBe(404)
+  })
+
+  it('PATCH /validacoes/tarefas/:id/aprovar deve retornar 409 para tarefa ja processada', async () => {
+    mockedService.aprovarTarefa.mockResolvedValueOnce({
+      sucesso: false,
+      mensagem: 'Tarefa já foi aprovada. Não pode ser alterada.',
+    })
+
+    const response = await request(app).patch(
+      '/validacoes/tarefas/00000000-0000-4000-8000-000000000301/aprovar'
+    )
+
+    expect(response.status).toBe(409)
+  })
+})

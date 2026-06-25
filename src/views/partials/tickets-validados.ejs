@@ -1,0 +1,37 @@
+<%# Lista de tickets já validados (status 'aprovado' no banco). Renderizada
+    server-side a partir de `ticketsValidados`. Usada nas seções "Validados"
+    mobile e desktop da tela de Tickets do supervisor. %>
+<% if (!ticketsValidados || !ticketsValidados.length) { %>
+  <p class="concl-vazio">Nenhum ticket validado ainda.</p>
+<% } else { %>
+  <% ticketsValidados.forEach(function (t) { %>
+    <div class="concl-item">
+      <button type="button" class="concl-head" aria-expanded="false">
+        <span class="concl-title"><%= t.nome %><%= t.retiro ? ' — ' + t.retiro : '' %></span>
+        <span class="concl-badge">Validado</span>
+        <span class="concl-arrow" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </button>
+      <div class="concl-panel">
+        <div class="concl-panel__inner">
+          <div class="concl-tags">
+            <span class="concl-prio concl-prio--<%= t.sevClasse %>"><%= t.severidade %></span>
+          </div>
+          <%
+            var partes = [];
+            if (t.dataValidacao) partes.push('Validado em ' + t.dataValidacao);
+            if (t.supervisor) partes.push('Supervisor ' + t.supervisor);
+          %>
+          <% if (partes.length) { %>
+          <p class="concl-meta"><%= partes.join(' • ') %></p>
+          <% } %>
+          <div class="concl-bloco">
+            <span class="concl-bloco__label">Descrição</span>
+            <p class="concl-bloco__texto"><%= t.descricao %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+<% } %>

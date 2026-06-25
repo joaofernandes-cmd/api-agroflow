@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2f6c3d" />
+  <title><%= typeof titulo !== 'undefined' ? titulo : 'Alow · Capataz' %></title>
+  <link rel="manifest" href="/manifest-capataz.json" />
+  <link rel="icon" type="image/png" href="/assets/pwa/icon-agroflow.png" />
+  <link rel="apple-touch-icon" href="/assets/pwa/icon-agroflow-550.png" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/capataz.css?v=7" />
+  <% if (typeof supabase !== 'undefined' && supabase && supabase.url) { %>
+  <script>window.__SUPABASE__ = <%- JSON.stringify(supabase) %>;</script>
+  <% } %>
+  <script src="/js/session.js"></script>
+  <script src="/capataz-pwa.js?v=8" defer></script>
+</head>
+<body>

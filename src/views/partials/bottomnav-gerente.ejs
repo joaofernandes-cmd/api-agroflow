@@ -1,0 +1,23 @@
+<%#
+  Partial: bottomnav-gerente.ejs
+  Variáveis esperadas:
+  - paginaAtiva: 'home' | 'relatorios'
+%>
+
+<nav class="bottomnav bottomnav--gerente" role="navigation" aria-label="Navegação principal">
+
+  <a href="/gerente/home"
+     class="bottomnav__item <%= paginaAtiva === 'home' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'home' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--home" aria-hidden="true"></span>
+    <span>Início</span>
+  </a>
+
+  <a href="/gerente/relatorios"
+     class="bottomnav__item <%= paginaAtiva === 'relatorios' ? 'bottomnav__item--active' : '' %>"
+     <%= paginaAtiva === 'relatorios' ? 'aria-current="page"' : '' %>>
+    <span class="bnav-icon bnav-icon--relatorios" aria-hidden="true"></span>
+    <span>Relatórios</span>
+  </a>
+
+</nav>

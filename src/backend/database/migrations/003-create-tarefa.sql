@@ -1,0 +1,46 @@
+-- 003 - Cria tabela de tarefas.
+
+CREATE TABLE IF NOT EXISTS tarefa (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  retiro_id UUID NOT NULL,
+  criada_por UUID NOT NULL,
+  atribuida_a UUID NOT NULL,
+  aprovado_por UUID NULL,
+  descricao TEXT NOT NULL,
+  categoria VARCHAR(255) NOT NULL,
+  prioridade tarefa_prioridade NOT NULL,
+  data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
+  status tarefa_status NOT NULL,
+  sincronizado BOOLEAN NOT NULL DEFAULT false
+);
+
+DO $$
+BEGIN
+  BEGIN
+    ALTER TABLE tarefa
+      ADD CONSTRAINT tarefa_retiro_id_foreign
+      FOREIGN KEY (retiro_id) REFERENCES retiro(id);
+  EXCEPTION WHEN duplicate_object THEN NULL;
+  END;
+
+  BEGIN
+    ALTER TABLE tarefa
+      ADD CONSTRAINT tarefa_criada_por_foreign
+      FOREIGN KEY (criada_por) REFERENCES usuario(id);
+  EXCEPTION WHEN duplicate_object THEN NULL;
+  END;
+
+  BEGIN
+    ALTER TABLE tarefa
+      ADD CONSTRAINT tarefa_atribuida_a_foreign
+      FOREIGN KEY (atribuida_a) REFERENCES usuario(id);
+  EXCEPTION WHEN duplicate_object THEN NULL;
+  END;
+
+  BEGIN
+    ALTER TABLE tarefa
+      ADD CONSTRAINT tarefa_aprovado_por_foreign
+      FOREIGN KEY (aprovado_por) REFERENCES usuario(id);
+  EXCEPTION WHEN duplicate_object THEN NULL;
+  END;
+END $$;

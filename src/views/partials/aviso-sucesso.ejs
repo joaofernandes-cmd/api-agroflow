@@ -1,0 +1,19 @@
+<!--
+  Tela cheia de confirmação (sucesso).
+  Fica sobreposta à moldura do celular e ocupa a tela inteira, para que o
+  capataz veja claramente que a ação deu certo (em vez de um aviso pequeno no
+  topo). É controlada pelo /js/aviso-sucesso.js via window.AvisoSucesso.
+-->
+<div class="tela-aviso" id="telaAviso" hidden role="alertdialog" aria-modal="true" aria-labelledby="telaAvisoTitulo">
+  <div class="tela-aviso__conteudo">
+    <div class="tela-aviso__icone" aria-hidden="true">
+      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+    </div>
+    <h2 class="tela-aviso__titulo" id="telaAvisoTitulo">Enviado com sucesso!</h2>
+    <p class="tela-aviso__mensagem" id="telaAvisoMensagem"></p>
+    <button type="button" class="btn-primario tela-aviso__botao" id="telaAvisoBotao">Voltar ao início</button>
+  </div>
+</div>

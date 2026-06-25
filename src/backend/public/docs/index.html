@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrPec API — Documentação de Endpoints</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f6f7f9;
+      --sidebar-bg: #1a1d23;
+      --sidebar-text: #c9d1d9;
+      --sidebar-hover: #2d3139;
+      --sidebar-active: #2563eb;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+      --get: #16a34a;
+      --get-bg: #dcfce7;
+      --post: #2563eb;
+      --post-bg: #dbeafe;
+      --patch: #d97706;
+      --patch-bg: #fef3c7;
+      --delete: #dc2626;
+      --delete-bg: #fee2e2;
+      --tag-alta: #dc2626;
+      --tag-media: #d97706;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    nav {
+      width: 280px;
+      min-width: 280px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-header {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid #2d3139;
+    }
+
+    .nav-header h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-header p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .search-box {
+      padding: 12px 16px;
+      border-bottom: 1px solid #2d3139;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: #2d3139;
+      border: 1px solid #3d4149;
+      border-radius: 6px;
+      color: var(--sidebar-text);
+      font-size: 13px;
+      padding: 6px 10px;
+      outline: none;
+    }
+
+    .search-box input::placeholder { color: #6b7280; }
+
+    .search-box input:focus { border-color: var(--sidebar-active); }
+
+    .nav-section { padding: 8px 0; }
+
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b7280;
+      padding: 6px 20px 4px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 20px;
+      font-size: 13px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .nav-link:hover { background: var(--sidebar-hover); color: #fff; }
+
+    .nav-link.active { background: var(--sidebar-active); color: #fff; }
+
+    .nav-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .badge-alta { background: #3f1010; color: #fca5a5; }
+    .badge-media { background: #3f2800; color: #fcd34d; }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 900px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+
+    .base-url-card {
+      background: var(--sidebar-bg);
+      color: #c9d1d9;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .base-url-card .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7280;
+      flex-shrink: 0;
+    }
+
+    .base-url-card .url {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 14px;
+      color: #7dd3fc;
+    }
+
+    /* SECTION */
+    .rf-section {
+      margin-bottom: 56px;
+    }
+
+    .rf-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .rf-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    .rf-badge.alta { background: #fee2e2; color: #dc2626; }
+    .rf-badge.media { background: #fef3c7; color: #b45309; }
+
+    .rf-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ENDPOINT CARD */
+    .endpoint-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+
+    .endpoint-header:hover { background: #f8fafc; }
+
+    .method-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .method-GET    { background: var(--get-bg);    color: var(--get);    }
+    .method-POST   { background: var(--post-bg);   color: var(--post);   }
+    .method-PATCH  { background: var(--patch-bg);  color: var(--patch);  }
+    .method-DELETE { background: var(--delete-bg); color: var(--delete); }
+
+    .endpoint-path {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .endpoint-summary {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .chevron {
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .endpoint-card.open .chevron { transform: rotate(90deg); }
+
+    .endpoint-body {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .endpoint-card.open .endpoint-body { display: block; }
+
+    .detail-section { margin-top: 16px; }
+
+    .detail-section h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .detail-section p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--bg);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+      border: 1px solid var(--border);
+    }
+
+    td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    td code, .inline-code {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 12px;
+    }
+
+    pre {
+      background: #1a1d23;
+      color: #c9d1d9;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 12px;
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    .status-chip {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+
+    .s-2 { background: #dcfce7; color: #166534; }
+    .s-4 { background: #fee2e2; color: #991b1b; }
+    .s-5 { background: #f3e8ff; color: #6b21a8; }
+
+    .auth-required {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #b45309;
+      background: #fef3c7;
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+
+    .auth-none {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* search highlight */
+    .hidden { display: none !important; }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      main { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav>
+  <div class="nav-header">
+    <h1>BrPec API</h1>
+    <p>Documentação de Endpoints</p>
+  </div>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Buscar endpoint..." oninput="filterEndpoints(this.value)" />
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Prioridade Alta</div>
+    <a class="nav-link" href="#rf001">RF001 — Movimentações <span class="nav-badge badge-alta">Alta</span></a>
+    <a class="nav-link" href="#rf002">RF002 — Tarefas <span class="nav-badge badge-alta">Alta</span></a>
+    <a class="nav-link" href="#rf003">RF003 — Sincronização <span class="nav-badge badge-alta">Alta</span></a>
+    <a class="nav-link" href="#rf004">RF004 — Evidências <span class="nav-badge badge-alta">Alta</span></a>
+    <a class="nav-link" href="#rf005">RF005 — Autenticação <span class="nav-badge badge-alta">Alta</span></a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Prioridade Média</div>
+    <a class="nav-link" href="#rf006">RF006 — Validações <span class="nav-badge badge-media">Média</span></a>
+    <a class="nav-link" href="#rf007">RF007 — Relatórios <span class="nav-badge badge-media">Média</span></a>
+    <a class="nav-link" href="#rf008">RF008 — Tickets <span class="nav-badge badge-media">Média</span></a>
+    <a class="nav-link" href="#rf009">RF009 — Filtros <span class="nav-badge badge-media">Média</span></a>
+    <a class="nav-link" href="#rf010">RF010 — Dashboard <span class="nav-badge badge-media">Média</span></a>
+    <a class="nav-link" href="#rf011">RF011 — Prioridade Tickets <span class="nav-badge badge-alta">Alta</span></a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Outros</div>
+    <a class="nav-link" href="#usuarios">Gestão de Usuários</a>
+    <a class="nav-link" href="#sistema">Sistema</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <h1 class="page-title">WebAPI — BrPec Agropecuária</h1>
+  <p class="page-subtitle">
+    Endpoints são pontos de entrada por meio dos quais o sistema se comunica internamente e com clientes externos, associados a um verbo HTTP (GET, POST, PATCH, DELETE) que define a intenção de cada requisição. A documentação abaixo cobre todos os endpoints implementados no backend, ordenados conforme a prioridade dos Requisitos Funcionais mapeados no Artefato 1.
+  </p>
+
+  <div class="base-url-card">
+    <span class="label">Base URL</span>
+    <span class="url">http://localhost:3000</span>
+  </div>
+
+  <!-- ===== RF001 ===== -->
+  <section class="rf-section" id="rf001">
+    <div class="rf-header">
+      <span class="rf-badge alta">RF001 — Alta</span>
+      <h2>Movimentações do Rebanho</h2>
+    </div>
+
+    <!-- POST /movimentacoes -->
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/movimentacoes</span>
+        <span class="endpoint-summary">Registrar uma nova movimentação</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Registra uma nova movimentação do rebanho (nascimento, morte, transferência, compra ou venda). Valida campos obrigatórios conforme o tipo da movimentação, conforme RN01.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Autenticação</h4>
+          <span class="auth-none">Nenhuma (acesso por perfil de campo)</span>
+        </div>
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{
+  "retiro_id":   string UUID  (obrigatório),
+  "capataz_id":  string  (obrigatório),
+  "tipo":        "nascimento" | "morte" | "transferencia" | "compra" | "venda"  (obrigatório),
+  "estagio_vida": string (obrigatório),
+  "origem":      string  (condicional: transferencia, nascimento, morte),
+  "destino":     string  (condicional: transferencia),
+  "quantidade":  number  (condicional: compra, venda, transferencia, nascimento),
+  "causa_obito": string  (condicional: morte),
+  "sincronizado": boolean
+}</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">201</span> Created</td><td>Movimentação criada. Retorna o objeto criado.</td></tr>
+            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td><code>{ "error": "Campos obrigatórios não informados" }</code></td></tr>
+            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Campo inválido para o tipo informado.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /movimentacoes -->
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/movimentacoes</span>
+        <span class="endpoint-summary">Listar todas as movimentações</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Retorna todas as movimentações cadastradas. Quando parâmetros de filtro são informados (retiro, tipo, status, dataInicio, dataFim), executa o filtro automaticamente.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Query Parameters (opcionais — ativam filtro)</h4>
+          <table>
+            <tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+            <tr><td><code>retiro</code></td><td>number</td><td>ID do retiro</td></tr>
+            <tr><td><code>tipo</code></td><td>string</td><td>Tipo(s) separados por vírgula</td></tr>
+            <tr><td><code>status</code></td><td>string</td><td><code>pendente</code> | <code>validado</code></td></tr>
+            <tr><td><code>dataInicio</code></td><td>string (ISO)</td><td>Data de início do período</td></tr>
+            <tr><td><code>dataFim</code></td><td>string (ISO)</td><td>Data de fim do período</td></tr>
+          </table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de movimentações.</td></tr>
+            <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /movimentacoes/:id -->
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/movimentacoes/:id</span>
+        <span class="endpoint-summary">Buscar movimentação por ID</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Parâmetros de Rota</h4>
+          <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+          <tr><td><code>id</code></td><td>number</td><td>ID da movimentação</td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto da movimentação.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td><code>{ "error": "Movimentação não encontrada" }</code></td></tr>
+            <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATCH /movimentacoes/:id -->
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/movimentacoes/:id</span>
+        <span class="endpoint-summary">Atualizar movimentação</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <p>Campos parciais da movimentação. Apenas os campos informados são atualizados.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto atualizado.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Movimentação não encontrada.</td></tr>
+            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Erro de validação.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE /movimentacoes/:id -->
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-DELETE">DELETE</span>
+        <span class="endpoint-path">/movimentacoes/:id</span>
+        <span class="endpoint-summary">Remover movimentação</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">204</span> No Content</td><td>Removida com sucesso.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Movimentação não encontrada.</td></tr>
+            <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF002 ===== -->
+  <section class="rf-section" id="rf002">
+    <div class="rf-header">
+      <span class="rf-badge alta">RF002 — Alta</span>
+      <h2>Tarefas</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/tarefas</span>
+        <span class="endpoint-summary">Criar tarefa</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Cria uma nova tarefa atribuída a um usuário. Todos os campos são obrigatórios conforme RN02.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{
+  "usuario_id":  string  (obrigatório),
+  "descricao":   string  (obrigatório),
+  "prioridade":  "alta" | "media" | "baixa"  (obrigatório),
+  "categoria":   string  (obrigatório),
+  "status":      string
+}</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">201</span> Created</td><td>Tarefa criada.</td></tr>
+            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Campo obrigatório ausente.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas</span>
+        <span class="endpoint-summary">Listar todas as tarefas</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas.</td></tr>
+            <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/:id</span>
+        <span class="endpoint-summary">Buscar tarefa por ID</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto da tarefa.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Tarefa não encontrada.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/tarefas/:id</span>
+        <span class="endpoint-summary">Atualizar tarefa</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <p>Campos parciais a atualizar.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Tarefa atualizada.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Tarefa não encontrada.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/tarefas/:id/status</span>
+        <span class="endpoint-summary">Atualizar status da tarefa</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{ "status": "pendente" | "aprovado" }</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td>Status atualizado.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Tarefa não encontrada.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-DELETE">DELETE</span>
+        <span class="endpoint-path">/tarefas/:id</span>
+        <span class="endpoint-summary">Remover tarefa</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">204</span> No Content</td><td>Removida com sucesso.</td></tr>
+            <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Tarefa não encontrada.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/status/:status</span>
+        <span class="endpoint-summary">Listar tarefas por status</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Parâmetros de Rota</h4>
+          <table><tr><th>Parâmetro</th><th>Valores aceitos</th></tr>
+          <tr><td><code>status</code></td><td><code>pendente</code>, <code>aprovado</code></td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas filtradas.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/usuario/:usuarioId</span>
+        <span class="endpoint-summary">Listar tarefas por usuário</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas do usuário.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/prioridade/:prioridade</span>
+        <span class="endpoint-summary">Listar tarefas por prioridade</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Parâmetros de Rota</h4>
+          <table><tr><th>Parâmetro</th><th>Valores aceitos</th></tr>
+          <tr><td><code>prioridade</code></td><td><code>alta</code>, <code>media</code>, <code>baixa</code></td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas filtradas.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/categoria/:categoria</span>
+        <span class="endpoint-summary">Listar tarefas por categoria</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas da categoria.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/contagem/status</span>
+        <span class="endpoint-summary">Contar tarefas agrupadas por status</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto com totais por status.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF003 ===== -->
+  <section class="rf-section" id="rf003">
+    <div class="rf-header">
+      <span class="rf-badge alta">RF003 — Alta</span>
+      <h2>Sincronização Offline/Online</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/sincronizacao/conexao</span>
+        <span class="endpoint-summary">Detectar disponibilidade de conexão</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Verifica se existe conexão disponível com o servidor. O cliente usa essa rota para disparar sincronização automática conforme RN03.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Conexão disponível.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/sincronizacao</span>
+        <span class="endpoint-summary">Executar sincronização de dados pendentes</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Processa e persiste no servidor os dados armazenados localmente com <code>sincronizado = false</code>.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Sincronização concluída.</td></tr>
+          <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro durante sincronização.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/sincronizacao/status</span>
+        <span class="endpoint-summary">Obter status da sincronização</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto com status atual da sincronização.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/sincronizacao/mensagem</span>
+        <span class="endpoint-summary">Obter mensagem amigável do status</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Mensagem textual do estado de sincronização.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/movimentacoes/sincronizar</span>
+        <span class="endpoint-summary">Receber movimentação sincronizada do cliente offline</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Recebe um registro criado offline e o persiste no servidor marcado como <code>sincronizado = true</code>.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{
+  "retiro_id":   string UUID (obrigatório),
+  "capataz_id":  string (obrigatório),
+  "tipo":        string (obrigatório),
+  "estagio_vida": string (obrigatório),
+  "origem":      string,
+  "destino":     string,
+  "quantidade":  number,
+  "causa_obito": string
+}</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">201</span> Created</td><td>Registro sincronizado e criado.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Campo obrigatório ausente.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/movimentacoes/:id/sincronizar</span>
+        <span class="endpoint-summary">Marcar movimentação como sincronizada</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Atualiza a flag <code>sincronizado</code> de um registro existente para <code>true</code>.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Movimentação marcada como sincronizada.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Movimentação não encontrada.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF004 ===== -->
+  <section class="rf-section" id="rf004">
+    <div class="rf-header">
+      <span class="rf-badge alta">RF004 — Alta</span>
+      <h2>Evidências</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/evidencias</span>
+        <span class="endpoint-summary">Listar todas as evidências</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de evidências.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/evidencias/:id</span>
+        <span class="endpoint-summary">Buscar evidência por ID</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto da evidência.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Evidência não encontrada.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/evidencias/mensagens</span>
+        <span class="endpoint-summary">Criar evidência de mensagem escrita</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Anexa uma mensagem escrita como evidência descritiva a uma tarefa, movimentação ou ticket. Obrigatório para abertura de tickets conforme RN08.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">201</span> Created</td><td>Evidência criada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Dados inválidos.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/evidencias/audios</span>
+        <span class="endpoint-summary">Criar evidência de áudio</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">201</span> Created</td><td>Evidência criada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Dados inválidos.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/evidencias/fotos</span>
+        <span class="endpoint-summary">Criar evidência de foto georreferenciada</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Valida georreferenciamento (latitude −90 a +90, longitude −180 a +180) antes de persistir. Rejeita com 400 caso os metadados sejam inválidos ou ausentes, conforme RN04.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">201</span> Created</td><td>Foto salva com georreferenciamento válido.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td><code>"Foto rejeitada: georreferenciamento inválido ou ausente"</code></td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF005 ===== -->
+  <section class="rf-section" id="rf005">
+    <div class="rf-header">
+      <span class="rf-badge alta">RF005 — Alta</span>
+      <h2>Autenticação</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/usuarios/login</span>
+        <span class="endpoint-summary">Autenticar usuário e obter token JWT</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Valida login e senha do usuário. Retorna o token JWT utilizado por todas as rotas protegidas. Capataz não recebe token por este endpoint (acesso de campo é por outro fluxo), conforme RN05/RN06.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{
+  "login": string (obrigatório),
+  "senha": string (obrigatório)
+}</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table>
+            <tr><th>Status</th><th>Descrição</th></tr>
+            <tr><td><span class="status-chip s-2">200</span> OK</td><td><pre>{ "usuario": { ...dados sem senha_hash }, "token": "JWT..." }</pre></td></tr>
+            <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Login ou senha ausentes.</td></tr>
+            <tr><td><span class="status-chip s-4">401</span> Unauthorized</td><td>Credenciais inválidas.</td></tr>
+            <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Usuário inativo ou perfil Capataz.</td></tr>
+            <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF006 ===== -->
+  <section class="rf-section" id="rf006">
+    <div class="rf-header">
+      <span class="rf-badge media">RF006 — Média</span>
+      <h2>Validações</h2>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+      <span class="auth-required">Requer JWT + cargo <strong>supervisor</strong></span>
+    </p>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/validacoes/permissao</span>
+        <span class="endpoint-summary">Verificar se usuário pode validar registros</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Usuário tem permissão.</td></tr>
+          <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Sem permissão.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/validacoes/movimentacoes/:id/validar</span>
+        <span class="endpoint-summary">Validar movimentação pendente</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Altera status da movimentação para <code>validado</code>. Restrito a perfil Supervisor conforme RN06.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Movimentação validada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Movimentação não encontrada, já validada ou violação de regra.</td></tr>
+          <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/validacoes/tarefas/:id/aprovar</span>
+        <span class="endpoint-summary">Aprovar tarefa</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Tarefa aprovada.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Tarefa não encontrada, já aprovada ou violação de regra.</td></tr>
+          <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/validacoes/tickets/:id/aprovar</span>
+        <span class="endpoint-summary">Aprovar ticket de infraestrutura</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Ticket aprovado.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Ticket não encontrado, já aprovado ou violação de regra.</td></tr>
+          <tr><td><span class="status-chip s-4">403</span> Forbidden</td><td>Cargo não autorizado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF007 ===== -->
+  <section class="rf-section" id="rf007">
+    <div class="rf-header">
+      <span class="rf-badge media">RF007 — Média</span>
+      <h2>Relatórios</h2>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+      <span class="auth-required">Requer JWT + cargo <strong>gerente</strong> ou <strong>supervisor</strong></span> — Apenas dados com <code>sincronizado = true</code> são incluídos (RN07).
+    </p>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/relatorios/movimentacoes/dados</span>
+        <span class="endpoint-summary">Dados brutos de movimentações para relatório</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de movimentações sincronizadas.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/relatorios/tarefas/dados</span>
+        <span class="endpoint-summary">Dados brutos de tarefas para relatório</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas sincronizadas.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/relatorios/movimentacoes</span>
+        <span class="endpoint-summary">Relatório de movimentações formatado para planilha</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Dados formatados para exportação (.xlsx / .csv).</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/relatorios/semanal</span>
+        <span class="endpoint-summary">Gerar relatório semanal consolidado</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Relatório semanal pronto para exportação.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/relatorios/mensal</span>
+        <span class="endpoint-summary">Gerar relatório mensal consolidado</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Relatório mensal pronto para exportação.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/sincronizacao/relatorios/movimentacoes</span>
+        <span class="endpoint-summary">Movimentações sincronizadas para relatório</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de movimentações com <code>sincronizado = true</code>.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/sincronizacao/relatorios/tarefas</span>
+        <span class="endpoint-summary">Tarefas sincronizadas para relatório</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tarefas com <code>sincronizado = true</code>.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF008 ===== -->
+  <section class="rf-section" id="rf008">
+    <div class="rf-header">
+      <span class="rf-badge media">RF008 — Média</span>
+      <h2>Tickets de Infraestrutura</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/tickets</span>
+        <span class="endpoint-summary">Abrir ticket de infraestrutura</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Cria um ticket de infraestrutura. Exige ao menos uma evidência descritiva (mensagem ou áudio) e o campo <code>prioridade</code> obrigatoriamente informado, conforme RN08 e RN11.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">201</span> Created</td><td>Ticket aberto.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Evidência descritiva ausente ou prioridade não informada.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets</span>
+        <span class="endpoint-summary">Listar todos os tickets</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tickets.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets/pendentes</span>
+        <span class="endpoint-summary">Listar tickets pendentes de aprovação</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tickets com status pendente.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets/status</span>
+        <span class="endpoint-summary">Listar tickets por status</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Query Parameters</h4>
+          <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+          <tr><td><code>status</code></td><td>string</td><td>Status desejado</td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tickets filtrados.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets/categoria</span>
+        <span class="endpoint-summary">Listar tickets por categoria</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tickets da categoria.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets/:id</span>
+        <span class="endpoint-summary">Buscar ticket por ID</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto do ticket.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Ticket não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/tickets/:id/status</span>
+        <span class="endpoint-summary">Atualizar status do ticket</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{ "novoStatus": "pendente" | "aprovado" }</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Status atualizado.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Ticket não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/tickets/:id/atribuicao</span>
+        <span class="endpoint-summary">Atribuir ticket a um usuário</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{ "usuarioId": string }</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Ticket atribuído.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Ticket não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF009 ===== -->
+  <section class="rf-section" id="rf009">
+    <div class="rf-header">
+      <span class="rf-badge media">RF009 — Média</span>
+      <h2>Filtros de Movimentações</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/movimentacoes/filtrar</span>
+        <span class="endpoint-summary">Filtrar movimentações com critérios específicos</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Rota dedicada ao filtro de validação do Supervisor, conforme RN09. Permite seleção múltipla de tipos e status, mas apenas um retiro por vez. Quando nenhum status é informado, retorna <code>pendente</code> por padrão.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Query Parameters</h4>
+          <table>
+            <tr><th>Parâmetro</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr>
+            <tr><td><code>retiro</code></td><td>number</td><td>Sim</td><td>ID do retiro</td></tr>
+            <tr><td><code>tipo</code></td><td>string(s) separados por vírgula</td><td>Não</td><td>nascimento, morte, transferencia, compra, venda</td></tr>
+            <tr><td><code>status</code></td><td>string(s) separados por vírgula</td><td>Não</td><td>pendente, validado (default: pendente)</td></tr>
+            <tr><td><code>dataInicio</code></td><td>string (ISO 8601)</td><td>Não</td><td>Início do período</td></tr>
+            <tr><td><code>dataFim</code></td><td>string (ISO 8601)</td><td>Não</td><td>Fim do período (inclui horário 23:59:59)</td></tr>
+          </table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de movimentações filtradas.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Retiro ausente ou data inválida.</td></tr>
+          <tr><td><span class="status-chip s-5">500</span> Internal Server Error</td><td>Erro interno.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/movimentacoes/pendentes</span>
+        <span class="endpoint-summary">Listar movimentações pendentes de validação</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Query Parameters (opcional)</h4>
+          <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+          <tr><td><code>retiroId</code></td><td>string UUID</td><td>Filtrar por retiro específico</td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de movimentações com status pendente.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF010 ===== -->
+  <section class="rf-section" id="rf010">
+    <div class="rf-header">
+      <span class="rf-badge media">RF010 — Média</span>
+      <h2>Dashboard do Gerente</h2>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+      Inclui apenas registros com <code>sincronizado = true</code> e status <code>validado</code> / <code>aprovado</code>, conforme RN10.
+    </p>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/movimentacoes/dashboard</span>
+        <span class="endpoint-summary">Dados de movimentações para o dashboard</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Query Parameters (opcional)</h4>
+          <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+          <tr><td><code>retiroId</code></td><td>string UUID</td><td>Segmentar por retiro específico</td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Indicadores consolidados de movimentações validadas e sincronizadas.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/movimentacoes/contagem/tipo</span>
+        <span class="endpoint-summary">Contar movimentações agrupadas por tipo</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto com total por tipo de movimentação.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tarefas/dashboard</span>
+        <span class="endpoint-summary">Dados de tarefas para o dashboard</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Indicadores consolidados de tarefas aprovadas.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/sincronizacao/dashboard/tickets</span>
+        <span class="endpoint-summary">Tickets sincronizados para o dashboard</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Dados de tickets aprovados e sincronizados.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets/contagem/prioridade</span>
+        <span class="endpoint-summary">Contar tickets agrupados por prioridade</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto com total por prioridade (alta, media, baixa).</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RF011 ===== -->
+  <section class="rf-section" id="rf011">
+    <div class="rf-header">
+      <span class="rf-badge alta">RF011 — Alta</span>
+      <h2>Prioridade de Tickets</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/tickets/prioridade</span>
+        <span class="endpoint-summary">Listar tickets por prioridade</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Query Parameters</h4>
+          <table><tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+          <tr><td><code>prioridade</code></td><td>string</td><td><code>alta</code>, <code>media</code> ou <code>baixa</code></td></tr></table>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de tickets filtrados por prioridade.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/tickets/:id/prioridade</span>
+        <span class="endpoint-summary">Alterar prioridade de um ticket existente</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Descrição</h4>
+          <p>Permite reorganização da demanda operacional alterando a prioridade após a criação do ticket, conforme RN11.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{ "prioridade": "alta" | "media" | "baixa" }</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Prioridade atualizada.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Ticket não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== USUÁRIOS ===== -->
+  <section class="rf-section" id="usuarios">
+    <div class="rf-header">
+      <h2>Gestão de Usuários</h2>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+      <span class="auth-required">Requer JWT + cargo <strong>gerente</strong></span> (exceto <code>POST /usuarios/login</code>)
+    </p>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-POST">POST</span>
+        <span class="endpoint-path">/usuarios</span>
+        <span class="endpoint-summary">Criar novo usuário</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Body (application/json)</h4>
+          <pre>{
+  "retiro_id": string UUID  (obrigatório),
+  "nome":      string  (obrigatório),
+  "login":     string  (obrigatório),
+  "senha_hash": string (obrigatório),
+  "status":    string  (obrigatório),
+  "cargo":     "capataz" | "supervisor" | "gerente"  (obrigatório)
+}</pre>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">201</span> Created</td><td>Usuário criado (sem senha_hash na resposta).</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>Campo obrigatório ausente.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/usuarios</span>
+        <span class="endpoint-summary">Listar todos os usuários</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de usuários (sem senha_hash).</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/usuarios/:id</span>
+        <span class="endpoint-summary">Buscar usuário por ID</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Objeto do usuário (sem senha_hash).</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Usuário não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/usuarios/retiro/:retiroId</span>
+        <span class="endpoint-summary">Listar usuários vinculados a um retiro</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Array de usuários do retiro.</td></tr>
+          <tr><td><span class="status-chip s-4">400</span> Bad Request</td><td>retiroId inválido.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-PATCH">PATCH</span>
+        <span class="endpoint-path">/usuarios/:id</span>
+        <span class="endpoint-summary">Atualizar dados do usuário</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td>Usuário atualizado.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Usuário não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-DELETE">DELETE</span>
+        <span class="endpoint-path">/usuarios/:id</span>
+        <span class="endpoint-summary">Remover usuário</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">204</span> No Content</td><td>Removido com sucesso.</td></tr>
+          <tr><td><span class="status-chip s-4">404</span> Not Found</td><td>Usuário não encontrado.</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SISTEMA ===== -->
+  <section class="rf-section" id="sistema">
+    <div class="rf-header">
+      <h2>Sistema</h2>
+    </div>
+
+    <div class="endpoint-card" onclick="toggle(this)">
+      <div class="endpoint-header">
+        <span class="method-badge method-GET">GET</span>
+        <span class="endpoint-path">/health</span>
+        <span class="endpoint-summary">Verificar saúde da aplicação</span>
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="endpoint-body">
+        <div class="detail-section">
+          <h4>Autenticação</h4>
+          <span class="auth-none">Nenhuma</span>
+        </div>
+        <div class="detail-section">
+          <h4>Respostas</h4>
+          <table><tr><th>Status</th><th>Descrição</th></tr>
+          <tr><td><span class="status-chip s-2">200</span> OK</td><td><pre>{ "status": "ok" }</pre></td></tr></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function toggle(card) {
+    card.classList.toggle('open')
+  }
+
+  function filterEndpoints(query) {
+    const q = query.toLowerCase().trim()
+    document.querySelectorAll('.endpoint-card').forEach(card => {
+      const text = card.textContent.toLowerCase()
+      card.classList.toggle('hidden', q.length > 0 && !text.includes(q))
+    })
+    document.querySelectorAll('.rf-section').forEach(section => {
+      const visible = [...section.querySelectorAll('.endpoint-card')].some(c => !c.classList.contains('hidden'))
+      section.classList.toggle('hidden', q.length > 0 && !visible)
+    })
+  }
+</script>
+</body>
+</html>

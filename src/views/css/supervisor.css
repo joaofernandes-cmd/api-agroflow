@@ -1,0 +1,1127 @@
+/* =============================================================
+   supervisor.css — Estilos exclusivos do Supervisor
+   Depende de: global.css + base.css
+   ============================================================= */
+
+/* Conteúdo scrollável da home */
+.home-content {
+  flex: 1;
+  padding: 16px 16px 0;
+  overflow-y: auto;
+}
+
+/* Títulos de seção da home maiores ("Acesso rápido", "Operações
+   de campo", "Atividade recente") — escopado à home p/ não afetar
+   o formulário de delegar. */
+.home-content .section__title,
+.desktop-content .section__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+@media (min-width: 768px) {
+  .desktop-content .section__title { font-size: 22px; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   HOME — Grade de blocos (mesmo visual dos cards de ação do app:
+   ícone de linha em quadrado colorido + título + descrição,
+   conteúdo centralizado). Mobile 2x2; desktop preenche a largura.
+   ════════════════════════════════════════════════════════════ */
+.tile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  text-decoration: none;
+  min-height: 160px;
+  padding: 28px 16px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 22px;
+  color: var(--color-text);
+  box-shadow: 0 12px 26px -20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+.tile:hover  { box-shadow: 0 16px 30px -18px rgba(0, 0, 0, 0.45); }
+.tile:active { transform: scale(0.98); }
+
+/* Quadrado do ícone (cor sólida + ícone de linha branco via currentColor) */
+.tile__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+.tile--yellow .tile__icon { background: #d99a00; }
+.tile--red    .tile__icon { background: #ff3b30; }
+.tile--blue   .tile__icon { background: #3d7da6; }
+.tile--green  .tile__icon { background: var(--color-primary); }
+.tile--teal   .tile__icon { background: #0e7c86; }
+
+.tile__text { display: flex; flex-direction: column; gap: 4px; }
+.tile__name { font-size: 16px; font-weight: 700; line-height: 1.2; }
+.tile__sub  { font-size: 12.5px; color: var(--color-muted); line-height: 1.35; }
+
+/* ════════════════════════════════════════════════════════════
+   HOME — "Precisa da sua atenção": pendências priorizadas que
+   o supervisor pode resolver direto da home (atalho de ação).
+   ════════════════════════════════════════════════════════════ */
+.section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section__head .section__title { margin-bottom: 0; }
+.section__count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 14px 0;
+  margin-bottom: 10px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 10px 24px -20px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.15s, transform 0.1s;
+}
+.task-row:hover  { box-shadow: 0 14px 28px -18px rgba(0, 0, 0, 0.4); }
+.task-row:active { transform: scale(0.99); }
+
+.task-row__accent { width: 5px; align-self: stretch; flex-shrink: 0; }
+.task-row--alta  .task-row__accent { background: #ff3b30; }
+.task-row--media .task-row__accent { background: #d99a00; }
+.task-row--baixa .task-row__accent { background: #2f7d34; }
+
+.task-row__body { flex: 1; min-width: 0; padding-left: 14px; }
+.task-row__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+.task-row__head .prioridade-badge { margin-right: 0; }
+.task-row__type {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.task-row__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.task-row__meta {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin-top: 2px;
+}
+
+/* Prazo da tarefa delegada (lado direito) */
+.task-row__due {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+.task-row__due-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+.task-row__due-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+/* Estado vazio (nenhuma tarefa pendente) */
+.atencao-vazio {
+  padding: 20px 16px;
+  background: var(--color-white);
+  border: 1px dashed var(--color-border);
+  border-radius: 14px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* Desktop: atenção em 2 colunas para não esticar a linha toda */
+@media (min-width: 768px) {
+  .atencao-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .atencao-list .task-row { margin-bottom: 0; }
+}
+
+/* Desktop: blocos maiores e em linha (preenchem a largura, centralizados) */
+@media (min-width: 768px) {
+  .tile-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .tile { min-height: 180px; padding: 32px 18px; }
+  .tile__icon { width: 70px; height: 70px; }
+  .tile__name { font-size: 17px; }
+  .tile__sub  { font-size: 13px; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   TAREFA DELEGADA — Preview read-only (o que o supervisor criou)
+   ════════════════════════════════════════════════════════════ */
+.preview {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.4);
+  padding: 0 18px 18px;
+  margin-bottom: 24px;
+}
+
+.preview__head {
+  display: flex;
+  gap: 14px;
+  padding: 18px 0 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.preview__accent {
+  width: 5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+.preview__accent--alta  { background: #ff3b30; }
+.preview__accent--media { background: #d99a00; }
+.preview__accent--baixa { background: #2f7d34; }
+
+.preview__head-body { flex: 1; min-width: 0; }
+.preview__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+.preview__sub { font-size: 13px; color: var(--color-muted); margin-top: 3px; }
+.preview__badges { display: flex; gap: 8px; margin-top: 10px; }
+.preview__badges .prioridade-badge { margin-right: 0; }
+
+.preview__info { margin: 0; padding: 6px 0 0; }
+.preview__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.preview__label { font-size: 13px; color: var(--color-muted); }
+.preview__value {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: right;
+}
+
+.preview__desc { padding-top: 16px; }
+.preview__desc-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+.preview__desc-text { font-size: 14px; line-height: 1.55; color: var(--color-text); }
+
+.preview__nota {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  background: rgba(217, 154, 0, 0.08);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+.preview__nota svg { color: #d99a00; flex-shrink: 0; margin-top: 1px; }
+
+/* Voltar (desktop) + largura do preview */
+.preview-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+.preview-back:hover { color: var(--color-text); }
+.preview-wrap { max-width: 640px; }
+
+/* ════════════════════════════════════════════════════════════
+   DELEGAR TAREFA — Campos de formulário (mobile + desktop)
+   ════════════════════════════════════════════════════════════ */
+
+/* Área de conteúdo mobile com scroll */
+.form-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 0;
+}
+
+.delegate-form { display: flex; flex-direction: column; }
+
+/* Campo */
+.dfield { margin-bottom: 18px; }
+
+.dfield__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+
+.dfield__label--dark { color: var(--color-text); font-size: 13px; }
+
+/* Select */
+.dfield__select-wrap { position: relative; }
+.dfield__select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-muted);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.dfield__select {
+  width: 100%;
+  height: 50px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-muted);
+  padding: 0 36px 0 16px;
+  outline: none;
+  appearance: none;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+.dfield__select:focus { border-color: var(--color-primary); }
+.dfield__select--has-value { color: var(--color-text); }
+
+.dfield__select option { color: var(--color-text); }
+.dfield__select option[disabled] { color: var(--color-muted); }
+
+.dfield__select--desktop {
+  height: 48px;
+  border-radius: 10px;
+  color: #b3b3b3;
+}
+.dfield__select--desktop.dfield__select--has-value { color: var(--color-text); }
+
+/* Textarea */
+.dfield__textarea {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  padding: 12px 16px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s;
+  line-height: 1.5;
+}
+.dfield__textarea::placeholder { color: var(--color-muted); }
+.dfield__textarea:focus { border-color: var(--color-primary); }
+
+.dfield__textarea--desktop {
+  border-radius: 10px;
+  min-height: 100px;
+}
+
+/* Campo de texto livre (ex.: "Outro" na atividade da delegação) */
+.dfield__input {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.dfield__input::placeholder { color: var(--color-muted); }
+.dfield__input:focus { border-color: var(--color-primary); }
+.dfield__input--desktop { border-radius: 10px; }
+
+/* Botão enviar mobile */
+.btn--enviar {
+  height: 56px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ════════════════════════════════════════════════════════════
+   DELEGAR TAREFA — Desktop
+   ════════════════════════════════════════════════════════════ */
+.delegar-grid {
+  display: grid;
+  grid-template-columns: 1fr 500px;
+  gap: 32px;
+  align-items: start;
+}
+
+.delegar-form-col  { display: flex; flex-direction: column; }
+.delegar-tarefas-col { display: flex; flex-direction: column; }
+
+/* Campo desktop */
+.dfield--desktop { margin-bottom: 20px; }
+
+/* Botão enviar desktop */
+.btn--enviar-desktop {
+  width: 100%;
+  height: 52px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  margin-top: 4px;
+}
+
+/* Cards de tarefas ativas */
+.tarefa-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+  border-radius: 4px 12px 12px 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 8px;
+  min-height: 76px;
+  overflow: hidden;
+}
+
+.tarefa-card__accent {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 12px 0 0 12px;
+  flex-shrink: 0;
+}
+.tarefa-card__accent--red    { background: #ff3b30; }
+.tarefa-card__accent--yellow { background: #d99a00; }
+.tarefa-card__accent--blue   { background: #3d7da6; }
+
+.tarefa-card__body {
+  flex: 1;
+  padding: 12px 16px;
+}
+
+.tarefa-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tarefa-card__meta {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin-top: 4px;
+}
+
+/* Badges de prioridade */
+.prioridade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.prioridade-badge--alta   { background: #ffe6e5; color: #ff3b30; }
+.prioridade-badge--media  { background: #faf0d9; color: #d99a00; }
+.prioridade-badge--baixa  { background: #dcf3e1; color: #2f7d34; }
+.prioridade-badge--critica { background: #fce8e8; color: #c0392b; }
+
+/* Seletor visual de prioridade (botões coloridos) */
+.prio-seletor { display: flex; flex-wrap: wrap; gap: 8px; }
+.prio-opcao {
+  flex: 1;
+  min-width: 70px;
+  padding: 10px 8px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.prio-opcao--alta    { background: #ffe3e1; color: #c0392b; }
+.prio-opcao--media   { background: #fff3cf; color: #a9791c; }
+.prio-opcao--baixa   { background: #dcf3e1; color: #2f7d34; }
+.prio-opcao--critica { background: #f3d6d6; color: #8a1c1c; }
+.prio-opcao--ativo.prio-opcao--alta    { background: #ff3b30; color: #fff; border-color: #c0392b; }
+.prio-opcao--ativo.prio-opcao--media   { background: #f0ad00; color: #fff; border-color: #a9791c; }
+.prio-opcao--ativo.prio-opcao--baixa   { background: #22a855; color: #fff; border-color: #2f7d34; }
+.prio-opcao--ativo.prio-opcao--critica { background: #8a1c1c; color: #fff; border-color: #5e1010; }
+
+/* ════════════════════════════════════════════════════════════
+   REVISÃO DE TAREFAS — Barra de busca + badge (mobile + desktop)
+   ════════════════════════════════════════════════════════════ */
+
+/* Barra de busca mobile */
+.revisao-filter-bar {
+  background: var(--color-white);
+  border-bottom: 0.5px solid var(--color-border);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.revisao-search-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.revisao-search-icon { color: var(--color-muted); flex-shrink: 0; }
+
+.revisao-search {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+}
+.revisao-search::placeholder { color: var(--color-muted); }
+
+.tickets-search {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+}
+.tickets-search::placeholder { color: var(--color-muted); }
+
+/* Badge pendentes */
+.revisao-badge-pendentes {
+  background: rgba(217, 154, 0, 0.15);
+  color: #d99a00;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   REVISÃO DE TAREFAS — Lista mobile
+   ════════════════════════════════════════════════════════════ */
+.revisao-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px 0;
+}
+
+/* Card de revisão mobile */
+.rev-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+  border-radius: 4px 16px 16px 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 8px;
+  min-height: 76px;
+  overflow: hidden;
+}
+
+.rev-card__accent {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 16px 0 0 16px;
+  flex-shrink: 0;
+  background: #d99a00;
+}
+
+.rev-card__body {
+  flex: 1;
+  padding: 12px 12px;
+}
+
+.rev-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.rev-card__meta {
+  font-size: 11px;
+  color: var(--color-muted);
+  margin-top: 4px;
+}
+
+/* Badges de status */
+.rev-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rev-badge--pendente  { background: rgba(217,154,0,0.15); color: #d99a00; }
+.rev-badge--concluido { background: #d1fae5; color: #059669; }
+
+.rev-card--concluido .rev-card__accent { background: #059669; }
+
+/* Badges da tabela desktop */
+.badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 11px; white-space: nowrap; min-width: 80px; text-align: center; display: inline-block; box-sizing: border-box; }
+.badge--yellow { background: #faf0d9; color: #d99a00; }
+.badge--green  { background: #d1fae5; color: #059669; }
+.badge--cinza  { background: #eef0ee; color: #6b7280; }
+
+/* Pill de status dentro da vara mobile (sem a largura mínima da tabela) */
+.pend-head .badge { min-width: 0; flex-shrink: 0; }
+
+/* Check da tabela desktop clicável */
+.revisao-table td .check-img { cursor: pointer; }
+
+/* Botão de check */
+.rev-card__check {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   REVISÃO DE TAREFAS — Desktop
+   ════════════════════════════════════════════════════════════ */
+
+/* Barra de busca desktop (abaixo do topbar) */
+.revisao-filter-bar-desktop {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.revisao-search-wrap-desktop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  height: 36px;
+  padding: 0 12px;
+  width: 400px;
+}
+
+.revisao-search-desktop {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+}
+.revisao-search-desktop::placeholder { color: var(--color-muted); }
+
+.revisao-badge-pendentes--desktop {
+  font-size: 11px;
+  padding: 4px 14px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+}
+
+/* Conteúdo sem padding extra */
+.revisao-desktop-content { padding: 0 !important; }
+
+/* ── Cabeçalho das listas (título + subtítulo centralizados) ── */
+.lista-secao { margin-bottom: 22px; }
+.lista-secao__titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+}
+.lista-secao__sub {
+  margin: 3px 0 14px;
+  font-size: 12.5px;
+  color: var(--color-muted);
+  text-align: center;
+}
+/* Mensagem de estado vazio centralizada */
+.concluidas-capataz > p { text-align: center; }
+
+/* No desktop a tabela vai de ponta a ponta; os cabeçalhos das seções
+   recebem respiro lateral para alinhar com a barra de busca. */
+.revisao-desktop-content .lista-secao { padding: 16px 32px 0; margin-bottom: 8px; }
+
+/* ════════════════════════════════════════════════════════════
+   PENDENTES DE REVISÃO — varas (mobile): nome + Validar + setinha
+   que abre as informações da tarefa.
+   ════════════════════════════════════════════════════════════ */
+.pend-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.pend-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px 11px 14px;
+}
+.pend-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pend-head .btn-revisar { flex-shrink: 0; min-width: 0; }
+.pend-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+}
+.pend-toggle svg { transition: transform 0.2s; }
+.pend-item.is-open .pend-toggle svg { transform: rotate(180deg); }
+
+.pend-panel { display: none; }
+.pend-item.is-open .pend-panel { display: block; }
+.pend-panel__inner { padding: 0 14px 14px; border-top: 1px solid var(--color-border); }
+.pend-info { margin: 12px 0 0; font-size: 13px; line-height: 1.7; color: var(--color-muted); text-align: center; }
+.pend-info strong { color: var(--color-text); font-weight: 600; }
+
+/* "Ver mais" na tabela do desktop + linha de detalhe (descrição + evidência) */
+.ver-mais {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+.ver-mais svg { transition: transform 0.2s; }
+.ver-mais[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.pend-detalhe td {
+  padding: 0 !important;
+  text-align: center;
+  background: #fafbf9;
+}
+.pend-detalhe__inner { padding: 6px 32px 18px; }
+
+/* Tabela — cada linha é um card arredondado (mesmo padrão das varas) */
+.revisao-table-wrap {
+  background: transparent;
+  overflow-x: auto;
+}
+
+.revisao-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;   /* respiro vertical → cada linha vira um card */
+  font-size: 13px;
+}
+
+/* Cabeçalho: só os rótulos das colunas, sem bloco */
+.revisao-table thead tr {
+  background: transparent;
+}
+
+.revisao-table thead th {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-align: center;
+  padding: 4px 16px;
+  white-space: nowrap;
+}
+
+/* Colunas de check/ação um pouco mais estreitas */
+.revisao-table tbody td:nth-child(5),
+.revisao-table tbody td:nth-child(6),
+.revisao-table tbody td:nth-child(7) { padding: 0 8px; }
+
+/* Altura compacta — igual às varas de validados */
+.revisao-table tbody tr {
+  height: 48px;
+}
+
+/* Cada célula compõe o card branco arredondado da linha */
+.revisao-table tbody td {
+  padding: 0 16px;
+  color: var(--color-muted);
+  text-align: center;
+  vertical-align: middle;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Pontas arredondadas da linha */
+.revisao-table tbody td:first-child {
+  border-left: 1px solid var(--color-border);
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+.revisao-table tbody td:last-child {
+  border-right: 1px solid var(--color-border);
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.revisao-table tbody td.td--bold {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Botão Revisar */
+.btn-revisar {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  min-width: 80px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-revisar:hover { opacity: 0.88; }
+/* Validar bloqueado: tarefa ainda não realizada pelo capataz */
+.btn-revisar:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TICKETS — Filtro mobile
+   ════════════════════════════════════════════════════════════ */
+.tickets-filter-bar {
+  background: var(--color-white);
+  border-bottom: 0.5px solid var(--color-border);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.tickets-filter-label {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.tickets-badge-ativos {
+  background: rgba(217, 154, 0, 0.15);
+  color: #d99a00;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 11px;
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TICKETS — Lista mobile
+   ════════════════════════════════════════════════════════════ */
+.tickets-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px 0;
+}
+
+.ticket-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+  border-radius: 4px 16px 16px 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 8px;
+  min-height: 76px;
+  overflow: hidden;
+}
+
+.ticket-card__accent {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 16px 0 0 16px;
+  flex-shrink: 0;
+}
+.ticket-card__accent--red    { background: #ff3b30; }
+.ticket-card__accent--yellow { background: #d99a00; }
+.ticket-card__accent--blue   { background: #3d7da6; }
+.ticket-card__accent--green  { background: #059669; }
+
+.ticket-card__body {
+  flex: 1;
+  padding: 12px 12px;
+}
+
+.ticket-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ticket-card__meta {
+  font-size: 11px;
+  color: var(--color-muted);
+  margin-top: 4px;
+}
+
+/* Badges de severidade */
+.sev-badge {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.sev-badge--alta   { background: rgba(255,59,48,0.15);  color: #ff3b30; }
+.sev-badge--media  { background: rgba(217,154,0,0.15);  color: #d99a00; }
+.sev-badge--baixa  { background: rgba(61,125,166,0.15); color: #3d7da6; }
+
+/* Espaçamento do botão Validar e do selo dentro do card de ticket */
+.ticket-card .sev-badge { margin-right: 10px; }
+.ticket-card .btn-revisar { flex-shrink: 0; margin-right: 12px; }
+.ticket-card .rev-badge { flex-shrink: 0; margin-right: 14px; }
+
+/* Estado vazio da seção "Validados" */
+#tickets-validados:empty::after {
+  content: 'Nenhum ticket validado ainda.';
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-muted);
+  padding: 4px 0 8px;
+}
+.td--vazio { text-align: center; color: var(--color-muted); font-size: 13px; padding: 16px !important; }
+
+.ticket-card__check {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TICKETS — Desktop (herda estilos da revisão + extras)
+   ════════════════════════════════════════════════════════════ */
+.tickets-filter-bar-desktop {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.tickets-badge-ativos--desktop {
+  font-size: 11px;
+  height: 28px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+}
+
+/* Accent na tabela (coluna estreita colorida) */
+.td--accent {
+  width: 3px;
+  padding: 0 !important;
+}
+.td--accent-red    { background: #ff3b30; }
+.td--accent-yellow { background: #d99a00; }
+.td--accent-blue   { background: #3d7da6; }
+
+/* Badges extras para tickets */
+.badge--red-soft { background: #ffe6e5; color: #ff3b30; }
+.badge--blue     { background: #e0eef5; color: #3d7da6; }
+.badge--green    { background: #e0f5e5; color: #1f803e; }
+
+/* Botão Atender */
+.btn-atender {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-atender:hover { opacity: 0.88; }
+
+.btn-validar {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  min-width: 96px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-validar:hover { opacity: 0.88; }
+
+.btn-confirmado {
+  background: var(--color-border);
+  color: var(--color-muted);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  min-width: 96px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-confirmado:hover { opacity: 0.85; }
+
+/* Botão Ver (resolvido — cinza) */
+.btn-ver {
+  background: var(--color-border);
+  color: var(--color-muted);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  height: 28px;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BottomNav do supervisor — 6 itens (inclui Movimentações)
+   Aperta um pouco para os 6 caberem bem em telas estreitas.
+   ════════════════════════════════════════════════════════════ */
+.layout-mobile .bottomnav__item { min-width: 0; flex: 1 1 0; padding: 0 2px; }
+.layout-mobile .bottomnav__item > span:last-child {
+  font-size: 9px;
+  line-height: 1.15;
+  text-align: center;
+  word-break: break-word;
+}
+.btn-ver:hover { opacity: 0.85; }

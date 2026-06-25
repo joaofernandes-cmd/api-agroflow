@@ -1,0 +1,376 @@
+<%- include('../partials/capataz-head', { titulo: 'Alow · Detalhe da Tarefa' }) %>
+
+<main class="celular">
+  <header class="cabecalho">
+    <div class="cabecalho__barra">
+      <a href="/capataz/tarefas" class="cabecalho__voltar" aria-label="Voltar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </a>
+      <span class="cabecalho__titulo">Detalhe da Tarefa</span>
+    </div>
+  </header>
+
+  <div class="conteudo">
+    <div class="detalhe-card">
+      <span class="detalhe-card__barra"></span>
+      <div class="detalhe-card__conteudo">
+        <div class="detalhe-card__titulo" id="tarefaTitulo"><%= tarefa.titulo %> — <%= tarefa.retiro %></div>
+        <div class="detalhe-card__autor" id="tarefaAutor"><%= tarefa.autor %></div>
+        <div class="detalhe-card__meta">
+          <span class="etiqueta etiqueta--<%= tarefa.classe %>" id="tarefaNivel"><%= tarefa.nivel %></span>
+          <span id="tarefaPrazo"><%= tarefa.prazo %></span>
+        </div>
+        <div class="detalhe-card__cat" id="tarefaCategoria"><%= tarefa.categoria %></div>
+      </div>
+    </div>
+
+    <div class="detalhe-linha">
+      <span class="detalhe-linha__rotulo">Retiro</span>
+      <span class="detalhe-linha__valor" id="tarefaRetiro"><%= tarefa.retiro %></span>
+    </div>
+    <div class="detalhe-linha">
+      <span class="detalhe-linha__rotulo">Data</span>
+      <span class="detalhe-linha__valor" id="tarefaData"><%= tarefa.data %></span>
+    </div>
+    <div class="detalhe-linha">
+      <span class="detalhe-linha__rotulo">Status</span>
+      <span class="detalhe-linha__valor" id="statusTarefa"><%= tarefa.statusRotulo %></span>
+    </div>
+    <div class="detalhe-linha">
+      <span class="detalhe-linha__rotulo">Supervisor</span>
+      <span class="detalhe-linha__valor" id="tarefaSupervisor"><%= tarefa.supervisor %></span>
+    </div>
+
+    <label class="detalhe-descricao-rotulo">Descrição</label>
+    <div class="detalhe-descricao" id="tarefaDescricao"><%= tarefa.descricao %></div>
+
+    <!-- Evidências já registradas (aparece quando a tarefa está concluída) -->
+    <div id="evidenciasSalvas" hidden style="margin-bottom: 12px;"></div>
+
+    <button type="button" class="btn-secundario" id="btnEvidencia" style="margin-bottom: 12px;">Anexar evidência</button>
+
+    <div id="painelEvidencia" hidden style="margin-bottom: 12px;">
+      <%- include('evidencia', { ns: 'ev' }) %>
+    </div>
+
+    <p id="evidenciaErro" class="evidencia-erro" hidden>Anexe uma evidência (foto, áudio ou texto) para marcar como concluída.</p>
+    <p id="tarefaSyncFeedback" class="evidencia-info" hidden></p>
+    <% var jaConcluida = tarefa.status !== 'pendente'; %>
+    <button type="button" class="btn-primario" id="btnConcluir" <%= jaConcluida ? 'disabled' : '' %>>
+      <%= tarefa.status === 'aprovado' ? 'Validada' : (jaConcluida ? 'Concluída' : 'Marcar como concluída') %>
+    </button>
+  </div>
+
+  <%- include('../partials/bottomnav-capataz', { ativa: 'tarefas' }) %>
+  <%- include('../partials/aviso-sucesso') %>
+</main>
+
+<script src="/js/aviso-sucesso.js"></script>
+<div id="dadosTarefa" hidden
+     data-titulo="<%= tarefa.titulo %>"
+     data-retiro="<%= tarefa.retiro %>"
+     data-supervisor="<%= tarefa.supervisor %>"
+     data-prioridade="<%= tarefa.classe %>"
+     data-descricao="<%= tarefa.descricao %>"
+     data-capataz-id="<%= capatazId %>"></div>
+<script>
+  var _el = document.getElementById('dadosTarefa');
+  var DADOS_TAREFA = {
+    id: new URLSearchParams(location.search).get('id') || '1',
+    titulo: _el.dataset.titulo,
+    retiro: _el.dataset.retiro,
+    supervisor: _el.dataset.supervisor,
+    prioridade: _el.dataset.prioridade,
+    descricao: _el.dataset.descricao
+  };
+
+  // Id real do capataz logado (vem do servidor, cookie de sessão). Usado só para
+  // nomear a pasta do upload no Supabase — o vínculo da evidência no banco é
+  // resolvido pelo servidor a partir do req.usuario autenticado.
+  var CAPATAZ_ID = _el.dataset.capatazId;
+
+  (function () {
+    var btnEvidencia = document.getElementById('btnEvidencia');
+    var painel = document.getElementById('painelEvidencia');
+    var evidenciaErro = document.getElementById('evidenciaErro');
+    var btnConcluir = document.getElementById('btnConcluir');
+    var status = document.getElementById('statusTarefa');
+    var listaEvidencia = document.getElementById('evLista');
+    var evidenciasSalvas = document.getElementById('evidenciasSalvas');
+    var syncFeedback = document.getElementById('tarefaSyncFeedback');
+
+    function evidenciasCapturadas() {
+      var api = window.__evidencias && window.__evidencias['ev'];
+      return api ? api.obter() : [];
+    }
+
+    // Prévia local (read-only) da evidência que o capataz acabou de capturar.
+    // Mostra só a primeira; foto/áudio via dataURL, texto como parágrafo.
+    function renderEvidenciaLocal(evidencias, container) {
+      container.textContent = '';
+      var ev = (evidencias || [])[0];
+      if (!ev) return;
+      var bloco = document.createElement('div');
+      bloco.className = 'evidencia-wrap';
+      if (ev.tipo === 'foto' && ev.dataUrl) {
+        var img = document.createElement('img');
+        img.className = 'evidencia-midia';
+        img.src = ev.dataUrl;
+        img.alt = 'Foto da evidência';
+        bloco.appendChild(img);
+      } else if (ev.tipo === 'audio' && ev.dataUrl) {
+        var audio = document.createElement('audio');
+        audio.className = 'evidencia-audio';
+        audio.controls = true;
+        audio.src = ev.dataUrl;
+        bloco.appendChild(audio);
+      } else if (ev.tipo === 'texto') {
+        var p = document.createElement('p');
+        p.className = 'evidencia-texto';
+        p.textContent = ev.conteudo || '';
+        bloco.appendChild(p);
+      }
+      container.appendChild(bloco);
+    }
+
+    // Mostra a tarefa como concluída + evidência capturada (read-only).
+    function mostrarConcluida(evidencias) {
+      if (status) status.textContent = 'Concluída';
+      if (btnConcluir) { btnConcluir.textContent = 'Concluída'; btnConcluir.disabled = true; }
+      if (btnEvidencia) btnEvidencia.style.display = 'none';
+      if (painel) painel.hidden = true;
+      if (evidenciaErro) evidenciaErro.hidden = true;
+      if (evidenciasSalvas && evidencias && evidencias.length) {
+        renderEvidenciaLocal(evidencias, evidenciasSalvas);
+        evidenciasSalvas.hidden = false;
+      }
+    }
+
+    // "Anexar evidência" mostra/esconde o painel com os 3 tipos.
+    if (btnEvidencia && painel) {
+      btnEvidencia.addEventListener('click', function () {
+        painel.hidden = !painel.hidden;
+      });
+    }
+
+    // Some com o erro assim que o capataz anexa qualquer evidência.
+    if (listaEvidencia) {
+      new MutationObserver(function () {
+        if (evidenciasCapturadas().length && evidenciaErro) evidenciaErro.hidden = true;
+      }).observe(listaEvidencia, { childList: true });
+    }
+
+    function gerarUuidLocal() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+      return '00000000-0000-4000-8000-' + String(Date.now()).slice(-12).padStart(12, '0');
+    }
+
+    function prioridadeApi(valor) {
+      return ['alta', 'media', 'baixa'].indexOf(valor) >= 0 ? valor : 'baixa';
+    }
+
+    function mostrarSync(msg) {
+      if (!syncFeedback) return;
+      syncFeedback.textContent = msg;
+      syncFeedback.hidden = false;
+    }
+
+    // Confirmação em tela cheia (o capataz precisa ver claramente que deu certo).
+    function mostrarSucessoTela(titulo, msg) {
+      if (!window.AvisoSucesso) { mostrarSync(msg); return; }
+      window.AvisoSucesso.mostrar(msg, {
+        titulo: titulo,
+        botaoTexto: 'Voltar para tarefas',
+        aoFechar: function () { window.location.href = '/capataz/tarefas'; },
+      });
+    }
+
+    // Versão da evidência para o localStorage: sem o Blob (não serializa em JSON).
+    function toEvidLocal(e) {
+      return { tipo: e.tipo, dataUrl: e.dataUrl, conteudo: e.conteudo, latitude: e.latitude, longitude: e.longitude };
+    }
+
+    // POST autenticado por cookie (a página do capataz já carrega o agroflow_token).
+    function postEvidencia(url, body) {
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }).then(function (resp) {
+        if (window.AgroFlowSession?.tratarResposta(resp)) {
+          throw new Error('Sessão expirada');
+        }
+        if (resp.ok) return resp.json().catch(function () { return {}; });
+        return resp.json().catch(function () { return {}; }).then(function (d) {
+          console.warn('Falha ao enviar evidência da tarefa', { status: resp.status, url: url });
+          throw new Error((d && d.error) || 'Não foi possível enviar a evidência. Tente novamente.');
+        });
+      });
+    }
+
+    // Sobe foto/áudio pro Supabase e posta cada evidência ligada à tarefa.
+    // O supervisor depois lê tudo por GET /evidencias/tarefa/:id.
+    async function enviarEvidenciasBackend(tarefaId, evidencias) {
+      var total = evidencias.length, enviadas = 0, aviso = '';
+      var temSupabase = !!window.__SUPABASE__;
+
+      for (var i = 0; i < evidencias.length; i++) {
+        var ev = evidencias[i];
+        try {
+          if (ev.tipo === 'texto') {
+            await postEvidencia('/evidencias/mensagens', {
+              conteudo: ev.conteudo, tarefa_id: tarefaId
+            });
+            enviadas++;
+          } else if (ev.tipo === 'foto') {
+            if (!temSupabase) { aviso = 'Não foi possível enviar foto ou áudio agora.'; continue; }
+            if (ev.latitude == null || ev.longitude == null) { aviso = 'A foto precisa ter localização para ser enviada.'; continue; }
+            var up = await window.AgroFlowCapataz.uploadBinary({ blob: ev.blob, mimeType: ev.mimeType || 'image/jpeg' }, CAPATAZ_ID, 'evidencias/foto');
+            await postEvidencia('/evidencias/fotos', {
+              urlArquivo: up.urlArquivo, latitude: ev.latitude, longitude: ev.longitude, tarefa_id: tarefaId
+            });
+            enviadas++;
+          } else if (ev.tipo === 'audio') {
+            if (!temSupabase) { aviso = 'Não foi possível enviar foto ou áudio agora.'; continue; }
+            var upA = await window.AgroFlowCapataz.uploadBinary({ blob: ev.blob, mimeType: ev.mimeType || 'audio/webm' }, CAPATAZ_ID, 'evidencias/audio');
+            await postEvidencia('/evidencias/audios', {
+              urlArquivo: upA.urlArquivo, duracao: ev.duracao || 3, tarefa_id: tarefaId
+            });
+            enviadas++;
+          }
+        } catch (e) {
+          console.warn('Falha ao sincronizar evidência da tarefa', e);
+          aviso = (e && e.message) ? e.message : 'Não foi possível enviar a evidência.';
+        }
+      }
+      return { total: total, enviadas: enviadas, aviso: aviso };
+    }
+
+    // Texto da descrição que o supervisor lê (a contagem reflete o que foi
+    // REALMENTE enviado ao backend, não só o que o capataz capturou).
+    function descricaoConclusao(qtdEvidencias) {
+      return 'Conclusao da tarefa "' + DADOS_TAREFA.titulo + '" no retiro ' +
+        DADOS_TAREFA.retiro + '. Evidencias anexadas: ' + qtdEvidencias + '.';
+    }
+
+    // Reverte a conclusão: a tarefa volta a ser 'pendente' (sem ficar como
+    // concluída sem evidência). Usa o endpoint de status (permitido ao capataz).
+    function reverterParaPendente(tarefaId) {
+      return fetch('/tarefas/' + encodeURIComponent(tarefaId) + '/status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'pendente' })
+      }).then(function (resp) {
+        if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
+        return resp.ok;
+      }).catch(function () { return false; });
+    }
+
+    // Re-sincroniza a mesma tarefa (upsert por id) só para corrigir a descrição
+    // quando parte das evidências não pôde ser enviada.
+    function corrigirContagem(payload, qtdEnviada) {
+      var corpo = Object.assign({}, payload, { descricao: descricaoConclusao(qtdEnviada) });
+      return window.AgroFlowCapataz.fetchOrQueueOperation({
+        kind: 'tarefa', url: '/tarefas/sincronizar', method: 'POST', body: corpo, queueBody: corpo
+      }).catch(function () {});
+    }
+
+    // Conclui a MESMA tarefa que o supervisor delegou (id vindo da URL, que é o
+    // UUID real no banco). A evidência obrigatória é enviada ligada a essa
+    // tarefa e só então o status passa de 'pendente' → 'concluido' (o supervisor
+    // vê em Revisão → A validar). NÃO criamos tarefa nova: concluímos a existente.
+    function concluirNoBackend(tarefaId) {
+      return fetch('/tarefas/' + encodeURIComponent(tarefaId) + '/status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'concluido' })
+      }).then(function (resp) {
+        if (window.AgroFlowSession?.tratarResposta(resp)) throw new Error('Sessão expirada');
+        return resp.ok;
+      });
+    }
+
+    // Retorna true se concluiu de fato; false se não concluiu (offline/falha).
+    async function sincronizarConclusao(tarefaId, dataConclusao, evidencias, evidLocais) {
+      // Sem internet não dá para enviar a evidência (obrigatória); não concluímos.
+      if (!navigator.onLine) {
+        mostrarSync('Você está sem internet. A evidência precisa ser enviada junto. Conecte-se e conclua de novo.');
+        return false;
+      }
+
+      // 1) Envia a(s) evidência(s) ligada(s) à tarefa que já existe (delegada).
+      var r = await enviarEvidenciasBackend(tarefaId, evidencias);
+      if (r.enviadas === 0) {
+        // Nenhuma evidência salva → não conclui (a tarefa segue pendente), para
+        // o supervisor nunca ver tarefa concluída sem evidência.
+        mostrarSync((r.aviso || 'Não foi possível enviar a evidência.') + ' A tarefa continua pendente — tente concluir de novo.');
+        return false;
+      }
+
+      // 2) Conclui a MESMA tarefa (pendente → concluido).
+      var ok = false;
+      try { ok = await concluirNoBackend(tarefaId); }
+      catch (e) { ok = false; }
+      if (!ok) {
+        mostrarSync('Enviamos a evidência, mas não foi possível concluir agora. Tente de novo.');
+        return false;
+      }
+
+      mostrarConcluida(evidLocais);
+      var msg = 'Sua Tarefa foi concluída e enviada para o supervisor.';
+      if (r.enviadas < r.total) msg += ' (' + r.enviadas + ' de ' + r.total + ' evidências enviadas.)';
+      mostrarSucessoTela('Tarefa concluída!', msg);
+      return true;
+    }
+
+    // Conclui sempre a MESMA tarefa delegada (o id da URL = UUID real no banco).
+    var tarefaIdConclusao = DADOS_TAREFA.id;
+
+    // Só conclui se houver pelo menos uma evidência (foto, áudio ou texto) E
+    // ela for de fato salva no backend. O servidor já desabilita o botão quando
+    // a tarefa não está mais 'pendente' (concluída/validada), então só ligamos o
+    // clique enquanto ela puder ser concluída.
+    if (btnConcluir && !btnConcluir.disabled) {
+      btnConcluir.addEventListener('click', function () {
+        var evid = evidenciasCapturadas();
+        if (!evid.length) {
+          if (evidenciaErro) evidenciaErro.hidden = false;
+          if (painel) painel.hidden = false;
+          return;
+        }
+        if (btnConcluir.dataset.processando === '1') return;
+        btnConcluir.dataset.processando = '1';
+        btnConcluir.disabled = true;
+        var textoOriginal = btnConcluir.textContent;
+        btnConcluir.textContent = 'Enviando...';
+
+        var dataConclusao = new Date().toLocaleString('pt-BR', {
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        var evidLocais = evid.map(toEvidLocal);
+
+        // A conclusão local + tela de sucesso só acontecem DENTRO de
+        // sincronizarConclusao, e apenas quando a evidência foi mesmo salva.
+        Promise.resolve(sincronizarConclusao(tarefaIdConclusao, dataConclusao, evid, evidLocais))
+          .then(function (concluiu) {
+            if (!concluiu) {
+              // Não concluiu (sem evidência no backend / offline): reabilita o
+              // botão para o capataz tentar de novo.
+              btnConcluir.dataset.processando = '';
+              btnConcluir.disabled = false;
+              btnConcluir.textContent = textoOriginal;
+              if (painel) painel.hidden = false;
+            }
+          });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
