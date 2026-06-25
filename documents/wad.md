@@ -4824,7 +4824,77 @@ VALUES (?, ?, ?, ?);
 
 ## <a name="c4.3"></a>4.3. Versão final da aplicação web 
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
+&nbsp;&nbsp;&nbsp;&nbsp;A versão final do AgroFlow consolidou a aplicação como um sistema web completo, seguro e que pode ser instalado no celular. O trabalho desta etapa concentrou-se em três frentes principais: o controle de acesso ao sistema, a entrada do Capataz por QR Code e a possibilidade de instalar a aplicação como um aplicativo (PWA), pendência herdada da Sprint 4. Além disso, os testes automatizados foram ampliados e a interface recebeu ajustes finais.
+
+### O que foi refinado ou adicionado: 
+
+**Acesso por QR Code do Capataz.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Como o Capataz atua em campo e possui baixo letramento digital, o acesso desse perfil ocorre por QR Code, em conformidade com a RN05. Ao escanear o código, o sistema reconhece o Capataz, confirma que o acesso é válido e o leva à tela de entrada e, em seguida, à página inicial (Figura 65). Cada código de acesso pode ser desativado ou ter um prazo de validade, o que permite encerrar o acesso a qualquer momento sem alterar o cadastro do usuário.
+
+<div align="center">
+<p align="center">Figura 65 - Tela de acesso do Capataz por QR Code</p>
+<p align="center">
+<img src="others/assets/acesso-capataz-qrcode.png" alt="Tela de acesso do Capataz por QR Code" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Tratamento de erros do acesso.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Quando o código lido não é mais válido ou já expirou, o sistema apresenta uma tela amigável, que informa o problema de forma simples e orienta o Capataz a solicitar um novo código, sem exibir mensagens técnicas (Figura 66).
+
+<div align="center">
+<p align="center">Figura 66 - Tela de QR Code inválido ou expirado</p>
+<p align="center">
+<img src="others/assets/acesso-capataz-invalido.png" alt="Tela de QR Code inválido ou expirado" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Controle de acesso ao sistema.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;O acesso foi padronizado para os três perfis. O Supervisor e o Gerente entram com login e senha, guardadas de forma protegida, enquanto o Capataz entra pelo QR Code. Em todos os casos, o sistema mantém a sessão do usuário de forma segura e garante que cada perfil utilize apenas as funcionalidades correspondentes ao seu papel. O detalhamento desse controle encontra-se na [Seção 3.8](#c3.8).
+
+**Instalação como aplicativo (PWA).**
+
+&nbsp;&nbsp;&nbsp;&nbsp;A possibilidade de instalar o AgroFlow como aplicativo, pendente na Sprint 4, foi concluída. A página inicial passou a oferecer um botão "Instalar app" (Figura 67) que abre a janela de instalação do próprio navegador (Figura 68), permitindo que o Capataz instale o sistema no celular e o utilize com a aparência de um aplicativo comum.
+
+<div align="center">
+<p align="center">Figura 67 - Botão de instalação do aplicativo na página inicial</p>
+<p align="center">
+<img src="others/assets/pwa-instalar-capataz.png" alt="Botão Instalar app na página inicial do Capataz" border="0" width="28%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+<div align="center">
+<p align="center">Figura 68 - Diálogo de instalação do aplicativo (PWA)</p>
+<p align="center">
+<img src="others/assets/pwa-dialogo-capataz.png" alt="Diálogo de instalação do aplicativo como PWA" border="0" width="60%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+**Ampliação dos testes e ajustes de interface.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os testes automatizados foram ampliados para cobrir o novo acesso por QR Code e o controle de acesso ao sistema, conforme detalhado na [Seção 5](#c5). Na interface, foram feitos ajustes finais, como a exibição de uma tela de confirmação ao término de ações importantes. Ao enviar um ticket, por exemplo, o Capataz passa a receber um retorno visual simples e direto, com um ícone de confirmação, uma mensagem curta informando que o ticket foi enviado ao supervisor e um botão para voltar ao início (Figura 76). Esse retorno é importante para usuários com baixo letramento digital, pois confirma que a ação foi concluída com sucesso e deixa claro o próximo passo.
+
+<div align="center">
+<p align="center">Figura 76 - Tela de confirmação de envio de ticket do Capataz</p>
+<p align="center">
+<img src="others/assets/interface-atual-capataz-ticket-enviado.png" alt="Tela de confirmação de envio de ticket do Capataz" border="0" width="42%">
+</p>
+<p align="center">Fonte: Próprios autores (2026).</p>
+</div>
+
+### Pendências remanescentes
+
+&nbsp;&nbsp;&nbsp;&nbsp;Atualmente, os códigos de acesso do Capataz são gerados por uma ferramenta separada do sistema, e ainda não existe uma tela própria para que o Gerente ou o Supervisor crie e desative esses acessos diretamente pela aplicação. A criação dessa tela de gerenciamento de acessos permanece como evolução futura.
+
+### Dificuldades técnicas enfrentadas
+
+&nbsp;&nbsp;&nbsp;&nbsp;O principal desafio foi adicionar o acesso por QR Code, sem prejudicar a entrada dos perfis Supervisor e Gerente nem as regras de permissão do sistema. Também foi preciso diferenciar o primeiro acesso pelo QR Code, que leva à tela de entrada, da confirmação seguinte, que leva à página inicial, garantindo uma navegação fluida sem mudar a interface. Por fim, a instalação como aplicativo exigiu ajustes para não interferir nas telas que dependem de login.
 
 # <a name="c5"></a>5. Testes
 
@@ -5041,7 +5111,7 @@ Também foram considerados subendpoints específicos:
 `npm run test:coverage -- --runInBand --coverageReporters=text-summary`
 
 <div align="center">
-  <p align="center">Figura 65 - Cobertura atual dos testes</p>
+  <p align="center">Figura 69 - Cobertura atual dos testes</p>
   <img src="others/assets/testes-coverage-atual.png" alt="Resultado atual da cobertura global e da camada de services." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5063,13 +5133,13 @@ Também foram considerados subendpoints específicos:
 - Cobertura da camada de services: **90,32% de statements**, **83,28% de branches**, **93,52% de functions** e **90,09% de lines**.
 
 <div align="center">
-  <p align="center">Figura 66 - Execução atual dos testes de integração</p>
+  <p align="center">Figura 70 - Execução atual dos testes de integração</p>
   <img src="others/assets/testes-integracao-atual.png" alt="Execução atual das 11 suítes de integração, com 147 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
 
 <div align="center">
-  <p align="center">Figura 67 - Execução atual da suíte completa</p>
+  <p align="center">Figura 71 - Execução atual da suíte completa</p>
   <img src="others/assets/testes-geral-atual.png" alt="Execução atual das 30 suítes, com 365 testes aprovados." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5255,7 +5325,7 @@ Também foram considerados subendpoints específicos:
 <br>
 
 <div align="center">
-  <p align="center">Figura 70 - Tabela de resultados da Tarefa 1 na planilha</p>
+  <p align="center">Figura 72 - Tabela de resultados da Tarefa 1 na planilha</p>
   <img src="/documents/others/assets/tarefa1-capataz.png" alt="Print da tabela de resultados - Tarefa 1 (Capataz)" width="800px">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5263,7 +5333,7 @@ Também foram considerados subendpoints específicos:
 <br>
 
 <div align="center">
-  <p align="center">Figura 71 - Tabela de resultados da Tarefa 2 na planilha</p>
+  <p align="center">Figura 73 - Tabela de resultados da Tarefa 2 na planilha</p>
   <img src="/documents/others/assets/tarefa2-supervisor.png" alt="Print da tabela de resultados - Tarefa 2 (Supervisor)" width="800px">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5271,7 +5341,7 @@ Também foram considerados subendpoints específicos:
 <br>
 
 <div align="center">
-  <p align="center">Figura 72 - Tabela de resultados da Tarefa 3 na planilha</p>
+  <p align="center">Figura 74 - Tabela de resultados da Tarefa 3 na planilha</p>
   <img src="/documents/others/assets/tarefa3-gerente.png" alt="Print da tabela de resultados - Tarefa 3 (Gerente)" width="800px">
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
@@ -5480,10 +5550,10 @@ Também foram considerados subendpoints específicos:
 
 ## <a name="c6.5"></a>6.5 Business Model Canvas
 
-&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 68 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
+&nbsp;&nbsp;&nbsp;&nbsp;O Business Model Canvas é uma ferramenta de gestão estratégica que organiza, em nove blocos integrados, a forma como uma solução cria, entrega e captura valor. Aplicado ao AgroFlow, ele sintetiza em uma única representação visual as análises desenvolvidas nas seções anteriores: segmentação e público-alvo ([Seção 6.3](#c6.3)), proposta de valor e posicionamento ([Seção 6.4](#c6.4)) e estratégia de marketing ([Seção 6.6](#c6.6)), articulando-as com os recursos, atividades e parcerias necessários para viabilizar o modelo de negócio. A Figura 75 apresenta o canvas consolidado, e os tópicos seguintes detalham cada um dos nove blocos.
 
 <div align="center">
-  <p align="center">Figura 68 - Business Model Canvas do AgroFlow</p>
+  <p align="center">Figura 75 - Business Model Canvas do AgroFlow</p>
   <img src="others/assets/business-model-canvas.png" alt="Business Model Canvas." />
   <p align="center">Fonte: Próprios autores (2026).</p>
 </div>
