@@ -9,3 +9,5 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 22.22.3
+      - key: APP_URL
+        value: https://agroflow-q58k.onrender.com
