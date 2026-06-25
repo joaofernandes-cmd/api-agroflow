@@ -9,11 +9,10 @@ const usuarioRoutes = Router()
 usuarioRoutes.post('/login', UsuarioController.autenticar)
 usuarioRoutes.post('/logout', UsuarioController.logout)
 
-// CRUD básico de usuários
-// Aqui o acesso já exige login válido.
+// CRUD básico de usuários; daqui em diante exige login válido
 usuarioRoutes.use(autenticarUsuario)
 usuarioRoutes.get('/capatazes/retiro/:retiroId', UsuarioController.listarCapatazesPorRetiro)
-// E, além disso, só gerente pode mexer nesses cadastros.
+// E, além disso, só gerente pode mexer nesses cadastros
 usuarioRoutes.use(exigirCargo('gerente'))
 usuarioRoutes.post('/', UsuarioController.criar)
 usuarioRoutes.get('/', UsuarioController.listarTodos)
@@ -21,7 +20,7 @@ usuarioRoutes.get('/', UsuarioController.listarTodos)
 // Consulta usuários vinculados a um retiro específico
 usuarioRoutes.get('/retiro/:retiroId', UsuarioController.listarPorRetiro)
 
-// Rotas por ID ficam por último para não capturar rotas específicas.
+// Rotas por ID ficam por último para não capturar rotas específicas
 usuarioRoutes.get('/:id', UsuarioController.buscarPorId)
 usuarioRoutes.patch('/:id', UsuarioController.atualizar)
 usuarioRoutes.delete('/:id', UsuarioController.remover)

@@ -1,10 +1,5 @@
-// Camada de APRESENTAÇÃO: converte os registros crus do banco (com FKs e enums)
-// no formato de exibição que as telas EJS consomem (nome do retiro, nome do
-// capataz/supervisor, rótulos de prioridade, tempo relativo, etc.).
-//
-// Antes, esses formatos vinham de mocks em memória (src/backend/data/*). Agora
-// o banco é a fonte ÚNICA: o que o capataz cria aparece para o supervisor e no
-// relatório porque todos leem do mesmo lugar. Estas funções só formatam.
+// Camada de apresentação: converte os registros crus do banco (FKs e enums)
+// no formato de exibição que as telas EJS consomem
 
 import { Request } from 'express'
 import { RetiroRepository } from '../repositories/retiro.repository'
@@ -14,7 +9,7 @@ import { Movimentacao, MovimentacaoTipo } from '../models/movimentacao.model'
 import { Tarefa, TarefaPrioridade, TarefaStatus } from '../models/tarefa.model'
 import { UUID } from '../models/uuid'
 
-// Mapas id → nome, carregados uma vez por request, para resolver as FKs.
+// Mapas id → nome, carregados uma vez por request, para resolver as FKs
 export interface ContextoApresentacao {
   mapaRetiro: Map<string, string>
   mapaUsuario: Map<string, string>
@@ -23,7 +18,7 @@ export interface ContextoApresentacao {
 }
 
 // Carrega retiros e usuários do banco e monta os mapas de id → nome, além do
-// nome do usuário logado (o JWT só guarda id/cargo/retiro, não o nome).
+// nome do usuário logado (o JWT só guarda id/cargo/retiro, não o nome)
 export async function carregarContexto(req: Request): Promise<ContextoApresentacao> {
   const [retiros, usuarios] = await Promise.all([
     RetiroRepository.buscarTodos(),
@@ -53,10 +48,8 @@ export function nomeUsuarioPorId(ctx: ContextoApresentacao, usuarioId: UUID | nu
   return ctx.mapaUsuario.get(String(usuarioId)) ?? ''
 }
 
-// ── Helpers de tempo ───────────────────────────────────────────────────────
-
 // "há 1h", "há 2 dias", "agora" — usado nas listas para indicar quando o
-// capataz registrou/enviou o item.
+// capataz registrou/enviou o item
 export function tempoRelativo(data: Date | string | null): string {
   if (!data) return ''
   const quando = new Date(data)
@@ -71,7 +64,7 @@ export function tempoRelativo(data: Date | string | null): string {
   return dias === 1 ? 'há 1 dia' : `há ${dias} dias`
 }
 
-// "DD/MM/AAAA HH:MM" — usado em "Validado em ...".
+// "DD/MM/AAAA HH:MM" — usado em "Validado em ..."
 export function dataHora(data: Date | string | null): string {
   if (!data) return ''
   const d = new Date(data)
@@ -80,8 +73,6 @@ export function dataHora(data: Date | string | null): string {
     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
   })
 }
-
-// ── Prioridade / severidade ──────────────────────────────────────────────
 
 const PRIORIDADE_LABEL: Record<TicketPrioridade, string> = {
   alta: 'Alta',
@@ -102,8 +93,6 @@ export function rotuloPrioridade(prioridade: TicketPrioridade): string {
 export function badgePrioridade(prioridade: TicketPrioridade): string {
   return PRIORIDADE_BADGE[prioridade] ?? 'badge--yellow'
 }
-
-// ── Ticket ─────────────────────────────────────────────────────────────────
 
 const CATEGORIA_TICKET_LABEL: Record<TicketCategoria, string> = {
   cerca: 'Cerca',
@@ -127,7 +116,7 @@ export interface TicketExibicao {
   dataValidacao: string
 }
 
-// Título amigável do ticket a partir da categoria (o banco não guarda "nome").
+// Título amigável do ticket a partir da categoria (o banco não guarda "nome")
 function tituloTicket(t: Ticket): string {
   return CATEGORIA_TICKET_LABEL[t.categoria] ?? 'Ticket'
 }
@@ -141,8 +130,7 @@ export function ticketParaExibicao(t: Ticket, ctx: ContextoApresentacao): Ticket
     severidade: rotuloPrioridade(t.prioridade),
     sevClasse: t.prioridade,
     badgeClasse: badgePrioridade(t.prioridade),
-    // Evidência do ticket é capturada no registro do capataz; aqui não fazemos
-    // join por ser apenas cosmético na lista. Mantemos vazio (a tela mostra "—").
+    // Sem join aqui: é só cosmético na lista, a tela mostra "—" quando vazio
     evidencia: '',
     evidenciaTexto: '',
     descricao: t.descricao,
@@ -151,8 +139,6 @@ export function ticketParaExibicao(t: Ticket, ctx: ContextoApresentacao): Ticket
     dataValidacao: t.status === 'aprovado' ? dataHora(t.data_realizado) : '',
   }
 }
-
-// ── Movimentação ─────────────────────────────────────────────────────────
 
 const TIPO_MOV_LABEL: Record<MovimentacaoTipo, string> = {
   nascimento: 'Nascimento',
@@ -194,7 +180,7 @@ export interface MovimentacaoExibicao {
   dataValidacao: string
 }
 
-// "BEZERRO 0 A 7 MESES" → "Bezerro 0 a 7 meses".
+// "BEZERRO 0 A 7 MESES" → "Bezerro 0 a 7 meses"
 function formatarEstagio(estagio: string | null): string {
   if (!estagio) return ''
   const texto = String(estagio).toLowerCase()
@@ -211,8 +197,6 @@ function montarDetalhesMov(m: Movimentacao, estagio: string): string {
   if (m.causa_obito) partes.push(`Causa do óbito: ${m.causa_obito}`)
   return partes.join(' · ')
 }
-
-// ── Tarefa ───────────────────────────────────────────────────────────────
 
 const COR_PRIORIDADE: Record<TarefaPrioridade, string> = {
   alta: 'var(--alerta)',
@@ -249,8 +233,7 @@ export interface TarefaExibicao {
 }
 
 export function tarefaParaExibicao(t: Tarefa, ctx: ContextoApresentacao): TarefaExibicao {
-  // O título da atividade é guardado em `categoria` (o delegar envia o título
-  // ali); `descricao` guarda os detalhes. Ciclo: pendente → concluido → aprovado.
+  // Título fica em `categoria`; `descricao` guarda os detalhes
   const concluida = t.status === 'concluido' || t.status === 'aprovado'
   const supervisor = nomeUsuarioPorId(ctx, t.criada_por)
   const titulo = TITULO_TAREFA_LABEL[t.categoria] ?? t.categoria
@@ -322,10 +305,8 @@ export function movimentacaoParaExibicao(m: Movimentacao, ctx: ContextoApresenta
   }
 }
 
-// ── Relatório ──────────────────────────────────────────────────────────────
-// Monta os datasets prontos para a tela de relatórios a partir dos registros
-// já validados/aprovados do banco (a mesma fonte das telas). Como tudo aqui já
-// passou pela validação do supervisor, o status na planilha é sempre "Validado".
+// Monta os datasets da tela de relatórios a partir dos registros já validados
+// no banco; por isso o status na planilha é sempre "Validado"
 
 export interface LinhaRelatorio {
   celulas: string[]

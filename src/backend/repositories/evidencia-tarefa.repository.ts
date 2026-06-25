@@ -40,7 +40,7 @@ export const EvidenciaTarefaRepository = {
 
     // Lista as evidências de uma tarefa já com o detalhe de cada tipo
     // (foto/áudio = url_arquivo; foto = latitude/longitude; mensagem = conteudo),
-    // numa única consulta, para o supervisor revisar.
+    // numa única consulta, para o supervisor revisar
     async buscarEvidenciasDaTarefa(tarefa_id: UUID): Promise<EvidenciaDetalhada[]> {
         return sql<EvidenciaDetalhada[]>`
             SELECT
