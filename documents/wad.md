@@ -5539,11 +5539,71 @@ Também foram considerados subendpoints específicos:
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-*Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na [Seção 2](#c2) deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
+### Conclusões
 
-*Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras*
+&nbsp;&nbsp;&nbsp;&nbsp;O desenvolvimento da aplicação web para a **BrPec Agropecuária S.A.** alcançou os objetivos centrais descritos na [Seção 2](#c2) deste documento. A solução substituiu o fluxo manual baseado em "boletas" de papel por um sistema centralizado de registro de eventos zootécnicos — nascimentos, óbitos, compras, vendas e transferências entre retiros —, eliminando a etapa de redigitação em planilhas e reduzindo a janela de inconsistência entre campo e escritório.
 
-*Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
+&nbsp;&nbsp;&nbsp;&nbsp;A versão final entregue contempla os três níveis hierárquicos previstos: o **capataz** registra a execução das atividades em campo, anexa evidências multimodais (fotos e áudios) e opera em modo *offline-first*, com armazenamento local no navegador e sincronização posterior quando há conexão; o **supervisor** acompanha, valida ou rejeita os registros consolidados; e o **gerente** acompanha indicadores e exporta dados em formato Excel/CSV para apoio à decisão administrativa. Dessa forma, a digitalização do fluxo operacional, a padronização dos registros e a integração entre as frentes de campo e escritório foram efetivamente estabelecidas.
+
+### Resultados alcançados
+
+- **Registro digital de ocorrências** por retiro e tipo de evento, com anexo de evidências multimodais.
+- **Operação offline-first** no fluxo do capataz, com persistência local e sincronização ao reestabelecer conexão.
+- **Fluxo de validação hierárquico**, no qual supervisores aprovam os registros antes da consolidação final.
+- **Exportação de dados** em Excel/CSV para suporte à gestão.
+- **Painéis de indicadores** e acompanhamento de tarefas, tickets e movimentações por perfil de usuário.
+
+### Pontos fortes
+
+&nbsp;&nbsp;&nbsp;&nbsp;O principal diferencial da solução é a arquitetura preparada para **operação offline**, requisito crítico para áreas remotas sem conectividade. A segmentação por perfis de acesso e o fluxo de validação garantem rastreabilidade e controle sobre a qualidade dos dados consolidados, enquanto a exportação estruturada conecta a operação de campo à tomada de decisão administrativa.
+
+### Limitações e pontos a melhorar
+
+&nbsp;&nbsp;&nbsp;&nbsp;Apesar de atender ao escopo proposto, a aplicação ainda apresenta limitações identificadas ao longo do desenvolvimento e dos testes de usabilidade, concentradas principalmente na **experiência de uso das interfaces de supervisor e gerente** e na ausência de recursos analíticos mais avançados. Esses pontos não comprometem o funcionamento central da solução, mas representam oportunidades claras de evolução, detalhadas nos trabalhos futuros a seguir.
+
+### Trabalhos futuros
+
+&nbsp;&nbsp;&nbsp;&nbsp;Os itens abaixo organizam as melhorias e expansões mapeadas para as próximas iterações da solução. O grupo não as implementou nesta entrega, registrando-as como plano de ação para evolução futura.
+
+### Análise inteligente de padrões de ocorrências (interfaces de gerente e supervisor)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Propõe-se a integração de um módulo de **inteligência artificial para análise de padrões nas ocorrências da fazenda**. O recurso monitoraria os registros consolidados e **notificaria gerentes e supervisores automaticamente sempre que um padrão relevante fosse identificado**. Exemplos de padrões:
+
+- Alta incidência de cercas quebradas em uma localização específica.
+- Retiro com número elevado de mortes bovinas em determinado mês.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Ao receber esse alerta, o gestor poderia investigar a **causa raiz** do padrão recorrente e atuar sobre ela, prevenindo ocorrências potencialmente mais graves na fazenda. Essa funcionalidade transforma o sistema de um registro passivo para uma ferramenta ativa de apoio à decisão preventiva.
+
+### Melhorias na interface do supervisor
+
+**Layout e uso do espaço de tela**
+
+- Redesenhar a aba de **tarefas / tickets / movimentações**, cuja disposição de elementos subutiliza o espaço da tela. A opção atual de centralizar todos os elementos e estender as caixas brancas até o limite da tela não foi a mais esteticamente nem funcionalmente ideal; recomenda-se uma distribuição que aproveite melhor a área disponível e que priorize a usabilidade.
+
+**Funcionalidades de validação**
+
+- Adicionar **botão de rejeitar** tarefa pendente de validação (hoje há apenas a aprovação). Quando um supervisor rejeitar uma tarefa, o capataz deve ser notificado automaticamente.
+
+**Visualização e paginação de registros**
+
+- Nos registros **já validados**, indicar **até qual data** os registros exibidos abrangem.
+- Implementar **paginação** que permita ao supervisor carregar mais registros quando desejar visualizar além do conjunto inicial.
+- Aplicar **paginação também na seção de tarefas ativas** (lado direito da tela de delegar), prevendo cenários com muitas tarefas ativas.
+
+**Correções na barra de pesquisa**
+
+- A pesquisa filtra apenas tarefas **pendentes de validação**, ignorando as **já validadas**; deve abranger ambos os conjuntos.
+
+### Melhorias na interface do gerente
+
+**Personalização e textos**
+
+- Substituir a saudação genérica **"Bom dia, Gerente"** pelo **nome do usuário** (ex.: "Bom dia, Marcos").
+- Retirar o texto **"Concluídas pelo capataz. Nenhuma tarefa concluída pelo capataz ainda"** localizado na porção superior da interface do gerente.
+
+**Visualização e paginação**
+
+- Adicionar **paginação** à seção de **atividades recentes**.
 
 # <a name="c8"></a>8. Referências
 
