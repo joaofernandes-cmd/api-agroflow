@@ -1,9 +1,9 @@
 {
   "name": "AgroFlow Capataz",
   "short_name": "Capataz",
-  "id": "/capataz/home",
+  "id": "/capataz/",
   "description": "Aplicação do capataz para registro de movimentações, tarefas e tickets em campo.",
-  "start_url": "/capataz/home",
+  "start_url": "/capataz/",
   "scope": "/capataz/",
   "display": "standalone",
   "orientation": "portrait-primary",

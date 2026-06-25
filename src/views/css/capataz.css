@@ -31,22 +31,22 @@
 
 body {
   font-family: "Poppins", system-ui, sans-serif;
-  background: #d7d7d2;
+  background: var(--fundo);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   min-height: 100vh;
-  padding: 24px;
+  min-height: 100dvh;
 }
 
-/* Moldura do celular ---------------------------------------------------- */
+/* Container da aplicação (fluido, ocupa a tela de qualquer celular) ------ */
 .celular {
-  width: 390px;
-  height: 820px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
   background: var(--fundo);
-  border-radius: 44px;
-  border: 10px solid #15151a;
-  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.45);
   overflow: hidden;
   position: relative;
   display: flex;
